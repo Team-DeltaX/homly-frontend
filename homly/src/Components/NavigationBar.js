@@ -13,6 +13,8 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 
+import {Link} from "react-router-dom";
+
 const pages = ['Home', 'Holiday Homes', 'Contact Us'];
 const settings = ['Notifications', 'My Account', 'Logout'];
 
@@ -120,7 +122,7 @@ function NavigationBar() {
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                {page}
+                <Link to={`/${page}`}>{page}</Link>
               </Button>
             ))}
           </Box>
