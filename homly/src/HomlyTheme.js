@@ -19,8 +19,14 @@ const theme = createTheme({
             black: '#2c2c2c',
             white: '#FFFFFF',
             red: '#872341',
-            disabled: '#E9E9E9',
         },
+    },
+    typography: {
+        fontFamily: 'Roboto Flex',
+        fontWeightLight: 300,
+        fontWeightRegular: 400,
+        fontWeightMedium: 500,
+        fontWeightBold: 700,
     },
 });
 
