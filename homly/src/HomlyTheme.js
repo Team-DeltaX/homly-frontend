@@ -16,8 +16,8 @@ const theme = createTheme({
         grey4: grey[400],
 
         text: {
-            black: '#2c2c2c',
-            white: '#FFFFFF',
+            primary: '#2c2c2c',
+            secondary: '#2c2c2c',
             red: '#872341',
         },
     },
