@@ -1,0 +1,11 @@
+/* Nav bar */
+
+@import url("https://fonts.googleapis.com/css2?family=Roboto Flex:wght@700&display=swap");
+
+p {
+  margin: 0;
+}
+
+.link {
+    text-decoration: none !important;
+}

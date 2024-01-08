@@ -13,7 +13,9 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 
+
 import {Link} from "react-router-dom";
+import '../Styles/styles.css';
 
 const pages = ['Home', 'Holiday Homes', 'Contact Us'];
 const settings = ['Notifications', 'My Account', 'Logout'];
@@ -117,13 +119,17 @@ function NavigationBar() {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
-              <Button
+              <Link className='link' to={`/${page}`}>
+                <Button 
                 key={page}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                <Link to={`/${page}`}>{page}</Link>
+
+                    {page}
+                
               </Button>
+            </Link>
             ))}
           </Box>
 
