@@ -85,6 +85,7 @@ const UserRegistration = () => {
   };
 
   const checkServiceNo = (sn) => {
+    setDbServiceNo("1000");
     let len = dbServiceNo === null? 0 : dbServiceNo.length;
     if (sn.length > 0 && len !== 0) {
       for (let i = 0; i < len; i++) {
@@ -98,15 +99,16 @@ const UserRegistration = () => {
     
   };
 
-  useEffect(() => {
-    fetch("http://localhost:8000/employee")
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        setDbServiceNo(data);
-      });
-  }, []);
+  // fetch data from database
+  // useEffect(() => {
+  //   fetch("http://localhost:8000/employee")
+  //     .then((res) => {
+  //       return res.json();
+  //     })
+  //     .then((data) => {
+  //       setDbServiceNo(data);
+  //     });
+  // }, []);
 
 
 
@@ -114,24 +116,27 @@ const UserRegistration = () => {
     e.preventDefault();
     checkServiceNo(ServiceNo)
 
-    const formData = { ServiceNo, Email, ContactNo, Password, ConfirmPassword };
-    const product = JSON.stringify(formData);
+    // const formData = { ServiceNo, Email, ContactNo, Password, ConfirmPassword };
+    // const product = JSON.stringify(formData);
+
     if(!errorServiceNumber && !checkEmail(Email) && !checkContactNo(ContactNo) && !errorConfirmPassword){
         console.log(ServiceNo, Email, ContactNo, Password, ConfirmPassword);
 
-        fetch("http://localhost:8000/homlyDb", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: product,
-        }).then(() => {
-          console.log("new product added");
-        });
 
-        setServiceNo("");
-        setEmail("");
-        setContactNo("");
-        setPassword("");
-        setConfirmPassword("");
+        // add data to database
+        // fetch("http://localhost:8000/homlyDb", {
+        //   method: "POST",
+        //   headers: { "Content-Type": "application/json" },
+        //   body: product,
+        // }).then(() => {
+        //   console.log("new product added");
+        // });
+
+        // setServiceNo("");
+        // setEmail("");
+        // setContactNo("");
+        // setPassword("");
+        // setConfirmPassword("");
         
     }
   }
