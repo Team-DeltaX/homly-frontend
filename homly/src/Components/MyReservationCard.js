@@ -4,7 +4,7 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import Button from "@mui/material/Button";
 import { ThemeProvider, Box } from "@mui/material";
 import theme from "../HomlyTheme";
@@ -23,31 +23,76 @@ export default function MyReservationCard(props) {
   if (props.paid === "true") {
     paidBox = (
       <Box className="booking-status-box" sx={{ backgroundColor: "grey2" }}>
-          <Box>
-          <Typography variant="h7" sx={{padding:"3%",fontWeight:'bold'}}>Reserved date : {props.reserved}</Typography>
+        <Box>
+          <Typography variant="h7" sx={{ padding: "3%", fontWeight: "bold" }}>
+            Reserved date : {props.reserved}
+          </Typography>
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            height: "80%",
+            flexDirection: "row",
+          }}
+        >
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <CheckCircleOutlineIcon
+              sx={{ fontSize: "9vh", color: "success.light" }}
+            />
+            <Typography
+              sx={{
+                fontSize: "8vh",
+                color: "success.light",
+                fontWeight: "medium",
+              }}
+            >
+              Paid
+            </Typography>
           </Box>
-          <Box sx={{display:'flex', justifyContent:'center', height:'80%', flexDirection:'row'}}>
-            <Box sx={{display:'flex',alignItems:'center'}}>
-              <CheckCircleOutlineIcon sx={{fontSize:'9vh',color:'success.light',}}/>
-              <Typography sx={{fontSize:'8vh',color:'success.light',fontWeight:'medium'}}>Paid</Typography>
-            </Box>
-          </Box>
+        </Box>
       </Box>
     );
   } else if (props.paid === "false") {
     paidBox = (
       <Box className="booking-status-box" sx={{ backgroundColor: "grey2" }}>
-          <Box>
-          <Typography variant="h7" sx={{padding:"3%",color:'error.main', fontWeight:'bold'}}>Auto Expire date :{props.reservedExpire} </Typography>
+        <Box>
+          <Typography
+            variant="h7"
+            sx={{ padding: "3%", color: "error.main", fontWeight: "bold" }}
+          >
+            Auto Expire date :{props.reservedExpire}{" "}
+          </Typography>
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            height: "40%",
+            flexDirection: "row",
+          }}
+        >
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Typography
+              sx={{
+                fontSize: "6vh",
+                color: "error.main",
+                fontWeight: "medium",
+              }}
+            >
+              Pending
+            </Typography>
           </Box>
-          <Box sx={{display:'flex', justifyContent:'center', height:'40%', flexDirection:'row'}}>
-            <Box sx={{display:'flex',alignItems:'center'}}>
-              <Typography sx={{fontSize:'6vh',color:'error.main',fontWeight:'medium'}}>Pending</Typography>
-            </Box>
-          </Box>
-          <Box sx={{display:'flex',justifyContent:'flex-end'}}>
-            <Button variant="outlined" sx={{width:'50%',alignItems:'flex-end',margin:"1%"}} color="error">Check out</Button>
-            </Box>
+        </Box>
+        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+          <Button
+            variant="outlined"
+            sx={{ width: "50%", alignItems: "flex-end", margin: "1%" }}
+            color="error"
+          >
+            Check out
+          </Button>
+        </Box>
       </Box>
     );
   }
