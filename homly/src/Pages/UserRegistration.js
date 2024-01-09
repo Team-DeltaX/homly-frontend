@@ -32,6 +32,9 @@ const Img = styled("img")({
 });
 
 const UserRegistration = () => {
+  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+  const phoneRegex = /^[0-9]{10}$/;
+
   const [focusedServiceNo, setFocusedServiceNo] = useState(false);
   const [focusedEmail, setFocusedEmail] = useState(false);
   const [focusedContactNo, setFocusedContactNo] = useState(false);
@@ -44,6 +47,7 @@ const UserRegistration = () => {
   const [Password, setPassword] = useState("");
   const [ConfirmPassword, setConfirmPassword] = useState("");
 
+  // const [errorEmail, setErrorEmail] = useState(false);
   const [errorConfirmPassword, setErrorConfirmPassword] = useState(false);
 
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -61,6 +65,14 @@ const UserRegistration = () => {
     let withoutSpace = str.replace(/\s/g, "");
     let len = withoutSpace.length;
     return len;
+  };
+
+  const checkEmail = (email) => {
+    return email.length > 0 && !emailRegex.test(email);
+  };
+
+  const checkContactNo = (contactNo) => {
+    return contactNo.length > 0 && !phoneRegex.test(contactNo);
   };
 
   const checkConfirmPassword = (cpw, pw) => {
@@ -105,9 +117,10 @@ const UserRegistration = () => {
             <Box paddingLeft={"5%"} marginBottom={"5%"}>
               <form action="" autoComplete="off">
                 <TextField
-                  sx={{ marginBottom: "4%", width: "90%" }}
+                  sx={{ marginBottom: " 6%", width: "90%" }}
                   id="textfield-serviceNumber"
                   label="Service Number"
+                  error={false}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
@@ -126,12 +139,14 @@ const UserRegistration = () => {
                   onBlur={() => setFocusedServiceNo(false)}
                   onChange={(e) => setServiceNo(e.target.value)}
                   size="small"
+                  helperText={""}
                   fullWidth
                 />
                 <TextField
-                  sx={{ marginBottom: "4%", width: "90%" }}
+                  sx={{ marginBottom: " 6%", width: "90%" }}
                   id="textfield-email"
                   label="Email"
+                  error={checkEmail(Email)}
                   type="email"
                   InputProps={{
                     startAdornment: (
@@ -151,13 +166,15 @@ const UserRegistration = () => {
                   onBlur={() => setFocusedEmail(false)}
                   onChange={(e) => setEmail(e.target.value)}
                   size="small"
+                  helperText={checkEmail(Email) ? "invalid email address" : ""}
                   fullWidth
                 />
 
                 <TextField
-                  sx={{ marginBottom: "4%", width: "90%" }}
+                  sx={{ marginBottom: " 6%", width: "90%" }}
                   id="textfield-contactNumber"
                   label="Contact Number"
+                  error={checkContactNo(ContactNo)}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
@@ -176,12 +193,16 @@ const UserRegistration = () => {
                   onBlur={() => setFocusedContactNo(false)}
                   onChange={(e) => setContactNo(e.target.value)}
                   size="small"
+                  helperText={
+                    checkContactNo(ContactNo) ? "invalid contact number" : ""
+                  }
                   fullWidth
                 />
                 <TextField
-                  sx={{ marginBottom: "4%", width: "90%" }}
+                  sx={{ marginBottom: "6%", width: "90%" }}
                   id="textfield-password"
                   label="Password"
+                  error={false}
                   type={showPassword ? "text" : "password"}
                   InputProps={{
                     startAdornment: (
@@ -215,10 +236,11 @@ const UserRegistration = () => {
                     checkConfirmPassword(ConfirmPassword, e.target.value);
                   }}
                   size="small"
+                  helperText={""}
                   fullWidth
                 />
                 <TextField
-                  sx={{ marginBottom: "4%", width: "90%" }}
+                  sx={{ marginBottom: " 6%", width: "90%" }}
                   id="textfield-confirmPassword"
                   label="Confirm Password"
                   error={errorConfirmPassword}
