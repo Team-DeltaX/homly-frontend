@@ -38,11 +38,13 @@ const UserRegistration = () => {
   const [focusedPassword, setFocusedPassword] = useState(false);
   const [focusedConfirmPassword, setFocusedConfirmPassword] = useState(false);
 
-  const [valueServiceNo, setValueServiceNo] = useState(false);
-  const [valueEmail, setValueEmail] = useState(false);
-  const [valueContactNo, setValueContactNo] = useState(false);
-  const [valuePassword, setValuePassword] = useState(false);
-  const [valueConfirmPassword, setValueConfirmPassword] = useState(false);
+  const [ServiceNo, setServiceNo] = useState("");
+  const [Email, setEmail] = useState("");
+  const [ContactNo, setContactNo] = useState("");
+  const [Password, setPassword] = useState("");
+  const [ConfirmPassword, setConfirmPassword] = useState("");
+
+  const [errorConfirmPassword, setErrorConfirmPassword] = useState(false);
 
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -55,12 +57,27 @@ const UserRegistration = () => {
     event.preventDefault();
   };
 
+  const countChar = (str) => {
+    let withoutSpace = str.replace(/\s/g, "");
+    let len = withoutSpace.length;
+    return len;
+  };
+
+  const checkConfirmPassword = (cpw, pw) => {
+    setErrorConfirmPassword(cpw.length > 0 && cpw !== pw);
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <Container className="registration-box-container">
         <Grid
           container
-          sx={{ height: "85%", backgroundColor: "grey1", borderRadius:"5%",boxShadow: 2 }}
+          sx={{
+            height: "85%",
+            backgroundColor: "grey1",
+            borderRadius: "5%",
+            boxShadow: 2,
+          }}
           className="registration-box"
         >
           <Grid item className="registration-box-left" xs={12} sm={12} md={6}>
@@ -85,7 +102,7 @@ const UserRegistration = () => {
               </Typography>
               <Button variant="outlined">Login</Button>
             </Box>
-            <Box>
+            <Box paddingLeft={"5%"} marginBottom={"5%"}>
               <form action="" autoComplete="off">
                 <TextField
                   sx={{ marginBottom: "4%", width: "90%" }}
@@ -99,16 +116,15 @@ const UserRegistration = () => {
                     ),
                   }}
                   InputLabelProps={{
-                    shrink: focusedServiceNo || valueServiceNo,
+                    shrink: focusedServiceNo || countChar(ServiceNo) !== 0,
                     style: {
-                      marginLeft: focusedServiceNo || valueServiceNo ? 0 : 35,
+                      marginLeft:
+                        focusedServiceNo || countChar(ServiceNo) !== 0 ? 0 : 35,
                     },
                   }}
                   onFocus={() => setFocusedServiceNo(true)}
                   onBlur={() => setFocusedServiceNo(false)}
-                  onChange={(e) =>
-                    setValueServiceNo(e.target.value.length !== 0)
-                  }
+                  onChange={(e) => setServiceNo(e.target.value)}
                   size="small"
                   fullWidth
                 />
@@ -125,12 +141,15 @@ const UserRegistration = () => {
                     ),
                   }}
                   InputLabelProps={{
-                    shrink: focusedEmail || valueEmail,
-                    style: { marginLeft: focusedEmail || valueEmail ? 0 : 35 },
+                    shrink: focusedEmail || countChar(Email) !== 0,
+                    style: {
+                      marginLeft:
+                        focusedEmail || countChar(Email) !== 0 ? 0 : 35,
+                    },
                   }}
                   onFocus={() => setFocusedEmail(true)}
                   onBlur={() => setFocusedEmail(false)}
-                  onChange={(e) => setValueEmail(e.target.value.length !== 0)}
+                  onChange={(e) => setEmail(e.target.value)}
                   size="small"
                   fullWidth
                 />
@@ -147,16 +166,15 @@ const UserRegistration = () => {
                     ),
                   }}
                   InputLabelProps={{
-                    shrink: focusedContactNo || valueContactNo,
+                    shrink: focusedContactNo || countChar(ContactNo) !== 0,
                     style: {
-                      marginLeft: focusedContactNo || valueContactNo ? 0 : 35,
+                      marginLeft:
+                        focusedContactNo || countChar(ContactNo) !== 0 ? 0 : 35,
                     },
                   }}
                   onFocus={() => setFocusedContactNo(true)}
                   onBlur={() => setFocusedContactNo(false)}
-                  onChange={(e) =>
-                    setValueContactNo(e.target.value.length !== 0)
-                  }
+                  onChange={(e) => setContactNo(e.target.value)}
                   size="small"
                   fullWidth
                 />
@@ -184,16 +202,18 @@ const UserRegistration = () => {
                     ),
                   }}
                   InputLabelProps={{
-                    shrink: focusedPassword || valuePassword,
+                    shrink: focusedPassword || countChar(Password) !== 0,
                     style: {
-                      marginLeft: focusedPassword || valuePassword ? 0 : 35,
+                      marginLeft:
+                        focusedPassword || countChar(Password) !== 0 ? 0 : 35,
                     },
                   }}
                   onFocus={() => setFocusedPassword(true)}
                   onBlur={() => setFocusedPassword(false)}
-                  onChange={(e) =>
-                    setValuePassword(e.target.value.length !== 0)
-                  }
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    checkConfirmPassword(ConfirmPassword, e.target.value);
+                  }}
                   size="small"
                   fullWidth
                 />
@@ -201,6 +221,7 @@ const UserRegistration = () => {
                   sx={{ marginBottom: "4%", width: "90%" }}
                   id="textfield-confirmPassword"
                   label="Confirm Password"
+                  error={errorConfirmPassword}
                   type={showConfirmPassword ? "text" : "password"}
                   InputProps={{
                     startAdornment: (
@@ -225,18 +246,25 @@ const UserRegistration = () => {
                     ),
                   }}
                   InputLabelProps={{
-                    shrink: focusedConfirmPassword || valueConfirmPassword,
+                    shrink:
+                      focusedConfirmPassword ||
+                      countChar(ConfirmPassword) !== 0,
                     style: {
                       marginLeft:
-                        focusedConfirmPassword || valueConfirmPassword ? 0 : 35,
+                        focusedConfirmPassword ||
+                        countChar(ConfirmPassword) !== 0
+                          ? 0
+                          : 35,
                     },
                   }}
                   onFocus={() => setFocusedConfirmPassword(true)}
                   onBlur={() => setFocusedConfirmPassword(false)}
-                  onChange={(e) =>
-                    setValueConfirmPassword(e.target.value.length !== 0)
-                  }
+                  onChange={(e) => {
+                    setConfirmPassword(e.target.value);
+                    checkConfirmPassword(e.target.value, Password);
+                  }}
                   size="small"
+                  helperText={errorConfirmPassword ? "password not match" : ""}
                   fullWidth
                 />
                 <Box className="form-button">
