@@ -76,7 +76,6 @@ const UserRegistration = () => {
   };
 
   const checkContactNo = (contactNo) => {
-    // console.log(dbServiceNo === null? "not" : dbServiceNo[0].serviceNumber);
     return contactNo.length > 0 && !phoneRegex.test(contactNo);
   };
 
@@ -85,21 +84,26 @@ const UserRegistration = () => {
   };
 
   const checkServiceNo = (sn) => {
-    setDbServiceNo("1000");
+    setDbServiceNo('1000');
     let len = dbServiceNo === null? 0 : dbServiceNo.length;
     if (sn.length > 0 && len !== 0) {
       for (let i = 0; i < len; i++) {
         if(dbServiceNo[i].SN === sn){
           setErrorServiceNumber(false);
-          break;
+          console.log('1',errorServiceNumber);
+          return false
+        }else{
+
+          setErrorServiceNumber(true);
+          console.log('1',errorServiceNumber);
+          
         }
-        setErrorServiceNumber(true);
       }
+      return true;
     }
     
   };
 
-  // fetch data from database
   // useEffect(() => {
   //   fetch("http://localhost:8000/employee")
   //     .then((res) => {
@@ -114,16 +118,14 @@ const UserRegistration = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    checkServiceNo(ServiceNo)
-
+    
+    // console.log('2',ServiceNo,checkServiceNo(ServiceNo))
     // const formData = { ServiceNo, Email, ContactNo, Password, ConfirmPassword };
     // const product = JSON.stringify(formData);
-
-    if(!errorServiceNumber && !checkEmail(Email) && !checkContactNo(ContactNo) && !errorConfirmPassword){
+    
+    if(!checkServiceNo(ServiceNo) && !checkEmail(Email) && !checkContactNo(ContactNo) && !errorConfirmPassword){
         console.log(ServiceNo, Email, ContactNo, Password, ConfirmPassword);
 
-
-        // add data to database
         // fetch("http://localhost:8000/homlyDb", {
         //   method: "POST",
         //   headers: { "Content-Type": "application/json" },
@@ -132,11 +134,11 @@ const UserRegistration = () => {
         //   console.log("new product added");
         // });
 
-        // setServiceNo("");
-        // setEmail("");
-        // setContactNo("");
-        // setPassword("");
-        // setConfirmPassword("");
+        setServiceNo("");
+        setEmail("");
+        setContactNo("");
+        setPassword("");
+        setConfirmPassword("");
         
     }
   }
