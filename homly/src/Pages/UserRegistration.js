@@ -1,4 +1,4 @@
-import { React } from "react";
+import { React, useEffect } from "react";
 import { useState } from "react";
 import {
   Box,
@@ -24,6 +24,8 @@ import "./UserRegistration.css";
 import logo from "../resources/images/logo.png";
 import wave from "../resources/images/wave.png";
 
+// import AvatarImage from "../Components/AvatarImage"
+
 const Img = styled("img")({
   margin: "auto",
   display: "block",
@@ -32,6 +34,9 @@ const Img = styled("img")({
 });
 
 const UserRegistration = () => {
+  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+  const phoneRegex = /^[0-9]{10}$/;
+
   const [focusedServiceNo, setFocusedServiceNo] = useState(false);
   const [focusedEmail, setFocusedEmail] = useState(false);
   const [focusedContactNo, setFocusedContactNo] = useState(false);
@@ -44,10 +49,13 @@ const UserRegistration = () => {
   const [Password, setPassword] = useState("");
   const [ConfirmPassword, setConfirmPassword] = useState("");
 
+  const [errorServiceNumber, setErrorServiceNumber] = useState(false);
   const [errorConfirmPassword, setErrorConfirmPassword] = useState(false);
 
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+
+  const [dbServiceNo, setDbServiceNo] = useState(null);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleClickShowConfirmPassword = () =>
@@ -63,9 +71,86 @@ const UserRegistration = () => {
     return len;
   };
 
+  const checkEmail = (email) => {
+    return email.length > 0 && !emailRegex.test(email);
+  };
+
+  const checkContactNo = (contactNo) => {
+    return contactNo.length > 0 && !phoneRegex.test(contactNo);
+  };
+
   const checkConfirmPassword = (cpw, pw) => {
     setErrorConfirmPassword(cpw.length > 0 && cpw !== pw);
   };
+
+  const checkServiceNo = (sn) => {
+    setDbServiceNo('1000');
+    let len = dbServiceNo === null? 0 : dbServiceNo.length;
+    if (sn.length > 0 && len !== 0) {
+      for (let i = 0; i < len; i++) {
+        if(dbServiceNo[i].SN === sn){
+          setErrorServiceNumber(false);
+          console.log('1',errorServiceNumber);
+          return false
+        }else{
+
+          setErrorServiceNumber(true);
+          console.log('1',errorServiceNumber);
+          
+        }
+      }
+      return true;
+    }
+    
+  };
+
+  // useEffect(() => {
+  //   fetch("http://localhost:8000/employee")
+  //     .then((res) => {
+  //       return res.json();
+  //     })
+  //     .then((data) => {
+  //       setDbServiceNo(data);
+  //     });
+  // }, []);
+
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    // console.log('2',ServiceNo,checkServiceNo(ServiceNo))
+    // const formData = { ServiceNo, Email, ContactNo, Password, ConfirmPassword };
+    // const product = JSON.stringify(formData);
+    
+    if(!checkServiceNo(ServiceNo) && !checkEmail(Email) && !checkContactNo(ContactNo) && !errorConfirmPassword){
+        console.log(ServiceNo, Email, ContactNo, Password, ConfirmPassword);
+
+        // fetch("http://localhost:8000/homlyDb", {
+        //   method: "POST",
+        //   headers: { "Content-Type": "application/json" },
+        //   body: product,
+        // }).then(() => {
+        //   console.log("new product added");
+        // });
+
+        setServiceNo("");
+        setEmail("");
+        setContactNo("");
+        setPassword("");
+        setConfirmPassword("");
+        
+    }
+  }
+
+  const handleReset = (e) => {
+    e.preventDefault();
+    setServiceNo("");
+    setEmail("");
+    setContactNo("");
+    setPassword("");
+    setConfirmPassword("");
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -103,11 +188,14 @@ const UserRegistration = () => {
               <Button variant="outlined">Login</Button>
             </Box>
             <Box paddingLeft={"5%"} marginBottom={"5%"}>
-              <form action="" autoComplete="off">
+              <form action="" autoComplete="off" onSubmit={handleSubmit} onReset={handleReset}>
+                {/* <AvatarImage /> */}
                 <TextField
-                  sx={{ marginBottom: "4%", width: "90%" }}
+                  sx={{ marginBottom: " 6%", width: "90%" }}
                   id="textfield-serviceNumber"
                   label="Service Number"
+                  required
+                  error={errorServiceNumber}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
@@ -124,14 +212,18 @@ const UserRegistration = () => {
                   }}
                   onFocus={() => setFocusedServiceNo(true)}
                   onBlur={() => setFocusedServiceNo(false)}
-                  onChange={(e) => setServiceNo(e.target.value)}
+                  onChange={(e) => {setServiceNo(e.target.value);}}
+                  value={ServiceNo}
                   size="small"
+                  helperText={errorServiceNumber?"Your are not an employee of Homly":""}
                   fullWidth
                 />
                 <TextField
-                  sx={{ marginBottom: "4%", width: "90%" }}
+                  sx={{ marginBottom: " 6%", width: "90%" }}
                   id="textfield-email"
                   label="Email"
+                  required
+                  error={checkEmail(Email)}
                   type="email"
                   InputProps={{
                     startAdornment: (
@@ -150,14 +242,18 @@ const UserRegistration = () => {
                   onFocus={() => setFocusedEmail(true)}
                   onBlur={() => setFocusedEmail(false)}
                   onChange={(e) => setEmail(e.target.value)}
+                  value={Email}
                   size="small"
+                  helperText={checkEmail(Email) ? "invalid email address" : ""}
                   fullWidth
                 />
 
                 <TextField
-                  sx={{ marginBottom: "4%", width: "90%" }}
+                  sx={{ marginBottom: " 6%", width: "90%" }}
                   id="textfield-contactNumber"
                   label="Contact Number"
+                  required
+                  error={checkContactNo(ContactNo)}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
@@ -175,13 +271,19 @@ const UserRegistration = () => {
                   onFocus={() => setFocusedContactNo(true)}
                   onBlur={() => setFocusedContactNo(false)}
                   onChange={(e) => setContactNo(e.target.value)}
+                  value={ContactNo}
                   size="small"
+                  helperText={
+                    checkContactNo(ContactNo) ? "invalid contact number" : ""
+                  }
                   fullWidth
                 />
                 <TextField
-                  sx={{ marginBottom: "4%", width: "90%" }}
+                  sx={{ marginBottom: "6%", width: "90%" }}
                   id="textfield-password"
                   label="Password"
+                  required
+                  error={false}
                   type={showPassword ? "text" : "password"}
                   InputProps={{
                     startAdornment: (
@@ -214,13 +316,16 @@ const UserRegistration = () => {
                     setPassword(e.target.value);
                     checkConfirmPassword(ConfirmPassword, e.target.value);
                   }}
+                  value={Password}
                   size="small"
+                  helperText={""}
                   fullWidth
                 />
                 <TextField
-                  sx={{ marginBottom: "4%", width: "90%" }}
+                  sx={{ marginBottom: " 6%", width: "90%" }}
                   id="textfield-confirmPassword"
                   label="Confirm Password"
+                  required
                   error={errorConfirmPassword}
                   type={showConfirmPassword ? "text" : "password"}
                   InputProps={{
@@ -263,6 +368,7 @@ const UserRegistration = () => {
                     setConfirmPassword(e.target.value);
                     checkConfirmPassword(e.target.value, Password);
                   }}
+                  value={ConfirmPassword}
                   size="small"
                   helperText={errorConfirmPassword ? "password not match" : ""}
                   fullWidth
