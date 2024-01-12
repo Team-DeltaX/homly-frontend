@@ -4,7 +4,7 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
-import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import Button from "@mui/material/Button";
 import { ThemeProvider, Box } from "@mui/material";
 import theme from "../HomlyTheme";
@@ -23,76 +23,31 @@ export default function MyReservationCard(props) {
   if (props.paid === "true") {
     paidBox = (
       <Box className="booking-status-box" sx={{ backgroundColor: "grey2" }}>
-        <Box>
-          <Typography variant="h7" sx={{ padding: "3%", fontWeight: "bold" }}>
-            Reserved date : {props.reserved}
-          </Typography>
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            height: "80%",
-            flexDirection: "row",
-          }}
-        >
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <CheckCircleOutlineIcon
-              sx={{ fontSize: "9vh", color: "success.light" }}
-            />
-            <Typography
-              sx={{
-                fontSize: "8vh",
-                color: "success.light",
-                fontWeight: "medium",
-              }}
-            >
-              Paid
-            </Typography>
+          <Box>
+          <Typography className="booking-status-box-text-date" sx={{padding:"3%",fontWeight:'bold'}}>Reserved date : {props.reserved}</Typography>
           </Box>
-        </Box>
+          <Box sx={{display:'flex', justifyContent:'center', height:'80%', flexDirection:'row'}}>
+            <Box sx={{display:'flex',alignItems:'center'}}>
+              <CheckCircleOutlineIcon sx={{fontSize:'9vh',color:'success.light',}}/>
+              <Typography className="booking-status-box-text" sx={{fontSize:'8vh',color:'success.light',fontWeight:'medium'}}>Paid</Typography>
+            </Box>
+          </Box>
       </Box>
     );
   } else if (props.paid === "false") {
     paidBox = (
-      <Box className="booking-status-box" sx={{ backgroundColor: "grey2" }}>
-        <Box>
-          <Typography
-            variant="h7"
-            sx={{ padding: "3%", color: "error.main", fontWeight: "bold" }}
-          >
-            Auto Expire date :{props.reservedExpire}{" "}
-          </Typography>
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            height: "40%",
-            flexDirection: "row",
-          }}
-        >
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <Typography
-              sx={{
-                fontSize: "6vh",
-                color: "error.main",
-                fontWeight: "medium",
-              }}
-            >
-              Pending
-            </Typography>
+      <Box className="booking-status-box" sx={{ backgroundColor: "grey2",paddingBottom:"1.5%" }}>
+          <Box>
+          <Typography variant="h7" className="booking-status-box-text-date" sx={{padding:"3%",color:'error.main', fontWeight:'bold'}}>Auto Expire date : {props.reservedExpire} </Typography>
           </Box>
-        </Box>
-        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-          <Button
-            variant="outlined"
-            sx={{ width: "50%", alignItems: "flex-end", margin: "1%" }}
-            color="error"
-          >
-            Check out
-          </Button>
-        </Box>
+          <Box sx={{display:'flex', justifyContent:'center', height:'40%', flexDirection:'row'}}>
+            <Box sx={{display:'flex',alignItems:'center'}}>
+              <Typography className="booking-status-box-text" sx={{fontSize:'6vh',color:'error.main',fontWeight:'medium'}}>Pending</Typography>
+            </Box>
+          </Box>
+          <Box sx={{display:'flex',justifyContent:'flex-end'}}>
+            <Button variant="outlined" sx={{width:{xs:'40%' ,sm:'60%' ,md:'50%'},padding:{xs:'2%'},alignItems:'flex-end',margin:"1%"}} color="error" >Check out</Button>
+            </Box>
       </Box>
     );
   }
@@ -119,7 +74,7 @@ export default function MyReservationCard(props) {
             className="reservation-card-details"
             item
             xs={12}
-            sm={6}
+            sm={5}
             md={4}
             container
           >
@@ -249,7 +204,7 @@ export default function MyReservationCard(props) {
             className="reservation-card-details booking-status-main"
             item
             xs={12}
-            sm={3}
+            sm={4}
             md={4}
             sx={{ display: "flex" }}
           >
