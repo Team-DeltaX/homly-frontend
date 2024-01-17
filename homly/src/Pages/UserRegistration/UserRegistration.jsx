@@ -25,6 +25,8 @@ import "./UserRegistration.css";
 import logo from "../../resources/images/logo.png";
 import wave from "../../resources/images/wave.png";
 
+import { Link } from "react-router-dom";
+
 // import AvatarImage from "../Components/AvatarImage"
 
 const Img = styled("img")({
@@ -220,7 +222,7 @@ const UserRegistration = () => {
               <Typography sx={{ paddingRight: "2%", fontWeight: "bold" }}>
                 Have an account
               </Typography>
-              <Button variant="outlined">Login</Button>
+              <Button variant="outlined" component={Link} to='/login'>Login</Button>
             </Box>
             <Box paddingLeft={"5%"} marginBottom={"5%"}>
               <form
