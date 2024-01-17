@@ -13,6 +13,8 @@ import {
   TextField,
 } from "@mui/material";
 
+import { Link } from "react-router-dom";
+
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import BadgeIcon from "@mui/icons-material/Badge";
 import PasswordIcon from "@mui/icons-material/Password";
@@ -54,6 +56,7 @@ const UserLogin = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setErrorServiceNumber(false);
   };
 
   const handleReset = (e) => {
@@ -94,7 +97,7 @@ const UserLogin = () => {
               <Typography sx={{ paddingRight: "2%", fontWeight: "bold" }}>
                 Don't have an account
               </Typography>
-              <Button variant="outlined">Sign up</Button>
+              <Button variant="outlined" component={Link} to="/registration">Sign up</Button>
             </Box>
             <Box paddingLeft={"5%"} marginBottom={"5%"}>
               <form
