@@ -20,10 +20,10 @@ import EmailIcon from "@mui/icons-material/Email";
 import CallIcon from "@mui/icons-material/Call";
 import PasswordIcon from "@mui/icons-material/Password";
 
-import theme from "../HomlyTheme";
+import theme from "../../HomlyTheme";
 import "./UserRegistration.css";
-import logo from "../resources/images/logo.png";
-import wave from "../resources/images/wave.png";
+import logo from "../../resources/images/logo.png";
+import wave from "../../resources/images/wave.png";
 
 // import AvatarImage from "../Components/AvatarImage"
 
