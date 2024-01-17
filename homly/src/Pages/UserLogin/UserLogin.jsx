@@ -17,18 +17,16 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import BadgeIcon from "@mui/icons-material/Badge";
 
 import theme from "../../HomlyTheme";
-import "./UserRegistration.css";
+import "./UserLogin.css";
 import logo from "../../resources/images/logo.png";
 import wave from "../../resources/images/wave.png";
 
 const Img = styled("img")({
-  // margin: "auto",
   display: "block",
   width: "40%",
   height: "40%%",
   padding: "5%",
   filter: "drop-shadow(17px 18px 90px  #872341)",
-  // filter: "drop-shadow(17px 18px 90px -8px rgba(0,0,0,0.64))",
 });
 
 const UserLogin = () => {
@@ -43,16 +41,20 @@ const UserLogin = () => {
             borderRadius: "10px",
             boxShadow: 1,
           }}
+          className="registration-box"
         >
-          <Grid
-            item
-            className="registration-box-left mytest"
-            xs={12}
-            sm={12}
-            md={6}
-          ></Grid>
+          <Grid item className="registration-box-left" xs={12} sm={12} md={6}>
+            <Box>
+              <Img src={logo} />
+            </Box>
+            <Box>
+              <img src={wave} className="registration-box-wave " alt="wave" />
+            </Box>
+          </Grid>
         </Grid>
       </Container>
     </ThemeProvider>
   );
 };
+
+export default UserLogin;

@@ -8,6 +8,7 @@ const Profile = lazy(() => import('../src/Pages/Profile'));
 const ContactUs = lazy(()=> import('../src/Pages/ContactUs'))
 const PaymentGateway = lazy(() => import('../src/services/paymentGateway/PaymentGateway'));
 const UserRegistration = lazy(() => import('../src/Pages/UserRegistration/UserRegistration'));
+const UserLogin = lazy(() => import('../src/Pages/UserLogin/UserLogin'));
 
 
 const App = () => (
@@ -21,6 +22,7 @@ const App = () => (
         <Route path="/Contact Us" element={<ContactUs />} />
         <Route path="/paymentGateway" element={<PaymentGateway />} />
         <Route path="/registration" element={<UserRegistration />} />
+        <Route path="/login" element={<UserLogin />} />
       </Routes>
     </Suspense>
   </Router>
