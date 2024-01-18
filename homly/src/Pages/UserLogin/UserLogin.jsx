@@ -97,7 +97,7 @@ const UserLogin = () => {
               <Typography sx={{ paddingRight: "2%", fontWeight: "bold" }}>
                 Don't have an account
               </Typography>
-              <Button variant="outlined" component={Link} to="/registration">Sign up</Button>
+              <Button variant="outlined" component={Link} to="/Registration">Sign up</Button>
             </Box>
             <Box paddingLeft={"5%"} marginBottom={"5%"}>
               <form

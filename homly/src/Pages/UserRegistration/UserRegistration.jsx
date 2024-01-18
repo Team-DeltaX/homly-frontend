@@ -223,7 +223,7 @@ const UserRegistration = () => {
               <Typography sx={{ paddingRight: "2%", fontWeight: "bold" }}>
                 Have an account
               </Typography>
-              <Button variant="outlined" component={Link} to='/login'>Login</Button>
+              <Button variant="outlined" component={Link} to='/Login'>Login</Button>
             </Box>
             <Box paddingLeft={"5%"} marginBottom={"5%"}>
               <form

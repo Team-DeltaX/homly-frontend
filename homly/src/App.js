@@ -20,20 +20,17 @@ const App = () => (
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/Home" element={<Home />} />
-        <Route path="/Holiday Homes" element={<HolidayHome />} />
+        <Route path="/HolidayHomes" element={<HolidayHome />} />
         <Route path="/Profile" element={<Profile />} />
-        <Route path="/Contact Us" element={<ContactUs />} />
+        <Route path="/ContactUs" element={<ContactUs />} />
         <Route path="/paymentGateway" element={<PaymentGateway />} />
-        <Route path="/registration" element={<UserRegistration />} />
-        <Route path="/login" element={<UserLogin />} />
-        <Route path="/My Profile" element={<PersonalDetails />} />
-        <Route
-          path="/My Profile/Personal Details"
-          element={<PersonalDetails />}
-        />
-        <Route path="/My Profile/Security" element={<UserSecurity />} />
-        <Route path="/My Profile/Payment Details" element={<PaymentDetails />} />
-        <Route path="/My Profile/My Reservation" element={<MyReservation />} />
+        <Route path="/Registration" element={<UserRegistration />} />
+        <Route path="/Login" element={<UserLogin />} />
+        <Route path="/MyProfile" element={<PersonalDetails />} />
+        <Route path="/MyProfile/PersonalDetails" element={<PersonalDetails />}/>
+        <Route path="/MyProfile/Security" element={<UserSecurity />} />
+        <Route path="/MyProfile/PaymentDetails" element={<PaymentDetails />} />
+        <Route path="/MyProfile/MyReservation" element={<MyReservation />} />
       </Routes>
     </Suspense>
   </Router>
