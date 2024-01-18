@@ -131,7 +131,7 @@ const NavBar = (props) => {
                             aria-label="open drawer"
                             edge="start"
                             onClick={handleDrawerToggle}
-                            sx={{ mr: 2, display: { sm: "none" }, color: "text" }}
+                            sx={{ mr: 2, display: { md: "none" }, color: "text" }}
                         >
                             <MenuIcon />
                         </IconButton>
@@ -150,14 +150,14 @@ const NavBar = (props) => {
                         <Stack
                             direction="row"
                             spacing={2}
-                            display={{ xs: "none", sm: "flex" }}
+                            display={{ xs: "none",sm: "none", md: "flex" }}
                         >
                             {pages.map((page) => (
                                 <Button variant="text"
                                     key={page}
                                     component={Link}
                                     to={`/${page}`}
-                                    sx={{ color: "text.primary", fontSize: "1.2rem" }}
+                                    sx={{ color: "text.primary" }}
                                 >
                                     {page}
                                 </Button>
@@ -204,7 +204,7 @@ const NavBar = (props) => {
                                         key={setting}
                                         onClick={handleCloseUserMenu}
                                         component={setting === "My Profile" ? Link : ""}
-                                        sx={{display:setting === "My Profile" ? { xs: "none", sm: "block" }: "block"}}
+                                        sx={{display:setting === "My Profile" ? { xs: "none", md: "block" }: "block"}}
                                         to={`/${setting}`}
                                     >
                                         <Typography textAlign="center">{setting}</Typography>
@@ -233,7 +233,7 @@ const NavBar = (props) => {
                             keepMounted: true, // Better open performance on mobile.
                         }}
                         sx={{
-                            display: { xs: "block", sm: "none" },
+                            display: { xs: "block", sm: "block",md: "none"},
                             "& .MuiDrawer-paper": {
                                 boxSizing: "border-box",
                                 width: drawerWidth,
@@ -246,7 +246,7 @@ const NavBar = (props) => {
                     <Drawer
                         variant="permanent"
                         sx={{
-                            display: { xs: "none", sm: "block" },
+                            display: { xs: "none", sm: "none", md:"block" },
                             "& .MuiDrawer-paper": {
                                 boxSizing: "border-box",
                                 width: drawerWidth,
