@@ -2,13 +2,11 @@ import React from "react";
 import { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import CssBaseline from "@mui/material/CssBaseline";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -18,10 +16,9 @@ import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import Badge from "@mui/material/Badge";
 import Stack from "@mui/material/Stack";
+import Button from "@mui/material/Button";
 
-import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 
 import { ThemeProvider } from "@emotion/react";
@@ -31,8 +28,27 @@ import { Link } from "react-router-dom";
 import theme from "../../HomlyTheme";
 
 const drawerWidth = 240;
-const settings = ["My Profile", "Logout"];
-const pages = ["Home", "Holiday Homes", "Contact Us"];
+const settings = [{ name: "My Profile", path: 'myProfile' }, { name: "Logout" }];
+const pages = [
+    { name: "Home", path: "/home" },
+    { name: "Holiday Homes", path: "/holidayHomes" },
+    { name: "Contact Us", path: "/contactUs" }
+];
+
+const respSidePages = [
+    { name: "Home", path: "/home" },
+    { name: "Holiday Homes", path: "/holidayHomes" },
+    { name: "Contact Us", path: "/contactUs" },
+    { name: "My Profile", path: 'myProfile' },
+];
+const sidePages = [
+    { name: "Personal Details", path: '/myProfile/personalDetails' },
+    { name: "Security", path: '/myProfile/security' },
+    { name: "Payement Details", path: '/myProfile/paymentDetails' },
+    { name: "My Reservation", path: '/myProfile/myReservation' },
+];
+
+
 
 const NavBar = (props) => {
     const [anchorElUser, setAnchorElUser] = useState(null);
@@ -62,19 +78,40 @@ const NavBar = (props) => {
         }
     };
 
+    const mainDrawer = (
+        <div>
+            <Toolbar />
+            <List>
+
+                {respSidePages.map((text) => (
+                    <ListItem key={text.name} disablePadding>
+                        <ListItemButton component={Link}
+                            to={text.path}>
+                            <ListItemText primary={text.name} />
+                        </ListItemButton>
+                    </ListItem>
+                ))}
+                {sidePages.map((text) => (
+                    <ListItem key={text.name} sx={{ padding: '0 0 0 10%', top: '-10px' }}>
+                        <ListItemButton component={Link} sx={{ padding: 0 }}
+                            to={text.path}>
+                            <ListItemText secondary={text.name} />
+                        </ListItemButton>
+                    </ListItem>
+                ))}
+
+            </List>
+        </div>
+    );
     const drawer = (
         <div>
             <Toolbar />
             <List>
-                {[
-                    "Personal Details",
-                    "Security",
-                    "Payement Details",
-                    "My Reservation",
-                ].map((text, index) => (
-                    <ListItem key={text} disablePadding>
-                        <ListItemButton>
-                            <ListItemText primary={text} />
+                {sidePages.map((text) => (
+                    <ListItem key={text.name} disablePadding>
+                        <ListItemButton component={Link}
+                            to={text.path}>
+                            <ListItemText primary={text.name} />
                         </ListItemButton>
                     </ListItem>
                 ))}
@@ -84,7 +121,7 @@ const NavBar = (props) => {
 
     return (
         <ThemeProvider theme={theme}>
-            <Box sx={{ display: "flex" }}>
+            <Box>
                 {/* <CssBaseline /> */}
                 <AppBar
                     sx={{
@@ -100,11 +137,10 @@ const NavBar = (props) => {
                 >
                     <Toolbar>
                         <IconButton
-                            color="inherit"
                             aria-label="open drawer"
                             edge="start"
                             onClick={handleDrawerToggle}
-                            sx={{ mr: 2, display: { sm: "none" } }}
+                            sx={{ mr: 2, display: { md: "none" }, color: "text" }}
                         >
                             <MenuIcon />
                         </IconButton>
@@ -123,18 +159,17 @@ const NavBar = (props) => {
                         <Stack
                             direction="row"
                             spacing={2}
-                            display={{ xs: "none", sm: "flex" }}
+                            display={{ xs: "none", sm: "none", md: "flex" }}
                         >
                             {pages.map((page) => (
-                                <Typography
-                                    textAlign="center"
-                                    key={page}
+                                <Button variant="text"
+                                    key={page.name}
                                     component={Link}
-                                    to={`/${page}`}
-                                    sx={{ color: "text.primary", fontSize: "1.2rem" }}
+                                    to={page.path}
+                                    sx={{ color: "text.primary" }}
                                 >
-                                    {page}
-                                </Typography>
+                                    {page.name}
+                                </Button>
                             ))}
                         </Stack>
                         <Badge
@@ -154,7 +189,7 @@ const NavBar = (props) => {
                         <Box sx={{ flexGrow: 0 }}>
                             <Tooltip title="Open settings">
                                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                    <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                                    <Avatar alt="Remy Sharp" src="https://img.freepik.com/premium-psd/3d-cartoon-man-smiling-portrait-isolated-transparent-background-png-psd_888962-1570.jpg" />
                                 </IconButton>
                             </Tooltip>
                             <Menu
@@ -175,12 +210,13 @@ const NavBar = (props) => {
                             >
                                 {settings.map((setting) => (
                                     <MenuItem
-                                        key={setting}
+                                        key={setting.name}
                                         onClick={handleCloseUserMenu}
                                         component={setting === "My Profile" ? Link : ""}
-                                        to={`/${setting}`}
+                                        sx={{ display: setting === "My Profile" ? { xs: "none", md: "block" } : "block" }}
+                                        to={setting.path}
                                     >
-                                        <Typography textAlign="center">{setting}</Typography>
+                                        <Typography textAlign="center">{setting.name}</Typography>
                                     </MenuItem>
                                 ))}
                             </Menu>
@@ -206,19 +242,20 @@ const NavBar = (props) => {
                             keepMounted: true, // Better open performance on mobile.
                         }}
                         sx={{
-                            display: { xs: "block", sm: "none" },
+                            display: { xs: "block", sm: "block", md: "none" },
                             "& .MuiDrawer-paper": {
                                 boxSizing: "border-box",
                                 width: drawerWidth,
                             },
                         }}
                     >
-                        {drawer}
+                        {mainDrawer}
+
                     </Drawer>
                     <Drawer
                         variant="permanent"
                         sx={{
-                            display: { xs: "none", sm: "block" },
+                            display: { xs: "none", sm: "none", md: "block" },
                             "& .MuiDrawer-paper": {
                                 boxSizing: "border-box",
                                 width: drawerWidth,
