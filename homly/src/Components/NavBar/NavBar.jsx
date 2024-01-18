@@ -2,13 +2,11 @@ import React from "react";
 import { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import CssBaseline from "@mui/material/CssBaseline";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -18,10 +16,9 @@ import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import Badge from "@mui/material/Badge";
 import Stack from "@mui/material/Stack";
+import Button from "@mui/material/Button";
 
-import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 
 import { ThemeProvider } from "@emotion/react";
@@ -62,6 +59,36 @@ const NavBar = (props) => {
         }
     };
 
+    const mainDrawer = (
+        <div>
+            <Toolbar />
+            <List>
+                {[
+                    "Home", "Holiday Homes", "Contact Us", "My Profile"
+                ].map((text, index) => (
+                    <ListItem key={text} disablePadding>
+                        <ListItemButton component={Link}
+                            to={`/${text}`}>
+                            <ListItemText primary={text} />
+                        </ListItemButton>
+                    </ListItem>
+                ))}
+                {[
+                    "Personal Details",
+                    "Security",
+                    "Payement Details",
+                    "My Reservation",
+                ].map((text, index) => (
+                    <ListItem key={text} sx={{ padding: '0 0 0 10%', top: '-10px' }} >
+                        <ListItemButton sx={{ padding: 0 }} component={Link}
+                            to={`/My Profile/${text}`}>
+                            <ListItemText secondary={text} />
+                        </ListItemButton>
+                    </ListItem>
+                ))}
+            </List>
+        </div>
+    );
     const drawer = (
         <div>
             <Toolbar />
@@ -73,7 +100,8 @@ const NavBar = (props) => {
                     "My Reservation",
                 ].map((text, index) => (
                     <ListItem key={text} disablePadding>
-                        <ListItemButton>
+                        <ListItemButton component={Link}
+                            to={`/My Profile/${text}`}>
                             <ListItemText primary={text} />
                         </ListItemButton>
                     </ListItem>
@@ -100,11 +128,10 @@ const NavBar = (props) => {
                 >
                     <Toolbar>
                         <IconButton
-                            color="inherit"
                             aria-label="open drawer"
                             edge="start"
                             onClick={handleDrawerToggle}
-                            sx={{ mr: 2, display: { sm: "none" } }}
+                            sx={{ mr: 2, display: { sm: "none" }, color: "text" }}
                         >
                             <MenuIcon />
                         </IconButton>
@@ -127,14 +154,13 @@ const NavBar = (props) => {
                         >
                             {pages.map((page) => (
                                 <Button variant="text"
-                                    textAlign="center"
                                     key={page}
                                     component={Link}
                                     to={`/${page}`}
                                     sx={{ color: "text.primary", fontSize: "1.2rem" }}
                                 >
                                     {page}
-                                    </Button>
+                                </Button>
                             ))}
                         </Stack>
                         <Badge
@@ -158,7 +184,7 @@ const NavBar = (props) => {
                                 </IconButton>
                             </Tooltip>
                             <Menu
-                                sx={{ mt: "45px" }}
+                                sx={{ mt: "45px"}}
                                 id="menu-appbar"
                                 anchorEl={anchorElUser}
                                 anchorOrigin={{
@@ -178,6 +204,7 @@ const NavBar = (props) => {
                                         key={setting}
                                         onClick={handleCloseUserMenu}
                                         component={setting === "My Profile" ? Link : ""}
+                                        sx={{display:setting === "My Profile" ? { xs: "none", sm: "block" }: "block"}}
                                         to={`/${setting}`}
                                     >
                                         <Typography textAlign="center">{setting}</Typography>
@@ -213,7 +240,8 @@ const NavBar = (props) => {
                             },
                         }}
                     >
-                        {drawer}
+                        {mainDrawer}
+
                     </Drawer>
                     <Drawer
                         variant="permanent"

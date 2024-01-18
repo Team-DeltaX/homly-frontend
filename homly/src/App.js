@@ -28,12 +28,12 @@ const App = () => (
         <Route path="/login" element={<UserLogin />} />
         <Route path="/My Profile" element={<PersonalDetails />} />
         <Route
-          path="/My Profile/personalDetails"
+          path="/My Profile/Personal Details"
           element={<PersonalDetails />}
         />
-        <Route path="/My Profile/security" element={<UserSecurity />} />
-        <Route path="/My Profile/paymentDetails" element={<PaymentDetails />} />
-        <Route path="/My Profile/myReservation" element={<MyReservation />} />
+        <Route path="/My Profile/Security" element={<UserSecurity />} />
+        <Route path="/My Profile/Payment Details" element={<PaymentDetails />} />
+        <Route path="/My Profile/My Reservation" element={<MyReservation />} />
       </Routes>
     </Suspense>
   </Router>
