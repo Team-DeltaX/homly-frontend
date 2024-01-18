@@ -1,11 +1,11 @@
 import React from "react";
-import NavigationBar from "../Components/NavigationBar";
+import NavBar from "../Components/NavBar/NavBar";
 import MyReservationCard from "../Components/MyReservationCard/MyReservationCard";
 
 export default function Home() {
   return (
     <div>
-      <NavigationBar />
+      <NavBar sideNavBar="none"/>
       <div>This is Home page.</div>
       <MyReservationCard
         image="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8aG9saWRheSUyMGhvbWV8ZW58MHx8MHx8fDA%3D"
