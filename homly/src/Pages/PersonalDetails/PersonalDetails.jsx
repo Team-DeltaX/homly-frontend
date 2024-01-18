@@ -1,14 +1,19 @@
 import React from "react";
 import NavBar from "../../Components/NavBar/NavBar";
 
-import { Box, ThemeProvider, Typography } from "@mui/material";
+import { Box, Container, ThemeProvider, Typography } from "@mui/material";
 
 const PersonalDetails = () => {
   return (
-    <div>
-        <NavBar/>
-          <h1>PersonalDetails</h1>
+    <div style={{display:'flex'}}>
+      <NavBar sideNavBar='block'/>
+      <Container>
+        <Box sx={{ display: "flex", mt: 10 }}>
+          <Typography variant="h4">Personal Details</Typography>
+        </Box>
+      </Container>
       
+
     </div>
   );
 };
