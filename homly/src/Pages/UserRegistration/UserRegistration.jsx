@@ -219,6 +219,7 @@ const UserRegistration = () => {
                 padding: "5%",
               }}
             >
+              
               <Typography sx={{ paddingRight: "2%", fontWeight: "bold" }}>
                 Have an account
               </Typography>
