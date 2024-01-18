@@ -28,18 +28,27 @@ import { Link } from "react-router-dom";
 import theme from "../../HomlyTheme";
 
 const drawerWidth = 240;
-const settings = [{name:"My Profile", path:'myProfile'},{name:"Logout"}];
+const settings = [{ name: "My Profile", path: 'myProfile' }, { name: "Logout" }];
 const pages = [
-    {name:"Home",path:"/home"}, 
-    {name:"Holiday Homes",path:"/holidayHomes"}, 
-    {name:"Contact Us",path:"/contactUs"}
+    { name: "Home", path: "/home" },
+    { name: "Holiday Homes", path: "/holidayHomes" },
+    { name: "Contact Us", path: "/contactUs" }
+];
+
+const respSidePages = [
+    { name: "Home", path: "/home" },
+    { name: "Holiday Homes", path: "/holidayHomes" },
+    { name: "Contact Us", path: "/contactUs" },
+    { name: "My Profile", path: 'myProfile' },
 ];
 const sidePages = [
-    { name: "Personal Details", path: '/myProfile/personalDetails' }, 
-    { name: "Security", path: '/myProfile/security' }, 
-    { name: "Payement Details", path: '/myProfile/paymentDetails' }, 
+    { name: "Personal Details", path: '/myProfile/personalDetails' },
+    { name: "Security", path: '/myProfile/security' },
+    { name: "Payement Details", path: '/myProfile/paymentDetails' },
     { name: "My Reservation", path: '/myProfile/myReservation' },
 ];
+
+
 
 const NavBar = (props) => {
     const [anchorElUser, setAnchorElUser] = useState(null);
@@ -73,13 +82,12 @@ const NavBar = (props) => {
         <div>
             <Toolbar />
             <List>
-                {[
-                    "Home", "Holiday Homes", "Contact Us", "My Profile"
-                ].map((text, index) => (
-                    <ListItem key={text} disablePadding>
+
+                {respSidePages.map((text) => (
+                    <ListItem key={text.name} disablePadding>
                         <ListItemButton component={Link}
-                            to={`/${text}`}>
-                            <ListItemText primary={text} />
+                            to={text.path}>
+                            <ListItemText primary={text.name} />
                         </ListItemButton>
                     </ListItem>
                 ))}
@@ -91,7 +99,7 @@ const NavBar = (props) => {
                         </ListItemButton>
                     </ListItem>
                 ))}
-                
+
             </List>
         </div>
     );
