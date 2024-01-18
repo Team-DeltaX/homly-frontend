@@ -1,15 +1,18 @@
-import React, { Suspense, lazy } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import '../src/Styles/styles.css'
+import React, { Suspense, lazy } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import "../src/Styles/styles.css";
 
-const Home = lazy(() => import('../src/Pages/Home'));
-const HolidayHome = lazy(() => import('../src/Pages/HolidayHome'));
-const Profile = lazy(() => import('../src/Pages/Profile'));
-const ContactUs = lazy(()=> import('../src/Pages/ContactUs'))
-const PaymentGateway = lazy(() => import('../src/services/paymentGateway/PaymentGateway'));
-const UserRegistration = lazy(() => import('../src/Pages/UserRegistration/UserRegistration'));
-const UserLogin = lazy(() => import('../src/Pages/UserLogin/UserLogin'));
-
+const Home = lazy(() => import("../src/Pages/Home"));
+const HolidayHome = lazy(() => import("../src/Pages/HolidayHome"));
+const Profile = lazy(() => import("../src/Pages/Profile"));
+const ContactUs = lazy(() => import("../src/Pages/ContactUs"));
+const PaymentGateway = lazy(() =>import("../src/services/paymentGateway/PaymentGateway"));
+const UserRegistration = lazy(() =>import("../src/Pages/UserRegistration/UserRegistration"));
+const UserLogin = lazy(() => import("../src/Pages/UserLogin/UserLogin"));
+const PersonalDetails = lazy(() =>import("../src/Pages/PersonalDetails/PersonalDetails"));
+const UserSecurity = lazy(() =>import("../src/Pages/UserSecurity/UserSecurity"));
+const PaymentDetails = lazy(() =>import("../src/Pages/PaymentDetails/PaymentDetails"));
+const MyReservation = lazy(() =>import("../src/Pages/MyReservation/MyReservation"));
 
 const App = () => (
   <Router>
@@ -23,6 +26,14 @@ const App = () => (
         <Route path="/paymentGateway" element={<PaymentGateway />} />
         <Route path="/registration" element={<UserRegistration />} />
         <Route path="/login" element={<UserLogin />} />
+        <Route path="/My Profile" element={<PersonalDetails />} />
+        <Route
+          path="/My Profile/personalDetails"
+          element={<PersonalDetails />}
+        />
+        <Route path="/My Profile/security" element={<UserSecurity />} />
+        <Route path="/My Profile/paymentDetails" element={<PaymentDetails />} />
+        <Route path="/My Profile/myReservation" element={<MyReservation />} />
       </Routes>
     </Suspense>
   </Router>
