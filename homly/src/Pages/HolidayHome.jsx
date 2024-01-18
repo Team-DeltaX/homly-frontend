@@ -1,10 +1,10 @@
 import React from 'react'
-import NavigationBar from '../Components/NavigationBar';
+import NavBar from '../Components/NavBar/NavBar'
 
 export default function HolidayHome() {
   return (
     <div>
-        <NavigationBar/>
+        <NavBar sideNavBar='none'/>
         This is HolidayHome page.
     </div>
   )

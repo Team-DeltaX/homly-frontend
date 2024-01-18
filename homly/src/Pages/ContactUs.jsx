@@ -1,10 +1,10 @@
 import React from 'react'
-import NavigationBar from '../Components/NavigationBar';
+import NavBar from '../Components/NavBar/NavBar'
 
 const ContactUs = () => {
   return (
     <div>
-        <NavigationBar/>
+        <NavBar sideNavBar='none'/>
         <div>ContactUs</div>
     </div>
   )
