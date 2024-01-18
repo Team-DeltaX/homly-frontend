@@ -1,4 +1,5 @@
-import * as React from "react";
+import React from "react";
+import { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -15,29 +16,28 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
-import Badge from '@mui/material/Badge';
-import Stack from '@mui/material/Stack';
+import Badge from "@mui/material/Badge";
+import Stack from "@mui/material/Stack";
 
 import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
-import NotificationsIcon from '@mui/icons-material/Notifications';
+import NotificationsIcon from "@mui/icons-material/Notifications";
 
 import { ThemeProvider } from "@emotion/react";
 
 import { Link } from "react-router-dom";
 
-import theme from "../../HomlyTheme"
+import theme from "../../HomlyTheme";
 
 const drawerWidth = 240;
-const settings = [ "My Profile", "Logout"];
+const settings = ["My Profile", "Logout"];
 const pages = ["Home", "Holiday Homes", "Contact Us"];
 
 const NavBar = (props) => {
-    const [anchorElUser, setAnchorElUser] = React.useState(null);
-    const [mobileOpen, setMobileOpen] = React.useState(false);
-    const [isClosing, setIsClosing] = React.useState(false);
-
+    const [anchorElUser, setAnchorElUser] = useState(null);
+    const [mobileOpen, setMobileOpen] = useState(false);
+    const [isClosing, setIsClosing] = useState(false);
 
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
@@ -66,31 +66,31 @@ const NavBar = (props) => {
         <div>
             <Toolbar />
             <List>
-                {["Personal Details", "Security", "Payement Details", "My Reservation"].map((text, index) => (
+                {[
+                    "Personal Details",
+                    "Security",
+                    "Payement Details",
+                    "My Reservation",
+                ].map((text, index) => (
                     <ListItem key={text} disablePadding>
                         <ListItemButton>
-                            <ListItemIcon>
-                                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                            </ListItemIcon>
                             <ListItemText primary={text} />
                         </ListItemButton>
                     </ListItem>
                 ))}
             </List>
-
         </div>
     );
-
 
     return (
         <ThemeProvider theme={theme}>
             <Box sx={{ display: "flex" }}>
-                <CssBaseline />
+                {/* <CssBaseline /> */}
                 <AppBar
                     sx={{
                         zIndex: (theme) => theme.zIndex.drawer + 1,
                         backgroundColor: "secondary.main",
-                        width: '100%',
+                        width: "100%",
                         flexDirection: "row",
                         justifyContent: "space-between",
                         alignItems: "center",
@@ -113,20 +113,45 @@ const NavBar = (props) => {
                             Responsive drawer
                         </Typography> */}
                     </Toolbar>
-                    <Stack direction="row" spacing={2} justifyContent="center"
-                        alignItems="center" sx={{ paddingRight: { xs: '4%', sm: '2%' } }}>
-                        <Stack  direction="row" spacing={2} display={{ xs: 'none', sm: 'flex' }}>
+                    <Stack
+                        direction="row"
+                        spacing={2}
+                        justifyContent="center"
+                        alignItems="center"
+                        sx={{ paddingRight: { xs: "4%", sm: "2%" } }}
+                    >
+                        <Stack
+                            direction="row"
+                            spacing={2}
+                            display={{ xs: "none", sm: "flex" }}
+                        >
                             {pages.map((page) => (
-                                <Typography textAlign="center" key={page} sx={{color: 'text.primary', fontSize: '1.2rem'}}>{page}</Typography>
+                                <Typography
+                                    textAlign="center"
+                                    key={page}
+                                    component={Link}
+                                    to={`/${page}`}
+                                    sx={{ color: "text.primary", fontSize: "1.2rem" }}
+                                >
+                                    {page}
+                                </Typography>
                             ))}
                         </Stack>
-                        <Badge color="primary" overlap="circular" badgeContent=" " variant="dot" anchorOrigin={{
-                            vertical: 'top',
-                            horizontal: 'right',
-                        }}>
-                            <NotificationsIcon sx={{ color: 'text.primary', fontSize: '2rem' }} />
+                        <Badge
+                            color="primary"
+                            overlap="circular"
+                            badgeContent=" "
+                            variant="dot"
+                            anchorOrigin={{
+                                vertical: "top",
+                                horizontal: "right",
+                            }}
+                        >
+                            <NotificationsIcon
+                                sx={{ color: "text.primary", fontSize: "2rem" }}
+                            />
                         </Badge>
-                        <Box sx={{ flexGrow: 0, }}>
+                        <Box sx={{ flexGrow: 0 }}>
                             <Tooltip title="Open settings">
                                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                                     <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
@@ -164,7 +189,11 @@ const NavBar = (props) => {
                 </AppBar>
                 <Box
                     component="nav"
-                    sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 }, display: props.sideNavBar }}
+                    sx={{
+                        width: { sm: drawerWidth },
+                        flexShrink: { sm: 0 },
+                        display: props.sideNavBar,
+                    }}
                     aria-label="mailbox folders"
                 >
                     {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
@@ -194,6 +223,7 @@ const NavBar = (props) => {
                                 boxSizing: "border-box",
                                 width: drawerWidth,
                                 bgcolor: "primary.main",
+                                color: "white",
                             },
                         }}
                         open
@@ -204,6 +234,6 @@ const NavBar = (props) => {
             </Box>
         </ThemeProvider>
     );
-}
+};
 
 export default NavBar;
