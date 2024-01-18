@@ -23,12 +23,13 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 
 import { ThemeProvider } from "@emotion/react";
 
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 import theme from "../../HomlyTheme";
+import "./NavBar.css"
 
 const drawerWidth = 240;
-const settings = [{ name: "My Profile", path: '/myProfile' }, { name: "Logout" }];
+const settings = [{ name: "My Profile", path: '/myProfile/personalDetails' }, { name: "Logout" }];
 const pages = [
     { name: "Home", path: "/home" },
     { name: "Holiday Homes", path: "/holidayHomes" },
@@ -39,7 +40,7 @@ const respSidePages = [
     { name: "Home", path: "/home" },
     { name: "Holiday Homes", path: "/holidayHomes" },
     { name: "Contact Us", path: "/contactUs" },
-    { name: "My Profile", path: '/myProfile' },
+    { name: "My Profile", path: '/myProfile/personalDetails' },
 ];
 const sidePages = [
     { name: "Personal Details", path: '/myProfile/personalDetails' },
@@ -109,10 +110,12 @@ const NavBar = (props) => {
             <List>
                 {sidePages.map((text) => (
                     <ListItem key={text.name} disablePadding>
-                        <ListItemButton component={Link}
-                            to={text.path}>
-                            <ListItemText primary={text.name} />
-                        </ListItemButton>
+                        <NavLink key={text.name} to={text.path} className={({ isActive }) => (isActive ? 'activeSidePage activeSidePage2' : 'normaSidePage')
+                        }>
+                            <ListItemButton>
+                                <ListItemText primary={text.name} />
+                            </ListItemButton>
+                        </NavLink>
                     </ListItem>
                 ))}
             </List>
@@ -162,14 +165,15 @@ const NavBar = (props) => {
                             display={{ xs: "none", sm: "none", md: "flex" }}
                         >
                             {pages.map((page) => (
-                                <Button variant="text"
-                                    key={page.name}
-                                    component={Link}
-                                    to={page.path}
-                                    sx={{ color: "text.primary" }}
-                                >
-                                    {page.name}
-                                </Button>
+                                <NavLink key={page.name} to={page.path} className={({ isActive }) => (isActive ? 'activePage' : 'normalPage')
+                                }>
+                                    <Button variant="text"
+
+                                        sx={{ color: "text.primary" }}
+                                    >
+                                        {page.name}
+                                    </Button>
+                                </NavLink>
                             ))}
                         </Stack>
                         <Badge

@@ -1,0 +1,45 @@
+.activePage {
+    background: aqua;
+}
+
+.activeSidePage,.activeSidePage2 {
+    background: white;
+    width: 100%;
+    color: #2c2c2c;
+    text-decoration: none !important;
+    position: relative;
+}
+
+
+
+.activeSidePage::before{
+    content: "";
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: #872341;
+    bottom:-40px;
+    right:0;
+    border-radius: 10px;
+    z-index: 1;
+}
+.activeSidePage::after{
+    content: "";
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background: rgb(255, 255, 255);
+    bottom:-30px;
+    right:0;
+}
+
+
+
+.normaSidePage{
+    text-decoration: none !important;
+    color: white;
+}
+
+.css-5f571a-MuiPaper-root-MuiDrawer-paper{
+    border-right: none !important;
+}
