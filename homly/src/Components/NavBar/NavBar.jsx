@@ -84,7 +84,7 @@ const NavBar = (props) => {
 
     return (
         <ThemeProvider theme={theme}>
-            <Box sx={{ display: "flex" }}>
+            <Box>
                 {/* <CssBaseline /> */}
                 <AppBar
                     sx={{
@@ -126,7 +126,7 @@ const NavBar = (props) => {
                             display={{ xs: "none", sm: "flex" }}
                         >
                             {pages.map((page) => (
-                                <Typography
+                                <Button variant="text"
                                     textAlign="center"
                                     key={page}
                                     component={Link}
@@ -134,7 +134,7 @@ const NavBar = (props) => {
                                     sx={{ color: "text.primary", fontSize: "1.2rem" }}
                                 >
                                     {page}
-                                </Typography>
+                                    </Button>
                             ))}
                         </Stack>
                         <Badge
@@ -154,7 +154,7 @@ const NavBar = (props) => {
                         <Box sx={{ flexGrow: 0 }}>
                             <Tooltip title="Open settings">
                                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                    <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                                    <Avatar alt="Remy Sharp" src="https://img.freepik.com/premium-psd/3d-cartoon-man-smiling-portrait-isolated-transparent-background-png-psd_888962-1570.jpg" />
                                 </IconButton>
                             </Tooltip>
                             <Menu
