@@ -28,7 +28,7 @@ import { Link } from "react-router-dom";
 import theme from "../../HomlyTheme";
 
 const drawerWidth = 240;
-const settings = [{ name: "My Profile", path: 'myProfile' }, { name: "Logout" }];
+const settings = [{ name: "My Profile", path: '/myProfile' }, { name: "Logout" }];
 const pages = [
     { name: "Home", path: "/home" },
     { name: "Holiday Homes", path: "/holidayHomes" },
@@ -39,7 +39,7 @@ const respSidePages = [
     { name: "Home", path: "/home" },
     { name: "Holiday Homes", path: "/holidayHomes" },
     { name: "Contact Us", path: "/contactUs" },
-    { name: "My Profile", path: 'myProfile' },
+    { name: "My Profile", path: '/myProfile' },
 ];
 const sidePages = [
     { name: "Personal Details", path: '/myProfile/personalDetails' },
@@ -212,8 +212,8 @@ const NavBar = (props) => {
                                     <MenuItem
                                         key={setting.name}
                                         onClick={handleCloseUserMenu}
-                                        component={setting === "My Profile" ? Link : ""}
-                                        sx={{ display: setting === "My Profile" ? { xs: "none", md: "block" } : "block" }}
+                                        component={setting.name === "My Profile" ? Link : ""}
+                                        sx={{ display: setting.name === "My Profile" ? { xs: "none", md: "block" } : "block" }}
                                         to={setting.path}
                                     >
                                         <Typography textAlign="center">{setting.name}</Typography>
