@@ -28,8 +28,18 @@ import { Link } from "react-router-dom";
 import theme from "../../HomlyTheme";
 
 const drawerWidth = 240;
-const settings = ["My Profile", "Logout"];
-const pages = ["Home", "Holiday Homes", "Contact Us"];
+const settings = [{name:"My Profile", path:'myProfile'},{name:"Logout"}];
+const pages = [
+    {name:"Home",path:"/home"}, 
+    {name:"Holiday Homes",path:"/holidayHomes"}, 
+    {name:"Contact Us",path:"/contactUs"}
+];
+const sidePages = [
+    { name: "Personal Details", path: '/myProfile/personalDetails' }, 
+    { name: "Security", path: '/myProfile/security' }, 
+    { name: "Payement Details", path: '/myProfile/paymentDetails' }, 
+    { name: "My Reservation", path: '/myProfile/myReservation' },
+];
 
 const NavBar = (props) => {
     const [anchorElUser, setAnchorElUser] = useState(null);
@@ -73,19 +83,15 @@ const NavBar = (props) => {
                         </ListItemButton>
                     </ListItem>
                 ))}
-                {[
-                    "Personal Details",
-                    "Security",
-                    "Payement Details",
-                    "My Reservation",
-                ].map((text, index) => (
-                    <ListItem key={text} sx={{ padding: '0 0 0 10%', top: '-10px' }} >
-                        <ListItemButton sx={{ padding: 0 }} component={Link}
-                            to={`/My Profile/${text}`}>
-                            <ListItemText secondary={text} />
+                {sidePages.map((text) => (
+                    <ListItem key={text.name} sx={{ padding: '0 0 0 10%', top: '-10px' }}>
+                        <ListItemButton component={Link} sx={{ padding: 0 }}
+                            to={text.path}>
+                            <ListItemText secondary={text.name} />
                         </ListItemButton>
                     </ListItem>
                 ))}
+                
             </List>
         </div>
     );
@@ -93,16 +99,11 @@ const NavBar = (props) => {
         <div>
             <Toolbar />
             <List>
-                {[
-                    "Personal Details",
-                    "Security",
-                    "Payement Details",
-                    "My Reservation",
-                ].map((text, index) => (
-                    <ListItem key={text} disablePadding>
+                {sidePages.map((text) => (
+                    <ListItem key={text.name} disablePadding>
                         <ListItemButton component={Link}
-                            to={`/My Profile/${text}`}>
-                            <ListItemText primary={text} />
+                            to={text.path}>
+                            <ListItemText primary={text.name} />
                         </ListItemButton>
                     </ListItem>
                 ))}
@@ -150,16 +151,16 @@ const NavBar = (props) => {
                         <Stack
                             direction="row"
                             spacing={2}
-                            display={{ xs: "none",sm: "none", md: "flex" }}
+                            display={{ xs: "none", sm: "none", md: "flex" }}
                         >
                             {pages.map((page) => (
                                 <Button variant="text"
-                                    key={page}
+                                    key={page.name}
                                     component={Link}
-                                    to={`/${page}`}
+                                    to={page.path}
                                     sx={{ color: "text.primary" }}
                                 >
-                                    {page}
+                                    {page.name}
                                 </Button>
                             ))}
                         </Stack>
@@ -184,7 +185,7 @@ const NavBar = (props) => {
                                 </IconButton>
                             </Tooltip>
                             <Menu
-                                sx={{ mt: "45px"}}
+                                sx={{ mt: "45px" }}
                                 id="menu-appbar"
                                 anchorEl={anchorElUser}
                                 anchorOrigin={{
@@ -201,13 +202,13 @@ const NavBar = (props) => {
                             >
                                 {settings.map((setting) => (
                                     <MenuItem
-                                        key={setting}
+                                        key={setting.name}
                                         onClick={handleCloseUserMenu}
                                         component={setting === "My Profile" ? Link : ""}
-                                        sx={{display:setting === "My Profile" ? { xs: "none", md: "block" }: "block"}}
-                                        to={`/${setting}`}
+                                        sx={{ display: setting === "My Profile" ? { xs: "none", md: "block" } : "block" }}
+                                        to={setting.path}
                                     >
-                                        <Typography textAlign="center">{setting}</Typography>
+                                        <Typography textAlign="center">{setting.name}</Typography>
                                     </MenuItem>
                                 ))}
                             </Menu>
@@ -233,7 +234,7 @@ const NavBar = (props) => {
                             keepMounted: true, // Better open performance on mobile.
                         }}
                         sx={{
-                            display: { xs: "block", sm: "block",md: "none"},
+                            display: { xs: "block", sm: "block", md: "none" },
                             "& .MuiDrawer-paper": {
                                 boxSizing: "border-box",
                                 width: drawerWidth,
@@ -246,7 +247,7 @@ const NavBar = (props) => {
                     <Drawer
                         variant="permanent"
                         sx={{
-                            display: { xs: "none", sm: "none", md:"block" },
+                            display: { xs: "none", sm: "none", md: "block" },
                             "& .MuiDrawer-paper": {
                                 boxSizing: "border-box",
                                 width: drawerWidth,
