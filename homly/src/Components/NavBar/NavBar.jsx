@@ -30,7 +30,7 @@ import { Link } from "react-router-dom";
 import theme from "../../HomlyTheme"
 
 const drawerWidth = 240;
-const settings = ["Notifications", "My Profile", "Logout"];
+const settings = [ "My Profile", "Logout"];
 const pages = ["Home", "Holiday Homes", "Contact Us"];
 
 const NavBar = (props) => {
