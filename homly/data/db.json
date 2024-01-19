@@ -1,158 +1,27 @@
 {
   "employee": [
-    {
-      "SN": "1000"
-    },
-    {
-      "SN": "1001"
-    },
-    {
-      "SN": "1002"
-    },
-    {
-      "SN": "1003"
-    },
-    {
-      "SN": "1004"
-    },
-    {
-      "SN": "1005"
-    },
-    {
-      "SN": "1006"
-    },
-    {
-      "SN": "1007"
-    },
-    {
-      "SN": "1008"
-    },
-    {
-      "SN": "1009"
-    },
-    {
-      "SN": "1010"
-    },
-    {
-      "SN": "1011"
-    },
-    {
-      "SN": "1012"
-    },
-    {
-      "SN": "1013"
-    },
-    {
-      "SN": "1014"
-    },
-    {
-      "SN": "1015"
-    },
-    {
-      "SN": "1016"
-    },
-    {
-      "SN": "1017"
-    },
-    {
-      "SN": "1018"
-    },
-    {
-      "SN": "1019"
-    },
-    {
-      "SN": "1020"
-    },
-    {
-      "SN": "1021"
-    },
-    {
-      "SN": "1022"
-    },
-    {
-      "SN": "1023"
-    },
-    {
-      "SN": "1024"
-    },
-    {
-      "SN": "1025"
-    },
-    {
-      "SN": "1026"
-    },
-    {
-      "SN": "1027"
-    },
-    {
-      "SN": "1028"
-    },
-    {
-      "SN": "1029"
-    },
-    {
-      "SN": "1030"
-    },
-    {
-      "SN": "1031"
-    },
-    {
-      "SN": "1032"
-    },
-    {
-      "SN": "1033"
-    },
-    {
-      "SN": "1034"
-    },
-    {
-      "SN": "1035"
-    },
-    {
-      "SN": "1036"
-    },
-    {
-      "SN": "1037"
-    },
-    {
-      "SN": "1038"
-    },
-    {
-      "SN": "1039"
-    },
-    {
-      "SN": "1040"
-    },
-    {
-      "SN": "1041"
-    },
-    {
-      "SN": "1042"
-    },
-    {
-      "SN": "1043"
-    },
-    {
-      "SN": "1044"
-    },
-    {
-      "SN": "1045"
-    },
-    {
-      "SN": "1046"
-    },
-    {
-      "SN": "1047"
-    },
-    {
-      "SN": "1048"
-    },
-    {
-      "SN": "1049"
-    },
-    {
-      "SN": "1050"
-    }
+    {"serviceNumber":"214000","name":"john doe","contactNo":"0712345678","email":"email1@gmail.com","NIC":"200122503023","workLocation":"kurunegala","address":"no 1,bandaranayake mawatha,moratuwa"},
+    {"serviceNumber":"214001","name":"john doe","contactNo":"0712345678","email":"email1@gmail.com","NIC":"200122503023","workLocation":"kurunegala","address":"no 1,bandaranayake mawatha,moratuwa"},
+    {"serviceNumber":"214002","name":"john doe","contactNo":"0712345678","email":"email1@gmail.com","NIC":"200122503023","workLocation":"kurunegala","address":"no 1,bandaranayake mawatha,moratuwa"},
+    {"serviceNumber":"214003","name":"john doe","contactNo":"0712345678","email":"email1@gmail.com","NIC":"200122503023","workLocation":"kurunegala","address":"no 1,bandaranayake mawatha,moratuwa"},
+    {"serviceNumber":"214004","name":"john doe","contactNo":"0712345678","email":"email1@gmail.com","NIC":"200122503023","workLocation":"kurunegala","address":"no 1,bandaranayake mawatha,moratuwa"},
+    {"serviceNumber":"214005","name":"john doe","contactNo":"0712345678","email":"email1@gmail.com","NIC":"200122503023","workLocation":"kurunegala","address":"no 1,bandaranayake mawatha,moratuwa"},
+    {"serviceNumber":"214006","name":"john doe","contactNo":"0712345678","email":"email1@gmail.com","NIC":"200122503023","workLocation":"kurunegala","address":"no 1,bandaranayake mawatha,moratuwa"},
+    {"serviceNumber":"214007","name":"john doe","contactNo":"0712345678","email":"email1@gmail.com","NIC":"200122503023","workLocation":"kurunegala","address":"no 1,bandaranayake mawatha,moratuwa"},
+    {"serviceNumber":"214008","name":"john doe","contactNo":"0712345678","email":"email1@gmail.com","NIC":"200122503023","workLocation":"kurunegala","address":"no 1,bandaranayake mawatha,moratuwa"},
+    {"serviceNumber":"214009","name":"john doe","contactNo":"0712345678","email":"email1@gmail.com","NIC":"200122503023","workLocation":"kurunegala","address":"no 1,bandaranayake mawatha,moratuwa"},
+    {"serviceNumber":"214010","name":"john doe","contactNo":"0712345678","email":"email1@gmail.com","NIC":"200122503023","workLocation":"kurunegala","address":"no 1,bandaranayake mawatha,moratuwa"},
+    {"serviceNumber":"215000","name":"john doe","contactNo":"0712345678","email":"email1@gmail.com","NIC":"200122503023","workLocation":"kurunegala","address":"no 1,bandaranayake mawatha,moratuwa"},
+    {"serviceNumber":"215001","name":"john doe","contactNo":"0712345678","email":"email1@gmail.com","NIC":"200122503023","workLocation":"kurunegala","address":"no 1,bandaranayake mawatha,moratuwa"},
+    {"serviceNumber":"215002","name":"john doe","contactNo":"0712345678","email":"email1@gmail.com","NIC":"200122503023","workLocation":"kurunegala","address":"no 1,bandaranayake mawatha,moratuwa"},
+    {"serviceNumber":"215003","name":"john doe","contactNo":"0712345678","email":"email1@gmail.com","NIC":"200122503023","workLocation":"kurunegala","address":"no 1,bandaranayake mawatha,moratuwa"},
+    {"serviceNumber":"215004","name":"john doe","contactNo":"0712345678","email":"email1@gmail.com","NIC":"200122503023","workLocation":"kurunegala","address":"no 1,bandaranayake mawatha,moratuwa"},
+    {"serviceNumber":"215005","name":"john doe","contactNo":"0712345678","email":"email1@gmail.com","NIC":"200122503023","workLocation":"kurunegala","address":"no 1,bandaranayake mawatha,moratuwa"},
+    {"serviceNumber":"215006","name":"john doe","contactNo":"0712345678","email":"email1@gmail.com","NIC":"200122503023","workLocation":"kurunegala","address":"no 1,bandaranayake mawatha,moratuwa"},
+    {"serviceNumber":"215007","name":"john doe","contactNo":"0712345678","email":"email1@gmail.com","NIC":"200122503023","workLocation":"kurunegala","address":"no 1,bandaranayake mawatha,moratuwa"},
+    {"serviceNumber":"215008","name":"john doe","contactNo":"0712345678","email":"email1@gmail.com","NIC":"200122503023","workLocation":"kurunegala","address":"no 1,bandaranayake mawatha,moratuwa"},
+    {"serviceNumber":"215009","name":"john doe","contactNo":"0712345678","email":"email1@gmail.com","NIC":"200122503023","workLocation":"kurunegala","address":"no 1,bandaranayake mawatha,moratuwa"},
+    {"serviceNumber":"215010","name":"john doe","contactNo":"0712345678","email":"email1@gmail.com","NIC":"200122503023","workLocation":"kurunegala","address":"no 1,bandaranayake mawatha,moratuwa"}
   ],
   "homlyDb": [
 
