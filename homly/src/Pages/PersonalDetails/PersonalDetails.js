@@ -77,12 +77,6 @@ const PersonalDetails = () => {
                       </Button>
                     </Grid>
                   </Grid>
-                  //   <Box sx={{display:'flex',flexDirection:'row',flex:'2 1'}}>
-                  //   <Typography  variant="h6" fontWeight={'regular'} component="div">
-                  //     {item.value}
-                  //   </Typography>
-                  //   <Button size="small" variant="outline" style={ { display: item.editable ? 'block' : 'none' } }  >Edit</Button>
-                  // </Box>
                 ))}
               </CardContent>
               <CardActions>
