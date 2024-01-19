@@ -15,6 +15,7 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 
 const NotificationPanel = (props) => {
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const [count, setCount] = useState(props.notifications.length);
   const handleCloseNotificationMenu = () => {
     setAnchorElUser(null);
   };
@@ -28,12 +29,11 @@ const NotificationPanel = (props) => {
   return (
     <Box>
       <Tooltip title="notifications">
-        <IconButton onClick={handleOpenUserMenu}>
-          <Badge
+        <IconButton onClick={handleOpenUserMenu} >
+          {/* <Badge
             color="primary"
             overlap="circular"
-            badgeContent=" "
-            variant="dot"
+            badgeContent="0"
             anchorOrigin={{
               vertical: "top",
               horizontal: "right",
@@ -42,7 +42,10 @@ const NotificationPanel = (props) => {
             <NotificationsIcon
               sx={{ color: "text.primary", fontSize: "2rem" }}
             />
-          </Badge>
+          </Badge> */}
+          <Badge color="primary" badgeContent={count} overlap="circular" >
+          <NotificationsIcon sx={{ color: "text.primary", fontSize: "2rem" }}/>
+        </Badge>
         </IconButton>
       </Tooltip>
       <Menu
@@ -63,7 +66,7 @@ const NotificationPanel = (props) => {
       >
         {props.notifications.map((item) => (
           <MenuItem
-          // key={setting.name}
+          key={item.title}
           // onClick={handleCloseUserMenu}
           // component={setting.name === "My Profile" ? Link : ""}
           // sx={{ display: setting.name === "My Profile" ? { xs: "none", md: "block" } : "block" }}
