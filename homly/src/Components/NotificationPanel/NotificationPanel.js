@@ -27,7 +27,7 @@ const NotificationPanel = (props) => {
 
 
   return (
-    <Box>
+    <Box alignItems={"center"}>
       <Tooltip title="notifications">
         <IconButton onClick={handleOpenUserMenu} >
           {/* <Badge

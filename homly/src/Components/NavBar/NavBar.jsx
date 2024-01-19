@@ -180,11 +180,13 @@ const NavBar = (props) => {
                                 </NavLink>
                             ))}
                         </Stack>
+                        {/* notification button */}
                         <NotificationPanel notifications={notifications} />
+                        {/* user button */}
                         <Box sx={{ flexGrow: 0 }}>
                             <Tooltip title="Open settings">
                                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                    <Avatar alt="Remy Sharp" sx={{ height: '50px', width: '50px' }} src="https://img.freepik.com/premium-psd/3d-cartoon-man-smiling-portrait-isolated-transparent-background-png-psd_888962-1570.jpg" />
+                                    <Avatar alt="Remy Sharp" sx={{ height: '48px', width: '48px' }} src="https://img.freepik.com/premium-psd/3d-cartoon-man-smiling-portrait-isolated-transparent-background-png-psd_888962-1570.jpg" />
                                 </IconButton>
                             </Tooltip>
                             <Menu
