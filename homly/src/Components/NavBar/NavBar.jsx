@@ -51,7 +51,10 @@ const sidePages = [
     { name: "My Reservation", path: '/myProfile/myReservation' },
 ];
 
-const notifications = [{ title: "notification 1", description: "this is notification 1", type: 'canceled' }, { title: "notification 2", description: "this is notification 2", type: '' }, { title: "notification 3", description: "this is notification 3", type: '' }];
+const notifications = [
+    { title: "notification 1", description: "this is notification 1.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,", type: 'canceled' }, 
+    { title: "notification 2", description: "this is notification 2", type: '' }, 
+    { title: "notification 3", description: "this is notification 3", type: '' }];
 
 
 
