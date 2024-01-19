@@ -33,13 +33,13 @@ import "./NavBar.css"
 const drawerWidth = 240;
 const settings = [{ name: "My Profile", path: '/myProfile/personalDetails' }, { name: "Logout" }];
 const pages = [
-    { name: "Home", path: "/home" },
+    { name: "Home", path: "/" },
     { name: "Holiday Homes", path: "/holidayHomes" },
     { name: "Contact Us", path: "/contactUs" }
 ];
 
 const respSidePages = [
-    { name: "Home", path: "/home" },
+    { name: "Home", path: "/" },
     { name: "Holiday Homes", path: "/holidayHomes" },
     { name: "Contact Us", path: "/contactUs" },
     { name: "My Profile", path: '/myProfile/personalDetails' },
