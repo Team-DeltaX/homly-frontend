@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <div>
       <NavBar sideNavBar="none" />
-      <Container>
+      <Container sx={{mt:10}}>
 
         <div>This is Home page.</div>
         <MyReservationCard

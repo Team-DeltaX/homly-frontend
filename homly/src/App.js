@@ -22,7 +22,6 @@ const App = () => (
     <Suspense fallback={<Loader/>}>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/Home" element={<Home />} />
         <Route path="/HolidayHomes" element={<HolidayHome />} />
         <Route path="/Profile" element={<Profile />} />
         <Route path="/ContactUs" element={<ContactUs />} />
