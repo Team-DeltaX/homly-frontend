@@ -51,7 +51,10 @@ const sidePages = [
     { name: "My Reservation", path: '/myProfile/myReservation' },
 ];
 
-const notifications = [{ title: "notification 1", description: "this is notification 1", type: 'canceled' }, { title: "notification 2", description: "this is notification 2", type: '' }, { title: "notification 3", description: "this is notification 3", type: '' }];
+const notifications = [
+    { title: "notification 1", description: "this is notification 1.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,", type: 'canceled' }, 
+    { title: "notification 2", description: "this is notification 2", type: '' }, 
+    { title: "notification 3", description: "this is notification 3", type: '' }];
 
 
 
@@ -180,11 +183,13 @@ const NavBar = (props) => {
                                 </NavLink>
                             ))}
                         </Stack>
+                        {/* notification button */}
                         <NotificationPanel notifications={notifications} />
+                        {/* user button */}
                         <Box sx={{ flexGrow: 0 }}>
                             <Tooltip title="Open settings">
                                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                    <Avatar alt="Remy Sharp" src="https://img.freepik.com/premium-psd/3d-cartoon-man-smiling-portrait-isolated-transparent-background-png-psd_888962-1570.jpg" />
+                                    <Avatar alt="Remy Sharp" sx={{ height: '48px', width: '48px' }} src="https://img.freepik.com/premium-psd/3d-cartoon-man-smiling-portrait-isolated-transparent-background-png-psd_888962-1570.jpg" />
                                 </IconButton>
                             </Tooltip>
                             <Menu
