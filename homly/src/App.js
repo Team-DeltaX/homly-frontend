@@ -1,5 +1,6 @@
 import React, { Suspense, lazy } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Loader from "./Components/Loader/Loader";
 
 
 import "../src/Styles/styles.css";
@@ -18,7 +19,7 @@ const MyReservation = lazy(() =>import("../src/Pages/MyReservation/MyReservation
 
 const App = () => (
   <Router>
-    <Suspense fallback={<div>loading</div>}>
+    <Suspense fallback={<Loader/>}>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/Home" element={<Home />} />
