@@ -14,16 +14,18 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
-import Badge from "@mui/material/Badge";
+// import Badge from "@mui/material/Badge";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 
 import MenuIcon from "@mui/icons-material/Menu";
-import NotificationsIcon from "@mui/icons-material/Notifications";
+
 
 import { ThemeProvider } from "@emotion/react";
 
 import { Link, NavLink } from "react-router-dom";
+
+import NotificationPanel from "../NotificationPanel/NotificationPanel";
 
 import theme from "../../HomlyTheme";
 import "./NavBar.css"
@@ -49,6 +51,8 @@ const sidePages = [
     { name: "My Reservation", path: '/myProfile/myReservation' },
 ];
 
+const notifications = [{ title: "notification 1", description: "this is notification 1", type: 'canceled' }, { title: "notification 2", description: "this is notification 2", type: '' }, { title: "notification 3", description: "this is notification 3", type: '' }];
+
 
 
 const NavBar = (props) => {
@@ -63,7 +67,7 @@ const NavBar = (props) => {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
-
+    
     const handleDrawerClose = () => {
         setIsClosing(true);
         setMobileOpen(false);
@@ -176,20 +180,7 @@ const NavBar = (props) => {
                                 </NavLink>
                             ))}
                         </Stack>
-                        <Badge
-                            color="primary"
-                            overlap="circular"
-                            badgeContent=" "
-                            variant="dot"
-                            anchorOrigin={{
-                                vertical: "top",
-                                horizontal: "right",
-                            }}
-                        >
-                            <NotificationsIcon
-                                sx={{ color: "text.primary", fontSize: "2rem" }}
-                            />
-                        </Badge>
+                        <NotificationPanel notifications={notifications} />
                         <Box sx={{ flexGrow: 0 }}>
                             <Tooltip title="Open settings">
                                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
