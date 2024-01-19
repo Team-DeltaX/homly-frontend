@@ -18,8 +18,6 @@ import {
 
 import theme from "../../HomlyTheme";
 
-
-
 const  userServiceNo = '214002';
 
 const PersonalDetails = () => {
@@ -38,8 +36,8 @@ const PersonalDetails = () => {
   const userd = detailsE.filter(obj => {
     return obj.serviceNumber === userServiceNo;
   });
-
-  console.log(userd[0] && userd[0].name);
+  // let arr =Object.keys(userd[0]) ;
+  // {arr[0] && console.log(arr[0])};
 
   // let len = userd === null ? 0 : userd.length;
 
@@ -72,13 +70,13 @@ const PersonalDetails = () => {
                 </Box> */}
             <Card sx={{ width: "90%", height: "90%" }}>
               <CardContent sx={{ display: "flex", flexDirection: "column" }}>
-                {userd[0] && <PersonalDetailsGrid lable="Service Number" value={userd[0].serviceNumber} editable={false} />}
-                {userd[0] && <PersonalDetailsGrid lable="Name" value={userd[0].name} editable={false} />}
-                {userd[0] && <PersonalDetailsGrid lable="Contact Number" value={userd[0].contactNo} editable={true} />}
-                {userd[0] && <PersonalDetailsGrid lable="Email" value={userd[0].email} editable={true} />}
-                {userd[0] && <PersonalDetailsGrid lable="NIC Number" value={userd[0].NIC} editable={false} />}
-                {userd[0] && <PersonalDetailsGrid lable="Work Location" value={userd[0].workLocation} editable={false} />}
-                {userd[0] && <PersonalDetailsGrid lable="Residantal Address" value={userd[0].address} editable={true} />}
+                {userd[0] && <PersonalDetailsGrid id="serviceNo" lable="Service Number" value={userd[0].serviceNumber} editable={false} />}
+                {userd[0] && <PersonalDetailsGrid id="name" lable="Name" value={userd[0].name} editable={false} />}
+                {userd[0] && <PersonalDetailsGrid id="contactNo" lable="Contact Number" value={userd[0].contactNo} editable={true} />}
+                {userd[0] && <PersonalDetailsGrid id="email" lable="Email" value={userd[0].email} editable={true} />}
+                {userd[0] && <PersonalDetailsGrid id="nic" lable="NIC Number" value={userd[0].NIC} editable={false} />}
+                {userd[0] && <PersonalDetailsGrid id="work" lable="Work Location" value={userd[0].workLocation} editable={false} />}
+                {userd[0] && <PersonalDetailsGrid id="address" lable="Residantal Address" value={userd[0].address} editable={true} />}
 
                 
               </CardContent>
