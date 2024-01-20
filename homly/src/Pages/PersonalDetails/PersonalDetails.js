@@ -1,6 +1,8 @@
 import React from "react";
+import { useEffect, useState } from "react";
 
 import NavBar from "../../Components/NavBar/NavBar";
+import PersonalDetailsGrid from "../../Components/PersonalDetailsGrid/PersonalDetailsGrid";
 
 import {
   Box,
@@ -16,17 +18,38 @@ import {
 
 import theme from "../../HomlyTheme";
 
-const details = [
-  { lable: "Name", value: "John Doe", editable: false },
-  { lable: "Service Number", value: "10001", editable: false },
-  { lable: "NIC", value: "123456789V", editable: false },
-  { lable: "Email", value: "abc@gmail.com", editable: true },
-  { lable: "Phone Number", value: "1234567890", editable: true },
-  { lable: "Address", value: "49,Jaya Mawatha,Colombo 3", editable: true },
-  { lable: "Work Location", value: "Colombo", editable: false },
-];
+const  userServiceNo = '214002';
 
 const PersonalDetails = () => {
+
+  const [detailsE,setDetailsE] = useState([]);
+  useEffect(() => {
+    fetch("http://localhost:8000/employee")
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        setDetailsE(data);
+      });
+  }, []);
+
+  const userd = detailsE.filter(obj => {
+    return obj.serviceNumber === userServiceNo;
+  });
+  // let arr =Object.keys(userd[0]) ;
+  // {arr[0] && console.log(arr[0])};
+
+  // let len = userd === null ? 0 : userd.length;
+
+  // console.log(len);
+
+  // if(len !== 0){
+  //   console.log(userd[0]);
+  //   setUser([userd[0]]);
+  // }
+
+
+  // console.log(detailsE);
   return (
     <ThemeProvider theme={theme}>
       <Box display={"flex"}>
@@ -47,40 +70,18 @@ const PersonalDetails = () => {
                 </Box> */}
             <Card sx={{ width: "90%", height: "90%" }}>
               <CardContent sx={{ display: "flex", flexDirection: "column" }}>
-                {details.map((item) => (
-                  <Grid container>
-                    <Grid item md={4}>
-                      <Typography
-                        variant="h6"
-                        fontWeight={"regular"}
-                        component="div"
-                      >
-                        {item.lable}
-                      </Typography>
-                    </Grid>
-                    <Grid item md={5}>
-                      <Typography
-                        variant="h6"
-                        fontWeight={"regular"}
-                        component="div"
-                      >
-                        {item.value}
-                      </Typography>
-                    </Grid>
-                    <Grid item md={3}>
-                      <Button
-                        size="small"
-                        variant="outline"
-                        style={{ display: item.editable ? "block" : "none" }}
-                      >
-                        Edit
-                      </Button>
-                    </Grid>
-                  </Grid>
-                ))}
+                {userd[0] && <PersonalDetailsGrid id="serviceNo" lable="Service Number" value={userd[0].serviceNumber} editable={false} />}
+                {userd[0] && <PersonalDetailsGrid id="name" lable="Name" value={userd[0].name} editable={false} />}
+                {userd[0] && <PersonalDetailsGrid id="contactNo" lable="Contact Number" value={userd[0].contactNo} editable={true} />}
+                {userd[0] && <PersonalDetailsGrid id="email" lable="Email" value={userd[0].email} editable={true} />}
+                {userd[0] && <PersonalDetailsGrid id="nic" lable="NIC Number" value={userd[0].NIC} editable={false} />}
+                {userd[0] && <PersonalDetailsGrid id="work" lable="Work Location" value={userd[0].workLocation} editable={false} />}
+                {userd[0] && <PersonalDetailsGrid id="address" lable="Residantal Address" value={userd[0].address} editable={true} />}
+
+                
               </CardContent>
               <CardActions>
-                <Button size="small" disabled>Update</Button>
+                <Button variant="contained" disabled>Update</Button>
               </CardActions>
             </Card>
           </Box>
