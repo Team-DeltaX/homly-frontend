@@ -21,8 +21,8 @@ import PasswordIcon from "@mui/icons-material/Password";
 
 import theme from "../../HomlyTheme";
 import "./UserLogin.css";
-import logo from "../../resources/images/logo.png";
-import wave from "../../resources/images/wave.png";
+import logo from "../../Assets/images/logo.png";
+import wave from "../../Assets/images/wave.png";
 
 const Img = styled("img")({
   display: "block",

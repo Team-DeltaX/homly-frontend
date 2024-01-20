@@ -1,47 +1,32 @@
 import React from "react";
-import { useState, useContext } from "react";
+import { useContext } from "react";
+import Editable from "./Editable";
+import Readable from "./Readable";
 
-import { Grid, Typography, Button } from "@mui/material";
-
-import EditPersonalDetailsContextProvider from "../../Contexts/EditPersonalDetailsContext";
+import { EditPersonalDetailsContext } from "../../Contexts/EditPersonalDetailsContext";
 
 const PersonalDetailsGrid = (props) => {
-    const { currentEditId } = useContext(EditPersonalDetailsContextProvider);
-    console>log(currentEditId);
-    const [buttonName, setButtonName] = useState("Edit");
+  const { currentEditId } = useContext(EditPersonalDetailsContext);
 
-    const handleEdit = () => {
-        if (buttonName === "Edit" ) {
-            setButtonName("Save");
-        } else {
-            setButtonName("Edit");
-        }
-    }
-    return (
-        <Grid container key={props.id}>
-            <Grid item md={4}>
-                <Typography variant="h6" fontWeight={"regular"} component="div">
-                    {props.lable}
-                </Typography>
-            </Grid>
-            <Grid item md={6}>
-                <Typography variant="h6" fontWeight={"regular"} component="div">
-                    {props.value}
-                </Typography>
-            </Grid>
-            <Grid item md={2}>
-                <Button
-                    variant="contained"
-                    size="small"
-                    sx={{ backgroundColor:"primary.main" }}
-                    style={{ display: props.editable ? "block" : "none" }}
-                    onClick={handleEdit}
-                >
-                    {buttonName}
-                </Button>
-            </Grid>
-        </Grid>
-    );
+  return (
+    <div>
+      {props.id === currentEditId ? (
+        <Readable
+          id={props.id}
+          lable={props.lable}
+          value={props.value}
+          editable={props.editable}
+        />
+      ) : (
+        <Editable
+          id={props.id}
+          lable={props.lable}
+          value={props.value}
+          editable={props.editable}
+        />
+      )}
+    </div>
+  );
 };
 
 export default PersonalDetailsGrid;

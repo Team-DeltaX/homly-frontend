@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 
 import NavBar from "../../Components/NavBar/NavBar";
 import PersonalDetailsGrid from "../../Components/PersonalDetailsGrid/PersonalDetailsGrid";
+import EditPersonalDetailsContextProvider from "../../Contexts/EditPersonalDetailsContext";
 
 import {
   Box,
@@ -13,7 +14,6 @@ import {
   CardContent,
   CardActions,
   Button,
-  Grid,
 } from "@mui/material";
 
 import theme from "../../HomlyTheme";
@@ -70,13 +70,15 @@ const PersonalDetails = () => {
                 </Box> */}
             <Card sx={{ width: "90%", height: "90%" }}>
               <CardContent sx={{ display: "flex", flexDirection: "column" }}>
-                {userd[0] && <PersonalDetailsGrid id="serviceNo" lable="Service Number" value={userd[0].serviceNumber} editable={false} />}
-                {userd[0] && <PersonalDetailsGrid id="name" lable="Name" value={userd[0].name} editable={false} />}
-                {userd[0] && <PersonalDetailsGrid id="contactNo" lable="Contact Number" value={userd[0].contactNo} editable={true} />}
-                {userd[0] && <PersonalDetailsGrid id="email" lable="Email" value={userd[0].email} editable={true} />}
-                {userd[0] && <PersonalDetailsGrid id="nic" lable="NIC Number" value={userd[0].NIC} editable={false} />}
-                {userd[0] && <PersonalDetailsGrid id="work" lable="Work Location" value={userd[0].workLocation} editable={false} />}
-                {userd[0] && <PersonalDetailsGrid id="address" lable="Residantal Address" value={userd[0].address} editable={true} />}
+                <EditPersonalDetailsContextProvider>
+                  {userd[0] && <PersonalDetailsGrid id="serviceNo" lable="Service Number" value={userd[0].serviceNumber} editable={false} />}
+                  {userd[0] && <PersonalDetailsGrid id="name" lable="Name" value={userd[0].name} editable={false} />}
+                  {userd[0] && <PersonalDetailsGrid id="contactNo" lable="Contact Number" value={userd[0].contactNo} editable={true} />}
+                  {userd[0] && <PersonalDetailsGrid id="email" lable="Email" value={userd[0].email} editable={true} />}
+                  {userd[0] && <PersonalDetailsGrid id="nic" lable="NIC Number" value={userd[0].NIC} editable={false} />}
+                  {userd[0] && <PersonalDetailsGrid id="work" lable="Work Location" value={userd[0].workLocation} editable={false} />}
+                  {userd[0] && <PersonalDetailsGrid id="address" lable="Residantal Address" value={userd[0].address} editable={true} />}
+                </EditPersonalDetailsContextProvider>
 
                 
               </CardContent>

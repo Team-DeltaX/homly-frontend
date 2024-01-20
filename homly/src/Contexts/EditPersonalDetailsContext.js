@@ -5,10 +5,16 @@ export const EditPersonalDetailsContext = createContext()
 
 const EditPersonalDetailsContextProvider = ({children}) => {
 
-    const [currentEditId, setCurrentEditId] = useState('email');
+    const [currentEditId, setCurrentEditId] = useState(null);
+
+    const handleEditId = (id) => {
+        setCurrentEditId(id);
+        console.log(id);
+    }
+
 
     return (
-        <EditPersonalDetailsContext.Provider value={{currentEditId}}>
+        <EditPersonalDetailsContext.Provider value={{currentEditId,handleEditId}}>
             {children}
         </EditPersonalDetailsContext.Provider>
     )
