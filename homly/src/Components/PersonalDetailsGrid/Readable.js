@@ -23,9 +23,6 @@ const Readable = (props) => {
       </Grid>
       <Grid item md={6}>
       <TextField id="outlined-basic" value={props.value} variant="outlined" size="small" />
-        {/* <Typography variant="h6" fontWeight={"regular"} component="div">
-          {props.value}
-        </Typography> */}
       </Grid>
       <Grid item md={2}>
         <Button
