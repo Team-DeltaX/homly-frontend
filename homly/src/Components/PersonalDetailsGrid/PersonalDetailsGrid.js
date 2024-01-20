@@ -1,13 +1,17 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useContext } from "react";
 
 import { Grid, Typography, Button } from "@mui/material";
 
+import EditPersonalDetailsContextProvider from "../../Contexts/EditPersonalDetailsContext";
+
 const PersonalDetailsGrid = (props) => {
+    const { currentEditId } = useContext(EditPersonalDetailsContextProvider);
+    console>log(currentEditId);
     const [buttonName, setButtonName] = useState("Edit");
 
     const handleEdit = () => {
-        if (buttonName === "Edit") {
+        if (buttonName === "Edit" ) {
             setButtonName("Save");
         } else {
             setButtonName("Edit");
