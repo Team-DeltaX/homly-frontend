@@ -1,4 +1,4 @@
-{
+{ 
   "employee": [
     {"serviceNumber":"214000","name":"john doe","contactNo":"0712345678","email":"email1@gmail.com","NIC":"200122503023","workLocation":"kurunegala","address":"no 1,bandaranayake mawatha,moratuwa"},
     {"serviceNumber":"214001","name":"john doe","contactNo":"0712345678","email":"email1@gmail.com","NIC":"200122503023","workLocation":"kurunegala","address":"no 1,bandaranayake mawatha,moratuwa"},

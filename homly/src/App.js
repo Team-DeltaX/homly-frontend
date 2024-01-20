@@ -17,6 +17,8 @@ const UserSecurity = lazy(() =>import("../src/Pages/UserSecurity/UserSecurity"))
 const PaymentDetails = lazy(() =>import("../src/Pages/PaymentDetails/PaymentDetails"));
 const MyReservation = lazy(() =>import("../src/Pages/MyReservation/MyReservation"));
 
+// json-server --watch data/db.json --port 8000
+
 const App = () => (
   <Router>
     <Suspense fallback={<Loader/>}>
