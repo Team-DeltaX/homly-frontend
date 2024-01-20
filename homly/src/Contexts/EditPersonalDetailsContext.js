@@ -1,26 +1,25 @@
-import React from 'react'
-import { useState, createContext } from 'react'
+import React from "react";
+import { useState, createContext } from "react";
 
-export const EditPersonalDetailsContext = createContext()
+export const EditPersonalDetailsContext = createContext();
 
-const EditPersonalDetailsContextProvider = ({children}) => {
+const EditPersonalDetailsContextProvider = ({ children }) => {
+  const [currentEditId, setCurrentEditId] = useState(null);
+//   const [userPersonalDetails, setUserPersonalDetails] = useState({});
 
-    const [currentEditId, setCurrentEditId] = useState(null);
+  const handleEditId = (id) => {
+    setCurrentEditId(id);
+    console.log(id);
+  };
 
-    const handleEditId = (id) => {
-        setCurrentEditId(id);
-        console.log(id);
-    }
-
-
-    return (
-        <EditPersonalDetailsContext.Provider value={{currentEditId,handleEditId}}>
-            {children}
-        </EditPersonalDetailsContext.Provider>
-    )
-
-
-}
+  
+  return (
+    <EditPersonalDetailsContext.Provider
+      value={{ currentEditId,  handleEditId }}
+    >
+      {children}
+    </EditPersonalDetailsContext.Provider>
+  );
+};
 
 export default EditPersonalDetailsContextProvider;
-

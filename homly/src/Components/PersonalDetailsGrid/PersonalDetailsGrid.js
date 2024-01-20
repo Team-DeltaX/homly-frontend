@@ -12,14 +12,14 @@ const PersonalDetailsGrid = (props) => {
   return (
     <Box>
       {props.id === currentEditId ? (
-        <Editable
+        <Readable
           id={props.id}
           lable={props.lable}
           value={props.value}
           editable={props.editable}
         />
       ) : (
-        <Readable
+        <Editable
           id={props.id}
           lable={props.lable}
           value={props.value}

@@ -1,28 +1,32 @@
 import React from "react";
 import { useState, useContext } from "react";
 
-import { Grid, Typography, Button, TextField } from "@mui/material";
+import { Grid, Typography, Button } from "@mui/material";
 
 import { EditPersonalDetailsContext } from "../../Contexts/EditPersonalDetailsContext";
 
 const Readable = (props) => {
-  const { handleEditId } = useContext(EditPersonalDetailsContext);
-  const handleSave = () => {
+  const {  handleEditId } = useContext(
+    EditPersonalDetailsContext
+  );
+  
+  const handleEdit = () => {
     {
-      props.id && handleEditId('');
+      props.id && handleEditId(props.id);
     }
-    console.log("save");
   };
 
   return (
     <Grid container key={props.id}>
       <Grid item md={4}>
-        <Typography variant="h6" fontWeight={"regular"} component="div">
+        <Typography variant="h6" fontWeight={"regular"} padding={'4 0'} component="div">
           {props.lable}
         </Typography>
       </Grid>
       <Grid item md={6}>
-      <TextField id="outlined-basic" value={props.value} variant="outlined" size="small" />
+        <Typography variant="h6" fontWeight={"regular"} sx={{margin:'4px 0'}} component="div">
+          {props.value}
+        </Typography>
       </Grid>
       <Grid item md={2}>
         <Button
@@ -30,9 +34,9 @@ const Readable = (props) => {
           size="small"
           sx={{ backgroundColor: "primary.main" }}
           style={{ display: props.editable ? "block" : "none" }}
-          onClick={handleSave}
+          onClick={handleEdit}
         >
-          Save
+          Edit
         </Button>
       </Grid>
     </Grid>

@@ -24,12 +24,13 @@ const PersonalDetails = () => {
 
   const [detailsE,setDetailsE] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:8000/employee")
+    fetch("https://65ac00f8fcd1c9dcffc76f52.mockapi.io/homly/api/employee")
       .then((res) => {
         return res.json();
       })
       .then((data) => {
         setDetailsE(data);
+        // console.log(data);
       });
   }, []);
 
