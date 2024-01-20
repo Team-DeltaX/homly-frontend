@@ -22,8 +22,8 @@ import PasswordIcon from "@mui/icons-material/Password";
 
 import theme from "../../HomlyTheme";
 import "./UserRegistration.css";
-import logo from "../../resources/images/logo.png";
-import wave from "../../resources/images/wave.png";
+import logo from "../../Assets/images/logo.png";
+import wave from "../../Assets/images/wave.png";
 
 import { Link } from "react-router-dom";
 
