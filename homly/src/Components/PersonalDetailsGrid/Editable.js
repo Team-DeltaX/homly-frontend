@@ -23,12 +23,12 @@ const Editable = (props) => {
   return (
     <Grid container key={props.id}>
       <Grid item md={4}>
-        <Typography variant="h6" fontWeight={"regular"} component="div">
+        <Typography variant="h6" fontWeight={"regular"} padding={'4 0'} component="div">
           {props.lable}
         </Typography>
       </Grid>
       <Grid item md={6}>
-        <Typography variant="h6" fontWeight={"regular"} component="div">
+        <Typography variant="h6" fontWeight={"regular"} sx={{margin:'4px 0'}} component="div">
           {props.value}
         </Typography>
       </Grid>

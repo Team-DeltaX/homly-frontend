@@ -82,9 +82,7 @@ const PersonalDetails = () => {
 
                 
               </CardContent>
-              <CardActions>
-                <Button variant="contained" disabled>Update</Button>
-              </CardActions>
+              
             </Card>
           </Box>
         </Container>
