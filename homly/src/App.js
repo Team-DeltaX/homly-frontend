@@ -31,6 +31,26 @@ const MyReservation = lazy(() =>
 const LocationDashboard = lazy(()=>
   import("../src/Pages/locationAdmin/Dashboard")
 )
+const HolidayHomesDetails = lazy(()=>
+  import("../src/Pages/locationAdmin/HolidayHomeDetails")
+)
+
+const CreateHolidayHome = lazy(()=>
+  import("../src/Pages/locationAdmin/CreateHolidayHome")
+)
+const FeedBack = lazy(()=>
+  import("../src/Pages/locationAdmin/Feedback")
+)
+const Login = lazy(()=>
+  import("../src/Pages/locationAdmin/Login")
+)
+const Reservations = lazy(()=>
+  import("../src/Pages/locationAdmin/Reservations")
+)
+
+const Report = lazy(()=>{
+  import("../src/Pages/locationAdmin/Report")
+})
 
 // json-server --watch data/db.json --port 8000
 
@@ -59,6 +79,11 @@ const App = () => (
           <Route path="/MyProfile/MyReservation" element={<MyReservation />} />
 
           <Route path="/locationadmin/dashboard" element={<LocationDashboard/>}/>
+          <Route path="/locationadmin/holidayhomes" element={<HolidayHomesDetails/>}/>
+          <Route path="/locationadmin/feedback" element={<FeedBack/>}/>
+          <Route path="/locationadmin/reservations" element={<Reservations/>}/>
+          <Route path="/locationadmin/report" element={<Report/>}/>
+          <Route path="/locationadmin/holidayhomes/createholidayhome" element={<CreateHolidayHome/>}/>
         </Routes>
       </Suspense>
     </Router>

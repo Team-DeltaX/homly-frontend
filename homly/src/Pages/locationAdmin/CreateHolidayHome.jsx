@@ -8,9 +8,9 @@ import theme from '../../HomlyTheme';
 
 import SideNavbar from '../../Components/locationAdmin/SideNavbar'
 import DashboardContent from '../../Components/locationAdmin/DashboardContent';
-import PageTitle from '../../components/locationAdmin/PageTitle';
+import PageTitle from '../../Components/locationAdmin/PageTitle';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';    
-import CreateHolidayHomeContent from '../../components/locationAdmin/CreateHolidayHome/CreateHolidayHomeContent';
+import CreateHolidayHomeContent from '../../Components/locationAdmin/CreateHolidayHome/CreateHolidayHomeContent';
 
 
 const Report = () => {

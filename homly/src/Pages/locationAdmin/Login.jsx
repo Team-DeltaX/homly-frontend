@@ -5,7 +5,7 @@ import theme from '../../HomlyTheme';
 import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
 
-import logo from '../../assest/images/logo_colored.png';
+import logo from '../../Assets/images/logo_colored.png';
 
 import './style.css';
 

@@ -8,7 +8,7 @@ import Box from '@mui/material/Box';
 import { Grid,ThemeProvider,Container} from '@mui/material';
 import theme from '../../HomlyTheme';
 
-import PageTitle from '../../components/locationAdmin/PageTitle';
+import PageTitle from '../../Components/locationAdmin/PageTitle';
 import ManageHomeContent from '../../components/locationAdmin/ManageHomeContent';
 
 

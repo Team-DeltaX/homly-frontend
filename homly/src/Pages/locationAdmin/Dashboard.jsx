@@ -8,11 +8,11 @@ import theme from '../../HomlyTheme';
 
 import SideNavbar from '../../Components/locationAdmin/SideNavbar'
 import DashboardContent from '../../Components/locationAdmin/DashboardContent';
-import PageTitle from '../../components/locationAdmin/PageTitle';
+import PageTitle from '../../Components/locationAdmin/PageTitle';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';    
 
 
-const Report = () => {
+const Dashboard = () => {
 
     const [showNav,setShowNav] = useState('nav_grid_deactive')
 
@@ -38,4 +38,4 @@ const Report = () => {
   )
 }
 
-export default Report
+export default Dashboard

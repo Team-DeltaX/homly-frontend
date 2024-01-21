@@ -3,8 +3,8 @@ import React,{useEffect, useState,memo} from 'react'
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import { Typography } from '@mui/material';
-import logo from '../../assest/images/logo.png';
-import user from '../../assest/images/profile.jpeg'
+import logo from '../../Assets/images/logo1.png';
+import user from '../../Assets/images/profile.jpeg';
 import {Link} from 'react-router-dom';
 
 
@@ -26,7 +26,7 @@ const  SideNavbar = ({closeNavGrid,setShowNav}) => {
     useEffect(()=>{
         const currentUrl = window.location.href;
         const urlArray = currentUrl.split("/");
-        setSelectedMenuItem(urlArray[3]);  
+        setSelectedMenuItem(urlArray[4]);  
     },[])
 
     const closeNav = () => {
@@ -55,7 +55,7 @@ const  SideNavbar = ({closeNavGrid,setShowNav}) => {
                     
                     </Box>
                     <Box alignItems={'center'}>
-                        <Link to="/dashboard" className='sidenav_link' >
+                        <Link to="" className='sidenav_link' >
                             <Typography variant='p'  sx={{color:selectedMenuItem === 'dashboard' ? 'black' : 'white'}}>Dashboard</Typography>
                         </Link>
                     </Box>
@@ -66,7 +66,7 @@ const  SideNavbar = ({closeNavGrid,setShowNav}) => {
                         <HomeOutlinedIcon sx={{color:selectedMenuItem === 'holidayhomes' ? 'black' : 'white'}}/>
                     </Box>
                     <Box alignItems={'center'}>
-                        <Link to="/holidayhomes/manage" className='sidenav_link' >
+                        <Link to="locationadmin/holidayhomes/manage" className='sidenav_link' >
                             <Typography variant='p' sx={{color:selectedMenuItem === 'holidayhomes' ? 'black' : 'white',fontWeight:'bold'}}>HolidayHomes</Typography>
                         </Link>
                     </Box>
@@ -74,13 +74,13 @@ const  SideNavbar = ({closeNavGrid,setShowNav}) => {
             <Grid container xs={12} className="submenu_item">
                     <Grid container >
                         <Grid xs={12} sx={{display:'flex',justifyContent:'flex-start',padding:'3px',marginTop:'5px'}}>
-                            <Link to="/holidayhomes/manage" className='sidenav_submenulink' >
+                            <Link to="locationadmin/holidayhomes/manage" className='sidenav_submenulink' >
                                 <ManageAccountsOutlinedIcon sx={{color:'white',marginRight:'20px',fontSize:"1.2rem"}}/>
                                 <Typography variant='p' sx={{color:'white'}}> Manage</Typography>
                             </Link>
                         </Grid>
                         <Grid xs={12} sx={{display:'flex',justifyContent:'flex-start',padding:'3px',marginBottom:'5px'}}>
-                            <Link to="/holidayhomes/details" className='sidenav_submenulink' >
+                            <Link to="locationadmin/holidayhomes/details" className='sidenav_submenulink' >
                                 <HistoryOutlinedIcon sx={{color:'white',marginRight:'20px',fontSize:"1.2rem"}}/>
                                 <Typography variant='p' sx={{color:'white'}}>Details</Typography>
                             </Link>
@@ -94,7 +94,7 @@ const  SideNavbar = ({closeNavGrid,setShowNav}) => {
                         <RateReviewOutlinedIcon sx={{color:selectedMenuItem === 'feedback' ? 'black' : 'white'}}/>
                     </Box>
                     <Box alignItems={'center'}>
-                        <Link to="/feedback" className='sidenav_link' >
+                        <Link to="locationadmin" className='sidenav_link' >
                             <Typography variant='p' sx={{color:selectedMenuItem === 'feedback' ? 'black' : 'white'}}>Feedback</Typography>
                         </Link> 
                     </Box>
@@ -106,7 +106,7 @@ const  SideNavbar = ({closeNavGrid,setShowNav}) => {
                        <ListAltOutlinedIcon sx={{color:selectedMenuItem === 'reservations' ? 'black' : 'white'}}/>
                     </Box>
                     <Box alignItems={'center'}>
-                        <Link to="/reservations" className='sidenav_link' >
+                        <Link to="locationadmin/reservations" className='sidenav_link' >
                             <Typography variant='p' sx={{color:selectedMenuItem === 'reservations' ? 'black' : 'white'}}>Reservations</Typography>
                         </Link>
                     </Box>
@@ -116,7 +116,7 @@ const  SideNavbar = ({closeNavGrid,setShowNav}) => {
                         <QueryStatsOutlinedIcon sx={{color:selectedMenuItem === 'report' ? 'black' : 'white'}}/>
                     </Box>
                     <Box alignItems={'center'}>
-                        <Link to="/report" className='sidenav_link' >
+                        <Link to="locationadmin/report" className='sidenav_link' >
                             <Typography variant='p' sx={{color:selectedMenuItem === 'report' ? 'black' : 'white'}}>Report</Typography>
                         </Link>
                     </Box>
