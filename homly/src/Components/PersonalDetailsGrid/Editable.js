@@ -6,14 +6,15 @@ import { Grid, Typography, Button, TextField } from "@mui/material";
 import { EditPersonalDetailsContext } from "../../Contexts/EditPersonalDetailsContext";
 
 const Editable = (props) => {
-  const { handleEditId} = useContext(EditPersonalDetailsContext);
+  const { handleEditId,handlePersonalDetails} = useContext(EditPersonalDetailsContext);
   const [data, setData] = useState(props.value);
 
   const handleSave = () => {
     {
-      props.id && handleEditId("");
+      props.id && handleEditId(""); handlePersonalDetails([props.id,data]);
     }
-  
+    
+    console.log(data);
     console.log("save");
   };
 

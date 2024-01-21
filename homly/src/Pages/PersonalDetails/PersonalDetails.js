@@ -1,9 +1,10 @@
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useContext } from "react";
 
 import NavBar from "../../Components/NavBar/NavBar";
 import PersonalDetailsGrid from "../../Components/PersonalDetailsGrid/PersonalDetailsGrid";
-import EditPersonalDetailsContextProvider from "../../Contexts/EditPersonalDetailsContext";
+import UpdateButton from "../../Components/PersonalDetailsGrid/UpdateButton";
+
+import { EditPersonalDetailsContext } from "../../Contexts/EditPersonalDetailsContext";
 
 import {
   Box,
@@ -13,44 +14,18 @@ import {
   Card,
   CardContent,
   CardActions,
-  Button,
 } from "@mui/material";
 
 import theme from "../../HomlyTheme";
 
-const  userServiceNo = '214002';
+
 
 const PersonalDetails = () => {
+  const { userPersonalDetails } = useContext(EditPersonalDetailsContext)
+ 
+  // console.log(userPersonalDetails);
+  
 
-  const [detailsE,setDetailsE] = useState([]);
-  useEffect(() => {
-    fetch("https://65ac00f8fcd1c9dcffc76f52.mockapi.io/homly/api/employee")
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        setDetailsE(data);
-        // console.log(data);
-      });
-  }, []);
-
-  const userd = detailsE.filter(obj => {
-    return obj.serviceNumber === userServiceNo;
-  });
-  // let arr =Object.keys(userd[0]) ;
-  // {arr[0] && console.log(arr[0])};
-
-  // let len = userd === null ? 0 : userd.length;
-
-  // console.log(len);
-
-  // if(len !== 0){
-  //   console.log(userd[0]);
-  //   setUser([userd[0]]);
-  // }
-
-
-  // console.log(detailsE);
   return (
     <ThemeProvider theme={theme}>
       <Box display={"flex"}>
@@ -69,22 +44,71 @@ const PersonalDetails = () => {
             {/* <Box sx={{width:'90%',height:'90%',backgroundColor:'green',boxShadow: '8px 11px 31px -17px rgba(0,0,0,0.75)',}}>
                            dfgd 
                 </Box> */}
-            <Card sx={{ width: "90%", height: "90%" }}>
-              <CardContent sx={{ display: "flex", flexDirection: "column" }}>
-                <EditPersonalDetailsContextProvider>
-                  {userd[0] && <PersonalDetailsGrid id="serviceNo" lable="Service Number" value={userd[0].serviceNumber} editable={false} />}
-                  {userd[0] && <PersonalDetailsGrid id="name" lable="Name" value={userd[0].name} editable={false} />}
-                  {userd[0] && <PersonalDetailsGrid id="contactNo" lable="Contact Number" value={userd[0].contactNo} editable={true} />}
-                  {userd[0] && <PersonalDetailsGrid id="email" lable="Email" value={userd[0].email} editable={true} />}
-                  {userd[0] && <PersonalDetailsGrid id="nic" lable="NIC Number" value={userd[0].NIC} editable={false} />}
-                  {userd[0] && <PersonalDetailsGrid id="work" lable="Work Location" value={userd[0].workLocation} editable={false} />}
-                  {userd[0] && <PersonalDetailsGrid id="address" lable="Residantal Address" value={userd[0].address} editable={true} />}
-                </EditPersonalDetailsContextProvider>
-
-                
-              </CardContent>
-              
-            </Card>
+            
+              <Card sx={{ width: "90%", height: "90%" }}>
+                <CardContent sx={{ display: "flex", flexDirection: "column" }}>
+                  {userPersonalDetails && (
+                    <PersonalDetailsGrid
+                      id="serviceNo"
+                      lable="Service Number"
+                      value={userPersonalDetails.serviceNumber}
+                      editable={false}
+                    />
+                  )}
+                  {userPersonalDetails && (
+                    <PersonalDetailsGrid
+                      id="name"
+                      lable="Name"
+                      value={userPersonalDetails.name}
+                      editable={false}
+                    />
+                  )}
+                  {userPersonalDetails && (
+                    <PersonalDetailsGrid
+                      id="contactNo"
+                      lable="Contact Number"
+                      value={userPersonalDetails.contactNo}
+                      editable={true}
+                    />
+                  )}
+                  {userPersonalDetails && (
+                    <PersonalDetailsGrid
+                      id="email"
+                      lable="Email"
+                      value={userPersonalDetails.email}
+                      editable={true}
+                    />
+                  )}
+                  {userPersonalDetails && (
+                    <PersonalDetailsGrid
+                      id="nic"
+                      lable="NIC Number"
+                      value={userPersonalDetails.NIC}
+                      editable={false}
+                    />
+                  )}
+                  {userPersonalDetails && (
+                    <PersonalDetailsGrid
+                      id="work"
+                      lable="Work Location"
+                      value={userPersonalDetails.workLocation}
+                      editable={false}
+                    />
+                  )}
+                  {userPersonalDetails && (
+                    <PersonalDetailsGrid
+                      id="address"
+                      lable="Residantal Address"
+                      value={userPersonalDetails.address}
+                      editable={true}
+                    />
+                  )}
+                </CardContent>
+                <CardActions>
+                  <UpdateButton />
+                </CardActions>
+              </Card>
+            
           </Box>
         </Container>
       </Box>
