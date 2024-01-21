@@ -1,12 +1,12 @@
 import React from "react";
-import NavBar from "../../Components/NavBar/NavBar";
+import NavBar from '../../Components/User/NavBar/NavBar'
 
 
 import { Box, Container, ThemeProvider, Typography } from "@mui/material";
 
 import theme from '../../HomlyTheme'
 
-const MyReservation = () => {
+const PaymentDetails = () => {
   return (
     
       <ThemeProvider theme={theme}>
@@ -25,4 +25,4 @@ const MyReservation = () => {
   );
 };
 
-export default MyReservation;
+export default PaymentDetails;

@@ -20,7 +20,7 @@ import BadgeIcon from "@mui/icons-material/Badge";
 import PasswordIcon from "@mui/icons-material/Password";
 
 import theme from "../../HomlyTheme";
-import "./UserLogin.css";
+import "./UserStyle.css";
 import logo from "../../Assets/images/logo.png";
 import wave from "../../Assets/images/wave.png";
 

@@ -21,7 +21,7 @@ import CallIcon from "@mui/icons-material/Call";
 import PasswordIcon from "@mui/icons-material/Password";
 
 import theme from "../../HomlyTheme";
-import "./UserRegistration.css";
+import "./UserStyle.css";
 import logo from "../../Assets/images/logo.png";
 import wave from "../../Assets/images/wave.png";
 

@@ -7,7 +7,7 @@ import Divider from "@mui/material/Divider";
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import Button from "@mui/material/Button";
 import { ThemeProvider, Box } from "@mui/material";
-import theme from "../../HomlyTheme";
+import theme from "../../../HomlyTheme";
 import "./MyReservationCard.css";
 
 const Img = styled("img")({

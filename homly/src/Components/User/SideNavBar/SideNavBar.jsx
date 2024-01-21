@@ -160,10 +160,10 @@
 //   );
 // };
 
-import React from "react";
-import NavBar from "../../Components/NavBar/NavBar"
-const SideNavBar = () => {
-    return <NavBar sideNavBar={'block'}/>;
-}
+// import React from "react";
+// import NavBar from "../../Components/NavBar/NavBar"
+// const SideNavBar = () => {
+//     return <NavBar sideNavBar={'block'}/>;
+// }
 
-export default SideNavBar;
+// export default SideNavBar;
