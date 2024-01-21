@@ -6,8 +6,8 @@ import Box from '@mui/material/Box';
 import { Grid,ThemeProvider,Container,Button,Typography} from '@mui/material';
 import theme from '../../HomlyTheme';
 
-import SideNavbar from '../../components/locationAdmin/SideNavbar'
-import DashboardContent from '../../components/locationAdmin/DashboardContent';
+import SideNavbar from '../../Components/locationAdmin/SideNavbar'
+import DashboardContent from '../../Components/locationAdmin/DashboardContent';
 import PageTitle from '../../components/locationAdmin/PageTitle';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';    
 import CreateHolidayHomeContent from '../../components/locationAdmin/CreateHolidayHome/CreateHolidayHomeContent';
