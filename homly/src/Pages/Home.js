@@ -20,7 +20,7 @@ export default function Home() {
         hallCount={1}
         reserved="2021-09-20"
         reservedExpire="2021-09-25"
-        paid="false"
+        paid="true"
       />
     </div>
   );
