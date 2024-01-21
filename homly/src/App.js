@@ -28,7 +28,6 @@ const MyReservation = lazy(() =>
   import("../src/Pages/MyReservation/MyReservation")
 );
 
-// json-server --watch data/db.json --port 8000
 
 const App = () => (
   <EditPersonalDetailsContextProvider>
