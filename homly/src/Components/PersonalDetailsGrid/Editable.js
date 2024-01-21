@@ -11,11 +11,9 @@ const Editable = (props) => {
 
   const handleSave = () => {
     {
-      props.id && handleEditId("");
+      props.id && handleEditId(""); handlePersonalDetails([props.id,data]);
     }
-    {
-      props.id && handlePersonalDetails([props.id,data]);
-    }
+    
     console.log(data);
     console.log("save");
   };
