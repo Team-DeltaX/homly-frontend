@@ -1,15 +1,15 @@
 
-import '../App.css';
+
+import './style.css';
 import React,{ useState} from 'react'
 
 import Box from '@mui/material/Box';
-import { Grid,ThemeProvider,Container,Button,Typography} from '@mui/material';
-import theme from '../Homlytheme';
+import { Grid,ThemeProvider,Container} from '@mui/material';
+import theme from '../../HomlyTheme';
 
-import SideNavbar from '../components/SideNavbar'
-import DashboardContent from '../components/DashboardContent';
-import PageTitle from '../components/PageTitle';
-import ControlPointIcon from '@mui/icons-material/ControlPoint';    
+import SideNavbar from '../../Components/locationAdmin/SideNavbar'
+import PageTitle from '../../Components/locationAdmin/PageTitle';
+
 
 
 const Report = () => {
@@ -26,9 +26,7 @@ const Report = () => {
                         </Grid>
                         <Grid className='container_grid' xs={9} sx={{backgroundColor:'white',borderTopLeftRadius:'20px',padding:'10px 30px',height:'100vh',position:'relative'}}>
                             <Box sx={{height:"100%"}}>
-                                <PageTitle setShowNav={setShowNav} title={'Dashboard'} bell={true}/>
-                                <DashboardContent/>   
-                                <Button variant="contained" sx={{backgroundColor:"primary.main",textTransform:"capitalize",fontWeight:"bold",position:'absolute',bottom:'20px',right:'40px',color:"white"}} startIcon={<ControlPointIcon/>}><Typography sx={{fontFamily:"sans-serif"}} variant='p'>Create New HolidayHome</Typography> </Button>
+                                <PageTitle setShowNav={setShowNav} title={'Sample'} bell={true}/>
                             </Box>
                         </Grid>  
                     </Grid>

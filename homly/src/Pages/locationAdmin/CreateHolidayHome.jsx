@@ -1,16 +1,16 @@
 
-import '../App.css';
+import './style.css';
 import React,{ useState} from 'react'
 
 import Box from '@mui/material/Box';
 import { Grid,ThemeProvider,Container,Button,Typography} from '@mui/material';
-import theme from '../Homlytheme';
+import theme from '../../HomlyTheme';
 
-import SideNavbar from '../components/SideNavbar'
-import DashboardContent from '../components/DashboardContent';
-import PageTitle from '../components/PageTitle';
+import SideNavbar from '../../Components/locationAdmin/SideNavbar'
+import DashboardContent from '../../Components/locationAdmin/DashboardContent';
+import PageTitle from '../../Components/locationAdmin/PageTitle';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';    
-import CreateHolidayHomeContent from '../components/CreateHolidayHome/CreateHolidayHomeContent';
+import CreateHolidayHomeContent from '../../Components/locationAdmin/CreateHolidayHome/CreateHolidayHomeContent';
 
 
 const Report = () => {

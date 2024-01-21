@@ -3,6 +3,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Loader from "./Components/Loader/Loader";
 import EditPersonalDetailsContextProvider from "./Contexts/EditPersonalDetailsContext";
 import "../src/Styles/styles.css";
+import ManageHomes from "../src/Pages/locationAdmin/ManageHomes";
+
+
 
 const Home = lazy(() => import("../src/Pages/Home"));
 const HolidayHome = lazy(() => import("../src/Pages/HolidayHome"));
@@ -29,6 +32,34 @@ const MyReservation = lazy(() =>
 );
 
 
+const LocationDashboard = lazy(()=>
+  import("../src/Pages/locationAdmin/Dashboard")
+)
+const HolidayHomesDetails = lazy(()=>
+  import("../src/Pages/locationAdmin/HolidayHomeDetails")
+)
+
+const CreateHolidayHome = lazy(()=>
+  import("../src/Pages/locationAdmin/CreateHolidayHome")
+)
+const FeedBack = lazy(()=>
+  import("../src/Pages/locationAdmin/Feedback")
+)
+const Reservations = lazy(()=>
+  import("../src/Pages/locationAdmin/Reservations")
+)
+
+const Report = lazy(()=>
+  import("../src/Pages/locationAdmin/Report")
+)
+const LocationManageHomes =lazy(()=>{
+  import("../src/Pages/locationAdmin/ManageHomes")
+}) 
+const Login = lazy(()=>
+  import("../src/Pages/locationAdmin/Login")
+)
+
+
 const App = () => (
   <EditPersonalDetailsContextProvider>
     <Router>
@@ -52,6 +83,14 @@ const App = () => (
             element={<PaymentDetails />}
           />
           <Route path="/MyProfile/MyReservation" element={<MyReservation />} />
+
+          <Route path="/locationadmin/dashboard" element={<LocationDashboard/>}/>
+          <Route path="/locationadmin/holidayhomes/manage" element={<ManageHomes/>}/>
+          <Route path="/locationadmin/holidayhomes/details" element={<HolidayHomesDetails/>}/>
+          <Route path="/locationadmin/feedback" element={<FeedBack/>}/>
+          <Route path="/locationadmin/reservations" element={<Reservations/>}/>
+          <Route path="/locationadmin/report" element={<Report/>}/>
+          <Route path="/locationadmin/holidayhomes/createholidayhome" element={<CreateHolidayHome/>}/>
         </Routes>
       </Suspense>
     </Router>

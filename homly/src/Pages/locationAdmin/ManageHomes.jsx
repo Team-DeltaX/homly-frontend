@@ -1,15 +1,15 @@
 
-import '../App.css';
+import './style.css';
 
 import React,{useEffect, useState} from 'react'
-import SideNavbar from '../components/SideNavbar'
+import SideNavbar from '../../Components/locationAdmin/SideNavbar'
 
 import Box from '@mui/material/Box';
 import { Grid,ThemeProvider,Container} from '@mui/material';
-import theme from '../Homlytheme';
+import theme from '../../HomlyTheme';
 
-import PageTitle from '../components/PageTitle';
-import ManageHomeContent from '../components/ManageHomeContent';
+import PageTitle from '../../Components/locationAdmin/PageTitle';
+import ManageHomeContent from '../../Components/locationAdmin/ManageHomeContent';
 
 
 
@@ -38,6 +38,7 @@ const ManageHomes = () => {
                         </Grid>  
                     </Grid>
                 </Container>    
+            
             </Box>
     </ThemeProvider>
   )

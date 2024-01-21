@@ -1,11 +1,13 @@
 import React from 'react'
 import { Box,Grid, Paper, Typography,ThemeProvider } from '@mui/material'
-import theme from '../Homlytheme'
+import theme from '../../HomlyTheme';
 
 import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
 
-import logo from '../assest/images/logo_colored.png';
+import logo from '../../Assets/images/logo_colored.png';
+
+import './style.css';
 
 
 
