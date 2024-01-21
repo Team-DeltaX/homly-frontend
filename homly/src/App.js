@@ -29,7 +29,7 @@ const MyReservation = lazy(() =>
 );
 
 const LocationDashboard = lazy(()=>
-  import("../src/Pages/LocationAdmin/Dashboard")
+  import("../src/Pages/locationAdmin/Dashboard")
 )
 
 // json-server --watch data/db.json --port 8000
