@@ -31,6 +31,7 @@ const MyReservation = lazy(() =>
   import("../src/Pages/MyReservation/MyReservation")
 );
 
+
 const LocationDashboard = lazy(()=>
   import("../src/Pages/locationAdmin/Dashboard")
 )
@@ -58,7 +59,6 @@ const Login = lazy(()=>
   import("../src/Pages/locationAdmin/Login")
 )
 
-// json-server --watch data/db.json --port 8000
 
 const App = () => (
   <EditPersonalDetailsContextProvider>
