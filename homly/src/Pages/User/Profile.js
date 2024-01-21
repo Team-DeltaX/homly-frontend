@@ -1,5 +1,5 @@
 import React from 'react'
-import NavBar from '../../Components/User/NavBar/NavBar'
+import NavBar from '../../Components/NavBar/NavBar'
 
 export default function Profile() {
   return (

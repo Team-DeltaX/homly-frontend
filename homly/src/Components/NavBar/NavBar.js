@@ -25,7 +25,7 @@ import { ThemeProvider } from "@emotion/react";
 
 import { Link, NavLink } from "react-router-dom";
 
-import NotificationPanel from "../../NotificationPanel/NotificationPanel";
+import NotificationPanel from "../NotificationPanel/NotificationPanel";
 
 import theme from "../../HomlyTheme";
 import "./NavBar.css"
@@ -228,7 +228,7 @@ const NavBar = (props) => {
                     sx={{
                         width: { sm: drawerWidth },
                         flexShrink: { sm: 0 },
-                        display: props.sideNavBar,
+                        display: {sm:'none', md:props.sideNavBar},
                     }}
                     aria-label="mailbox folders"
                 >

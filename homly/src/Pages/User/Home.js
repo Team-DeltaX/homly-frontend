@@ -1,8 +1,8 @@
 import React from "react";
 import { Container } from "@mui/material";
 
-import NavBar from '../../Components/User/NavBar/NavBar'
-import MyReservationCard from "../../Components/User/MyReservationCard/MyReservationCard";
+import NavBar from '../../Components/NavBar/NavBar'
+import MyReservationCard from "../../Components/MyReservationCard/MyReservationCard";
 
 
 export default function Home() {

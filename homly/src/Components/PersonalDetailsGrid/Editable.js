@@ -3,7 +3,7 @@ import { useState, useContext } from "react";
 
 import { Grid, Typography, Button, TextField } from "@mui/material";
 
-import { EditPersonalDetailsContext } from "../../../Contexts/EditPersonalDetailsContext";
+import { EditPersonalDetailsContext } from "../../Contexts/EditPersonalDetailsContext";
 
 const Editable = (props) => {
   const { handleEditId, handlePersonalDetails } = useContext(EditPersonalDetailsContext);
@@ -19,13 +19,13 @@ const Editable = (props) => {
   };
 
   return (
-    <Grid container key={props.id}>
-      <Grid item md={4}>
+    <Grid container key={props.id} sx={{width:'100%'}}>
+      <Grid item xs={12} sm={4} md={4}>
         <Typography variant="h6" fontWeight={"regular"} component="div">
           {props.lable}
         </Typography>
       </Grid>
-      <Grid item md={6}>
+      <Grid item xs={9} sm={6} md={6}>
         <TextField
           id="outlined-basic"
           value={data}
@@ -34,7 +34,7 @@ const Editable = (props) => {
           onChange={(e) => setData(e.target.value)}
         />
       </Grid>
-      <Grid item md={2}>
+      <Grid item xs={3} sm={2} md={2}>
         <Button
           variant="contained"
           size="small"
