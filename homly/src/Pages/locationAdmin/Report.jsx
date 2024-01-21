@@ -18,7 +18,8 @@ const Report = () => {
     const [showNav,setShowNav] = useState('nav_grid_deactive')
 
     return (
-    <ThemeProvider theme={theme}>
+    
+      <ThemeProvider theme={theme}> 
         <Box className="main_container" sx={{width:"100%",backgroundColor:'primary.main',overflow:'hidden'}}>
                 <Container maxWidth="xl" style={{padding:0}}>
                     <Grid container sx={{position:'relative'}}>
@@ -35,7 +36,10 @@ const Report = () => {
                     </Grid>
                 </Container>    
             </Box>
-    </ThemeProvider>
+            
+     </ThemeProvider> 
+
+
   )
 }
 

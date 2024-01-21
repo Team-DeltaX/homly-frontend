@@ -3,6 +3,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Loader from "./Components/Loader/Loader";
 import EditPersonalDetailsContextProvider from "./Contexts/EditPersonalDetailsContext";
 import "../src/Styles/styles.css";
+import ManageHomes from "../src/Pages/locationAdmin/ManageHomes";
+
+
 
 const Home = lazy(() => import("../src/Pages/Home"));
 const HolidayHome = lazy(() => import("../src/Pages/HolidayHome"));
@@ -41,16 +44,19 @@ const CreateHolidayHome = lazy(()=>
 const FeedBack = lazy(()=>
   import("../src/Pages/locationAdmin/Feedback")
 )
-const Login = lazy(()=>
-  import("../src/Pages/locationAdmin/Login")
-)
 const Reservations = lazy(()=>
   import("../src/Pages/locationAdmin/Reservations")
 )
 
-const Report = lazy(()=>{
+const Report = lazy(()=>
   import("../src/Pages/locationAdmin/Report")
-})
+)
+const LocationManageHomes =lazy(()=>{
+  import("../src/Pages/locationAdmin/ManageHomes")
+}) 
+const Login = lazy(()=>
+  import("../src/Pages/locationAdmin/Login")
+)
 
 // json-server --watch data/db.json --port 8000
 
@@ -79,7 +85,8 @@ const App = () => (
           <Route path="/MyProfile/MyReservation" element={<MyReservation />} />
 
           <Route path="/locationadmin/dashboard" element={<LocationDashboard/>}/>
-          <Route path="/locationadmin/holidayhomes" element={<HolidayHomesDetails/>}/>
+          <Route path="/locationadmin/holidayhomes/manage" element={<ManageHomes/>}/>
+          <Route path="/locationadmin/holidayhomes/details" element={<HolidayHomesDetails/>}/>
           <Route path="/locationadmin/feedback" element={<FeedBack/>}/>
           <Route path="/locationadmin/reservations" element={<Reservations/>}/>
           <Route path="/locationadmin/report" element={<Report/>}/>

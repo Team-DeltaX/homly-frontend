@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box,Paper,Typography,Button} from '@mui/material';
-import imag from "../../assest/images/user.webp";
+import imag from "../../Assets/images/user.webp";
 
 
 const HolidayHomeCard = () => {

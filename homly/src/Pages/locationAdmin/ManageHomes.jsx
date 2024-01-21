@@ -9,7 +9,7 @@ import { Grid,ThemeProvider,Container} from '@mui/material';
 import theme from '../../HomlyTheme';
 
 import PageTitle from '../../Components/locationAdmin/PageTitle';
-import ManageHomeContent from '../../components/locationAdmin/ManageHomeContent';
+import ManageHomeContent from '../../Components/locationAdmin/ManageHomeContent';
 
 
 
@@ -38,6 +38,7 @@ const ManageHomes = () => {
                         </Grid>  
                     </Grid>
                 </Container>    
+            
             </Box>
     </ThemeProvider>
   )
