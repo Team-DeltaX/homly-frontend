@@ -2,7 +2,7 @@ import React from "react";
 import { useContext } from "react";
 import { Box, Button } from "@mui/material";
 
-import { EditPersonalDetailsContext } from "../../Contexts/EditPersonalDetailsContext";
+import { EditPersonalDetailsContext } from "../../../Contexts/EditPersonalDetailsContext";
 
 const UpdateButton = () => {
   const { handleUpdate,handleCancel,isEnable } = useContext(EditPersonalDetailsContext);
