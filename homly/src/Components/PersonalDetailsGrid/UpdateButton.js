@@ -6,7 +6,7 @@ import { EditPersonalDetailsContext } from "../../Contexts/EditPersonalDetailsCo
 
 const UpdateButton = () => {
   const { handleUpdate,handleCancel,isEnable } = useContext(EditPersonalDetailsContext);
-    console.log('button',isEnable);
+   
   return (
     <Box>
       <Button

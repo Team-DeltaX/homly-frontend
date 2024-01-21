@@ -1,6 +1,4 @@
 import React, { useContext } from "react";
-import { useEffect, useState } from "react";
-import axios from "axios";
 
 import NavBar from "../../Components/NavBar/NavBar";
 import PersonalDetailsGrid from "../../Components/PersonalDetailsGrid/PersonalDetailsGrid";
@@ -23,9 +21,9 @@ import theme from "../../HomlyTheme";
 
 
 const PersonalDetails = () => {
-  const { APIData,userd,userPersonalDetails } = useContext(EditPersonalDetailsContext)
+  const { userPersonalDetails } = useContext(EditPersonalDetailsContext)
  
-  console.log(userPersonalDetails);
+  // console.log(userPersonalDetails);
   
 
   return (

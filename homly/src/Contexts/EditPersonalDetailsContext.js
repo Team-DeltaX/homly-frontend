@@ -41,7 +41,7 @@ const EditPersonalDetailsContextProvider = ({ children }) => {
 
   const handleEditId = (id) => {
     setCurrentEditId(id);
-    console.log(id);
+    // console.log(id);
   };
 
   const handlePersonalDetails = (data) => {
@@ -49,10 +49,15 @@ const EditPersonalDetailsContextProvider = ({ children }) => {
     // setUserPersonalDetails(userd[0]);
     setIsEnable(true)
     setUserPersonalDetails({ ...userPersonalDetails, [data[0]]: data[1] });
-    console.log(userPersonalDetails);
+    // console.log(userPersonalDetails);
+    checkEquality();
 
     // console.log("keu",Object.keys(object),'val',Object.values(object));
   };
+
+  const checkEquality = () => {
+    console.log('equal',JSON.stringify(userPersonalDetails)===JSON.stringify(userd[0]))
+  }
 
   return (
     <EditPersonalDetailsContext.Provider
