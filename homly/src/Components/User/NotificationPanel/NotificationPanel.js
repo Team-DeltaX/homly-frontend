@@ -50,7 +50,7 @@ const NotificationPanel = (props) => {
         </IconButton>
       </Tooltip>
       <Menu
-        sx={{ mt: "45px" }}
+        sx={{ mt: "45px",width:"20%" }}
         id="menu-appbar"
         anchorEl={anchorElUser}
         anchorOrigin={{
@@ -69,7 +69,7 @@ const NotificationPanel = (props) => {
           <MenuItem
             key={item.title}
             display={"flex"}
-            sx={{backgroundColor: "red",m:0.5 ,borderRadius: "10px",boxShadow: "0px 39px 64px -55px rgba(0,0,0,0.75)",flexDirection: "column",alignItems:"flex-start"}}
+            sx={{m:0.5 ,borderRadius: "10px",boxShadow: "0px 39px 64px -55px rgba(0,0,0,0.75)",flexDirection: "column",alignItems:"flex-start"}}
             
             // alignItems={"flex-start"}
             // onClick={handleCloseUserMenu}
