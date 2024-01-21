@@ -28,6 +28,10 @@ const MyReservation = lazy(() =>
   import("../src/Pages/MyReservation/MyReservation")
 );
 
+const LocationDashboard = lazy(()=>
+  import("../src/Pages/LocationAdmin/Dashboard")
+)
+
 // json-server --watch data/db.json --port 8000
 
 const App = () => (
@@ -53,6 +57,8 @@ const App = () => (
             element={<PaymentDetails />}
           />
           <Route path="/MyProfile/MyReservation" element={<MyReservation />} />
+
+          <Route path="/locationadmin/dashboard" element={<LocationDashboard/>}/>
         </Routes>
       </Suspense>
     </Router>
