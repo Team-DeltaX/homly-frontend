@@ -66,6 +66,7 @@ const Notification = ({type,url,data,id,updateNotifications}) => {
                     </Grid>
 
                 </Grid>
+         
             }
 
             

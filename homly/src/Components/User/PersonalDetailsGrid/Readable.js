@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useContext } from "react";
+import { useContext } from "react";
 
 import { Grid, Typography, Button } from "@mui/material";
 
@@ -11,9 +11,7 @@ const Readable = (props) => {
   );
   
   const handleEdit = () => {
-    {
-      props.id && handleEditId(props.id);
-    }
+    if (props.id) handleEditId(props.id);
   };
 
   return (

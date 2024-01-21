@@ -89,6 +89,7 @@ const PageTitle = ({title,bell,setShowNav}) => {
 
       const removeAllNotifications = () => {
         SetNotifications([]);
+        SetMessagecount(0);
       };
 
   return (
