@@ -1,6 +1,6 @@
 import React, { Suspense, lazy } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Loader from "./Components/Loader/Loader";
+// import Loader from "./Components/Loader/Loader";
 import EditPersonalDetailsContextProvider from "./Contexts/EditPersonalDetailsContext";
 import "../src/Styles/styles.css";
 import ManageHomes from "../src/Pages/locationAdmin/ManageHomes";
@@ -67,12 +67,10 @@ const Reservations = lazy(()=>
 const Report = lazy(()=>
   import("../src/Pages/locationAdmin/Report")
 )
-const LocationManageHomes =lazy(()=>{
-  import("../src/Pages/locationAdmin/ManageHomes")
-}) 
-const Login = lazy(()=>
-  import("../src/Pages/locationAdmin/Login")
-)
+// const LocationManageHomes =lazy(()=>{
+//   import("../src/Pages/locationAdmin/ManageHomes")
+// }) 
+
 // location admin import end
 
 const App = () => (

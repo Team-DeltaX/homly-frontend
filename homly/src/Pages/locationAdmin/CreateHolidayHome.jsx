@@ -3,13 +3,11 @@ import './style.css';
 import React,{ useState} from 'react'
 
 import Box from '@mui/material/Box';
-import { Grid,ThemeProvider,Container,Button,Typography} from '@mui/material';
+import { Grid,ThemeProvider,Container} from '@mui/material';
 import theme from '../../HomlyTheme';
 
 import SideNavbar from '../../Components/locationAdmin/SideNavbar'
-import DashboardContent from '../../Components/locationAdmin/DashboardContent';
-import PageTitle from '../../Components/locationAdmin/PageTitle';
-import ControlPointIcon from '@mui/icons-material/ControlPoint';    
+import PageTitle from '../../Components/locationAdmin/PageTitle';  
 import CreateHolidayHomeContent from '../../Components/locationAdmin/CreateHolidayHome/CreateHolidayHomeContent';
 
 
