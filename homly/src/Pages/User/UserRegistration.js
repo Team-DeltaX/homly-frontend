@@ -99,7 +99,7 @@ const UserRegistration = () => {
     let len = dbServiceNo === null ? 0 : dbServiceNo.length;
     if (sn.length > 0 && len !== 0) {
       for (let i = 0; i < len; i++) {
-        if (dbServiceNo[i].ServiceNo === sn) {
+        if (dbServiceNo[i].serviceNumber === sn) {
           setErrorServiceNumber(false);
           console.log("1", errorServiceNumber);
           return false;
@@ -121,6 +121,8 @@ const UserRegistration = () => {
         setDbServiceNo(data);
       });
   }, []);
+
+  // console.log(dbServiceNo)
 
   const handleSubmit = (e) => {
     e.preventDefault();
