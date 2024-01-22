@@ -1,5 +1,5 @@
 import { React } from "react";
-// import { useEffect } from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 import {
   Box,
@@ -95,11 +95,11 @@ const UserRegistration = () => {
   };
 
   const checkServiceNo = (sn) => {
-    setDbServiceNo("1000");
+    // setDbServiceNo("1000");
     let len = dbServiceNo === null ? 0 : dbServiceNo.length;
     if (sn.length > 0 && len !== 0) {
       for (let i = 0; i < len; i++) {
-        if (dbServiceNo[i].SN === sn) {
+        if (dbServiceNo[i].ServiceNo === sn) {
           setErrorServiceNumber(false);
           console.log("1", errorServiceNumber);
           return false;
@@ -112,15 +112,15 @@ const UserRegistration = () => {
     }
   };
 
-  // useEffect(() => {
-  //   fetch("http://localhost:8000/employee")
-  //     .then((res) => {
-  //       return res.json();
-  //     })
-  //     .then((data) => {
-  //       setDbServiceNo(data);
-  //     });
-  // }, []);
+  useEffect(() => {
+    fetch("https://65ac00f8fcd1c9dcffc76f52.mockapi.io/homly/api/employee")
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        setDbServiceNo(data);
+      });
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -164,7 +164,14 @@ const UserRegistration = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      
+      <Box
+        className="main_container"
+        sx={{
+          width: "100%",
+          overflow: "hidden",
+        }}
+      >
+        <Container maxWidth="xl" style={{ padding: 0 }}>
           <Container className="registration-box-container">
             <Grid
               container
@@ -240,7 +247,7 @@ const UserRegistration = () => {
                   </Button>
                 </Box>
                 <Box paddingLeft={"5%"} marginBottom={"5%"} width="100%">
-                  <FormControl action="" autoComplete="off" width="100%">
+                  <form action="" autoComplete="off" width="100%" onSubmit={handleSubmit} onReset={handleReset}>
                     {/* <AvatarImage /> */}
                     <TextField
                       sx={{ marginBottom: " 6%", width: "90%" }}
@@ -449,7 +456,6 @@ const UserRegistration = () => {
                         variant="outlined"
                         color="primary"
                         sx={{ marginRight: "2%" }}
-                        onClick={handleReset}
                       >
                         Reset
                       </Button>
@@ -457,17 +463,17 @@ const UserRegistration = () => {
                         type="submit"
                         variant="contained"
                         color="primary"
-                        onClick={handleSubmit}
                       >
                         Register
                       </Button>
                     </Box>
-                  </FormControl>
+                  </form>
                 </Box>
               </Grid>
             </Grid>
           </Container>
-        
+        </Container>
+      </Box>
     </ThemeProvider>
   );
 };
