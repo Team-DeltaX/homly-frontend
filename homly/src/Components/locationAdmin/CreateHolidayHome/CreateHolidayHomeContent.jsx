@@ -1,12 +1,18 @@
-import { Grid,Box } from '@mui/material'
+import { Grid,Box, Button,TextField } from '@mui/material'
 import React from 'react'
 import HomeDetailsView from './HomeDetailsView'
 import CareTakerDetailsView from './CareTakerDetailsView'
 import HomeBreakDownView from './HomeBreakDownView'
 
 const CreateHolidayHomeContent = () => {
+
+    const handleSubmit =( e)=>{
+        e.preventDefault();
+    }
   return (
     <Box className="content_container" sx={{maxHeight:'90vh'}}>
+        <form onSubmit={handleSubmit}>
+
         <Grid container spacing={2} sx={{marginBottom:"16px "}} >
             <Grid item md={6} sm={12} xs={12} >
                 <HomeDetailsView/>
@@ -20,6 +26,11 @@ const CreateHolidayHomeContent = () => {
                 <HomeBreakDownView/>
             </Grid>
         </Grid>
+ 
+        <Box>
+            <Button type='submit'>Submit</Button>
+        </Box>
+        </form>
     </Box>
     
   )
