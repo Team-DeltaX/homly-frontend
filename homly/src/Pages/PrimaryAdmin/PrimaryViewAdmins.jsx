@@ -62,7 +62,7 @@ const PrimaryViewAdmins = () => {
                 
                       </Box>
                       <Box>
-                      <Link to='/addadmin'>
+                      <Link to='/primaryadmin/addadmin'>
                       <Button sx={{marginLeft:{md:"75%",xs:"10%"}, width:'170px',marginTop:{xs:"8%",md:'1%'}}} component="label" variant="contained" startIcon={<AddCircleIcon/>} >
                              Add Admin
                 

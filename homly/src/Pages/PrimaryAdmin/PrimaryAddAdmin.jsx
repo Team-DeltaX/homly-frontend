@@ -21,12 +21,49 @@ const PrimaryAddAdmin = () => {
     const [worklocation,SetWorklocation]=useState("")
     const [passworderror,setPassworderror]=useState(false)
     const [mobileerror,setMobileerror]=useState(false)
+    const [emailerror,setEmailerror]=useState(false)
+    const [serviceerror,setServiceerror]=useState(false)
+    const [usernameerror,setUsernameerror]=useState(false)
+    const [worklocationeerror,setWorklocationerror]=useState(false)
 
     const validatemobile=(number)=>{
         const pattern =/^(?:\+94|0)?(?:7\d{8}|[1-9]\d{8})$/;
         return pattern.test(number)
     }
+    const validateemail=(email)=>{
+        const pattern =/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+        if( pattern.test(email)){
+            setEmailerror(false)
+        }else{
+            setEmailerror(true)
+        }
+    }
+    const valideservice=(serviceno)=>{
+        if(serviceno.length<2){
+            setServiceerror(true)
 
+        }else{
+            setServiceerror(false)
+
+        }
+    }
+
+    const validusername=(username)=>{
+        if(username.length<2){
+            setUsernameerror(true)
+
+        }else{
+            setUsernameerror(false)
+        }
+    }
+    const validlocation=(location)=>{
+        if(location.length<2){
+            setWorklocationerror(true)
+
+        }else{
+            setWorklocationerror(false)
+        }
+    }
 
     const handlesubmit=()=>{
         console.log("submitted")
@@ -72,7 +109,7 @@ const PrimaryAddAdmin = () => {
                                 <Grid container width={"60%"} sx={{marginLeft:'15%',alignItems:'center',padding:'10px'}}>
                     
                                     <Grid item  md={6} sm={12} xs={12}>
-                                    <InputLabel sx={{fontFamily:'roboto'}}>Service Number</InputLabel>
+                                    <InputLabel>Service Number</InputLabel>
                                     </Grid>
                                     <Grid item md={6} sm={12} xs={12}>
                                     {/* <TextField
@@ -89,9 +126,16 @@ const PrimaryAddAdmin = () => {
                                    ></TextField> */}
                                    <TextField value={serviceno}
                                    required={true}
-                                   onChange={e=>{setServiceno(e.target.value)}}
+                                   onChange={e=>{setServiceno(e.target.value)
+                                    valideservice(e.target.value)
+
+                                    
+                                
+                                }}
+
                                     alignItems="center"
                                     fullWidth
+                                    error={serviceerror}
                     
                                     type='text'
                                     size="small"
@@ -104,14 +148,18 @@ const PrimaryAddAdmin = () => {
                             <Grid item sm={12}>
                                 <Grid container width={"60%"} sx={{marginLeft:'15%',alignItems:'center',padding:'10px'}}>
                                     <Grid item  md={6} sm={12} xs={12}>
-                                    <InputLabel  sx={{fontFamily:'roboto'}}>User Name</InputLabel>
+                                    <InputLabel  >User Name</InputLabel>
                                     </Grid>
                                     <Grid item md={6} sm={12} xs={12}>
                                     <TextField value={username}
                                    required={true}
-                                   onChange={e=>{setUsername(e.target.value)}}
-                                   error={mobileerror}
+                                   onChange={e=>{setUsername(e.target.value)
+                                    validusername(e.target.value)
+                                
+                                }}
+                                   
                                     alignItems="center"
+                                    error={usernameerror}
                                     type='text'
                                     size="small"
                                     sx={{background:"white",marginLeft:'3%',borderRadius:"15px",
@@ -122,7 +170,7 @@ const PrimaryAddAdmin = () => {
                             <Grid item sm={12}>
                                 <Grid container width={"60%"} sx={{marginLeft:'15%',alignItems:'center',padding:'10px'}}>
                                     <Grid item  md={6} sm={12} xs={12}>
-                                    <InputLabel  sx={{fontFamily:'roboto'}}>Password</InputLabel>
+                                    <InputLabel  >Password</InputLabel>
                                     </Grid>
                                     <Grid item md={6} sm={12} xs={12}>
                                     <TextField value={password}
@@ -136,7 +184,7 @@ const PrimaryAddAdmin = () => {
                                     size="small"
                                     sx={{background:"white",marginLeft:'3%',borderRadius:"15px",
                                     '& fieldset': {  borderRadius: '10px', borderWidth: '2px', fontFamily: 'roboto' ,},width:"100%"}}></TextField>
-                                    {passworderror && <Typography sx={{fontSize:"10px",fontFamily:"roboto",color:"red"}}>password length should be greater than 8 characters</Typography>
+                                    {passworderror && <Typography sx={{fontSize:"10px",color:"red"}}>password length should be greater than 8 characters</Typography>
                      }
                                     </Grid>
                                 </Grid>
@@ -144,7 +192,7 @@ const PrimaryAddAdmin = () => {
                             <Grid item sm={12}>
                                 <Grid container width={"60%"} sx={{marginLeft:'15%',alignItems:'center',padding:'10px'}}>
                                     <Grid item  md={6} sm={12} xs={12}>
-                                    <InputLabel  sx={{fontFamily:'roboto'}}>Contact Number</InputLabel>
+                                    <InputLabel >Contact Number</InputLabel>
                                     </Grid>
                                     <Grid item md={6} sm={12} xs={12}>
                                     <TextField value={contactno}
@@ -154,27 +202,34 @@ const PrimaryAddAdmin = () => {
                                 }}
                                    type='text'
                                     alignItems="center"
+                                    error={mobileerror}
                                     size="small"
                                     sx={{background:"white",marginLeft:'3%',borderRadius:"15px",
                                     '& fieldset': {  borderRadius: '10px', borderWidth: '2px', fontFamily: 'roboto' ,},width:"100%"}}></TextField>
-                                    {mobileerror && <Typography sx={{fontSize:"10px",fontFamily:"roboto",color:"red"}}>enter valid contact number</Typography>}
+                                    {mobileerror && <Typography sx={{fontSize:"10px",color:"red"}}>enter valid contact number</Typography>}
                                     </Grid>
                                 </Grid>
                             </Grid>
                             <Grid item sm={12}>
                                 <Grid container width={"60%"} sx={{marginLeft:'15%',alignItems:'center',padding:'10px'}}>
                                     <Grid item  md={6} sm={12} xs={12}>
-                                    <InputLabel  sx={{fontFamily:'roboto'}}>Email</InputLabel>
+                                    <InputLabel >Email</InputLabel>
                                     </Grid>
                                     <Grid item md={6} sm={12} xs={12}>
                                     <TextField value={email}
                                     type='email'
                                    required={true}
-                                   onChange={e=>{SetEmail(e.target.value)}}
+                                   onChange={e=>{SetEmail(e.target.value)
+                                    validateemail(e.target.value)
+                                
+                                }}
                                     alignItems="center"
+                                    error={emailerror}
                                     size="small"
                                     sx={{background:"white",marginLeft:'3%',borderRadius:"15px",
                                     '& fieldset': {  borderRadius: '10px', borderWidth: '2px', fontFamily: 'roboto' ,},width:"100%"}}></TextField>
+                                    {emailerror && <Typography sx={{fontSize:"10px",color:"red"}}>Enter Valid Email</Typography>}
+
                                     </Grid>
                                 </Grid>
                             </Grid>
@@ -182,15 +237,19 @@ const PrimaryAddAdmin = () => {
                             <Grid item sm={12}>
                                 <Grid container width={"60%"} sx={{marginLeft:'15%',alignItems:'center',padding:'10px'}}>
                                     <Grid item  md={6} sm={12} xs={12}>
-                                    <InputLabel  sx={{fontFamily:'roboto'}}>Work Location</InputLabel>
+                                    <InputLabel  >Work Location</InputLabel>
                                     </Grid>
                     
                                     <Grid item md={6} sm={12} xs={12}>
                                     <TextField value={worklocation}
                                     type='text'
                                    required={true}
-                                   onChange={e=>{SetWorklocation(e.target.value)}}
+                                   onChange={e=>{SetWorklocation(e.target.value)
+                                    validlocation(e.target.value)
+                                
+                                }}
                                     alignItems="center"
+                                    error={worklocationeerror}
                                     size="small"
                                     sx={{background:"white",marginLeft:'3%',borderRadius:"15px",
                                     '& fieldset': {  borderRadius: '10px', borderWidth: '2px', fontFamily: 'roboto' ,},width:"100%"}}></TextField>
@@ -198,7 +257,7 @@ const PrimaryAddAdmin = () => {
                                 </Grid>
                             </Grid>
                             <Grid item sm={12} sx={{marginLeft:{md:"60%",xs:'20%'},marginBottom:"2%"}}>
-                                <Button type='submit' variant='contained' sx={{fontFamily:'roboto'}} disabled={(mobileerror || passworderror)?true:false} >Add</Button>
+                                <Button type='submit' variant='contained'  disabled={(mobileerror || passworderror ||emailerror || usernameerror ||serviceerror||worklocationeerror)?true:false} >Add</Button>
                             </Grid>
                     
                     
