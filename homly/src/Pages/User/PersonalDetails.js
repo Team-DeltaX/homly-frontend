@@ -28,9 +28,9 @@ const PersonalDetails = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box display={"flex"}>
+      <Box display={'flex'}>
         <NavBar sideNavBar="block" />
-        <Container sx={{ mt: 10, height: {xs:"100vh",sm:"75vh",md:"80vh"} }}>
+        <Container sx={{ mt: 10, height: {xs:"auto",sm:"75vh",md:"80vh"} }}>
           <Typography variant="h4">Personal Details</Typography>
           <Box
             sx={{
@@ -46,7 +46,7 @@ const PersonalDetails = () => {
                            dfgd 
                 </Box> */}
             
-              <Card sx={{ width: "90%"}}>
+              <Card sx={{ width: "90%",margin:{xs:'3% 0 10% 0'}}}>
                 <CardContent sx={{ display: "flex", flexDirection: "column" }}>
                   {userPersonalDetails && (
                     <PersonalDetailsGrid

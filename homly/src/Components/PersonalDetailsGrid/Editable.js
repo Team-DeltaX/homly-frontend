@@ -21,7 +21,7 @@ const Editable = (props) => {
   return (
     <Grid container key={props.id} sx={{width:'100%'}}>
       <Grid item xs={12} sm={4} md={4}>
-        <Typography variant="h6" fontWeight={"regular"} component="div">
+        <Typography variant="h6" fontWeight={"bold"} component="div">
           {props.lable}
         </Typography>
       </Grid>
