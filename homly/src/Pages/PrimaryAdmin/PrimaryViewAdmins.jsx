@@ -1,15 +1,15 @@
 
-// import '../App.css';
-import PageTopnb from '../../Components/PrimaryAdmin/PageTopnb'
+// // import '../App.css';
+// import PageTopnb from '../../Components/PrimaryAdmin/PageTopnb'
 import React,{useEffect, useState} from 'react'
 import SideNavbar from '../../Components/PrimaryAdmin/SideNavbar'
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Box from '@mui/material/Box';
 import { Button, Container, Grid,ThemeProvider } from '@mui/material';
 import theme from '../../HomlyTheme';
-import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
-import Search from '../../Components/PrimaryAdmin/Search';
-import ViewAdminsCard from '../../Components/PrimaryAdmin/ViewAdminCard';
+// import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+// import Search from '../../Components/PrimaryAdmin/Search';
+// import ViewAdminsCard from '../../Components/PrimaryAdmin/ViewAdminCard';
 import { Link } from 'react-router-dom';
 import ViewAdminCard2 from '../../Components/PrimaryAdmin/ViewAdminCard2';
 import PageTop from '../../Components/PrimaryAdmin/PageTop';

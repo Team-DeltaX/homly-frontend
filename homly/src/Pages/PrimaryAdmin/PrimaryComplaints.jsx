@@ -8,7 +8,7 @@ import Box from '@mui/material/Box';
 import { Container, Grid,ThemeProvider } from '@mui/material';
 import theme from '../../HomlyTheme';
 import Pagetop from '../../Components/PrimaryAdmin/PageTop';
-import Search from '../../Components/PrimaryAdmin/Search';
+// import Search from '../../Components/PrimaryAdmin/Search';
 import ViewPopupComplaints from '../../Components/PrimaryAdmin/ViewPopupComplints';
 
 const PrimaryComplaints = () => {

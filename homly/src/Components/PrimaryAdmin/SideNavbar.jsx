@@ -8,6 +8,7 @@ import { Typography } from '@mui/material';
 import logo from '../../Assets/images/logo.png';
 import user from '../../Assets/images/profile.jpeg'
 import {Link} from 'react-router-dom';
+import logo1 from '../../Assets/images/logo1.png'
 
 
 
@@ -52,7 +53,7 @@ export default function SideNavbar({setShowNav}) {
             <Box sx={{width:'100%',margin:'0 auto'}}>
                 <Grid container alignItems={'center'} direction={"column"} >
                     <Box sx={{display:'flex',justifyContent:'center',alignItems:'center'}}>
-                    <img src={logo} alt="logoOfHomely"/>
+                    <img src={logo1} alt="logoOfHomely"/>
                     </Box>
                     {/* <Box>
                     <Typography variant='h5' sx={{color:'white',fontFamily:theme.fontFamily} }>Admin</Typography>

@@ -3,15 +3,15 @@
 import { createPortal } from 'react-dom';
 import React,{useEffect, useState} from 'react'
 import SideNavbar from '../../Components/PrimaryAdmin/SideNavbar'
-import ComplaintCard from '../../Components/PrimaryAdmin/ComplaintCard';
+// import ComplaintCard from '../../Components/PrimaryAdmin/ComplaintCard';
 import Box from '@mui/material/Box';
 import { Container, Grid,ThemeProvider } from '@mui/material';
 import theme from '../../HomlyTheme';
 import Pagetop from '../../Components/PrimaryAdmin/PageTop';
-import Search from '../../Components/PrimaryAdmin/Search';
+// import Search from '../../Components/PrimaryAdmin/Search';
 import AuthorizationsCard from '../../Components/PrimaryAdmin/authorizationsCard';
 import Model from '../../Components/PrimaryAdmin/Model';
-import { Mode } from '@mui/icons-material';
+// import { Mode } from '@mui/icons-material';
 
 const PrimaryAuthorizations = () => {
     const [popup,setpopup]=useState(false)

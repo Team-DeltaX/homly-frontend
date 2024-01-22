@@ -1,7 +1,7 @@
 
 // import '../App.css';
 
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import SideNavbar from '../../Components/PrimaryAdmin/SideNavbar'
 
 import Box from '@mui/material/Box';
@@ -10,7 +10,7 @@ import theme from '../../HomlyTheme';
 import Pagetop from '../../Components/PrimaryAdmin/PageTop';
 import DashViewAdminBox from '../../Components/PrimaryAdmin/DashViewAdminBox';
 import { Link } from 'react-router-dom';
-
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 
 
@@ -36,14 +36,14 @@ const PrimaryDashboard = () => {
                                     <Grid md={4} sx={{height:'100vh'}}>
                                         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                                             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: '#E9E9E9', padding: '2px', margin: '15px', borderRadius: '20px' }}>
-                                                <Box><Typography variant='h6' style={{ margin: '10px' }}>Location Admins</Typography></Box>
+                                                <Box><Typography variant='h6' style={{ margin: '5px' }}>Location Admins</Typography></Box>
                                               
                                                 
                                                 <Box><DashViewAdminBox color={"#253DA1"}/></Box>
                                                 <Box><DashViewAdminBox color={"pink"}/></Box>
                                                 <Box><DashViewAdminBox color={"#77ccff"}/></Box>
                                                 <Box><DashViewAdminBox color={"#f5c77e"}/></Box>
-                                                <Box><DashViewAdminBox color={"#bebdb8"}/></Box>
+                                                {/* <Box><DashViewAdminBox color={"#bebdb8"}/></Box> */}
                                                 <Box><Link to="/primaryadmin/viewadmin"><Button sx={{ color: '#19BDFF' }}>See More</Button></Link></Box>
 
 
@@ -63,6 +63,12 @@ const PrimaryDashboard = () => {
                                                         
                                                     </Box>
 
+                                                </Box>
+                                                <Box>
+                                                {/* <Button sx={{  marginLeft: "5%", marginTop: { xs: '10%', sm: '2px' }}} component="label" variant="contained" startIcon={<AddCircleIcon/>}>
+                                    Add Admin
+
+                                </Button> */}
                                                 </Box>
                                             </Box>
                                         </Box>

@@ -9,7 +9,7 @@ import { Button, Container, Grid,ThemeProvider } from '@mui/material';
 import theme from '../../HomlyTheme';
 import BlacklistHistoryCard from '../../Components/PrimaryAdmin/BlacklistHistoryCard';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
-import Search from '../../Components/PrimaryAdmin/Search';
+// import Search from '../../Components/PrimaryAdmin/Search';
 const PrimaryBlacklistHistory = () => {
     const [popup,setpopup]=useState(false)
     const [selecteduser,setSelecteduser]=useState({})

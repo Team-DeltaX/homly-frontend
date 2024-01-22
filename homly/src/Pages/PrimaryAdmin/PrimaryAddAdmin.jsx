@@ -1,15 +1,14 @@
 
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import SideNavbar from '../../Components/PrimaryAdmin/SideNavbar'
-import ComplaintCard from '../../Components/PrimaryAdmin/ComplaintCard';
+// import ComplaintCard from '../../Components/PrimaryAdmin/ComplaintCard';
 import Box from '@mui/material/Box';
-import { Button, Container, FormControl, Grid, InputLabel, OutlinedInput, TextField, ThemeProvider, Typography } from '@mui/material';
+import { Button, Container,  Grid, InputLabel,TextField, ThemeProvider, Typography } from '@mui/material';
 import theme from '../../HomlyTheme';
-import Pagetopnb from '../../Components/PrimaryAdmin/PageTopnb';
 import Pagetop from '../../Components/PrimaryAdmin/PageTop';
-import BlacklistHistoryCard from '../../Components/PrimaryAdmin/BlacklistHistoryCard';
-import Search from '../../Components/PrimaryAdmin/Search';
-import { Label } from '@mui/icons-material';
+// import BlacklistHistoryCard from '../../Components/PrimaryAdmin/BlacklistHistoryCard';
+// import Search from '../../Components/PrimaryAdmin/Search';
+// import { Label } from '@mui/icons-material';
 // import { Form } from 'react-router-dom';
 
 

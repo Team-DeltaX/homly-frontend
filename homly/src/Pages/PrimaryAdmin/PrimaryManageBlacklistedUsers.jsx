@@ -103,15 +103,15 @@ import Pagetop from '../../Components/PrimaryAdmin/PageTop';
 
 
 // import '../App.css';
-import PageTop from '../../Components/PrimaryAdmin/PageTop'
+// import PageTop from '../../Components/PrimaryAdmin/PageTop'
 import React, { useEffect, useState } from 'react'
 import SideNavbar from '../../Components/PrimaryAdmin/SideNavbar'
 
 import Box from '@mui/material/Box';
 import { Button, Grid, ThemeProvider, Container } from '@mui/material';
 import theme from '../../HomlyTheme';
-import BlacklistedUsersList from '../../Components/PrimaryAdmin/BlacklistedUsersList';
-import Search from '../../Components/PrimaryAdmin/Search';
+// import BlacklistedUsersList from '../../Components/PrimaryAdmin/BlacklistedUsersList';
+// import Search from '../../Components/PrimaryAdmin/Search';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import BlacklistedUsersCardNew from '../../Components/PrimaryAdmin/BlacklistedUsersCardNew';
 import ViewPopupManage from '../../Components/PrimaryAdmin/ViewPopupManage';
@@ -181,7 +181,7 @@ const PrimaryManageBlacklistedUsers = () => {
                             <SideNavbar setShowNav={setShowNav}></SideNavbar>
                         </Grid>
 
-                        <Grid className='container_grid' xs={9} sx={{ backgroundColor: 'white', borderTopLeftRadius: '20px', padding: '0 20px' }}>
+                        <Grid className='container_grid' xs={9} sx={{ backgroundColor: 'white', borderTopLeftRadius: '20px', padding: '0 20px' ,height:'100vh'}}>
                             <Pagetop setShowNav={setShowNav} heading={"Manage Blacklist"} />
                             <SearchNew setSearch={setSearch} search={search}/>
                           
@@ -202,7 +202,7 @@ const PrimaryManageBlacklistedUsers = () => {
 
                             </Box>
                             <Box>
-                                <Button sx={{  marginLeft: "5%", marginTop: { xs: '10%', sm: '2px' } }} component="label" variant="contained" startIcon={<PictureAsPdfIcon />}>
+                                <Button sx={{  marginLeft: "5%", marginTop: { xs: '10%', sm: '1.5%' } }} component="label" variant="contained" startIcon={<PictureAsPdfIcon />}>
                                     Download Excel
 
                                 </Button>
