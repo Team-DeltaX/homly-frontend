@@ -46,11 +46,6 @@
   right: 0;
 }
 
-.form-button {
-  display: flex;
-  justify-content: center;
-}
-
 #textfield-serviceNumber-helper-text,
 #textfield-email-helper-text,
 #textfield-contactNumber-helper-text,
@@ -117,6 +112,9 @@
   bottom: -20px !important;
 }
 
+.css-1nrlq1o-MuiFormControl-root {
+  width: 100%;
+}
 /* @media screen and (max-width: 820px) {
   .registration-box-wave {
     display: none;

@@ -12,6 +12,7 @@ import {
   InputAdornment,
   IconButton,
   TextField,
+  FormControl,
 } from "@mui/material";
 
 import { Visibility, VisibilityOff } from "@mui/icons-material";
@@ -163,14 +164,7 @@ const UserRegistration = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box
-        className="main_container"
-        sx={{
-          width: "100%",
-          overflow: "hidden",
-        }}
-      >
-        <Container maxWidth="xl" style={{ padding: 0 }}>
+      
           <Container className="registration-box-container">
             <Grid
               container
@@ -245,13 +239,8 @@ const UserRegistration = () => {
                     Login
                   </Button>
                 </Box>
-                <Box paddingLeft={"5%"} marginBottom={"5%"}>
-                  <form
-                    action=""
-                    autoComplete="off"
-                    onSubmit={handleSubmit}
-                    onReset={handleReset}
-                  >
+                <Box paddingLeft={"5%"} marginBottom={"5%"} width="100%">
+                  <FormControl action="" autoComplete="off" width="100%">
                     {/* <AvatarImage /> */}
                     <TextField
                       sx={{ marginBottom: " 6%", width: "90%" }}
@@ -454,26 +443,31 @@ const UserRegistration = () => {
                       }
                       fullWidth
                     />
-                    <Box className="form-button">
+                    <Box sx={{display:'flex',justifyContent:'flex-end',width:'90%'}}>
                       <Button
                         type="reset"
                         variant="outlined"
                         color="primary"
                         sx={{ marginRight: "2%" }}
+                        onClick={handleReset}
                       >
                         Reset
                       </Button>
-                      <Button type="submit" variant="contained" color="primary">
+                      <Button
+                        type="submit"
+                        variant="contained"
+                        color="primary"
+                        onClick={handleSubmit}
+                      >
                         Register
                       </Button>
                     </Box>
-                  </form>
+                  </FormControl>
                 </Box>
               </Grid>
             </Grid>
           </Container>
-        </Container>
-      </Box>
+        
     </ThemeProvider>
   );
 };
