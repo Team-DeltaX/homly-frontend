@@ -136,7 +136,6 @@ const NavBar = (props) => {
                 <AppBar
                     sx={{
                         
-                        position:"fixed",
                         zIndex: (theme) => theme.zIndex.drawer + 1,
                         backgroundColor: "secondary.main",
                         width: "100%",

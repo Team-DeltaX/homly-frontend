@@ -19,10 +19,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 // import Badge from "@mui/material/Badge";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
-import Divider from "@mui/material/Divider";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import MailIcon from "@mui/icons-material/Mail";
+import {useLayoutEffect, useRef } from "react";
 
 import MenuIcon from "@mui/icons-material/Menu";
 
@@ -73,13 +70,17 @@ const notifications = [
   { title: "notification 3", description: "this is notification 3", type: "" },
 ];
 
-
-
-
-
-
-
 const MyProfile = () => {
+
+  const ref = useRef(null);
+  const [containerWidth, setContainerWidth] = useState(0);
+
+  useLayoutEffect(() => {
+    setContainerWidth(ref.current.offsetWidth);
+    console.log("width", `${containerWidth}px`);
+  }, [containerWidth]);
+
+
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
@@ -87,6 +88,8 @@ const MyProfile = () => {
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
+
+  // console.log("vh", vh, "containerWidth", containerWidth)
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
@@ -159,150 +162,178 @@ const MyProfile = () => {
           overflow: "hidden",
         }}
       >
-        <Container maxWidth="xl" style={{ padding: 0 }}>
-          <Box sx={{ display: "flex" }}>
-            <CssBaseline />
-            <AppBar
-              position="fixed"
-              sx={{
-                zIndex: (theme) => theme.zIndex.drawer + 1,
-                // width: { sm: `calc(100% - ${drawerWidth}px)` },
-                // ml: { sm: `${drawerWidth}px` },
-                bgcolor: "secondary.main",
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <Toolbar>
-                <IconButton
-                  color="inherit"
-                  aria-label="open drawer"
-                  edge="start"
-                  onClick={handleDrawerToggle}
-                  sx={{ mr: 2, display: { sm: "none" } }}
-                >
-                  <MenuIcon />
-                </IconButton>
-                {/* <Typography variant="h6" noWrap component="div">
-                  Responsive drawer
-                </Typography> */}
-              </Toolbar>
-              <Stack
+        <Container maxWidth="xl" ref={ref} style={{ padding: 0 }}>
+          <Box
+            className="main_container"
+            sx={{
+              width: "100%",
+              overflow: "hidden",
+            }}
+          >
+            <Container maxWidth="xl" style={{ padding: 0,position:'relative' }} >
+              <Box sx={{ display: "flex" }}>
+                <CssBaseline />
+                  <AppBar
+                    sx={{
+                      zIndex: (theme) => theme.zIndex.drawer + 1,
+                      // width:'1000px',
+                      // ml: { sm: `${drawerWidth}px` },
+                      bgcolor: "secondary.main",
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      width: "100%",
+                      position: "absolute",
+                      left: 0,
+                    }}
+                  >
+                    
+                      <Toolbar>
+                        <IconButton
+                          color="inherit"
+                          aria-label="open drawer"
+                          edge="start"
+                          onClick={handleDrawerToggle}
+                          sx={{ mr: 2, display: { sm: "none" } }}
+                        >
+                          <MenuIcon />
+                        </IconButton>
+                        {/* <Typography variant="h6" noWrap component="div">
+                      Responsive drawer
+                                      </Typography> */}
+                      </Toolbar>
+                      <Stack
                         direction="row"
                         spacing={2}
                         justifyContent="center"
                         alignItems="center"
                         sx={{ paddingRight: { xs: "4%", sm: "2%" } }}
-                    >
+                      >
                         <Stack
-                            direction="row"
-                            spacing={2}
-                            display={{ xs: "none", sm: "none", md: "flex" }}
+                          direction="row"
+                          spacing={2}
+                          display={{ xs: "none", sm: "none", md: "flex" }}
                         >
-                            {pages.map((page) => (
-                                <NavLink key={page.name} to={page.path} className={({ isActive }) => (isActive ? 'activePage' : 'normalPage')
-                                }>
-                                    <Button variant="text"
-
-                                        sx={{ color: "text.primary" }}
-                                    >
-                                        {page.name}
-                                    </Button>
-                                </NavLink>
-                            ))}
+                          {pages.map((page) => (
+                            <NavLink
+                              key={page.name}
+                              to={page.path}
+                              className={({ isActive }) =>
+                                isActive ? "activePage" : "normalPage"
+                              }
+                            >
+                              <Button variant="text" sx={{ color: "text.primary" }}>
+                                {page.name}
+                              </Button>
+                            </NavLink>
+                          ))}
                         </Stack>
                         {/* notification button */}
                         {/* <NotificationPanel notifications={notifications} /> */}
                         {/* user button */}
                         <Box sx={{ flexGrow: 0 }}>
-                            <Tooltip title="Open settings">
-                                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                    <Avatar alt="Remy Sharp" sx={{ height: '48px', width: '48px' }} src="https://img.freepik.com/premium-psd/3d-cartoon-man-smiling-portrait-isolated-transparent-background-png-psd_888962-1570.jpg" />
-                                </IconButton>
-                            </Tooltip>
-                            <Menu
-                                sx={{ mt: "45px" }}
-                                id="menu-appbar"
-                                anchorEl={anchorElUser}
-                                anchorOrigin={{
-                                    vertical: "top",
-                                    horizontal: "right",
+                          <Tooltip title="Open settings">
+                            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                              <Avatar
+                                alt="Remy Sharp"
+                                sx={{ height: "48px", width: "48px" }}
+                                src="https://img.freepik.com/premium-psd/3d-cartoon-man-smiling-portrait-isolated-transparent-background-png-psd_888962-1570.jpg"
+                              />
+                            </IconButton>
+                          </Tooltip>
+                          <Menu
+                            sx={{ mt: "45px" }}
+                            id="menu-appbar"
+                            anchorEl={anchorElUser}
+                            anchorOrigin={{
+                              vertical: "top",
+                              horizontal: "right",
+                            }}
+                            keepMounted
+                            transformOrigin={{
+                              vertical: "top",
+                              horizontal: "right",
+                            }}
+                            open={Boolean(anchorElUser)}
+                            onClose={handleCloseUserMenu}
+                          >
+                            {settings.map((setting) => (
+                              <MenuItem
+                                key={setting.name}
+                                onClick={handleCloseUserMenu}
+                                component={
+                                  setting.name === "My Profile" ? Link : ""
+                                }
+                                sx={{
+                                  display:
+                                    setting.name === "My Profile"
+                                      ? { xs: "none", md: "block" }
+                                      : "block",
                                 }}
-                                keepMounted
-                                transformOrigin={{
-                                    vertical: "top",
-                                    horizontal: "right",
-                                }}
-                                open={Boolean(anchorElUser)}
-                                onClose={handleCloseUserMenu}
-                            >
-                                {settings.map((setting) => (
-                                    <MenuItem
-                                        key={setting.name}
-                                        onClick={handleCloseUserMenu}
-                                        component={setting.name === "My Profile" ? Link : ""}
-                                        sx={{ display: setting.name === "My Profile" ? { xs: "none", md: "block" } : "block" }}
-                                        to={setting.path}
-                                    >
-                                        <Typography textAlign="center">{setting.name}</Typography>
-                                    </MenuItem>
-                                ))}
-                            </Menu>
+                                to={setting.path}
+                              >
+                                <Typography textAlign="center">
+                                  {setting.name}
+                                </Typography>
+                              </MenuItem>
+                            ))}
+                          </Menu>
                         </Box>
-                    </Stack>
-            </AppBar>
-            <Box
-              component="nav"
-              sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-              aria-label="mailbox folders"
-            >
-              {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-              <Drawer
-                variant="temporary"
-                open={mobileOpen}
-                onTransitionEnd={handleDrawerTransitionEnd}
-                onClose={handleDrawerClose}
-                ModalProps={{
-                  keepMounted: true, // Better open performance on mobile.
-                }}
-                sx={{
-                  display: { xs: "block", sm: "none" },
-                  "& .MuiDrawer-paper": {
-                    boxSizing: "border-box",
-                    width: drawerWidth,
-                  },
-                }}
-              >
-                {mainDrawer}
-              </Drawer>
-              <Drawer
-                variant="permanent"
-                sx={{
-                  display: { xs: "none", sm: "block" },
-                  "& .MuiDrawer-paper": {
-                    boxSizing: "border-box",
-                    width: drawerWidth,
-                    height: `calc(100vh)`,
-                    bgcolor: "primary.main",
-                  },
-                }}
-                open
-              >
-                {drawer}
-              </Drawer>
-            </Box>
-            <Box
-              component="main"
-              sx={{
-                flexGrow: 1,
-                p: 3,
-                width: { sm: `calc(100% - ${drawerWidth}px)` },
-              }}
-            >
-              <Toolbar />
-              <PersonalDetailsCom />
-            </Box>
+                      </Stack>
+                  </AppBar>
+                <Box
+                  component="nav"
+                  sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+                  aria-label="mailbox folders"
+                >
+                  {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+                  <Drawer
+                    variant="temporary"
+                    open={mobileOpen}
+                    onTransitionEnd={handleDrawerTransitionEnd}
+                    onClose={handleDrawerClose}
+                    ModalProps={{
+                      keepMounted: true, // Better open performance on mobile.
+                    }}
+                    sx={{
+                      display: { xs: "block", sm: "none" },
+                      "& .MuiDrawer-paper": {
+                        boxSizing: "border-box",
+                        width: drawerWidth,
+                      },
+                    }}
+                  >
+                    {mainDrawer}
+                  </Drawer>
+                  <Drawer
+                    variant="permanent"
+                    sx={{
+                      display: { xs: "none", sm: "block" },
+                      "& .MuiDrawer-paper": {
+                        boxSizing: "border-box",
+                        width: drawerWidth,
+                        height: `calc(100vh)`,
+                        bgcolor: "primary.main",
+                      },
+                    }}
+                    open
+                  >
+                    {drawer}
+                  </Drawer>
+                </Box>
+                <Box
+                  component="main"
+                  sx={{
+                    flexGrow: 1,
+                    p: 3,
+                    width: { sm: `calc(100% - ${drawerWidth}px)` },
+                  }}
+                >
+                  <Toolbar />
+                  <PersonalDetailsCom />
+                </Box>
+              </Box>
+            </Container>
           </Box>
         </Container>
       </Box>

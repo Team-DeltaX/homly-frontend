@@ -14,12 +14,9 @@ export default function Home() {
           overflow: "hidden",
         }}
       >
-        <Container
-          maxWidth="xl"
-          style={{ padding: 0}}
-        >
+        <Container maxWidth="xl" style={{ padding: 0 ,height:'100vh'}}>
           <NavBar sideNavBar="none" />
-          <Container sx={{ mt: 10 }}>
+          <Container sx={{ marginTop: "100px" }}>
             <div>This is Home page.</div>
             <MyReservationCard
               image="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8aG9saWRheSUyMGhvbWV8ZW58MHx8MHx8fDA%3D"
