@@ -67,6 +67,12 @@ const PrimaryAddAdmin = () => {
 
     const handlesubmit=()=>{
         console.log("submitted")
+        setServiceno('')
+        setUsername('')
+        setContactno('')
+        SetEmail('')
+        SetWorklocation('')
+        setPassword('')
     }
     const ValidatePassword=(password)=>{
         if(password.length <= 8){
@@ -94,7 +100,16 @@ const PrimaryAddAdmin = () => {
     return (
         <ThemeProvider theme={theme}>
             <Box className="main_continer" sx={{ width: "100%", backgroundColor: 'primary.main', height: "100vh", overflow: 'hidden' }}>
-                <form onSubmit={handlesubmit}>
+                <form onSubmit={(e)=>{
+                    e.preventDefault();
+
+                    if(!(mobileerror || passworderror ||emailerror || usernameerror ||serviceerror||worklocationeerror)){
+                        handlesubmit();
+                    }else{
+                        console.log('error')
+
+                    }
+                }}>
                 <Container maxWidth="xl" style={{padding:"0px"}} >
                     <Grid container  sx={{position:'relative'}}>
                         <Grid className={showNav} xs={3} sx={{ backgroundColor: "primary.main", height: "100vh" }}>
@@ -257,7 +272,7 @@ const PrimaryAddAdmin = () => {
                                 </Grid>
                             </Grid>
                             <Grid item sm={12} sx={{marginLeft:{md:"60%",xs:'20%'},marginBottom:"2%"}}>
-                                <Button type='submit' variant='contained'  disabled={(mobileerror || passworderror ||emailerror || usernameerror ||serviceerror||worklocationeerror)?true:false} >Add</Button>
+                                <Button type='submit' variant='contained'  >Add</Button>
                             </Grid>
                     
                     
