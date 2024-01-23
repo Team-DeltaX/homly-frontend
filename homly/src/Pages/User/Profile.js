@@ -29,6 +29,8 @@ import { Link, NavLink } from "react-router-dom";
 
 import theme from "../../HomlyTheme";
 
+let vh = window.innerHeight * 0.01;
+
 const drawerWidth = 240;
 const settings = [
   { name: "My Profile", path: "/myProfile/personalDetails" },
@@ -254,6 +256,7 @@ const NavBar = () => {
             <Box
               component="nav"
               sx={{
+                height: { sm: `calc(100vh - ${vh}px)` },
                 width: { sm: drawerWidth },
                 flexShrink: { sm: 0 },
                 display: { sm: "none", md: "block" },
@@ -275,6 +278,7 @@ const NavBar = () => {
                     boxSizing: "border-box",
                     width: drawerWidth,
                   },
+                  
                 }}
               >
                 {mainDrawer}
@@ -288,6 +292,7 @@ const NavBar = () => {
                     width: drawerWidth,
                     bgcolor: "primary.main",
                     color: "white",
+                    height: { sm: `calc(100vh - ${vh}px)`}
                   },
                 }}
                 open

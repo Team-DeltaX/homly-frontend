@@ -228,27 +228,30 @@ const NavBar = (props) => {
                     sx={{
                         width: { sm: drawerWidth },
                         flexShrink: { sm: 0 },
-                        display:'none',
+                        display: {sm:'none', md:props.sideNavBar},
                     }}
                     aria-label="mailbox folders"
                 >
-                    {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-                    
                     <Drawer
-                        variant="permanent"
+                        variant="temporary"
+                        open={mobileOpen}
+                        onTransitionEnd={handleDrawerTransitionEnd}
+                        onClose={handleDrawerClose}
+                        ModalProps={{
+                            keepMounted: true, // Better open performance on mobile.
+                        }}
                         sx={{
-                            display: { xs: "none", sm: "none", md: "block" },
+                            display: { xs: "block", sm: "block", md: "none" },
                             "& .MuiDrawer-paper": {
                                 boxSizing: "border-box",
                                 width: drawerWidth,
-                                bgcolor: "primary.main",
-                                color: "white",
                             },
                         }}
-                        open
                     >
-                        {drawer}
+                        {mainDrawer}
+
                     </Drawer>
+                    
                 </Box>
             </Box>
         </ThemeProvider>
