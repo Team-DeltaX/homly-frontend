@@ -135,6 +135,8 @@ const NavBar = (props) => {
                 {/* <CssBaseline /> */}
                 <AppBar
                     sx={{
+                        
+                        position:"fixed",
                         zIndex: (theme) => theme.zIndex.drawer + 1,
                         backgroundColor: "secondary.main",
                         width: "100%",
@@ -250,6 +252,22 @@ const NavBar = (props) => {
                     >
                         {mainDrawer}
 
+                    </Drawer>
+                    <Drawer
+                        variant="permanent"
+                        sx={{
+                            display: { xs: "none", sm: "none", md: "block" },
+                            "& .MuiDrawer-paper": {
+                                boxSizing: "border-box",
+                                width: drawerWidth,
+                                color: "white",
+                                
+                            },
+                            bgcolor: "primary.main",
+                        }}
+                        open
+                    >
+                        {drawer}
                     </Drawer>
                     
                 </Box>

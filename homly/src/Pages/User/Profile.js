@@ -15,9 +15,14 @@ import MenuItem from "@mui/material/MenuItem";
 import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import Container from "@mui/material/Container";
+import CssBaseline from "@mui/material/CssBaseline";
 // import Badge from "@mui/material/Badge";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
+import Divider from "@mui/material/Divider";
+import InboxIcon from "@mui/icons-material/MoveToInbox";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import MailIcon from "@mui/icons-material/Mail";
 
 import MenuIcon from "@mui/icons-material/Menu";
 
@@ -28,6 +33,8 @@ import { Link, NavLink } from "react-router-dom";
 // import NotificationPanel from "../NotificationPanel/NotificationPanel";
 
 import theme from "../../HomlyTheme";
+import "../../Components/NavBar/NavBar.css";
+import PersonalDetailsCom from "../../Components/MyProfile/PersonalDetailsCom";
 
 let vh = window.innerHeight * 0.01;
 
@@ -66,7 +73,13 @@ const notifications = [
   { title: "notification 3", description: "this is notification 3", type: "" },
 ];
 
-const NavBar = () => {
+
+
+
+
+
+
+const MyProfile = () => {
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
@@ -137,7 +150,6 @@ const NavBar = () => {
       </List>
     </div>
   );
-
   return (
     <ThemeProvider theme={theme}>
       <Box
@@ -148,119 +160,101 @@ const NavBar = () => {
         }}
       >
         <Container maxWidth="xl" style={{ padding: 0 }}>
-          <Box>
-            {/* <CssBaseline /> */}
+          <Box sx={{ display: "flex" }}>
+            <CssBaseline />
             <AppBar
+              position="fixed"
               sx={{
                 zIndex: (theme) => theme.zIndex.drawer + 1,
-                backgroundColor: "secondary.main",
-                width: "100%",
+                // width: { sm: `calc(100% - ${drawerWidth}px)` },
+                // ml: { sm: `${drawerWidth}px` },
+                bgcolor: "secondary.main",
                 flexDirection: "row",
                 justifyContent: "space-between",
                 alignItems: "center",
-                // width: { sm: `calc(100% - ${drawerWidth}px)` },
-                // ml: { sm: `${drawerWidth}px` },
               }}
             >
               <Toolbar>
                 <IconButton
+                  color="inherit"
                   aria-label="open drawer"
                   edge="start"
                   onClick={handleDrawerToggle}
-                  sx={{ mr: 2, display: { md: "none" }, color: "text" }}
+                  sx={{ mr: 2, display: { sm: "none" } }}
                 >
                   <MenuIcon />
                 </IconButton>
-
                 {/* <Typography variant="h6" noWrap component="div">
-                            Responsive drawer
-                        </Typography> */}
+                  Responsive drawer
+                </Typography> */}
               </Toolbar>
               <Stack
-                direction="row"
-                spacing={2}
-                justifyContent="center"
-                alignItems="center"
-                sx={{ paddingRight: { xs: "4%", sm: "2%" } }}
-              >
-                <Stack
-                  direction="row"
-                  spacing={2}
-                  display={{ xs: "none", sm: "none", md: "flex" }}
-                >
-                  {pages.map((page) => (
-                    <NavLink
-                      key={page.name}
-                      to={page.path}
-                      className={({ isActive }) =>
-                        isActive ? "activePage" : "normalPage"
-                      }
+                        direction="row"
+                        spacing={2}
+                        justifyContent="center"
+                        alignItems="center"
+                        sx={{ paddingRight: { xs: "4%", sm: "2%" } }}
                     >
-                      <Button variant="text" sx={{ color: "text.primary" }}>
-                        {page.name}
-                      </Button>
-                    </NavLink>
-                  ))}
-                </Stack>
-                {/* notification button */}
-                {/* <NotificationPanel notifications={notifications} /> */}
-                {/* user button */}
-                <Box sx={{ flexGrow: 0 }}>
-                  <Tooltip title="Open settings">
-                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                      <Avatar
-                        alt="Remy Sharp"
-                        sx={{ height: "48px", width: "48px" }}
-                        src="https://img.freepik.com/premium-psd/3d-cartoon-man-smiling-portrait-isolated-transparent-background-png-psd_888962-1570.jpg"
-                      />
-                    </IconButton>
-                  </Tooltip>
-                  <Menu
-                    sx={{ mt: "45px" }}
-                    id="menu-appbar"
-                    anchorEl={anchorElUser}
-                    anchorOrigin={{
-                      vertical: "top",
-                      horizontal: "right",
-                    }}
-                    keepMounted
-                    transformOrigin={{
-                      vertical: "top",
-                      horizontal: "right",
-                    }}
-                    open={Boolean(anchorElUser)}
-                    onClose={handleCloseUserMenu}
-                  >
-                    {settings.map((setting) => (
-                      <MenuItem
-                        key={setting.name}
-                        onClick={handleCloseUserMenu}
-                        component={setting.name === "My Profile" ? Link : ""}
-                        sx={{
-                          display:
-                            setting.name === "My Profile"
-                              ? { xs: "none", md: "block" }
-                              : "block",
-                        }}
-                        to={setting.path}
-                      >
-                        <Typography textAlign="center">
-                          {setting.name}
-                        </Typography>
-                      </MenuItem>
-                    ))}
-                  </Menu>
-                </Box>
-              </Stack>
+                        <Stack
+                            direction="row"
+                            spacing={2}
+                            display={{ xs: "none", sm: "none", md: "flex" }}
+                        >
+                            {pages.map((page) => (
+                                <NavLink key={page.name} to={page.path} className={({ isActive }) => (isActive ? 'activePage' : 'normalPage')
+                                }>
+                                    <Button variant="text"
+
+                                        sx={{ color: "text.primary" }}
+                                    >
+                                        {page.name}
+                                    </Button>
+                                </NavLink>
+                            ))}
+                        </Stack>
+                        {/* notification button */}
+                        {/* <NotificationPanel notifications={notifications} /> */}
+                        {/* user button */}
+                        <Box sx={{ flexGrow: 0 }}>
+                            <Tooltip title="Open settings">
+                                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                                    <Avatar alt="Remy Sharp" sx={{ height: '48px', width: '48px' }} src="https://img.freepik.com/premium-psd/3d-cartoon-man-smiling-portrait-isolated-transparent-background-png-psd_888962-1570.jpg" />
+                                </IconButton>
+                            </Tooltip>
+                            <Menu
+                                sx={{ mt: "45px" }}
+                                id="menu-appbar"
+                                anchorEl={anchorElUser}
+                                anchorOrigin={{
+                                    vertical: "top",
+                                    horizontal: "right",
+                                }}
+                                keepMounted
+                                transformOrigin={{
+                                    vertical: "top",
+                                    horizontal: "right",
+                                }}
+                                open={Boolean(anchorElUser)}
+                                onClose={handleCloseUserMenu}
+                            >
+                                {settings.map((setting) => (
+                                    <MenuItem
+                                        key={setting.name}
+                                        onClick={handleCloseUserMenu}
+                                        component={setting.name === "My Profile" ? Link : ""}
+                                        sx={{ display: setting.name === "My Profile" ? { xs: "none", md: "block" } : "block" }}
+                                        to={setting.path}
+                                    >
+                                        <Typography textAlign="center">{setting.name}</Typography>
+                                    </MenuItem>
+                                ))}
+                            </Menu>
+                        </Box>
+                    </Stack>
             </AppBar>
             <Box
               component="nav"
-              sx={{
-                height: { sm: `calc(100vh - ${vh}px)` },
-                width: { sm: drawerWidth },
-                flexShrink: { sm: 0 },
-                display: { sm: "none", md: "block" },
-              }}
+              sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
               aria-label="mailbox folders"
             >
               {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
@@ -273,12 +267,11 @@ const NavBar = () => {
                   keepMounted: true, // Better open performance on mobile.
                 }}
                 sx={{
-                  display: { xs: "block", sm: "block", md: "none" },
+                  display: { xs: "block", sm: "none" },
                   "& .MuiDrawer-paper": {
                     boxSizing: "border-box",
                     width: drawerWidth,
                   },
-                  
                 }}
               >
                 {mainDrawer}
@@ -286,19 +279,29 @@ const NavBar = () => {
               <Drawer
                 variant="permanent"
                 sx={{
-                  display: { xs: "none", sm: "none", md: "block" },
+                  display: { xs: "none", sm: "block" },
                   "& .MuiDrawer-paper": {
                     boxSizing: "border-box",
                     width: drawerWidth,
+                    height: `calc(100vh)`,
                     bgcolor: "primary.main",
-                    color: "white",
-                    height: { sm: `calc(100vh - ${vh}px)`}
                   },
                 }}
                 open
               >
                 {drawer}
               </Drawer>
+            </Box>
+            <Box
+              component="main"
+              sx={{
+                flexGrow: 1,
+                p: 3,
+                width: { sm: `calc(100% - ${drawerWidth}px)` },
+              }}
+            >
+              <Toolbar />
+              <PersonalDetailsCom />
             </Box>
           </Box>
         </Container>
@@ -307,4 +310,4 @@ const NavBar = () => {
   );
 };
 
-export default NavBar;
+export default MyProfile;

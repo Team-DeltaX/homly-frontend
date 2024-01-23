@@ -30,7 +30,7 @@ import ManageHomes from "../src/Pages/locationAdmin/ManageHomes";
 // const MyReservation = lazy(() =>
 //   import("../src/Pages/User/MyReservation")
 // );
-import PaymentGateway from "../src/services/paymentGateway/PaymentGateway";
+// import PaymentGateway from "../src/services/paymentGateway/PaymentGateway";
 
 import Home from "../src/Pages/User/Home";
 import HolidayHome from "../src/Pages/User/HolidayHome";
