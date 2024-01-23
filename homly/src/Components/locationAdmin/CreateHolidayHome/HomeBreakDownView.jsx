@@ -63,19 +63,28 @@ function a11yProps(index) {
 }
 const HomeBreakDownView = () => {
   const [values, setValues] = useState({
-    RoomCode: '', Ac: '', RoomType: '', NoOfBeds: '', Remarks: '', Rental: ''
+    roomCode: '', roomAc: '', RoomType: '', NoOfBeds: '', NoOfAdults: '', NoOfChildren: '', roomRemarks: '', roomRental: '',
   })
+
+
+  const [roomArray, setRoomArray] = useState([]);
+
+  const handleSaveRoom = () => {
+    if (values.roomCode === '' || values.roomAc === '' || values.RoomType === '' || values.NoOfBeds === '' || values.NoOfAdults === '' || values.NoOfChildren === '' || values.roomRemarks === '' || values.roomRental === '') return;
+    setRoomArray([...roomArray, values]);
+    setOpen(false);
+  };
 
   const [error, setError] = useState({
     ctName: false, ctAddress: false, ctDescription: false, ctContactNo: false
   });
 
   const handleRoomCodeChange = (e) => {
-    setValues({ ...values, RoomCode: e.target.value });
+    setValues({ ...values, roomCode: e.target.value });
 
   }
   const handleAcChange = (e) => {
-    setValues({ ...values, Ac: e.target.value });
+    setValues({ ...values, roomAc: e.target.value });
   }
 
   const handleRoomTypeChange = (e) => {
@@ -86,12 +95,21 @@ const HomeBreakDownView = () => {
     setValues({ ...values, NoOfBeds: e.target.value });
   }
 
+  const handleNoOfAdults = (e) => {
+    setValues({ ...values, NoOfAdults: e.target.value });
+  }
+
+  const handleNoOfChildren = (e) => {
+    setValues({ ...values, NoOfChildren: e.target.value });
+  }
+
+
   const handleRemarksChange = (e) => {
-    setValues({ ...values, Remarks: e.target.value });
+    setValues({ ...values, roomRemarks: e.target.value });
   }
 
   const handleRentalChange = (e) => {
-    setValues({ ...values, Rental: e.target.value });
+    setValues({ ...values, roomRental: e.target.value });
   }
 
   const [rental, setRental] = useState({
@@ -102,7 +120,7 @@ const HomeBreakDownView = () => {
     setRental({ ...rental, district: e.target.value });
   }
 
-  const handleWeedays = (e) => {
+  const handleWeekdays = (e) => {
     setRental({ ...rental, weekDays: e.target.value });
   }
 
@@ -110,7 +128,6 @@ const HomeBreakDownView = () => {
     setRental({ ...rental, weekEnds: e.target.value });
   }
 
-  console.log(rental);
 
 
   const [rentalArray, setRentalArray] = useState([]);
@@ -128,17 +145,137 @@ const HomeBreakDownView = () => {
     setValue(newValue);
   };
 
-  const [open, setOpen] = React.useState(false);
-  const [fullWidth, setFullWidth] = React.useState(true);
-  const [maxWidth, setMaxWidth] = React.useState('sm');
+  const [open, setOpen] = useState(false);
+  const [openUnit, setOpenUnit] = useState(false);
+  const [openHall, setOpenHall] = useState(false);
+  const [fullWidth, setFullWidth] = useState(true);
+  const [maxWidth, setMaxWidth] = useState('sm');
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
+
+
   const handleClose = () => {
     setOpen(false);
   };
+
+  const handleClickOpenUnit = () => {
+    setOpenUnit(true);
+  };
+
+  const handleClickOpenHall = () => {
+    setOpenHall(true);
+  };
+
+  const handleCloseUnit = () => {
+    setOpenUnit(false);
+  };
+
+  // unit popup
+
+  const [unitValues, setUnitValues] = useState({
+    unitCode: '', unitAc: '', floorLevel: '', unitRemark: '', unitRental: '',
+  })
+  const handleUnitCodeChange = (e) => {
+    setUnitValues({ ...unitValues, unitCode: e.target.value });
+
+  }
+
+  const handleUnitAcChange = (e) => {
+    setUnitValues({ ...unitValues, unitAc: e.target.value });
+  }
+
+  const handleFloorLevelChange = (e) => {
+    setUnitValues({ ...unitValues, floorLevel: e.target.value });
+  }
+
+  const handleUnitRemarkChange = (e) => {
+    setUnitValues({ ...unitValues, unitRemark: e.target.value });
+  }
+
+  const handleUnitRentalChange = (e) => {
+    setUnitValues({ ...unitValues, unitRental: e.target.value });
+  }
+
+
+  const [unitRental, setUnitRental] = useState({
+    district: '', weekDays: '', weekEnds: ''
+  });
+
+  const handleUnitDistrict = (e) => {
+    setUnitRental({ ...unitRental, district: e.target.value });
+  }
+
+  const handleUnitWeedays = (e) => {
+    setUnitRental({ ...unitRental, weekDays: e.target.value });
+  }
+
+  const handleUnitWeekends = (e) => {
+    setUnitRental({ ...unitRental, weekEnds: e.target.value });
+  }
+
+
+
+  const [unitRentalArray, setUnitRentalArray] = useState([]);
+  const handleUnitAdd = () => {
+    if (unitRental.district === '' || unitRental.weekDays === '' || unitRental.weekEnds === '') return;
+    setUnitRentalArray([...unitRentalArray, unitRental]);
+
+  };
+
+
+  // Hall pop up
+
+
+  const [hallValues, setHallValues] = useState({
+    hallCode: '', hallAc: '', floorLevel: '', hallRemark: '', hallRental: '', hallNoOfAdults: '', hallNoOfChildren: '',
+  })
+  const handleHallCodeChange = (e) => {
+    setHallValues({ ...hallValues, hallCode: e.target.value });
+
+  }
+
+  const handleHallAcChange = (e) => {
+    setHallValues({ ...hallValues, hallAc: e.target.value });
+  }
+
+  const handleHallFloorChange = (e) => {
+    setHallValues({ ...hallValues, floorLevel: e.target.value });
+  }
+
+  const handleHallRemarksChange = (e) => {
+    setHallValues({ ...hallValues, hallRemark: e.target.value });
+  }
+
+  const handleHallRentalChange = (e) => {
+    setHallValues({ ...hallValues, hallRental: e.target.value });
+  }
+
+  const handleHallNoOfAdultsChange = (e) => {
+    setHallValues({ ...hallValues, hallNoOfAdults: e.target.value });
+  }
+
+  const handleHallNoOfChildrenChange = (e) => {
+    setHallValues({ ...hallValues, hallNoOfChildren: e.target.value });
+  }
+
+
+
+  const [hallArray, setHallArray] = useState([]);
+
+  const handleSaveHall = () => {
+    if (hallValues.hallCode === '' || hallValues.hallAc === '' || hallValues.floorLevel === '' || hallValues.hallRemark === '' || hallValues.hallRental === '') return;
+    setHallArray([...hallArray, hallValues]);
+    setOpenHall(false);
+  };
+
+
+
+
+
+
 
 
 
@@ -212,9 +349,18 @@ const HomeBreakDownView = () => {
                 <Box>
                   <fieldset style={{ borderRadius: '8px' }}>
                     <legend>Rooms Breakdown</legend>
-                    <RoomBreakdown />
-                    <RoomBreakdown />
-                    <RoomBreakdown />
+                    {roomArray.length === 0
+                      ?
+                      <Box sx={{ display: 'flex', padding: "2em", justifyContent: 'center' }}>
+
+                        <Typography variant='p' sx={{ color: 'grey' }}>No Rooms Added Yet</Typography>
+                      </Box>
+                      :
+                      roomArray.map((item, index) => {
+                        return (
+                          <RoomBreakdown key={index} roomCode={item.roomCode} roomAc={item.roomAc} roomType={item.RoomType} noOfBeds={item.NoOfBeds} noOfAdults={item.NoOfAdults} noOfChildren={item.NoOfChildren} roomRemarks={item.roomRemarks} roomRental={item.roomRental} />
+                        )
+                      })}
                   </fieldset>
                   <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: "12px" }}>
 
@@ -231,7 +377,7 @@ const HomeBreakDownView = () => {
                     <UnitBreakDown />
                   </fieldset>
                   <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: "12px" }}>
-                    <Button size='small' variant='contained' sx={{ backgroundColor: 'primary.main' }}>Add Unit</Button>
+                    <Button size='small' variant='contained' sx={{ backgroundColor: 'primary.main' }} onClick={handleClickOpenUnit}>Add Unit</Button>
                   </Box>
                 </Box>
               </CustomTabPanel>
@@ -239,13 +385,23 @@ const HomeBreakDownView = () => {
                 <Box>
                   <fieldset style={{ borderRadius: '8px' }}>
                     <legend>Halls Breakdown</legend>
-                    <HallBreakDown />
-                    <HallBreakDown />
-                    <HallBreakDown />
+                    {hallArray.length === 0
+                      ?
+                      <Box sx={{ display: 'flex', padding: "2em", justifyContent: 'center' }}>
+
+                        <Typography variant='p' sx={{ color: 'grey' }}>No Halls Added Yet</Typography>
+                      </Box>
+                      :
+                      hallArray.map((item, index) => {
+                        return (
+                    
+                          <HallBreakDown key={index} hallCode={item.hallCode} hallAc={item.hallAc} floorLevel={item.floorLevel} hallNoOfAdults={item.hallNoOfAdults} hallNoOfChildren={item.hallNoOfChildren} hallRemarks={item.hallRemarks} hallRental={item.hallRental} />
+                        )
+                      })}
 
                   </fieldset>
                   <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: "12px" }}>
-                    <Button size='small' variant='contained' sx={{ backgroundColor: 'primary.main' }}>Add Hall</Button>
+                    <Button size='small' variant='contained' sx={{ backgroundColor: 'primary.main' }} onClick={handleClickOpenHall}>Add Hall</Button>
                   </Box>
                 </Box>
               </CustomTabPanel>
@@ -254,7 +410,7 @@ const HomeBreakDownView = () => {
         </Grid>
       </fieldset>
 
-
+      {/* Add new room popup */}
       <React.Fragment>
         <Dialog
           fullWidth={fullWidth}
@@ -270,7 +426,7 @@ const HomeBreakDownView = () => {
                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                   <Typography variant='p' sx={{ color: 'black' }}>Name</Typography>
                 </Box>
-                <TextField error={error.ctName} required id="outlined-required" label="Enter Name" placeholder='Enter Name' fullWidth size='small' onChange={handleAcChange} helperText={error.ctName ? "Invalid Input" : ''} />
+                <TextField error={error.ctName} required id="outlined-required" label="Enter Name" placeholder='Enter Name' fullWidth size='small' onChange={handleRoomCodeChange} helperText={error.ctName ? "Invalid Input" : ''} />
               </Box>
               <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
@@ -287,10 +443,10 @@ const HomeBreakDownView = () => {
                     id="demo-simple-select"
                     value={value.catogery}
                     label="Age"
-                    onChange={handleRoomTypeChange}
+                    onChange={handleAcChange}
                   >
-                    <MenuItem value={"exclusive"}>AC</MenuItem>
-                    <MenuItem value={"nonExclusive"}>Non-AC</MenuItem>
+                    <MenuItem value={"AC"}>AC</MenuItem>
+                    <MenuItem value={"Non-Ac"}>Non-AC</MenuItem>
 
                   </Select>
                 </FormControl>
@@ -310,10 +466,11 @@ const HomeBreakDownView = () => {
                     id="demo-simple-select"
                     value={value.catogery}
                     label="Age"
-                    onChange={handleAcChange}
+                    onChange={handleRoomTypeChange}
                   >
-                    <MenuItem value={"exclusive"}>Single Room</MenuItem>
-                    <MenuItem value={"nonExclusive"}></MenuItem>
+                    <MenuItem value={"SingleRoom"}>Single Room</MenuItem>
+                    <MenuItem value={"DoubleRoom"}>Double Room</MenuItem>
+                    <MenuItem value={"TripleRoom"}>Triple Room</MenuItem>
 
                   </Select>
                 </FormControl>
@@ -323,6 +480,18 @@ const HomeBreakDownView = () => {
                   <Typography variant='p' sx={{ color: 'black' }}>Number Of Beds</Typography>
                 </Box>
                 <TextField type='number' error={error.ctName} required id="outlined-required" label="" placeholder='No of beds' fullWidth size='small' onChange={handleNoOfBedsChange} helperText={error.ctName ? "Invalid Input" : ''} />
+              </Box>
+              <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
+                <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
+                  <Typography variant='p' sx={{ color: 'black' }}>Number Of Adults</Typography>
+                </Box>
+                <TextField type='number' error={error.ctName} required id="outlined-required" label="" placeholder='No of Adults' fullWidth size='small' onChange={handleNoOfAdults} helperText={error.ctName ? "Invalid Input" : ''} />
+              </Box>
+              <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
+                <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
+                  <Typography variant='p' sx={{ color: 'black' }}>Number Of Children</Typography>
+                </Box>
+                <TextField type='number' error={error.ctName} required id="outlined-required" label="" placeholder='No of Children' fullWidth size='small' onChange={handleNoOfChildren} helperText={error.ctName ? "Invalid Input" : ''} />
               </Box>
 
               <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
@@ -335,7 +504,7 @@ const HomeBreakDownView = () => {
                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                   <Typography variant='p' sx={{ color: 'black' }}>Rental</Typography>
                 </Box>
-                <TextField type='number' error={error.ctName} required id="outlined-required" label="Rental" placeholder='Rental' fullWidth size='small' onChange={handleRemarksChange} helperText={error.ctName ? "Invalid Input" : ''} />
+                <TextField type='number' error={error.ctName} required id="outlined-required" label="Rental" placeholder='Rental' fullWidth size='small' onChange={handleRentalChange} helperText={error.ctName ? "Invalid Input" : ''} />
               </Box>
               <Box className="rental_container">
                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
@@ -359,22 +528,22 @@ const HomeBreakDownView = () => {
 
 
                       >
-                        <MenuItem value={"january"}>January</MenuItem>
-                        <MenuItem value={"february"}>February</MenuItem>
-                        <MenuItem value={"march"}>March</MenuItem>
-                        <MenuItem value={"april"}>April</MenuItem>
-                        <MenuItem value={"may"}>May</MenuItem>
-                        <MenuItem value={"june"}>June</MenuItem>
-                        <MenuItem value={"july"}>July</MenuItem>
-                        <MenuItem value={"august"}>August</MenuItem>
-                        <MenuItem value={"september"}>September</MenuItem>
-                        <MenuItem value={"october"}>October</MenuItem>
-                        <MenuItem value={"november"}>November</MenuItem>
-                        <MenuItem value={"december"}>December</MenuItem>
+                        <MenuItem value={"January"}>January</MenuItem>
+                        <MenuItem value={"February"}>February</MenuItem>
+                        <MenuItem value={"March"}>March</MenuItem>
+                        <MenuItem value={"April"}>April</MenuItem>
+                        <MenuItem value={"May"}>May</MenuItem>
+                        <MenuItem value={"June"}>June</MenuItem>
+                        <MenuItem value={"July"}>July</MenuItem>
+                        <MenuItem value={"August"}>August</MenuItem>
+                        <MenuItem value={"September"}>September</MenuItem>
+                        <MenuItem value={"October"}>October</MenuItem>
+                        <MenuItem value={"November"}>November</MenuItem>
+                        <MenuItem value={"December"}>December</MenuItem>
 
                       </Select>
                     </FormControl>
-                    <TextField type='number' id="outlined-required" label="WeekDays" placeholder='WeekDays' size='small' onChange={handleWeedays} helperText={error.ctName ? "Invalid Input" : ''} sx={{ width: "150px" }} />
+                    <TextField type='number' id="outlined-required" label="WeekDays" placeholder='WeekDays' size='small' onChange={handleWeekdays} helperText={error.ctName ? "Invalid Input" : ''} sx={{ width: "150px" }} />
                     <TextField type='number' id="outlined-required" label="Weekend" placeholder='Weekend' size='small' onChange={handleWeekends} helperText={error.ctName ? "Invalid Input" : ''} sx={{ width: "150px" }} />
                     <Button variant='contained' size='small' onClick={handleAdd} >Add</Button>
 
@@ -388,16 +557,16 @@ const HomeBreakDownView = () => {
                     <Box>
                       <Paper sx={{ display: 'flex', padding: "1.2em 2em", justifyContent: 'space-between', marginBottom: "1em" }}>
                         <Box>
-                          <Typography variant='p' sx={{ color: 'black' }}>Month</Typography>
-                          <Typography variant='p' sx={{ color: 'grey' }}>{item.district}</Typography>
+                          <Typography variant='p' sx={{ color: 'black', marginRight: '0.6em', fontWeight: "bold" }}>Month</Typography>
+                          <Typography variant='p' sx={{ color: 'grey', fontWeight: '500' }}>{item.district}</Typography>
                         </Box>
                         <Box>
-                          <Typography variant='p' sx={{ color: 'black' }}>WeekDays</Typography>
-                          <Typography variant='p' sx={{ color: 'grey' }}>{item.weekDays}</Typography>
+                          <Typography variant='p' sx={{ color: 'black', marginRight: '0.6em', fontWeight: "bold" }}>WeekDays</Typography>
+                          <Typography variant='p' sx={{ color: 'grey', fontWeight: '500' }}>{item.weekDays}</Typography>
                         </Box>
                         <Box>
-                          <Typography variant='p' sx={{ color: 'black' }}>WeekEnd</Typography>
-                          <Typography variant='p' sx={{ color: 'grey' }}>{item.weekEnds}</Typography>
+                          <Typography variant='p' sx={{ color: 'black', marginRight: '0.6em', fontWeight: 'bold' }}>WeekEnd</Typography>
+                          <Typography variant='p' sx={{ color: 'grey', fontWeight: '500' }}>{item.weekEnds}</Typography>
                         </Box>
 
                       </Paper>
@@ -408,13 +577,9 @@ const HomeBreakDownView = () => {
 
               </Box>
 
-
-
-
-
             </DialogContent>
             <DialogActions>
-              <Button type='submit' variant='contained' onClick={handleClose}>Save</Button>
+              <Button variant='contained' onClick={handleSaveRoom}>Save</Button>
               <Button variant='outlined' onClick={handleClose}>Close</Button>
             </DialogActions>
 
@@ -423,8 +588,302 @@ const HomeBreakDownView = () => {
       </React.Fragment>
 
 
+      {/* Add new Unit popup */}
+      <React.Fragment>
+        <Dialog
+          fullWidth={fullWidth}
+          maxWidth={maxWidth}
+          open={openUnit}
+          onClose={handleCloseUnit}
+
+        >
+          <DialogTitle>Add New Unit</DialogTitle>
+          <form>
+            <DialogContent sx={{ maxHeight: "350px" }}>
+              <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
+                <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
+                  <Typography variant='p' sx={{ color: 'black' }}>Unit Code</Typography>
+                </Box>
+                <TextField required id="outlined-required" placeholder='Enter Unit Code' fullWidth size='small' onChange={handleUnitCodeChange} />
+              </Box>
+              <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
+                <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
+                  <Typography variant='p' sx={{ color: 'black' }}>AC/Non-AC</Typography>
+                </Box>
+
+                <FormControl sx={{ width: '100%', }}>
+                  <InputLabel id="demo-simple-select-label">select</InputLabel>
+                  <Select
+                    required
+                    xs={{ width: "5%" }}
+                    size='small'
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={value.catogery}
+                    label="Age"
+                    onChange={handleUnitAcChange}
+                  >
+                    <MenuItem value={"exclusive"}>AC</MenuItem>
+                    <MenuItem value={"nonExclusive"}>Non-AC</MenuItem>
+
+                  </Select>
+                </FormControl>
+              </Box>
+              <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
+                <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
+                  <Typography variant='p' sx={{ color: 'black' }}>Floor Level</Typography>
+                </Box>
+                <TextField type='number' error={error.ctName} required id="outlined-required" label="" placeholder='Floor Level' fullWidth size='small' onChange={handleFloorLevelChange} helperText={error.ctName ? "Invalid Input" : ''} />
+              </Box>
 
 
+              <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
+                <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
+                  <Typography variant='p' sx={{ color: 'black' }}>Remark</Typography>
+                </Box>
+                <TextField error={error.ctName} required id="outlined-required" label="Remark" placeholder='Enter Remark' fullWidth size='small' onChange={handleUnitRemarkChange} helperText={error.ctName ? "Invalid Input" : ''} />
+              </Box>
+              <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
+                <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
+                  <Typography variant='p' sx={{ color: 'black' }}>Rental</Typography>
+                </Box>
+                <TextField type='number' error={error.ctName} required id="outlined-required" label="Rental" placeholder='Rental' fullWidth size='small' onChange={handleUnitRentalChange} helperText={error.ctName ? "Invalid Input" : ''} />
+              </Box>
+
+              <Box className="rental_container">
+                <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
+                  <Typography variant='p' sx={{ color: 'black' }}>Add Rental</Typography>
+                </Box>
+
+                <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
+                  <Box sx={{ width: "100%", display: 'flex', justifyContent: 'space-around', marginTop: '20px' }} >
+                    <FormControl sx={{}}>
+                      <InputLabel id="demo-simple-select-label">District</InputLabel>
+                      <Select
+                        required
+
+                        size='small'
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={value.district}
+                        label="Age"
+                        sx={{ width: "150px" }}
+                        onChange={handleUnitDistrict}
+
+
+                      >
+                        <MenuItem value={"January"}>January</MenuItem>
+                        <MenuItem value={"February"}>February</MenuItem>
+                        <MenuItem value={"March"}>March</MenuItem>
+                        <MenuItem value={"April"}>April</MenuItem>
+                        <MenuItem value={"May"}>May</MenuItem>
+                        <MenuItem value={"June"}>June</MenuItem>
+                        <MenuItem value={"July"}>July</MenuItem>
+                        <MenuItem value={"August"}>August</MenuItem>
+                        <MenuItem value={"September"}>September</MenuItem>
+                        <MenuItem value={"October"}>October</MenuItem>
+                        <MenuItem value={"November"}>November</MenuItem>
+                        <MenuItem value={"December"}>December</MenuItem>
+
+                      </Select>
+                    </FormControl>
+                    <TextField type='number' id="outlined-required" label="WeekDays" placeholder='WeekDays' size='small' onChange={handleUnitWeedays} helperText={error.ctName ? "Invalid Input" : ''} sx={{ width: "150px" }} />
+                    <TextField type='number' id="outlined-required" label="Weekend" placeholder='Weekend' size='small' onChange={handleUnitWeekends} helperText={error.ctName ? "Invalid Input" : ''} sx={{ width: "150px" }} />
+                    <Button variant='contained' size='small' onClick={handleUnitAdd} >Add</Button>
+
+
+                  </Box>
+                </Box>
+
+
+                {unitRentalArray.map((item, index) => {
+                  return (
+                    <Box>
+                      <Paper sx={{ display: 'flex', padding: "1.2em 2em", justifyContent: 'space-between', marginBottom: "1em" }}>
+                        <Box>
+                          <Typography variant='p' sx={{ color: 'black', marginRight: '0.6em', fontWeight: "bold" }}>Month</Typography>
+                          <Typography variant='p' sx={{ color: 'grey', fontWeight: '500' }}>{item.district}</Typography>
+                        </Box>
+                        <Box>
+                          <Typography variant='p' sx={{ color: 'black', marginRight: '0.6em', fontWeight: "bold" }}>WeekDays</Typography>
+                          <Typography variant='p' sx={{ color: 'grey', fontWeight: '500' }}>{item.weekDays}</Typography>
+                        </Box>
+                        <Box>
+                          <Typography variant='p' sx={{ color: 'black', marginRight: '0.6em', fontWeight: 'bold' }}>WeekEnd</Typography>
+                          <Typography variant='p' sx={{ color: 'grey', fontWeight: '500' }}>{item.weekEnds}</Typography>
+                        </Box>
+
+                      </Paper>
+                    </Box>
+                  )
+
+                })}
+
+              </Box>
+
+            </DialogContent>
+            <DialogActions>
+              <Button variant='contained' onClick={handleCloseUnit}>Save</Button>
+              <Button variant='outlined' onClick={handleCloseUnit}>Close</Button>
+            </DialogActions>
+
+          </form>
+        </Dialog>
+      </React.Fragment>
+
+      {/* Add new Hall popup */}
+      <React.Fragment>
+        <Dialog
+          fullWidth={fullWidth}
+          maxWidth={maxWidth}
+          open={openHall}
+          onClose={handleClose}
+
+        >
+          <DialogTitle>Add New Hall</DialogTitle>
+          <form>
+            <DialogContent sx={{ maxHeight: "350px" }}>
+              <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
+                <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
+                  <Typography variant='p' sx={{ color: 'black' }}>Hall Code</Typography>
+                </Box>
+                <TextField error={error.ctName} required id="outlined-required" label="Hall Name" placeholder='Hall Name/Code' fullWidth size='small' onChange={handleHallCodeChange} helperText={error.ctName ? "Invalid Input" : ''} />
+              </Box>
+              <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
+                <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
+                  <Typography variant='p' sx={{ color: 'black' }}>AC/Non-AC</Typography>
+                </Box>
+
+                <FormControl sx={{ width: '100%', }}>
+                  <InputLabel id="demo-simple-select-label">select</InputLabel>
+                  <Select
+                    required
+                    xs={{ width: "5%" }}
+                    size='small'
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={value.catogery}
+                    label="Age"
+                    onChange={handleHallAcChange}
+                  >
+                    <MenuItem value={"AC"}>AC</MenuItem>
+                    <MenuItem value={"Non-Ac"}>Non-AC</MenuItem>
+
+                  </Select>
+                </FormControl>
+              </Box>
+
+              <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
+                <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
+                  <Typography variant='p' sx={{ color: 'black' }}>Floor Level</Typography>
+                </Box>
+                <TextField type='number' error={error.ctName} required id="outlined-required" label="" placeholder='No of beds' fullWidth size='small' onChange={handleHallFloorChange} helperText={error.ctName ? "Invalid Input" : ''} />
+              </Box>
+              <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
+                <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
+                  <Typography variant='p' sx={{ color: 'black' }}>Number Of Adults</Typography>
+                </Box>
+                <TextField type='number' error={error.ctName} required id="outlined-required" label="" placeholder='No of Adults' fullWidth size='small' onChange={handleHallNoOfAdultsChange} helperText={error.ctName ? "Invalid Input" : ''} />
+              </Box>
+              <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
+                <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
+                  <Typography variant='p' sx={{ color: 'black' }}>Number Of Children</Typography>
+                </Box>
+                <TextField type='number' error={error.ctName} required id="outlined-required" label="" placeholder='No of Children' fullWidth size='small' onChange={handleHallNoOfChildrenChange} helperText={error.ctName ? "Invalid Input" : ''} />
+              </Box>
+
+              <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
+                <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
+                  <Typography variant='p' sx={{ color: 'black' }}>Remark</Typography>
+                </Box>
+                <TextField error={error.ctName} required id="outlined-required" label="Remark" placeholder='Enter Remark' fullWidth size='small' onChange={handleHallRemarksChange} helperText={error.ctName ? "Invalid Input" : ''} />
+              </Box>
+              <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
+                <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
+                  <Typography variant='p' sx={{ color: 'black' }}>Rental</Typography>
+                </Box>
+                <TextField type='number' error={error.ctName} required id="outlined-required" label="Rental" placeholder='Rental' fullWidth size='small' onChange={handleHallRentalChange} helperText={error.ctName ? "Invalid Input" : ''} />
+              </Box>
+              <Box className="rental_container">
+                <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
+                  <Typography variant='p' sx={{ color: 'black' }}>Add Rental</Typography>
+                </Box>
+
+                <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
+                  <Box sx={{ width: "100%", display: 'flex', justifyContent: 'space-around', marginTop: '20px' }} >
+                    <FormControl sx={{}}>
+                      <InputLabel id="demo-simple-select-label">District</InputLabel>
+                      <Select
+                        required
+
+                        size='small'
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={value.district}
+                        label="Age"
+                        sx={{ width: "150px" }}
+                        onChange={handleDistrict}
+
+
+                      >
+                        <MenuItem value={"January"}>January</MenuItem>
+                        <MenuItem value={"February"}>February</MenuItem>
+                        <MenuItem value={"March"}>March</MenuItem>
+                        <MenuItem value={"April"}>April</MenuItem>
+                        <MenuItem value={"May"}>May</MenuItem>
+                        <MenuItem value={"June"}>June</MenuItem>
+                        <MenuItem value={"July"}>July</MenuItem>
+                        <MenuItem value={"August"}>August</MenuItem>
+                        <MenuItem value={"September"}>September</MenuItem>
+                        <MenuItem value={"October"}>October</MenuItem>
+                        <MenuItem value={"November"}>November</MenuItem>
+                        <MenuItem value={"December"}>December</MenuItem>
+
+                      </Select>
+                    </FormControl>
+                    <TextField type='number' id="outlined-required" label="WeekDays" placeholder='WeekDays' size='small' onChange={handleWeekdays} helperText={error.ctName ? "Invalid Input" : ''} sx={{ width: "150px" }} />
+                    <TextField type='number' id="outlined-required" label="Weekend" placeholder='Weekend' size='small' onChange={handleWeekends} helperText={error.ctName ? "Invalid Input" : ''} sx={{ width: "150px" }} />
+                    <Button variant='contained' size='small' onClick={handleUnitAdd} >Add</Button>
+
+
+                  </Box>
+                </Box>
+
+
+                {rentalArray.map((item, index) => {
+                  return (
+                    <Box>
+                      <Paper sx={{ display: 'flex', padding: "1.2em 2em", justifyContent: 'space-between', marginBottom: "1em" }}>
+                        <Box>
+                          <Typography variant='p' sx={{ color: 'black', marginRight: '0.6em', fontWeight: "bold" }}>Month</Typography>
+                          <Typography variant='p' sx={{ color: 'grey', fontWeight: '500' }}>{item.district}</Typography>
+                        </Box>
+                        <Box>
+                          <Typography variant='p' sx={{ color: 'black', marginRight: '0.6em', fontWeight: "bold" }}>WeekDays</Typography>
+                          <Typography variant='p' sx={{ color: 'grey', fontWeight: '500' }}>{item.weekDays}</Typography>
+                        </Box>
+                        <Box>
+                          <Typography variant='p' sx={{ color: 'black', marginRight: '0.6em', fontWeight: 'bold' }}>WeekEnd</Typography>
+                          <Typography variant='p' sx={{ color: 'grey', fontWeight: '500' }}>{item.weekEnds}</Typography>
+                        </Box>
+
+                      </Paper>
+                    </Box>
+                  )
+
+                })}
+
+              </Box>
+
+            </DialogContent>
+            <DialogActions>
+              <Button variant='contained' onClick={handleSaveHall}>Save</Button>
+              <Button variant='outlined' onClick={handleClose}>Close</Button>
+            </DialogActions>
+
+          </form>
+        </Dialog>
+      </React.Fragment>
 
     </Box>
   )
