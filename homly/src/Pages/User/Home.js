@@ -15,7 +15,7 @@ export default function Home() {
         }}
       >
         <Container maxWidth="xl" style={{ padding: 0 ,height:'100vh'}}>
-          <NavBar sideNavBar="none" />
+          <NavBar />
           <Container sx={{ marginTop: "100px" }}>
             <div>This is Home page.</div>
             <MyReservationCard

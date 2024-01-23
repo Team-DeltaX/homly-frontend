@@ -58,7 +58,7 @@ const notifications = [
 
 
 
-const NavBar = (props) => {
+const NavBar = () => {
     const [anchorElUser, setAnchorElUser] = useState(null);
     const [mobileOpen, setMobileOpen] = useState(false);
     const [isClosing, setIsClosing] = useState(false);
@@ -229,7 +229,7 @@ const NavBar = (props) => {
                     sx={{
                         width: { sm: drawerWidth },
                         flexShrink: { sm: 0 },
-                        display: {sm:'none', md:props.sideNavBar},
+                        display: 'none',
                     }}
                     aria-label="mailbox folders"
                 >
@@ -252,7 +252,7 @@ const NavBar = (props) => {
                         {mainDrawer}
 
                     </Drawer>
-                    <Drawer
+                    {/* <Drawer
                         variant="permanent"
                         sx={{
                             display: { xs: "none", sm: "none", md: "block" },
@@ -267,7 +267,7 @@ const NavBar = (props) => {
                         open
                     >
                         {drawer}
-                    </Drawer>
+                    </Drawer> */}
                     
                 </Box>
             </Box>
