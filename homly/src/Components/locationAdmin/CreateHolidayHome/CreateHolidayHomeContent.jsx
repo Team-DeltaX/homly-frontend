@@ -25,8 +25,8 @@ const CreateHolidayHomeContent = () => {
           </Grid>
         </Grid>
 
-        <Box sx={{ paddingBottom: "3em",display:'flex',justifyContent:'flex-end'}}>
-          <Button type="submit">Submit</Button>
+        <Box sx={{ minHeight:'100px',display:'flex',alignItems:'center',justifyContent:'flex-end',paddingRight:"3em"}}>
+          <Button type="submit" variant="contained" disabled={true} sx={{marginBottom:"1.25em"}}>Submit</Button>
         </Box>
       </form>
     </Box>
