@@ -205,7 +205,7 @@ const ViewPopupManage=(props)=>{
                             alignItems:'center',
                             margin:'5px'
                         }}>
-                            <Box><Typography  h6>Blacklist Reson</Typography></Box>
+                            <Box><Typography  h6>Blacklist Reason</Typography></Box>
                             <Box ><TextField disabled size="small" sx={{width:'85%',margin:"5px"}}></TextField></Box>
                         </Box>
                         <Box sx={{
@@ -216,7 +216,7 @@ const ViewPopupManage=(props)=>{
                             alignItems:'center',
                             margin:'5px'
                         }}>
-                            <Box><Typography  h6>Removed Reson</Typography></Box>
+                            <Box><Typography  h6>Removed Reason</Typography></Box>
                             <Box ><TextField disabled size="small" sx={{width:'85%',margin:"5px"}}></TextField></Box>
                         </Box>
                         
