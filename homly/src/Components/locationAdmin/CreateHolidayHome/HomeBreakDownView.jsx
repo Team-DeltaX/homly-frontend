@@ -1,11 +1,15 @@
 import React from 'react'
-import { Box,TextField,Typography,Grid} from '@mui/material'
+import { Box,TextField,Typography,Grid,Button} from '@mui/material'
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+
+
+import RoomBreakdown from './RoomBreakdown';
+import UnitBreakDown from './UnitBreakDown';
 
 
 function CustomTabPanel(props) {
@@ -66,10 +70,10 @@ const HomeBreakDownView = () => {
                     <TextField type='number' id="outlined-required" label="Maximum Children" placeholder='Maximum Children' fullWidth size='small'/>
                   </Box>  
                   <FormGroup sx={{display:'flex',width:'100%'}}>
-                  <FormControlLabel control={<Checkbox defaultChecked />} label="Label" />
-                  <FormControlLabel control={<Checkbox defaultChecked />} label="Label" />
-                  <FormControlLabel control={<Checkbox defaultChecked />} label="Label" />
-                  <FormControlLabel control={<Checkbox defaultChecked />} label="Label" />
+                  <FormControlLabel control={<Checkbox />} label="Free wifi" />
+                  <FormControlLabel control={<Checkbox />} label="AC" />
+                  <FormControlLabel control={<Checkbox />} label="Parking" />
+                  <FormControlLabel control={<Checkbox />} label="Kitchen" />
                  
                 </FormGroup>
                 </Grid>
@@ -90,13 +94,13 @@ const HomeBreakDownView = () => {
                     <Box sx={{minWidth:'100px',maxWidth:'200px'}} className="label_container" >
                         <Typography  variant='p' sx={{color:'black'}}>Total Rental</Typography>
                     </Box>
-                    <TextField type='number' id="outlined-required" label="Total Rental" placeholder='Total Rental' fullWidth size='small'/>
+                    <TextField type='number' id="outlined-required" label="Total Rental" placeholder='Total Rental' fullWidth size='small' required/>
                   </Box>  
                   <Box className="input_container" sx={{display:'flex',alignItems:'center',justifyContent:'space-between',gap:'1em',marginBottom:'12px'}}>
                     <Box sx={{minWidth:'100px',maxWidth:'200px'}} className="label_container" >
                         <Typography  variant='p' sx={{color:'black'}}>Enter facilities</Typography>
                     </Box>
-                    <TextField type='number' id="outlined-required" label="Facilities" placeholder='Enter Facilities' fullWidth size='small'/>
+                    <TextField  id="outlined-required" label="Facilities" placeholder='Enter Facilities' fullWidth size='small'/>
                   </Box>  
                 </Grid>
 
@@ -113,10 +117,40 @@ const HomeBreakDownView = () => {
                             </Tabs>
                         </Box>
                         <CustomTabPanel value={value} index={0}>
-                            Rooms/Units
+                            <Box>
+                              <fieldset style={{borderRadius:'8px'}}>
+                                <legend>Rooms Breakdown</legend>
+                                <RoomBreakdown/>
+                                <RoomBreakdown/>
+                                <RoomBreakdown/>
+                              </fieldset>
+                              <Box sx={{display:'flex',justifyContent:'flex-end',marginTop:"12px"}}>
+
+                              <Button size='small' variant='contained' sx={{backgroundColor:'primary.main'}}>Add Room</Button>
+                              </Box>
+
+                            </Box>
+
+                            <Box>
+                              <fieldset style={{borderRadius:'8px'}}>
+                                <legend>Units Breakdown</legend>
+                                <UnitBreakDown/>
+                                <UnitBreakDown/>
+                                <UnitBreakDown/>
+                              </fieldset>
+                              <Box sx={{display:'flex',justifyContent:'flex-end',marginTop:"12px"}}>
+                                  <Button size='small' variant='contained' sx={{backgroundColor:'primary.main'}}>Add Unit</Button>
+                              </Box>
+                            </Box>
                         </CustomTabPanel>
                         <CustomTabPanel value={value} index={1}>
-                            Halls
+                        <Box>
+                              <fieldset style={{borderRadius:'8px'}}>
+                                <legend>Halls Breakdown</legend>
+                              </fieldset>
+                              <Button size='small' variant='contained' sx={{backgroundColor:'primary.main'}}>Add Hall</Button>
+
+                            </Box>
                         </CustomTabPanel>
                     </Box>
                 </Grid>

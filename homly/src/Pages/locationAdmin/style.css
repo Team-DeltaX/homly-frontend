@@ -415,3 +415,25 @@
   overflow-y: scroll;
   
 }
+
+/* helper text */
+.input_field p {
+  color:red !important;
+}
+
+
+/* holiday home break down parts */
+.card_item .card_item_title{
+  color:black;
+
+}
+
+.card_item{
+  display: flex;
+  flex-direction: column;
+}
+
+.card_item .card_item_value{
+  color:rgb(100, 100, 100);
+
+}
