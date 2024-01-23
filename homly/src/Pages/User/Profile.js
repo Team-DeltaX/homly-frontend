@@ -19,7 +19,9 @@ import CssBaseline from "@mui/material/CssBaseline";
 // import Badge from "@mui/material/Badge";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
-import {useLayoutEffect, useRef } from "react";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import { useLayoutEffect, useRef } from "react";
 
 import MenuIcon from "@mui/icons-material/Menu";
 
@@ -33,7 +35,7 @@ import theme from "../../HomlyTheme";
 import "../../Components/NavBar/NavBar.css";
 import PersonalDetailsCom from "../../Components/MyProfile/PersonalDetailsCom";
 
-let vh = window.innerHeight * 0.01;
+// let vh = window.innerHeight * 0.01;
 
 const drawerWidth = 240;
 const settings = [
@@ -70,20 +72,31 @@ const notifications = [
   { title: "notification 3", description: "this is notification 3", type: "" },
 ];
 
-const MyProfile = () => {
+const tabComponent = [<PersonalDetailsCom />, <div>Item Two</div>,  <div>Item Three</div>,  <div>Item Four</div>];
 
+
+
+
+const MyProfile = () => {
   const ref = useRef(null);
   const [containerWidth, setContainerWidth] = useState(0);
 
   useLayoutEffect(() => {
     setContainerWidth(ref.current.offsetWidth);
-    console.log("width", `${containerWidth}px`);
   }, [containerWidth]);
-
 
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
+
+  // tabs
+  const [value, setValue] = useState(0);
+
+  const handleTabChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  // tabs end
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -110,6 +123,8 @@ const MyProfile = () => {
     }
   };
 
+  
+
   const mainDrawer = (
     <div>
       <Toolbar />
@@ -134,14 +149,29 @@ const MyProfile = () => {
   const drawer = (
     <div>
       <Toolbar />
-      <List>
+      <Box sx={{ width: "100%" }}>
+        <Tabs
+          orientation="vertical"
+          value={value}
+          onChange={handleTabChange}
+          textColor="secondary"
+          indicatorColor="secondary"
+          aria-label="secondary tabs example"
+        >
+          <Tab value={0} label="Item One" />
+          <Tab value={1} label="Item Two" />
+          <Tab value={2} label="Item Three" />
+          <Tab value={3} label="Item Three" />
+        </Tabs>
+      </Box>
+      {/* <List>
         {sidePages.map((text) => (
           <ListItem key={text.name} disablePadding>
             <NavLink
               key={text.name}
               to={text.path}
               className={({ isActive }) =>
-                isActive ? "activeSidePage activeSidePage2" : "normaSidePage"
+                isActive ? "activeSidePage " : "normaSidePage"
               }
             >
               <ListItemButton>
@@ -150,7 +180,7 @@ const MyProfile = () => {
             </NavLink>
           </ListItem>
         ))}
-      </List>
+      </List> */}
     </div>
   );
   return (
@@ -170,117 +200,119 @@ const MyProfile = () => {
               overflow: "hidden",
             }}
           >
-            <Container maxWidth="xl" style={{ padding: 0,position:'relative' }} >
+            <Container
+              maxWidth="xl"
+              style={{ padding: 0, position: "relative" }}
+            >
               <Box sx={{ display: "flex" }}>
                 <CssBaseline />
-                  <AppBar
-                    sx={{
-                      zIndex: (theme) => theme.zIndex.drawer + 1,
-                      // width:'1000px',
-                      // ml: { sm: `${drawerWidth}px` },
-                      bgcolor: "secondary.main",
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      width: "100%",
-                      position: "absolute",
-                      left: 0,
-                    }}
-                  >
-                    
-                      <Toolbar>
-                        <IconButton
-                          color="inherit"
-                          aria-label="open drawer"
-                          edge="start"
-                          onClick={handleDrawerToggle}
-                          sx={{ mr: 2, display: { sm: "none" } }}
-                        >
-                          <MenuIcon />
-                        </IconButton>
-                        {/* <Typography variant="h6" noWrap component="div">
+                <AppBar
+                  sx={{
+                    zIndex: (theme) => theme.zIndex.drawer + 1,
+                    // width:'1000px',
+                    // ml: { sm: `${drawerWidth}px` },
+                    bgcolor: "secondary.main",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    width: "100%",
+                    position: "absolute",
+                    left: 0,
+                  }}
+                >
+                  <Toolbar>
+                    <IconButton
+                      color="inherit"
+                      aria-label="open drawer"
+                      edge="start"
+                      onClick={handleDrawerToggle}
+                      sx={{ mr: 2, display: { sm: "none" } }}
+                    >
+                      <MenuIcon />
+                    </IconButton>
+                    {/* <Typography variant="h6" noWrap component="div">
                       Responsive drawer
                                       </Typography> */}
-                      </Toolbar>
-                      <Stack
-                        direction="row"
-                        spacing={2}
-                        justifyContent="center"
-                        alignItems="center"
-                        sx={{ paddingRight: { xs: "4%", sm: "2%" } }}
-                      >
-                        <Stack
-                          direction="row"
-                          spacing={2}
-                          display={{ xs: "none", sm: "none", md: "flex" }}
+                  </Toolbar>
+                  <Stack
+                    direction="row"
+                    spacing={2}
+                    justifyContent="center"
+                    alignItems="center"
+                    sx={{ paddingRight: { xs: "4%", sm: "2%" } }}
+                  >
+                    <Stack
+                      direction="row"
+                      spacing={2}
+                      display={{ xs: "none", sm: "none", md: "flex" }}
+                    >
+                      {pages.map((page) => (
+                        <NavLink
+                          key={page.name}
+                          to={page.path}
+                          className={({ isActive }) =>
+                            isActive ? "activePage" : "normalPage"
+                          }
                         >
-                          {pages.map((page) => (
-                            <NavLink
-                              key={page.name}
-                              to={page.path}
-                              className={({ isActive }) =>
-                                isActive ? "activePage" : "normalPage"
-                              }
-                            >
-                              <Button variant="text" sx={{ color: "text.primary" }}>
-                                {page.name}
-                              </Button>
-                            </NavLink>
-                          ))}
-                        </Stack>
-                        {/* notification button */}
-                        {/* <NotificationPanel notifications={notifications} /> */}
-                        {/* user button */}
-                        <Box sx={{ flexGrow: 0 }}>
-                          <Tooltip title="Open settings">
-                            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                              <Avatar
-                                alt="Remy Sharp"
-                                sx={{ height: "48px", width: "48px" }}
-                                src="https://img.freepik.com/premium-psd/3d-cartoon-man-smiling-portrait-isolated-transparent-background-png-psd_888962-1570.jpg"
-                              />
-                            </IconButton>
-                          </Tooltip>
-                          <Menu
-                            sx={{ mt: "45px" }}
-                            id="menu-appbar"
-                            anchorEl={anchorElUser}
-                            anchorOrigin={{
-                              vertical: "top",
-                              horizontal: "right",
+                          <Button variant="text" sx={{ color: "text.primary" }}>
+                            {page.name}
+                          </Button>
+                        </NavLink>
+                      ))}
+                    </Stack>
+                    {/* notification button */}
+                    {/* <NotificationPanel notifications={notifications} /> */}
+                    {/* user button */}
+                    <Box sx={{ flexGrow: 0 }}>
+                      <Tooltip title="Open settings">
+                        <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                          <Avatar
+                            alt="Remy Sharp"
+                            sx={{ height: "48px", width: "48px" }}
+                            src="https://img.freepik.com/premium-psd/3d-cartoon-man-smiling-portrait-isolated-transparent-background-png-psd_888962-1570.jpg"
+                          />
+                        </IconButton>
+                      </Tooltip>
+                      <Menu
+                        sx={{ mt: "45px" }}
+                        id="menu-appbar"
+                        anchorEl={anchorElUser}
+                        anchorOrigin={{
+                          vertical: "top",
+                          horizontal: "right",
+                        }}
+                        keepMounted
+                        transformOrigin={{
+                          vertical: "top",
+                          horizontal: "right",
+                        }}
+                        open={Boolean(anchorElUser)}
+                        onClose={handleCloseUserMenu}
+                      >
+                        {settings.map((setting) => (
+                          <MenuItem
+                            key={setting.name}
+                            onClick={handleCloseUserMenu}
+                            component={
+                              setting.name === "My Profile" ? Link : ""
+                            }
+                            sx={{
+                              display:
+                                setting.name === "My Profile"
+                                  ? { xs: "none", md: "block" }
+                                  : "block",
                             }}
-                            keepMounted
-                            transformOrigin={{
-                              vertical: "top",
-                              horizontal: "right",
-                            }}
-                            open={Boolean(anchorElUser)}
-                            onClose={handleCloseUserMenu}
+                            to={setting.path}
                           >
-                            {settings.map((setting) => (
-                              <MenuItem
-                                key={setting.name}
-                                onClick={handleCloseUserMenu}
-                                component={
-                                  setting.name === "My Profile" ? Link : ""
-                                }
-                                sx={{
-                                  display:
-                                    setting.name === "My Profile"
-                                      ? { xs: "none", md: "block" }
-                                      : "block",
-                                }}
-                                to={setting.path}
-                              >
-                                <Typography textAlign="center">
-                                  {setting.name}
-                                </Typography>
-                              </MenuItem>
-                            ))}
-                          </Menu>
-                        </Box>
-                      </Stack>
-                  </AppBar>
+                            <Typography textAlign="center">
+                              {setting.name}
+                            </Typography>
+                          </MenuItem>
+                        ))}
+                      </Menu>
+                    </Box>
+                  </Stack>
+                </AppBar>
                 <Box
                   component="nav"
                   sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
@@ -330,7 +362,8 @@ const MyProfile = () => {
                   }}
                 >
                   <Toolbar />
-                  <PersonalDetailsCom />
+                  {tabComponent[value]}
+                  
                 </Box>
               </Box>
             </Container>
