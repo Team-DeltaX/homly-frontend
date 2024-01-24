@@ -6,13 +6,21 @@ import Box from '@mui/material/Box';
 import { Button, Container,  Grid, InputLabel,TextField, ThemeProvider, Typography } from '@mui/material';
 import theme from '../../HomlyTheme';
 import Pagetop from '../../Components/PrimaryAdmin/PageTop';
+import AutohideSnackbar from '../../Components/PrimaryAdmin/AutohideSnackbar';
 // import BlacklistHistoryCard from '../../Components/PrimaryAdmin/BlacklistHistoryCard';
 // import Search from '../../Components/PrimaryAdmin/Search';
 // import { Label } from '@mui/icons-material';
 // import { Form } from 'react-router-dom';
 
 
+
+
 const PrimaryAddAdmin = () => {
+
+
+
+
+    
     const [serviceno,setServiceno]=useState("")
     const [username,setUsername]=useState("")
     const [password,setPassword]=useState("")
@@ -25,6 +33,29 @@ const PrimaryAddAdmin = () => {
     const [serviceerror,setServiceerror]=useState(false)
     const [usernameerror,setUsernameerror]=useState(false)
     const [worklocationeerror,setWorklocationerror]=useState(false)
+
+    //sncak bar 
+//     const [open, setOpen] = React.useState(false);
+
+//   const handleClick = () => {
+//     setOpen(true);
+//   };
+
+//   const handleClose = (event, reason) => {
+//     if (reason === 'clickaway') {
+//       return;
+//     }
+
+//     setOpen(false);
+//   };
+//snack bar
+
+
+
+    
+
+    
+ 
 
     const validatemobile=(number)=>{
         const pattern =/^(?:\+94|0)?(?:7\d{8}|[1-9]\d{8})$/;
@@ -66,7 +97,9 @@ const PrimaryAddAdmin = () => {
     }
 
     const handlesubmit=()=>{
+        
         console.log("submitted")
+        handleClick()
         setServiceno('')
         setUsername('')
         setContactno('')
@@ -92,14 +125,29 @@ const PrimaryAddAdmin = () => {
 
     }
     
+    //SnackBar
     const [showNav,setShowNav] = useState('nav_grid_deactive')
+    const [open, setOpen] = React.useState(false);
 
+    const handleClick = () => {
+      setOpen(true);
+    };
+  
+    const handleClose = (event, reason) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+  
+      setOpen(false);
+    };
+//SnackBar
 
 
 
     return (
         <ThemeProvider theme={theme}>
             <Box className="main_continer" sx={{ width: "100%", backgroundColor: 'primary.main', height: "100vh", overflow: 'hidden' }}>
+           
                 <form onSubmit={(e)=>{
                     e.preventDefault();
 
@@ -117,6 +165,7 @@ const PrimaryAddAdmin = () => {
                         </Grid>
                         <Grid className='container_grid' xs={9} sx={{ backgroundColor: 'white', borderTopLeftRadius: '20px', padding: '0 20px' }}>
                             <Pagetop setShowNav={setShowNav} heading={"Add Admin"} />
+                            <AutohideSnackbar handleClick={handleClick} handleClose={handleClose} open={open} setOpen={setOpen}/>
                           <Box sx={{display:"flex",justifyContent:'center',alignItems:'center',marginTop:'10%'}}>
                           <Grid container sx={{background:'#E9E9E9',width:{md:"50%",xs:'100%'},height:"50%",borderRadius:'20px',}}>
                     
