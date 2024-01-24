@@ -38,6 +38,7 @@ import { Link, NavLink } from "react-router-dom";
 // import NotificationPanel from "../NotificationPanel/NotificationPanel";
 
 import theme from "../../HomlyTheme";
+import './Profile.css'
 // import "../../Components/NavBar/NavBar.css";
 import PersonalDetailsCom from "../../Components/MyProfile/PersonalDetailsCom";
 
@@ -68,6 +69,9 @@ const sidePages = [
 ];
 
 const tabComponent = [
+  <PersonalDetailsCom />,
+  <PersonalDetailsCom />,
+  <PersonalDetailsCom />,
   <PersonalDetailsCom />,
   <div>Item Two</div>,
   <div>Item Three</div>,
@@ -110,14 +114,47 @@ const MyProfile = () => {
         alignItems: "center",
         height: "100%",
         width: "15vw",
-        color: "primary.main",
+        color: "white",
         // backgroundColor: "white",
       }}
     >
       <Box
+        className="bottom-tab-icon"
         sx={{
-          backgroundColor: "white",
-          padding:'7px',
+          // backgroundColor: "white",
+          padding: '7px',
+          borderRadius: "50%",
+          display: "flex",
+          justifyContent: "center",
+          alignItem: "center",
+          marginBottom: "5px",
+        }}
+      >
+        {icon}
+      </Box>
+      <Typography
+        sx={{ fontSize: { xs: "0.5rem", sm: "0.8rem" }, color: "white" }}
+      >
+        {name}
+      </Typography>
+    </Stack>
+  );
+  const sideTabLable = (name, icon) => (
+    <Stack
+      direction="roe"
+      sx={{
+        alignItems: "center",
+        // height: "100%",
+        width: "100%",
+        color: "white",
+        // backgroundColor: "white",
+      }}
+    >
+      <Box
+        className="side-tab-icon"
+        sx={{
+          // backgroundColor: "white",
+          padding: '7px',
           borderRadius: "50%",
           display: "flex",
           justifyContent: "center",
@@ -195,10 +232,13 @@ const MyProfile = () => {
           indicatorColor="secondary"
           aria-label="secondary tabs example"
         >
-          <Tab value={0} label="Item One" />
-          <Tab value={1} label="Item Two" />
-          <Tab value={2} label="Item Three" />
-          <Tab value={3} label="Item Three" />
+          {sidePages.map((item) => (
+            <Tab
+              key={item.name}
+              value={item.value}
+              label={sideTabLable(item.name, item.icon)}
+            />
+          ))}
         </Tabs>
       </Box>
       {/* <List>
@@ -397,7 +437,6 @@ const MyProfile = () => {
           <Box
             sx={{
               width: "100%",
-              backgroundColor: "red",
               position: "fixed",
               bottom: 0,
               display: { md: "none" },
@@ -409,10 +448,17 @@ const MyProfile = () => {
               onChange={handleTabChange}
               textColor="secondary"
               // indicatorColor="secondary"
+              // TabIndicatorProps={{
+              //   style:{
+              //     backgroundColor: "green",
+              //     "& .Mui-selected":{
+              //       backgroundColor: "green",
+              //     }
+              //   }
+              // }}
               aria-label="secondary tabs example"
               sx={{
                 width: "100%",
-                height: "100%",
                 backgroundColor: "primary.main",
                 display: "flex",
                 justifyContent: "space-between",
@@ -428,11 +474,11 @@ const MyProfile = () => {
           <Tab value={1} label="Item Two" />
           <Tab value={2} label="Item Three" />
           <Tab value={3} label="Item Three" /> */}
-              {sidePages.map((text) => (
+              {sidePages.map((item) => (
                 <Tab
-                  key={text.name}
-                  value={text.value}
-                  label={bottomTabLable(text.name, text.icon)}
+                  key={item.name}
+                  value={item.value}
+                  label={bottomTabLable(item.name, item.icon)}
                 />
               ))}
             </Tabs>
