@@ -169,6 +169,11 @@ const HomeBreakDownView = () => {
     setOpenHall(true);
   };
 
+
+  const handleCloseHall = () => {
+    setOpenHall(false);
+  };
+
   const handleCloseUnit = () => {
     setOpenUnit(false);
   };
@@ -198,6 +203,14 @@ const HomeBreakDownView = () => {
   const handleUnitRentalChange = (e) => {
     setUnitValues({ ...unitValues, unitRental: e.target.value });
   }
+
+  const [unitArray, setUnitArray] = useState([]);
+
+  const handleSaveUnit = () => {
+    if (unitValues.unitCode === '' || unitValues.unitAc === '' || unitValues.floorLevel === '' || unitValues.unitRemark === '' || unitValues.unitRental === '') return;
+    setUnitArray([...unitArray, unitValues]);
+    setOpenUnit(false);
+  };
 
 
   const [unitRental, setUnitRental] = useState({
@@ -271,6 +284,31 @@ const HomeBreakDownView = () => {
     setOpenHall(false);
   };
 
+
+  const [hallRental, setHallRental] = useState({
+    district: '', weekDays: '', weekEnds: ''
+  });
+
+  const handleHallDistrict = (e) => {
+    setHallRental({ ...hallRental, district: e.target.value });
+  }
+
+  const handleHallWeekdays = (e) => {
+    setHallRental({ ...hallRental, weekDays: e.target.value });
+  }
+
+  const handleHallWeekends = (e) => {
+    setHallRental({ ...hallRental, weekEnds: e.target.value });
+  }
+
+
+
+  const [hallRentalArray, setHallRentalArray] = useState([]);
+  const handleHallAdd = () => {
+    if (hallRental.district === '' || hallRental.weekDays === '' || hallRental.weekEnds === '') return;
+    setHallRentalArray([...hallRentalArray, hallRental]);
+
+  };
 
 
 
@@ -372,9 +410,18 @@ const HomeBreakDownView = () => {
                 <Box>
                   <fieldset style={{ borderRadius: '8px' }}>
                     <legend>Units Breakdown</legend>
-                    <UnitBreakDown />
-                    <UnitBreakDown />
-                    <UnitBreakDown />
+                    {unitArray.length === 0
+                      ?
+                      <Box sx={{ display: 'flex', padding: "2em", justifyContent: 'center' }}>
+
+                        <Typography variant='p' sx={{ color: 'grey' }}>No Units Added Yet</Typography>
+                      </Box>
+                      :
+                      unitArray.map((item, index) => {
+                        return (
+                          <UnitBreakDown key={index} unitCode={item.unitCode} unitAc={item.unitAc} floorLevel={item.floorLevel} unitNoOfAdults={item.unitNoOfAdults} unitNoOfChildren={item.unitNoOfChildren} unitRemarks={item.unitRemarks} unitRental={item.unitRental} />
+                        )
+                      })}
                   </fieldset>
                   <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: "12px" }}>
                     <Button size='small' variant='contained' sx={{ backgroundColor: 'primary.main' }} onClick={handleClickOpenUnit}>Add Unit</Button>
@@ -394,7 +441,7 @@ const HomeBreakDownView = () => {
                       :
                       hallArray.map((item, index) => {
                         return (
-                    
+
                           <HallBreakDown key={index} hallCode={item.hallCode} hallAc={item.hallAc} floorLevel={item.floorLevel} hallNoOfAdults={item.hallNoOfAdults} hallNoOfChildren={item.hallNoOfChildren} hallRemarks={item.hallRemarks} hallRental={item.hallRental} />
                         )
                       })}
@@ -723,7 +770,7 @@ const HomeBreakDownView = () => {
 
             </DialogContent>
             <DialogActions>
-              <Button variant='contained' onClick={handleCloseUnit}>Save</Button>
+              <Button variant='contained' onClick={handleSaveUnit}>Save</Button>
               <Button variant='outlined' onClick={handleCloseUnit}>Close</Button>
             </DialogActions>
 
@@ -822,7 +869,7 @@ const HomeBreakDownView = () => {
                         value={value.district}
                         label="Age"
                         sx={{ width: "150px" }}
-                        onChange={handleDistrict}
+                        onChange={handleHallDistrict}
 
 
                       >
@@ -841,16 +888,16 @@ const HomeBreakDownView = () => {
 
                       </Select>
                     </FormControl>
-                    <TextField type='number' id="outlined-required" label="WeekDays" placeholder='WeekDays' size='small' onChange={handleWeekdays} helperText={error.ctName ? "Invalid Input" : ''} sx={{ width: "150px" }} />
-                    <TextField type='number' id="outlined-required" label="Weekend" placeholder='Weekend' size='small' onChange={handleWeekends} helperText={error.ctName ? "Invalid Input" : ''} sx={{ width: "150px" }} />
-                    <Button variant='contained' size='small' onClick={handleUnitAdd} >Add</Button>
+                    <TextField type='number' id="outlined-required" label="WeekDays" placeholder='WeekDays' size='small' onChange={handleHallWeekdays} helperText={error.ctName ? "Invalid Input" : ''} sx={{ width: "150px" }} />
+                    <TextField type='number' id="outlined-required" label="Weekend" placeholder='Weekend' size='small' onChange={handleHallWeekends} helperText={error.ctName ? "Invalid Input" : ''} sx={{ width: "150px" }} />
+                    <Button variant='contained' size='small' onClick={handleHallAdd} >Add</Button>
 
 
                   </Box>
                 </Box>
 
 
-                {rentalArray.map((item, index) => {
+                {hallRentalArray.map((item, index) => {
                   return (
                     <Box>
                       <Paper sx={{ display: 'flex', padding: "1.2em 2em", justifyContent: 'space-between', marginBottom: "1em" }}>
@@ -878,7 +925,7 @@ const HomeBreakDownView = () => {
             </DialogContent>
             <DialogActions>
               <Button variant='contained' onClick={handleSaveHall}>Save</Button>
-              <Button variant='outlined' onClick={handleClose}>Close</Button>
+              <Button variant='outlined' onClick={handleCloseHall}>Close</Button>
             </DialogActions>
 
           </form>
