@@ -22,8 +22,7 @@ import Button from "@mui/material/Button";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 
-
-import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 
 import { useLayoutEffect, useRef } from "react";
 
@@ -59,10 +58,10 @@ const respSidePages = [
   { name: "My Profile", path: "/myProfile/personalDetails" },
 ];
 const sidePages = [
-  { name: "Personal Details",icon:<ManageAccountsIcon />,value:0},
-  { name: "Security",icon:<ManageAccountsIcon />,value:1  },
-  { name: "Payement Details",icon:<ManageAccountsIcon />,value:2 },
-  { name: "My Reservation",icon:<ManageAccountsIcon />,value:3  },
+  { name: "Personal Details", icon: <ManageAccountsIcon />, value: 0 },
+  { name: "Security", icon: <ManageAccountsIcon />, value: 1 },
+  { name: "Payement Details", icon: <ManageAccountsIcon />, value: 2 },
+  { name: "My Reservation", icon: <ManageAccountsIcon />, value: 3 },
 ];
 
 const notifications = [
@@ -107,13 +106,9 @@ const MyProfile = () => {
 
   // tabs
   const [value, setValue] = useState(0);
-  const [bottomValue, setBottomValue] = useState(0);
 
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
-  };
-  const handleBottomTabChange = (event, newValue) => {
-    setBottomValue(newValue);
   };
 
   // tabs end
@@ -123,7 +118,6 @@ const MyProfile = () => {
   };
 
   // console.log("vh", vh, "containerWidth", containerWidth)
-  
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
@@ -144,10 +138,23 @@ const MyProfile = () => {
     }
   };
 
-  const bottomTabLable = (name,icon) => <Stack direction="column" sx={{justifyContent:'center',alignItems:'center',width:'25%'}}>
-    {icon}
-    <Typography sx={{fontSize:'0.5rem',color:'white'}}>{name}</Typography>
-  </Stack>;
+  const bottomTabLable = (name, icon) => (
+    <Stack
+      direction="column"
+      sx={{
+        // justifyContent: "center",
+        alignItems: "center",
+        width: "15vw",
+        // backgroundColor: "black",
+        color: "white",
+      }}
+    >
+      {icon}
+      <Typography sx={{ fontSize: "0.5rem", color: "white" }}>
+        {name}
+      </Typography>
+    </Stack>
+  );
 
   const mainDrawer = (
     <div>
@@ -217,11 +224,7 @@ const MyProfile = () => {
           overflow: "hidden",
         }}
       >
-        <Container
-          ref={ref}
-          maxWidth="xl"
-          style={{ padding: 0, position: "relative" }}
-        >
+        <Container ref={ref} maxWidth="xl" style={{ padding: 0 }}>
           <Box sx={{ display: "flex" }}>
             <CssBaseline />
             <AppBar
@@ -240,11 +243,11 @@ const MyProfile = () => {
             >
               <Toolbar>
                 <IconButton
-                  color="inherit"
+                  color="text.primary"
                   aria-label="open drawer"
                   edge="start"
                   onClick={handleDrawerToggle}
-                  sx={{ mr: 2, display: { sm: "none" } }}
+                  sx={{ mr: 2, display: { sm: "block", md: "none" } }}
                 >
                   <MenuIcon />
                 </IconButton>
@@ -333,9 +336,8 @@ const MyProfile = () => {
               className="nav_container"
               component="nav"
               sx={{
-                width: { sm: drawerWidth },
+                width: { md: drawerWidth },
                 flexShrink: { sm: 0 },
-                bgcolor: "blue",
               }}
               aria-label="mailbox folders"
             >
@@ -349,7 +351,7 @@ const MyProfile = () => {
                   keepMounted: true, // Better open performance on mobile.
                 }}
                 sx={{
-                  display: { xs: "block", sm: "none" },
+                  display: { xs: "block", sm: "block", md: "none" },
                   "& .MuiDrawer-paper": {
                     boxSizing: "border-box",
                     width: drawerWidth,
@@ -362,7 +364,7 @@ const MyProfile = () => {
                 className="side_navbar"
                 variant="permanent"
                 sx={{
-                  display: { xs: "none", sm: "block" },
+                  display: { xs: "none", sm: "none", md: "block" },
                   "& .MuiDrawer-paper": {
                     boxSizing: "border-box",
                     width: drawerWidth,
@@ -390,29 +392,46 @@ const MyProfile = () => {
           <Box
             sx={{
               width: "100%",
-              height: "10vh",
+              height: "7vh",
               backgroundColor: "red",
               position: "fixed",
               bottom: 0,
-              display: { sm: "none", md: "none" },
+              display: { md: "none" },
             }}
           >
             <Tabs
-          // orientation="vertical"
-          value={value}
-          onChange={handleTabChange}
-          textColor="secondary"
-          indicatorColor="secondary"
-          aria-label="secondary tabs example"
-        >
-          {/* <Tab value={0} label={bottomTabLable(sidePages.name,sidePages.icon)} />
+              // orientation="vertical"
+              className="bottom_tabs"
+              value={value}
+              onChange={handleTabChange}
+              textColor="secondary"
+              indicatorColor="secondary"
+              aria-label="secondary tabs example"
+              sx={{
+                width: "100%",
+                height: "100%",
+                backgroundColor: "blue",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                "& .css-heg063-MuiTabs-flexContainer ":{
+                  width:'100%',
+                  display: "flex",
+                justifyContent: "space-between",
+                }
+              }}
+            >
+              {/* <Tab value={0} label={bottomTabLable(sidePages.name,sidePages.icon)} />
           <Tab value={1} label="Item Two" />
           <Tab value={2} label="Item Three" />
           <Tab value={3} label="Item Three" /> */}
-          {sidePages.map((text) => (
-            <Tab value={text.value} label={bottomTabLable(text.name,text.icon)} />
-          ))}
-        </Tabs>
+              {sidePages.map((text) => (
+                <Tab
+                  value={text.value}
+                  label={bottomTabLable(text.name, text.icon)}
+                />
+              ))}
+            </Tabs>
           </Box>
         </Container>
       </Box>
