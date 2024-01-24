@@ -74,8 +74,8 @@ const sidePages = [
 
 const tabComponent = [
   <PersonalDetailsCom />,
-  <PaymentDetailsCom />,
   <Security />,
+  <PaymentDetailsCom />,
   <MyReservation />,
 ];
 
@@ -128,30 +128,30 @@ const MyProfile = () => {
   );
   const sideTabLable = (name, icon) => (
     <Stack
+      className="side-tab"
       direction="row"
       sx={{
         alignItems: "center",
-        // height: "100%",
         width: "100%",
         color: "white",
-        // backgroundColor: "white",
+        padding: "10px 0",
       }}
     >
       <Box
         className="side-tab-icon"
         sx={{
-          // backgroundColor: "white",
           padding: '7px',
           borderRadius: "50%",
           display: "flex",
           justifyContent: "center",
           alignItem: "center",
-          marginBottom: "5px",
+          margin: "0 15px",
         }}
       >
         {icon}
       </Box>
       <Typography
+      className="side-tab-text"
         sx={{ fontSize: { xs: "0.5rem", sm: "0.8rem" }, color: "white" }}
       >
         {name}
@@ -164,8 +164,6 @@ const MyProfile = () => {
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
-
-  // console.log("vh", vh, "containerWidth", containerWidth)
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
@@ -197,13 +195,7 @@ const MyProfile = () => {
             </ListItemButton>
           </ListItem>
         ))}
-        {/* {sidePages.map((text) => (
-          <ListItem key={text.name} sx={{ padding: "0 0 0 10%", top: "-10px" }}>
-            <ListItemButton component={Link} sx={{ padding: 0 }} to={text.path}>
-              <ListItemText secondary={text.name} />
-            </ListItemButton>
-          </ListItem>
-        ))} */}
+        
       </List>
     </div>
   );
@@ -216,7 +208,6 @@ const MyProfile = () => {
           value={value}
           onChange={handleTabChange}
           textColor="secondary"
-          indicatorColor="secondary"
           aria-label="secondary tabs example"
         >
           {sidePages.map((item) => (
@@ -228,23 +219,7 @@ const MyProfile = () => {
           ))}
         </Tabs>
       </Box>
-      {/* <List>
-        {sidePages.map((text) => (
-          <ListItem key={text.name} disablePadding>
-            <NavLink
-              key={text.name}
-              to={text.path}
-              className={({ isActive }) =>
-                isActive ? "activeSidePage " : "normaSidePage"
-              }
-            >
-              <ListItemButton>
-                <ListItemText primary={text.name} />
-              </ListItemButton>
-            </NavLink>
-          </ListItem>
-        ))}
-      </List> */}
+      
     </div>
   );
   return (
@@ -366,7 +341,6 @@ const MyProfile = () => {
               </AppBar>
             
             <Box
-              className="nav_container"
               component="nav"
               sx={{
                 width: { md: drawerWidth },
@@ -394,13 +368,12 @@ const MyProfile = () => {
                 {mainDrawer}
               </Drawer>
               <Drawer
-                className="side_navbar"
                 variant="permanent"
                 sx={{
                   display: { xs: "none", sm: "none", md: "block" },
                   marginTop: { xs: "0px", sm: "0px", md: "64px" },
                   "& .MuiDrawer-paper": {
-                    boxSizing: "border-box",
+                    // boxSizing: "border-box",
                     width: drawerWidth,
                     bgcolor: "primary.main",
                   },
