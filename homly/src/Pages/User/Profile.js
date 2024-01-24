@@ -21,6 +21,10 @@ import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
+
+
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+
 import { useLayoutEffect, useRef } from "react";
 
 import MenuIcon from "@mui/icons-material/Menu";
@@ -32,10 +36,10 @@ import { Link, NavLink } from "react-router-dom";
 // import NotificationPanel from "../NotificationPanel/NotificationPanel";
 
 import theme from "../../HomlyTheme";
-import "../../Components/NavBar/NavBar.css";
+// import "../../Components/NavBar/NavBar.css";
 import PersonalDetailsCom from "../../Components/MyProfile/PersonalDetailsCom";
-
-// let vh = window.innerHeight * 0.01;
+import BottomTabs from "../../Components/NavBar/BottomTabs";
+let vh = window.innerHeight * 0.01;
 
 const drawerWidth = 240;
 const settings = [
@@ -55,10 +59,10 @@ const respSidePages = [
   { name: "My Profile", path: "/myProfile/personalDetails" },
 ];
 const sidePages = [
-  { name: "Personal Details", path: "/myProfile/personalDetails" },
-  { name: "Security", path: "/myProfile/security" },
-  { name: "Payement Details", path: "/myProfile/paymentDetails" },
-  { name: "My Reservation", path: "/myProfile/myReservation" },
+  { name: "Personal Details",icon:<ManageAccountsIcon />,value:0},
+  { name: "Security",icon:<ManageAccountsIcon />,value:1  },
+  { name: "Payement Details",icon:<ManageAccountsIcon />,value:2 },
+  { name: "My Reservation",icon:<ManageAccountsIcon />,value:3  },
 ];
 
 const notifications = [
@@ -72,18 +76,30 @@ const notifications = [
   { title: "notification 3", description: "this is notification 3", type: "" },
 ];
 
-const tabComponent = [<PersonalDetailsCom />, <div>Item Two</div>,  <div>Item Three</div>,  <div>Item Four</div>];
-
-
-
+const tabComponent = [
+  <PersonalDetailsCom />,
+  <div>Item Two</div>,
+  <div>Item Three</div>,
+  <div>Item Four</div>,
+];
 
 const MyProfile = () => {
   const ref = useRef(null);
+  const ref2 = useRef(null);
   const [containerWidth, setContainerWidth] = useState(0);
+  const [containerHeight, setContainerHeight] = useState(0);
 
   useLayoutEffect(() => {
     setContainerWidth(ref.current.offsetWidth);
-  }, [containerWidth]);
+    setContainerHeight(ref2.current.offsetHeight);
+  }, [containerWidth, containerHeight]);
+
+  console.log(
+    "containerWidth",
+    containerWidth,
+    "containerHeight",
+    containerHeight
+  );
 
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -91,9 +107,13 @@ const MyProfile = () => {
 
   // tabs
   const [value, setValue] = useState(0);
+  const [bottomValue, setBottomValue] = useState(0);
 
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
+  };
+  const handleBottomTabChange = (event, newValue) => {
+    setBottomValue(newValue);
   };
 
   // tabs end
@@ -103,6 +123,7 @@ const MyProfile = () => {
   };
 
   // console.log("vh", vh, "containerWidth", containerWidth)
+  
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
@@ -123,7 +144,10 @@ const MyProfile = () => {
     }
   };
 
-  
+  const bottomTabLable = (name,icon) => <Stack direction="column" sx={{justifyContent:'center',alignItems:'center',width:'25%'}}>
+    {icon}
+    <Typography sx={{fontSize:'0.5rem',color:'white'}}>{name}</Typography>
+  </Stack>;
 
   const mainDrawer = (
     <div>
@@ -136,13 +160,13 @@ const MyProfile = () => {
             </ListItemButton>
           </ListItem>
         ))}
-        {sidePages.map((text) => (
+        {/* {sidePages.map((text) => (
           <ListItem key={text.name} sx={{ padding: "0 0 0 10%", top: "-10px" }}>
             <ListItemButton component={Link} sx={{ padding: 0 }} to={text.path}>
               <ListItemText secondary={text.name} />
             </ListItemButton>
           </ListItem>
-        ))}
+        ))} */}
       </List>
     </div>
   );
@@ -186,187 +210,209 @@ const MyProfile = () => {
   return (
     <ThemeProvider theme={theme}>
       <Box
-        className="main_container"
+        ref={ref2}
+        // className="main_container"
         sx={{
           width: "100%",
           overflow: "hidden",
         }}
       >
-        <Container maxWidth="xl" ref={ref} style={{ padding: 0 }}>
-          <Box
-            className="main_container"
-            sx={{
-              width: "100%",
-              overflow: "hidden",
-            }}
-          >
-            <Container
-              maxWidth="xl"
-              style={{ padding: 0, position: "relative" }}
+        <Container
+          ref={ref}
+          maxWidth="xl"
+          style={{ padding: 0, position: "relative" }}
+        >
+          <Box sx={{ display: "flex" }}>
+            <CssBaseline />
+            <AppBar
+              sx={{
+                zIndex: (theme) => theme.zIndex.drawer + 1,
+                // width:'1000px',
+                // ml: { sm: `${drawerWidth}px` },
+                bgcolor: "secondary.main",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+                width: "100%",
+                position: "absolute",
+                left: 0,
+              }}
             >
-              <Box sx={{ display: "flex" }}>
-                <CssBaseline />
-                <AppBar
-                  sx={{
-                    zIndex: (theme) => theme.zIndex.drawer + 1,
-                    // width:'1000px',
-                    // ml: { sm: `${drawerWidth}px` },
-                    bgcolor: "secondary.main",
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    width: "100%",
-                    position: "absolute",
-                    left: 0,
-                  }}
+              <Toolbar>
+                <IconButton
+                  color="inherit"
+                  aria-label="open drawer"
+                  edge="start"
+                  onClick={handleDrawerToggle}
+                  sx={{ mr: 2, display: { sm: "none" } }}
                 >
-                  <Toolbar>
-                    <IconButton
-                      color="inherit"
-                      aria-label="open drawer"
-                      edge="start"
-                      onClick={handleDrawerToggle}
-                      sx={{ mr: 2, display: { sm: "none" } }}
-                    >
-                      <MenuIcon />
-                    </IconButton>
-                    {/* <Typography variant="h6" noWrap component="div">
+                  <MenuIcon />
+                </IconButton>
+                {/* <Typography variant="h6" noWrap component="div">
                       Responsive drawer
                                       </Typography> */}
-                  </Toolbar>
-                  <Stack
-                    direction="row"
-                    spacing={2}
-                    justifyContent="center"
-                    alignItems="center"
-                    sx={{ paddingRight: { xs: "4%", sm: "2%" } }}
-                  >
-                    <Stack
-                      direction="row"
-                      spacing={2}
-                      display={{ xs: "none", sm: "none", md: "flex" }}
+              </Toolbar>
+              <Stack
+                direction="row"
+                spacing={2}
+                justifyContent="center"
+                alignItems="center"
+                sx={{ paddingRight: { xs: "4%", sm: "2%" } }}
+              >
+                <Stack
+                  direction="row"
+                  spacing={2}
+                  display={{ xs: "none", sm: "none", md: "flex" }}
+                >
+                  {pages.map((page) => (
+                    <NavLink
+                      key={page.name}
+                      to={page.path}
+                      className={({ isActive }) =>
+                        isActive ? "activePage" : "normalPage"
+                      }
                     >
-                      {pages.map((page) => (
-                        <NavLink
-                          key={page.name}
-                          to={page.path}
-                          className={({ isActive }) =>
-                            isActive ? "activePage" : "normalPage"
-                          }
-                        >
-                          <Button variant="text" sx={{ color: "text.primary" }}>
-                            {page.name}
-                          </Button>
-                        </NavLink>
-                      ))}
-                    </Stack>
-                    {/* notification button */}
-                    {/* <NotificationPanel notifications={notifications} /> */}
-                    {/* user button */}
-                    <Box sx={{ flexGrow: 0 }}>
-                      <Tooltip title="Open settings">
-                        <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                          <Avatar
-                            alt="Remy Sharp"
-                            sx={{ height: "48px", width: "48px" }}
-                            src="https://img.freepik.com/premium-psd/3d-cartoon-man-smiling-portrait-isolated-transparent-background-png-psd_888962-1570.jpg"
-                          />
-                        </IconButton>
-                      </Tooltip>
-                      <Menu
-                        sx={{ mt: "45px" }}
-                        id="menu-appbar"
-                        anchorEl={anchorElUser}
-                        anchorOrigin={{
-                          vertical: "top",
-                          horizontal: "right",
+                      <Button variant="text" sx={{ color: "text.primary" }}>
+                        {page.name}
+                      </Button>
+                    </NavLink>
+                  ))}
+                </Stack>
+                {/* notification button */}
+                {/* <NotificationPanel notifications={notifications} /> */}
+                {/* user button */}
+                <Box sx={{ flexGrow: 0 }}>
+                  <Tooltip title="Open settings">
+                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                      <Avatar
+                        alt="Remy Sharp"
+                        sx={{ height: "48px", width: "48px" }}
+                        src="https://img.freepik.com/premium-psd/3d-cartoon-man-smiling-portrait-isolated-transparent-background-png-psd_888962-1570.jpg"
+                      />
+                    </IconButton>
+                  </Tooltip>
+                  <Menu
+                    sx={{ mt: "45px" }}
+                    id="menu-appbar"
+                    anchorEl={anchorElUser}
+                    anchorOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    open={Boolean(anchorElUser)}
+                    onClose={handleCloseUserMenu}
+                  >
+                    {settings.map((setting) => (
+                      <MenuItem
+                        key={setting.name}
+                        onClick={handleCloseUserMenu}
+                        component={setting.name === "My Profile" ? Link : ""}
+                        sx={{
+                          display:
+                            setting.name === "My Profile"
+                              ? { xs: "none", md: "block" }
+                              : "block",
                         }}
-                        keepMounted
-                        transformOrigin={{
-                          vertical: "top",
-                          horizontal: "right",
-                        }}
-                        open={Boolean(anchorElUser)}
-                        onClose={handleCloseUserMenu}
+                        to={setting.path}
                       >
-                        {settings.map((setting) => (
-                          <MenuItem
-                            key={setting.name}
-                            onClick={handleCloseUserMenu}
-                            component={
-                              setting.name === "My Profile" ? Link : ""
-                            }
-                            sx={{
-                              display:
-                                setting.name === "My Profile"
-                                  ? { xs: "none", md: "block" }
-                                  : "block",
-                            }}
-                            to={setting.path}
-                          >
-                            <Typography textAlign="center">
-                              {setting.name}
-                            </Typography>
-                          </MenuItem>
-                        ))}
-                      </Menu>
-                    </Box>
-                  </Stack>
-                </AppBar>
-                <Box
-                  component="nav"
-                  sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-                  aria-label="mailbox folders"
-                >
-                  {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-                  <Drawer
-                    variant="temporary"
-                    open={mobileOpen}
-                    onTransitionEnd={handleDrawerTransitionEnd}
-                    onClose={handleDrawerClose}
-                    ModalProps={{
-                      keepMounted: true, // Better open performance on mobile.
-                    }}
-                    sx={{
-                      display: { xs: "block", sm: "none" },
-                      "& .MuiDrawer-paper": {
-                        boxSizing: "border-box",
-                        width: drawerWidth,
-                      },
-                    }}
-                  >
-                    {mainDrawer}
-                  </Drawer>
-                  <Drawer
-                    variant="permanent"
-                    sx={{
-                      display: { xs: "none", sm: "block" },
-                      "& .MuiDrawer-paper": {
-                        boxSizing: "border-box",
-                        width: drawerWidth,
-                        height: `calc(100vh)`,
-                        bgcolor: "primary.main",
-                      },
-                    }}
-                    open
-                  >
-                    {drawer}
-                  </Drawer>
+                        <Typography textAlign="center">
+                          {setting.name}
+                        </Typography>
+                      </MenuItem>
+                    ))}
+                  </Menu>
                 </Box>
-                <Box
-                  component="main"
-                  sx={{
-                    flexGrow: 1,
-                    p: 3,
-                    width: { sm: `calc(100% - ${drawerWidth}px)` },
-                  }}
-                >
-                  <Toolbar />
-                  {tabComponent[value]}
-                  
-                </Box>
-              </Box>
-            </Container>
+              </Stack>
+            </AppBar>
+            <Box
+              className="nav_container"
+              component="nav"
+              sx={{
+                width: { sm: drawerWidth },
+                flexShrink: { sm: 0 },
+                bgcolor: "blue",
+              }}
+              aria-label="mailbox folders"
+            >
+              {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+              <Drawer
+                variant="temporary"
+                open={mobileOpen}
+                onTransitionEnd={handleDrawerTransitionEnd}
+                onClose={handleDrawerClose}
+                ModalProps={{
+                  keepMounted: true, // Better open performance on mobile.
+                }}
+                sx={{
+                  display: { xs: "block", sm: "none" },
+                  "& .MuiDrawer-paper": {
+                    boxSizing: "border-box",
+                    width: drawerWidth,
+                  },
+                }}
+              >
+                {mainDrawer}
+              </Drawer>
+              <Drawer
+                className="side_navbar"
+                variant="permanent"
+                sx={{
+                  display: { xs: "none", sm: "block" },
+                  "& .MuiDrawer-paper": {
+                    boxSizing: "border-box",
+                    width: drawerWidth,
+                    bgcolor: "primary.main",
+                  },
+                  height: "100%",
+                }}
+                open
+              >
+                {drawer}
+              </Drawer>
+            </Box>
+            <Box
+              component="main"
+              sx={{
+                flexGrow: 1,
+                p: 3,
+                width: { sm: `calc(100% - ${drawerWidth}px)` },
+              }}
+            >
+              <Toolbar />
+              {tabComponent[value]}
+            </Box>
+          </Box>
+          <Box
+            sx={{
+              width: "100%",
+              height: "10vh",
+              backgroundColor: "red",
+              position: "fixed",
+              bottom: 0,
+              display: { sm: "none", md: "none" },
+            }}
+          >
+            <Tabs
+          // orientation="vertical"
+          value={value}
+          onChange={handleTabChange}
+          textColor="secondary"
+          indicatorColor="secondary"
+          aria-label="secondary tabs example"
+        >
+          {/* <Tab value={0} label={bottomTabLable(sidePages.name,sidePages.icon)} />
+          <Tab value={1} label="Item Two" />
+          <Tab value={2} label="Item Three" />
+          <Tab value={3} label="Item Three" /> */}
+          {sidePages.map((text) => (
+            <Tab value={text.value} label={bottomTabLable(text.name,text.icon)} />
+          ))}
+        </Tabs>
           </Box>
         </Container>
       </Box>
