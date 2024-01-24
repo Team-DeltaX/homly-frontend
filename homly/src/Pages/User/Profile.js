@@ -398,6 +398,7 @@ const MyProfile = () => {
                 variant="permanent"
                 sx={{
                   display: { xs: "none", sm: "none", md: "block" },
+                  marginTop: { xs: "0px", sm: "0px", md: "64px" },
                   "& .MuiDrawer-paper": {
                     boxSizing: "border-box",
                     width: drawerWidth,
