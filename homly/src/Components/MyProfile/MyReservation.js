@@ -1,41 +1,40 @@
-import React, { useContext } from "react";
+// import React, { useContext } from "react";
+import React from 'react'
 import {
   Box,
+//   Container,
   ThemeProvider,
   Typography,
-  Card,
-  CardContent,
-  CardActions,
+//   Card,
+//   CardContent,
+//   CardActions,
 } from "@mui/material";
 
-import PersonalDetailsGrid from "../PersonalDetailsGrid/PersonalDetailsGrid";
-import UpdateButton from "../PersonalDetailsGrid/UpdateButton";
+// import PersonalDetailsGrid from "../PersonalDetailsGrid/PersonalDetailsGrid";
+// import UpdateButton from "../PersonalDetailsGrid/UpdateButton";
 
-import { EditPersonalDetailsContext } from "../../Contexts/EditPersonalDetailsContext";
+// import { EditPersonalDetailsContext } from "../../Contexts/EditPersonalDetailsContext";
 
 import theme from "../../HomlyTheme";
 
 
-const PersonalDetailsCom = () => {
-    const { userPersonalDetails } = useContext(EditPersonalDetailsContext);
+const MyReservation = () => {
+    // const { userPersonalDetails } = useContext(EditPersonalDetailsContext);
   return (
     <ThemeProvider theme={theme}>
       <Box>
-          <Typography variant="h4">Personal Details</Typography>
-          <Box
+          <Typography variant="h4">My Reservation</Typography>
+          {/* <Box
             sx={{
               width: "100%",
               height: "100%",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              margin:{xs:'3% 0 20% 0',sm:'3% 0 0 0'}
+              margin:{xs:'3% 0 20% 0'}
             }}
           >
-            {/* <Box sx={{width:'90%',height:'90%',backgroundColor:'green',boxShadow: '8px 11px 31px -17px rgba(0,0,0,0.75)',}}>
-                           dfgd 
-                </Box> */}
-            
+           
               <Card sx={{ width: {xs:"100%",sm:"90%"}}}>
                 <CardContent sx={{ display: "flex", flexDirection: "column" }}>
                   {userPersonalDetails && (
@@ -100,10 +99,10 @@ const PersonalDetailsCom = () => {
                 </CardActions>
               </Card>
             
-          </Box>
+          </Box> */}
       </Box>
     </ThemeProvider>
   );
 };
 
-export default PersonalDetailsCom;
+export default MyReservation;
