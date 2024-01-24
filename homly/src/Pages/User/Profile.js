@@ -23,6 +23,9 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import CreditCardIcon from "@mui/icons-material/CreditCard";
+import ListAltIcon from "@mui/icons-material/ListAlt";
+import HttpsIcon from "@mui/icons-material/Https";
 
 import { useLayoutEffect, useRef } from "react";
 
@@ -37,8 +40,8 @@ import { Link, NavLink } from "react-router-dom";
 import theme from "../../HomlyTheme";
 // import "../../Components/NavBar/NavBar.css";
 import PersonalDetailsCom from "../../Components/MyProfile/PersonalDetailsCom";
-import BottomTabs from "../../Components/NavBar/BottomTabs";
-let vh = window.innerHeight * 0.01;
+
+// let vh = window.innerHeight * 0.01;
 
 const drawerWidth = 240;
 const settings = [
@@ -59,20 +62,9 @@ const respSidePages = [
 ];
 const sidePages = [
   { name: "Personal Details", icon: <ManageAccountsIcon />, value: 0 },
-  { name: "Security", icon: <ManageAccountsIcon />, value: 1 },
-  { name: "Payement Details", icon: <ManageAccountsIcon />, value: 2 },
-  { name: "My Reservation", icon: <ManageAccountsIcon />, value: 3 },
-];
-
-const notifications = [
-  {
-    title: "notification 1",
-    description:
-      "this is notification 1.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
-    type: "canceled",
-  },
-  { title: "notification 2", description: "this is notification 2", type: "" },
-  { title: "notification 3", description: "this is notification 3", type: "" },
+  { name: "Security", icon: <HttpsIcon />, value: 1 },
+  { name: "Payement Details", icon: <CreditCardIcon />, value: 2 },
+  { name: "My Reservation", icon: <ListAltIcon />, value: 3 },
 ];
 
 const tabComponent = [
@@ -111,6 +103,38 @@ const MyProfile = () => {
     setValue(newValue);
   };
 
+  const bottomTabLable = (name, icon) => (
+    <Stack
+      direction="column"
+      sx={{
+        alignItems: "center",
+        height: "100%",
+        width: "15vw",
+        color: "primary.main",
+        // backgroundColor: "white",
+      }}
+    >
+      <Box
+        sx={{
+          backgroundColor: "white",
+          padding:'7px',
+          borderRadius: "50%",
+          display: "flex",
+          justifyContent: "center",
+          alignItem: "center",
+          marginBottom: "5px",
+        }}
+      >
+        {icon}
+      </Box>
+      <Typography
+        sx={{ fontSize: { xs: "0.5rem", sm: "0.8rem" }, color: "white" }}
+      >
+        {name}
+      </Typography>
+    </Stack>
+  );
+
   // tabs end
 
   const handleOpenUserMenu = (event) => {
@@ -137,24 +161,6 @@ const MyProfile = () => {
       setMobileOpen(!mobileOpen);
     }
   };
-
-  const bottomTabLable = (name, icon) => (
-    <Stack
-      direction="column"
-      sx={{
-        // justifyContent: "center",
-        alignItems: "center",
-        width: "15vw",
-        // backgroundColor: "black",
-        color: "white",
-      }}
-    >
-      {icon}
-      <Typography sx={{ fontSize: "0.5rem", color: "white" }}>
-        {name}
-      </Typography>
-    </Stack>
-  );
 
   const mainDrawer = (
     <div>
@@ -257,8 +263,7 @@ const MyProfile = () => {
               </Toolbar>
               <Stack
                 direction="row"
-                spacing={2}
-                justifyContent="center"
+                spacing={1}
                 alignItems="center"
                 sx={{ paddingRight: { xs: "4%", sm: "2%" } }}
               >
@@ -392,7 +397,6 @@ const MyProfile = () => {
           <Box
             sx={{
               width: "100%",
-              height: "7vh",
               backgroundColor: "red",
               position: "fixed",
               bottom: 0,
@@ -400,25 +404,24 @@ const MyProfile = () => {
             }}
           >
             <Tabs
-              // orientation="vertical"
               className="bottom_tabs"
               value={value}
               onChange={handleTabChange}
               textColor="secondary"
-              indicatorColor="secondary"
+              // indicatorColor="secondary"
               aria-label="secondary tabs example"
               sx={{
                 width: "100%",
                 height: "100%",
-                backgroundColor: "blue",
+                backgroundColor: "primary.main",
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
-                "& .css-heg063-MuiTabs-flexContainer ":{
-                  width:'100%',
+                "& .css-heg063-MuiTabs-flexContainer ": {
+                  width: "100%",
                   display: "flex",
-                justifyContent: "space-between",
-                }
+                  justifyContent: "space-between",
+                },
               }}
             >
               {/* <Tab value={0} label={bottomTabLable(sidePages.name,sidePages.icon)} />
@@ -427,6 +430,7 @@ const MyProfile = () => {
           <Tab value={3} label="Item Three" /> */}
               {sidePages.map((text) => (
                 <Tab
+                  key={text.name}
                   value={text.value}
                   label={bottomTabLable(text.name, text.icon)}
                 />
