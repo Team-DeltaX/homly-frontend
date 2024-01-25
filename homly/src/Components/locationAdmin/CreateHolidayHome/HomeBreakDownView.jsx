@@ -63,7 +63,7 @@ function a11yProps(index) {
 }
 const HomeBreakDownView = () => {
   const [values, setValues] = useState({
-    roomCode: '', roomAc: '', RoomType: '', NoOfBeds: '', NoOfAdults: '', NoOfChildren: '', roomRemarks: '', roomRental: '',
+    roomCode: '', roomAc: '', RoomType: '', NoOfBeds: '', NoOfAdults: '', NoOfChildren: '', roomRemarks: '', roomRental: '',groupByUnit:false
   })
 
 
@@ -181,7 +181,7 @@ const HomeBreakDownView = () => {
   // unit popup
 
   const [unitValues, setUnitValues] = useState({
-    unitCode: '', unitAc: '', floorLevel: '', unitRemark: '', unitRental: '',
+    unitCode: '', unitAc: '', floorLevel: '', unitRemark: '', unitRental: '',roomAttached:false,selectedRooms:[]
   })
   const handleUnitCodeChange = (e) => {
     setUnitValues({ ...unitValues, unitCode: e.target.value });
@@ -396,7 +396,7 @@ const HomeBreakDownView = () => {
                       :
                       roomArray.map((item, index) => {
                         return (
-                          <RoomBreakdown key={index} roomCode={item.roomCode} roomAc={item.roomAc} roomType={item.RoomType} noOfBeds={item.NoOfBeds} noOfAdults={item.NoOfAdults} noOfChildren={item.NoOfChildren} roomRemarks={item.roomRemarks} roomRental={item.roomRental} />
+                          <RoomBreakdown key={index} roomCode={item.roomCode} roomAc={item.roomAc} roomType={item.RoomType} noOfBeds={item.NoOfBeds} noOfAdults={item.NoOfAdults} noOfChildren={item.NoOfChildren} roomRemarks={item.roomRemarks} roomRental={item.roomRental} groupByUnit={item.groupByUnit}/>
                         )
                       })}
                   </fieldset>
@@ -419,7 +419,7 @@ const HomeBreakDownView = () => {
                       :
                       unitArray.map((item, index) => {
                         return (
-                          <UnitBreakDown key={index} unitCode={item.unitCode} unitAc={item.unitAc} floorLevel={item.floorLevel} unitNoOfAdults={item.unitNoOfAdults} unitNoOfChildren={item.unitNoOfChildren} unitRemarks={item.unitRemarks} unitRental={item.unitRental} />
+                          <UnitBreakDown key={index} unitCode={item.unitCode} unitAc={item.unitAc} floorLevel={item.floorLevel} unitNoOfAdults={item.unitNoOfAdults} unitNoOfChildren={item.unitNoOfChildren} unitRemarks={item.unitRemarks} unitRental={item.unitRental} roomArray={roomArray} setRoomArray={setRoomArray} selectedRooms={item.selectedRooms} />
                         )
                       })}
                   </fieldset>
