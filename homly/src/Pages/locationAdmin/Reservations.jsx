@@ -10,7 +10,7 @@ import theme from '../../HomlyTheme';
 import SideNavbar from '../../Components/locationAdmin/SideNavbar'
 import PageTitle from '../../Components/locationAdmin/PageTitle';
 
-import BasicTabs from '../../Components/locationAdmin/Reservations/BasicTab';
+import BasicTabs from '../../Components/locationAdmin/Reservations/LocationAdminBasicTab';
 
 
 

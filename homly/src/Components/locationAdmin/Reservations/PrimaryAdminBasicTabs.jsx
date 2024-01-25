@@ -11,7 +11,7 @@ function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
 
   return (
-    <div
+    <Box
       role="tabpanel"
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
@@ -23,7 +23,7 @@ function CustomTabPanel(props) {
           <Typography>{children}</Typography>
         </Box>
       )}
-    </div>
+    </Box>
   );
 }
 
@@ -40,7 +40,7 @@ function a11yProps(index) {
   };
 }
 
-export default function BasicTabs() {
+export default function PrimaryAdminBasicTabs() {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -53,12 +53,16 @@ export default function BasicTabs() {
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
           <Tab label="Ongoing Reservations" {...a11yProps(0)} />
           <Tab label="Past Reservations" {...a11yProps(1)} />
+          <Tab label="Special Reservations" {...a11yProps(2)} />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
         <OngoingReservationList/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
+        <PastReservationList />
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={2}>
         <PastReservationList />
       </CustomTabPanel>
     </Box>

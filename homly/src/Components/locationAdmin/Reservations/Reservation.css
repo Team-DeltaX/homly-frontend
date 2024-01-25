@@ -1,6 +1,4 @@
-* {
-    margin: 0;
-  }
+
 .home{
     /*height: 500px;*/
     height: 75vh;
@@ -32,13 +30,17 @@
     flex-direction: wrap;
     justify-content: space-around;
 }
+.section2 {
+    align-items: right;
+    float: right;
+}
 .reservation-preview {
-    padding: 10px 16px;
-    margin: 20px 0;
+    padding: 10px 1px;
+    margin: 10px 8px;
     border-bottom: 1px solid #fafafa;
   }
   .reservation-preview:hover {
-    box-shadow: 1px 3px 5px rgba(0,0,0,0.1);
+    box-shadow: 5px 3px 5px rgba(0,0,0,0.1);
   }
   .reservation-preview h2 {
     font-size: 20px;
