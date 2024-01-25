@@ -466,3 +466,9 @@
   font-size: 0.9rem;
 
 }
+
+/* create_holiday home -> units breakdown ->add rooms to unit popup */
+
+.bottom_container_selected_rooms {
+  max-height: 400px;
+}

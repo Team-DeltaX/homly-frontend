@@ -5,7 +5,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 
 
 
-const RoomBreakdown = ({ roomCode, roomAC, roomType, noOfBeds, noOfAdults, noOfChildren, roomRemarks, roomRental, groupByUnit }) => {
+const RoomBreakdown = ({ roomCode, roomAC, roomType, noOfBeds, noOfAdults, noOfChildren, roomRemarks, roomRental, groupByUnit, handleRoomDelete }) => {
 
     const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
@@ -44,12 +44,12 @@ const RoomBreakdown = ({ roomCode, roomAC, roomType, noOfBeds, noOfAdults, noOfC
                 <Button size='small' variant='contained' sx={{ backgroundColor: 'primary.main' }}>Edit Row</Button>
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                     <Typography variant='p'>Group by Unit</Typography>
-                    {/* <Checkbox {...label} disabled={true} /> */}
+
                     <Checkbox {...label} disabled={groupByUnit ? false : true} checked={groupByUnit} />
 
                 </Box>
                 <Box>
-                    <CancelIcon />
+                    <CancelIcon sx={{ cursor: "pointer" }} onClick={() => handleRoomDelete(roomCode)} />
                 </Box>
 
             </Box>

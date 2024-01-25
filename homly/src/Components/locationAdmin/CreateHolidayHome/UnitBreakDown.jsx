@@ -9,7 +9,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 
 
-const UnitBreakDown = ({ unitCode, unitAc, floorLevel, unitNoOfAdults, unitNoOfChildren, unitRemarks, unitRental,selectedRooms , roomArray, setRoomArray}) => {
+const UnitBreakDown = ({ unitCode, unitAc, floorLevel, unitNoOfAdults, unitNoOfChildren, unitRemarks, unitRental, selectedRooms, roomArray, setRoomArray, handleUnitDelete }) => {
     const [open, setOpen] = useState(false);
     const [fullWidth, setFullWidth] = useState(true);
     const [maxWidth, setMaxWidth] = useState('sm');
@@ -26,10 +26,10 @@ const UnitBreakDown = ({ unitCode, unitAc, floorLevel, unitNoOfAdults, unitNoOfC
 
     const handleRoomAddToUnit = (roomCode) => {
         setRoomArray(roomArray.map((item, index) => {
-          
+
             if (item.roomCode === roomCode) {
                 selectedRooms.push(item);
-                
+
                 return {
                     ...item,
                     groupByUnit: true
@@ -38,6 +38,20 @@ const UnitBreakDown = ({ unitCode, unitAc, floorLevel, unitNoOfAdults, unitNoOfC
                 return item
             }
         }))
+    }
+
+    const handleCancelSelectedRoom = (roomCode) => {
+        setRoomArray(roomArray.map((item, index) => {
+            if (item.roomCode === roomCode) {
+                return {
+                    ...item,
+                    groupByUnit: false
+                }
+            } else {
+                return item
+            }
+        }))
+        selectedRooms.splice(selectedRooms.findIndex(item => item.roomCode === roomCode), 1)
     }
 
 
@@ -80,10 +94,10 @@ const UnitBreakDown = ({ unitCode, unitAc, floorLevel, unitNoOfAdults, unitNoOfC
                 <Button size='small' variant='contained' sx={{ backgroundColor: 'primary.main' }}>Edit Row</Button>
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                     <Typography variant='p'>Room Attached?</Typography>
-                    <Checkbox disabled={true} {...label} />
+                    <Checkbox {...label} disabled={selectedRooms.length === 0 ? true : false} checked={selectedRooms.length === 0 ? false : true} />
                 </Box>
                 <Box>
-                    <CancelIcon />
+                    <CancelIcon sx={{ cursor: 'pointer' }} onClick={() => handleUnitDelete(unitCode,selectedRooms)} />
                 </Box>
 
             </Box>
@@ -98,7 +112,7 @@ const UnitBreakDown = ({ unitCode, unitAc, floorLevel, unitNoOfAdults, unitNoOfC
                 >
                     <DialogTitle>Add Rooms to Unit</DialogTitle>
                     <form>
-                        <DialogContent>
+                        <DialogContent sx={{ overflow: "hidden" }}>
                             <Box>
                                 <Box sx={{ display: 'flex', justifyContent: 'space-between', padding: '0em 2em' }}>
                                     <Box sx={{ display: 'flex', gap: '1em', marginBottom: '1em', alignItems: 'center', }}>
@@ -121,21 +135,68 @@ const UnitBreakDown = ({ unitCode, unitAc, floorLevel, unitNoOfAdults, unitNoOfC
                                     </Box>
                                 </Box>
                             </Box>
+                            <Box className="bottom_container_selected_rooms" >
+                                <Box sx={{ marginBottom: '1.5em' }}>
+                                    <fieldset style={{ borderRadius: '10px' }}>
+                                        <legend>Rooms</legend>
+                                        {roomArray.length === 0
+                                            ?
+                                            <Box sx={{ display: 'flex', padding: "2em", justifyContent: 'center' }}>
 
-                            <Box sx={{ marginBottom: '1.5em' }}>
-                                <fieldset style={{ borderRadius: '10px' }}>
-                                    <legend>Rooms</legend>
-                                    {roomArray.length === 0
-                                        ?
-                                        <Box sx={{ display: 'flex', padding: "2em", justifyContent: 'center' }}>
+                                                <Typography variant='p' sx={{ color: 'grey' }}>No Rooms Available</Typography>
+                                            </Box>
+                                            :
+                                            roomArray
+                                                .filter(item => !item.groupByUnit)
+                                                .map((item, index) => {
 
-                                            <Typography variant='p' sx={{ color: 'grey' }}>No Rooms Available</Typography>
-                                        </Box>
-                                        :
-                                        roomArray
-                                            .filter(item => !item.groupByUnit)
-                                            .map((item, index) => {
+                                                    return (
+                                                        <Paper elevation={8} sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', padding: "10px", marginBottom: "10px" }}>
+                                                            <Box sx={{ display: 'flex', gap: '1em' }}>
+                                                                <Box className="card_item">
+                                                                    <Typography variant='p' className='attach_card_item_title'>Room Code</Typography>
+                                                                    <Typography variant='p' className='attach_card_item_value'>{item.roomCode}</Typography>
+                                                                </Box>
+                                                                <Box className="card_item">
+                                                                    <Typography variant='p' className='attach_card_item_title'>AC/Non AC</Typography>
+                                                                    <Typography variant='p' className='attach_card_item_value'>{item.roomAC}</Typography>
+                                                                </Box>
+                                                                <Box className="card_item">
+                                                                    <Typography variant='p' className='attach_card_item_title'>Room Type</Typography>
+                                                                    <Typography variant='p' className='attach_card_item_value'>{item.RoomType}</Typography>
+                                                                </Box>
+                                                                <Box className="card_item">
+                                                                    <Typography variant='p' className='attach_card_item_title'>Adults</Typography>
+                                                                    <Typography variant='p' className='attach_card_item_value'>{item.NoOfAdults}</Typography>
+                                                                </Box>
+                                                                <Box className="card_item">
+                                                                    <Typography variant='p' className='attach_card_item_title'>Children</Typography>
+                                                                    <Typography variant='p' className='attach_card_item_value'>{item.NoOfChildren}</Typography>
+                                                                </Box>
 
+                                                            </Box>
+                                                            <Box sx={{ display: 'flex', alignItems: 'center', gap: '1em' }}>
+                                                                <Button size='small' variant='contained' sx={{ backgroundColor: 'primary.main' }} onClick={() => handleRoomAddToUnit(item.roomCode)}>Add</Button>
+                                                            </Box>
+                                                        </Paper>
+                                                    )
+                                                })
+
+                                        }
+                                    </fieldset>
+                                </Box>
+
+                                <Box>
+                                    <fieldset style={{ borderRadius: '10px' }}>
+                                        <legend>Selected Rooms for the Unit</legend>
+                                        {selectedRooms.length === 0
+                                            ?
+                                            <Box sx={{ display: 'flex', padding: "2em", justifyContent: 'center' }}>
+
+                                                <Typography variant='p' sx={{ color: 'grey' }}>No Selected Rooms</Typography>
+                                            </Box>
+                                            :
+                                            selectedRooms.map((item, index) => {
                                                 return (
                                                     <Paper elevation={8} sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', padding: "10px", marginBottom: "10px" }}>
                                                         <Box sx={{ display: 'flex', gap: '1em' }}>
@@ -162,62 +223,16 @@ const UnitBreakDown = ({ unitCode, unitAc, floorLevel, unitNoOfAdults, unitNoOfC
 
                                                         </Box>
                                                         <Box sx={{ display: 'flex', alignItems: 'center', gap: '1em' }}>
-                                                            <Button size='small' variant='contained' sx={{ backgroundColor: 'primary.main' }} onClick={() => handleRoomAddToUnit(item.roomCode)}>Add</Button>
+                                                            <CancelIcon sx={{ cursor: "pointer" }} onClick={() => handleCancelSelectedRoom(item.roomCode)} />
                                                         </Box>
                                                     </Paper>
                                                 )
                                             })
 
-                                    }
-                                </fieldset>
-                            </Box>
+                                        }
+                                    </fieldset>
 
-                            <Box>
-                                <fieldset style={{ borderRadius: '10px' }}>
-                                    <legend>Selected Rooms for the Unit</legend>
-                                    {selectedRooms.length === 0
-                                        ?
-                                        <Box sx={{ display: 'flex', padding: "2em", justifyContent: 'center' }}>
-
-                                            <Typography variant='p' sx={{ color: 'grey' }}>No Selected Rooms</Typography>
-                                        </Box>
-                                        :
-                                        selectedRooms.map((item, index) => {
-                                            return (
-                                                <Paper elevation={8} sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', padding: "10px", marginBottom: "10px" }}>
-                                                    <Box sx={{ display: 'flex', gap: '1em' }}>
-                                                        <Box className="card_item">
-                                                            <Typography variant='p' className='attach_card_item_title'>Room Code</Typography>
-                                                            <Typography variant='p' className='attach_card_item_value'>{item.roomCode}</Typography>
-                                                        </Box>
-                                                        <Box className="card_item">
-                                                            <Typography variant='p' className='attach_card_item_title'>AC/Non AC</Typography>
-                                                            <Typography variant='p' className='attach_card_item_value'>{item.roomAC}</Typography>
-                                                        </Box>
-                                                        <Box className="card_item">
-                                                            <Typography variant='p' className='attach_card_item_title'>Room Type</Typography>
-                                                            <Typography variant='p' className='attach_card_item_value'>{item.RoomType}</Typography>
-                                                        </Box>
-                                                        <Box className="card_item">
-                                                            <Typography variant='p' className='attach_card_item_title'>Adults</Typography>
-                                                            <Typography variant='p' className='attach_card_item_value'>{item.NoOfAdults}</Typography>
-                                                        </Box>
-                                                        <Box className="card_item">
-                                                            <Typography variant='p' className='attach_card_item_title'>Children</Typography>
-                                                            <Typography variant='p' className='attach_card_item_value'>{item.NoOfChildren}</Typography>
-                                                        </Box>
-
-                                                    </Box>
-                                                    <Box sx={{ display: 'flex', alignItems: 'center', gap: '1em' }}>
-                                                        <CancelIcon />
-                                                    </Box>
-                                                </Paper>
-                                            )
-                                        })
-
-                                    }
-                                </fieldset>
-
+                                </Box>
                             </Box>
 
 

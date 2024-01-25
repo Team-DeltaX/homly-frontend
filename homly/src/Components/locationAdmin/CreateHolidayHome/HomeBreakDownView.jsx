@@ -62,8 +62,10 @@ function a11yProps(index) {
   };
 }
 const HomeBreakDownView = () => {
+
+
   const [values, setValues] = useState({
-    roomCode: '', roomAc: '', RoomType: '', NoOfBeds: '', NoOfAdults: '', NoOfChildren: '', roomRemarks: '', roomRental: '',groupByUnit:false
+    roomCode: '', roomAc: '', RoomType: '', NoOfBeds: '', NoOfAdults: '', NoOfChildren: '', roomRemarks: '', roomRental: '', groupByUnit: false
   })
 
 
@@ -74,6 +76,12 @@ const HomeBreakDownView = () => {
     setRoomArray([...roomArray, values]);
     setOpen(false);
   };
+
+  const handleRoomDelete = (roomCode) => { //for room breakdown component
+    const newRoomArray = roomArray.filter((item) => item.roomCode !== roomCode);
+    setRoomArray(newRoomArray);
+  }
+
 
   const [error, setError] = useState({
     ctName: false, ctAddress: false, ctDescription: false, ctContactNo: false
@@ -181,7 +189,7 @@ const HomeBreakDownView = () => {
   // unit popup
 
   const [unitValues, setUnitValues] = useState({
-    unitCode: '', unitAc: '', floorLevel: '', unitRemark: '', unitRental: '',roomAttached:false,selectedRooms:[]
+    unitCode: '', unitAc: '', floorLevel: '', unitRemark: '', unitRental: '', roomAttached: false, selectedRooms: []
   })
   const handleUnitCodeChange = (e) => {
     setUnitValues({ ...unitValues, unitCode: e.target.value });
@@ -211,6 +219,44 @@ const HomeBreakDownView = () => {
     setUnitArray([...unitArray, unitValues]);
     setOpenUnit(false);
   };
+
+  // const handleUnitDelete = (unitCode, selectedRooms) => { //for unit breakdown component
+  //   selectedRooms.map((item) => {
+  //     roomArray.map((room) => {
+  //       if (room.roomCode === item.roomCode) {
+  //         room.groupByUnit = false;
+  //       }
+  //     })
+
+  //   })
+
+  //   selectedRooms.length = 0;
+
+  //   const newUnitArray = unitArray.filter((item) => item.unitCode !== unitCode);
+  //   setUnitArray(newUnitArray);
+
+  // }
+  const handleUnitDelete = (unitCode, selectedRooms) => {
+    setRoomArray((prevRoomArray) => {
+      const updatedRoomArray = prevRoomArray.map((room) => {
+        if (selectedRooms.some((item) => item.roomCode === room.roomCode)) {
+          return { ...room, groupByUnit: false };
+        }
+        return room;
+      });
+  
+      return updatedRoomArray;
+    });
+
+    selectedRooms.length = 0;
+
+    setUnitArray((prevUnitArray) => {
+      const newUnitArray = prevUnitArray.filter((item) => item.unitCode !== unitCode);
+      return newUnitArray;
+    });
+    return null;
+  };
+  
 
 
   const [unitRental, setUnitRental] = useState({
@@ -396,7 +442,7 @@ const HomeBreakDownView = () => {
                       :
                       roomArray.map((item, index) => {
                         return (
-                          <RoomBreakdown key={index} roomCode={item.roomCode} roomAc={item.roomAc} roomType={item.RoomType} noOfBeds={item.NoOfBeds} noOfAdults={item.NoOfAdults} noOfChildren={item.NoOfChildren} roomRemarks={item.roomRemarks} roomRental={item.roomRental} groupByUnit={item.groupByUnit}/>
+                          <RoomBreakdown key={index} roomCode={item.roomCode} roomAc={item.roomAc} roomType={item.RoomType} noOfBeds={item.NoOfBeds} noOfAdults={item.NoOfAdults} noOfChildren={item.NoOfChildren} roomRemarks={item.roomRemarks} roomRental={item.roomRental} groupByUnit={item.groupByUnit} handleRoomDelete={handleRoomDelete} />
                         )
                       })}
                   </fieldset>
@@ -419,7 +465,7 @@ const HomeBreakDownView = () => {
                       :
                       unitArray.map((item, index) => {
                         return (
-                          <UnitBreakDown key={index} unitCode={item.unitCode} unitAc={item.unitAc} floorLevel={item.floorLevel} unitNoOfAdults={item.unitNoOfAdults} unitNoOfChildren={item.unitNoOfChildren} unitRemarks={item.unitRemarks} unitRental={item.unitRental} roomArray={roomArray} setRoomArray={setRoomArray} selectedRooms={item.selectedRooms} />
+                          <UnitBreakDown key={index} unitCode={item.unitCode} unitAc={item.unitAc} floorLevel={item.floorLevel} unitNoOfAdults={item.unitNoOfAdults} unitNoOfChildren={item.unitNoOfChildren} unitRemarks={item.unitRemarks} unitRental={item.unitRental} roomArray={roomArray} setRoomArray={setRoomArray} selectedRooms={item.selectedRooms} handleUnitDelete={handleUnitDelete} />
                         )
                       })}
                   </fieldset>
