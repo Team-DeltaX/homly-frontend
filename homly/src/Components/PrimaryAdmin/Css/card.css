@@ -1,0 +1,88 @@
+
+
+.homes_container_body .button_container{
+    display: flex;
+    justify-content: center;
+    gap:1em;
+   }
+  
+   .homes_container_body .sub_details{
+    font-weight: 500;
+   }
+  
+    .home_image img{
+      width:80px;
+      border-radius: 12px;
+      background-position: center;
+      background-repeat: no-repeat;
+     
+  
+  
+    }
+  
+    /* holiday homes card container scroll bar */
+    
+  .holidayhomes_card_container::-webkit-scrollbar {
+    width: 5px;
+    margin-left: 5px;
+  }
+  
+  /* Track */
+  .holidayhomes_card_container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  /* Handle */
+  .holidayhomes_card_container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 5px;
+  
+  }
+  
+  /* Handle on hover */
+  .holidayhomes_card_container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+  
+  
+  /* manageholiday homes  */
+  
+  @media screen and (max-width:920px) {
+  
+      .homes_container_body{
+        display: flex;
+        flex-wrap: wrap;
+        gap:1em;
+  
+      }
+      .homes_container_body .home_card{
+        flex-direction: column;
+        width:fit-content;
+        padding:20px;
+      }
+  
+      .home_card .sub_details{
+        
+        display: flex;
+        justify-content: flex-start;
+        width:100%;
+      }
+  
+      .home_card .button_container{
+        margin-top: 10px;
+      }
+  
+      .home_card .home_image{
+        margin-bottom: 10px;
+        width:100%;
+        display: flex;
+        justify-content: center;
+      }
+  
+      .home_image img{
+        width:140px;
+      }
+    
+  }
+  
+  
