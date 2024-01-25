@@ -1,14 +1,6 @@
 import React, { useContext } from "react";
-
-import NavBar from '../../Components/NavBar/NavBar'
-import PersonalDetailsGrid from "../../Components/PersonalDetailsGrid/PersonalDetailsGrid";
-import UpdateButton from "../../Components/PersonalDetailsGrid/UpdateButton";
-
-import { EditPersonalDetailsContext } from "../../Contexts/EditPersonalDetailsContext";
-
 import {
   Box,
-  Container,
   ThemeProvider,
   Typography,
   Card,
@@ -16,37 +8,35 @@ import {
   CardActions,
 } from "@mui/material";
 
+import PersonalDetailsGrid from "../PersonalDetailsGrid/PersonalDetailsGrid";
+import UpdateButton from "../PersonalDetailsGrid/UpdateButton";
+
+import { EditPersonalDetailsContext } from "../../Contexts/EditPersonalDetailsContext";
+
 import theme from "../../HomlyTheme";
 
 
-
-const PersonalDetails = () => {
-  const { userPersonalDetails } = useContext(EditPersonalDetailsContext)
- 
-  // console.log(userPersonalDetails);
-  
-
+const PersonalDetailsCom = () => {
+    const { userPersonalDetails } = useContext(EditPersonalDetailsContext);
   return (
     <ThemeProvider theme={theme}>
-      <Box display={'flex'}>
-        <NavBar sideNavBar="block" />
-        <Container sx={{ mt: 10, height: {xs:"auto",sm:"75vh",md:"80vh"} }}>
+      <Box>
           <Typography variant="h4">Personal Details</Typography>
           <Box
             sx={{
               width: "100%",
               height: "100%",
-              marginTop:1,
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
+              margin:{xs:'3% 0 20% 0',sm:'3% 0 0 0'}
             }}
           >
             {/* <Box sx={{width:'90%',height:'90%',backgroundColor:'green',boxShadow: '8px 11px 31px -17px rgba(0,0,0,0.75)',}}>
                            dfgd 
                 </Box> */}
             
-              <Card sx={{ width: "90%",margin:{xs:'3% 0 10% 0'}}}>
+              <Card sx={{ width: {xs:"100%",sm:"90%"}}}>
                 <CardContent sx={{ display: "flex", flexDirection: "column" }}>
                   {userPersonalDetails && (
                     <PersonalDetailsGrid
@@ -111,10 +101,9 @@ const PersonalDetails = () => {
               </Card>
             
           </Box>
-        </Container>
       </Box>
     </ThemeProvider>
   );
 };
 
-export default PersonalDetails;
+export default PersonalDetailsCom;

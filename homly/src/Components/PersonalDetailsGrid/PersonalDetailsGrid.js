@@ -4,7 +4,7 @@ import Editable from "./Readable";
 import Readable from "./Editable";
 import { Box } from "@mui/system";
 
-import { EditPersonalDetailsContext } from "../../../Contexts/EditPersonalDetailsContext";
+import { EditPersonalDetailsContext } from "../../Contexts/EditPersonalDetailsContext";
 
 const PersonalDetailsGrid = (props) => {
   const { currentEditId } = useContext(EditPersonalDetailsContext);

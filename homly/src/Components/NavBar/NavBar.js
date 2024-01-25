@@ -12,6 +12,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import { CssBaseline } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 // import Badge from "@mui/material/Badge";
@@ -25,13 +26,13 @@ import { ThemeProvider } from "@emotion/react";
 
 import { Link, NavLink } from "react-router-dom";
 
-import NotificationPanel from "../../NotificationPanel/NotificationPanel";
+import NotificationPanel from "../NotificationPanel/NotificationPanel";
 
 import theme from "../../HomlyTheme";
 import "./NavBar.css"
 
 const drawerWidth = 240;
-const settings = [{ name: "My Profile", path: '/myProfile/personalDetails' }, { name: "Logout" }];
+const settings = [{ name: "My Profile", path: '/myProfile' }, { name: "Logout" }];
 const pages = [
     { name: "Home", path: "/" },
     { name: "Holiday Homes", path: "/holidayHomes" },
@@ -42,14 +43,9 @@ const respSidePages = [
     { name: "Home", path: "/" },
     { name: "Holiday Homes", path: "/holidayHomes" },
     { name: "Contact Us", path: "/contactUs" },
-    { name: "My Profile", path: '/myProfile/personalDetails' },
+    { name: "My Profile", path: '/myProfile' },
 ];
-const sidePages = [
-    { name: "Personal Details", path: '/myProfile/personalDetails' },
-    { name: "Security", path: '/myProfile/security' },
-    { name: "Payement Details", path: '/myProfile/paymentDetails' },
-    { name: "My Reservation", path: '/myProfile/myReservation' },
-];
+
 
 const notifications = [
     { title: "notification 1", description: "this is notification 1.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,", type: 'canceled' }, 
@@ -58,7 +54,7 @@ const notifications = [
 
 
 
-const NavBar = (props) => {
+const NavBar = () => {
     const [anchorElUser, setAnchorElUser] = useState(null);
     const [mobileOpen, setMobileOpen] = useState(false);
     const [isClosing, setIsClosing] = useState(false);
@@ -99,50 +95,28 @@ const NavBar = (props) => {
                         </ListItemButton>
                     </ListItem>
                 ))}
-                {sidePages.map((text) => (
-                    <ListItem key={text.name} sx={{ padding: '0 0 0 10%', top: '-10px' }}>
-                        <ListItemButton component={Link} sx={{ padding: 0 }}
-                            to={text.path}>
-                            <ListItemText secondary={text.name} />
-                        </ListItemButton>
-                    </ListItem>
-                ))}
+ 
 
             </List>
         </div>
     );
-    const drawer = (
-        <div>
-            <Toolbar />
-            <List>
-                {sidePages.map((text) => (
-                    <ListItem key={text.name} disablePadding>
-                        <NavLink key={text.name} to={text.path} className={({ isActive }) => (isActive ? 'activeSidePage activeSidePage2' : 'normaSidePage')
-                        }>
-                            <ListItemButton>
-                                <ListItemText primary={text.name} />
-                            </ListItemButton>
-                        </NavLink>
-                    </ListItem>
-                ))}
-            </List>
-        </div>
-    );
+    
 
     return (
         <ThemeProvider theme={theme}>
             <Box>
-                {/* <CssBaseline /> */}
+                <CssBaseline />
                 <AppBar
                     sx={{
+                        
                         zIndex: (theme) => theme.zIndex.drawer + 1,
                         backgroundColor: "secondary.main",
                         width: "100%",
                         flexDirection: "row",
                         justifyContent: "space-between",
                         alignItems: "center",
-                        width: { sm: `calc(100% - ${drawerWidth}px)` },
-                        ml: { sm: `${drawerWidth}px` },
+                        // width: { sm: `calc(100% - ${drawerWidth}px)` },
+                        // ml: { sm: `${drawerWidth}px` },
                     }}
                 >
                     <Toolbar>
@@ -155,7 +129,9 @@ const NavBar = (props) => {
                             <MenuIcon />
                         </IconButton>
 
-                    
+                        {/* <Typography variant="h6" noWrap component="div">
+                            Responsive drawer
+                        </Typography> */}
                     </Toolbar>
                     <Stack
                         direction="row"
@@ -211,7 +187,6 @@ const NavBar = (props) => {
                                         key={setting.name}
                                         onClick={handleCloseUserMenu}
                                         component={setting.name === "My Profile" ? Link : ""}
-                                        sx={{ display: setting.name === "My Profile" ? { xs: "none", md: "block" } : "block" }}
                                         to={setting.path}
                                     >
                                         <Typography textAlign="center">{setting.name}</Typography>
@@ -226,11 +201,10 @@ const NavBar = (props) => {
                     sx={{
                         width: { sm: drawerWidth },
                         flexShrink: { sm: 0 },
-                        display: props.sideNavBar,
+                        display: 'none',
                     }}
                     aria-label="mailbox folders"
                 >
-                    {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
                     <Drawer
                         variant="temporary"
                         open={mobileOpen}
@@ -250,21 +224,23 @@ const NavBar = (props) => {
                         {mainDrawer}
 
                     </Drawer>
-                    <Drawer
+                    {/* <Drawer
                         variant="permanent"
                         sx={{
                             display: { xs: "none", sm: "none", md: "block" },
                             "& .MuiDrawer-paper": {
                                 boxSizing: "border-box",
                                 width: drawerWidth,
-                                bgcolor: "primary.main",
                                 color: "white",
+                                
                             },
+                            bgcolor: "primary.main",
                         }}
                         open
                     >
                         {drawer}
-                    </Drawer>
+                    </Drawer> */}
+                    
                 </Box>
             </Box>
         </ThemeProvider>

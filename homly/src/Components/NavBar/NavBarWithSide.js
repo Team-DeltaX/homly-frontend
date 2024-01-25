@@ -25,7 +25,7 @@ import { ThemeProvider } from "@emotion/react";
 
 import { Link, NavLink } from "react-router-dom";
 
-import NotificationPanel from "../../NotificationPanel/NotificationPanel";
+import NotificationPanel from "../NotificationPanel/NotificationPanel";
 
 import theme from "../../HomlyTheme";
 import "./NavBar.css"
@@ -141,8 +141,8 @@ const NavBar = (props) => {
                         flexDirection: "row",
                         justifyContent: "space-between",
                         alignItems: "center",
-                        width: { sm: `calc(100% - ${drawerWidth}px)` },
-                        ml: { sm: `${drawerWidth}px` },
+                        // width: { sm: `calc(100% - ${drawerWidth}px)` },
+                        // ml: { sm: `${drawerWidth}px` },
                     }}
                 >
                     <Toolbar>
@@ -155,7 +155,9 @@ const NavBar = (props) => {
                             <MenuIcon />
                         </IconButton>
 
-                    
+                        {/* <Typography variant="h6" noWrap component="div">
+                            Responsive drawer
+                        </Typography> */}
                     </Toolbar>
                     <Stack
                         direction="row"
@@ -226,7 +228,7 @@ const NavBar = (props) => {
                     sx={{
                         width: { sm: drawerWidth },
                         flexShrink: { sm: 0 },
-                        display: props.sideNavBar,
+                        display: {sm:'none', md:props.sideNavBar},
                     }}
                     aria-label="mailbox folders"
                 >

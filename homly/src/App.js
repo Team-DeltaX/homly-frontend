@@ -30,7 +30,7 @@ import ManageHomes from "../src/Pages/locationAdmin/ManageHomes";
 // const MyReservation = lazy(() =>
 //   import("../src/Pages/User/MyReservation")
 // );
-import PaymentGateway from "../src/services/paymentGateway/PaymentGateway";
+// import PaymentGateway from "../src/services/paymentGateway/PaymentGateway";
 
 import Home from "../src/Pages/User/Home";
 import HolidayHome from "../src/Pages/User/HolidayHome";
@@ -80,12 +80,12 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/HolidayHomes" element={<HolidayHome />} />
-          <Route path="/Profile" element={<Profile />} />
+          <Route path="/MyProfile" element={<Profile />} />
           <Route path="/ContactUs" element={<ContactUs />} />
-          <Route path="/paymentGateway" element={<PaymentGateway />} />
+          {/* <Route path="/paymentGateway" element={<PaymentGateway />} /> */}
           <Route path="/Registration" element={<UserRegistration />} />
           <Route path="/Login" element={<UserLogin />} />
-          <Route path="/MyProfile" element={<PersonalDetails />} />
+          {/* <Route path="/MyProfile" element={<PersonalDetails />} /> */}
           <Route
             path="/MyProfile/PersonalDetails"
             element={<PersonalDetails />}
