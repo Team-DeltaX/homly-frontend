@@ -4,8 +4,14 @@ import {
   Box,
   Typography,
   ThemeProvider,
-  Stack, Grid,
+  Stack,
+  Grid,
 } from "@mui/material";
+import dayjs from "dayjs";
+import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DateRangePicker } from "@mui/x-date-pickers-pro/DateRangePicker";
 
 import NavBar from "../../Components/NavBar/NavBar";
 import theme from "../../HomlyTheme";
@@ -76,23 +82,36 @@ export default function Home() {
                     sx={{ bgcolor: "white", width: "80%" }}
                   >
                     <Typography>Find</Typography>
-                    <Grid container sx={{bgcolor:'blueviolet',width:'100%'}}>
+                    <Grid
+                      container
+                      sx={{ bgcolor: "blueviolet", width: "100%" }}
+                    >
                       <Grid item md={4}>
-                        <Stack direction='column'>
+                        <Stack direction="column">
                           <Typography>Location</Typography>
                           <Typography>Location</Typography>
                         </Stack>
                       </Grid>
                       <Grid item md={6}>
-                        <Stack direction='row'>
-                          <Stack direction='column'>
+                        <Stack direction="row">
+                          {/* <Stack direction='column'>
                             <Typography>Location</Typography>
                             <Typography>Location</Typography>
                           </Stack>
                           <Stack direction='column'>
                             <Typography>Location</Typography>
                             <Typography>Location</Typography>
-                          </Stack>
+                          </Stack> */}
+                          <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <DemoContainer components={["DateRangePicker"]}>
+                              <DateRangePicker
+                                localeText={{
+                                  start: "Check-in",
+                                  end: "Check-out",
+                                }}
+                              />
+                            </DemoContainer>
+                          </LocalizationProvider>
                         </Stack>
                       </Grid>
                       <Grid item md={2}>
