@@ -3,7 +3,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useState } from "react";
 import { grey } from "@mui/material/colors";
 import theme from '../../HomlyTheme'
-
+import CancelIcon from '@mui/icons-material/Cancel';
 
 
 
@@ -68,7 +68,7 @@ const ViewPopupManage=(props)=>{
                        
             
                     }}>
-                       <Button sx={{position:"absolute",right:"0px",top:'0px',padding:"10px",borderRadius:'50%',color:'black'}} onClick={()=>{props.handlepopup()}}>X</Button>
+                       <Button sx={{position:"absolute",right:"0px",top:'0px',padding:"10px",color:'black'}} onClick={()=>{props.handlepopup()}}><CancelIcon/></Button>
             
                     <Box sx={{
                         display:'felx',

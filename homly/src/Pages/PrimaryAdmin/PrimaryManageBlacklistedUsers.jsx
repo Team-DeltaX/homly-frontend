@@ -187,7 +187,7 @@ const PrimaryManageBlacklistedUsers = () => {
                           
 
 
-                            <Box sx={{  maxHeight: '470px', overflow: 'scroll', padding: "2%" }}>
+                            <Box sx={{marginTop:'1%',  maxHeight: '470px', overflow: 'scroll', padding: "2%" }}>
                                 {blacklistedusers.filter((data)=>{
                                     const serviceNumberString = String(data.Service_number);
                                     return (search.toLowerCase()==='')?data:

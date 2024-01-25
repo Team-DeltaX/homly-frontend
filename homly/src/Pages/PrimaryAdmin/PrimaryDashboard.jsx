@@ -35,8 +35,8 @@ const PrimaryDashboard = () => {
                                     <Grid md={8} sx={{ backgroundColor: 'grey', height: '100vh' }}>s</Grid>
                                     <Grid md={4} sx={{height:'100vh'}}>
                                         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                                            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: '#E9E9E9', padding: '2px', margin: '15px', borderRadius: '20px' }}>
-                                                <Box><Typography variant='h6' style={{ margin: '5px' }}>Location Admins</Typography></Box>
+                                            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: '#E9E9E9', padding: '1px', margin: '10px', borderRadius: '20px' }}>
+                                                <Box><Typography variant='h6' style={{ margin: '3px' }}>Location Admins</Typography></Box>
                                               
                                                 
                                                 <Box><DashViewAdminBox color={"#253DA1"}/></Box>
@@ -49,7 +49,7 @@ const PrimaryDashboard = () => {
 
                                             </Box>
                                             <Box>
-                                                <Box sx={{backgroundColor:'#E9E9E9',padding:'2px', margin: '15px', borderRadius: '20px' }}>
+                                                <Box sx={{backgroundColor:'#E9E9E9',padding:'1px', margin: '10px', borderRadius: '20px' }}>
                                                     <Box sx={{display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center'}}>
                                                         <Box sx={{display:'flex',flexDirection:'row',alignItems:'center',justifyContent:'center',columnGap:'20px',padding:'10px',margin:'7px',background:'white',borderRadius:'10px'}}>
                                                             <Box><Avatar sx={{ bgcolor: 'red' }}>6</Avatar></Box>

@@ -9,7 +9,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-
+import CancelIcon from '@mui/icons-material/Cancel';
 
 const ViewPopupComplaints = (props) => {
     const [reson, setReson] = useState("")
@@ -55,17 +55,20 @@ const ViewPopupComplaints = (props) => {
                     <Box sx={{
                         backgroundColor: 'white',
                         borderRadius: "10px",
-                        padding: '5px',
-                        width: { md: '470px' },
+                        padding: '20px',
+                        width: { md: '500px',sx:'400px' },
                         display: 'flex',
                         flexDirection: 'column',
                         justifyContent: "center",
                         alignItems: 'center',
                         position: 'relative',
+                        maxHeight:{md:'100%',xs:'690px'},
+                        overflow:'auto',
+                        marginTop:{xs:'15px'}
+                       
 
                     }}>
-                        <Button sx={{ position: "absolute", right: "0px", top: '0px', padding: "10px", borderRadius: '50%', color: 'black' }} onClick={() => { props.handlepopup() }}>X</Button>
-
+ <Button sx={{position:"absolute",right:"0px",top:'0px',padding:"10px",color:'black'}} onClick={()=>{props.handlepopup()}}><CancelIcon/></Button>
                         <Box sx={{
                             display: 'felx',
                             flexDirection: 'column',
@@ -79,7 +82,7 @@ const ViewPopupComplaints = (props) => {
                                 flexDirection: { md: 'row', xs: 'column' },
                                 justifyContent: "space-between",
                                 alignItems: 'center',
-                                margin: '10px'
+                                marginTop:{md:'5px',xs:'199px'}
                             }}>
                                 <Box><Typography sx={{ flex: 2 }} h6>Service Number</Typography></Box>
                                 <Box ><TextField
@@ -119,7 +122,7 @@ const ViewPopupComplaints = (props) => {
                                 margin: '10px'
                             }}>
                                 <Box><Typography h6>Description</Typography></Box>
-                                <Box  ><TextField multiline maxRows={4} disabled value={props.selecteduser.Nic_number} size="small" sx={{ width: '85%', margin: "5px", }}></TextField></Box>
+                                <Box  ><TextField multiline maxRows={2} disabled value="111 ee e eeeee eeeeeeee eeeeeee eeeeeeeeeee" size="small" sx={{ width: '85%', margin: "5px", }}></TextField></Box>
                             </Box>
 
 
@@ -145,10 +148,10 @@ const ViewPopupComplaints = (props) => {
                                 margin: '10px'
                             }}>
                                 <div>
-                                    {data.length >= 1 ? <Accordion expanded={!expand} onClick={() => { setExpand(!expand) }}>
+                                    {data.length >= 1 ? <Accordion expanded={!expand} onClick={() => { setExpand(!expand) }} sx={{width:'95%' ,boxShadow:'rgba(0, 0, 0, 0.05) 0px 0px 0px 1px'}}>
                                         <AccordionSummary
                                             expandIcon={<ArrowDropDownIcon />}
-                                            aria-controls="panel2-content"
+                                            aria-controls="panel2-content" 
                                             id="panel2-header"
                                         >
                                             <Typography>Complaint on {data[0].date}</Typography>
@@ -159,7 +162,7 @@ const ViewPopupComplaints = (props) => {
                                             </Typography>
                                         </AccordionDetails>
                                     </Accordion> : ""}
-                                    {data.length == 2 ? <Accordion expanded={expand} onClick={() => { setExpand(!expand) }}>
+                                    {data.length == 2 ? <Accordion expanded={expand} onClick={() => { setExpand(!expand) }} sx={{width:'95%',boxShadow:'rgba(0, 0, 0, 0.05) 0px 0px 0px 1px'}}> 
                                         <AccordionSummary
                                             expandIcon={<ArrowDropDownIcon />}
                                             aria-controls="panel2-content"
@@ -181,7 +184,7 @@ const ViewPopupComplaints = (props) => {
                             <Box sx={{
                                 // width:"100%",
                                 display: 'flex',
-                                flexDirection: { md: 'row', },
+                                flexDirection: { md: 'row',sx:'column' },
                                 justifyContent: "flex-end",
                                 alignItems: 'center',
                                 margin: '10px'
