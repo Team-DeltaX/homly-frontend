@@ -8,6 +8,7 @@ import Box from '@mui/material/Box';
 import { Grid,ThemeProvider } from '@mui/material';
 import theme from '../../HomlyTheme';
 
+
 const PrimaryReservations = () => {
 
     return (
@@ -19,6 +20,8 @@ const PrimaryReservations = () => {
                 </Grid>
                 <Grid xs={9} sx={{backgroundColor:'white',borderTopLeftRadius:'20px',padding:'0 20px'}}>
                     <h1>Reservations</h1>
+                  
+                   
                 </Grid>
             </Grid>
         </Box>

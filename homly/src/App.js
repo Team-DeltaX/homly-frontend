@@ -5,7 +5,6 @@ import EditPersonalDetailsContextProvider from "./Contexts/EditPersonalDetailsCo
 import "../src/Styles/styles.css";
 import ManageHomes from "../src/Pages/locationAdmin/ManageHomes";
 
-
 const PrimaryDashboard = lazy(() => import("./Pages/PrimaryAdmin/PrimaryDashboard"));
 const PrimaryReservations = lazy(() => import("./Pages/PrimaryAdmin/PrimaryReservations"));
 const PrimaryHolidayHomes = lazy(() => import("./Pages/PrimaryAdmin/PrimaryHolidayHomes"));

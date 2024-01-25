@@ -11,6 +11,7 @@ import Pagetop from '../../Components/PrimaryAdmin/PageTop';
 import DashViewAdminBox from '../../Components/PrimaryAdmin/DashViewAdminBox';
 import { Link } from 'react-router-dom';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import SimpleCharts from '../../Components/PrimaryAdmin/Simplecharts';
 
 
 
@@ -24,16 +25,27 @@ const PrimaryDashboard = () => {
             <Box className="main_continer" sx={{ width: "100%", backgroundColor: 'primary.main', height: "100vh", overflow: 'hidden' }}>
                 <Container maxWidth="xl" style={{ padding: "0px" }}>
                     <Grid container sx={{ position: 'relative' }}>
-                        <Grid className={showNav} xs={3} sx={{ backgroundColor: "primary.main", height: "100vh" }}>
+                        <Grid item className={showNav} xs={3} sx={{ backgroundColor: "primary.main", }}>
                             <SideNavbar setShowNav={setShowNav}></SideNavbar>
                         </Grid>
 
                         <Grid className='container_grid' xs={9} sx={{ backgroundColor: 'white', borderTopLeftRadius: '20px', padding: '0 20px' }}>
                             <Pagetop setShowNav={setShowNav} heading={"Dashboard"} />
                             <Box>
-                                <Grid container>
-                                    <Grid md={8} sx={{ backgroundColor: 'grey', height: '100vh' }}>s</Grid>
-                                    <Grid md={4} sx={{height:'100vh'}}>
+                                <Grid  container sx={{overflow:'auto',maxHeight:'100vh'}}>
+                                    <Grid item md={8} sx={{ backgroundColor: 'white',overflow:'auto',maxHeight:'100vh' }}>
+                                    <Box sx={{display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center'}} >
+                                        <Box >
+                                        <SimpleCharts/>
+                                       
+                                        </Box>
+                                    </Box>
+                                   
+                                    
+                                    
+
+                                    </Grid>
+                                    <Grid  item md={4} sx={{height:'100vh'}}>
                                         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                                             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: '#E9E9E9', padding: '1px', margin: '10px', borderRadius: '20px' }}>
                                                 <Box><Typography variant='h6' style={{ margin: '3px' }}>Location Admins</Typography></Box>
@@ -43,8 +55,10 @@ const PrimaryDashboard = () => {
                                                 <Box><DashViewAdminBox color={"pink"}/></Box>
                                                 <Box><DashViewAdminBox color={"#77ccff"}/></Box>
                                                 <Box><DashViewAdminBox color={"#f5c77e"}/></Box>
+                                               
+                                              
                                                 {/* <Box><DashViewAdminBox color={"#bebdb8"}/></Box> */}
-                                                <Box><Link to="/primaryadmin/viewadmin"><Button sx={{ color: '#19BDFF' }}>See More</Button></Link></Box>
+                                                <Box><Link to="/primaryadmin/viewadmin"><Button sx={{ color: '#19BDFF' }}><Typography>See More</Typography></Button></Link></Box>
 
 
                                             </Box>
@@ -58,7 +72,7 @@ const PrimaryDashboard = () => {
 
 
                                                         </Box>
-                                                        <Box> <Link to="/primaryadmin/authorizations"><Button sx={{ color: '#19BDFF' ,fontFamily:'Roboto Flex'}}>Get Actions</Button></Link></Box>
+                                                        <Box> <Link to="/primaryadmin/authorizations"><Button sx={{ color: '#19BDFF' ,fontFamily:'Roboto Flex'}}><Typography>See More</Typography></Button></Link></Box>
                                                         
                                                         
                                                     </Box>
