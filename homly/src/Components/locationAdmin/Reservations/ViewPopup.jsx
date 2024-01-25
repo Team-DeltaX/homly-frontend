@@ -14,6 +14,8 @@ import Grid from '@mui/material/Unstable_Grid2';
 import Paper from '@mui/material/Paper';
 import holidayhome from '../../../Assets/images/holidayHome.jpg';
 import Stack from '@mui/material/Stack';
+import Divider from '@mui/material/Divider';
+import { alignProperty } from '@mui/material/styles/cssUtils';
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -83,47 +85,50 @@ export default function ViewPopUp(props) {
             magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec
             ullamcorper nulla non metus auctor fringilla.
           </Typography> */}
-          <Box sx={{ width: '100%' }}>
-            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 2 }}>
+          <Box sx={{ width: '100%'}} elevation={0}>
+            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 2 }} elevation={0}>
               <Grid xs={4}>
-                <Item><img className="reservation-photo" src={props.reservation.img} alt="" /></Item>
-              </Grid>
-              <Grid xs={4}>
-                <Item>
-                  <h2>{ props.reservation.receiptName }</h2>
-                  <p>Reservation Number  { props.reservation.recervationNO }</p>
-                  <p>Amount { props.reservation.amount }</p>
+                <Item sx={{boxShadow: "none"}}>
+                  <img className="reservation-photo" src={props.reservation.img} alt="" />
                 </Item>
               </Grid>
               <Grid xs={4}>
-                <Item>
-                    <h2>{ props.reservation.holidayhomename }</h2>
-                    <p>Check In : { props.reservation.checkindate }</p>
-                    <p>Check Out : { props.reservation.checoutdate }</p>
+                <Item sx={{boxShadow: "none"}}>
+                  <Typography variant="h6" align="left" display="block" gutterBottom>{ props.reservation.receiptName }</Typography>
+                  <Typography variant="body2" align="left" display="block" gutterBottom>Reservation Number  { props.reservation.recervationNO }</Typography>
+                  <Typography variant="body2" align="left" display="block" gutterBottom>Amount { props.reservation.amount }</Typography>
+                </Item>
+              </Grid>
+              <Grid xs={4}>
+                <Item sx={{boxShadow: "none"}}>
+                  <Typography variant="h6" align="right" display="block" gutterBottom>{ props.reservation.holidayhomename }</Typography>
+                  <Typography variant="body2" align="right" display="block" gutterBottom>Check In : { props.reservation.checkindate }</Typography>
+                  <Typography variant="body4" align="right" display="block" gutterBottom>Check Out : { props.reservation.checoutdate }</Typography>
                 </Item>
               </Grid>
               <Grid xs={5}>
-                <Item>
-                <Stack direction="column" spacing={1}>
+                <Item sx={{boxShadow: "none"}}>
+                <Stack direction="column" spacing={1} sx={{ width: '100%', maxWidth: 500 }}>
                   <item>
-                    <p>No. of Rooms : { props.reservation.noOfRooms }</p>
-                    <p>No. of Halls : { props.reservation.noOfHalls }</p>
+                   <Typography variant="body2" align="left" display="block" gutterBottom>No. of Rooms : { props.reservation.noOfRooms }</Typography>
+                   <Typography variant="body3" align="left" display="block" gutterBottom>No. of Halls : { props.reservation.noOfHalls }</Typography>
                   </item>
                   <item>
-                    <h5>Reserved date : { props.reservation.reservedDate }</h5>
+                    <Typography variant="body3" align="left" display="block" gutterBottom>Reserved date : { props.reservation.reservedDate }</Typography>
                   </item>
                 </Stack>
                 </Item>
               </Grid>
               <Grid xs={7}>
-                <Item>
-                  <Stack direction="row" spacing={1}>
-                    <Item>
-                      <h5>Reserved Room ID</h5>
-                      <h6>{ props.reservation.roomId }</h6>
+                <Item sx={{boxShadow: "none"}}>
+                  <Stack direction="row" spacing={3} divider={<Divider orientation="vertical" flexItem />}>
+                    <Item sx={{boxShadow: "none"}}>
+                      <Typography variant="body3" align="center" display="block" gutterBottom>Reserved room ID</Typography>
+                      <Typography variant="body3" align="center" display="block" gutterBottom>{ props.reservation.roomId }</Typography>
                     </Item>
-                    <Item>
-                      <h5>Reserved Hall ID</h5>
+                    <Item sx={{boxShadow: "none"}}>
+                      <Typography variant="body3" align="center" display="block" gutterBottom>Reserved Hall ID</Typography>
+                      <Typography variant="body3" align="center" display="block" > { props.reservation.hallId }</Typography>
                     </Item>
                   </Stack>
                 </Item>
