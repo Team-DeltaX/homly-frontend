@@ -80,9 +80,31 @@ const UnitBreakDown = ({ unitCode, unitAc, floorLevel, unitNoOfAdults, unitNoOfC
                     onClose={handleClose}
 
                 >
-                    <DialogTitle>Add New Unit</DialogTitle>
+                    <DialogTitle>Add Rooms to </DialogTitle>
                     <form>
                         <DialogContent>
+                            <Box>
+                                <Box sx={{ display: 'flex', gap: '1em', marginBottom: '1em' }}>
+                                    <Typography variant='p' className='card_item_title'>Unit Code</Typography>
+                                    <Typography variant='p' className='card_item_value'>{unitCode}</Typography>
+                                </Box>
+                                <Box sx={{ display: 'flex', gap: '1em', marginBottom: '1em' }}>
+                                    <Typography variant='p' className='card_item_title'>Unit Rental</Typography>
+                                    <Typography variant='p' className='card_item_value'>{unitRental}</Typography>
+                                </Box>
+                            </Box>
+                            <Box>
+                                <Box sx={{ display: 'flex', gap: '1em', marginBottom: '1em' }}>
+                                    <Typography variant='p' className='card_item_title'>AC/Non AC</Typography>
+                                    <Typography variant='p' className='card_item_value'>{unitAc}</Typography>
+                                </Box>
+                                <Box sx={{ display: 'flex', gap: '1em', marginBottom: '1em' }}>
+                                    <Typography variant='p' className='card_item_title'>Selected Room Count</Typography>
+                                    <Typography variant='p' className='card_item_value'>03</Typography>
+                                </Box>
+                            </Box>
+
+
 
                         </DialogContent>
 

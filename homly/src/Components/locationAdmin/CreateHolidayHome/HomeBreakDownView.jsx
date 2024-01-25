@@ -670,8 +670,8 @@ const HomeBreakDownView = () => {
                     label="Age"
                     onChange={handleUnitAcChange}
                   >
-                    <MenuItem value={"exclusive"}>AC</MenuItem>
-                    <MenuItem value={"nonExclusive"}>Non-AC</MenuItem>
+                    <MenuItem value={"AC"}>AC</MenuItem>
+                    <MenuItem value={"Non-AC"}>Non-AC</MenuItem>
 
                   </Select>
                 </FormControl>
