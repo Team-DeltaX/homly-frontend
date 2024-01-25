@@ -1,5 +1,4 @@
-// import React, { useContext } from "react";
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import {
   Box,
@@ -9,19 +8,18 @@ import {
   Card,
   CardContent,
   Grid,
-  //   CardActions,
-  TextField,
-  IconButton,
-  InputAdornment,
+  Button,
+  Stack,
+  Snackbar,
+  Alert,
+  CardActions,
 } from "@mui/material";
-
-import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 // import PersonalDetailsGrid from "../PersonalDetailsGrid/PersonalDetailsGrid";
 // import UpdateButton from "../PersonalDetailsGrid/UpdateButton";
 
 // import { EditPersonalDetailsContext } from "../../Contexts/EditPersonalDetailsContext";
-
+import PasswordComGrid from "./PasswordComGrid";
 import theme from "../../HomlyTheme";
 
 const gridData = [
@@ -50,73 +48,37 @@ const Security = () => {
     newPass: false,
     confirmPass: false,
   });
-  const [visible, setVisible] = useState({
-    currentPass: false,
-    newPass: false,
-    confirmPass: false,
-  });
+  const [isUpdate, setIsUpdate] = useState(false);
 
-  const handlePassword = (data, name) => {
-    setPassword({ ...password, [name]: data });
+  const [isEnable, setIsEnable] = useState(false);
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setIsUpdate(false);
   };
 
-  const passwordComp = (id, lable, placeholder) => {
-    // <Grid container sx={{ width: "100%" }}>
-    //   <Grid item xs={12} sm={4} md={4}>
-    //     <Typography
-    //       variant="h6"
-    //       fontWeight={"bold"}
-    //       padding={"4 0"}
-    //       component="div"
-    //     >
-    //       {lable}
-    //     </Typography>
-    //   </Grid>
-    //   <Grid item xs={12} sm={6} md={6}>
-    //     <TextField
-    //       sx={{ marginBottom: " 6%", width: "90%" }}
-    //       id={id}
-    //       placeholder={placeholder}
-    //       required
-    //       // error={errorConfirmPassword}
-    //       // type={showConfirmPassword ? "text" : "password"}
-    //       InputProps={{
-    //         endAdornment: (
-    //           <IconButton
-    //             aria-label="toggle password visibility"
-    //             // onClick={handleClickShowConfirmPassword}
-    //             // onMouseDown={handleMouseDownPassword}
-    //             edge="end"
-    //           >
-    //             {/* {showConfirmPassword ? (
-    //                           <VisibilityOff />
-    //                         ) : (
-    //                           <Visibility />
-    //                         )} */}
-    //           </IconButton>
-    //         ),
-    //       }}
-    //       // onFocus={() => setFocusedConfirmPassword(true)}
-    //       // onBlur={() => setFocusedConfirmPassword(false)}
-    //       // onChange={(e) => {
-    //       //   setConfirmPassword(e.target.value);
-    //       //   checkConfirmPassword(e.target.value, Password);
-    //       // }}
-    //       // value={ConfirmPassword}
-    //       size="small"
-    //       // helperText={
-    //       //   errorConfirmPassword ? "password not match" : ""
-    //       // }
-    //       fullWidth
-    //     />
-    //   </Grid>
-    // </Grid>
-    <div>
-      {lable}
-    </div>
+  const handleUpdateData = () => {
+    // handleUpdate();
+    console.log("update");
+    setIsUpdate(true);
   };
 
-  console.log("password", password);
+  const checkConfirmPassword = (cpw, pw) => {
+    let check = cpw.length > 0 && cpw !== pw;
+    setError({ ...error, confirmPass: check });
+  };
+
+  useEffect(() => {
+    setIsEnable(
+      password.currentPass.length > 0 &&
+        password.newPass.length > 0 &&
+        password.confirmPass.length > 0 &&
+        !error.confirmPass &&
+        !error.password
+    );
+  }, [password,error]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -133,17 +95,61 @@ const Security = () => {
           }}
         >
           <Card sx={{ width: { xs: "100%", sm: "90%" } }}>
-            <CardContent sx={{ display: "flex", flexDirection: "column" }}>
-              <form action="">
-                sadfsdf
-                {/* {gridData.map((item) => {
-                  {
-                    passwordComp(item.id, item.lable, item.placeholder);
-                  }
-                })} */}
-                {passwordComp('1','2','3')}
-              </form>
-            </CardContent>
+            <form action="">
+              <CardContent
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  width: "100%",
+                }}
+              >
+                {gridData.map((data) => (
+                  <Grid container sx={{ width: "100%" }} key={data.id}>
+                    <PasswordComGrid
+                      id={data.id}
+                      lable={data.lable}
+                      placeholder={data.placeholder}
+                      password={password}
+                      setPassword={setPassword}
+                      error={error}
+                      setError={setError}
+                      checkConfirmPassword={checkConfirmPassword}
+                    />
+                  </Grid>
+                ))}
+              </CardContent>
+              <CardActions sx={{ width: "92%", justifyContent: "flex-end" }}>
+                <Stack direction={"row"} sx={{ justifyContent: "flex-end" }}>
+                  <Button
+                    variant="contained"
+                    size="small"
+                    sx={{ backgroundColor: "primary.main", width: "10%" }}
+                    onClick={handleUpdateData}
+                    disabled={!isEnable}
+                  >
+                    Update
+                  </Button>
+                  <Snackbar
+                    autoHideDuration={3000}
+                    onClose={handleClose}
+                    open={isUpdate}
+                  >
+                    <Alert
+                      onClose={handleClose}
+                      severity="error"
+                      variant="filled"
+                      sx={{
+                        width: "100%",
+                        backgroundColor: "success.light",
+                      }}
+                    >
+                      "Successfully Updated!"
+                    </Alert>
+                  </Snackbar>
+                </Stack>
+              </CardActions>
+            </form>
           </Card>
         </Box>
       </Box>

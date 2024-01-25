@@ -72,7 +72,7 @@ const UpdateButton = () => {
       <Snackbar autoHideDuration={3000} onClose={handleClose} open={isUpdate}>
         <Alert
           onClose={handleClose}
-          severity="success"
+          severity="error"
           variant="filled"
           sx={{
             width: "100%",
