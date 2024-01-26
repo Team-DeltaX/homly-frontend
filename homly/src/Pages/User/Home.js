@@ -6,19 +6,20 @@ import {
   ThemeProvider,
   Stack,
   Grid,
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl,
 } from "@mui/material";
-
-// import dayjs from "dayjs";
-// import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
-// import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-// import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-// import { DateRangePicker } from "@mui/x-date-pickers-pro/DateRangePicker";
+import SearchIcon from "@mui/icons-material/Search";
 
 import NavBar from "../../Components/NavBar/NavBar";
 import theme from "../../HomlyTheme";
 // import MyReservationCard from "../../Components/MyReservationCard/MyReservationCard";
 
 import DatePickerCom from "../../Components/User/DatePickerCom/DatePickerCom";
+
+import "./UserStyle.css";
 
 const reservedDates = [
   "2024/01/27",
@@ -29,12 +30,44 @@ const reservedDates = [
   "2024/02/07",
 ];
 
+const districts = [
+  "Colombo",
+  "Gampaha",
+  "Kalutara",
+  "Kandy",
+  "Matale",
+  "Nuwara Eliya",
+  "Galle",
+  "Matara",
+  "Hambantota",
+  "Jaffna",
+  "Mannar",
+  "Vavuniya",
+  "Mullaitivu",
+  "Kilinochchi",
+  "Batticaloa",
+  "Ampara",
+  "Trincomalee",
+  "Kurunegala",
+  "Puttalam",
+  "Anuradhapura",
+  "Polonnaruwa",
+  "Badulla",
+  "Monaragala",
+  "Ratnapura",
+  "Kegalle",
+];
+
 export default function Home() {
   const [selectionRange, setSelectRange] = useState({
-    startDate: new Date(),
-    endDate: new Date(),
+    startDate: '',
+    endDate: '',
     key: "selection",
   });
+
+  const [district, setDistrict] = useState("");
+
+  const [isVisible, setIsVisible] = useState(true);
 
   return (
     <ThemeProvider theme={theme}>
@@ -51,7 +84,7 @@ export default function Home() {
             <Container
               sx={{
                 bgcolor: "azure",
-                height: "100%",
+                height: "100vh",
                 width: { xs: "100%", sm: "95%", padding: 0 },
               }}
             >
@@ -97,22 +130,67 @@ export default function Home() {
                   </Stack>
                   <Stack
                     direction="column"
-                    sx={{ bgcolor: "white", width: "80%" }}
+                    sx={{ width: { xs: "100%", sm: "75%" } }}
                   >
-                    <Typography>Find</Typography>
+                    <Typography variant="h5">Find</Typography>
                     <Grid
                       container
-                      sx={{ bgcolor: "blueviolet", width: "100%" }}
+                      sx={{
+                        bgcolor: "white",
+                        width: "100%",
+                        borderRadius: "40px",
+                      }}
                     >
-                      <Grid item md={4}>
+                      <Grid
+                        item
+                        xs={12}
+                        md={4}
+                        sx={{ padding: "0 3% 0.5% 5%" }}
+                      >
                         <Stack direction="column">
-                          <Typography>Location</Typography>
-                          <Typography>Location</Typography>
+                          <Typography
+                            sx={{ fontSize: "1rem", fontWeight: "bold" }}
+                          >
+                            Location
+                          </Typography>
+                          <FormControl variant="standard">
+                            <Typography
+                              sx={{
+                                display: isVisible ? "flex" : "none",
+                                fontSize: "0.7rem",
+                                fontWeight: "regular",
+                                position: "absolute",
+                                bottom: "5px",
+                              }}
+                            >
+                              Which district do you prefer
+                            </Typography>
+                            <Select
+                              p
+                              size="small"
+                              sx={{ width: "100%", position: "relative" }}
+                              id="select-district"
+                              value={district}
+                              onChange={(e) => {
+                                setDistrict(e.target.value);
+                                setIsVisible(false);
+                              }}
+                            >
+                              {districts.map((name) => (
+                                <MenuItem
+                                  key={name}
+                                  value={name}
+                                  // style={getStyles(name, personName, theme)}
+                                >
+                                  {name}
+                                </MenuItem>
+                              ))}
+                            </Select>
+                          </FormControl>
                         </Stack>
                       </Grid>
-                      <Grid item md={6}>
-                        <Stack direction="row">
-                          {/* <Stack direction='column'>
+                      <Grid item xs={12} md={6} sx={{ padding: "0 3%" }}>
+                        {/* <Stack direction='column'>
                             <Typography>Location</Typography>
                             <Typography>Location</Typography>
                           </Stack>
@@ -120,7 +198,7 @@ export default function Home() {
                             <Typography>Location</Typography>
                             <Typography>Location</Typography>
                           </Stack> */}
-                          {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DemoContainer components={["DateRangePicker"]}>
                               <DateRangePicker
                                 localeText={{
@@ -130,11 +208,46 @@ export default function Home() {
                               />
                             </DemoContainer>
                           </LocalizationProvider> */}
-                          <DatePickerCom selectionRange={selectionRange} setSelectRange={setSelectRange} reservedDates={reservedDates}/>
-                        </Stack>
+                        <DatePickerCom
+                          selectionRange={selectionRange}
+                          setSelectRange={setSelectRange}
+                          reservedDates={reservedDates}
+                        />
                       </Grid>
-                      <Grid item md={2}>
-                        <Typography>Search</Typography>
+                      <Grid
+                        item
+                        md={2}
+                        sx={{
+                          padding: "0 1% 0.5% 3%",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "flex-end",
+                        }}
+                      >
+                        <Stack
+                          direction="row"
+                          sx={{
+                            bgcolor: "#484848",
+                            width: { xs: "100%", sm: "60px" },
+                            height: "60px",
+                            borderRadius: { xs: "10px", sm: "50%" },
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <Typography
+                            sx={{ display: { xs: "flex", sm: "none" } }}
+                          >
+                            Search
+                          </Typography>
+                          <SearchIcon
+                            sx={{
+                              color: "white",
+                              fontSize: { sm: "2.5rem" },
+                              fontWeight: "bold",
+                            }}
+                          />
+                        </Stack>
                       </Grid>
                     </Grid>
                   </Stack>
