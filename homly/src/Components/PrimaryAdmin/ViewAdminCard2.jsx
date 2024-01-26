@@ -1,4 +1,4 @@
-import { Box, Button, Grid, TextField, ThemeProvider } from "@mui/material";
+import { Box, Button, Grid, TextField, ThemeProvider, Typography } from "@mui/material";
 import css from "./Css/viewadmin.css";
 import theme from "../../HomlyTheme";
 import EditIcon from "@mui/icons-material/EditCalendar";
@@ -42,7 +42,7 @@ const ViewAdminCard2 = (props) => {
           borderRadius: "15px",
           alignItems: { xs: "center" },
           columnGap: "30px",
-          boxShadow:'rgba(0, 0, 0, 0.1) 0px 4px 12px;'
+          boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px;",
         }}
       >
         <Box sx={{ padding: "10px" }}>
@@ -61,9 +61,6 @@ const ViewAdminCard2 = (props) => {
               type="text"
               sx={{
                 backgroundColor: "white",
-                
-                
-                
               }}
               alignItems="center"
             ></TextField>
@@ -80,7 +77,6 @@ const ViewAdminCard2 = (props) => {
               alignItems="center"
               sx={{
                 backgroundColor: "white",
-                
               }}
               size="small"
             ></TextField>
@@ -99,7 +95,6 @@ const ViewAdminCard2 = (props) => {
               value={password}
               sx={{
                 backgroundColor: "white",
-              
               }}
               alignItems="center"
             ></TextField>
@@ -116,7 +111,6 @@ const ViewAdminCard2 = (props) => {
               alignItems="center"
               sx={{
                 backgroundColor: "white",
-              
               }}
               size="small"
             ></TextField>
@@ -135,7 +129,6 @@ const ViewAdminCard2 = (props) => {
               value={email}
               sx={{
                 backgroundColor: "white",
-             
               }}
               alignItems="center"
             ></TextField>
@@ -152,7 +145,6 @@ const ViewAdminCard2 = (props) => {
               alignItems="center"
               sx={{
                 backgroundColor: "white",
-              
               }}
               size="small"
             ></TextField>
@@ -175,7 +167,7 @@ const ViewAdminCard2 = (props) => {
               setDisabled(!disabled);
             }}
           >
-            Edit
+            <Typography>Edit</Typography>
           </Button>
           {/* <Box>{dataobj}</Box> */}
           <Box sx={{ height: "20px" }}></Box>
@@ -188,7 +180,7 @@ const ViewAdminCard2 = (props) => {
               handlesave();
             }}
           >
-            Save
+           <Typography>Save</Typography>
           </Button>
         </Box>
       </Box>
