@@ -7,61 +7,35 @@ import {
   Stack,
   Grid,
 } from "@mui/material";
+
 // import dayjs from "dayjs";
 // import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
 // import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 // import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 // import { DateRangePicker } from "@mui/x-date-pickers-pro/DateRangePicker";
 
-import "react-date-range/dist/styles.css"; // main style file
-import "react-date-range/dist/theme/default.css"; // theme css file
-
-import { DateRangePicker } from 'react-date-range';
-
 import NavBar from "../../Components/NavBar/NavBar";
 import theme from "../../HomlyTheme";
 // import MyReservationCard from "../../Components/MyReservationCard/MyReservationCard";
 
+import DatePickerCom from "../../Components/User/DatePickerCom/DatePickerCom";
+
 const reservedDates = [
-'2024/01/27','2024/01/28','2024/02/01','2024/02/02','2024/02/03','2024/02/04'
+  "2024/01/27",
+  "2024/01/28",
+  "2024/02/04",
+  "2024/02/05",
+  "2024/01/30",
+  "2024/02/07",
 ];
 
 export default function Home() {
-  const [selectionRange,setSelectRange] = useState({
+  const [selectionRange, setSelectRange] = useState({
     startDate: new Date(),
     endDate: new Date(),
     key: "selection",
   });
 
-  const [disabledDates, setDisabledDates] = useState([]);
-  function formatDate(string){
-    var options = { year: 'numeric', month: 'numeric', day: 'numeric' };
-    return new Date(string).toLocaleDateString([],options);
-}
-  
-  useEffect(() => {
-    let updated = []
-    reservedDates.map((date) => {
-      let d = new Date(date);
-      let dates = [d.getFullYear(),d.getMonth(),d.getDate()];
-      updated.push(dates)
-      // let updated = [...disabledDates,...dates]
-      // setDisabledDates(updated)
-      
-      // console.log(date =>[...date,[d.getFullYear(),d.getMonth(),d.getDate()]]);
-    });
-    setDisabledDates(updated);
-  }, []);
-
-  console.log(disabledDates);
-  // const disaabedDates = {
-  //   date1: new Date(2024, 0,27),
-  // };
-
-  const handleSelect = (range) =>{
-    console.log(range.selection); // native Date object
-    setSelectRange({...selectionRange, startDate: range.selection.startDate, endDate: range.selection.endDate});
-  }
   return (
     <ThemeProvider theme={theme}>
       <Box
@@ -156,12 +130,7 @@ export default function Home() {
                               />
                             </DemoContainer>
                           </LocalizationProvider> */}
-                          <DateRangePicker
-                          rangeColors={["#FF7F50"]}
-                          disabledDates={[(2024,1,2)]}
-                            ranges={[selectionRange]}
-                            onChange={handleSelect}
-                          />
+                          <DatePickerCom selectionRange={selectionRange} setSelectRange={setSelectRange} reservedDates={reservedDates}/>
                         </Stack>
                       </Grid>
                       <Grid item md={2}>
