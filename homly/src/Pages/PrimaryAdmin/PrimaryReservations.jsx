@@ -8,6 +8,7 @@ import { Container, Grid, ThemeProvider } from "@mui/material";
 import theme from "../../HomlyTheme";
 import Pagetop from "../../Components/PrimaryAdmin/PageTop";
 
+
 const PrimaryReservations = () => {
     const [showNav, setShowNav] = useState("nav_grid_deactive");
 
@@ -23,7 +24,7 @@ const PrimaryReservations = () => {
         }}
       >
         <Container maxWidth="xl" style={{ padding: "0px" }}>
-            <Grid container> 
+            <Grid container sx={{ position: "relative" }}> 
               <Grid
               className={showNav}
                 xs={3}
