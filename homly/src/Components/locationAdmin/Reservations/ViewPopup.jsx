@@ -123,7 +123,7 @@ export default function ViewPopUp(props) {
                 <Item sx={{boxShadow: "none"}}>
                   <Stack direction="row" spacing={3} divider={<Divider orientation="vertical" flexItem />}>
                     <Item sx={{boxShadow: "none"}}>
-                      <Typography variant="body3" align="center" display="block" gutterBottom>Reserved room ID</Typography>
+                      <Typography variant="body3" align="center" display="block" gutterBottom>Reserved Room ID</Typography>
                       <Typography variant="body3" align="center" display="block" gutterBottom>{ props.reservation.roomId }</Typography>
                     </Item>
                     <Item sx={{boxShadow: "none"}}>
