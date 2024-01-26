@@ -1,53 +1,54 @@
-
 /* main_conatiner */
-.main_container{
-  height:100vh;
+.main_container {
+  height: 100vh;
   height: calc(var(--vh, 1vh) * 100);
 }
+
 /*..................................................... navbar.....................................  */
-.dashicon{
+.dashicon {
   margin-left: 20px;
 }
 
-.user_image{
-  width:70px;
-  height:70px;
+.user_image {
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
 }
 
-.sidenav_item{
+.sidenav_item {
   padding-left: 50px;
-  gap:20px;
+  gap: 20px;
 }
 
-.submenu_item{
-  padding-left:70px;
+.submenu_item {
+  padding-left: 70px;
 }
 
 
-@media screen and (max-width:920px){
-  .sidenav_item{
+@media screen and (max-width:920px) {
+  .sidenav_item {
     padding-left: 30px;
   }
-  .submenu_item{
+
+  .submenu_item {
     padding-left: 50px;
   }
-  
+
 }
 
 
-.sidenav_link{
+.sidenav_link {
   text-decoration: none;
-  font-weight:bold;
+  font-weight: bold;
 }
 
-.sidenav_submenulink{
+.sidenav_submenulink {
   text-decoration: none;
 }
 
 /* page title customization */
 
-.page_title{
+.page_title {
   margin-bottom: 15px;
 }
 
@@ -57,47 +58,47 @@
 
 /* customization navbar for mobile device */
 @media screen and (max-width:890px) {
-  
-  .nav_grid_deactive{
-      position: absolute;
-      z-index: 100000;
-      right:-50%;
-      min-width: 50%;
-      Transition: all 0.5s ease-in;
-   
 
-  }
-
-  .nav_grid_active{
+  .nav_grid_deactive {
     position: absolute;
-      z-index: 100000;
-      right:0%;
-      min-width: 50%;
-      transition: all 0.5s ease-in;
+    z-index: 100000;
+    right: -50%;
+    min-width: 50%;
+    Transition: all 0.5s ease-in;
+
+
+  }
+
+  .nav_grid_active {
+    position: absolute;
+    z-index: 100000;
+    right: 0%;
+    min-width: 50%;
+    transition: all 0.5s ease-in;
   }
 
 
-  .container_grid{
+  .container_grid {
     display: block;
     min-width: 100%;
     border-top-left-radius: 0px !important;
-    height:100vh;
+    height: 100vh;
   }
 
-  .burger_icon{
-    display:block !important;
+  .burger_icon {
+    display: block !important;
   }
 
-  .close_icon{
+  .close_icon {
     display: block !important;
 
   }
 
-  .nav_header{
+  .nav_header {
     padding-top: 40px;
   }
 
-  .page_title{
+  .page_title {
     font-size: 2rem !important;
   }
 
@@ -106,43 +107,44 @@
 
 @media screen and (max-width:600px) {
 
-  .nav_grid_active{
+  .nav_grid_active {
     min-width: 60%;
   }
 
-  
-  .sidenav_item{
+
+  .sidenav_item {
     padding-left: 12px;
   }
-  .submenu_item{
+
+  .submenu_item {
     padding-left: 35px;
   }
 
-  .page_title{
-    font-size: 1.3rem !important; 
+  .page_title {
+    font-size: 1.3rem !important;
   }
-  
+
 }
 
 
 
 /* ..............................................login page............................................... */
 
-.colored_logo{
-  width:200px;
+.colored_logo {
+  width: 200px;
 }
 
 
 
 /*.............................. .................dashboard............................................. */
 
-.count_inner{
-  width:12px;
-  height:12px;
+.count_inner {
+  width: 12px;
+  height: 12px;
   background-color: red;
   border-radius: 50%;
-  padding:0.2em;
-  color:white;
+  padding: 0.2em;
+  color: white;
   position: relative;
   z-index: 200;
   display: flex;
@@ -152,32 +154,32 @@
 
 }
 
-.bell_container{
+.bell_container {
   position: relative;
 }
 
-.notify_count_container{
+.notify_count_container {
   position: absolute;
   top: 2px;
-  left:23px;
+  left: 23px;
 }
 
 /* dashboard sum icons */
 
-.sum_icon{
+.sum_icon {
   font-size: 20px;
 }
 
 /* notification */
 
-.notification{
+.notification {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
-.notify_container{
+.notify_container {
   display: flex;
   flex-direction: column;
-} 
+}
 
 
 
@@ -207,54 +209,54 @@
 /* .................................... Manage Holiday homes page................................ */
 
 /* search input customization */
-.custom_input div{
-    border-radius: 30px;
-    padding-left: 40px;
-    background-color: white;
+.custom_input div {
+  border-radius: 30px;
+  padding-left: 40px;
+  background-color: white;
 }
 
-.custom_input_container{
+.custom_input_container {
   display: inline-block;
   position: relative;
-  
+
 }
 
-.custom_input_container input{
-  padding:5px 3px;
+.custom_input_container input {
+  padding: 5px 3px;
 }
 
-.input_icon{
+.input_icon {
   position: absolute;
-  left:15px;
-  top:4px;
+  left: 15px;
+  top: 4px;
   z-index: 1000;
 }
 
-.custom_input_outer_container{
-  border-radius:30px !important;
+.custom_input_outer_container {
+  border-radius: 30px !important;
   display: inline-block;
   max-width: fit-content;
-  padding:5px 8px;  
+  padding: 5px 8px;
   background-color: #9b9b9b !important;
 }
 
-.custom_input::placeholder{
+.custom_input::placeholder {
   font-size: 2rem !important;
   font-weight: 700 !important;
 
 }
 
 @media screen and (max-width:600px) {
-  .search_container{
+  .search_container {
     flex-direction: column-reverse;
   }
-  }
-  
+}
+
 
 
 
 /* holidayhomes list making */
-.homes_container_header{
+.homes_container_header {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
@@ -262,61 +264,63 @@
 
 
 }
-.homes_container_header hr{
-  color:rgb(59, 59, 59);
+
+.homes_container_header hr {
+  color: rgb(59, 59, 59);
   flex: 1;
   margin-left: 20px;
-  
+
 }
-.header_title{
-    display: flex;
-    font-weight: bold;
 
-   
-  
-  }
+.header_title {
+  display: flex;
+  font-weight: bold;
 
- .homes_container_body .button_container{
+
+
+}
+
+.homes_container_body .button_container {
   display: flex;
   justify-content: center;
-  gap:1em;
- }
+  gap: 1em;
+}
 
- .homes_container_body .sub_details{
+.homes_container_body .sub_details {
   font-weight: 500;
- }
+}
 
-  .home_image img{
-    width:80px;
-    border-radius: 12px;
-    background-position: center;
-    background-repeat: no-repeat;
-   
+.home_image img {
+  width: 80px;
+  border-radius: 12px;
+  background-position: center;
+  background-repeat: no-repeat;
+
+
+
+}
+
+@media screen and (max-width:600px) {
+  .homes_container_body {
+    justify-content: center;
+  }
+
+  .homes_container_header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .homes_container_header hr {
+    width: 100%;
+    margin-left: 0;
 
 
   }
 
-  @media screen and (max-width:600px) {
-    .homes_container_body{
-      justify-content: center;
-    }
+}
 
-    .homes_container_header{
-      flex-direction: column;
-      align-items: flex-start;
-    }
+/* holiday homes card container scroll bar */
 
-    .homes_container_header hr{
-      width:100%;
-      margin-left: 0;
-
-
-    }
-    
-  }
-
-  /* holiday homes card container scroll bar */
-  
 .holidayhomes_card_container::-webkit-scrollbar {
   width: 5px;
   margin-left: 5px;
@@ -347,43 +351,44 @@
   .holidayhomes_card_container::-webkit-scrollbar {
     display: none;
   }
-  
 
-    .homes_container_body{
-      display: flex;
-      flex-wrap: wrap;
 
-      gap:1em;
+  .homes_container_body {
+    display: flex;
+    flex-wrap: wrap;
 
-    }
-    .homes_container_body .home_card{
-      flex-direction: column;
-      width:fit-content;
-      padding:20px;
-    }
+    gap: 1em;
 
-    .home_card .sub_details{
-      
-      display: flex;
-      justify-content: flex-start;
-      width:100%;
-    }
+  }
 
-    .home_card .button_container{
-      margin-top: 10px;
-    }
+  .homes_container_body .home_card {
+    flex-direction: column;
+    width: fit-content;
+    padding: 20px;
+  }
 
-    .home_card .home_image{
-      margin-bottom: 10px;
-      width:100%;
-      display: flex;
-      justify-content: center;
-    }
+  .home_card .sub_details {
 
-    .home_image img{
-      width:140px;
-    }
-  
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+  }
+
+  .home_card .button_container {
+    margin-top: 10px;
+  }
+
+  .home_card .home_image {
+    margin-bottom: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .home_image img {
+    width: 140px;
+  }
+
 }
 
 /* ................................ create holiday home page................................... */
@@ -393,25 +398,77 @@
 
 
 @media screen and (max-width:475px) {
-  .input_container{
+  .input_container {
     flex-direction: column;
-   
+
   }
 
-  .input_container .label_container{
-      min-width: 100% !important;
+  .input_container .label_container {
+    min-width: 100% !important;
   }
-  
 
-  .file_input{
-    width:280px !important;
+
+  .file_input {
+    width: 280px !important;
   }
 }
 
 /* content container scrolling making*/
 
-.content_container{
+.content_container {
   max-height: 90vh;
   overflow-y: scroll;
-  
+
+}
+
+/* helper text */
+.input_field p {
+  color: red !important;
+}
+
+
+/* holiday home break down parts */
+.card_item .card_item_title {
+  color: black;
+
+}
+
+.card_item {
+  display: flex;
+  flex-direction: column;
+}
+
+.card_item .card_item_value {
+  color: rgb(100, 100, 100);
+
+}
+
+/* create_holiday home -> units breakdown ->attach room popup */
+
+.attach_room_value {
+  background-color: rgb(207, 207, 207);
+  padding: .2em .8em;
+  border-radius: 5px;
+  box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+
+}
+
+.attach_card_item_title {
+  color: black;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 1em;
+
+}
+
+.attach_card_item_value {
+  color: rgb(100, 100, 100);
+  font-size: 0.9rem;
+
+}
+
+/* create_holiday home -> units breakdown ->add rooms to unit popup */
+
+.bottom_container_selected_rooms {
+  max-height: 400px;
 }
