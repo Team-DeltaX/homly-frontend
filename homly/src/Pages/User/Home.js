@@ -40,11 +40,17 @@ export default function Home() {
 }
   
   useEffect(() => {
-    const disabledDates = reservedDates.map((date) => {
+    let updated = []
+    reservedDates.map((date) => {
       let d = new Date(date);
-      // console.log(d.getFullYear());
+      let dates = [d.getFullYear(),d.getMonth(),d.getDate()];
+      updated.push(dates)
+      // let updated = [...disabledDates,...dates]
+      // setDisabledDates(updated)
+      
+      // console.log(date =>[...date,[d.getFullYear(),d.getMonth(),d.getDate()]]);
     });
-    // setDisabledDates(disabledDates);
+    setDisabledDates(updated);
   }, []);
 
   console.log(disabledDates);
@@ -152,8 +158,7 @@ export default function Home() {
                           </LocalizationProvider> */}
                           <DateRangePicker
                           rangeColors={["#FF7F50"]}
-                          disabledDates={[disabledDates]}
-                          
+                          disabledDates={[(2024,1,2)]}
                             ranges={[selectionRange]}
                             onChange={handleSelect}
                           />
