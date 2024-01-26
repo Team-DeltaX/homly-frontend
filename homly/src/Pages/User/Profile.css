@@ -1,0 +1,28 @@
+.Mui-selected .bottom-tab-icon {
+    background-color: white !important;
+    color: #872341 !important;
+}
+
+.css-1nej3se-MuiTabs-indicator{
+    display: none !important;
+}
+.css-1qqs86a-MuiButtonBase-root-MuiTab-root {
+  padding: 5px 0 !important;
+}
+.Mui-selected .side-tab {
+  background-color: white !important;
+  color: #2c2c2c !important;
+  position: relative;
+}
+
+.Mui-selected .side-tab-text{
+    color: #2c2c2c !important;
+    font-weight: 700;
+    line-height: 1.5
+}
+
+.css-1iai66b-MuiFormHelperText-root{
+  position: absolute !important;
+  bottom: -20px  !important;
+
+}

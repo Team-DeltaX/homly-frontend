@@ -131,7 +131,7 @@ export default function MyReservationCard(props) {
                     sx={{ marginTop: "4%" }}
                     className="counts"
                   >
-                    <Grid item xs={7} md={6}>
+                    <Grid item xs={7} md={8}>
                       <Typography variant="body2" className="counts-text">
                         Number of Adults :
                       </Typography>
@@ -144,12 +144,12 @@ export default function MyReservationCard(props) {
                   </Grid>
                   {/* child count */}
                   <Grid item container className="counts">
-                    <Grid item xs={7} md={6}>
+                    <Grid item xs={7} md={8}>
                       <Typography variant="body2" className="counts-text">
                         Number of Children :
                       </Typography>
                     </Grid>
-                    <Grid item>
+                    <Grid item >
                       <Typography variant="body2" className="counts-value">
                         {props.childCount}
                       </Typography>
@@ -157,7 +157,7 @@ export default function MyReservationCard(props) {
                   </Grid>
                   {/* room count */}
                   <Grid item container className="counts">
-                    <Grid item xs={7} md={6}>
+                    <Grid item xs={7} md={8}>
                       <Typography variant="body2" className="counts-text">
                         Number of Rooms :
                       </Typography>
@@ -170,7 +170,7 @@ export default function MyReservationCard(props) {
                   </Grid>
                   {/* hall count */}
                   <Grid item container className="counts">
-                    <Grid item xs={7} md={6}>
+                    <Grid item xs={7} md={8}>
                       <Typography variant="body2" className="counts-text">
                         Number of Halls :
                       </Typography>
