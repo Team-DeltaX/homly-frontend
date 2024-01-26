@@ -1,9 +1,47 @@
 import React, { Suspense, lazy } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Loader from "./Components/Loader/Loader";
+// import Loader from "./Components/Loader/Loader";
 import EditPersonalDetailsContextProvider from "./Contexts/EditPersonalDetailsContext";
 import "../src/Styles/styles.css";
 import ManageHomes from "../src/Pages/locationAdmin/ManageHomes";
+
+// user pages import start
+
+// const Home = lazy(() => import("../src/Pages/Home"));
+// const HolidayHome = lazy(() => import("../src/Pages/HolidayHome"));
+// const Profile = lazy(() => import("../src/Pages/Profile"));
+// const ContactUs = lazy(() => import("../src/Pages/ContactUs"));
+// const PaymentGateway = lazy(() =>
+//   import("../src/services/paymentGateway/PaymentGateway")
+// );
+// const UserRegistration = lazy(() =>
+//   import("../src/Pages/User/UserRegistration")
+// );
+// const UserLogin = lazy(() => import("../src/Pages/User/UserLogin"));
+// const PersonalDetails = lazy(() =>
+//   import("../src/Pages/User/PersonalDetails")
+// );
+// const UserSecurity = lazy(() =>
+//   import("../src/Pages/User/UserSecurity")
+// );
+// const PaymentDetails = lazy(() =>
+//   import("../src/Pages/User/PaymentDetails")
+// );
+// const MyReservation = lazy(() =>
+//   import("../src/Pages/User/MyReservation")
+// );
+// import PaymentGateway from "../src/services/paymentGateway/PaymentGateway";
+
+import Home from "../src/Pages/User/Home";
+import HolidayHome from "../src/Pages/User/HolidayHome";
+import Profile from "../src/Pages/User/Profile";
+import ContactUs from "../src/Pages/User/ContactUs";
+import UserRegistration from "../src/Pages/User/UserRegistration";
+import UserLogin from "../src/Pages/User/UserLogin";
+import PersonalDetails from "../src/Pages/User/PersonalDetails";
+import UserSecurity from "../src/Pages/User/UserSecurity";
+import PaymentDetails from "../src/Pages/User/PaymentDetails";
+import MyReservation from "../src/Pages/User/MyReservation";
 
 const PrimaryDashboard = lazy(() => import("./Pages/PrimaryAdmin/PrimaryDashboard"));
 const PrimaryReservations = lazy(() => import("./Pages/PrimaryAdmin/PrimaryReservations"));
@@ -22,30 +60,8 @@ const PrimaryAuthorizations = lazy(() => import("./Pages/PrimaryAdmin/PrimaryAut
 
 
 
-const Home = lazy(() => import("../src/Pages/Home"));
-const HolidayHome = lazy(() => import("../src/Pages/HolidayHome"));
-const Profile = lazy(() => import("../src/Pages/Profile"));
-const ContactUs = lazy(() => import("../src/Pages/ContactUs"));
-const PaymentGateway = lazy(() =>
-  import("../src/services/paymentGateway/PaymentGateway")
-);
-const UserRegistration = lazy(() =>
-  import("../src/Pages/UserRegistration/UserRegistration")
-);
-const UserLogin = lazy(() => import("../src/Pages/UserLogin/UserLogin"));
-const PersonalDetails = lazy(() =>
-  import("../src/Pages/PersonalDetails/PersonalDetails")
-);
-const UserSecurity = lazy(() =>
-  import("../src/Pages/UserSecurity/UserSecurity")
-);
-const PaymentDetails = lazy(() =>
-  import("../src/Pages/PaymentDetails/PaymentDetails")
-);
-const MyReservation = lazy(() =>
-  import("../src/Pages/MyReservation/MyReservation")
-);
-
+// user pages import end
+// location admin import start
 
 const LocationDashboard = lazy(()=>
   import("../src/Pages/locationAdmin/Dashboard")
@@ -67,27 +83,25 @@ const Reservations = lazy(()=>
 const Report = lazy(()=>
   import("../src/Pages/locationAdmin/Report")
 )
-const LocationManageHomes =lazy(()=>{
-  import("../src/Pages/locationAdmin/ManageHomes")
-}) 
-const Login = lazy(()=>
-  import("../src/Pages/locationAdmin/Login")
-)
+// const LocationManageHomes =lazy(()=>{
+//   import("../src/Pages/locationAdmin/ManageHomes")
+// }) 
 
+// location admin import end
 
 const App = () => (
   <EditPersonalDetailsContextProvider>
     <Router>
-      <Suspense fallback={<Loader />}>
+      <Suspense fallback={<div>loading</div>}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/HolidayHomes" element={<HolidayHome />} />
-          <Route path="/Profile" element={<Profile />} />
+          <Route path="/MyProfile" element={<Profile />} />
           <Route path="/ContactUs" element={<ContactUs />} />
-          <Route path="/paymentGateway" element={<PaymentGateway />} />
+          {/* <Route path="/paymentGateway" element={<PaymentGateway />} /> */}
           <Route path="/Registration" element={<UserRegistration />} />
           <Route path="/Login" element={<UserLogin />} />
-          <Route path="/MyProfile" element={<PersonalDetails />} />
+          {/* <Route path="/MyProfile" element={<PersonalDetails />} /> */}
           <Route
             path="/MyProfile/PersonalDetails"
             element={<PersonalDetails />}

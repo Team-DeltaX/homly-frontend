@@ -10,6 +10,8 @@ import theme from '../../HomlyTheme';
 import SideNavbar from '../../Components/locationAdmin/SideNavbar'
 import PageTitle from '../../Components/locationAdmin/PageTitle';
 
+import BasicTabs from '../../Components/locationAdmin/Reservations/LocationAdminBasicTab';
+
 
 
 const Report = () => {
@@ -27,6 +29,7 @@ const Report = () => {
                         <Grid className='container_grid' xs={9} sx={{backgroundColor:'white',borderTopLeftRadius:'20px',padding:'10px 30px',height:'100vh',position:'relative'}}>
                             <Box sx={{height:"100%"}}>
                                 <PageTitle setShowNav={setShowNav} title={'Reservations'} bell={false}/>
+                                <BasicTabs/>
                             </Box>
                         </Grid>  
                     </Grid>

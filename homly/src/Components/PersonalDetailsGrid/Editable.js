@@ -6,26 +6,26 @@ import { Grid, Typography, Button, TextField } from "@mui/material";
 import { EditPersonalDetailsContext } from "../../Contexts/EditPersonalDetailsContext";
 
 const Editable = (props) => {
-  const { handleEditId,handlePersonalDetails} = useContext(EditPersonalDetailsContext);
+  const { handleEditId, handlePersonalDetails } = useContext(EditPersonalDetailsContext);
   const [data, setData] = useState(props.value);
 
   const handleSave = () => {
-    {
-      props.id && handleEditId(""); handlePersonalDetails([props.id,data]);
-    }
-    
+
+    if (props.id) { handleEditId(""); handlePersonalDetails([props.id, data]) };
+
+
     console.log(data);
     console.log("save");
   };
 
   return (
-    <Grid container key={props.id}>
-      <Grid item md={4}>
-        <Typography variant="h6" fontWeight={"regular"} component="div">
+    <Grid container key={props.id} sx={{width:'100%'}}>
+      <Grid item xs={12} sm={4} md={4}>
+        <Typography variant="h6" fontWeight={"bold"} component="div">
           {props.lable}
         </Typography>
       </Grid>
-      <Grid item md={6}>
+      <Grid item xs={9} sm={6} md={6}>
         <TextField
           id="outlined-basic"
           value={data}
@@ -34,7 +34,7 @@ const Editable = (props) => {
           onChange={(e) => setData(e.target.value)}
         />
       </Grid>
-      <Grid item md={2}>
+      <Grid item xs={3} sm={2} md={2}>
         <Button
           variant="contained"
           size="small"

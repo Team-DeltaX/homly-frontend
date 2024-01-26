@@ -1,7 +1,6 @@
 import { Paper,Box, Typography } from '@mui/material'
 import React from 'react'
 
-import DirectionsWalkIcon from '@mui/icons-material/DirectionsWalk';
 
 const Summary = ({summaryTitle,count,iconUse,color}) => {
   return (

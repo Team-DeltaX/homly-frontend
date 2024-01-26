@@ -21,6 +21,7 @@
     "react-router-dom": "^6.21.1",
     "react-scripts": "5.0.1",
     "react-to-pdf": "^1.0.1",
+    "react-window": "^1.8.10",
     "stripe": "^14.10.0",
     "styled-components": "^6.1.6",
     "web-vitals": "^2.1.4"

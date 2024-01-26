@@ -1,51 +1,41 @@
-import React, { useContext } from "react";
-
-import NavBar from "../../Components/NavBar/NavBar";
-import PersonalDetailsGrid from "../../Components/PersonalDetailsGrid/PersonalDetailsGrid";
-import UpdateButton from "../../Components/PersonalDetailsGrid/UpdateButton";
-
-import { EditPersonalDetailsContext } from "../../Contexts/EditPersonalDetailsContext";
-
+// import React, { useContext } from "react";
+import React from 'react'
 import {
   Box,
-  Container,
+//   Container,
   ThemeProvider,
   Typography,
-  Card,
-  CardContent,
-  CardActions,
+//   Card,
+//   CardContent,
+//   CardActions,
 } from "@mui/material";
+
+// import PersonalDetailsGrid from "../PersonalDetailsGrid/PersonalDetailsGrid";
+// import UpdateButton from "../PersonalDetailsGrid/UpdateButton";
+
+// import { EditPersonalDetailsContext } from "../../Contexts/EditPersonalDetailsContext";
 
 import theme from "../../HomlyTheme";
 
 
-
-const PersonalDetails = () => {
-  const { userPersonalDetails } = useContext(EditPersonalDetailsContext)
- 
-  // console.log(userPersonalDetails);
-  
-
+const MyReservation = () => {
+    // const { userPersonalDetails } = useContext(EditPersonalDetailsContext);
   return (
     <ThemeProvider theme={theme}>
-      <Box display={"flex"}>
-        <NavBar sideNavBar="block" />
-        <Container sx={{ mt: 10, height: "85vh" }}>
-          <Typography variant="h4">Personal Details</Typography>
-          <Box
+      <Box>
+          <Typography variant="h4">My Reservation</Typography>
+          {/* <Box
             sx={{
               width: "100%",
-              height: "90%",
+              height: "100%",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
+              margin:{xs:'3% 0 20% 0'}
             }}
           >
-            {/* <Box sx={{width:'90%',height:'90%',backgroundColor:'green',boxShadow: '8px 11px 31px -17px rgba(0,0,0,0.75)',}}>
-                           dfgd 
-                </Box> */}
-            
-              <Card sx={{ width: "90%", height: "90%" }}>
+           
+              <Card sx={{ width: {xs:"100%",sm:"90%"}}}>
                 <CardContent sx={{ display: "flex", flexDirection: "column" }}>
                   {userPersonalDetails && (
                     <PersonalDetailsGrid
@@ -104,16 +94,15 @@ const PersonalDetails = () => {
                     />
                   )}
                 </CardContent>
-                <CardActions>
+                <CardActions sx={{width:'92%',justifyContent:"flex-end"}}>
                   <UpdateButton />
                 </CardActions>
               </Card>
             
-          </Box>
-        </Container>
+          </Box> */}
       </Box>
     </ThemeProvider>
   );
 };
 
-export default PersonalDetails;
+export default MyReservation;

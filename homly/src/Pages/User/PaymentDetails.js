@@ -1,12 +1,12 @@
 import React from "react";
-import NavBar from "../../Components/NavBar/NavBar";
+import NavBar from '../../Components/NavBar/NavBar'
 
 
 import { Box, Container, ThemeProvider, Typography } from "@mui/material";
 
 import theme from '../../HomlyTheme'
 
-const UserSecurity = () => {
+const PaymentDetails = () => {
   return (
     
       <ThemeProvider theme={theme}>
@@ -25,4 +25,4 @@ const UserSecurity = () => {
   );
 };
 
-export default UserSecurity;
+export default PaymentDetails;
