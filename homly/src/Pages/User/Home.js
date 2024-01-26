@@ -60,8 +60,8 @@ const districts = [
 
 export default function Home() {
   const [selectionRange, setSelectRange] = useState({
-    startDate: '',
-    endDate: '',
+    startDate: new Date(),
+    endDate: new Date(),
     key: "selection",
   });
 
@@ -166,7 +166,6 @@ export default function Home() {
                               Which district do you prefer
                             </Typography>
                             <Select
-                              p
                               size="small"
                               sx={{ width: "100%", position: "relative" }}
                               id="select-district"
@@ -218,7 +217,7 @@ export default function Home() {
                         item
                         md={2}
                         sx={{
-                          padding: "0 1% 0.5% 3%",
+                          padding: "0 1% 0 3%",
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "flex-end",
@@ -228,8 +227,8 @@ export default function Home() {
                           direction="row"
                           sx={{
                             bgcolor: "#484848",
-                            width: { xs: "100%", sm: "60px" },
-                            height: "60px",
+                            width: { xs: "100%", sm: "50px" },
+                            height: "50px",
                             borderRadius: { xs: "10px", sm: "50%" },
                             alignItems: "center",
                             justifyContent: "center",

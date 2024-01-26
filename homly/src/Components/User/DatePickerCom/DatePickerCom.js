@@ -80,7 +80,8 @@ export default function DatePickerCom(props) {
               Check in
             </Typography>
             <TextField
-              id="checkin-checkout"
+            variant="standard"
+              id="checkin"
               size="small"
               fullWidth
               value={convertDate(props.selectionRange.startDate)}
@@ -96,7 +97,8 @@ export default function DatePickerCom(props) {
               Check out
             </Typography>
             <TextField
-              id="checkin-checkout"
+            variant="standard"
+              id="checkout"
               size="small"
               fullWidth
               value={convertDate(props.selectionRange.endDate)}
