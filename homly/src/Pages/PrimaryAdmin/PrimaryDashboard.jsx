@@ -16,7 +16,6 @@ import theme from "../../HomlyTheme";
 import Pagetop from "../../Components/PrimaryAdmin/PageTop";
 import DashViewAdminBox from "../../Components/PrimaryAdmin/DashViewAdminBox";
 import { Link } from "react-router-dom";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
 import SimpleCharts from "../../Components/PrimaryAdmin/Simplecharts";
 
 const PrimaryDashboard = () => {
