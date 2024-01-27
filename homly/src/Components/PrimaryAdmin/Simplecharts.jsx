@@ -5,7 +5,7 @@ import { Box, Typography } from '@mui/material';
 export default function SimpleCharts() {
   return (
     <div>
-        <Box textAlign={'center'}><Typography>Last 7 Days Income</Typography></Box>
+        <Box textAlign={'center'}><Typography sx={{color:'#002347',fontWeight:'bold'}}>Last 7 Days Income</Typography></Box>
         <BarChart
         title='Last 7 Days'
           xAxis={[
@@ -15,12 +15,14 @@ export default function SimpleCharts() {
               scaleType: 'band',
             },
           ]}
+          
           series={[
             {
               data: [20000, 52000, 30000,41223,10023,31234,1222],
+              color:'#002347'
             },
           ]}
-          width={400}
+          width={330}
           height={300}
         />
      

@@ -17,6 +17,7 @@ import Pagetop from "../../Components/PrimaryAdmin/PageTop";
 import DashViewAdminBox from "../../Components/PrimaryAdmin/DashViewAdminBox";
 import { Link } from "react-router-dom";
 import SimpleCharts from "../../Components/PrimaryAdmin/Simplecharts";
+import { PieChart } from '@mui/x-charts/PieChart';
 
 const PrimaryDashboard = () => {
   const [showNav, setShowNav] = useState("nav_grid_deactive");
@@ -72,8 +73,49 @@ const PrimaryDashboard = () => {
                         alignItems: "center",
                       }}
                     >
-                      <Box>
+                      <Box sx={{display:'flex',flexDirection:{sm:'row',xs:'column'}}}>
                         <SimpleCharts />
+{/*                         
+                        <PieChart
+                  series={[
+                    {
+                      data: [ 1,2,3],
+                      innerRadius: 30,
+                      outerRadius: 100,
+                      paddingAngle: 5,
+                      cornerRadius: 5,
+                      startAngle: -90,
+                      endAngle: 180,
+                      cx: 150,
+                      cy: 150,
+                    },]}
+                />
+                        */}
+                        <Box  sx={{paddingTop:{xs:'5px',sm:'130px'}}}>
+                          <PieChart
+                          
+                            series={[
+                              {
+                                data: [
+                                  { id: 0, value: 10, label: 'Active' ,color:'#FF5003'},
+                                  { id: 1, value: 2, label: 'Inactive' ,color:'#002347'},
+                                ],
+                                innerRadius: 30,
+                                outerRadius: 100,
+                                paddingAngle: 5,
+                                cornerRadius: 5,
+                                startAngle: -90,
+                                endAngle: +90,
+                                cx: 150,
+                                cy: 150,
+                              },
+                            ]}
+                            width={370}
+                            height={200}
+                          />
+                        </Box>
+                        
+                        
                       </Box>
                     </Box>
                   </Grid>
