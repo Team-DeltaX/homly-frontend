@@ -18,6 +18,9 @@ import DashViewAdminBox from "../../Components/PrimaryAdmin/DashViewAdminBox";
 import { Link } from "react-router-dom";
 import SimpleCharts from "../../Components/PrimaryAdmin/Simplecharts";
 import { PieChart } from '@mui/x-charts/PieChart';
+import CircularProgress from '@mui/joy/CircularProgress';
+
+
 
 const PrimaryDashboard = () => {
   const [showNav, setShowNav] = useState("nav_grid_deactive");
@@ -113,6 +116,9 @@ const PrimaryDashboard = () => {
                             width={370}
                             height={200}
                           />
+                          {/* <CircularProgress/> */}
+
+
                         </Box>
                         
                         
