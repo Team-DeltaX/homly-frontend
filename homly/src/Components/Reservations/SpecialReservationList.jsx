@@ -5,7 +5,7 @@ import Stack from '@mui/material/Stack';
 import holidayhome from '../../Assets/images/holidayHome.jpg';
 import './Reservation.css';
 import ViewPopUp from './ViewPopup';
-import SpecialReservationCard from './PastReservationCard';
+import SpecialReservationCard from './SpecialReservationCard';
 
 const SpecialReservationList = (props) => {
   const [reservations, setReservations] = useState([
@@ -16,7 +16,7 @@ const SpecialReservationList = (props) => {
         reciptTelephone: "0765678453",
         recervationNO: '4501',
         amount: '3500',
-        holidayhomename: 'palmadulla Lotus by nipun',
+        holidayhomename: 'Palmadulla Lotus by nipun',
         checkindate: '2024-03-01',
         checoutdate: '2024-03-03',
         holidayHomeAddress: "89/A, Anuradhapura, Malwathuoya",
