@@ -23,6 +23,7 @@ import HolidayHomeCard from "../../Components/User/HHCard/HolidayHomeCard";
 import "./UserStyle.css";
 import Topbg from "../../Assets/images/LandingPageTop.png";
 import DistrictSelectCom from "../../Components/User/DistrictSelectCom";
+import OurPlaces from "../../Components/User/OurPlaces/OurPlaces";
 
 const reservedDates = [
   "2024/01/27",
@@ -339,6 +340,7 @@ export default function Home() {
               <Box>
                 <Typography variant="h4" color="initial">
                   our places - 5 districts
+                  <OurPlaces/>
                 </Typography>
               </Box>
               <Box>
