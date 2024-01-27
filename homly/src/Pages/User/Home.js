@@ -8,7 +8,6 @@ import {
   Grid,
   Select,
   MenuItem,
-  InputLabel,
   FormControl,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
@@ -20,6 +19,7 @@ import theme from "../../HomlyTheme";
 import DatePickerCom from "../../Components/User/DatePickerCom/DatePickerCom";
 
 import "./UserStyle.css";
+import Topbg from "../../Assets/images/LandingPageTop.png"
 
 const reservedDates = [
   "2024/01/27",
@@ -91,7 +91,7 @@ export default function Home() {
               <Box sx={{ position: "relative" }}>
                 <Box
                   component="img"
-                  src="https://images.pexels.com/photos/2403209/pexels-photo-2403209.jpeg"
+                  src={Topbg}
                   alt="top-image"
                   sx={{ width: "100%", height: "50vh", objectFit: "cover" }}
                 />
@@ -101,7 +101,7 @@ export default function Home() {
                     position: "absolute",
                     height: "50vh",
                     width: "100%",
-                    bgcolor: "#ffa07d5c",
+                    bgcolor: "#2c2c2ca3",
                     top: 0,
                     justifyContent: "center",
                     alignItems: "center",
