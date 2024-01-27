@@ -5,6 +5,7 @@
     display: none !important;
 } */
 
-.rdrMonth {
-    height: 280px !important;
+.rdrDateDisplayWrapper {
+    height: 80px;
+    /* background: #58c885; */
 }

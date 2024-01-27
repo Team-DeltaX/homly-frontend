@@ -5,41 +5,45 @@ import {
   Stack,
   TextField,
   Typography,
-  InputLabel,
-  FormControl,
-  Select,
-  Button,
+  IconButton,
 } from "@mui/material";
 import { DateRangePicker } from "react-date-range";
-import { addDays } from "date-fns";
+import { addDays, differenceInDays } from "date-fns";
+
+
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
-import theme from "../../../HomlyTheme";
 import "./DatePickerCom.css";
 
+import theme from "../../../HomlyTheme";
+
 export default function DatePickerCom(props) {
-  const [disabledDatesArr, setDisabledDatesArr] = useState([]);
+  // const [disabledDatesArr, setDisabledDatesArr] = useState([]);
   const [isDisplay, setIsDisplay] = useState(false);
-  const [isDisplay2, setIsDisplay2] = useState(false);
   const [dateSelectionRange, setDateSelectRange] = useState({
     startDate: new Date(),
     endDate: new Date(),
     key: "selection",
   });
+  const [dateRangeError, setDateRangeError] = useState(false);
 
-  useEffect(() => {
-    let updated = [];
-    props.reservedDates.map((date) => {
-      let d = new Date(date);
-      let dates = [d.getFullYear(), d.getMonth() + 1, d.getDate()];
-      updated.push(new Date(dates));
-    });
-    setDisabledDatesArr(updated);
-  }, []);
-  //   console.log(today.getFullYear(), today.getMonth() + 1, today.getDate());
+  // useEffect(() => {
+  //   let updated = [];
+
+  //   props.reservedDates.map((date) => {
+  //     let d = new Date(date);
+  //     let dates = [d.getFullYear(), d.getMonth() + 1, d.getDate()];
+  //     updated.push(new Date(dates));
+  //     return null;
+  //   });
+  //   setDisabledDatesArr(updated);
+  // }, [props.reservedDates]);
 
   // console.log(disabledDatesArr);
+
   const handleSelect = (range) => {
     // console.log(range.selection);
     // props.setSelectRange({
@@ -47,11 +51,18 @@ export default function DatePickerCom(props) {
     //   startDate: range.selection.startDate,
     //   endDate: range.selection.endDate,
     // });
-    setDateSelectRange({
-      ...dateSelectionRange,
-      startDate: range.selection.startDate,
-      endDate: range.selection.endDate,
-    });
+    let diff = differenceInDays(range.selection.endDate, range.selection.startDate)
+    if(diff<4){
+      setDateSelectRange({
+        ...dateSelectionRange,
+        startDate: range.selection.startDate,
+        endDate: range.selection.endDate,
+      });
+      setDateRangeError(false)
+    }else{
+      
+      setDateRangeError(true)
+    }
   };
 
   const convertDate = (date) => {
@@ -59,13 +70,17 @@ export default function DatePickerCom(props) {
     return d;
   };
 
-  const handleDates = () => {
+  const handleDatesConfirm = () => {
     setIsDisplay(false);
     props.setSelectRange({
       ...props.selectionRange,
       startDate: dateSelectionRange.startDate,
       endDate: dateSelectionRange.endDate,
     });
+  };
+
+  const handleDatesClose = () => {
+    setIsDisplay(false);
   };
 
   return (
@@ -80,7 +95,7 @@ export default function DatePickerCom(props) {
               Check in
             </Typography>
             <TextField
-            variant="standard"
+              variant="standard"
               id="checkin"
               size="small"
               fullWidth
@@ -100,7 +115,7 @@ export default function DatePickerCom(props) {
               Check out
             </Typography>
             <TextField
-            variant="standard"
+              variant="standard"
               id="checkout"
               size="small"
               fullWidth
@@ -120,20 +135,58 @@ export default function DatePickerCom(props) {
           <Box sx={{ position: "realative" }}>
             <DateRangePicker
               rangeColors={["#FF7F50"]}
-              disabledDates={[...disabledDatesArr]}
+              // disabledDates={[...disabledDatesArr]}
               ranges={[dateSelectionRange]}
               onChange={handleSelect}
               minDate={addDays(new Date(), 0)}
               maxDate={addDays(new Date(), 90)}
             />
-            <Stack direction='row'>
-              <Button
+            <Stack
+              direction="row"
+              sx={{
+                width: "100%",
+                height: "30px",
+                position: "absolute",
+                top: "50px",
+                justifyContent: "space-between",
+              }}
+            >
+              <Box sx={{width:'100%'}}>
+                <Typography
+                  sx={{
+                    fontSize: "1rem",
+                    fontWeight: "bold",
+                    color: "error.dark",
+                    display:dateRangeError?'block':'none',
+                  }}
+                >
+                  Maximum 4 days can be booked
+                </Typography>
+              </Box>
+              <Stack direction="row">
+                {/* <Button
+              
                 variant="outlined"
                 onClick={handleDates}
-                sx={{ position: "absolute", bottom: "5px", right: "5px" }}
+                sx={{ position: "absolute", bottom: "5px", right: "5px",height:'40px' }}
               >
-                Close
+                Confirm
               </Button>
+              <Button
+              
+                variant="outlined"
+                onClick={handleDates}
+                sx={{ position: "absolute", bottom: "5px", right: "5px",height:'40px' }}
+              >
+                Confirm
+              </Button> */}
+                <IconButton aria-label="close" onClick={handleDatesClose}>
+                  <HighlightOffIcon sx={{ color: "error.dark" }} />
+                </IconButton>
+                <IconButton aria-label="confirm" onClick={handleDatesConfirm}>
+                  <CheckCircleOutlineIcon sx={{ color: "success.dark" }} />
+                </IconButton>
+              </Stack>
             </Stack>
           </Box>
         </Box>

@@ -19,7 +19,7 @@ import theme from "../../HomlyTheme";
 import DatePickerCom from "../../Components/User/DatePickerCom/DatePickerCom";
 
 import "./UserStyle.css";
-import Topbg from "../../Assets/images/LandingPageTop.png"
+import Topbg from "../../Assets/images/LandingPageTop.png";
 
 const reservedDates = [
   "2024/01/27",
@@ -88,6 +88,7 @@ export default function Home() {
                 width: { xs: "100%", sm: "95%", padding: 0 },
               }}
             >
+              {/* top image with search bar */}
               <Box sx={{ position: "relative" }}>
                 <Box
                   component="img"
@@ -248,14 +249,18 @@ export default function Home() {
                           }}
                         >
                           <Typography
-                            sx={{ display: { xs: "flex", sm: "none" } ,fontSize: "1.2rem", fontWeight: "bold"}}
+                            sx={{
+                              display: { xs: "flex", sm: "none" },
+                              fontSize: "1.2rem",
+                              fontWeight: "bold",
+                            }}
                           >
                             Search
                           </Typography>
                           <SearchIcon
                             sx={{
                               marginLeft: { xs: "5px", sm: "0" },
-                              fontSize: { xs:'1.5rem',sm: "2.5rem" },
+                              fontSize: { xs: "1.5rem", sm: "2.5rem" },
                               fontWeight: "bold",
                             }}
                           />
@@ -264,11 +269,17 @@ export default function Home() {
                     </Grid>
                   </Stack>
                 </Stack>
-                <Box></Box>
-                <Typography variant="h4" color="initial">
-                  Top Rated Holiday Homes
-                </Typography>
               </Box>
+
+              {/* top rated holiday homes */}
+              <Box>
+                <Stack>
+                  <Typography variant="h4" color="initial">
+                    Top Rated Holiday Homes
+                  </Typography>
+                </Stack>
+              </Box>
+
               <Box>
                 <Typography variant="h4" color="initial">
                   our places - 5 districts
