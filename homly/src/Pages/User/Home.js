@@ -9,6 +9,7 @@ import {
   MenuItem,
   FormControl,
 } from "@mui/material";
+import axios from "axios";
 // import Select from "react-select";
 import SearchIcon from "@mui/icons-material/Search";
 
@@ -32,8 +33,52 @@ const reservedDates = [
   "2024/02/07",
 ];
 
+// const holidayHomes = [
+//   {
+//     id: 1,
+//     name: "Holiday Home 1",
+//     address: "No2, Colombo 1",
+//     rating: 4.7,
+//     price: 5000,
+//   },
+//   {
+//     id: 2,
+//     name: "Holiday Home 2",
+//     address: "No2, Kuruneagala",
+//     rating: 4.6,
+//     price: 5000,
+//     image: "https://picsum.photos/200",
+//   },
+//   {
+//     id: 3,
+//     name: "Holiday Home 3",
+//     address: "Bandaranayaka Mawatha, Moratuwa",
+//     rating: 4.6,
+//     price: 5000,
+//     image: "https://picsum.photos/200",
+//   },
+//   {
+//     id: 4,
+//     name: "Holiday Home 4",
+//     address:'No 5,Nuwara Eliya',
+//     rating: 5,
+//     price: 5000,
+//     image: "https://picsum.photos/200",
+//   },
+//   {
+//     id: 5,
+//     name: "Holiday Home 5",
+//     address: "No2, Colombo 1",
+//     rating: 4.4,
+//     price: 5000,
+//     image: "https://picsum.photos/200",
+//   }
+
+// ];
 
 export default function Home() {
+  const [APIData, setAPIData] = useState([]);
+  const [sortedByRating, setSortedByRating] = useState([]);
   const [selectionRange, setSelectRange] = useState({
     startDate: new Date(),
     endDate: new Date(),
@@ -42,6 +87,22 @@ export default function Home() {
 
   const [district, setDistrict] = useState("");
 
+  useEffect(() => {
+    axios
+      .get(`https://65ac00f8fcd1c9dcffc76f52.mockapi.io/homly/api/HolidayHomes`)
+      .then((response) => {
+        setAPIData(response.data);
+        setSortedByRating(response.data);
+      });
+    // APIData.sort((a, b) => b.rating - a.rating);
+  }, []);
+
+  useEffect(() => {
+    sortedByRating.sort((a, b) => b.rating - a.rating);
+  }, [sortedByRating]);
+
+  console.log(sortedByRating);
+  // console.log(APIData[0].name)
   // const [isVisible, setIsVisible] = useState(true);
 
   return (
@@ -131,7 +192,10 @@ export default function Home() {
                           >
                             Location
                           </Typography>
-                          <DistrictSelectCom setDistrict={setDistrict} district={district}/>
+                          <DistrictSelectCom
+                            setDistrict={setDistrict}
+                            district={district}
+                          />
                           {/* <Typography
                               sx={{
                                 display: isVisible ? "flex" : "none",
@@ -254,7 +318,20 @@ export default function Home() {
                     Top Rated Holiday Homes
                   </Typography>
                   <Box>
-                    <HolidayHomeCard />
+                    
+                    <Stack direction='row' spacing={2} >
+                      {sortedByRating.sort((a, b) => b.rating - a.rating).slice(0, 4).map((item) => (
+                        <HolidayHomeCard
+                          key={item.HHId}
+                          HHName={item.name}
+                          HHLocation={item.address}
+                          HHPrice={item.price}
+                          HHRating={item.rating}
+                          HHImage={item.image}
+                        />
+                      ))}
+                      
+                    </Stack>
                   </Box>
                 </Stack>
               </Box>

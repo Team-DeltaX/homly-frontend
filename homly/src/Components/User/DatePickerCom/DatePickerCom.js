@@ -10,7 +10,6 @@ import {
 import { DateRangePicker } from "react-date-range";
 import { addDays, differenceInDays, set } from "date-fns";
 
-
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 
@@ -51,19 +50,23 @@ export default function DatePickerCom(props) {
      */
     function handleClickOutside(event) {
       if (calanderRef.current && !calanderRef.current.contains(event.target)) {
-       setIsDisplay(false);
+        setIsDisplay(false);
+        props.setSelectRange({
+          ...props.selectionRange,
+          startDate: dateSelectionRange.startDate,
+          endDate: dateSelectionRange.endDate,
+        });
       }
     }
     // Bind the event listener
-    if (isDisplay){
-
+    if (isDisplay) {
       document.addEventListener("mousedown", handleClickOutside);
       return () => {
         // Unbind the event listener on clean up
         document.removeEventListener("mousedown", handleClickOutside);
       };
     }
-  }, [calanderRef,isDisplay]);
+  }, [calanderRef, isDisplay,dateSelectionRange]);
 
   const handleSelect = (range) => {
     // console.log(range.selection);
@@ -72,17 +75,19 @@ export default function DatePickerCom(props) {
     //   startDate: range.selection.startDate,
     //   endDate: range.selection.endDate,
     // });
-    let diff = differenceInDays(range.selection.endDate, range.selection.startDate)
-    if(diff<4){
+    let diff = differenceInDays(
+      range.selection.endDate,
+      range.selection.startDate
+    );
+    if (diff < 4) {
       setDateSelectRange({
         ...dateSelectionRange,
         startDate: range.selection.startDate,
         endDate: range.selection.endDate,
       });
-      setDateRangeError(false)
-    }else{
-
-      setDateRangeError(true)
+      setDateRangeError(false);
+    } else {
+      setDateRangeError(true);
     }
   };
 
@@ -126,7 +131,7 @@ export default function DatePickerCom(props) {
               value={convertDate(props.selectionRange.startDate)}
               onFocus={() => setIsDisplay(true)}
               // onChange={}
-              sx={{marginTop:'10px'}}
+              sx={{ marginTop: "10px" }}
             />
           </Stack>
           <Stack
@@ -146,15 +151,19 @@ export default function DatePickerCom(props) {
               }}
               value={convertDate(props.selectionRange.endDate)}
               onFocus={() => setIsDisplay(true)}
-              sx={{marginTop:'10px'}}
+              sx={{ marginTop: "10px" }}
               // onChange={}
             />
           </Stack>
         </Stack>
 
         <Box
-          
-          sx={{ position: "absolute", display: isDisplay ? "flex" : "none",paddingTop:'10px' }}
+          sx={{
+            position: "absolute",
+            display: isDisplay ? "flex" : "none",
+            paddingTop: "10px",
+            zIndex: 100,
+          }}
         >
           <Box sx={{ position: "realative" }} ref={calanderRef}>
             <DateRangePicker
@@ -171,17 +180,17 @@ export default function DatePickerCom(props) {
                 width: "100%",
                 height: "30px",
                 position: "absolute",
-                top: "50px",
+                top: "60px",
                 justifyContent: "space-between",
               }}
             >
-              <Box sx={{width:'100%'}}>
+              <Box sx={{ width: "100%" }}>
                 <Typography
                   sx={{
                     fontSize: "1rem",
                     fontWeight: "bold",
                     color: "error.dark",
-                    display:dateRangeError?'block':'none',
+                    display: dateRangeError ? "block" : "none",
                   }}
                 >
                   Maximum 4 days can be booked
