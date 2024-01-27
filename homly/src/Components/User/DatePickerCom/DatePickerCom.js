@@ -84,6 +84,9 @@ export default function DatePickerCom(props) {
               id="checkin"
               size="small"
               fullWidth
+              InputProps={{
+                readOnly: true,
+              }}
               value={convertDate(props.selectionRange.startDate)}
               onFocus={() => setIsDisplay(true)}
               // onChange={}
@@ -101,6 +104,9 @@ export default function DatePickerCom(props) {
               id="checkout"
               size="small"
               fullWidth
+              InputProps={{
+                readOnly: true,
+              }}
               value={convertDate(props.selectionRange.endDate)}
               onFocus={() => setIsDisplay(true)}
               // onChange={}
@@ -119,7 +125,6 @@ export default function DatePickerCom(props) {
               onChange={handleSelect}
               minDate={addDays(new Date(), 0)}
               maxDate={addDays(new Date(), 90)}
-              
             />
             <Stack direction='row'>
               <Button

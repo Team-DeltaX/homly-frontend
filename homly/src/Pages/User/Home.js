@@ -110,6 +110,7 @@ export default function Home() {
                   <Stack
                     direction="column"
                     sx={{ color: "white", fontWeight: 700 }}
+                    display={{ xs: "none", sm: "flex" }}
                   >
                     <Typography
                       sx={{
@@ -130,22 +131,23 @@ export default function Home() {
                   </Stack>
                   <Stack
                     direction="column"
-                    sx={{ width: { xs: "100%", sm: "75%" } }}
+                    sx={{ width: { xs: "97%", sm: "90%", md: "75%" } }}
                   >
-                    <Typography variant="h5">Find</Typography>
+                    {/* <Typography variant="h5">Find</Typography> */}
                     <Grid
                       container
                       sx={{
                         bgcolor: "white",
                         width: "100%",
-                        borderRadius: "40px",
+                        borderRadius: { xs: "10px", sm: "40px" },
                       }}
                     >
+                      {/* location */}
                       <Grid
                         item
                         xs={12}
-                        md={4}
-                        sx={{ padding: "0 3% 0.5% 5%" }}
+                        sm={4}
+                        sx={{ padding: { xs: "3%", sm: "0 3% 0.5% 5%" } }}
                       >
                         <Stack direction="column">
                           <Typography
@@ -188,7 +190,14 @@ export default function Home() {
                           </FormControl>
                         </Stack>
                       </Grid>
-                      <Grid item xs={12} md={6} sx={{ padding: "0 3%" }}>
+
+                      {/* checkin-checkout */}
+                      <Grid
+                        item
+                        xs={12}
+                        sm={6}
+                        sx={{ padding: { xs: "3%", sm: "0 3%" } }}
+                      >
                         {/* <Stack direction='column'>
                             <Typography>Location</Typography>
                             <Typography>Location</Typography>
@@ -213,11 +222,14 @@ export default function Home() {
                           reservedDates={reservedDates}
                         />
                       </Grid>
+
+                      {/* search */}
                       <Grid
                         item
-                        md={2}
+                        xs={12}
+                        sm={2}
                         sx={{
-                          padding: "0 1% 0 3%",
+                          padding: { xs: "3%", sm: "0 1% 0 3%" },
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "flex-end",
@@ -232,17 +244,18 @@ export default function Home() {
                             borderRadius: { xs: "10px", sm: "50%" },
                             alignItems: "center",
                             justifyContent: "center",
+                            color: "white",
                           }}
                         >
                           <Typography
-                            sx={{ display: { xs: "flex", sm: "none" } }}
+                            sx={{ display: { xs: "flex", sm: "none" } ,fontSize: "1.2rem", fontWeight: "bold"}}
                           >
                             Search
                           </Typography>
                           <SearchIcon
                             sx={{
-                              color: "white",
-                              fontSize: { sm: "2.5rem" },
+                              marginLeft: { xs: "5px", sm: "0" },
+                              fontSize: { xs:'1.5rem',sm: "2.5rem" },
                               fontWeight: "bold",
                             }}
                           />
