@@ -2,12 +2,11 @@ import { useState } from "react";
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
-import holidayhome from '../../../Assets/images/holidayHome.jpg';
+import holidayhome from '../../Assets/images/holidayHome.jpg';
 import './Reservation.css';
 import ViewPopUp from './ViewPopup';
-import AddComplainPopUp from './AddComplainPopUp';
 
-const PastReservationCard = ({reservation}) => {
+const OngoingReservationCard = ({reservation}) => {
     return(
         <Box className="reservation-preview" key={reservation.id} >
             <Box className="columnData"> 
@@ -24,12 +23,14 @@ const PastReservationCard = ({reservation}) => {
                         <h2>{ reservation.holidayhomename }</h2>
                         <p>Check In : { reservation.checkindate }</p>
                         <p>Check Out : { reservation.checoutdate }</p>
-                        <Stack direction="row" justifyContent="flex-end" alignItems="flex-end" spacing={2}>
-                            <ViewPopUp reservation={reservation}/>
-                            <AddComplainPopUp />
-                        </Stack>
+                        <ViewPopUp reservation={reservation}/>
                     </Stack>
-                    
+                    {/* <h2>{ reservation.holidayhomename }</h2>
+                    <p>Check In : { reservation.checkindate }</p>
+                    <p>Check Out : { reservation.checoutdate }</p> */}
+                    <Stack direction="row" justifyContent="flex-end" alignItems="flex-end" spacing={2}>
+                        
+                    </Stack>
                 </Box>
             </Box>
         </Box> 
@@ -37,5 +38,5 @@ const PastReservationCard = ({reservation}) => {
     
 }
 
-export default PastReservationCard;
+export default OngoingReservationCard;
 

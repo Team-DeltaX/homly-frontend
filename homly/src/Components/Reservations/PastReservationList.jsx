@@ -2,12 +2,12 @@ import { useState } from "react";
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
-import holidayhome from '../../../Assets/images/holidayHome.jpg';
+import holidayhome from '../../Assets/images/holidayHome.jpg';
 import './Reservation.css';
 import ViewPopUp from './ViewPopup';
 import PastReservationCard from './PastReservationCard';
 
-const PastReservationList = () => {
+const PastReservationList = (props) => {
   const [reservations, setReservations] = useState([
     {
         img: holidayhome,
@@ -32,7 +32,7 @@ const PastReservationList = () => {
             //isspecial: true,
             receiptName: "Jhon Doe",
             reciptTelephone: "0765678453",
-            recervationNO: '4501',
+            recervationNO: '4502',
             amount: '3500',
             holidayhomename: 'Anuradhapura Lotus by nipun',
             checkindate: '2024-03-01',
@@ -50,7 +50,7 @@ const PastReservationList = () => {
             //isspecial: true,
             receiptName: "Jhon Doe",
             reciptTelephone: "0765678453",
-            recervationNO: '4501',
+            recervationNO: '4503',
             amount: '3500',
             holidayhomename: 'Anuradhapura Lotus by nipun',
             checkindate: '2024-03-01',
@@ -124,7 +124,7 @@ const PastReservationList = () => {
             reciptTelephone: "0765678453",
             recervationNO: '4501',
             amount: '3500',
-            holidayhomename: 'Anuradhapura Lotus by nipun',
+            holidayhomename: 'kurunagala Lotus by nipun',
             checkindate: '2024-03-01',
             checoutdate: '2024-03-03',
             holidayHomeAddress: "89/A, Anuradhapura, Malwathuoya",
@@ -160,7 +160,7 @@ const PastReservationList = () => {
             reciptTelephone: "0765678453",
             recervationNO: '4501',
             amount: '3500',
-            holidayhomename: 'Anuradhapura Lotus by nipun',
+            holidayhomename: 'kegalle Lotus by nipun',
             checkindate: '2024-03-01',
             checoutdate: '2024-03-03',
             holidayHomeAddress: "89/A, Anuradhapura, Malwathuoya",
@@ -193,7 +193,14 @@ const PastReservationList = () => {
 
   return (
     <Box className="home">
-      {reservations.map(reservation => (
+      {reservations.filter((reservations) => {
+                    return props.search.toLowerCase() === ""
+                      ? reservations
+                      : reservations.holidayhomename.toLowerCase().startsWith(
+                            props.search.toLocaleLowerCase()
+                        );
+                  })
+                  .map(reservation => (
          (<PastReservationCard  reservation={reservation}/>)    
       ))}
     </Box>

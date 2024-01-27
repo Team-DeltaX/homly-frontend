@@ -12,7 +12,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Unstable_Grid2';
 import Paper from '@mui/material/Paper';
-import holidayhome from '../../../Assets/images/holidayHome.jpg';
+import holidayhome from '../../Assets/images/holidayHome.jpg';
 import Stack from '@mui/material/Stack';
 import Divider from '@mui/material/Divider';
 import { alignProperty } from '@mui/material/styles/cssUtils';
