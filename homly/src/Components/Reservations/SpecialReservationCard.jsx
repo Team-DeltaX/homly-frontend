@@ -24,8 +24,9 @@ const SpecialReservationCard = ({reservation}) => {
                         <h2>{ reservation.holidayhomename }</h2>
                         <p>Check In : { reservation.checkindate }</p>
                         <p>Check Out : { reservation.checoutdate }</p>
+                        <ViewPopUp reservation={reservation}/>
                         <Stack direction="row" justifyContent="flex-end" alignItems="flex-end" spacing={2}>
-                            <ViewPopUp reservation={reservation}/>
+                            
                             {/* <AddComplainPopUp /> */}
                         </Stack>
                     </Stack>

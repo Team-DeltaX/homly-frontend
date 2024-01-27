@@ -12,11 +12,11 @@ const SpecialReservationList = (props) => {
     {
         img: holidayhome,
         //isspecial: true,
-        receiptName: "Jhon Doe",
+        receiptName: "Jhon Doe12",
         reciptTelephone: "0765678453",
         recervationNO: '4501',
         amount: '3500',
-        holidayhomename: 'Anuradhapura Lotus by nipun',
+        holidayhomename: 'palmadulla Lotus by nipun',
         checkindate: '2024-03-01',
         checoutdate: '2024-03-03',
         holidayHomeAddress: "89/A, Anuradhapura, Malwathuoya",
