@@ -6,10 +6,10 @@ import {
   ThemeProvider,
   Stack,
   Grid,
-  Select,
   MenuItem,
   FormControl,
 } from "@mui/material";
+// import Select from "react-select";
 import SearchIcon from "@mui/icons-material/Search";
 
 import NavBar from "../../Components/NavBar/NavBar";
@@ -17,9 +17,11 @@ import theme from "../../HomlyTheme";
 // import MyReservationCard from "../../Components/MyReservationCard/MyReservationCard";
 
 import DatePickerCom from "../../Components/User/DatePickerCom/DatePickerCom";
+import HolidayHomeCard from "../../Components/User/HHCard/HolidayHomeCard";
 
 import "./UserStyle.css";
 import Topbg from "../../Assets/images/LandingPageTop.png";
+import DistrictSelectCom from "../../Components/User/DistrictSelectCom";
 
 const reservedDates = [
   "2024/01/27",
@@ -30,33 +32,6 @@ const reservedDates = [
   "2024/02/07",
 ];
 
-const districts = [
-  "Colombo",
-  "Gampaha",
-  "Kalutara",
-  "Kandy",
-  "Matale",
-  "Nuwara Eliya",
-  "Galle",
-  "Matara",
-  "Hambantota",
-  "Jaffna",
-  "Mannar",
-  "Vavuniya",
-  "Mullaitivu",
-  "Kilinochchi",
-  "Batticaloa",
-  "Ampara",
-  "Trincomalee",
-  "Kurunegala",
-  "Puttalam",
-  "Anuradhapura",
-  "Polonnaruwa",
-  "Badulla",
-  "Monaragala",
-  "Ratnapura",
-  "Kegalle",
-];
 
 export default function Home() {
   const [selectionRange, setSelectRange] = useState({
@@ -67,7 +42,7 @@ export default function Home() {
 
   const [district, setDistrict] = useState("");
 
-  const [isVisible, setIsVisible] = useState(true);
+  // const [isVisible, setIsVisible] = useState(true);
 
   return (
     <ThemeProvider theme={theme}>
@@ -84,7 +59,7 @@ export default function Home() {
             <Container
               sx={{
                 bgcolor: "azure",
-                height: "100vh",
+                // height: "100vh",
                 width: { xs: "100%", sm: "95%", padding: 0 },
               }}
             >
@@ -156,8 +131,8 @@ export default function Home() {
                           >
                             Location
                           </Typography>
-                          <FormControl variant="standard">
-                            <Typography
+                          <DistrictSelectCom setDistrict={setDistrict} district={district}/>
+                          {/* <Typography
                               sx={{
                                 display: isVisible ? "flex" : "none",
                                 fontSize: "0.7rem",
@@ -167,8 +142,9 @@ export default function Home() {
                               }}
                             >
                               Which district do you prefer
-                            </Typography>
-                            <Select
+                            </Typography> */}
+
+                          {/* <Select
                               size="small"
                               sx={{ width: "100%", position: "relative" }}
                               id="select-district"
@@ -187,8 +163,8 @@ export default function Home() {
                                   {name}
                                 </MenuItem>
                               ))}
-                            </Select>
-                          </FormControl>
+                            </Select> */}
+                          {/* </FormControl> */}
                         </Stack>
                       </Grid>
 
@@ -277,6 +253,9 @@ export default function Home() {
                   <Typography variant="h4" color="initial">
                     Top Rated Holiday Homes
                   </Typography>
+                  <Box>
+                    <HolidayHomeCard />
+                  </Box>
                 </Stack>
               </Box>
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   ThemeProvider,
   Box,
@@ -8,7 +8,7 @@ import {
   IconButton,
 } from "@mui/material";
 import { DateRangePicker } from "react-date-range";
-import { addDays, differenceInDays } from "date-fns";
+import { addDays, differenceInDays, set } from "date-fns";
 
 
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
@@ -29,6 +29,7 @@ export default function DatePickerCom(props) {
     key: "selection",
   });
   const [dateRangeError, setDateRangeError] = useState(false);
+  const calanderRef = useRef(null);
 
   // useEffect(() => {
   //   let updated = [];
@@ -43,6 +44,26 @@ export default function DatePickerCom(props) {
   // }, [props.reservedDates]);
 
   // console.log(disabledDatesArr);
+
+  useEffect(() => {
+    /**
+     * Alert if clicked on outside of element
+     */
+    function handleClickOutside(event) {
+      if (calanderRef.current && !calanderRef.current.contains(event.target)) {
+       setIsDisplay(false);
+      }
+    }
+    // Bind the event listener
+    if (isDisplay){
+
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => {
+        // Unbind the event listener on clean up
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }
+  }, [calanderRef,isDisplay]);
 
   const handleSelect = (range) => {
     // console.log(range.selection);
@@ -60,7 +81,7 @@ export default function DatePickerCom(props) {
       });
       setDateRangeError(false)
     }else{
-      
+
       setDateRangeError(true)
     }
   };
@@ -105,6 +126,7 @@ export default function DatePickerCom(props) {
               value={convertDate(props.selectionRange.startDate)}
               onFocus={() => setIsDisplay(true)}
               // onChange={}
+              sx={{marginTop:'10px'}}
             />
           </Stack>
           <Stack
@@ -124,17 +146,19 @@ export default function DatePickerCom(props) {
               }}
               value={convertDate(props.selectionRange.endDate)}
               onFocus={() => setIsDisplay(true)}
+              sx={{marginTop:'10px'}}
               // onChange={}
             />
           </Stack>
         </Stack>
 
         <Box
-          sx={{ position: "absolute", display: isDisplay ? "flex" : "none" }}
+          
+          sx={{ position: "absolute", display: isDisplay ? "flex" : "none",paddingTop:'10px' }}
         >
-          <Box sx={{ position: "realative" }}>
+          <Box sx={{ position: "realative" }} ref={calanderRef}>
             <DateRangePicker
-              rangeColors={["#FF7F50"]}
+              rangeColors={["#872341"]}
               // disabledDates={[...disabledDatesArr]}
               ranges={[dateSelectionRange]}
               onChange={handleSelect}
