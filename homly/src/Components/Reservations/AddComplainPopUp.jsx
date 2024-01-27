@@ -10,7 +10,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Input } from '@mui/base/Input';
-import TextArea from '../../Common/TextArea';
+import TextArea from '../Common/TextArea';
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -22,7 +22,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-export default function AddComplainPopUp() {
+export default function AddComplainPopUp({reservation}) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -69,6 +69,8 @@ export default function AddComplainPopUp() {
         <DialogContent>
           <TextField
             autoFocus
+            disabled={true}
+            value={reservation.receiptName}
             required
             margin="dense"
             id="serviceno"
@@ -80,6 +82,8 @@ export default function AddComplainPopUp() {
           />
           <TextField
             autoFocus
+            disabled={true}
+            value={reservation.recervationNO}
             required
             margin="dense"
             id="reservationno"

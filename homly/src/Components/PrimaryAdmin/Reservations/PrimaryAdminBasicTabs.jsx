@@ -4,8 +4,9 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import OngoingReservationList from './OngoingReservationList';
-import PastReservationList from './PastReservationList';
+import OngoingReservationList from '../../Reservations/OngoingReservationList';
+import PastReservationList from '../../Reservations/PastReservationList';
+import SpecialReservationList from '../../Reservations/SpecialReservationList';
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -40,7 +41,7 @@ function a11yProps(index) {
   };
 }
 
-export default function PrimaryAdminBasicTabs() {
+export default function PrimaryAdminBasicTabs(props) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -54,16 +55,21 @@ export default function PrimaryAdminBasicTabs() {
           <Tab label="Ongoing Reservations" {...a11yProps(0)} />
           <Tab label="Past Reservations" {...a11yProps(1)} />
           <Tab label="Special Reservations" {...a11yProps(2)} />
+
+
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <OngoingReservationList/>
+        {/* <OngoingReservationList search={props.search} setSearch={props.setSearch}/> */}
+        <OngoingReservationList search={props.search} setSearch={props.setSearch}/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <PastReservationList />
+        {/* <PastReservationList search={props.search} setSearch={props.setSearch}/> */}
+        <PastReservationList search={props.search} setSearch={props.setSearch}/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        <PastReservationList />
+        {/* <PastReservationList search={props.search} setSearch={props.setSearch}/> */}
+        <SpecialReservationList search={props.search} setSearch={props.setSearch}/>
       </CustomTabPanel>
     </Box>
   );

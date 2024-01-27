@@ -2,12 +2,12 @@ import { useState } from "react";
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
-import holidayhome from '../../../Assets/images/holidayHome.jpg';
+import holidayhome from '../../Assets/images/holidayHome.jpg';
 import './Reservation.css';
 import ViewPopUp from './ViewPopup';
-import OngoingReservationCard from './OngoingReservationCard';
+import SpecialReservationCard from './PastReservationCard';
 
-const OngoingReservationList = () => {
+const SpecialReservationList = (props) => {
   const [reservations, setReservations] = useState([
     {
         img: holidayhome,
@@ -16,14 +16,14 @@ const OngoingReservationList = () => {
         reciptTelephone: "0765678453",
         recervationNO: '4501',
         amount: '3500',
-        holidayhomename: 'Anuradhapura Lotus',
+        holidayhomename: 'Anuradhapura Lotus by nipun',
         checkindate: '2024-03-01',
         checoutdate: '2024-03-03',
         holidayHomeAddress: "89/A, Anuradhapura, Malwathuoya",
         noOfRooms: "3",
         noOfHalls: "0",
-        roomId: "R001,R002,R003",
-        hallId: "",
+        roomId: "{R001,R002,R003}",
+        hallId: "{}",
         reservedDate: "2024-01-12",
         id: 1
     },
@@ -40,9 +40,8 @@ const OngoingReservationList = () => {
             holidayHomeAddress: "89/A, Anuradhapura, Malwathuoya",
             noOfRooms: "3",
             noOfHalls: "0",
-            //const [roomId,setRoomId] = useState(["R001","R002","R003"]),
-            roomId: "R001,R002,R003",
-            hallId: "",
+            roomId: "{R001,R002,R003}",
+            hallId: "{}",
             reservedDate: "2024-01-12",
             id: 2
         },
@@ -59,8 +58,8 @@ const OngoingReservationList = () => {
             holidayHomeAddress: "89/A, Anuradhapura, Malwathuoya",
             noOfRooms: "3",
             noOfHalls: "0",
-            roomId: "R001,R002,R003",
-            hallId: "",
+            roomId: "{R001,R002,R003}",
+            hallId: "{}",
             reservedDate: "2024-01-12",
             id: 3
         },
@@ -77,8 +76,8 @@ const OngoingReservationList = () => {
             holidayHomeAddress: "89/A, Anuradhapura, Malwathuoya",
             noOfRooms: "3",
             noOfHalls: "0",
-            roomId: "R001,R002,R003",
-            hallId: "",
+            roomId: "{R001,R002,R003}",
+            hallId: "{}",
             reservedDate: "2024-01-12",
             id: 4
         },
@@ -95,8 +94,8 @@ const OngoingReservationList = () => {
             holidayHomeAddress: "89/A, Anuradhapura, Malwathuoya",
             noOfRooms: "3",
             noOfHalls: "0",
-            roomId: "R001,R002,R003",
-            hallId: "",
+            roomId: "{R001,R002,R003}",
+            hallId: "{}",
             reservedDate: "2024-01-12",
             id: 5
         },
@@ -113,8 +112,8 @@ const OngoingReservationList = () => {
             holidayHomeAddress: "89/A, Anuradhapura, Malwathuoya",
             noOfRooms: "3",
             noOfHalls: "0",
-            roomId: "R001,R002,R003",
-            hallId: "",
+            roomId: "{R001,R002,R003}",
+            hallId: "{}",
             reservedDate: "2024-01-12",
             id: 6
         },
@@ -125,14 +124,14 @@ const OngoingReservationList = () => {
             reciptTelephone: "0765678453",
             recervationNO: '4501',
             amount: '3500',
-            holidayhomename: 'Anuradhapura Lotus by nipun',
+            holidayhomename: 'kurunagala Lotus by nipun',
             checkindate: '2024-03-01',
             checoutdate: '2024-03-03',
             holidayHomeAddress: "89/A, Anuradhapura, Malwathuoya",
             noOfRooms: "3",
             noOfHalls: "0",
-            roomId: "R001,R002,R003",
-            hallId: "",
+            roomId: "{R001,R002,R003}",
+            hallId: "{}",
             reservedDate: "2024-01-12",
             id: 7
         },
@@ -143,14 +142,14 @@ const OngoingReservationList = () => {
             reciptTelephone: "0765678453",
             recervationNO: '4501',
             amount: '3500',
-            holidayhomename: 'Anuradhapura Lotus',
+            holidayhomename: 'Anuradhapura Lotus by nipun',
             checkindate: '2024-03-01',
             checoutdate: '2024-03-03',
             holidayHomeAddress: "89/A, Anuradhapura, Malwathuoya",
             noOfRooms: "3",
             noOfHalls: "0",
-            roomId: "R001,R002,R003",
-            hallId: "",
+            roomId: "{R001,R002,R003}",
+            hallId: "{}",
             reservedDate: "2024-01-12",
             id: 8
         },
@@ -161,14 +160,14 @@ const OngoingReservationList = () => {
             reciptTelephone: "0765678453",
             recervationNO: '4501',
             amount: '3500',
-            holidayhomename: 'Anuradhapura Lotus by nipun',
+            holidayhomename: 'kegalle Lotus by nipun',
             checkindate: '2024-03-01',
             checoutdate: '2024-03-03',
             holidayHomeAddress: "89/A, Anuradhapura, Malwathuoya",
             noOfRooms: "3",
             noOfHalls: "0",
-            roomId: "R001,R002,R003",
-            hallId: "",
+            roomId: "{R001,R002,R003}",
+            hallId: "{}",
             reservedDate: "2024-01-12",
             id: 9
         },
@@ -185,8 +184,8 @@ const OngoingReservationList = () => {
             holidayHomeAddress: "89/A, Anuradhapura, Malwathuoya",
             noOfRooms: "3",
             noOfHalls: "0",
-            roomId: "R001,R002,R003",
-            hallId: "",
+            roomId: "{R001,R002,R003}",
+            hallId: "{}",
             reservedDate: "2024-01-12",
             id: 10
         }
@@ -194,11 +193,18 @@ const OngoingReservationList = () => {
 
   return (
     <Box className="home">
-      {reservations.map(reservation => (
-         (<OngoingReservationCard  reservation={reservation}/>)    
+      {reservations.filter((reservations) => {
+                    return props.search.toLowerCase() === ""
+                      ? reservations
+                      : reservations.holidayhomename.toLowerCase().startsWith(
+                            props.search.toLocaleLowerCase()
+                        );
+                  })
+                  .map(reservation => (
+         (<SpecialReservationCard  reservation={reservation}/>)    
       ))}
     </Box>
   );
 }
  
-export default OngoingReservationList;
+export default SpecialReservationList;
