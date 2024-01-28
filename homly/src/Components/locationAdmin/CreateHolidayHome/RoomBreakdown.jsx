@@ -14,7 +14,7 @@ const RoomBreakdown = ({ roomCode, roomAc, roomType, noOfBeds, noOfAdults, noOfC
         <Paper elevation={8} sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', padding: "10px", marginBottom: "10px" }}>
             <Box sx={{ display: 'flex', gap: '1em' }}>
                 <Box className="card_item">
-                    <Typography variant='p' className='card_item_title'>Room Code</Typography>
+                    <Typography variant='p' className='card_item_title'>Room No</Typography>
                     <Typography variant='p' className='card_item_value'>{roomCode}</Typography>
                 </Box>
                 <Box className="card_item">
@@ -35,7 +35,7 @@ const RoomBreakdown = ({ roomCode, roomAc, roomType, noOfBeds, noOfAdults, noOfC
                 </Box>
                 <Box className="card_item">
                     <Typography variant='p' className='card_item_title'>Rental</Typography>
-                    <Typography variant='p' className='card_item_value'>{groupByUnit ? "true" : "false"}</Typography>
+                    <Typography variant='p' className='card_item_value'>{roomRental}</Typography>
                 </Box>
 
 

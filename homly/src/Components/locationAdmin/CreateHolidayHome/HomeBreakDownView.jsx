@@ -138,6 +138,7 @@ const HomeBreakDownView = () => {
       return;
     }
     setRoomArray([...roomArray, values]);
+    setValues({ roomCode: '', roomAc: '', RoomType: '', NoOfBeds: '', NoOfAdults: '', NoOfChildren: '', roomRemarks: '', roomRental: '', groupByUnit: false })
     setOpen(false);
   };
 
@@ -322,6 +323,7 @@ const HomeBreakDownView = () => {
       selectedRooms: [],
     };
     setUnitArray([...unitArray, newUnit]);
+    setUnitValues({ unitCode: '', unitAc: '', floorLevel: '', unitRemark: '', unitRental: '', roomAttached: false, })
     setOpenUnit(false);
   };
 
@@ -440,6 +442,7 @@ const HomeBreakDownView = () => {
       return;
     }
     setHallArray([...hallArray, hallValues]);
+    setHallValues({ hallCode: '', hallAc: '', floorLevel: '', hallRemark: '', hallRental: '', hallNoOfAdults: '', hallNoOfChildren: '', })
     setOpenHall(false);
   };
 
@@ -650,9 +653,9 @@ const HomeBreakDownView = () => {
             <DialogContent sx={{ maxHeight: "350px" }}>
               <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
-                  <Typography variant='p' sx={{ color: 'black' }}>Name</Typography>
+                  <Typography variant='p' sx={{ color: 'black' }}>Room No</Typography>
                 </Box>
-                <TextField error={error.ctName} required id="outlined-required" label="Enter Name" placeholder='Enter Name' fullWidth size='small' onChange={handleRoomCodeChange} helperText={error.ctName ? "Invalid Input" : ''} />
+                <TextField error={error.ctName} required id="outlined-required" label="Enter Room No" placeholder='Enter No' fullWidth size='small' onChange={handleRoomCodeChange} helperText={error.ctName ? "Invalid Input" : ''} />
               </Box>
               <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
@@ -829,9 +832,9 @@ const HomeBreakDownView = () => {
             <DialogContent sx={{ maxHeight: "350px" }}>
               <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
-                  <Typography variant='p' sx={{ color: 'black' }}>Unit Code</Typography>
+                  <Typography variant='p' sx={{ color: 'black' }}>Unit No</Typography>
                 </Box>
-                <TextField required id="outlined-required" placeholder='Enter Unit Code' fullWidth size='small' onChange={handleUnitCodeChange} />
+                <TextField required id="outlined-required" placeholder='Enter Unit No' fullWidth size='small' onChange={handleUnitCodeChange} />
               </Box>
               <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
@@ -885,7 +888,7 @@ const HomeBreakDownView = () => {
                 <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                   <Box sx={{ width: "100%", display: 'flex', justifyContent: 'space-around', marginTop: '20px' }} >
                     <FormControl sx={{}}>
-                      <InputLabel id="demo-simple-select-label">District</InputLabel>
+                      <InputLabel id="demo-simple-select-label">Month</InputLabel>
                       <Select
                         required
 
@@ -1040,7 +1043,7 @@ const HomeBreakDownView = () => {
                 <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                   <Box sx={{ width: "100%", display: 'flex', justifyContent: 'space-around', marginTop: '20px' }} >
                     <FormControl sx={{}}>
-                      <InputLabel id="demo-simple-select-label">District</InputLabel>
+                      <InputLabel id="demo-simple-select-label">Month</InputLabel>
                       <Select
                         required
 
