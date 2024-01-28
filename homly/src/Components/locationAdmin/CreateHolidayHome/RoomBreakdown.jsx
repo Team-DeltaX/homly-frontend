@@ -5,9 +5,10 @@ import CancelIcon from '@mui/icons-material/Cancel';
 
 
 
-const RoomBreakdown = ({ roomCode, roomAC, roomType, noOfBeds, noOfAdults, noOfChildren, roomRemarks, roomRental, groupByUnit, handleRoomDelete }) => {
+const RoomBreakdown = ({ roomCode, roomAc, roomType, noOfBeds, noOfAdults, noOfChildren, roomRemarks, roomRental, groupByUnit, handleRoomDelete }) => {
 
     const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
+
 
     return (
         <Paper elevation={8} sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', padding: "10px", marginBottom: "10px" }}>
@@ -18,7 +19,7 @@ const RoomBreakdown = ({ roomCode, roomAC, roomType, noOfBeds, noOfAdults, noOfC
                 </Box>
                 <Box className="card_item">
                     <Typography variant='p' className='card_item_title'>AC/Non AC</Typography>
-                    <Typography variant='p' className='card_item_value'>{roomAC}</Typography>
+                    <Typography variant='p' className='card_item_value'>{roomAc}</Typography>
                 </Box>
                 <Box className="card_item">
                     <Typography variant='p' className='card_item_title'>Room Type</Typography>
@@ -49,7 +50,7 @@ const RoomBreakdown = ({ roomCode, roomAC, roomType, noOfBeds, noOfAdults, noOfC
 
                 </Box>
                 <Box>
-                    <CancelIcon sx={{ cursor: "pointer" }} onClick={() => handleRoomDelete(roomCode)} />
+                    <CancelIcon sx={{ cursor: "pointer" }} onClick={() => handleRoomDelete(roomCode, groupByUnit)} />
                 </Box>
 
             </Box>

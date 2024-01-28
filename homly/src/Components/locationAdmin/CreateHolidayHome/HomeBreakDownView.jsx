@@ -17,7 +17,9 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
-
+// import { SnackbarProvider, useSnackbar } from 'notistack';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 
 import RoomBreakdown from './RoomBreakdown';
@@ -63,6 +65,19 @@ function a11yProps(index) {
 }
 const HomeBreakDownView = () => {
 
+  //remove room alert
+  const [openAlert, setOpenAlert] = useState(false);
+
+  const handleCloseAlert = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenAlert(false);
+  };
+
+
+
 
   const [values, setValues] = useState({
     roomCode: '', roomAc: '', RoomType: '', NoOfBeds: '', NoOfAdults: '', NoOfChildren: '', roomRemarks: '', roomRental: '', groupByUnit: false
@@ -71,15 +86,23 @@ const HomeBreakDownView = () => {
 
   const [roomArray, setRoomArray] = useState([]);
 
+  console.log(roomArray);
+
   const handleSaveRoom = () => {
     if (values.roomCode === '' || values.roomAc === '' || values.RoomType === '' || values.NoOfBeds === '' || values.NoOfAdults === '' || values.NoOfChildren === '' || values.roomRemarks === '' || values.roomRental === '') return;
     setRoomArray([...roomArray, values]);
     setOpen(false);
   };
 
-  const handleRoomDelete = (roomCode) => { //for room breakdown component
-    const newRoomArray = roomArray.filter((item) => item.roomCode !== roomCode);
-    setRoomArray(newRoomArray);
+  const handleRoomDelete = (roomCode, groupByUnit) => { //for room breakdown component
+    if (groupByUnit) {
+      setOpenAlert(true);
+    }
+    else {
+      const newRoomArray = roomArray.filter((item) => item.roomCode !== roomCode);
+      setRoomArray(newRoomArray);
+
+    }
   }
 
 
@@ -91,7 +114,7 @@ const HomeBreakDownView = () => {
     setValues({ ...values, roomCode: e.target.value });
 
   }
-  const handleAcChange = (e) => {
+  const handleRoomAcChange = (e) => {
     setValues({ ...values, roomAc: e.target.value });
   }
 
@@ -147,11 +170,6 @@ const HomeBreakDownView = () => {
 
 
 
-  const [value, setValue] = useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
 
   const [open, setOpen] = useState(false);
   const [openUnit, setOpenUnit] = useState(false);
@@ -214,28 +232,19 @@ const HomeBreakDownView = () => {
 
   const [unitArray, setUnitArray] = useState([]);
 
+  console.log(unitArray);
+
   const handleSaveUnit = () => {
     if (unitValues.unitCode === '' || unitValues.unitAc === '' || unitValues.floorLevel === '' || unitValues.unitRemark === '' || unitValues.unitRental === '') return;
-    setUnitArray([...unitArray, unitValues]);
+    const newUnit = {
+      ...unitValues,
+      selectedRooms: [],
+    };
+    setUnitArray([...unitArray, newUnit]);
     setOpenUnit(false);
   };
 
-  // const handleUnitDelete = (unitCode, selectedRooms) => { //for unit breakdown component
-  //   selectedRooms.map((item) => {
-  //     roomArray.map((room) => {
-  //       if (room.roomCode === item.roomCode) {
-  //         room.groupByUnit = false;
-  //       }
-  //     })
 
-  //   })
-
-  //   selectedRooms.length = 0;
-
-  //   const newUnitArray = unitArray.filter((item) => item.unitCode !== unitCode);
-  //   setUnitArray(newUnitArray);
-
-  // }
   const handleUnitDelete = (unitCode, selectedRooms) => {
     setRoomArray((prevRoomArray) => {
       const updatedRoomArray = prevRoomArray.map((room) => {
@@ -244,7 +253,7 @@ const HomeBreakDownView = () => {
         }
         return room;
       });
-  
+
       return updatedRoomArray;
     });
 
@@ -256,7 +265,7 @@ const HomeBreakDownView = () => {
     });
     return null;
   };
-  
+
 
 
   const [unitRental, setUnitRental] = useState({
@@ -357,6 +366,30 @@ const HomeBreakDownView = () => {
   };
 
 
+  //dropdowns 
+
+  //AC room
+  const [value, setValue] = useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  //Ac unit
+  const [unitAcValue, setUnitAcValue] = useState(0);
+
+  const handleUnitAcValue = (event, newValue) => {
+    setUnitAcValue(newValue);
+  }
+
+
+
+
+
+
+
+
+
 
 
 
@@ -441,6 +474,7 @@ const HomeBreakDownView = () => {
                       </Box>
                       :
                       roomArray.map((item, index) => {
+                      
                         return (
                           <RoomBreakdown key={index} roomCode={item.roomCode} roomAc={item.roomAc} roomType={item.RoomType} noOfBeds={item.NoOfBeds} noOfAdults={item.NoOfAdults} noOfChildren={item.NoOfChildren} roomRemarks={item.roomRemarks} roomRental={item.roomRental} groupByUnit={item.groupByUnit} handleRoomDelete={handleRoomDelete} />
                         )
@@ -536,7 +570,7 @@ const HomeBreakDownView = () => {
                     id="demo-simple-select"
                     value={value.catogery}
                     label="Age"
-                    onChange={handleAcChange}
+                    onChange={handleRoomAcChange}
                   >
                     <MenuItem value={"AC"}>AC</MenuItem>
                     <MenuItem value={"Non-Ac"}>Non-AC</MenuItem>
@@ -977,6 +1011,21 @@ const HomeBreakDownView = () => {
           </form>
         </Dialog>
       </React.Fragment>
+
+      {/* alert remove room */}
+      <div>
+
+        <Snackbar open={openAlert} autoHideDuration={4000} onClose={handleCloseAlert}>
+          <Alert
+            onClose={handleCloseAlert}
+            severity="error"
+            variant="filled"
+            sx={{ width: '100%' }}
+          >
+            Can't Remove | This room is grouped by a Unit
+          </Alert>
+        </Snackbar>
+      </div>
 
     </Box>
   )
