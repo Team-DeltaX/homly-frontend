@@ -321,25 +321,25 @@
 
 /* holiday homes card container scroll bar */
 
-.holidayhomes_card_container::-webkit-scrollbar {
+.homes_container::-webkit-scrollbar {
   width: 5px;
   margin-left: 5px;
 }
 
 /* Track */
-.holidayhomes_card_container::-webkit-scrollbar-track {
+.homes_container::-webkit-scrollbar-track {
   background: #f1f1f1;
 }
 
 /* Handle */
-.holidayhomes_card_container::-webkit-scrollbar-thumb {
+.homes_container::-webkit-scrollbar-thumb {
   background: #888;
   border-radius: 5px;
 
 }
 
 /* Handle on hover */
-.holidayhomes_card_container::-webkit-scrollbar-thumb:hover {
+.homes_container::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
 
@@ -424,6 +424,7 @@
 /* helper text */
 .input_field p {
   color: red !important;
+
 }
 
 

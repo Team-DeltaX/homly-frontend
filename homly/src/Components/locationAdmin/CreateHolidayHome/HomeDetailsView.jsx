@@ -9,7 +9,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
 
-const HomeDetailsView = () => {
+const HomeDetailsView = ({ setSubmit }) => {
 
   const [value, setValue] = useState({
     name: '', address: '', district: '', description: '', contactNo1: '', contactNo2: '', category: '', status: ''
@@ -19,12 +19,36 @@ const HomeDetailsView = () => {
     name: false, address: false, description: false, contactNo1: false, contactNo2: false
   });
 
+  // const areAllErrorsFalse = () => {
+  //   return Object.values(error).every(value => value === false);
+  // };
+
+  // if (value.name === '' || value.address === '' || value.district === '' || value.description === '' || value.contactNo1 === '' || value.contactNo2 === '' || value.catogery === '' || value.status === '') {
+  //   console.log("first");
+
+  // }else{
+
+  // }
+  // if (areAllErrorsFalse()) {
+  //     // setSubmit(prevState => ({ ...prevState, holidayhomeDetails: false }));
+  //   }
+  //   else {
+  //     // setSubmit(prevState => ({ ...prevState, holidayhomeDetails: true }));
+
+  //   }
+
+  // } else {
+  //   // There is at least one error, handle accordingly
+  //   console.log('There are errors.');
+  // }
+
+
+
+
 
   const handleNameChange = (e) => {
     setValue({ ...value, name: e.target.value });
-    const name_regex = /^[a-zA-Z]+$/;
-
-
+    const name_regex = /^[a-zA-Z\s]+$/;
     if (e.target.value.length > 0) {
       if (!name_regex.test(e.target.value)) {
         setError({ ...error, name: true });

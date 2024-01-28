@@ -66,7 +66,6 @@ function a11yProps(index) {
 }
 const HomeBreakDownView = () => {
 
-  const [submit, setSubmit] = useState([]);
 
   //remove room alert
   const [openAlert, setOpenAlert] = useState(false);
@@ -91,6 +90,17 @@ const HomeBreakDownView = () => {
     setOpenRoomFillAlert(false);
   };
 
+  //room - same room no exist warning
+
+  const [openRoomExistAlert, setOpenRoomExistAlert] = useState(false);
+
+  const handleCloseRoomExistAlert = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenRoomExistAlert(false);
+  };
 
   //unit - all fields should filled warning
   const [openUnitFillAlert, setOpenUnitFillAlert] = useState(false);
@@ -130,11 +140,14 @@ const HomeBreakDownView = () => {
 
   const [roomArray, setRoomArray] = useState([]);
 
-  console.log(roomArray);
 
   const handleSaveRoom = () => {
     if (values.roomCode === '' || values.roomAc === '' || values.RoomType === '' || values.NoOfBeds === '' || values.NoOfAdults === '' || values.NoOfChildren === '' || values.roomRemarks === '' || values.roomRental === '') {
       setOpenRoomFillAlert(true);
+      return;
+    }
+    if (roomExist) {
+      setOpenRoomExistAlert(true);
       return;
     }
     setRoomArray([...roomArray, values]);
@@ -158,7 +171,15 @@ const HomeBreakDownView = () => {
     ctName: false, ctAddress: false, ctDescription: false, ctContactNo: false
   });
 
+  const [roomExist, setRoomExist] = useState(false);
   const handleRoomCodeChange = (e) => {
+    const roomCodeExists = roomArray.some(room => room.roomCode === e.target.value);
+    if (roomCodeExists) {
+      setRoomExist(true);
+    }
+    else {
+      setRoomExist(false);
+    }
     setValues({ ...values, roomCode: e.target.value });
 
   }
@@ -572,7 +593,7 @@ const HomeBreakDownView = () => {
                       ?
                       <Box sx={{ display: 'flex', padding: "2em", justifyContent: 'center' }}>
 
-                        <Typography variant='p' sx={{ color: 'grey' }}>No Rooms Added Yet <br></br>Add Rooms to Submit form</Typography>
+                        <Typography variant='p' sx={{ color: 'grey', textAlign: 'center' }}>No Rooms Added Yet <br></br>Add Rooms to Submit form</Typography>
                       </Box>
                       :
                       roomArray.map((item, index) => {
@@ -651,11 +672,11 @@ const HomeBreakDownView = () => {
           <DialogTitle>Add New Room</DialogTitle>
           <form>
             <DialogContent sx={{ maxHeight: "350px" }}>
-              <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
+              <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '20px' }}>
                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                   <Typography variant='p' sx={{ color: 'black' }}>Room No</Typography>
                 </Box>
-                <TextField error={error.ctName} required id="outlined-required" label="Enter Room No" placeholder='Enter No' fullWidth size='small' onChange={handleRoomCodeChange} helperText={error.ctName ? "Invalid Input" : ''} />
+                <TextField className='input_field' required id="outlined-required" label="Enter Room No" placeholder='Enter No' fullWidth size='small' onChange={handleRoomCodeChange} helperText={roomExist ? "Already exist" : ''} />
               </Box>
               <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
@@ -1178,6 +1199,20 @@ const HomeBreakDownView = () => {
         </Snackbar>
       </div>
 
+      {/* alert same room exist add room popup*/}
+      <div>
+
+        <Snackbar open={openRoomExistAlert} autoHideDuration={4000} onClose={handleCloseRoomExistAlert}>
+          <Alert
+            onClose={handleCloseRoomExistAlert}
+            severity="error"
+            variant="filled"
+            sx={{ width: '100%' }}
+          >
+            Can't Save | Room No already exist
+          </Alert>
+        </Snackbar>
+      </div>
     </Box>
   )
 }
