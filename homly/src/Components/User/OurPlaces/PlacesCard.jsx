@@ -13,6 +13,7 @@ export default function PlacesCard(props) {
           borderRadius: "10px",
           position: "relative",
           overflow: "hidden",
+          boxShadow:10,
         }}
       >
         <Box

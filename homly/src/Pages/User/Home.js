@@ -24,6 +24,7 @@ import "./UserStyle.css";
 import Topbg from "../../Assets/images/LandingPageTop.png";
 import DistrictSelectCom from "../../Components/User/DistrictSelectCom";
 import OurPlaces from "../../Components/User/OurPlaces/OurPlaces";
+import BrowseMoreCom from "../../Components/User/BrowseMore/BrowseMoreCom";
 
 const reservedDates = [
   "2024/01/27",
@@ -340,13 +341,14 @@ export default function Home() {
               <Box>
                 <Typography variant="h4" color="initial">
                   our places - 5 districts
-                  <OurPlaces/>
                 </Typography>
+                  <OurPlaces/>
               </Box>
               <Box>
                 <Typography variant="h4" color="initial">
                   Browse for More holiday Homes
                 </Typography>
+                      <BrowseMoreCom/>
               </Box>
               <Box>
                 <Typography variant="h4" color="initial">
