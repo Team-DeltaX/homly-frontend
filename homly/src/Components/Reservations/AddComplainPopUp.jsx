@@ -13,6 +13,7 @@ import { Input } from '@mui/base/Input';
 import TextArea from '../Common/TextArea';
 
 
+
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
     padding: theme.spacing(2),
@@ -78,7 +79,7 @@ export default function AddComplainPopUp({reservation}) {
             label="Service No"
             type="text"
             fullWidth
-            variant="standard"
+            variant="outlined"
           />
           <TextField
             autoFocus
@@ -91,7 +92,7 @@ export default function AddComplainPopUp({reservation}) {
             label="Reservation No"
             type="text"
             fullWidth
-            variant="standard"
+            variant="outlined"
           />
           <TextField
             autoFocus
@@ -102,7 +103,7 @@ export default function AddComplainPopUp({reservation}) {
             label=""
             type="date"
             fullWidth
-            variant="standard"
+            variant="outlined"
           />
           <TextArea 
             inputProps = {"Reason"}
