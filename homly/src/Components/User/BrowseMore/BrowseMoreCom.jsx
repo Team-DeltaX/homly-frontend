@@ -22,11 +22,13 @@ export default function BrowseMoreCom() {
         }}
       >
         <Stack direction="column" sx={{ width: "40%",paddingLeft:'5%',height:'100%',justifyContent:'center', }}>
-          <Stack direction="column" >
-            <Typography sx={{fontWeight:'bold',fontSize:'1.7rem'}}>Browse For</Typography>
-            <Typography sx={{fontWeight:'bold',fontSize:'1.7rem'}}>More Holiday Homes</Typography>
+          <Stack direction="column" sx={{position:{xs:'absolute',sm:'realative',zIndex:1}}}>
+              <Stack direction="column">
+                <Typography sx={{fontWeight:'bold',fontSize:'1.7rem'}}>Browse For</Typography>
+                <Typography sx={{fontWeight:'bold',fontSize:'1.7rem'}}>More Holiday Homes</Typography>
+              </Stack>
+              <Button variant="outlined" component={Link} to="/HolidayHomes" sx={{width:'80%'}}>Find a Holiday Home</Button>
           </Stack>
-          <Button variant="outlined" component={Link} to="/HolidayHomes" sx={{width:'80%'}}>Find a Holiday Home</Button>
         </Stack>
         <Box sx={{ position: "relative", width: "60%" }}>
           <Box
@@ -38,7 +40,7 @@ export default function BrowseMoreCom() {
           <Box
             sx={{
               background:
-                "linear-gradient(274deg, rgba(255,255,255,0) 40%, rgba(255,255,255,1) 90%)",
+                {xs:'linear-gradient(295deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 62%)',sm:"linear-gradient(274deg, rgba(255,255,255,0) 40%, rgba(255,255,255,1) 90%)"},
               height: "100%",
               width: "100%",
               position: "absolute",

@@ -69,26 +69,29 @@ export default function DatePickerCom(props) {
   }, [calanderRef, isDisplay,dateSelectionRange]);
 
   const handleSelect = (range) => {
-    // console.log(range.selection);
-    // props.setSelectRange({
-    //   ...props.selectionRange,
-    //   startDate: range.selection.startDate,
-    //   endDate: range.selection.endDate,
-    // });
-    let diff = differenceInDays(
-      range.selection.endDate,
-      range.selection.startDate
-    );
-    if (diff < 4) {
-      setDateSelectRange({
-        ...dateSelectionRange,
-        startDate: range.selection.startDate,
-        endDate: range.selection.endDate,
-      });
-      setDateRangeError(false);
-    } else {
-      setDateRangeError(true);
-    }
+    console.log(range.selection);
+    setDateSelectRange({
+      ...dateSelectionRange,
+      startDate: range.selection.startDate,
+      endDate: range.selection.endDate,
+    });
+
+
+    // booking date range limit validation
+    // let diff = differenceInDays(
+    //   range.selection.endDate,
+    //   range.selection.startDate
+    // );
+    // if (diff < 4) {
+    //   setDateSelectRange({
+    //     ...dateSelectionRange,
+    //     startDate: range.selection.startDate,
+    //     endDate: range.selection.endDate,
+    //   });
+    //   setDateRangeError(false);
+    // } else {
+    //   setDateRangeError(true);
+    // }
   };
 
   const convertDate = (date) => {
@@ -184,8 +187,11 @@ export default function DatePickerCom(props) {
                 justifyContent: "space-between",
               }}
             >
-              <Box sx={{ width: "100%" }}>
-                <Typography
+                {/* date select range validation error */}
+              {/*<Box sx={{ width: "100%" }}>
+
+
+                 <Typography
                   sx={{
                     fontSize: "1rem",
                     fontWeight: "bold",
@@ -194,8 +200,8 @@ export default function DatePickerCom(props) {
                   }}
                 >
                   Maximum 4 days can be booked
-                </Typography>
-              </Box>
+                </Typography> 
+              </Box> */}
               <Stack direction="row">
                 {/* <Button
               

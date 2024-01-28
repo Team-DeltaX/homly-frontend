@@ -39,7 +39,7 @@ export default function PlacesCard(props) {
                 "linear-gradient(355deg, rgba(0,0,0,0.36074940229998254) 52%, rgba(0,0,0,1) 92%)",
             }}
           >
-            <Typography>{props.name}</Typography>
+            <Typography sx={{fontSize:'1.5rem',fontWeight:'medium'}}>{props.name}</Typography>
           </Box>
         </Box>
       </Box>
