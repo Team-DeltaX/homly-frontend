@@ -26,13 +26,13 @@ export default function Footer() {
       <Box
         sx={{
           width: "100%",
-          bgcolor: "azure",
+          bgcolor: "white",
         }}
       >
         <Box
           sx={{
-            width: "100%",
-            height: { xs: "20vh", sm: "30vh", lg: "32vh" },
+            width: "110%",
+            height: { xs: "20vh", sm: "30vh", lg: "45vh" },
             position: "relative",
           }}
         >
@@ -40,7 +40,7 @@ export default function Footer() {
             component="img"
             src={footerWave}
             alt="footer wave"
-            sx={{ width: "100%", bottom: "0", position: "absolute" }}
+            sx={{ width: "100%", bottom: "0",left:'-10px', position: "absolute" }}
           />
         </Box>
         <Box sx={{ width: "100%", bgcolor: "#313131" }}>

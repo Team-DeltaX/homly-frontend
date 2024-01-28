@@ -8,6 +8,7 @@ import {
   Grid,
   MenuItem,
   FormControl,
+  Divider,
 } from "@mui/material";
 import axios from "axios";
 // import Select from "react-select";
@@ -119,11 +120,10 @@ export default function Home() {
       >
         <Container maxWidth="xl" style={{ padding: 0 }}>
           <NavBar />
-          <Container maxWidth="lg" sx={{ bgcolor: "chartreuse" }}>
+          <Container maxWidth="lg" sx={{ bgcolor: "white" }}>
             <Container
               sx={{
-                bgcolor: "azure",
-                // height: "100vh",
+                bgcolor: "white",
                 width: { xs: "100%", sm: "95%", padding: 0 },
               }}
             >
@@ -316,10 +316,26 @@ export default function Home() {
 
               {/* top rated holiday homes */}
               <Box>
-                <Stack>
-                  <Typography variant="h4" color="initial">
-                    Top Rated Holiday Homes
-                  </Typography>
+                <Stack sx={{ margin: "3% 0" }}>
+                  <Stack direction="column" sx={{ margin: "3% 0" }}>
+                    <Typography
+                      sx={{
+                        fontSize: { xs: "1.2rem", sm: "1.8rem" },
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Top Rated Holiday Homes
+                    </Typography>
+
+                    <Divider
+                      sx={{
+                        width: "80%",
+                        borderBottomWidth: "2px",
+                        bgcolor: "#2c2c2c6e",
+                        ml: "10px",
+                      }}
+                    />
+                  </Stack>
                   <Box>
                     <Stack direction="row" spacing={2}>
                       {sortedByRating
@@ -340,38 +356,49 @@ export default function Home() {
                 </Stack>
               </Box>
 
-              <Box>
-                <Typography variant="h4" color="initial">
-                  our places - 5 districts
-                </Typography>
+              <Stack sx={{ margin: "3% 0" }}>
+                <Stack direction="column" sx={{ margin: "3% 0" }}>
+                  <Typography
+                    sx={{
+                      fontSize: { xs: "1.2rem", sm: "1.8rem" },
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Our Places
+                  </Typography>
+                  <Divider
+                    sx={{
+                      width: "80%",
+                      borderBottomWidth: "2px",
+                      bgcolor: "#2c2c2c6e",
+                      ml: "10px",
+                    }}
+                  />
+                </Stack>
                 <OurPlaces />
-              </Box>
-              <Box>
-                <Typography variant="h4" color="initial">
-                  Browse for More holiday Homes
-                </Typography>
+              </Stack>
+              <Stack sx={{ margin: "5% 0 0 0" }}>
                 <BrowseMoreCom />
-              </Box>
+              </Stack>
             </Container>
             <Container
               sx={{
-                bgcolor: "red",
+               
                 // height: "100vh",
                 width: { xs: "100%", sm: "95%" },
                 padding: 0,
-                paddingLeft:0,
-                "& .css-185m5ur-MuiContainer-root":{
-                  padding:0,
-                  paddingLeft:0
-                }
+                paddingLeft: 0,
+                "& .css-185m5ur-MuiContainer-root": {
+                  padding: 0,
+                  paddingLeft: 0,
+                },
               }}
             >
-              <Box>
-                
-                <Footer />
-              </Box>
             </Container>
           </Container>
+              <Box>
+                <Footer />
+              </Box>
         </Container>
       </Box>
     </ThemeProvider>
