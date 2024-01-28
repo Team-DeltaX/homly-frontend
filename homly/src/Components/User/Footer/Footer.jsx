@@ -52,11 +52,11 @@ export default function Footer() {
                   sx={{
                     width: "100%",
                     height: "100%",
-                    padding: "0 10%",
+                    padding: {xs:'5% 10%',sm:"0 10%"},
                   }}
                 >
                   <Typography
-                    sx={{ color: "white", fontSize: "3vw", fontWeight: "bold" }}
+                    sx={{ color: "white", fontSize:{xs:'1rem',sm:"2rem"}, fontWeight: "bold" }}
                   >
                     Contact Us
                   </Typography>
@@ -67,13 +67,13 @@ export default function Footer() {
                       borderColor: "white",
                     }}
                   />
-                  <Stack
-                    direction="row"
+                <Stack
+                    direction={{ xs: "column", sm: "row" }}
                     sx={{ marginTop: "2%", width: "100%" }}
-                  >
+                >
                     <Stack
                       direction="row"
-                      sx={{ justifyContent: "center", alignItems: "center" }}
+                      sx={{ justifyContent: {xs:'none',sm:"center"}, alignItems: "center" }}
                     >
                       {/* location icon */}
                       <LocationOnIcon
@@ -134,10 +134,14 @@ export default function Footer() {
                   </Stack>
                 </Stack>
               </Grid>
-              <Grid item xs={12} sm={5} lg={4} sx={{ padding: "0 5%" }}>
-                <Stack direction="column">
+              <Grid item xs={12} sm={5} lg={4} >
+                <Stack direction="column" sx={{
+                    width: "100%",
+                    height: "100%",
+                    padding: {xs:"5% 10%",sm:"0 5%"},
+                  }}>
                   <Typography
-                    sx={{ color: "white", fontSize: "3vw", fontWeight: "bold" }}
+                    sx={{ color: "white", fontSize:{xs:'1rem',sm:"2rem"}, fontWeight: "bold" }}
                   >
                     Usefull Link
                   </Typography>
@@ -214,7 +218,7 @@ export default function Footer() {
                 direction="row"
                 sx={{ alignItems: "center", padding: "0.5% 0 1% 0" }}
               >
-                <Typography sx={{ color: "white" }}>
+                <Typography sx={{ color: "white",fontSize:{xs:'0.7rem',sm:'1rem'} }}>
                   Copyright © 2023-{new Date().getFullYear()} Homly. All Rights
                   Reserved.
                 </Typography>
