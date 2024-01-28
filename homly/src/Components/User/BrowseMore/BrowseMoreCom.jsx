@@ -1,6 +1,6 @@
-import { ThemeProvider } from "@emotion/react";
-import { Button, Stack, Typography, Box } from "@mui/material";
 import React from "react";
+import { ThemeProvider,Button, Stack, Typography, Box } from "@mui/material";
+import { Link } from "react-router-dom";
 
 import theme from "../../../HomlyTheme";
 
@@ -26,7 +26,7 @@ export default function BrowseMoreCom() {
             <Typography sx={{fontWeight:'bold',fontSize:'1.7rem'}}>Browse For</Typography>
             <Typography sx={{fontWeight:'bold',fontSize:'1.7rem'}}>More Holiday Homes</Typography>
           </Stack>
-          <Button variant="outlined" sx={{width:'80%'}}>Find a Holiday Home</Button>
+          <Button variant="outlined" component={Link} to="/HolidayHomes" sx={{width:'80%'}}>Find a Holiday Home</Button>
         </Stack>
         <Box sx={{ position: "relative", width: "60%" }}>
           <Box
