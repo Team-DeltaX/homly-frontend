@@ -6,6 +6,7 @@ import Tab from '@mui/material/Tab';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 
 import Dialog from '@mui/material/Dialog';
@@ -17,7 +18,9 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
-
+// import { SnackbarProvider, useSnackbar } from 'notistack';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 
 import RoomBreakdown from './RoomBreakdown';
@@ -63,6 +66,62 @@ function a11yProps(index) {
 }
 const HomeBreakDownView = () => {
 
+  const [submit, setSubmit] = useState([]);
+
+  //remove room alert
+  const [openAlert, setOpenAlert] = useState(false);
+
+  const handleCloseAlert = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenAlert(false);
+  };
+
+
+  //room - all fields should filled warning
+  const [openRoomFillAlert, setOpenRoomFillAlert] = useState(false);
+
+  const handleCloseRoomFillAlert = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenRoomFillAlert(false);
+  };
+
+
+  //unit - all fields should filled warning
+  const [openUnitFillAlert, setOpenUnitFillAlert] = useState(false);
+
+  const handleCloseUnitFillAlert = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenUnitFillAlert(false);
+  };
+
+
+
+
+
+  //hall -all fields should filled warning
+  const [openHallFillAlert, setOpenHallFillAlert] = useState(false);
+
+  const handleCloseHallFillAlert = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenHallFillAlert(false);
+  };
+
+
+
+
+
 
   const [values, setValues] = useState({
     roomCode: '', roomAc: '', RoomType: '', NoOfBeds: '', NoOfAdults: '', NoOfChildren: '', roomRemarks: '', roomRental: '', groupByUnit: false
@@ -71,15 +130,26 @@ const HomeBreakDownView = () => {
 
   const [roomArray, setRoomArray] = useState([]);
 
+  console.log(roomArray);
+
   const handleSaveRoom = () => {
-    if (values.roomCode === '' || values.roomAc === '' || values.RoomType === '' || values.NoOfBeds === '' || values.NoOfAdults === '' || values.NoOfChildren === '' || values.roomRemarks === '' || values.roomRental === '') return;
+    if (values.roomCode === '' || values.roomAc === '' || values.RoomType === '' || values.NoOfBeds === '' || values.NoOfAdults === '' || values.NoOfChildren === '' || values.roomRemarks === '' || values.roomRental === '') {
+      setOpenRoomFillAlert(true);
+      return;
+    }
     setRoomArray([...roomArray, values]);
     setOpen(false);
   };
 
-  const handleRoomDelete = (roomCode) => { //for room breakdown component
-    const newRoomArray = roomArray.filter((item) => item.roomCode !== roomCode);
-    setRoomArray(newRoomArray);
+  const handleRoomDelete = (roomCode, groupByUnit) => { //for room breakdown component
+    if (groupByUnit) {
+      setOpenAlert(true);
+    }
+    else {
+      const newRoomArray = roomArray.filter((item) => item.roomCode !== roomCode);
+      setRoomArray(newRoomArray);
+
+    }
   }
 
 
@@ -91,7 +161,7 @@ const HomeBreakDownView = () => {
     setValues({ ...values, roomCode: e.target.value });
 
   }
-  const handleAcChange = (e) => {
+  const handleRoomAcChange = (e) => {
     setValues({ ...values, roomAc: e.target.value });
   }
 
@@ -130,11 +200,17 @@ const HomeBreakDownView = () => {
 
   const handleWeekdays = (e) => {
     setRental({ ...rental, weekDays: e.target.value });
+    setNewRoomWeekDayValue(e.target.value);
   }
 
   const handleWeekends = (e) => {
     setRental({ ...rental, weekEnds: e.target.value });
+    setNewRoomWeekendValue(e.target.value);
   }
+
+  const [newRoomWeekDayValue, setNewRoomWeekDayValue] = useState('')
+  const [newRoomWeekendValue, setNewRoomWeekendValue] = useState('')
+
 
 
 
@@ -142,16 +218,25 @@ const HomeBreakDownView = () => {
   const handleAdd = () => {
     if (rental.district === '' || rental.weekDays === '' || rental.weekEnds === '') return;
     setRentalArray([...rentalArray, rental]);
+    setRental({
+      district: '',
+      weekDays: '',
+      weekEnds: '',
+    });
+
+    setNewRoomWeekDayValue('');
+    setNewRoomWeekendValue('');
 
   };
 
 
+  const handleRemoveRentalItem = (no) => {
+    const newRentalArray = rentalArray.filter((item, index) => index !== no);
+    setRentalArray(newRentalArray);
+  }
 
-  const [value, setValue] = useState(0);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+
 
   const [open, setOpen] = useState(false);
   const [openUnit, setOpenUnit] = useState(false);
@@ -186,6 +271,15 @@ const HomeBreakDownView = () => {
     setOpenUnit(false);
   };
 
+  const handleHallDelete = (hallCode) => { //for room hallbreakdown component
+
+
+    const newHallArray = hallArray.filter((item) => item.hallCode !== hallCode);
+    setHallArray(newHallArray);
+
+  }
+
+
   // unit popup
 
   const [unitValues, setUnitValues] = useState({
@@ -214,28 +308,24 @@ const HomeBreakDownView = () => {
 
   const [unitArray, setUnitArray] = useState([]);
 
+  console.log(unitArray);
+
   const handleSaveUnit = () => {
-    if (unitValues.unitCode === '' || unitValues.unitAc === '' || unitValues.floorLevel === '' || unitValues.unitRemark === '' || unitValues.unitRental === '') return;
-    setUnitArray([...unitArray, unitValues]);
+    if (unitValues.unitCode === '' || unitValues.unitAc === '' || unitValues.floorLevel === '' || unitValues.unitRemark === '' || unitValues.unitRental === '') {
+      setOpenUnitFillAlert(true);
+      return;
+
+    }
+
+    const newUnit = {
+      ...unitValues,
+      selectedRooms: [],
+    };
+    setUnitArray([...unitArray, newUnit]);
     setOpenUnit(false);
   };
 
-  // const handleUnitDelete = (unitCode, selectedRooms) => { //for unit breakdown component
-  //   selectedRooms.map((item) => {
-  //     roomArray.map((room) => {
-  //       if (room.roomCode === item.roomCode) {
-  //         room.groupByUnit = false;
-  //       }
-  //     })
 
-  //   })
-
-  //   selectedRooms.length = 0;
-
-  //   const newUnitArray = unitArray.filter((item) => item.unitCode !== unitCode);
-  //   setUnitArray(newUnitArray);
-
-  // }
   const handleUnitDelete = (unitCode, selectedRooms) => {
     setRoomArray((prevRoomArray) => {
       const updatedRoomArray = prevRoomArray.map((room) => {
@@ -244,7 +334,7 @@ const HomeBreakDownView = () => {
         }
         return room;
       });
-  
+
       return updatedRoomArray;
     });
 
@@ -256,7 +346,7 @@ const HomeBreakDownView = () => {
     });
     return null;
   };
-  
+
 
 
   const [unitRental, setUnitRental] = useState({
@@ -269,11 +359,17 @@ const HomeBreakDownView = () => {
 
   const handleUnitWeedays = (e) => {
     setUnitRental({ ...unitRental, weekDays: e.target.value });
+    setNewUnitWeekDayValue(e.target.value);
   }
 
   const handleUnitWeekends = (e) => {
     setUnitRental({ ...unitRental, weekEnds: e.target.value });
+    setNewUnitWeekendValue(e.target.value);
   }
+
+
+  const [newUnitWeekDayValue, setNewUnitWeekDayValue] = useState('')
+  const [newUnitWeekendValue, setNewUnitWeekendValue] = useState('')
 
 
 
@@ -281,8 +377,22 @@ const HomeBreakDownView = () => {
   const handleUnitAdd = () => {
     if (unitRental.district === '' || unitRental.weekDays === '' || unitRental.weekEnds === '') return;
     setUnitRentalArray([...unitRentalArray, unitRental]);
+    setUnitRental({
+      district: '',
+      weekDays: '',
+      weekEnds: '',
+    });
 
+    setNewUnitWeekDayValue('');
+    setNewUnitWeekendValue('');
   };
+
+
+  const handleRemoveUnitRentalItem = (no) => {
+    const newUnitRentalArray = unitRentalArray.filter((item, index) => index !== no);
+    setUnitRentalArray(newUnitRentalArray);
+  }
+
 
 
   // Hall pop up
@@ -325,7 +435,10 @@ const HomeBreakDownView = () => {
   const [hallArray, setHallArray] = useState([]);
 
   const handleSaveHall = () => {
-    if (hallValues.hallCode === '' || hallValues.hallAc === '' || hallValues.floorLevel === '' || hallValues.hallRemark === '' || hallValues.hallRental === '') return;
+    if (hallValues.hallCode === '' || hallValues.hallAc === '' || hallValues.floorLevel === '' || hallValues.hallRemark === '' || hallValues.hallRental === '') {
+      setOpenHallFillAlert(true);
+      return;
+    }
     setHallArray([...hallArray, hallValues]);
     setOpenHall(false);
   };
@@ -355,6 +468,25 @@ const HomeBreakDownView = () => {
     setHallRentalArray([...hallRentalArray, hallRental]);
 
   };
+
+
+  //dropdowns 
+
+  //AC room
+  const [value, setValue] = useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+
+
+
+
+
+
+
+
 
 
 
@@ -437,10 +569,11 @@ const HomeBreakDownView = () => {
                       ?
                       <Box sx={{ display: 'flex', padding: "2em", justifyContent: 'center' }}>
 
-                        <Typography variant='p' sx={{ color: 'grey' }}>No Rooms Added Yet</Typography>
+                        <Typography variant='p' sx={{ color: 'grey' }}>No Rooms Added Yet <br></br>Add Rooms to Submit form</Typography>
                       </Box>
                       :
                       roomArray.map((item, index) => {
+
                         return (
                           <RoomBreakdown key={index} roomCode={item.roomCode} roomAc={item.roomAc} roomType={item.RoomType} noOfBeds={item.NoOfBeds} noOfAdults={item.NoOfAdults} noOfChildren={item.NoOfChildren} roomRemarks={item.roomRemarks} roomRental={item.roomRental} groupByUnit={item.groupByUnit} handleRoomDelete={handleRoomDelete} />
                         )
@@ -488,7 +621,7 @@ const HomeBreakDownView = () => {
                       hallArray.map((item, index) => {
                         return (
 
-                          <HallBreakDown key={index} hallCode={item.hallCode} hallAc={item.hallAc} floorLevel={item.floorLevel} hallNoOfAdults={item.hallNoOfAdults} hallNoOfChildren={item.hallNoOfChildren} hallRemarks={item.hallRemarks} hallRental={item.hallRental} />
+                          <HallBreakDown key={index} hallCode={item.hallCode} hallAc={item.hallAc} floorLevel={item.floorLevel} hallNoOfAdults={item.hallNoOfAdults} hallNoOfChildren={item.hallNoOfChildren} hallRemarks={item.hallRemarks} hallRental={item.hallRental} handleHallDelete={handleHallDelete} />
                         )
                       })}
 
@@ -536,10 +669,10 @@ const HomeBreakDownView = () => {
                     id="demo-simple-select"
                     value={value.catogery}
                     label="Age"
-                    onChange={handleAcChange}
+                    onChange={handleRoomAcChange}
                   >
                     <MenuItem value={"AC"}>AC</MenuItem>
-                    <MenuItem value={"Non-Ac"}>Non-AC</MenuItem>
+                    <MenuItem value={"Non-AC"}>Non-AC</MenuItem>
 
                   </Select>
                 </FormControl>
@@ -605,7 +738,7 @@ const HomeBreakDownView = () => {
                 </Box>
 
                 <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
-                  <Box sx={{ width: "100%", display: 'flex', justifyContent: 'space-around', marginTop: '20px' }} >
+                  <Box sx={{ width: "100%", display: 'flex', gap: "1em", justifyContent: 'space-around', marginTop: '20px' }} >
                     <FormControl sx={{}}>
                       <InputLabel id="demo-simple-select-label">District</InputLabel>
                       <Select
@@ -636,8 +769,9 @@ const HomeBreakDownView = () => {
 
                       </Select>
                     </FormControl>
-                    <TextField type='number' id="outlined-required" label="WeekDays" placeholder='WeekDays' size='small' onChange={handleWeekdays} helperText={error.ctName ? "Invalid Input" : ''} sx={{ width: "150px" }} />
-                    <TextField type='number' id="outlined-required" label="Weekend" placeholder='Weekend' size='small' onChange={handleWeekends} helperText={error.ctName ? "Invalid Input" : ''} sx={{ width: "150px" }} />
+
+                    <TextField type='number' id="outlined-required" label="WeekDays" placeholder='WeekDays' value={newRoomWeekDayValue} size='small' onChange={handleWeekdays} helperText={error.ctName ? "Invalid Input" : ''} sx={{ width: "200px" }} />
+                    <TextField type='number' id="outlined-required" label="Weekend" placeholder='Weekend' value={newRoomWeekendValue} size='small' onChange={handleWeekends} helperText={error.ctName ? "Invalid Input" : ''} sx={{ width: "200px" }} />
                     <Button variant='contained' size='small' onClick={handleAdd} >Add</Button>
 
 
@@ -661,7 +795,7 @@ const HomeBreakDownView = () => {
                           <Typography variant='p' sx={{ color: 'black', marginRight: '0.6em', fontWeight: 'bold' }}>WeekEnd</Typography>
                           <Typography variant='p' sx={{ color: 'grey', fontWeight: '500' }}>{item.weekEnds}</Typography>
                         </Box>
-
+                        <CancelIcon sx={{ cursor: 'pointer' }} onClick={() => handleRemoveRentalItem(index)} />
                       </Paper>
                     </Box>
                   )
@@ -780,8 +914,8 @@ const HomeBreakDownView = () => {
 
                       </Select>
                     </FormControl>
-                    <TextField type='number' id="outlined-required" label="WeekDays" placeholder='WeekDays' size='small' onChange={handleUnitWeedays} helperText={error.ctName ? "Invalid Input" : ''} sx={{ width: "150px" }} />
-                    <TextField type='number' id="outlined-required" label="Weekend" placeholder='Weekend' size='small' onChange={handleUnitWeekends} helperText={error.ctName ? "Invalid Input" : ''} sx={{ width: "150px" }} />
+                    <TextField type='number' id="outlined-required" label="WeekDays" placeholder='WeekDays' size='small' value={newUnitWeekDayValue} onChange={handleUnitWeedays} helperText={error.ctName ? "Invalid Input" : ''} sx={{ width: "150px" }} />
+                    <TextField type='number' id="outlined-required" label="Weekend" placeholder='Weekend' size='small' value={newUnitWeekendValue} onChange={handleUnitWeekends} helperText={error.ctName ? "Invalid Input" : ''} sx={{ width: "150px" }} />
                     <Button variant='contained' size='small' onClick={handleUnitAdd} >Add</Button>
 
 
@@ -805,6 +939,7 @@ const HomeBreakDownView = () => {
                           <Typography variant='p' sx={{ color: 'black', marginRight: '0.6em', fontWeight: 'bold' }}>WeekEnd</Typography>
                           <Typography variant='p' sx={{ color: 'grey', fontWeight: '500' }}>{item.weekEnds}</Typography>
                         </Box>
+                        <CancelIcon sx={{ cursor: 'pointer' }} onClick={() => handleRemoveUnitRentalItem(index)} />
 
                       </Paper>
                     </Box>
@@ -977,6 +1112,68 @@ const HomeBreakDownView = () => {
           </form>
         </Dialog>
       </React.Fragment>
+
+      {/* alert remove room */}
+      <div>
+
+        <Snackbar open={openAlert} autoHideDuration={4000} onClose={handleCloseAlert}>
+          <Alert
+            onClose={handleCloseAlert}
+            severity="error"
+            variant="filled"
+            sx={{ width: '100%' }}
+          >
+            Can't Remove | This room is grouped by a Unit
+          </Alert>
+        </Snackbar>
+      </div>
+
+      {/* alert add room all should fill*/}
+      <div>
+
+        <Snackbar open={openRoomFillAlert} autoHideDuration={4000} onClose={handleCloseRoomFillAlert}>
+          <Alert
+            onClose={handleCloseRoomFillAlert}
+            severity="error"
+            variant="filled"
+            sx={{ width: '100%' }}
+          >
+            Can't Save | You must fill all the fields
+          </Alert>
+        </Snackbar>
+      </div>
+
+      {/* alert add unit all should fill*/}
+      <div>
+
+        <Snackbar open={openUnitFillAlert} autoHideDuration={4000} onClose={handleCloseUnitFillAlert}>
+          <Alert
+            onClose={handleCloseUnitFillAlert}
+            severity="error"
+            variant="filled"
+            sx={{ width: '100%' }}
+          >
+            Can't Save | You must fill all the fields
+          </Alert>
+        </Snackbar>
+      </div>
+
+
+
+      {/* alert add hall all should fill*/}
+      <div>
+
+        <Snackbar open={openHallFillAlert} autoHideDuration={4000} onClose={handleCloseHallFillAlert}>
+          <Alert
+            onClose={handleCloseHallFillAlert}
+            severity="error"
+            variant="filled"
+            sx={{ width: '100%' }}
+          >
+            Can't Save | You must fill all the fields
+          </Alert>
+        </Snackbar>
+      </div>
 
     </Box>
   )
