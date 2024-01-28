@@ -27,6 +27,7 @@ import DistrictSelectCom from "../../Components/User/DistrictSelectCom";
 import OurPlaces from "../../Components/User/OurPlaces/OurPlaces";
 import BrowseMoreCom from "../../Components/User/BrowseMore/BrowseMoreCom";
 import Footer from "../../Components/User/Footer/Footer";
+import HHCarousel from "../../Components/User/Carousel/HHCarousel";
 
 const reservedDates = [
   "2024/01/27",
@@ -313,7 +314,6 @@ export default function Home() {
                   </Stack>
                 </Stack>
               </Box>
-
               {/* top rated holiday homes */}
               <Box>
                 <Stack sx={{ margin: "3% 0" }}>
@@ -337,7 +337,8 @@ export default function Home() {
                     />
                   </Stack>
                   <Box>
-                    <Stack direction="row" spacing={2}>
+                    <HHCarousel sortedByRating={sortedByRating} />
+                    {/* <Stack direction="row" spacing={2}>
                       {sortedByRating
                         .sort((a, b) => b.rating - a.rating)
                         .slice(0, 4)
@@ -351,7 +352,7 @@ export default function Home() {
                             HHImage={item.image}
                           />
                         ))}
-                    </Stack>
+                    </Stack> */}
                   </Box>
                 </Stack>
               </Box>
@@ -383,7 +384,6 @@ export default function Home() {
             </Container>
             <Container
               sx={{
-               
                 // height: "100vh",
                 width: { xs: "100%", sm: "95%" },
                 padding: 0,
@@ -393,12 +393,11 @@ export default function Home() {
                   paddingLeft: 0,
                 },
               }}
-            >
-            </Container>
+            ></Container>
           </Container>
-              <Box>
-                <Footer />
-              </Box>
+          <Box>
+            <Footer />
+          </Box>
         </Container>
       </Box>
     </ThemeProvider>
