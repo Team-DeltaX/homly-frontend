@@ -25,6 +25,7 @@ import Topbg from "../../Assets/images/LandingPageTop.png";
 import DistrictSelectCom from "../../Components/User/DistrictSelectCom";
 import OurPlaces from "../../Components/User/OurPlaces/OurPlaces";
 import BrowseMoreCom from "../../Components/User/BrowseMore/BrowseMoreCom";
+import Footer from "../../Components/User/Footer/Footer";
 
 const reservedDates = [
   "2024/01/27",
@@ -320,19 +321,20 @@ export default function Home() {
                     Top Rated Holiday Homes
                   </Typography>
                   <Box>
-                    
-                    <Stack direction='row' spacing={2} >
-                      {sortedByRating.sort((a, b) => b.rating - a.rating).slice(0, 4).map((item) => (
-                        <HolidayHomeCard
-                          key={item.HHId}
-                          HHName={item.name}
-                          HHLocation={item.address}
-                          HHPrice={item.price}
-                          HHRating={item.rating}
-                          HHImage={item.image}
-                        />
-                      ))}
-                      
+                    <Stack direction="row" spacing={2}>
+                      {sortedByRating
+                        .sort((a, b) => b.rating - a.rating)
+                        .slice(0, 4)
+                        .map((item) => (
+                          <HolidayHomeCard
+                            key={item.HHId}
+                            HHName={item.name}
+                            HHLocation={item.address}
+                            HHPrice={item.price}
+                            HHRating={item.rating}
+                            HHImage={item.image}
+                          />
+                        ))}
                     </Stack>
                   </Box>
                 </Stack>
@@ -342,18 +344,31 @@ export default function Home() {
                 <Typography variant="h4" color="initial">
                   our places - 5 districts
                 </Typography>
-                  <OurPlaces/>
+                <OurPlaces />
               </Box>
               <Box>
                 <Typography variant="h4" color="initial">
                   Browse for More holiday Homes
                 </Typography>
-                      <BrowseMoreCom/>
+                <BrowseMoreCom />
               </Box>
+            </Container>
+            <Container
+              sx={{
+                bgcolor: "red",
+                // height: "100vh",
+                width: { xs: "100%", sm: "95%" },
+                padding: 0,
+                paddingLeft:0,
+                "& .css-185m5ur-MuiContainer-root":{
+                  padding:0,
+                  paddingLeft:0
+                }
+              }}
+            >
               <Box>
-                <Typography variant="h4" color="initial">
-                  contactus/footer
-                </Typography>
+                
+                <Footer />
               </Box>
             </Container>
           </Container>
