@@ -1,0 +1,209 @@
+[33mcommit d63eaad49a82417cf802d33f77e78e0ff6c93cee[m[33m ([m[1;36mHEAD -> [m[1;32muser[m[33m, [m[1;31morigin/user[m[33m)[m
+Author: Aruna Priyadarshana Bandara <108753678+arunapriyadarshana@users.noreply.github.com>
+Date:   Sun Jan 28 01:18:38 2024 +0530
+
+    Add OurPlaces component and PlacesCard component
+
+[33mcommit f617a80154e6342db349101bddcfe735d91fee1d[m
+Author: Aruna Priyadarshana Bandara <108753678+arunapriyadarshana@users.noreply.github.com>
+Date:   Sun Jan 28 01:07:56 2024 +0530
+
+    Refactor code to improve performance and readability
+
+[33mcommit cbf4da1606feacd8a514e427d7e2889540d2a587[m
+Author: Aruna Priyadarshana Bandara <108753678+arunapriyadarshana@users.noreply.github.com>
+Date:   Sun Jan 28 01:07:14 2024 +0530
+
+    Add holiday home API integration and sort by rating
+
+[33mcommit 6a93d8c4237d303df24b6557c11bfc6ad39a8207[m
+Author: Aruna Priyadarshana Bandara <108753678+arunapriyadarshana@users.noreply.github.com>
+Date:   Sat Jan 27 21:37:28 2024 +0530
+
+    Add HolidayHomeCard and DistrictSelectCom components
+
+[33mcommit e2b94e42c48565549605bcfdfdc1a7c59fc6a4cb[m
+Author: Aruna Priyadarshana Bandara <108753678+arunapriyadarshana@users.noreply.github.com>
+Date:   Sat Jan 27 16:15:06 2024 +0530
+
+    Update DatePickerCom component and Home page
+
+[33mcommit 08e4d6509ea611020b421a73da64d2accc133c6d[m
+Author: Aruna Priyadarshana Bandara <108753678+arunapriyadarshana@users.noreply.github.com>
+Date:   Sat Jan 27 11:28:05 2024 +0530
+
+    Add landing page top image and update background color
+
+[33mcommit 95ec82bca3533d2141d22b66316faa7dced8d190[m
+Author: Aruna Priyadarshana Bandara <108753678+arunapriyadarshana@users.noreply.github.com>
+Date:   Sat Jan 27 11:20:29 2024 +0530
+
+     update responsive styling in seacrh bar
+
+[33mcommit eaddff6270e1292fa64c47a235f1dff767b3e27b[m
+Author: Aruna Priyadarshana Bandara <108753678+arunapriyadarshana@users.noreply.github.com>
+Date:   Sat Jan 27 02:37:00 2024 +0530
+
+    Fix DatePickerCom styling and add default date values in Home.js
+
+[33mcommit 168f208d8b8e11629c74f98295d320db75f3087f[m
+Author: Aruna Priyadarshana Bandara <108753678+arunapriyadarshana@users.noreply.github.com>
+Date:   Sat Jan 27 02:12:59 2024 +0530
+
+    create search bar in landing page and do some modification in datePicker component
+
+[33mcommit 3c5d697b8025c745ae7e25b26bf7d179287e5ee1[m
+Author: Aruna Priyadarshana Bandara <108753678+arunapriyadarshana@users.noreply.github.com>
+Date:   Fri Jan 26 21:12:45 2024 +0530
+
+    add checking and checkout date picker to home page
+
+[33mcommit 4f84e91861dbfdf633d48015554e3ada3a6db9fa[m
+Author: Aruna Priyadarshana Bandara <108753678+arunapriyadarshana@users.noreply.github.com>
+Date:   Fri Jan 26 16:50:06 2024 +0530
+
+    add some disabledDates
+
+[33mcommit 223e416c08cf1c3c24c5774726d8b0837777fcf8[m
+Author: Aruna Priyadarshana Bandara <108753678+arunapriyadarshana@users.noreply.github.com>
+Date:   Fri Jan 26 11:57:14 2024 +0530
+
+    add calender
+
+[33mcommit 9db1ff6e94244ba40bf7552ef0a6911f7333c12f[m
+Author: Aruna Priyadarshana Bandara <108753678+arunapriyadarshana@users.noreply.github.com>
+Date:   Fri Jan 26 00:56:11 2024 +0530
+
+    install 2 dependancies and add date range picker
+
+[33mcommit f78ac2fd99adc173b60d3bd808cbe76f01bcdc54[m
+Author: Aruna Priyadarshana Bandara <108753678+arunapriyadarshana@users.noreply.github.com>
+Date:   Fri Jan 26 00:21:57 2024 +0530
+
+    changes Home.js file,add top image and some details
+
+[33mcommit 73a0f4c2c1f4b47dbc27c4567036ea0a4f2ebd83[m
+Merge: f71cd4d 5509487
+Author: Booshana Namudara <booshiwork@gmail.com>
+Date:   Thu Jan 25 18:17:41 2024 +0530
+
+    Merge branch 'main' of https://github.com/booshananamudara/homly
+
+[33mcommit f71cd4dcd56e8f1722224603bbb33f0913a65334[m
+Author: Booshana Namudara <booshiwork@gmail.com>
+Date:   Thu Jan 25 18:17:37 2024 +0530
+
+    Update package-lock.json
+
+[33mcommit 550948762be8f193f7ecabc4969323fb9bfe69e9[m
+Merge: a72bfce 216b36c
+Author: Booshana Namudara <81310074+booshananamudara@users.noreply.github.com>
+Date:   Thu Jan 25 18:17:20 2024 +0530
+
+    Merge pull request #23 from booshananamudara/PrimaryAdmin
+    
+    Primary admin
+
+[33mcommit 216b36c1ea2c5b33de55927118d018114d4c5665[m
+Author: Nipun Madhushan <108778265+Nipun2001M@users.noreply.github.com>
+Date:   Thu Jan 25 18:13:00 2024 +0530
+
+    litte changes in popup
+
+[33mcommit a72bfce2e266a1ec3ad6900e3f57b71e26491b54[m
+Merge: ba07fe9 38be95b
+Author: Booshana Namudara <81310074+booshananamudara@users.noreply.github.com>
+Date:   Thu Jan 25 18:07:26 2024 +0530
+
+    Merge pull request #22 from booshananamudara/user
+    
+    Update import paths for NavBar component
+
+[33mcommit 38be95b994c22808f441a7d83fe762eab8162306[m
+Author: Aruna Priyadarshana Bandara <108753678+arunapriyadarshana@users.noreply.github.com>
+Date:   Thu Jan 25 17:56:42 2024 +0530
+
+    Update reservation card layout
+
+[33mcommit 54ce4902eedf22cf3a902c0ea9717492d89d9713[m
+Author: Aruna Priyadarshana Bandara <108753678+arunapriyadarshana@users.noreply.github.com>
+Date:   Thu Jan 25 17:45:53 2024 +0530
+
+    complete security component and Update CSS and error severity in UpdateButton.js, add PasswordComGrid.js
+
+[33mcommit 9814bbf487636b3c187486edb1bedea81ca08e18[m
+Author: Aruna Priyadarshana Bandara <108753678+arunapriyadarshana@users.noreply.github.com>
+Date:   Thu Jan 25 01:09:14 2024 +0530
+
+    Refactor CSS styles and update button component
+    
+    Update profile page layout and navigation
+
+[33mcommit 1c41a442f52840ad4a7220b44b0813fdcb147fec[m
+Author: Aruna Priyadarshana Bandara <108753678+arunapriyadarshana@users.noreply.github.com>
+Date:   Wed Jan 24 22:48:10 2024 +0530
+
+    Adjust margin-top for drawer in Profile.js
+
+[33mcommit 3b4428296963db1fbe33a05a5c029b54c46b6e0b[m
+Author: Aruna Priyadarshana Bandara <108753678+arunapriyadarshana@users.noreply.github.com>
+Date:   Wed Jan 24 21:44:39 2024 +0530
+
+    Refactor components and update styles
+
+[33mcommit 719685edda24e49ee74fe3745670eead534e602b[m
+Author: Aruna Priyadarshana Bandara <108753678+arunapriyadarshana@users.noreply.github.com>
+Date:   Wed Jan 24 21:10:36 2024 +0530
+
+    Add Security component
+
+[33mcommit 6b84d72d9e29aab02107a7b379c2a436b446d4f8[m
+Author: Aruna Priyadarshana Bandara <108753678+arunapriyadarshana@users.noreply.github.com>
+Date:   Wed Jan 24 21:08:47 2024 +0530
+
+    Add PaymentDetailsCom component and update Profile.js and Profile.css
+
+[33mcommit df86c70194aa025cda6c82987a5da21a80d8ae3f[m
+Author: Aruna Priyadarshana Bandara <108753678+arunapriyadarshana@users.noreply.github.com>
+Date:   Wed Jan 24 18:09:32 2024 +0530
+
+    Refactor bottom tabs and add icons to profile page
+
+[33mcommit a89ace84e60a8db90f20b72f15f91af09ac7a35b[m
+Author: Aruna Priyadarshana Bandara <108753678+arunapriyadarshana@users.noreply.github.com>
+Date:   Wed Jan 24 17:06:58 2024 +0530
+
+    change some style in bottom navbar
+
+[33mcommit ca914615ae013c8b129488c0e6e41ff73f8d45dd[m
+Author: Nipun Madhushan <108778265+Nipun2001M@users.noreply.github.com>
+Date:   Wed Jan 24 16:50:34 2024 +0530
+
+    auto hide snack bar component created and added to add admin page
+
+[33mcommit b3cf45136790e84d451dfdaebb4b7913510b6859[m
+Author: Aruna Priyadarshana Bandara <108753678+arunapriyadarshana@users.noreply.github.com>
+Date:   Wed Jan 24 16:11:38 2024 +0530
+
+    add bottom app bar
+
+[33mcommit db6aeb9dbc92d8ecf17b041bbde12a8c94ef9083[m
+Author: Aruna Priyadarshana Bandara <108753678+arunapriyadarshana@users.noreply.github.com>
+Date:   Wed Jan 24 02:15:27 2024 +0530
+
+    Add SideNavBarTab and update PersonalDetailsCom
+
+[33mcommit 9ddd814c57b27a93fdc6fe485c54dfb7eb25f125[m
+Author: Aruna Priyadarshana Bandara <108753678+arunapriyadarshana@users.noreply.github.com>
+Date:   Wed Jan 24 00:19:21 2024 +0530
+
+    Refactor NavBar component and update Home page
+
+[33mcommit a6e7efbca47b1425f3f61f55dc435b2d93cf9d2e[m
+Author: Aruna Priyadarshana Bandara <108753678+arunapriyadarshana@users.noreply.github.com>
+Date:   Wed Jan 24 00:16:59 2024 +0530
+
+    fix some problems in myprofile page navbar
+
+[33mcommit d04dcae1f1f3ff5db7c76d0e8bdf028ce6319548[m
+Author: Nipun Madhushan <108778265+Nipun2001M@users.noreply.github.com>
