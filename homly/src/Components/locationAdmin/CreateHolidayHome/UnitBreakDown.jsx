@@ -101,7 +101,7 @@ const UnitBreakDown = ({ unitCode, unitAc, floorLevel, unitNoOfAdults, unitNoOfC
         <Paper elevation={8} sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', padding: "10px", marginBottom: "10px" }}>
             <Box sx={{ display: 'flex', gap: '1em', marginBottom: '1em' }}>
                 <Box className="card_item">
-                    <Typography variant='p' className='card_item_title'>Unit Code</Typography>
+                    <Typography variant='p' className='card_item_title'>Unit No</Typography>
                     <Typography variant='p' className='card_item_value'>{unitCode}</Typography>
                 </Box>
                 <Box className="card_item">
