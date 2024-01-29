@@ -105,6 +105,7 @@ export default function AddComplainPopUp({reservation}) {
             variant="standard"
           />
           <TextArea 
+            margin="dense"
             inputProps = {"Reason"}
           />
         </DialogContent>
