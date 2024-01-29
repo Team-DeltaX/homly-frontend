@@ -8,7 +8,6 @@ import { Container, Grid, ThemeProvider } from "@mui/material";
 import theme from "../../HomlyTheme";
 import Pagetop from "../../Components/PrimaryAdmin/PageTop";
 import PrimaryAdminBasicTabs from '../../Components/PrimaryAdmin/Reservations/PrimaryAdminBasicTabs';
-import AddSpecialReservationPopUp from '../../Components/Reservations/AddSpecialReservationPopUp';
 
 import SearchNew from '../../Components/PrimaryAdmin/SearchNew'
 
@@ -50,7 +49,6 @@ const PrimaryReservations = () => {
                 {/* <h1>Reservations</h1> */}
                 <Pagetop setShowNav={setShowNav} heading={"Reservations"} />
                 <SearchNew setSearch={setSearch} search={search} />
-                <AddSpecialReservationPopUp />
                 <PrimaryAdminBasicTabs setSearch={setSearch} search={search}/>
 
               </Grid>
