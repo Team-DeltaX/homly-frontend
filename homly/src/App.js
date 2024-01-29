@@ -5,6 +5,7 @@ import EditPersonalDetailsContextProvider from "./Contexts/EditPersonalDetailsCo
 import "../src/Styles/styles.css";
 import ManageHomes from "../src/Pages/locationAdmin/ManageHomes";
 
+
 // user pages import start
 
 // const Home = lazy(() => import("../src/Pages/Home"));
@@ -42,6 +43,7 @@ import PersonalDetails from "../src/Pages/User/PersonalDetails";
 import UserSecurity from "../src/Pages/User/UserSecurity";
 import PaymentDetails from "../src/Pages/User/PaymentDetails";
 import MyReservation from "../src/Pages/User/MyReservation";
+import HolidayHomeDetails from '../src/Pages/User/HolidayHomeDetails';
 
 const PrimaryDashboard = lazy(() => import("./Pages/PrimaryAdmin/PrimaryDashboard"));
 const PrimaryReservations = lazy(() => import("./Pages/PrimaryAdmin/PrimaryReservations"));
@@ -96,6 +98,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/HolidayHomes" element={<HolidayHome />} />
+          <Route path="/HolidayHomeDetails" element={<HolidayHomeDetails />} />
           <Route path="/MyProfile" element={<Profile />} />
           <Route path="/ContactUs" element={<ContactUs />} />
           {/* <Route path="/paymentGateway" element={<PaymentGateway />} /> */}

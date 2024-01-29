@@ -6,7 +6,13 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
+
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 
 const UnitBreakDown = ({ unitCode, unitAc, floorLevel, unitNoOfAdults, unitNoOfChildren, unitRemarks, unitRental, selectedRooms, roomArray, setRoomArray, handleUnitDelete }) => {
@@ -24,18 +30,24 @@ const UnitBreakDown = ({ unitCode, unitAc, floorLevel, unitNoOfAdults, unitNoOfC
         setOpen(false);
     };
 
-    const handleRoomAddToUnit = (roomCode) => {
+    const handleRoomAddToUnit = (roomCode, roomAc, unitAc) => {
         setRoomArray(roomArray.map((item, index) => {
+            if (roomAc === unitAc) {
+                if (item.roomCode === roomCode) {
+                    selectedRooms.push(item);
 
-            if (item.roomCode === roomCode) {
-                selectedRooms.push(item);
-
-                return {
-                    ...item,
-                    groupByUnit: true
+                    return {
+                        ...item,
+                        groupByUnit: true
+                    }
+                } else {
+                    return item
                 }
-            } else {
+            }
+            else {
+                setOpenAlert(true);
                 return item
+
             }
         }))
     }
@@ -58,11 +70,38 @@ const UnitBreakDown = ({ unitCode, unitAc, floorLevel, unitNoOfAdults, unitNoOfC
 
     const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
+
+
+    //ADD ac nonac room alert
+    const [openAlert, setOpenAlert] = useState(false);
+
+    const handleCloseAlert = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpenAlert(false);
+    };
+
+    // Sure dialog for remove unit
+    const [openUnitRemove, setOpenUnitRemove] = useState(false);
+    const theme = useTheme();
+    const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+
+    const handleOpenUnitRemove = () => {
+        setOpenUnitRemove(true);
+    };
+
+    const handleCloseUnitRemove = () => {
+        setOpenUnitRemove(false);
+    };
+
+
     return (
         <Paper elevation={8} sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', padding: "10px", marginBottom: "10px" }}>
             <Box sx={{ display: 'flex', gap: '1em', marginBottom: '1em' }}>
                 <Box className="card_item">
-                    <Typography variant='p' className='card_item_title'>Unit Code</Typography>
+                    <Typography variant='p' className='card_item_title'>Unit No</Typography>
                     <Typography variant='p' className='card_item_value'>{unitCode}</Typography>
                 </Box>
                 <Box className="card_item">
@@ -97,7 +136,7 @@ const UnitBreakDown = ({ unitCode, unitAc, floorLevel, unitNoOfAdults, unitNoOfC
                     <Checkbox {...label} disabled={selectedRooms.length === 0 ? true : false} checked={selectedRooms.length === 0 ? false : true} />
                 </Box>
                 <Box>
-                    <CancelIcon sx={{ cursor: 'pointer' }} onClick={() => handleUnitDelete(unitCode,selectedRooms)} />
+                    <CancelIcon sx={{ cursor: 'pointer' }} onClick={handleOpenUnitRemove} />
                 </Box>
 
             </Box>
@@ -159,7 +198,7 @@ const UnitBreakDown = ({ unitCode, unitAc, floorLevel, unitNoOfAdults, unitNoOfC
                                                                 </Box>
                                                                 <Box className="card_item">
                                                                     <Typography variant='p' className='attach_card_item_title'>AC/Non AC</Typography>
-                                                                    <Typography variant='p' className='attach_card_item_value'>{item.roomAC}</Typography>
+                                                                    <Typography variant='p' className='attach_card_item_value'>{item.roomAc}</Typography>
                                                                 </Box>
                                                                 <Box className="card_item">
                                                                     <Typography variant='p' className='attach_card_item_title'>Room Type</Typography>
@@ -176,7 +215,7 @@ const UnitBreakDown = ({ unitCode, unitAc, floorLevel, unitNoOfAdults, unitNoOfC
 
                                                             </Box>
                                                             <Box sx={{ display: 'flex', alignItems: 'center', gap: '1em' }}>
-                                                                <Button size='small' variant='contained' sx={{ backgroundColor: 'primary.main' }} onClick={() => handleRoomAddToUnit(item.roomCode)}>Add</Button>
+                                                                <Button size='small' variant='contained' sx={{ backgroundColor: 'primary.main' }} onClick={() => handleRoomAddToUnit(item.roomCode, item.roomAc, unitAc)}>Add</Button>
                                                             </Box>
                                                         </Paper>
                                                     )
@@ -206,7 +245,7 @@ const UnitBreakDown = ({ unitCode, unitAc, floorLevel, unitNoOfAdults, unitNoOfC
                                                             </Box>
                                                             <Box className="card_item">
                                                                 <Typography variant='p' className='attach_card_item_title'>AC/Non AC</Typography>
-                                                                <Typography variant='p' className='attach_card_item_value'>{item.roomAC}</Typography>
+                                                                <Typography variant='p' className='attach_card_item_value'>{item.roomAc}</Typography>
                                                             </Box>
                                                             <Box className="card_item">
                                                                 <Typography variant='p' className='attach_card_item_title'>Room Type</Typography>
@@ -247,6 +286,60 @@ const UnitBreakDown = ({ unitCode, unitAc, floorLevel, unitNoOfAdults, unitNoOfC
                     </form>
                 </Dialog>
             </React.Fragment>
+
+
+            {/* alert Add ac nonac rooms */}
+            <div>
+                <Snackbar open={openAlert} autoHideDuration={4000} onClose={handleCloseAlert}>
+                    <Alert
+                        onClose={handleCloseAlert}
+                        severity="error"
+                        variant="filled"
+                        sx={{ width: '100%' }}
+                    >
+                        Can't Add | Not compatible with Unit
+                    </Alert>
+                </Snackbar>
+            </div>
+
+
+            {/* Dialog for remove unit which already has rooms */}
+            <Dialog
+                fullScreen={fullScreen}
+                open={openUnitRemove}
+                onClose={handleCloseUnitRemove}
+                aria-labelledby="responsive-dialog-title"
+            >
+                <DialogTitle id="responsive-dialog-title">
+                    {"Are You Sure?"}
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        <Box>
+                            <Box sx={{ display: 'flex', gap: "0.5em", flexWrap: 'wrap', justifyContent: 'center', marginBottom: '20px' }}>
+                                {
+                                    selectedRooms.map((item, index) => {
+                                        return (
+                                            <Typography sx={{ boxShadow: "rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;", padding: "5px 10px", backgroundColor: "rgb(220, 220, 220)", borderRadius: "10px", fontWeight: '550', letterSpacing: "1.2px" }} variant='p'>{item.roomCode}</Typography>
+                                        )
+                                    })
+
+                                }
+                            </Box>
+                            <Typography variant='p'>Rooms will be seperated from the Unit.</Typography>
+                        </Box>
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button autoFocus onClick={() => handleUnitDelete(unitCode, selectedRooms)}>
+                        Yes
+                    </Button>
+                    <Button onClick={handleCloseUnitRemove} autoFocus>
+                        No
+                    </Button>
+                </DialogActions>
+            </Dialog>
+
 
 
         </Paper>
