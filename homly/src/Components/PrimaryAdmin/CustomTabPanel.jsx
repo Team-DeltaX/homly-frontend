@@ -7,6 +7,7 @@ import Box from '@mui/material/Box';
 import CurrentAdminslist from './CurrentAdminslist';
 import DisabledAdminslist from '../../Components/PrimaryAdmin/DisabledAdminslist'
 
+
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
 

@@ -8,7 +8,7 @@ import { useState } from "react";
 
 const ViewAdminCard2 = (props) => {
   const [disabled, setDisabled] = useState(true);
-  const [serviceno, setServiceno] = useState(props.data.Service_number);
+  const [AdminNo, setAdminNo] = useState(props.data.Service_number);
   const [username, setUsername] = useState(props.data.User_name);
   const [password, setPassword] = useState(props.data.Nic_number);
   const [contactnumber, setContactnumber] = useState(props.data.Service_number);
@@ -18,7 +18,7 @@ const ViewAdminCard2 = (props) => {
 
   const handlesave = () => {
     const dataobj = {
-      serviceno: serviceno,
+      Adminno: AdminNo,
       username: username,
       password: password,
       contactno: contactnumber,
@@ -49,14 +49,14 @@ const ViewAdminCard2 = (props) => {
           <AccountCircleIcon sx={{ color: "Black", fontSize: "70px" }} />
         </Box>
         <Box sx={{ padding: "10px" }}>
-          <Box>Service Number</Box>
+          <Box>Admin Number</Box>
           <Box>
             <TextField
               disabled={disabled}
               onChange={(e) => {
-                setServiceno(e.target.value);
+                setAdminNo(e.target.value);
               }}
-              value={serviceno}
+              value={AdminNo}
               size="small"
               type="text"
               sx={{
@@ -91,7 +91,7 @@ const ViewAdminCard2 = (props) => {
                 setPassword(e.target.value);
               }}
               size="small"
-              type="password"
+              type="text"
               value={password}
               sx={{
                 backgroundColor: "white",
@@ -159,7 +159,7 @@ const ViewAdminCard2 = (props) => {
             marginTop: "10px",
           }}
         >
-          <Button
+          {/* <Button
             startIcon={<EditIcon />}
             sx={{ width: "90px", borderRadius: "15px", height: "30px" }}
             variant="contained"
@@ -168,19 +168,19 @@ const ViewAdminCard2 = (props) => {
             }}
           >
             <Typography>Edit</Typography>
-          </Button>
+          </Button> */}
           {/* <Box>{dataobj}</Box> */}
           <Box sx={{ height: "20px" }}></Box>
           <Button
-            startIcon={<SaveIcon />}
-            disabled={disabled}
+           
+            
             sx={{ width: "90px", height: "30px", borderRadius: "15px" }}
             variant="contained"
             onClick={() => {
               handlesave();
             }}
           >
-           <Typography>Save</Typography>
+           <Typography>Disable</Typography>
           </Button>
         </Box>
       </Box>

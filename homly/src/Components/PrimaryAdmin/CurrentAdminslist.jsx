@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
 import ViewAdminCard2 from "./ViewAdminCard2";
+import CurrentAdminCard from "./CurrentAdminCard";
 
 const CurrentAdminslist=()=>{
     const data = [
@@ -89,7 +90,7 @@ const CurrentAdminslist=()=>{
               >
                 {blacklistedusers.map((item) => {
                   return (
-                    <ViewAdminCard2 data={item} key={item.Service_number} />
+                    <CurrentAdminCard data={item} key={item.Service_number} />
                   );
                 })}
               </Box> 
