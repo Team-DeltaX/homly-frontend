@@ -5,10 +5,11 @@ import React,{useEffect, useState} from 'react'
 import SideNavbar from '../../Components/PrimaryAdmin/SideNavbar'
 import ViewPopupHistory from '../../Components/PrimaryAdmin/ViewPopupHistory';
 import Box from '@mui/material/Box';
-import { Button, Container, Grid,ThemeProvider } from '@mui/material';
+import { Button, Container, Grid,ThemeProvider, Typography } from '@mui/material';
 import theme from '../../HomlyTheme';
 import BlacklistHistoryCard from '../../Components/PrimaryAdmin/BlacklistHistoryCard';
-import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+// import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import SummarizeIcon from '@mui/icons-material/Summarize';
 // import Search from '../../Components/PrimaryAdmin/Search';
 const PrimaryBlacklistHistory = () => {
     const [popup,setpopup]=useState(false)
@@ -64,8 +65,8 @@ const PrimaryBlacklistHistory = () => {
                             )
                         })}
                       </Box>
-                      <Button sx={{marginLeft:"5%",marginTop:{xs:'10%',sm:'3px'}}} component="label" variant="contained" startIcon={<PictureAsPdfIcon  />}>
-                              Download Excel
+                      <Button sx={{marginLeft:"5%",marginTop:{xs:'10%',sm:'3px'}}} component="label" variant="contained" startIcon={<SummarizeIcon  />}>
+                              <Typography>Download Excel</Typography>
                 
                             </Button>
                     </Grid>

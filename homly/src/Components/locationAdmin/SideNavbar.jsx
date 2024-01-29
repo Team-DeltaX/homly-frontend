@@ -2,10 +2,13 @@
 import React,{useEffect, useState,memo} from 'react'
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import { Typography } from '@mui/material';
+import { Typography,ThemeProvider } from '@mui/material';
 import logo from '../../Assets/images/logo1.png';
 import user from '../../Assets/images/profile.jpeg';
 import {Link} from 'react-router-dom';
+import theme from '../../HomlyTheme';
+
+
 
 
 import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';
@@ -35,6 +38,7 @@ const  SideNavbar = ({closeNavGrid,setShowNav}) => {
   
 
   return (
+    <ThemeProvider theme={theme}>
     <Box sx={{ width: '100%',paddingTop:"20px",position:'relative'}}>
     <CloseIcon className='close_icon' sx={{color:'white',display:'none',position:'absolute',top:'10px',right:'20px',fontSize:'2rem'}}  onClick={closeNav}/>
       <Grid container sx={{height:"100vh"}} >
@@ -138,6 +142,7 @@ const  SideNavbar = ({closeNavGrid,setShowNav}) => {
        
       </Grid>
     </Box>
+    </ThemeProvider>
   );
 }
 

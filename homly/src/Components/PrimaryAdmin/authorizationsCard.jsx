@@ -1,8 +1,12 @@
 import { Box, Button, Grid, Stack, ThemeProvider, Typography } from "@mui/material"
 import PreviewIcon from '@mui/icons-material/Preview';
 import theme from "../../HomlyTheme";
-import { Group } from "@mui/icons-material";
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+// import { Group } from "@mui/icons-material";
+// import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import CheckIcon from '@mui/icons-material/Check';
+import CancelPresentationIcon from '@mui/icons-material/CancelPresentation';
+import CloseIcon from '@mui/icons-material/Close';
+
 
 
 const AuthorizationsCard=(props)=>{
@@ -34,7 +38,7 @@ const AuthorizationsCard=(props)=>{
    
            <Grid md={3} xs={12}>
                <Grid md={12}>
-               <Button type='submit' variant='contained' sx={{width:"80px",height:'30px',borderRadius:"15px"}} startIcon={<PreviewIcon/>}  >View</Button>
+               <Button type='submit' variant='contained' sx={{width:"80px",height:'30px',borderRadius:"15px"}} startIcon={<PreviewIcon/>}  ><Typography>View</Typography></Button>
    
                </Grid>
                <Grid md={12}>
@@ -54,8 +58,8 @@ const AuthorizationsCard=(props)=>{
    
        </Grid></Box>
         <Box sx={{display:"flex",justifyContent:'center',flexDirection:{md:"row",sm:"row",xs:"column"}}}>
-        <Button type='submit' variant='contained' sx={{margin:"10px",width:"100px",height:'30px',borderRadius:"15px",background:"#39e75f",color:"black"}} startIcon={<PreviewIcon/>}  >Accept</Button>
-        <Button type='submit' variant='outlined' sx={{margin:"10px",width:"100px",height:'30px',borderRadius:"15px",color:"red",borderBlockColor:"red"}} onClick={()=>{props.setpopup(!props.popup)}} startIcon={<PreviewIcon/>}  >Decline</Button>
+        <Button type='submit' variant='contained' sx={{margin:"10px",width:"100px",height:'30px',borderRadius:"15px",background:"#39e75f",color:"black"}} startIcon={<CheckIcon/>}  ><Typography>Accept</Typography></Button>
+        <Button type='submit' variant='outlined' sx={{margin:"10px",width:"100px",height:'30px',borderRadius:"15px",color:"red",borderBlockColor:"red"}} onClick={()=>{props.setpopup(!props.popup)}} startIcon={<CloseIcon/>}  ><Typography>Decline</Typography></Button>
 
         </Box>
        </Stack>
