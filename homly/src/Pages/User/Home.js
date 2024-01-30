@@ -14,7 +14,7 @@ import axios from "axios";
 // import Select from "react-select";
 import SearchIcon from "@mui/icons-material/Search";
 
-import NavBar from "../../Components/NavBar/NavBar";
+import NavBar from "../../Components/User/NavBar/NavBar";
 import theme from "../../HomlyTheme";
 // import MyReservationCard from "../../Components/MyReservationCard/MyReservationCard";
 

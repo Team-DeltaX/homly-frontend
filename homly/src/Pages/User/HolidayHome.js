@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, Container,Typography } from '@mui/material'
 
-import NavBar from '../../Components/NavBar/NavBar'
+import NavBar from '../../Components/User/NavBar/NavBar'
 
 
 export default function HolidayHome() {

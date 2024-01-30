@@ -1,28 +1,28 @@
-import React from "react";
-import NavBar from '../../Components/NavBar/NavBar'
+// import React from "react";
+// import NavBar from '../../Components/NavBar/NavBar'
 
 
-import { Box, Container, ThemeProvider, Typography } from "@mui/material";
+// import { Box, Container, ThemeProvider, Typography } from "@mui/material";
 
-import theme from '../../HomlyTheme'
+// import theme from '../../HomlyTheme'
 
-const MyReservation = () => {
-  return (
+// const MyReservation = () => {
+//   return (
     
-      <ThemeProvider theme={theme}>
-        <Box display={'flex'}>
-          <NavBar sideNavBar='block'/>
-          <Container>
-            <Box sx={{ display: "flex", mt: 10 }}>
-              <Typography variant="h4">Personal Details</Typography>
-            </Box>
-          </Container>
-        </Box>
-      </ThemeProvider>
+//       <ThemeProvider theme={theme}>
+//         <Box display={'flex'}>
+//           <NavBar sideNavBar='block'/>
+//           <Container>
+//             <Box sx={{ display: "flex", mt: 10 }}>
+//               <Typography variant="h4">Personal Details</Typography>
+//             </Box>
+//           </Container>
+//         </Box>
+//       </ThemeProvider>
       
 
     
-  );
-};
+//   );
+// };
 
-export default MyReservation;
+// export default MyReservation;
