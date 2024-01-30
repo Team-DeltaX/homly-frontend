@@ -45,9 +45,9 @@ export default function HolidayHomeCard(props) {
               >
                 {props.HHName}
               </Typography>
-              <Stack direction="row">
+              <Stack direction="row" sx={{alignItems:'center'}}>
                 <StarIcon sx={{ color: "primary.main" }} />
-                <Typography>{props.HHRating}</Typography>
+                <Typography sx={{fontWeight:'medium'}}>{props.HHRating}</Typography>
               </Stack>
             </Stack>
             <Typography>{props.HHLocation}</Typography>
