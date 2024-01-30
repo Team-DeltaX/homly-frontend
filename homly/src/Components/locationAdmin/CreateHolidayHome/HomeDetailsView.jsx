@@ -19,32 +19,6 @@ const HomeDetailsView = ({ setSubmit }) => {
     name: false, address: false, description: false, contactNo1: false, contactNo2: false
   });
 
-  // const areAllErrorsFalse = () => {
-  //   return Object.values(error).every(value => value === false);
-  // };
-
-  // if (value.name === '' || value.address === '' || value.district === '' || value.description === '' || value.contactNo1 === '' || value.contactNo2 === '' || value.catogery === '' || value.status === '') {
-  //   console.log("first");
-
-  // }else{
-
-  // }
-  // if (areAllErrorsFalse()) {
-  //     // setSubmit(prevState => ({ ...prevState, holidayhomeDetails: false }));
-  //   }
-  //   else {
-  //     // setSubmit(prevState => ({ ...prevState, holidayhomeDetails: true }));
-
-  //   }
-
-  // } else {
-  //   // There is at least one error, handle accordingly
-  //   console.log('There are errors.');
-  // }
-
-
-
-
 
   const handleNameChange = (e) => {
     setValue({ ...value, name: e.target.value });

@@ -84,9 +84,10 @@ const UnitBreakDown = ({ unitCode, unitAc, floorLevel, unitNoOfAdults, unitNoOfC
     };
 
     // Sure dialog for remove unit
-    const [openUnitRemove, setOpenUnitRemove] = useState(false);
+
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+    const [openUnitRemove, setOpenUnitRemove] = useState(false);//unit remove state pop up
 
     const handleOpenUnitRemove = () => {
         setOpenUnitRemove(true);
@@ -331,7 +332,7 @@ const UnitBreakDown = ({ unitCode, unitAc, floorLevel, unitNoOfAdults, unitNoOfC
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button autoFocus onClick={() => handleUnitDelete(unitCode, selectedRooms)}>
+                    <Button autoFocus onClick={() => { handleCloseUnitRemove(); handleUnitDelete(unitCode, selectedRooms); }}>
                         Yes
                     </Button>
                     <Button onClick={handleCloseUnitRemove} autoFocus>

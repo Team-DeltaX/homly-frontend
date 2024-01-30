@@ -113,6 +113,18 @@ const HomeBreakDownView = () => {
     setOpenUnitFillAlert(false);
   };
 
+  //unit - same unit no exist warning
+
+  const [openUnitExistAlert, setOpenUnitExistAlert] = useState(false);
+
+  const handleCloseUnitExistAlert = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenUnitExistAlert(false);
+  };
+
 
 
 
@@ -128,9 +140,17 @@ const HomeBreakDownView = () => {
     setOpenHallFillAlert(false);
   };
 
+  //unit - same unit no exist warning
 
+  const [openHallExistAlert, setOpenHallExistAlert] = useState(false);
 
+  const handleCloseHallExistAlert = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
 
+    setOpenHallExistAlert(false);
+  };
 
 
   const [values, setValues] = useState({
@@ -172,6 +192,7 @@ const HomeBreakDownView = () => {
   });
 
   const [roomExist, setRoomExist] = useState(false);
+
   const handleRoomCodeChange = (e) => {
     const roomCodeExists = roomArray.some(room => room.roomCode === e.target.value);
     if (roomCodeExists) {
@@ -307,7 +328,14 @@ const HomeBreakDownView = () => {
   const [unitValues, setUnitValues] = useState({
     unitCode: '', unitAc: '', floorLevel: '', unitRemark: '', unitRental: '', roomAttached: false, selectedRooms: []
   })
+  const [unitExist, setUnitExist] = useState(false);
   const handleUnitCodeChange = (e) => {
+    const unitCodeExists = unitArray.some(unit => unit.unitCode === e.target.value);
+    if (unitCodeExists) {
+      setUnitExist(true)
+    } else {
+      setUnitExist(false)
+    }
     setUnitValues({ ...unitValues, unitCode: e.target.value });
 
   }
@@ -339,6 +367,11 @@ const HomeBreakDownView = () => {
 
     }
 
+    if (unitExist) {
+      setOpenUnitExistAlert(true);
+      return;
+    }
+
     const newUnit = {
       ...unitValues,
       selectedRooms: [],
@@ -349,7 +382,9 @@ const HomeBreakDownView = () => {
   };
 
 
+
   const handleUnitDelete = (unitCode, selectedRooms) => {
+
     setRoomArray((prevRoomArray) => {
       const updatedRoomArray = prevRoomArray.map((room) => {
         if (selectedRooms.some((item) => item.roomCode === room.roomCode)) {
@@ -424,7 +459,16 @@ const HomeBreakDownView = () => {
   const [hallValues, setHallValues] = useState({
     hallCode: '', hallAc: '', floorLevel: '', hallRemark: '', hallRental: '', hallNoOfAdults: '', hallNoOfChildren: '',
   })
+  const [hallExist, setHallExist] = useState(false);
+
   const handleHallCodeChange = (e) => {
+    const hallCodeExists = hallArray.some(hall => hall.hallCode === e.target.value);
+    if (hallCodeExists) {
+      setHallExist(true);
+    }
+    else {
+      setHallExist(false);
+    }
     setHallValues({ ...hallValues, hallCode: e.target.value });
 
   }
@@ -460,6 +504,10 @@ const HomeBreakDownView = () => {
   const handleSaveHall = () => {
     if (hallValues.hallCode === '' || hallValues.hallAc === '' || hallValues.floorLevel === '' || hallValues.hallRemark === '' || hallValues.hallRental === '') {
       setOpenHallFillAlert(true);
+      return;
+    }
+    if (hallExist) {
+      setOpenHallExistAlert(true);
       return;
     }
     setHallArray([...hallArray, hallValues]);
@@ -851,11 +899,11 @@ const HomeBreakDownView = () => {
           <DialogTitle>Add New Unit</DialogTitle>
           <form>
             <DialogContent sx={{ maxHeight: "350px" }}>
-              <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
+              <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '20px' }}>
                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                   <Typography variant='p' sx={{ color: 'black' }}>Unit No</Typography>
                 </Box>
-                <TextField required id="outlined-required" placeholder='Enter Unit No' fullWidth size='small' onChange={handleUnitCodeChange} />
+                <TextField className='input_field' required id="outlined-required" placeholder='Enter Unit No' fullWidth size='small' onChange={handleUnitCodeChange} helperText={unitExist ? "Already exist" : ''} />
               </Box>
               <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
@@ -995,11 +1043,11 @@ const HomeBreakDownView = () => {
           <DialogTitle>Add New Hall</DialogTitle>
           <form>
             <DialogContent sx={{ maxHeight: "350px" }}>
-              <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
+              <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '20px' }}>
                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                   <Typography variant='p' sx={{ color: 'black' }}>Hall Code</Typography>
                 </Box>
-                <TextField error={error.ctName} required id="outlined-required" label="Hall Name" placeholder='Hall Name/Code' fullWidth size='small' onChange={handleHallCodeChange} helperText={error.ctName ? "Invalid Input" : ''} />
+                <TextField className="input_field" error={error.ctName} required id="outlined-required" label="Hall Name" placeholder='Hall Name/Code' fullWidth size='small' onChange={handleHallCodeChange} helperText={hallExist ? "Already exist" : ''} />
               </Box>
               <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
@@ -1210,6 +1258,35 @@ const HomeBreakDownView = () => {
             sx={{ width: '100%' }}
           >
             Can't Save | Room No already exist
+          </Alert>
+        </Snackbar>
+      </div>
+
+      {/* alert same unit exist add room popup*/}
+      <div>
+
+        <Snackbar open={openUnitExistAlert} autoHideDuration={4000} onClose={handleCloseUnitExistAlert}>
+          <Alert
+            onClose={handleCloseUnitExistAlert}
+            severity="error"
+            variant="filled"
+            sx={{ width: '100%' }}
+          >
+            Can't Save | Unit No already exist
+          </Alert>
+        </Snackbar>
+      </div>
+      {/* alert same hall exist add hall popup*/}
+      <div>
+
+        <Snackbar open={openHallExistAlert} autoHideDuration={4000} onClose={handleCloseHallExistAlert}>
+          <Alert
+            onClose={handleCloseHallExistAlert}
+            severity="error"
+            variant="filled"
+            sx={{ width: '100%' }}
+          >
+            Can't Save | Hall No already exist
           </Alert>
         </Snackbar>
       </div>
