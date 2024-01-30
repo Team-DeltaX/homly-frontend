@@ -21,16 +21,17 @@ const PrimaryAddAdmin = () => {
 
 
     
-    const [serviceno,setServiceno]=useState("")
+    const [adminno,setadminno]=useState("")
     const [username,setUsername]=useState("")
     const [password,setPassword]=useState("")
     const [contactno,setContactno]=useState("")
     const [email,SetEmail]=useState("")
     const [worklocation,SetWorklocation]=useState("")
+    const [substitute,SetSubstitute]=useState("")
     const [passworderror,setPassworderror]=useState(false)
     const [mobileerror,setMobileerror]=useState(false)
     const [emailerror,setEmailerror]=useState(false)
-    const [serviceerror,setServiceerror]=useState(false)
+    const [adminerror,setadminerror]=useState(false)
     const [usernameerror,setUsernameerror]=useState(false)
     const [worklocationeerror,setWorklocationerror]=useState(false)
 
@@ -69,12 +70,12 @@ const PrimaryAddAdmin = () => {
             setEmailerror(true)
         }
     }
-    const valideservice=(serviceno)=>{
-        if(serviceno.length<2){
-            setServiceerror(true)
+    const validateadmin=(adminno)=>{
+        if(adminno.length<2){
+            setadminerror(true)
 
         }else{
-            setServiceerror(false)
+            setadminerror(false)
 
         }
     }
@@ -97,15 +98,27 @@ const PrimaryAddAdmin = () => {
     }
 
     const handlesubmit=()=>{
+        if(substitute.length<1){
+            SetSubstitute("Null")
+        }
         
-        console.log("submitted")
+        console.log({
+            AdminNo:adminno,
+            UserName:username,
+            password:password,
+            contactNumber:contactno,
+            Email:email,
+            WorkLocation:worklocation,
+            RepleceAdminNo:substitute
+        })
         handleClick()
-        setServiceno('')
+        setadminno('')
         setUsername('')
         setContactno('')
         SetEmail('')
         SetWorklocation('')
         setPassword('')
+        SetSubstitute('')
     }
     const ValidatePassword=(password)=>{
         if(password.length <= 8){
@@ -151,7 +164,7 @@ const PrimaryAddAdmin = () => {
                 <form onSubmit={(e)=>{
                     e.preventDefault();
 
-                    if(!(mobileerror || passworderror ||emailerror || usernameerror ||serviceerror||worklocationeerror)){
+                    if(!(mobileerror || passworderror ||emailerror || usernameerror ||adminerror||worklocationeerror)){
                         handlesubmit();
                     }else{
                         console.log('error')
@@ -173,7 +186,7 @@ const PrimaryAddAdmin = () => {
                                 <Grid container width={"60%"} sx={{marginLeft:'15%',alignItems:'center',padding:'10px'}}>
                     
                                     <Grid item  md={6} sm={12} xs={12}>
-                                    <InputLabel>Service Number</InputLabel>
+                                    <InputLabel>Admin Number</InputLabel>
                                     </Grid>
                                     <Grid item md={6} sm={12} xs={12}>
                                     {/* <TextField
@@ -188,10 +201,10 @@ const PrimaryAddAdmin = () => {
                     
                     
                                    ></TextField> */}
-                                   <TextField value={serviceno}
+                                   <TextField value={adminno}
                                    required={true}
-                                   onChange={e=>{setServiceno(e.target.value)
-                                    valideservice(e.target.value)
+                                   onChange={e=>{setadminno(e.target.value)
+                                    validateadmin(e.target.value)
 
                                     
                                 
@@ -199,7 +212,7 @@ const PrimaryAddAdmin = () => {
 
                                     alignItems="center"
                                     fullWidth
-                                    error={serviceerror}
+                                    error={adminerror}
                     
                                     type='text'
                                     size="small"
@@ -319,6 +332,29 @@ const PrimaryAddAdmin = () => {
                                     '& fieldset': {  borderRadius: '10px', borderWidth: '2px', fontFamily: 'roboto' ,},width:"100%"}}></TextField>
                                     </Grid>
                                 </Grid>
+                                <Grid item sm={12}>
+                                <Grid container width={"60%"} sx={{marginLeft:'15%',alignItems:'center',padding:'10px'}}>
+                                    <Grid item  md={6} sm={12} xs={12}>
+                                    <InputLabel  >Replace Admin No<br></br>(if substitute)</InputLabel>
+                                    </Grid>
+                    
+                                    <Grid item md={6} sm={12} xs={12}>
+                                    <TextField value={substitute}
+                                    type='text'
+
+                                //    required={true}
+                                   onChange={e=>{SetSubstitute(e.target.value)
+                                    // validlocation(e.target.value)
+                                
+                                }}
+                                    alignItems="center"
+                                    // error={worklocationeerror}
+                                    size="small"
+                                    sx={{background:"white",marginLeft:'3%',borderRadius:"15px",
+                                    '& fieldset': {  borderRadius: '10px', borderWidth: '2px', fontFamily: 'roboto' ,},width:"100%"}}></TextField>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
                             </Grid>
                             <Grid item sm={12} sx={{marginLeft:{md:"60%",xs:'20%'},marginBottom:"2%"}}>
                                 <Button type='submit' variant='contained'  >Add</Button>

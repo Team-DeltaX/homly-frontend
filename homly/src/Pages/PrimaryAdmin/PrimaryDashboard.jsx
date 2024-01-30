@@ -109,7 +109,7 @@ const PrimaryDashboard = () => {
 
                         
                       </Box>
-                      <Populer/>
+                     
                     </Box>
                   </Grid>
                   <Grid item md={4} sx={{ height: "100vh" }}>
