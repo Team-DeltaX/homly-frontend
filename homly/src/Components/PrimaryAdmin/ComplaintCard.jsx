@@ -44,7 +44,7 @@ const ComplaintCard=(props)=>{
             props.setSelecteduser(props.data)
             
             }}
-        >View</Button>
+        ><Typography>View</Typography></Button>
 
 
         </Box>
