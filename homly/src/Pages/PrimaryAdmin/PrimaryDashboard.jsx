@@ -20,6 +20,7 @@ import SimpleCharts from "../../Components/PrimaryAdmin/Simplecharts";
 import { PieChart } from '@mui/x-charts/PieChart';
 import CircularProgress from '@mui/joy/CircularProgress';
 import Populer from "../../Components/PrimaryAdmin/Populer";
+import Income from "../../Components/PrimaryAdmin/Income";
 
 
 
@@ -109,6 +110,7 @@ const PrimaryDashboard = () => {
 
                         
                       </Box>
+                      <Income/>
                      
                     </Box>
                   </Grid>
