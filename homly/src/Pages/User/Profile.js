@@ -40,10 +40,10 @@ import "./Profile.css";
 // import "../../Components/NavBar/NavBar.css";
 
 // pages component
-import PersonalDetailsCom from "../../Components/MyProfile/PersonalDetailsCom";
-import PaymentDetailsCom from "../../Components/MyProfile/PaymentDetailsCom";
-import Security from "../../Components/MyProfile/Security";
-import MyReservation from "../../Components/MyProfile/MyReservation";
+import PersonalDetailsCom from "../../Components/User/MyProfile/PersonalDetailsCom";
+import PaymentDetailsCom from "../../Components/User/MyProfile/PaymentDetailsCom";
+import Security from "../../Components/User/MyProfile/Security";
+import MyReservation from "../../Components/User/MyProfile/MyReservation";
 
 // let vh = window.innerHeight * 0.01;
 

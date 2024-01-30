@@ -11,9 +11,9 @@ import {
 import PersonalDetailsGrid from "../PersonalDetailsGrid/PersonalDetailsGrid";
 import UpdateButton from "../PersonalDetailsGrid/UpdateButton";
 
-import { EditPersonalDetailsContext } from "../../Contexts/EditPersonalDetailsContext";
+import { EditPersonalDetailsContext } from "../../../Contexts/EditPersonalDetailsContext";
 
-import theme from "../../HomlyTheme";
+import theme from "../../../HomlyTheme";
 
 
 const PersonalDetailsCom = () => {

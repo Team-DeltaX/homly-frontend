@@ -20,7 +20,7 @@ import {
 
 // import { EditPersonalDetailsContext } from "../../Contexts/EditPersonalDetailsContext";
 import PasswordComGrid from "./PasswordComGrid";
-import theme from "../../HomlyTheme";
+import theme from "../../../HomlyTheme";
 
 const gridData = [
   {

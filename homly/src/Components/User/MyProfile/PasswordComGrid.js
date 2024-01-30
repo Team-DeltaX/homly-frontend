@@ -8,7 +8,7 @@ import {
   IconButton,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import theme from "../../HomlyTheme";
+import theme from "../../../HomlyTheme";
 
 const PasswordComGrid = (props) => {
   const [showPassword, setShowPassword] = useState(false);

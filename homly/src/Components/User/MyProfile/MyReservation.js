@@ -15,7 +15,7 @@ import {
 
 // import { EditPersonalDetailsContext } from "../../Contexts/EditPersonalDetailsContext";
 
-import theme from "../../HomlyTheme";
+import theme from "../../../HomlyTheme";
 
 
 const MyReservation = () => {
