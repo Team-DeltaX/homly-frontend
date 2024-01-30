@@ -158,7 +158,7 @@ const NavBar = () => {
                             ))}
                         </Stack>
                         {/* notification button */}
-                        <NotificationPanel notifications={notifications} />
+                        {/* <NotificationPanel /> */}
                         {/* user button */}
                         <Box sx={{ flexGrow: 0 }}>
                             <Tooltip title="Open settings">
