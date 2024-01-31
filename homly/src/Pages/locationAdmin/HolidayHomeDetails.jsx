@@ -1,5 +1,6 @@
 
 import './style.css';
+import "react-big-calendar/lib/css/react-big-calendar.css";
 import React, { useState } from 'react'
 
 import Box from '@mui/material/Box';
@@ -20,6 +21,14 @@ const HolidayHomeDetails = () => {
 
     const [showNav, setShowNav] = useState('nav_grid_deactive')
 
+    const myEventsList = [
+        { start: new Date(), end: new Date(), title: "special event" },
+        { start: new Date(), end: new Date(), title: "special event" },
+        { start: new Date(), end: new Date(), title: "special event" },
+        { start: new Date(), end: new Date(), title: "special event" },
+
+    ];
+
     return (
         <ThemeProvider theme={theme}>
             <Box className="main_container" sx={{ width: "100%", backgroundColor: 'primary.main', overflow: 'hidden' }}>
@@ -31,10 +40,12 @@ const HolidayHomeDetails = () => {
                         <Grid className='container_grid' xs={9} sx={{ backgroundColor: 'white', borderTopLeftRadius: '20px', padding: '10px 30px', height: '100vh', position: 'relative' }}>
                             <Box sx={{ height: "100%" }}>
                                 <PageTitle setShowNav={setShowNav} title={'Holiday Homes Details'} bell={true} />
-
+                                <Box>
+                                    
+                                </Box>
                                 <Calendar
                                     localizer={localizer}
-                                    events={[ { title: 'holiday home 1', start: new Date(), end: new Date(moment().add(1, "days")) } ]}
+                                    events={myEventsList}
                                     startAccessor="start"
                                     endAccessor="end"
                                     style={{ height: 500 }}
