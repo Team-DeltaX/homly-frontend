@@ -126,6 +126,19 @@ const HomeBreakDownView = () => {
   };
 
 
+  //unit - same unit no exist warning
+
+  const [openHallExistAlert, setOpenHallExistAlert] = useState(false);
+
+  const handleCloseHallExistAlert = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenHallExistAlert(false);
+  };
+
+
 
 
 
@@ -140,17 +153,6 @@ const HomeBreakDownView = () => {
     setOpenHallFillAlert(false);
   };
 
-  //unit - same unit no exist warning
-
-  const [openHallExistAlert, setOpenHallExistAlert] = useState(false);
-
-  const handleCloseHallExistAlert = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setOpenHallExistAlert(false);
-  };
 
 
   const [values, setValues] = useState({
@@ -358,7 +360,6 @@ const HomeBreakDownView = () => {
 
   const [unitArray, setUnitArray] = useState([]);
 
-  console.log(unitArray);
 
   const handleSaveUnit = () => {
     if (unitValues.unitCode === '' || unitValues.unitAc === '' || unitValues.floorLevel === '' || unitValues.unitRemark === '' || unitValues.unitRental === '') {
@@ -1215,6 +1216,21 @@ const HomeBreakDownView = () => {
         </Snackbar>
       </div>
 
+      {/* alert same room exist add room popup*/}
+      <div>
+
+        <Snackbar open={openRoomExistAlert} autoHideDuration={4000} onClose={handleCloseRoomExistAlert}>
+          <Alert
+            onClose={handleCloseRoomExistAlert}
+            severity="error"
+            variant="filled"
+            sx={{ width: '100%' }}
+          >
+            Can't Save | Room No already exist
+          </Alert>
+        </Snackbar>
+      </div>
+
       {/* alert add unit all should fill*/}
       <div>
 
@@ -1230,6 +1246,21 @@ const HomeBreakDownView = () => {
         </Snackbar>
       </div>
 
+
+      {/* alert same unit exist add room popup*/}
+      <div>
+
+        <Snackbar open={openUnitExistAlert} autoHideDuration={4000} onClose={handleCloseUnitExistAlert}>
+          <Alert
+            onClose={handleCloseUnitExistAlert}
+            severity="error"
+            variant="filled"
+            sx={{ width: '100%' }}
+          >
+            Can't Save | Unit No already exist
+          </Alert>
+        </Snackbar>
+      </div>
 
 
       {/* alert add hall all should fill*/}
@@ -1247,35 +1278,7 @@ const HomeBreakDownView = () => {
         </Snackbar>
       </div>
 
-      {/* alert same room exist add room popup*/}
-      <div>
 
-        <Snackbar open={openRoomExistAlert} autoHideDuration={4000} onClose={handleCloseRoomExistAlert}>
-          <Alert
-            onClose={handleCloseRoomExistAlert}
-            severity="error"
-            variant="filled"
-            sx={{ width: '100%' }}
-          >
-            Can't Save | Room No already exist
-          </Alert>
-        </Snackbar>
-      </div>
-
-      {/* alert same unit exist add room popup*/}
-      <div>
-
-        <Snackbar open={openUnitExistAlert} autoHideDuration={4000} onClose={handleCloseUnitExistAlert}>
-          <Alert
-            onClose={handleCloseUnitExistAlert}
-            severity="error"
-            variant="filled"
-            sx={{ width: '100%' }}
-          >
-            Can't Save | Unit No already exist
-          </Alert>
-        </Snackbar>
-      </div>
       {/* alert same hall exist add hall popup*/}
       <div>
 

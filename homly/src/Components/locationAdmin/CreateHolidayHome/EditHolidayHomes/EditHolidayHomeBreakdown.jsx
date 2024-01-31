@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import { Box, Grid, Typography, TextField, FormGroup, FormControlLabel, Checkbox } from '@mui/material';
+import { Box, Grid, Typography, TextField, FormGroup, FormControlLabel, Checkbox, Button } from '@mui/material';
 
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+
+import EditRoom from './EditRoom';
+import EditUnit from './EditUnit';
 
 
 function CustomTabPanel(props) {
@@ -47,6 +50,12 @@ const EditHolidayHomeBreakdown = () => {
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
+
+    const [roomArray, setRoomArray] = useState([]);
+
+
+
+
 
     return (
         <Box>
@@ -122,10 +131,10 @@ const EditHolidayHomeBreakdown = () => {
                             </Tabs>
                         </Box>
                         <CustomTabPanel value={value} index={0}>
-                            Item One
+                            <EditRoom roomArray={roomArray} setRoomArray={setRoomArray} />
                         </CustomTabPanel>
                         <CustomTabPanel value={value} index={1}>
-                            Item Two
+                            <EditUnit roomArray={roomArray} setRoomArray={setRoomArray} />
                         </CustomTabPanel>
                         <CustomTabPanel value={value} index={2}>
                             Item Three
@@ -135,6 +144,8 @@ const EditHolidayHomeBreakdown = () => {
 
                 </Grid>
             </fieldset>
+
+
         </Box >
     )
 }
