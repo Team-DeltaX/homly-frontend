@@ -9,6 +9,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
+import BasicDatePicker from '../Common/BasicDatePicker';
 
 const currencies = [
   {
@@ -81,6 +82,14 @@ export default function AddSpecialReservationPopUp() {
                 </MenuItem>
               ))}
             </TextField>
+            <BasicDatePicker
+              fullWidth
+              title="Check In Date"
+            />
+            <BasicDatePicker
+              fullWidth
+              title="Check Out Date"
+            />
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleClose}>
