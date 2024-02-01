@@ -7,6 +7,8 @@ import Tab from '@mui/material/Tab';
 
 import EditRoom from './EditRoom';
 import EditUnit from './EditUnit';
+import EditHall from './EditHall';
+
 
 
 function CustomTabPanel(props) {
@@ -52,6 +54,8 @@ const EditHolidayHomeBreakdown = () => {
     };
 
     const [roomArray, setRoomArray] = useState([]);
+    const [unitArray, setUnitArray] = useState([]);
+    const [hallArray, setHallArray] = useState([]);
 
 
 
@@ -134,10 +138,10 @@ const EditHolidayHomeBreakdown = () => {
                             <EditRoom roomArray={roomArray} setRoomArray={setRoomArray} />
                         </CustomTabPanel>
                         <CustomTabPanel value={value} index={1}>
-                            <EditUnit roomArray={roomArray} setRoomArray={setRoomArray} />
+                            <EditUnit roomArray={roomArray} setRoomArray={setRoomArray} unitArray={unitArray} setUnitArray={setUnitArray} />
                         </CustomTabPanel>
                         <CustomTabPanel value={value} index={2}>
-                            Item Three
+                            <EditHall hallArray={hallArray} setHallArray={setHallArray} />
                         </CustomTabPanel>
                     </Box>
 

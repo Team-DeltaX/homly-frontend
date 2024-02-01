@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
-import { Box, Button, Typography, TextField, Paper } from '@mui/material'
+import { Box, Button, TextField, Typography, Paper } from '@mui/material'
 import CancelIcon from '@mui/icons-material/Cancel';
-
 
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -15,188 +14,53 @@ import Select from '@mui/material/Select';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 
-import UnitBreakDown from '../UnitBreakDown';
-const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
+import HallBreakDown from '../HallBreakDown';
 
-    const [openUnit, setOpenUnit] = useState(false);
+const EditHall = ({ hallArray, setHallArray }) => {
+
+    const [open, setOpen] = useState(false);
+    const [openHall, setOpenHall] = useState(false);
     const [fullWidth, setFullWidth] = useState(true);
     const [maxWidth, setMaxWidth] = useState('sm');
 
-    //dropdowns 
 
-    //AC room
-    const [value, setValue] = useState(0);
-
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
+    const handleClickOpen = () => {
+        setOpen(true);
     };
 
 
 
-    const handleClickOpenUnit = () => {
-        setOpenUnit(true);
+    const handleClose = () => {
+        setOpen(false);
     };
 
-    const handleCloseUnit = () => {
-        setOpenUnit(false);
+
+    const handleClickOpenHall = () => {
+        setOpenHall(true);
     };
 
-    const [error, setError] = useState({
-        ctName: false, ctAddress: false, ctDescription: false, ctContactNo: false
-    });
 
-
-    const [unitValues, setUnitValues] = useState({
-        unitCode: '', unitAc: '', floorLevel: '', unitRemark: '', unitRental: '', roomAttached: false, selectedRooms: []
-    })
-    const [unitExist, setUnitExist] = useState(false);
-    const handleUnitCodeChange = (e) => {
-        const unitCodeExists = unitArray.some(unit => unit.unitCode === e.target.value);
-        if (unitCodeExists) {
-            setUnitExist(true)
-        } else {
-            setUnitExist(false)
-        }
-        setUnitValues({ ...unitValues, unitCode: e.target.value });
-
-    }
-
-    const handleUnitAcChange = (e) => {
-        setUnitValues({ ...unitValues, unitAc: e.target.value });
-    }
-
-    const handleFloorLevelChange = (e) => {
-        setUnitValues({ ...unitValues, floorLevel: e.target.value });
-    }
-
-    const handleUnitRemarkChange = (e) => {
-        setUnitValues({ ...unitValues, unitRemark: e.target.value });
-    }
-
-    const handleUnitRentalChange = (e) => {
-        setUnitValues({ ...unitValues, unitRental: e.target.value });
-    }
-
-
-
-    const handleSaveUnit = () => {
-        if (unitValues.unitCode === '' || unitValues.unitAc === '' || unitValues.floorLevel === '' || unitValues.unitRemark === '' || unitValues.unitRental === '') {
-            setOpenUnitFillAlert(true);
-            return;
-
-        }
-
-        if (unitExist) {
-            setOpenUnitExistAlert(true);
-            return;
-        }
-
-        const newUnit = {
-            ...unitValues,
-            selectedRooms: [],
-            unitRentalArray
-        };
-        setUnitArray([...unitArray, newUnit]);
-        setUnitRentalArray([]);
-        setUnitValues({ unitCode: '', unitAc: '', floorLevel: '', unitRemark: '', unitRental: '', roomAttached: false, })
-        setOpenUnit(false);
+    const handleCloseHall = () => {
+        setOpenHall(false);
     };
 
 
 
-    const handleUnitDelete = (unitCode, selectedRooms) => {
-
-        setRoomArray((prevRoomArray) => {
-            const updatedRoomArray = prevRoomArray.map((room) => {
-                if (selectedRooms.some((item) => item.roomCode === room.roomCode)) {
-                    return { ...room, groupByUnit: false };
-                }
-                return room;
-            });
-
-            return updatedRoomArray;
-        });
-
-        selectedRooms.length = 0;
-
-        setUnitArray((prevUnitArray) => {
-            const newUnitArray = prevUnitArray.filter((item) => item.unitCode !== unitCode);
-            return newUnitArray;
-        });
-        return null;
-    };
 
 
+    //hall -all fields should filled warning
+    const [openHallFillAlert, setOpenHallFillAlert] = useState(false);
 
-    const [unitRental, setUnitRental] = useState({
-        district: '', weekDays: '', weekEnds: ''
-    });
-
-    const handleUnitDistrict = (e) => {
-        setUnitRental({ ...unitRental, district: e.target.value });
-    }
-
-    const handleUnitWeedays = (e) => {
-        setUnitRental({ ...unitRental, weekDays: e.target.value });
-        setNewUnitWeekDayValue(e.target.value);
-    }
-
-    const handleUnitWeekends = (e) => {
-        setUnitRental({ ...unitRental, weekEnds: e.target.value });
-        setNewUnitWeekendValue(e.target.value);
-    }
-
-
-    const [newUnitWeekDayValue, setNewUnitWeekDayValue] = useState('')
-    const [newUnitWeekendValue, setNewUnitWeekendValue] = useState('')
-
-
-
-    const [unitRentalArray, setUnitRentalArray] = useState([]);
-    const handleUnitAdd = () => {
-        if (unitRental.district === '' || unitRental.weekDays === '' || unitRental.weekEnds === '') return;
-        setUnitRentalArray([...unitRentalArray, unitRental]);
-        setUnitRental({
-            district: '',
-            weekDays: '',
-            weekEnds: '',
-        });
-
-        setNewUnitWeekDayValue('');
-        setNewUnitWeekendValue('');
-    };
-
-
-    const handleRemoveUnitRentalItem = (no) => {
-        const newUnitRentalArray = unitRentalArray.filter((item, index) => index !== no);
-        setUnitRentalArray(newUnitRentalArray);
-    }
-
-    //unit - all fields should filled warning
-    const [openUnitFillAlert, setOpenUnitFillAlert] = useState(false);
-
-    const handleCloseUnitFillAlert = (event, reason) => {
+    const handleCloseHallFillAlert = (event, reason) => {
         if (reason === 'clickaway') {
             return;
         }
 
-        setOpenUnitFillAlert(false);
-    };
-
-    //unit - same unit no exist warning
-
-    const [openUnitExistAlert, setOpenUnitExistAlert] = useState(false);
-
-    const handleCloseUnitExistAlert = (event, reason) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-
-        setOpenUnitExistAlert(false);
+        setOpenHallFillAlert(false);
     };
 
 
-    //unit - same unit no exist warning
+    //hall - same hall no exist warning
 
     const [openHallExistAlert, setOpenHallExistAlert] = useState(false);
 
@@ -208,50 +72,161 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
         setOpenHallExistAlert(false);
     };
 
-    console.log(unitArray);
+    const [error, setError] = useState({
+        ctName: false, ctAddress: false, ctDescription: false, ctContactNo: false
+    });
 
 
+
+    const [hallValues, setHallValues] = useState({
+        hallCode: '', hallAc: '', floorLevel: '', hallRemark: '', hallRental: '', hallNoOfAdults: '', hallNoOfChildren: '',
+    })
+    const [hallExist, setHallExist] = useState(false);
+
+
+    const handleHallCodeChange = (e) => {
+        const hallCodeExists = hallArray.some(hall => hall.hallCode === e.target.value);
+        if (hallCodeExists) {
+            setHallExist(true);
+        }
+        else {
+            setHallExist(false);
+        }
+        setHallValues({ ...hallValues, hallCode: e.target.value });
+
+    }
+
+    const handleHallAcChange = (e) => {
+        setHallValues({ ...hallValues, hallAc: e.target.value });
+    }
+
+    const handleHallFloorChange = (e) => {
+        setHallValues({ ...hallValues, floorLevel: e.target.value });
+    }
+
+    const handleHallRemarksChange = (e) => {
+        setHallValues({ ...hallValues, hallRemark: e.target.value });
+    }
+
+    const handleHallRentalChange = (e) => {
+        setHallValues({ ...hallValues, hallRental: e.target.value });
+    }
+
+    const handleHallNoOfAdultsChange = (e) => {
+        setHallValues({ ...hallValues, hallNoOfAdults: e.target.value });
+    }
+
+    const handleHallNoOfChildrenChange = (e) => {
+        setHallValues({ ...hallValues, hallNoOfChildren: e.target.value });
+    }
+
+
+
+
+
+    const handleSaveHall = () => {
+        if (hallValues.hallCode === '' || hallValues.hallAc === '' || hallValues.floorLevel === '' || hallValues.hallRemark === '' || hallValues.hallRental === '') {
+            setOpenHallFillAlert(true);
+            return;
+        }
+        if (hallExist) {
+            setOpenHallExistAlert(true);
+            return;
+        }
+
+        const updatedHallValues = { ...hallValues, hallRentalArray };
+        setHallArray([...hallArray, updatedHallValues]);
+        setHallRentalArray([]);
+        setHallValues({ hallCode: '', hallAc: '', floorLevel: '', hallRemark: '', hallRental: '', hallNoOfAdults: '', hallNoOfChildren: '', })
+        setOpenHall(false);
+    };
+
+    const handleHallDelete = (hallCode) => { //for room hallbreakdown component
+
+
+        const newHallArray = hallArray.filter((item) => item.hallCode !== hallCode);
+        setHallArray(newHallArray);
+
+    }
+
+
+    const [hallRental, setHallRental] = useState({
+        district: '', weekDays: '', weekEnds: ''
+    });
+
+    const handleHallDistrict = (e) => {
+        setHallRental({ ...hallRental, district: e.target.value });
+    }
+
+    const handleHallWeekdays = (e) => {
+        setHallRental({ ...hallRental, weekDays: e.target.value });
+    }
+
+    const handleHallWeekends = (e) => {
+        setHallRental({ ...hallRental, weekEnds: e.target.value });
+    }
+
+    const [hallRentalArray, setHallRentalArray] = useState([]);
+    const handleHallAdd = () => {
+        if (hallRental.district === '' || hallRental.weekDays === '' || hallRental.weekEnds === '') return;
+        setHallRentalArray([...hallRentalArray, hallRental]);
+
+    };
+
+    const handleRemoveRentalItem = (no) => {
+        const newRentalArray = hallRentalArray.filter((item, index) => index !== no);
+        setHallRentalArray(newRentalArray);
+    }
+
+
+    //dropdowns 
+
+    //AC room
+    const [value, setValue] = useState(0);
+
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
 
 
     return (
         <Box>
             <Box sx={{ display: 'flex', justifyContent: 'flex-start', marginTop: "12px", marginBottom: "12px" }}>
-                <Button size='small' variant='contained' sx={{ backgroundColor: 'primary.main' }} onClick={handleClickOpenUnit}>Add Unit</Button>
+                <Button size='small' variant='contained' sx={{ backgroundColor: 'primary.main' }} onClick={handleClickOpenHall}>Add Hall</Button>
             </Box>
-            {unitArray.length === 0
+
+            {hallArray.length === 0
                 ?
                 <Box sx={{ display: 'flex', padding: "2em", justifyContent: 'center' }}>
 
-                    <Typography variant='p' sx={{ color: 'grey' }}>No Units Added Yet</Typography>
+                    <Typography variant='p' sx={{ color: 'grey' }}>No Halls Added Yet</Typography>
                 </Box>
                 :
-                unitArray.map((item, index) => {
+                hallArray.map((item, index) => {
                     return (
-                        <UnitBreakDown key={index} unitCode={item.unitCode} unitAc={item.unitAc} floorLevel={item.floorLevel} unitNoOfAdults={item.unitNoOfAdults} unitNoOfChildren={item.unitNoOfChildren} unitRemarks={item.unitRemarks} unitRental={item.unitRental} roomArray={roomArray} setRoomArray={setRoomArray} selectedRooms={item.selectedRooms} handleUnitDelete={handleUnitDelete} />
+
+                        <HallBreakDown key={index} hallCode={item.hallCode} hallAc={item.hallAc} floorLevel={item.floorLevel} hallNoOfAdults={item.hallNoOfAdults} hallNoOfChildren={item.hallNoOfChildren} hallRemarks={item.hallRemarks} hallRental={item.hallRental} handleHallDelete={handleHallDelete} />
                     )
                 })}
 
 
-
-
-
-            {/* Add new Unit popup */}
+            {/* Add new Hall popup */}
             <React.Fragment>
                 <Dialog
                     fullWidth={fullWidth}
                     maxWidth={maxWidth}
-                    open={openUnit}
-                    onClose={handleCloseUnit}
+                    open={openHall}
+                    onClose={handleClose}
 
                 >
-                    <DialogTitle>Add New Unit</DialogTitle>
+                    <DialogTitle>Add New Hall</DialogTitle>
                     <form>
                         <DialogContent sx={{ maxHeight: "350px" }}>
                             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '20px' }}>
                                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
-                                    <Typography variant='p' sx={{ color: 'black' }}>Unit No</Typography>
+                                    <Typography variant='p' sx={{ color: 'black' }}>Hall Code</Typography>
                                 </Box>
-                                <TextField className='input_field' required id="outlined-required" placeholder='Enter Unit No' fullWidth size='small' onChange={handleUnitCodeChange} helperText={unitExist ? "Already exist" : ''} />
+                                <TextField className="input_field" error={error.ctName} required id="outlined-required" label="Hall Name" placeholder='Hall Name/Code' fullWidth size='small' onChange={handleHallCodeChange} helperText={hallExist ? "Already exist" : ''} />
                             </Box>
                             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
@@ -268,35 +243,46 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
                                         id="demo-simple-select"
                                         value={value.catogery}
                                         label="Age"
-                                        onChange={handleUnitAcChange}
+                                        onChange={handleHallAcChange}
                                     >
                                         <MenuItem value={"AC"}>AC</MenuItem>
-                                        <MenuItem value={"Non-AC"}>Non-AC</MenuItem>
+                                        <MenuItem value={"Non-Ac"}>Non-AC</MenuItem>
 
                                     </Select>
                                 </FormControl>
                             </Box>
+
                             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                     <Typography variant='p' sx={{ color: 'black' }}>Floor Level</Typography>
                                 </Box>
-                                <TextField type='number' error={error.ctName} required id="outlined-required" label="" placeholder='Floor Level' fullWidth size='small' onChange={handleFloorLevelChange} helperText={error.ctName ? "Invalid Input" : ''} />
+                                <TextField type='number' error={error.ctName} required id="outlined-required" label="" placeholder='No of beds' fullWidth size='small' onChange={handleHallFloorChange} helperText={error.ctName ? "Invalid Input" : ''} />
                             </Box>
-
+                            <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
+                                <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
+                                    <Typography variant='p' sx={{ color: 'black' }}>Number Of Adults</Typography>
+                                </Box>
+                                <TextField type='number' error={error.ctName} required id="outlined-required" label="" placeholder='No of Adults' fullWidth size='small' onChange={handleHallNoOfAdultsChange} helperText={error.ctName ? "Invalid Input" : ''} />
+                            </Box>
+                            <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
+                                <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
+                                    <Typography variant='p' sx={{ color: 'black' }}>Number Of Children</Typography>
+                                </Box>
+                                <TextField type='number' error={error.ctName} required id="outlined-required" label="" placeholder='No of Children' fullWidth size='small' onChange={handleHallNoOfChildrenChange} helperText={error.ctName ? "Invalid Input" : ''} />
+                            </Box>
 
                             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                     <Typography variant='p' sx={{ color: 'black' }}>Remark</Typography>
                                 </Box>
-                                <TextField error={error.ctName} required id="outlined-required" label="Remark" placeholder='Enter Remark' fullWidth size='small' onChange={handleUnitRemarkChange} helperText={error.ctName ? "Invalid Input" : ''} />
+                                <TextField error={error.ctName} required id="outlined-required" label="Remark" placeholder='Enter Remark' fullWidth size='small' onChange={handleHallRemarksChange} helperText={error.ctName ? "Invalid Input" : ''} />
                             </Box>
                             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                     <Typography variant='p' sx={{ color: 'black' }}>Rental</Typography>
                                 </Box>
-                                <TextField type='number' error={error.ctName} required id="outlined-required" label="Rental" placeholder='Rental' fullWidth size='small' onChange={handleUnitRentalChange} helperText={error.ctName ? "Invalid Input" : ''} />
+                                <TextField type='number' error={error.ctName} required id="outlined-required" label="Rental" placeholder='Rental' fullWidth size='small' onChange={handleHallRentalChange} helperText={error.ctName ? "Invalid Input" : ''} />
                             </Box>
-
                             <Box className="rental_container">
                                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                     <Typography variant='p' sx={{ color: 'black' }}>Add Rental</Typography>
@@ -315,7 +301,7 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
                                                 value={value.district}
                                                 label="Age"
                                                 sx={{ width: "150px" }}
-                                                onChange={handleUnitDistrict}
+                                                onChange={handleHallDistrict}
 
 
                                             >
@@ -334,16 +320,16 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
 
                                             </Select>
                                         </FormControl>
-                                        <TextField type='number' id="outlined-required" label="WeekDays" placeholder='WeekDays' size='small' value={newUnitWeekDayValue} onChange={handleUnitWeedays} helperText={error.ctName ? "Invalid Input" : ''} sx={{ width: "150px" }} />
-                                        <TextField type='number' id="outlined-required" label="Weekend" placeholder='Weekend' size='small' value={newUnitWeekendValue} onChange={handleUnitWeekends} helperText={error.ctName ? "Invalid Input" : ''} sx={{ width: "150px" }} />
-                                        <Button variant='contained' size='small' onClick={handleUnitAdd} >Add</Button>
+                                        <TextField type='number' id="outlined-required" label="WeekDays" placeholder='WeekDays' size='small' onChange={handleHallWeekdays} helperText={error.ctName ? "Invalid Input" : ''} sx={{ width: "150px" }} />
+                                        <TextField type='number' id="outlined-required" label="Weekend" placeholder='Weekend' size='small' onChange={handleHallWeekends} helperText={error.ctName ? "Invalid Input" : ''} sx={{ width: "150px" }} />
+                                        <Button variant='contained' size='small' onClick={handleHallAdd} >Add</Button>
 
 
                                     </Box>
                                 </Box>
 
 
-                                {unitRentalArray.map((item, index) => {
+                                {hallRentalArray.map((item, index) => {
                                     return (
                                         <Box>
                                             <Paper sx={{ display: 'flex', padding: "1.2em 2em", justifyContent: 'space-between', marginBottom: "1em" }}>
@@ -359,7 +345,7 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
                                                     <Typography variant='p' sx={{ color: 'black', marginRight: '0.6em', fontWeight: 'bold' }}>WeekEnd</Typography>
                                                     <Typography variant='p' sx={{ color: 'grey', fontWeight: '500' }}>{item.weekEnds}</Typography>
                                                 </Box>
-                                                <CancelIcon sx={{ cursor: 'pointer' }} onClick={() => handleRemoveUnitRentalItem(index)} />
+                                                <CancelIcon sx={{ cursor: 'pointer' }} onClick={() => handleRemoveRentalItem(index)} />
 
                                             </Paper>
                                         </Box>
@@ -371,8 +357,8 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
 
                         </DialogContent>
                         <DialogActions>
-                            <Button variant='contained' onClick={handleSaveUnit}>Save</Button>
-                            <Button variant='outlined' onClick={handleCloseUnit}>Close</Button>
+                            <Button variant='contained' onClick={handleSaveHall}>Save</Button>
+                            <Button variant='outlined' onClick={handleCloseHall}>Close</Button>
                         </DialogActions>
 
                     </form>
@@ -380,15 +366,12 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
             </React.Fragment>
 
 
-
-
-
-            {/* alert add unit all should fill*/}
+            {/* alert add hall all should fill*/}
             <div>
 
-                <Snackbar open={openUnitFillAlert} autoHideDuration={4000} onClose={handleCloseUnitFillAlert}>
+                <Snackbar open={openHallFillAlert} autoHideDuration={4000} onClose={handleCloseHallFillAlert}>
                     <Alert
-                        onClose={handleCloseUnitFillAlert}
+                        onClose={handleCloseHallFillAlert}
                         severity="error"
                         variant="filled"
                         sx={{ width: '100%' }}
@@ -399,17 +382,17 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
             </div>
 
 
-            {/* alert same unit exist add room popup*/}
+            {/* alert same hall exist add hall popup*/}
             <div>
 
-                <Snackbar open={openUnitExistAlert} autoHideDuration={4000} onClose={handleCloseUnitExistAlert}>
+                <Snackbar open={openHallExistAlert} autoHideDuration={4000} onClose={handleCloseHallExistAlert}>
                     <Alert
-                        onClose={handleCloseUnitExistAlert}
+                        onClose={handleCloseHallExistAlert}
                         severity="error"
                         variant="filled"
                         sx={{ width: '100%' }}
                     >
-                        Can't Save | Unit No already exist
+                        Can't Save | Hall No already exist
                     </Alert>
                 </Snackbar>
             </div>
@@ -419,4 +402,4 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
     )
 }
 
-export default EditUnit
+export default EditHall

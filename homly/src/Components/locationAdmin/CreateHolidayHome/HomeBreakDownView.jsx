@@ -126,7 +126,7 @@ const HomeBreakDownView = () => {
   };
 
 
-  //unit - same unit no exist warning
+  //hall - same hall no exist warning
 
   const [openHallExistAlert, setOpenHallExistAlert] = useState(false);
 

@@ -16,7 +16,7 @@ import Alert from '@mui/material/Alert';
 
 import RoomBreakdown from '../RoomBreakdown';
 
-const EditRoom = ({roomArray,setRoomArray}) => {
+const EditRoom = ({ roomArray, setRoomArray }) => {
     // open pop up for add room
     const [open, setOpen] = useState(false);
     const [fullWidth, setFullWidth] = useState(true);
@@ -67,11 +67,10 @@ const EditRoom = ({roomArray,setRoomArray}) => {
 
 
     const [values, setValues] = useState({
-        roomCode: '', roomAc: '', RoomType: '', NoOfBeds: '', NoOfAdults: '', NoOfChildren: '', roomRemarks: '', roomRental: '', groupByUnit: false
+        roomCode: '', roomAc: '', RoomType: '', NoOfBeds: '', NoOfAdults: '', NoOfChildren: '', roomRemarks: '', roomRental: '', groupByUnit: false,
     })
 
 
-    
 
 
     const handleSaveRoom = () => {
@@ -83,7 +82,9 @@ const EditRoom = ({roomArray,setRoomArray}) => {
             setOpenRoomExistAlert(true);
             return;
         }
-        setRoomArray([...roomArray, values]);
+        const updatedValues = { ...values, rentalArray };
+        setRoomArray([...roomArray, updatedValues]);
+        setRentalArray([]);
         setValues({ roomCode: '', roomAc: '', RoomType: '', NoOfBeds: '', NoOfAdults: '', NoOfChildren: '', roomRemarks: '', roomRental: '', groupByUnit: false })
         setOpen(false);
     };
@@ -98,6 +99,10 @@ const EditRoom = ({roomArray,setRoomArray}) => {
 
         }
     }
+
+    const handleRoomEdit = (roomCode) => {
+    }
+
 
 
     const [error, setError] = useState({
@@ -190,9 +195,6 @@ const EditRoom = ({roomArray,setRoomArray}) => {
         const newRentalArray = rentalArray.filter((item, index) => index !== no);
         setRentalArray(newRentalArray);
     }
-
-
-
     //dropdowns 
 
     //AC room
@@ -203,6 +205,9 @@ const EditRoom = ({roomArray,setRoomArray}) => {
     };
 
 
+    console.log(roomArray);
+
+
 
 
     return (
@@ -210,8 +215,6 @@ const EditRoom = ({roomArray,setRoomArray}) => {
             <Box sx={{ display: 'flex', justifyContent: 'flex-start', marginTop: "12px", marginBottom: '12px' }}>
                 <Button size='small' variant='contained' sx={{ backgroundColor: 'primary.main' }} onClick={handleClickOpen}>Add Room</Button>
             </Box>
-
-
 
             {roomArray.length === 0
                 ?
@@ -248,7 +251,7 @@ const EditRoom = ({roomArray,setRoomArray}) => {
                                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                     <Typography variant='p' sx={{ color: 'black' }}>Room No</Typography>
                                 </Box>
-                                <TextField className='input_field' required id="outlined-required" label="Enter Room No" placeholder='Enter No' fullWidth size='small' onChange={handleRoomCodeChange} helperText={roomExist ? "Already exist" : ''} />
+                                <TextField className='input_field' required id="outlined-required" label="Enter Room No" placeholder='Enter No' fullWidth size='small' onChange={handleRoomCodeChange} helperText={roomExist ? "Already exist" : ''} value={values.roomCode} />
                             </Box>
                             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
@@ -263,7 +266,7 @@ const EditRoom = ({roomArray,setRoomArray}) => {
                                         size='small'
                                         labelId="demo-simple-select-label"
                                         id="demo-simple-select"
-                                        value={value.catogery}
+                                        value={values.roomAc}
                                         label="Age"
                                         onChange={handleRoomAcChange}
                                     >
@@ -286,7 +289,7 @@ const EditRoom = ({roomArray,setRoomArray}) => {
                                         size='small'
                                         labelId="demo-simple-select-label"
                                         id="demo-simple-select"
-                                        value={value.catogery}
+                                        value={values.RoomType}
                                         label="Age"
                                         onChange={handleRoomTypeChange}
                                     >
@@ -301,32 +304,32 @@ const EditRoom = ({roomArray,setRoomArray}) => {
                                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                     <Typography variant='p' sx={{ color: 'black' }}>Number Of Beds</Typography>
                                 </Box>
-                                <TextField type='number' error={error.ctName} required id="outlined-required" label="" placeholder='No of beds' fullWidth size='small' onChange={handleNoOfBedsChange} helperText={error.ctName ? "Invalid Input" : ''} />
+                                <TextField type='number' error={error.ctName} required id="outlined-required" label="" placeholder='No of beds' fullWidth size='small' onChange={handleNoOfBedsChange} helperText={error.ctName ? "Invalid Input" : ''} value={values.NoOfBeds} />
                             </Box>
                             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                     <Typography variant='p' sx={{ color: 'black' }}>Number Of Adults</Typography>
                                 </Box>
-                                <TextField type='number' error={error.ctName} required id="outlined-required" label="" placeholder='No of Adults' fullWidth size='small' onChange={handleNoOfAdults} helperText={error.ctName ? "Invalid Input" : ''} />
+                                <TextField type='number' error={error.ctName} required id="outlined-required" label="" placeholder='No of Adults' fullWidth size='small' onChange={handleNoOfAdults} helperText={error.ctName ? "Invalid Input" : ''} value={values.NoOfAdults} />
                             </Box>
                             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                     <Typography variant='p' sx={{ color: 'black' }}>Number Of Children</Typography>
                                 </Box>
-                                <TextField type='number' error={error.ctName} required id="outlined-required" label="" placeholder='No of Children' fullWidth size='small' onChange={handleNoOfChildren} helperText={error.ctName ? "Invalid Input" : ''} />
+                                <TextField type='number' error={error.ctName} required id="outlined-required" label="" placeholder='No of Children' fullWidth size='small' onChange={handleNoOfChildren} helperText={error.ctName ? "Invalid Input" : ''} value={values.NoOfChildren} />
                             </Box>
 
                             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                     <Typography variant='p' sx={{ color: 'black' }}>Remark</Typography>
                                 </Box>
-                                <TextField error={error.ctName} required id="outlined-required" label="Remark" placeholder='Enter Remark' fullWidth size='small' onChange={handleRemarksChange} helperText={error.ctName ? "Invalid Input" : ''} />
+                                <TextField error={error.ctName} required id="outlined-required" label="Remark" placeholder='Enter Remark' fullWidth size='small' onChange={handleRemarksChange} helperText={error.ctName ? "Invalid Input" : ''} value={values.roomRemarks} />
                             </Box>
                             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                     <Typography variant='p' sx={{ color: 'black' }}>Rental</Typography>
                                 </Box>
-                                <TextField type='number' error={error.ctName} required id="outlined-required" label="Rental" placeholder='Rental' fullWidth size='small' onChange={handleRentalChange} helperText={error.ctName ? "Invalid Input" : ''} />
+                                <TextField type='number' error={error.ctName} required id="outlined-required" label="Rental" placeholder='Rental' fullWidth size='small' onChange={handleRentalChange} helperText={error.ctName ? "Invalid Input" : ''} value={values.roomRental} />
                             </Box>
                             <Box className="rental_container">
                                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
