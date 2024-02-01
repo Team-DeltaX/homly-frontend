@@ -79,7 +79,8 @@ const PrimaryDashboard = () => {
                       }}
                     >
                       <Box sx={{display:'flex',flexDirection:{sm:'row',xs:'column'}}}>
-                        <SimpleCharts />
+                      <Income/>
+                      
 
                         <Box  sx={{paddingTop:{xs:'5px',sm:'130px'}}}>
                           <PieChart
@@ -110,7 +111,8 @@ const PrimaryDashboard = () => {
 
                         
                       </Box>
-                      <Income/>
+                      
+                      <SimpleCharts />
                      
                     </Box>
                   </Grid>
