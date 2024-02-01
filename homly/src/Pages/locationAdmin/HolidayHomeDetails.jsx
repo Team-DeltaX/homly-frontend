@@ -9,6 +9,7 @@ import theme from '../../HomlyTheme';
 
 import SideNavbar from '../../Components/locationAdmin/SideNavbar'
 import PageTitle from '../../Components/locationAdmin/PageTitle';
+import CustomSelect from '../../Components/locationAdmin/CustomSelect/CustomSelect';
 
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import moment from 'moment'
@@ -69,6 +70,7 @@ const HolidayHomeDetails = () => {
                             <Box sx={{ height: "100%" }}>
                                 <PageTitle setShowNav={setShowNav} title={'Holiday Homes Details'} bell={true} />
                                 <Box>
+                                    <CustomSelect />
 
                                 </Box>
                                 <Calendar

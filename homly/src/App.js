@@ -5,7 +5,7 @@ import EditPersonalDetailsContextProvider from "./Contexts/EditPersonalDetailsCo
 import "../src/Styles/styles.css";
 import ManageHomes from "../src/Pages/locationAdmin/ManageHomes";
 import HolidayHomeEdit from "./Pages/locationAdmin/HolidayHomeEdit";
-import MyCalendar from "./Pages/locationAdmin/MyCalendar";
+
 
 
 // user pages import start
@@ -124,7 +124,6 @@ const App = () => (
           <Route path="/locationadmin/report" element={<Report />} />
           <Route path="/locationadmin/holidayhomes/createholidayhome" element={<CreateHolidayHome />} />
           <Route path="/locationadmin/holidayhomes/editholidayhome" element={<HolidayHomeEdit />} />
-          <Route path="/locationadmin/holidayhomes/calendar" element={<MyCalendar />} />
 
 
 

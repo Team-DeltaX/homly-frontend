@@ -90,10 +90,7 @@ const MyCalendar = ({ doctorId, selectedTab, setSelectedTab }) => {
 
     return (
 
-        <Box sx={{
-            height: '100%', width: '100%'
-
-        }}>
+        <Box sx={{ height: '100%', width: '100%' }}>
             <Calendar
                 localizer={localizer}
                 events={[]}
