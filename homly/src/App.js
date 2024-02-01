@@ -36,13 +36,13 @@ import ManageHomes from "../src/Pages/locationAdmin/ManageHomes";
 import Home from "../src/Pages/User/Home";
 import HolidayHome from "../src/Pages/User/HolidayHome";
 import Profile from "../src/Pages/User/Profile";
-import ContactUs from "../src/Pages/User/ContactUs";
+// import ContactUs from "../src/Pages/User/ContactUs";
 import UserRegistration from "../src/Pages/User/UserRegistration";
 import UserLogin from "../src/Pages/User/UserLogin";
-import PersonalDetails from "../src/Pages/User/PersonalDetails";
-import UserSecurity from "../src/Pages/User/UserSecurity";
-import PaymentDetails from "../src/Pages/User/PaymentDetails";
-import MyReservation from "../src/Pages/User/MyReservation";
+// import PersonalDetails from "../src/Pages/User/PersonalDetails";
+// import UserSecurity from "../src/Pages/User/UserSecurity";
+// import PaymentDetails from "../src/Pages/User/PaymentDetails";
+// import MyReservation from "../src/Pages/User/MyReservation";
 import HolidayHomeDetails from '../src/Pages/User/HolidayHomeDetails';
 
 const PrimaryDashboard = lazy(() => import("./Pages/PrimaryAdmin/PrimaryDashboard"));
@@ -100,21 +100,21 @@ const App = () => (
           <Route path="/HolidayHomes" element={<HolidayHome />} />
           <Route path="/HolidayHomeDetails" element={<HolidayHomeDetails />} />
           <Route path="/MyProfile" element={<Profile />} />
-          <Route path="/ContactUs" element={<ContactUs />} />
+          {/* <Route path="/ContactUs" element={<ContactUs />} /> */}
           {/* <Route path="/paymentGateway" element={<PaymentGateway />} /> */}
           <Route path="/Registration" element={<UserRegistration />} />
           <Route path="/Login" element={<UserLogin />} />
           {/* <Route path="/MyProfile" element={<PersonalDetails />} /> */}
-          <Route
+          {/* <Route
             path="/MyProfile/PersonalDetails"
             element={<PersonalDetails />}
-          />
-          <Route path="/MyProfile/Security" element={<UserSecurity />} />
+          /> */}
+          {/* <Route path="/MyProfile/Security" element={<UserSecurity />} />
           <Route
             path="/MyProfile/PaymentDetails"
             element={<PaymentDetails />}
-          />
-          <Route path="/MyProfile/MyReservation" element={<MyReservation />} />
+          /> */}
+          {/* <Route path="/MyProfile/MyReservation" element={<MyReservation />} /> */}
 
           <Route path="/locationadmin/dashboard" element={<LocationDashboard/>}/>
           <Route path="/locationadmin/holidayhomes/manage" element={<ManageHomes/>}/>

@@ -3,7 +3,7 @@ import { useState, useContext } from "react";
 
 import { Grid, Typography, Button, TextField } from "@mui/material";
 
-import { EditPersonalDetailsContext } from "../../Contexts/EditPersonalDetailsContext";
+import { EditPersonalDetailsContext } from "../../../Contexts/EditPersonalDetailsContext";
 
 const Editable = (props) => {
   const { handleEditId, handlePersonalDetails } = useContext(EditPersonalDetailsContext);

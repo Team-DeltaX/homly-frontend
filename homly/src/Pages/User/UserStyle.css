@@ -149,6 +149,11 @@
   box-shadow: none !important;
 }
 
+.react-multi-carousel-list{
+  height:360px !important;
+}
+
+
 /* .select__control{
   border: none !important;
   border-bottom: solid !important;

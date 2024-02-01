@@ -1,30 +1,63 @@
-import {
-    ThemeProvider,
-    Card,
-    Stack,
-    Box,
-    Typography,
-    Rating,
-    Divider,
-} from "@mui/material";
 import React from "react";
+import {
+  ThemeProvider,
+  Card,
+  Stack,
+  Box,
+  Typography,
+  Rating,
+  Divider,
+} from "@mui/material";
+import StarIcon from "@mui/icons-material/Star";
 import theme from "../../../HomlyTheme";
 import "./HolidayHomeCard.css";
 
 export default function HolidayHomeCard(props) {
-    return (
-        <ThemeProvider theme={theme}>
-            <Card sx={{ width: "200px", height: "270px", position: "relative" }}>
-                <Box
-                    component="img"
-                    src={props.HHImage}
-                    alt="Holiday Home Image"
-                    sx={{
-                        height: "100%",
-                        width: "100%",
-                    }}
-                />
-                <Box
+  return (
+    <ThemeProvider theme={theme}>
+      <Card
+        sx={{
+          width: "257px",
+          height: "309px",
+          position: "relative",
+          margin: "0 20px",
+          borderRadius: "20px",
+          boxShadow:"12px 1px 30px -18px rgba(0,0,0,0.75)"
+        }}
+      >
+        <Box
+          component="img"
+          src={props.HHImage}
+          alt="Holiday Home Image"
+          sx={{
+            height: "219px",
+            width: "100%",
+          }}
+        />
+        <Box sx={{ width: "100%", height: "90px", padding: "0 4%" }}>
+          <Stack direction="column">
+            <Stack
+              direction="row"
+              sx={{ justifyContent: "space-between", alignItem: "center" }}
+            >
+              <Typography
+                sx={{ fontSize: { sm: "1.2rem" }, fontWeight: "medium" }}
+              >
+                {props.HHName}
+              </Typography>
+              <Stack direction="row" sx={{alignItems:'center'}}>
+                <StarIcon sx={{ color: "primary.main" }} />
+                <Typography sx={{fontWeight:'medium'}}>{props.HHRating}</Typography>
+              </Stack>
+            </Stack>
+            <Typography>{props.HHLocation}</Typography>
+            <Stack direction="row" sx={{alignItems:'baseline'}}>
+              <Typography sx={{fontWeight:'medium',color:'primary.main',fontSize:{sm:'1rem'},marginRight:'5px'}}>LKR</Typography>
+              <Typography sx={{fontWeight:'bold',color:'primary.main',fontSize:{sm:'1.2rem'}}}>{props.HHPrice}</Typography>
+            </Stack>
+          </Stack>
+        </Box>
+        {/* <Box
                     sx={{
                         position: "absolute",
                         bgcolor: "#ffffff94",
@@ -42,8 +75,8 @@ export default function HolidayHomeCard(props) {
                             sx={{ color: "primary.main", padding: "2%" }}
                         />
                     </Stack>
-                </Box>
-                <Box
+                </Box> */}
+        {/* <Box
                     sx={{
                         position: "absolute",
                         width: "100%",
@@ -77,8 +110,8 @@ export default function HolidayHomeCard(props) {
                             </Stack>
                         </Stack>
                     </Stack>
-                </Box>
-            </Card>
-        </ThemeProvider>
-    );
+                </Box> */}
+      </Card>
+    </ThemeProvider>
+  );
 }

@@ -3,7 +3,7 @@ import { useContext } from "react";
 
 import { Grid, Typography, Button } from "@mui/material";
 
-import { EditPersonalDetailsContext } from "../../Contexts/EditPersonalDetailsContext";
+import { EditPersonalDetailsContext } from "../../../Contexts/EditPersonalDetailsContext";
 
 const Readable = (props) => {
   const {  handleEditId } = useContext(

@@ -15,15 +15,15 @@ import {
 
 // import { EditPersonalDetailsContext } from "../../Contexts/EditPersonalDetailsContext";
 
-import theme from "../../HomlyTheme";
+import theme from "../../../HomlyTheme";
 
 
-const MyReservation = () => {
+const PaymentDetailsCom = () => {
     // const { userPersonalDetails } = useContext(EditPersonalDetailsContext);
   return (
     <ThemeProvider theme={theme}>
       <Box>
-          <Typography variant="h4">My Reservation</Typography>
+          <Typography variant="h4">Payment Details</Typography>
           {/* <Box
             sx={{
               width: "100%",
@@ -105,4 +105,4 @@ const MyReservation = () => {
   );
 };
 
-export default MyReservation;
+export default PaymentDetailsCom;

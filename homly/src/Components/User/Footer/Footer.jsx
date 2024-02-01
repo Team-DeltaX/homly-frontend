@@ -32,7 +32,7 @@ export default function Footer() {
         <Box
           sx={{
             width: "110%",
-            height: { xs: "20vh", sm: "30vh", lg: "45vh" },
+            height: { xs: "20vh", sm: "35vh", lg: "50vh" },
             position: "relative",
           }}
         >

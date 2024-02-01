@@ -43,14 +43,12 @@ export default function HHCarousel(props) {
         additionalTransfrom={0}
         arrows
         autoPlaySpeed={3000}
-        centerMode={false}
-        className=""
+        centerMode={true}
         containerClass="container"
         dotListClass=""
         draggable
         focusOnSelect={false}
         infinite={false}
-        itemClass=""
         keyBoardControl
         minimumTouchDrag={80}
         pauseOnHover
@@ -63,7 +61,7 @@ export default function HHCarousel(props) {
               max: 3000,
               min: 821,
             },
-            items: 4.2,
+            items: 2,
             partialVisibilityGutter: 40,
           },
           mobile: {
@@ -71,16 +69,16 @@ export default function HHCarousel(props) {
               max: 464,
               min: 0,
             },
-            items: 1.7,
-            partialVisibilityGutter: 30,
+            items: 0.1,
+            partialVisibilityGutter: 0,
           },
           tablet: {
             breakpoint: {
               max: 820,
               min: 464,
             },
-            items: 3.2,
-            partialVisibilityGutter: 60,
+            items: 1,
+            partialVisibilityGutter: 20,
           },
         }}
         rewind={false}
@@ -94,7 +92,7 @@ export default function HHCarousel(props) {
       >
         {props.sortedByRating
           .sort((a, b) => b.rating - a.rating)
-          .slice(0, 7)
+          .slice(0, 6)
           .map((item) => (
             <HolidayHomeCard
               key={item.HHId}

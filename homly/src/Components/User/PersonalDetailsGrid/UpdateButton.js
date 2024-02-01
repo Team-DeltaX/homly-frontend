@@ -4,7 +4,7 @@ import { Box, Button } from "@mui/material";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 
-import { EditPersonalDetailsContext } from "../../Contexts/EditPersonalDetailsContext";
+import { EditPersonalDetailsContext } from "../../../Contexts/EditPersonalDetailsContext";
 
 const UpdateButton = () => {
   const { handleUpdate, handleCancel, isEnable } = useContext(
@@ -38,37 +38,48 @@ const UpdateButton = () => {
   };
 
   return (
-    <Box>
+    <Box sx={{ width: "100%", display: "flex", justifyContent: "flex-end" }}>
       <Button
         variant="outlined"
         size="small"
         onClick={handleCancelData}
         disabled={!isEnable}
-        //   style={{ display: props.editable ? "block" : "none" }}
       >
         Cancel
       </Button>
       <Button
         variant="contained"
         size="small"
-        sx={{ backgroundColor: "primary.main" }}
+        sx={{ backgroundColor: "primary.main", marginLeft: "2%" }}
         onClick={handleUpdateData}
         disabled={!isEnable}
-        //   style={{ display: props.editable ? "block" : "none" }}
       >
         Update
       </Button>
-      <Snackbar open={isUpdate || isCancel} autoHideDuration={3000}>
+      <Snackbar autoHideDuration={3000} onClose={handleClose} open={isCancel}>
         <Alert
           onClose={handleClose}
-          severity={isUpdate ? "success" : "error"}
+          severity="error"
           variant="filled"
           sx={{
             width: "100%",
-            backgroundColor: isUpdate ? "success.light" : "error.light",
+            backgroundColor: "error.light",
           }}
         >
-          {isUpdate ? "Successfully Updated!" : "Cancelled your changes!"}
+          "Cancelled your changes!"
+        </Alert>
+      </Snackbar>
+      <Snackbar autoHideDuration={3000} onClose={handleClose} open={isUpdate}>
+        <Alert
+          onClose={handleClose}
+          severity="error"
+          variant="filled"
+          sx={{
+            width: "100%",
+            backgroundColor: "success.light",
+          }}
+        >
+          "Successfully Updated!"
         </Alert>
       </Snackbar>
     </Box>
