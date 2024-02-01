@@ -59,12 +59,12 @@ export default function ReservationCard(props) {
             sx={{ height: "100%", width: "100%", borderRadius: "10px" }}
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
-          <Stack direction="column">
-            <Typography>{props.HHName}</Typography>
-            <Typography>{props.HHAddress}</Typography>
+        <Grid item xs={12} sm={6} >
+          <Stack direction="column" sx={{marginLeft:{sm:'10px'}}}>
+            <Typography sx={{fontWeight:'bold',fontSize:'1.3rem'}}>{props.HHName}</Typography>
+            <Typography sx={{fontWeight:'light',fontSize:'0.8rem'}}>{props.HHAddress}</Typography>
             <Grid container>
-              <Grid item xs={7}>
+              <Grid item xs={7} sm={5}>
                 <Typography>Reserved Date</Typography>
               </Grid>
               <Grid item>
@@ -72,7 +72,7 @@ export default function ReservationCard(props) {
               </Grid>
             </Grid>
             <Grid container>
-              <Grid item xs={7}>
+              <Grid item xs={7} sm={5}>
                 <Typography>Check in</Typography>
               </Grid>
               <Grid item>
@@ -80,7 +80,7 @@ export default function ReservationCard(props) {
               </Grid>
             </Grid>
             <Grid container>
-              <Grid item xs={7}>
+              <Grid item xs={7} sm={5}>
                 <Typography>Check out</Typography>
               </Grid>
               <Grid item>
@@ -88,7 +88,7 @@ export default function ReservationCard(props) {
               </Grid>
             </Grid>
             <Grid container>
-              <Grid item xs={7}>
+              <Grid item xs={7} sm={5}>
                 <Typography>Total Cost</Typography>
               </Grid>
               <Grid item>
@@ -100,35 +100,77 @@ export default function ReservationCard(props) {
             </Grid>
           </Stack>
         </Grid>
-        <Grid item xs={12} sm={3}>
-          <Stack direction='column' sx={{justifyContent:'space-between' ,height:'100%'}}>
+        <Grid item xs={12} sm={3} sx={{justifyContent:'right'}}>
+          <Stack
+            direction="column"
+            sx={{ justifyContent: "space-between", height: "100%" }}
+          >
             <Stack direction="column">
-              <Grid container>
-                <Grid item xs={7}>
+              <Grid item container sx={{justifyContent:'space-between'}}>
+                <Grid item xs={8}>
                   <Typography>No of Adults</Typography>
                 </Grid>
                 <Grid item>
-                <Box><Typography>{props.HHAdults}</Typography></Box>
+                  <Box
+                    sx={{
+                      bgcolor: "text.primary",
+                      width: "25px",
+                      height: "25px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      borderRadius: "5px",
+                      color: "white",
+                    }}
+                  >
+                    <Typography>{props.HHAdults}</Typography>
+                  </Box>
                 </Grid>
               </Grid>
-              <Grid container>
-                <Grid item xs={7}>
-                  <Typography>No of Child</Typography>
+              <Grid item container sx={{justifyContent:'space-between'}}>
+                <Grid item xs={8}>
+                  <Typography>No of Childlen</Typography>
                 </Grid>
                 <Grid item>
-                  <Box><Typography>{props.HHRooms}</Typography></Box>
+                  <Box
+                    sx={{
+                      bgcolor: "text.primary",
+                      width: "25px",
+                      height: "25px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      borderRadius: "5px",
+                      color: "white",
+                    }}
+                  >
+                    <Typography>{props.HHRooms}</Typography>
+                  </Box>
                 </Grid>
               </Grid>
-              <Grid container>
-                <Grid item xs={7}>
+              <Grid item container sx={{justifyContent:'space-between'}}>
+                <Grid item xs={8}>
                   <Typography>No of Rooms</Typography>
                 </Grid>
                 <Grid item>
-                  <Box><Typography>{props.HHRooms}</Typography></Box>
+                  <Box
+                    sx={{
+                      bgcolor: "text.primary",
+                      width: "25px",
+                      height: "25px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      borderRadius: "5px",
+                      color: "white",
+                    }}
+                  >
+                    <Typography>{props.HHRooms}</Typography>
+                  </Box>
                 </Grid>
               </Grid>
             </Stack>
-            <Box>{buttons(props)}</Box>
+            <Box sx={{display:'flex',justifyContent:'end'}}>{buttons(props)}</Box>
           </Stack>
         </Grid>
       </Grid>
