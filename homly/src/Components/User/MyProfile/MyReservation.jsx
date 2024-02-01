@@ -16,17 +16,18 @@ import {
 // import UpdateButton from "../PersonalDetailsGrid/UpdateButton";
 
 // import { EditPersonalDetailsContext } from "../../Contexts/EditPersonalDetailsContext";
-
+import OngoingReservation from "./OngoingReservation";
+import PastReservation from "./PastReservation";
 import theme from "../../../HomlyTheme";
 
 const MyReservation = () => {
-  const [value, setValue] = React.useState("0");
+  const [value, setValue] = React.useState(0);
 
-  const handleChange = (event, newValue) => {
+  const handleTabChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  const tabComponent = [<div>tab1</div>, <div>tab2</div>];
+  const tabComponent = [<OngoingReservation/>, <PastReservation/>];
 
   return (
     <ThemeProvider theme={theme}>
@@ -45,13 +46,19 @@ const MyReservation = () => {
           <Card sx={{ width: { xs: "100%", sm: "90%" } }}>
             <CardContent sx={{ display: "flex", flexDirection: "column" }}>
               <Tabs
-                onChange={handleChange}
-                textColor="text.secondary"
-                indicatorColor="black"
+                value={value}
+                onChange={handleTabChange}
+                textColor="secondary"
                 aria-label="secondary tabs example"
+                // sx={{
+                //   width: "100%",
+                //   display: "flex",
+                //   alignItems: "center",
+
+                // }}
               >
-                <Tab label="Ongoing Reservation" value="0" />
-                <Tab label="Past Reservation" value="1" />
+                <Tab value={0} label="Ongoing Reservation" />
+                <Tab value={1} label="Past Reservation" />
               </Tabs>
               {tabComponent[value]}
             </CardContent>
