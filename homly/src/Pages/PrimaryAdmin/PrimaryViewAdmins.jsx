@@ -18,6 +18,7 @@ import theme from "../../HomlyTheme";
 import { Link } from "react-router-dom";
 import ViewAdminCard2 from "../../Components/PrimaryAdmin/ViewAdminCard2";
 import PageTop from "../../Components/PrimaryAdmin/PageTop";
+import CustomTabPanel from '../../Components/PrimaryAdmin/CustomTabPanel'
 const PrimaryViewAdmins = () => {
   const data = [
     {
@@ -132,8 +133,8 @@ const PrimaryViewAdmins = () => {
               <Box>
                 <PageTop setShowNav={setShowNav} heading={"View Admins"} />
               </Box>
-              {/* <Box>  <Search/></Box> */}
-              <Box
+             
+              {/* <Box
                 sx={{ marginTop: "2%", maxHeight: "530px", overflow: "scroll" }}
               >
                 {blacklistedusers.map((item) => {
@@ -141,7 +142,9 @@ const PrimaryViewAdmins = () => {
                     <ViewAdminCard2 data={item} key={item.Service_number} />
                   );
                 })}
-              </Box>
+              </Box> */}
+              <CustomTabPanel/>
+              
               <Box>
                 <Link to="/primaryadmin/addadmin">
                   <Button

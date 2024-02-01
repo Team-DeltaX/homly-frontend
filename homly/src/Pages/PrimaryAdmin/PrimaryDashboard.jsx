@@ -18,6 +18,11 @@ import DashViewAdminBox from "../../Components/PrimaryAdmin/DashViewAdminBox";
 import { Link } from "react-router-dom";
 import SimpleCharts from "../../Components/PrimaryAdmin/Simplecharts";
 import { PieChart } from '@mui/x-charts/PieChart';
+import CircularProgress from '@mui/joy/CircularProgress';
+import Populer from "../../Components/PrimaryAdmin/Populer";
+import Income from "../../Components/PrimaryAdmin/Income";
+
+
 
 const PrimaryDashboard = () => {
   const [showNav, setShowNav] = useState("nav_grid_deactive");
@@ -74,23 +79,9 @@ const PrimaryDashboard = () => {
                       }}
                     >
                       <Box sx={{display:'flex',flexDirection:{sm:'row',xs:'column'}}}>
-                        <SimpleCharts />
-{/*                         
-                        <PieChart
-                  series={[
-                    {
-                      data: [ 1,2,3],
-                      innerRadius: 30,
-                      outerRadius: 100,
-                      paddingAngle: 5,
-                      cornerRadius: 5,
-                      startAngle: -90,
-                      endAngle: 180,
-                      cx: 150,
-                      cy: 150,
-                    },]}
-                />
-                        */}
+                      <Income/>
+                      
+
                         <Box  sx={{paddingTop:{xs:'5px',sm:'130px'}}}>
                           <PieChart
                           
@@ -113,10 +104,16 @@ const PrimaryDashboard = () => {
                             width={370}
                             height={200}
                           />
+                      
+
                         </Box>
                         
+
                         
                       </Box>
+                      
+                      <SimpleCharts />
+                     
                     </Box>
                   </Grid>
                   <Grid item md={4} sx={{ height: "100vh" }}>
