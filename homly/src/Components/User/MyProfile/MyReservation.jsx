@@ -12,8 +12,6 @@ import {
   //   CardActions,
 } from "@mui/material";
 
-
-
 // import PersonalDetailsGrid from "../PersonalDetailsGrid/PersonalDetailsGrid";
 // import UpdateButton from "../PersonalDetailsGrid/UpdateButton";
 
@@ -24,13 +22,11 @@ import theme from "../../../HomlyTheme";
 const MyReservation = () => {
   const [value, setValue] = React.useState("0");
 
-
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  
-  const tabComponent =[<div>tab1</div>,<div>tab2</div>]
 
+  const tabComponent = [<div>tab1</div>, <div>tab2</div>];
 
   return (
     <ThemeProvider theme={theme}>
@@ -50,8 +46,9 @@ const MyReservation = () => {
             <CardContent sx={{ display: "flex", flexDirection: "column" }}>
               <Tabs
                 onChange={handleChange}
-                aria-label="lab API tabs example"
-                sx={{textTransform:'capitalize'}}
+                textColor="text.secondary"
+                indicatorColor="black"
+                aria-label="secondary tabs example"
               >
                 <Tab label="Ongoing Reservation" value="0" />
                 <Tab label="Past Reservation" value="1" />
