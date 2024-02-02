@@ -64,7 +64,7 @@ const PrimaryDashboard = () => {
                 <Grid container sx={{ overflow: "auto", maxHeight: "100vh" }}>
                   <Grid
                     item
-                    md={8}
+                    md={8.5}
                     sx={{
                       backgroundColor: "white",
                       overflow: "auto",
@@ -118,7 +118,7 @@ const PrimaryDashboard = () => {
                      
                     </Box>
                   </Grid>
-                  <Grid item md={4} sx={{ height: "100vh" }}>
+                  <Grid item md={3.5} sx={{ height: "100vh" }}>
                     <Box sx={{ display: "flex", flexDirection: "column" }}>
                       <Box
                         sx={{

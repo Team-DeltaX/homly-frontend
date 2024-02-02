@@ -1,7 +1,7 @@
 import { Grid,Box } from '@mui/material'
 import React from 'react'
 
-// import PStatisticsDetails from './StatisticsDetails';
+import PStatisticsDetails from '../../Components/PrimaryAdmin/PStatisticsDetails';
 
 
 import DirectionsWalkIcon from '@mui/icons-material/DirectionsWalk';
@@ -51,7 +51,7 @@ const PDashboardCon = () => {
             </Grid>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    {/* <StatisticsDetails/> */}
+                    <PStatisticsDetails/>
                 </Grid>
             </Grid>
         </Grid>
