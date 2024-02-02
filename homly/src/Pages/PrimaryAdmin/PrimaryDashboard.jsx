@@ -21,6 +21,7 @@ import { PieChart } from '@mui/x-charts/PieChart';
 import CircularProgress from '@mui/joy/CircularProgress';
 import Populer from "../../Components/PrimaryAdmin/Populer";
 import Income from "../../Components/PrimaryAdmin/Income";
+import PDashboardCon from "../../Components/PrimaryAdmin/PDashboardCon";
 
 
 
@@ -70,6 +71,7 @@ const PrimaryDashboard = () => {
                       maxHeight: "100vh",
                     }}
                   >
+                    <PDashboardCon/>
                     <Box
                       sx={{
                         display: "flex",
