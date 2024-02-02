@@ -369,7 +369,7 @@ const MyProfile = () => {
                     width: drawerWidth,
                     bgcolor: "primary.main",
                   },
-                  height: "100vh",
+                  height: "90vh",
                 }}
                 open
               >

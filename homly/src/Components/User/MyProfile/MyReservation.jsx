@@ -40,7 +40,7 @@ const MyReservation = () => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            margin: { xs: "3% 0 20% 0" },
+            margin: { xs: "3% 0 20% 0", sm: "3% 0 0 0" },
           }}
         >
           <Card sx={{ width: { xs: "100%", sm: "90%" } }}>

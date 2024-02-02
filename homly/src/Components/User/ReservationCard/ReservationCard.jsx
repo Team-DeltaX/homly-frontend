@@ -69,7 +69,6 @@ export default function ReservationCard(props) {
           bgcolor: "#F5F5F5",
           borderRadius: "10px",
           padding: "10px",
-          margin: { sm: "10px" },
         }}
       >
         <Grid item xs={12} sm={3} sx={{ alignItems: "center" }}>
