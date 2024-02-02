@@ -38,7 +38,7 @@ const AuthorizationsCard=(props)=>{
    
            <Grid md={3} xs={12}>
                <Grid md={12}>
-               <Button type='submit' variant='contained' sx={{width:"80px",height:'30px',borderRadius:"15px"}} startIcon={<PreviewIcon/>}  ><Typography>View</Typography></Button>
+               <Button type='submit' variant='contained' sx={{width:"80px",height:'30px',borderRadius:"15px",display:{xs:'none',md:'flex'}}} startIcon={<PreviewIcon/>}  ><Typography>View</Typography></Button>
    
                </Grid>
                <Grid md={12}>
@@ -60,6 +60,10 @@ const AuthorizationsCard=(props)=>{
         <Box sx={{display:"flex",justifyContent:'center',flexDirection:{md:"row",sm:"row",xs:"column"}}}>
         <Button type='submit' variant='contained' sx={{margin:"10px",width:"100px",height:'30px',borderRadius:"15px",background:"#39e75f",color:"black"}} startIcon={<CheckIcon/>}  ><Typography>Accept</Typography></Button>
         <Button type='submit' variant='outlined' sx={{margin:"10px",width:"100px",height:'30px',borderRadius:"15px",color:"red",borderBlockColor:"red"}} onClick={()=>{props.setpopup(!props.popup)}} startIcon={<CloseIcon/>}  ><Typography>Decline</Typography></Button>
+        <Button type='submit' variant='outlined' sx={{margin:"10px",width:"100px",height:'30px',borderRadius:"15px",display:{xs:'flex',md:'none'}}}  startIcon={<PreviewIcon/>}  ><Typography>View</Typography></Button>
+
+        
+
 
         </Box>
        </Stack>
