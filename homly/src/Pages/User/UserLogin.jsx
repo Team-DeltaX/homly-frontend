@@ -13,7 +13,7 @@ import {
   TextField,
 } from "@mui/material";
 
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import BadgeIcon from "@mui/icons-material/Badge";
@@ -54,9 +54,13 @@ const UserLogin = () => {
     return len;
   };
 
+  // navigate to home
+  const Navigate = useNavigate();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrorServiceNumber(false);
+    Navigate('/');
   };
 
   const handleReset = (e) => {
@@ -64,10 +68,14 @@ const UserLogin = () => {
     setServiceNo("");
     setPassword("");
   };
+
+
+  
+  
   return (
     <ThemeProvider theme={theme}>
       <Box
-        className="main_container"
+        // className="main_container"
         sx={{
           width: "100%",
           overflow: "hidden",
@@ -78,7 +86,7 @@ const UserLogin = () => {
             <Grid
               container
               sx={{
-                height: "85%",
+                height: "auto",
                 backgroundColor: "grey1",
                 borderRadius: "10px",
                 boxShadow: 1,
@@ -95,7 +103,11 @@ const UserLogin = () => {
                 <Box>
                   <Img src={logo} />
                 </Box>
-                <Box>
+                <Box
+                  sx={{
+                    display: { xs: "none", sm: "none", md: "flex" },
+                  }}
+                >
                   <img
                     src={wave}
                     className="registration-box-wave "
@@ -133,7 +145,6 @@ const UserLogin = () => {
                   paddingLeft={"5%"}
                   marginBottom={"5%"}
                   sx={{
-                    height:'100%',
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "center",
@@ -225,7 +236,13 @@ const UserLogin = () => {
                       helperText={""}
                       fullWidth
                     />
-                    <Box className="form-button">
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "flex-end",
+                        width: "90%",
+                      }}
+                    >
                       <Button
                         type="reset"
                         variant="outlined"
@@ -234,7 +251,7 @@ const UserLogin = () => {
                       >
                         Reset
                       </Button>
-                      <Button type="submit" variant="contained" color="primary">
+                      <Button type="submit" variant="contained" color="primary"  >
                         Login
                       </Button>
                     </Box>

@@ -177,7 +177,7 @@ const UserRegistration = () => {
   return (
     <ThemeProvider theme={theme}>
       <Box
-        className="main_container"
+        // className="main_container"
         sx={{
           width: "100%",
           overflow: "hidden",
@@ -189,6 +189,7 @@ const UserRegistration = () => {
               container
               sx={{
                 // height: "85%",
+                height: 'auto',
                 backgroundColor: "grey1",
                 borderRadius: "10px",
                 boxShadow: 1,
@@ -268,13 +269,13 @@ const UserRegistration = () => {
                   >
                     {/* <AvatarImage /> */}
                     <ProfilePicUploadPopup open={open} setOpen={setOpen}  setImage={setImage}/>
-                    <Stack direction={{xs:'column',sm:'row'}} sx={{margin:'2% 0',height: 100,width:'100%' }}>
+                    <Stack direction='row' sx={{margin:'2% 0',height: {xs:80,sm:100},width:'100%' }}>
                       <Avatar
                         alt="Remy Sharp"
                         src={image}
-                        sx={{ width: 100, height: 100 }}
+                        sx={{ width: {xs:80,sm:100}, height: {xs:80,sm:100} }}
                       />
-                      <Box sx={{height:'100%',display:'flex',alignItems:'center',marginLeft:{sm:'10px'}}}>
+                      <Box sx={{height:'100%',display:'flex',alignItems:'center',marginLeft:{xs:'8px'}}}>
 
                       <Button variant="outlined" onClick={handleClickOpen} > Upload Profile Picture</Button>
                       </Box>
