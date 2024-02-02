@@ -5,7 +5,7 @@ import { Box , Stack} from '@mui/material'
 
 export default function ongoingReservation() {
   return (
-    <Stack direction='column' sx={{height:{sm:'310px'},overflowY:{xs:'none',sm:'scroll'}}}>
+    <Stack direction='column' sx={{height:{md:'380px'}}}>
       <Box sx={{marginTop:'10px'}}>
         <ReservationCard
         HHreservation="Ongoing"
