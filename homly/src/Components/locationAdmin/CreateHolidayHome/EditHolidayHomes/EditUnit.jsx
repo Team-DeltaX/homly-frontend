@@ -29,17 +29,16 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
     useEffect(() => {
         if (isEditMode && editIndex !== null) {
             // Editing an existing room
-            const editedRoom = roomArray[editIndex];
+            const editedUnit = unitArray[editIndex];
             setUnitValues({
-                roomCode: editedRoom.roomCode,
-                roomAc: editedRoom.roomAc,
-                RoomType: editedRoom.RoomType,
-                NoOfBeds: editedRoom.NoOfBeds,
-                NoOfAdults: editedRoom.NoOfAdults,
-                NoOfChildren: editedRoom.NoOfChildren,
-                roomRemarks: editedRoom.roomRemarks,
-                roomRental: editedRoom.roomRental,
-                groupByUnit: editedRoom.groupByUnit,
+                unitCode : editedUnit.unitCode,
+                unitAC : editedUnit.unitAc,
+                floorLevel : editedUnit.floorLevel,
+                unitRemark : editedUnit.unitRemark,
+                unitRental : editedUnit.unitRental,
+                roomAttached : editedUnit.roomAttached,
+                selectedRooms : editedUnit.selectedRooms
+
             });
         } else {
             // Adding a new room
@@ -145,6 +144,8 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
         console.log(editedUnit.unitCode);
         console.log(editedUnit.unitRentalArray);
         console.log(editedUnit.selectedRooms);
+
+
 
     }
 
@@ -297,7 +298,7 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
                                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                     <Typography variant='p' sx={{ color: 'black' }}>Unit No</Typography>
                                 </Box>
-                                <TextField className='input_field' required id="outlined-required" placeholder='Enter Unit No' fullWidth size='small' onChange={handleUnitCodeChange} helperText={unitExist ? "Already exist" : ''} />
+                                <TextField className='input_field' value={unitValues.unitCode} required id="outlined-required" placeholder='Enter Unit No' fullWidth size='small' onChange={handleUnitCodeChange} helperText={unitExist ? "Already exist" : ''} />
                             </Box>
                             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
@@ -312,7 +313,7 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
                                         size='small'
                                         labelId="demo-simple-select-label"
                                         id="demo-simple-select"
-                                        value={value.catogery}
+                                        value={unitValues.unitAc}
                                         label="Age"
                                         onChange={handleUnitAcChange}
                                     >
@@ -326,7 +327,7 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
                                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                     <Typography variant='p' sx={{ color: 'black' }}>Floor Level</Typography>
                                 </Box>
-                                <TextField type='number' error={error.ctName} required id="outlined-required" label="" placeholder='Floor Level' fullWidth size='small' onChange={handleFloorLevelChange} helperText={error.ctName ? "Invalid Input" : ''} />
+                                <TextField type='number' value={unitValues.floorLevel} error={error.ctName} required id="outlined-required" label="" placeholder='Floor Level' fullWidth size='small' onChange={handleFloorLevelChange} helperText={error.ctName ? "Invalid Input" : ''} />
                             </Box>
 
 
@@ -334,13 +335,13 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
                                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                     <Typography variant='p' sx={{ color: 'black' }}>Remark</Typography>
                                 </Box>
-                                <TextField error={error.ctName} required id="outlined-required" label="Remark" placeholder='Enter Remark' fullWidth size='small' onChange={handleUnitRemarkChange} helperText={error.ctName ? "Invalid Input" : ''} />
+                                <TextField error={error.ctName} value={unitValues.unitRemark} required id="outlined-required" label="Remark" placeholder='Enter Remark' fullWidth size='small' onChange={handleUnitRemarkChange} helperText={error.ctName ? "Invalid Input" : ''} />
                             </Box>
                             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                     <Typography variant='p' sx={{ color: 'black' }}>Rental</Typography>
                                 </Box>
-                                <TextField type='number' error={error.ctName} required id="outlined-required" label="Rental" placeholder='Rental' fullWidth size='small' onChange={handleUnitRentalChange} helperText={error.ctName ? "Invalid Input" : ''} />
+                                <TextField type='number' value={unitValues.unitRental} error={error.ctName} required id="outlined-required" label="Rental" placeholder='Rental' fullWidth size='small' onChange={handleUnitRentalChange} helperText={error.ctName ? "Invalid Input" : ''} />
                             </Box>
 
                             <Box className="rental_container">
