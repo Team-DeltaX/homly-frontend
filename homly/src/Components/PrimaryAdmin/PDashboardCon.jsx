@@ -39,7 +39,7 @@ const PDashboardCon = () => {
       ];
   return (
     <Grid container sx={{padding:'10px 30px',display:'flex',justifyContent:'center',width:'100%'}}>
-        <Grid md={8} xs={12}>
+        {/* <Grid md={8} xs={12}>
             <Grid container justifyContent={'space-between'}sx={{marginBottom:'25px',width:'100%'}} spacing={1}>
                 {summaries.map((sum)=>(
                      <Grid item md={3} xs={6}  sx={{display:'flex',alignItems:'center',justifyContent:'spcae-between'}}>
@@ -54,9 +54,26 @@ const PDashboardCon = () => {
                     <PStatisticsDetails/>
                 </Grid>
             </Grid>
-        </Grid>
+        </Grid> */}
         {/* <Grid md={4} xs={12}>
         </Grid> */}
+        <Grid item md={12}>
+        <Grid container justifyContent={'space-between'}sx={{marginBottom:'25px',width:'100%'}} spacing={1}>
+                {summaries.map((sum)=>(
+                     <Grid item md={3} xs={6}  sx={{display:'flex',alignItems:'center',justifyContent:'spcae-between'}}>
+                        <Box sx={{width:'350px',height:'150px'}}>
+                            <PSummary summaryTitle={sum.summaryTitle} iconUse={sum.iconComponent} count={sum.count} color={sum.color}/>
+                        </Box>
+                     </Grid>
+                ))}
+            </Grid>
+        
+
+        </Grid>
+        <Grid item md={12}>
+        <PStatisticsDetails/>
+          
+        </Grid>
     </Grid>
     
   )
