@@ -137,6 +137,17 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
         setOpenUnit(false);
     };
 
+    console.log(unitArray);
+
+    const handleUnitEdit = (index) =>{
+        const editedUnit = unitArray[index];
+
+        console.log(editedUnit.unitCode);
+        console.log(editedUnit.unitRentalArray);
+        console.log(editedUnit.selectedRooms);
+
+    }
+
 
 
     const handleUnitDelete = (unitCode, selectedRooms) => {
@@ -262,7 +273,7 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
                 :
                 unitArray.map((item, index) => {
                     return (
-                        <UnitBreakDown key={index} unitCode={item.unitCode} unitAc={item.unitAc} floorLevel={item.floorLevel} unitNoOfAdults={item.unitNoOfAdults} unitNoOfChildren={item.unitNoOfChildren} unitRemarks={item.unitRemarks} unitRental={item.unitRental} roomArray={roomArray} setRoomArray={setRoomArray} selectedRooms={item.selectedRooms} handleUnitDelete={handleUnitDelete} />
+                        <UnitBreakDown key={index} unitCode={item.unitCode} unitAc={item.unitAc} floorLevel={item.floorLevel} unitNoOfAdults={item.unitNoOfAdults} unitNoOfChildren={item.unitNoOfChildren} unitRemarks={item.unitRemarks} unitRental={item.unitRental} roomArray={roomArray} setRoomArray={setRoomArray} selectedRooms={item.selectedRooms} handleUnitDelete={handleUnitDelete} handleUnitEdit={handleUnitEdit} index={index} />
                     )
                 })}
 

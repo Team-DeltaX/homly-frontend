@@ -189,6 +189,9 @@ const HolidayHomeDetails = () => {
                                         toolbar={true}
                                         ref={calendarRef}
                                         onSelectSlot={handleDateClick}
+                                        
+                                        selectable
+
                                     />
                                 </Box>
 
