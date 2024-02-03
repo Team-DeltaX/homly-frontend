@@ -2,12 +2,12 @@
 import React from "react";
 import {
   Box,
-  //   Container,
+  Stack,
   ThemeProvider,
   Typography,
-  //   Card,
-  //   CardContent,
-  //   CardActions,
+  Card,
+  CardContent,
+  Button,
 } from "@mui/material";
 
 // import PersonalDetailsGrid from "../PersonalDetailsGrid/PersonalDetailsGrid";
@@ -16,9 +16,9 @@ import {
 // import { EditPersonalDetailsContext } from "../../Contexts/EditPersonalDetailsContext";
 
 import theme from "../../../HomlyTheme";
+import AddedCardCom from "../PaymentCard/AddedCardCom";
 
 const PaymentDetailsCom = () => {
-  // const { userPersonalDetails } = useContext(EditPersonalDetailsContext);
   return (
     <ThemeProvider theme={theme}>
       <Box>
@@ -34,9 +34,38 @@ const PaymentDetailsCom = () => {
           }}
         >
           <Card sx={{ width: { xs: "100%", sm: "90%" } }}>
-            <CardContent
-              sx={{ display: "flex", flexDirection: "column" }}
-            ></CardContent>
+            <CardContent sx={{ display: "flex", flexDirection: "column" }}>
+              <Stack direction="column">
+                <Stack
+                  direction="row"
+                  sx={{
+                    width: "100%",
+                    height: "50px",
+                    alignItems: "center",
+                    justifyContent: "end",
+                  }}
+                >
+                  <Button variant="contained">Add Card</Button>
+                </Stack>
+                <Stack
+                  direction="column"
+                  sx={{ width: "100%", margin: "10px 5px" }}
+                >
+                  <Box sx={{marginTop:'10px'}}>
+                    <AddedCardCom
+                      cardName="Card Holder Name"
+                      cardNumber="1234 5678 9101 1121"
+                    />
+                  </Box>
+                  <Box sx={{marginTop:'10px'}}>
+                    <AddedCardCom
+                      cardName="Card Holder Name"
+                      cardNumber="1234 5678 9101 1121"
+                    />
+                  </Box>
+                </Stack>
+              </Stack>
+            </CardContent>
           </Card>
         </Box>
       </Box>
