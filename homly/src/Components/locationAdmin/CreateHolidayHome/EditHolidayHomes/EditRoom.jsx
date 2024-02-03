@@ -114,10 +114,7 @@ const EditRoom = ({ roomArray, setRoomArray }) => {
         //     setOpenRoomFillAlert(true);
         //     return;
         // }
-        // if (roomExist) {
-        //     setOpenRoomExistAlert(true);
-        //     return;
-        // }
+
         // const updatedValues = { ...values, rentalArray };
         // setRoomArray([...roomArray, updatedValues]);
         // setRentalArray([]);
@@ -129,6 +126,13 @@ const EditRoom = ({ roomArray, setRoomArray }) => {
             return;
         }
 
+        // if (roomExist) {
+        //     setOpenRoomExistAlert(true);
+        //     return;
+        // }
+
+
+        
         if (isEditMode && editIndex !== null) {
             // Editing an existing room
             const updatedRoomArray = [...roomArray];

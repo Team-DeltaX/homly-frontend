@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { Box, Button, Typography, TextField, Paper } from '@mui/material'
 import CancelIcon from '@mui/icons-material/Cancel';
 
@@ -21,6 +21,41 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
     const [openUnit, setOpenUnit] = useState(false);
     const [fullWidth, setFullWidth] = useState(true);
     const [maxWidth, setMaxWidth] = useState('sm');
+
+    const [isEditMode, setIsEditMode] = useState(false);
+    const [editIndex, setEditIndex] = useState(null);
+
+
+    useEffect(() => {
+        if (isEditMode && editIndex !== null) {
+            // Editing an existing room
+            const editedRoom = roomArray[editIndex];
+            setUnitValues({
+                roomCode: editedRoom.roomCode,
+                roomAc: editedRoom.roomAc,
+                RoomType: editedRoom.RoomType,
+                NoOfBeds: editedRoom.NoOfBeds,
+                NoOfAdults: editedRoom.NoOfAdults,
+                NoOfChildren: editedRoom.NoOfChildren,
+                roomRemarks: editedRoom.roomRemarks,
+                roomRental: editedRoom.roomRental,
+                groupByUnit: editedRoom.groupByUnit,
+            });
+        } else {
+            // Adding a new room
+            setUnitValues({
+                roomCode: '',
+                roomAc: '',
+                RoomType: '',
+                NoOfBeds: '',
+                NoOfAdults: '',
+                NoOfChildren: '',
+                roomRemarks: '',
+                roomRental: '',
+                groupByUnit: false,
+            });
+        }
+    }, [isEditMode, editIndex, roomArray]);
 
     //dropdowns 
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Box, Button, TextField, Typography, Paper } from '@mui/material'
 import CancelIcon from '@mui/icons-material/Cancel';
 
@@ -23,6 +23,31 @@ const EditHall = ({ hallArray, setHallArray }) => {
     const [fullWidth, setFullWidth] = useState(true);
     const [maxWidth, setMaxWidth] = useState('sm');
 
+    const [isEditMode, setIsEditMode] = useState(false);
+    const [editIndex, setEditIndex] = useState(null);
+
+
+    useEffect(() => {
+        if (isEditMode && editIndex !== null) {
+
+            const editedHall = hallArray[editIndex];
+            setHallValues({
+                hallCode: editedHall.hallCode,
+                hallAc: editedHall.hallAc,
+                floorLevel: editedHall.floorLevel,
+                hallNoOfAdults: editedHall.hallNoOfAdults,
+                hallNoOfChildren: editedHall.hallNoOfChildren,
+                hallRemark: editedHall.hallRemark,
+                hallRental: editedHall.hallRental,
+            });
+        } else {
+
+            setHallValues({
+                hallCode: '', hallAc: '', floorLevel: '', hallRemark: '', hallRental: '', hallNoOfAdults: '', hallNoOfChildren: '',
+            });
+        }
+    }, [isEditMode, editIndex, hallArray]);
+
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -36,6 +61,9 @@ const EditHall = ({ hallArray, setHallArray }) => {
 
 
     const handleClickOpenHall = () => {
+        setHallValues({
+            hallCode: '', hallAc: '', floorLevel: '', hallRemark: '', hallRental: '', hallNoOfAdults: '', hallNoOfChildren: '',
+        });
         setOpenHall(true);
     };
 
@@ -129,16 +157,37 @@ const EditHall = ({ hallArray, setHallArray }) => {
             setOpenHallFillAlert(true);
             return;
         }
-        if (hallExist) {
-            setOpenHallExistAlert(true);
-            return;
+        // if (hallExist) {
+        //     setOpenHallExistAlert(true);
+        //     return;
+        // }
+
+        if (isEditMode && editIndex !== null) {
+            // Editing an existing room
+            const updatedHallArray = [...hallArray];
+            updatedHallArray[editIndex] = {
+                ...updatedHallArray[editIndex],
+                ...hallValues,
+                hallRentalArray: [...hallRentalArray], // Copy the rentalArray as well
+            };
+            setHallArray(updatedHallArray);
+        } else {
+            // Adding a new room
+            const updatedValues = { ...hallValues, hallRentalArray };
+            setHallArray([...hallArray, updatedValues]);
+            // setRoomArray([...roomArray, values]);
         }
 
-        const updatedHallValues = { ...hallValues, hallRentalArray };
-        setHallArray([...hallArray, updatedHallValues]);
+
+
+
         setHallRentalArray([]);
-        setHallValues({ hallCode: '', hallAc: '', floorLevel: '', hallRemark: '', hallRental: '', hallNoOfAdults: '', hallNoOfChildren: '', })
+
+        // Close the dialog and reset state
+
         setOpenHall(false);
+        setIsEditMode(false);
+        setEditIndex(null);
     };
 
     const handleHallDelete = (hallCode) => { //for room hallbreakdown component
@@ -148,6 +197,36 @@ const EditHall = ({ hallArray, setHallArray }) => {
         setHallArray(newHallArray);
 
     }
+
+
+    const handleHallEdit = (index) => {
+
+        const editedHall = hallArray[index];
+        console.log(editedHall);
+
+        setHallValues({
+            hallCode: editedHall.hallCode,
+            hallAc: editedHall.hallAc,
+            floorLevel: editedHall.floorLevel,
+            hallNoOfAdults: editedHall.hallNoOfAdults,
+            hallNoOfChildren: editedHall.hallNoOfChildren,
+            hallRemark: editedHall.hallRemark,
+            hallRental: editedHall.hallRental,
+
+        });
+
+
+        setHallRentalArray(editedHall.hallRentalArray);
+
+
+        setOpenHall(true);
+        setEditIndex(index);
+        setIsEditMode(true);
+
+
+    }
+
+
 
 
     const [hallRental, setHallRental] = useState({
@@ -205,7 +284,7 @@ const EditHall = ({ hallArray, setHallArray }) => {
                 hallArray.map((item, index) => {
                     return (
 
-                        <HallBreakDown key={index} hallCode={item.hallCode} hallAc={item.hallAc} floorLevel={item.floorLevel} hallNoOfAdults={item.hallNoOfAdults} hallNoOfChildren={item.hallNoOfChildren} hallRemarks={item.hallRemarks} hallRental={item.hallRental} handleHallDelete={handleHallDelete} />
+                        <HallBreakDown key={index} hallCode={item.hallCode} hallAc={item.hallAc} floorLevel={item.floorLevel} hallNoOfAdults={item.hallNoOfAdults} hallNoOfChildren={item.hallNoOfChildren} hallRemarks={item.hallRemarks} hallRental={item.hallRental} handleHallDelete={handleHallDelete} handleHallEdit={handleHallEdit} index={index} />
                     )
                 })}
 
@@ -226,7 +305,7 @@ const EditHall = ({ hallArray, setHallArray }) => {
                                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                     <Typography variant='p' sx={{ color: 'black' }}>Hall Code</Typography>
                                 </Box>
-                                <TextField className="input_field" error={error.ctName} required id="outlined-required" label="Hall Name" placeholder='Hall Name/Code' fullWidth size='small' onChange={handleHallCodeChange} helperText={hallExist ? "Already exist" : ''} />
+                                <TextField className="input_field" error={error.ctName} required id="outlined-required" label="Hall Name" placeholder='Hall Name/Code' fullWidth size='small' onChange={handleHallCodeChange} helperText={hallExist ? "Already exist" : ''} value={hallValues.hallCode} />
                             </Box>
                             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
@@ -241,7 +320,7 @@ const EditHall = ({ hallArray, setHallArray }) => {
                                         size='small'
                                         labelId="demo-simple-select-label"
                                         id="demo-simple-select"
-                                        value={value.catogery}
+                                        value={hallValues.hallAc}
                                         label="Age"
                                         onChange={handleHallAcChange}
                                     >
@@ -256,32 +335,32 @@ const EditHall = ({ hallArray, setHallArray }) => {
                                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                     <Typography variant='p' sx={{ color: 'black' }}>Floor Level</Typography>
                                 </Box>
-                                <TextField type='number' error={error.ctName} required id="outlined-required" label="" placeholder='No of beds' fullWidth size='small' onChange={handleHallFloorChange} helperText={error.ctName ? "Invalid Input" : ''} />
+                                <TextField type='number' error={error.ctName} required id="outlined-required" label="" placeholder='No of beds' fullWidth size='small' onChange={handleHallFloorChange} helperText={error.ctName ? "Invalid Input" : ''} value={hallValues.floorLevel} />
                             </Box>
                             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                     <Typography variant='p' sx={{ color: 'black' }}>Number Of Adults</Typography>
                                 </Box>
-                                <TextField type='number' error={error.ctName} required id="outlined-required" label="" placeholder='No of Adults' fullWidth size='small' onChange={handleHallNoOfAdultsChange} helperText={error.ctName ? "Invalid Input" : ''} />
+                                <TextField type='number' error={error.ctName} required id="outlined-required" label="" placeholder='No of Adults' fullWidth size='small' onChange={handleHallNoOfAdultsChange} helperText={error.ctName ? "Invalid Input" : ''} value={hallValues.hallNoOfAdults} />
                             </Box>
                             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                     <Typography variant='p' sx={{ color: 'black' }}>Number Of Children</Typography>
                                 </Box>
-                                <TextField type='number' error={error.ctName} required id="outlined-required" label="" placeholder='No of Children' fullWidth size='small' onChange={handleHallNoOfChildrenChange} helperText={error.ctName ? "Invalid Input" : ''} />
+                                <TextField type='number' error={error.ctName} required id="outlined-required" label="" placeholder='No of Children' fullWidth size='small' onChange={handleHallNoOfChildrenChange} helperText={error.ctName ? "Invalid Input" : ''} value={hallValues.hallNoOfChildren} />
                             </Box>
 
                             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                     <Typography variant='p' sx={{ color: 'black' }}>Remark</Typography>
                                 </Box>
-                                <TextField error={error.ctName} required id="outlined-required" label="Remark" placeholder='Enter Remark' fullWidth size='small' onChange={handleHallRemarksChange} helperText={error.ctName ? "Invalid Input" : ''} />
+                                <TextField error={error.ctName} required id="outlined-required" label="Remark" placeholder='Enter Remark' fullWidth size='small' onChange={handleHallRemarksChange} helperText={error.ctName ? "Invalid Input" : ''} value={hallValues.hallRemark} />
                             </Box>
                             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                     <Typography variant='p' sx={{ color: 'black' }}>Rental</Typography>
                                 </Box>
-                                <TextField type='number' error={error.ctName} required id="outlined-required" label="Rental" placeholder='Rental' fullWidth size='small' onChange={handleHallRentalChange} helperText={error.ctName ? "Invalid Input" : ''} />
+                                <TextField type='number' error={error.ctName} required id="outlined-required" label="Rental" placeholder='Rental' fullWidth size='small' onChange={handleHallRentalChange} helperText={error.ctName ? "Invalid Input" : ''} value={hallValues.hallRental} />
                             </Box>
                             <Box className="rental_container">
                                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
