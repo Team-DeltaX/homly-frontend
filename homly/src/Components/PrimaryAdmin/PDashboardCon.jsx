@@ -31,19 +31,19 @@ const PDashboardCon = () => {
           },
           {
             color:'#FF5F51',
-            summaryTitle: 'Holiday Homes',
+            summaryTitle: 'Homes',
             count: 879,
             iconComponent: <PaidIcon sx={{fontSize:'2.8rem'}}/>,
           }
         // Add more objects as needed for additional summaries
       ];
   return (
-    <Grid container sx={{padding:'10px 30px'}}>
+    <Grid container sx={{padding:'10px 30px',display:'flex',justifyContent:'center',width:'100%'}}>
         <Grid md={8} xs={12}>
-            <Grid container justifyContent={'space-between'}sx={{marginBottom:'25px'}} spacing={2}>
+            <Grid container justifyContent={'space-between'}sx={{marginBottom:'25px',width:'100%'}} spacing={1}>
                 {summaries.map((sum)=>(
-                     <Grid item md={2} xs={6} sm={3} lg={4} xl={4} sx={{display:'flex',alignItems:'center',justifyContent:'center'}}>
-                        <Box sx={{width:'150px',height:'150px'}}>
+                     <Grid item md={3} xs={6}  sx={{display:'flex',alignItems:'center',justifyContent:'spcae-between'}}>
+                        <Box sx={{width:'350px',height:'150px'}}>
                             <PSummary summaryTitle={sum.summaryTitle} iconUse={sum.iconComponent} count={sum.count} color={sum.color}/>
                         </Box>
                      </Grid>
@@ -55,8 +55,8 @@ const PDashboardCon = () => {
                 </Grid>
             </Grid>
         </Grid>
-        <Grid md={4} xs={12}>
-        </Grid>
+        {/* <Grid md={4} xs={12}>
+        </Grid> */}
     </Grid>
     
   )

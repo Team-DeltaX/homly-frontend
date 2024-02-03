@@ -68,7 +68,7 @@ const PrimaryDashboard = () => {
                     sx={{
                       backgroundColor: "white",
                       overflow: "auto",
-                      maxHeight: "100vh",
+                      maxHeight: {md:'645px',xs:'auto'},
                     }}
                   >
                     <PDashboardCon/>

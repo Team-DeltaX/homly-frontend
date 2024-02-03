@@ -21,7 +21,7 @@ export default function SimpleCharts() {
               color:'#002347'
             },
           ]}
-          width={730}
+          width={window.innerHeight<100?'100':'730'}
           height={300}
         />
      
