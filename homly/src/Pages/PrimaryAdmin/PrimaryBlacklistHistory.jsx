@@ -16,7 +16,10 @@ import BlacklistHistoryCard from "../../Components/PrimaryAdmin/BlacklistHistory
 import { CSVLink } from "react-csv";
 
 import SummarizeIcon from "@mui/icons-material/Summarize";
+import SearchNew from "../../Components/PrimaryAdmin/SearchNew";
 const PrimaryBlacklistHistory = () => {
+  const [search, setSearch] = useState("");
+
   const [popup, setpopup] = useState(false);
   const [selecteduser, setSelecteduser] = useState({});
 
@@ -165,15 +168,28 @@ const PrimaryBlacklistHistory = () => {
                 heading={"Blacklist User History"}
               />
               {/* <Box>  <Search/></Box> */}
+              <SearchNew setSearch={setSearch} search={search} />
+
               <Box
                 sx={{
                   marginTop: "2%",
                   maxHeight: "490px",
                   overflow: "scroll",
-                  padding: "3%",
+                  padding: "1.5%",
                 }}
               >
-                {blacklistedusers.map((data) => {
+
+                {blacklistedusers.filter((data) => {
+                    const serviceNumberString = String(data.Service_number);
+                    return search.toLowerCase() === ""
+                      ? data
+                      : serviceNumberString
+                          .toLowerCase()
+                          .startsWith(search.toLocaleLowerCase()) ||
+                          data.User_name.toLowerCase().startsWith(
+                            search.toLocaleLowerCase()
+                          );
+                  }).map((data) => {
                   return (
                     <BlacklistHistoryCard
                       handlepopup={handlepopup}
@@ -184,14 +200,17 @@ const PrimaryBlacklistHistory = () => {
                 })}
               </Box>
               <CSVLink {...csvLink}>
-              <Button
-                sx={{ marginLeft: "5%", marginTop: { xs: "10%", sm: "15px",md:'15px' } }}
-                component="label"
-                variant="contained"
-                startIcon={<SummarizeIcon />}
-              >
-                <Typography>Download Excel</Typography>
-              </Button>
+                <Button
+                  sx={{
+                    marginLeft: "5%",
+                    marginTop: { xs: "4%", sm: "15px", md: "15px" },
+                  }}
+                  component="label"
+                  variant="contained"
+                  startIcon={<SummarizeIcon />}
+                >
+                  <Typography>Download Excel</Typography>
+                </Button>
               </CSVLink>
             </Grid>
           </Grid>
