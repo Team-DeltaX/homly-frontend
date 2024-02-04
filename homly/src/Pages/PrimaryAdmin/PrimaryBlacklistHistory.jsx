@@ -59,7 +59,7 @@ const PrimaryBlacklistHistory = () => {
                     <PageTop setShowNav={setShowNav} heading={"Blacklist User History"}/>
                     {/* <Box>  <Search/></Box> */}
                     <Box sx={{marginTop:'2%',maxHeight:"490px",overflow:"scroll",padding:"3%"}}>
-                      {data.map((data)=>{
+                      {blacklistedusers.map((data)=>{
                             return(
                                <BlacklistHistoryCard handlepopup={handlepopup} data={data} setSelecteduser={setSelecteduser}/>
                             )
