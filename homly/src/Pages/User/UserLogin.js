@@ -78,7 +78,7 @@ const UserLogin = () => {
             <Grid
               container
               sx={{
-                // height: "85%",
+                height: "85%",
                 backgroundColor: "grey1",
                 borderRadius: "10px",
                 boxShadow: 1,
@@ -129,7 +129,17 @@ const UserLogin = () => {
                     Sign up
                   </Button>
                 </Box>
-                <Box paddingLeft={"5%"} marginBottom={"5%"}>
+                <Box
+                  paddingLeft={"5%"}
+                  marginBottom={"5%"}
+                  sx={{
+                    height:'100%',
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
                   <form
                     autoComplete="off"
                     onSubmit={handleSubmit}

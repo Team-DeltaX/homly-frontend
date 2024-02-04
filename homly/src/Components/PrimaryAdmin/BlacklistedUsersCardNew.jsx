@@ -58,7 +58,7 @@ const BlacklistedUsersCardNew=(props)=>{
                 props.handlepopup()
                 props.setSelecteduser(props.data)
         
-                }}>View</Button>
+                }}><Typography>View</Typography></Button>
             </Box>
         
         
