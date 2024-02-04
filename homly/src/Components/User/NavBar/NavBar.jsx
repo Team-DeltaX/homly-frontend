@@ -82,6 +82,9 @@ const NavBar = ({ refContactUS }) => {
   };
 
   const handleScrollClick = () => {
+    if (window.innerWidth < 600) {
+      setMobileOpen(!mobileOpen);
+    }
     refContactUS.current?.scrollIntoView({ behavior: "smooth" });
   };
 
@@ -96,6 +99,11 @@ const NavBar = ({ refContactUS }) => {
             </ListItemButton>
           </ListItem>
         ))}
+        <ListItem disablePadding>
+          <ListItemButton onClick={handleScrollClick}>
+            <ListItemText primary="Contact Us" />
+          </ListItemButton>
+        </ListItem>
       </List>
     </div>
   );
@@ -114,6 +122,7 @@ const NavBar = ({ refContactUS }) => {
             alignItems: "center",
             // width: { sm: `calc(100% - ${drawerWidth}px)` },
             // ml: { sm: `${drawerWidth}px` },
+            position: { xs: "fixed", sm: "fixed", md: "sticky" },
           }}
         >
           <Toolbar>
@@ -166,7 +175,12 @@ const NavBar = ({ refContactUS }) => {
                 }}
               >
                 <Typography
-                  sx={{ color: "text.primary", textTransform: "uppercase",fontSize:'0.875rem',fontWeight:'500' }}
+                  sx={{
+                    color: "text.primary",
+                    textTransform: "uppercase",
+                    fontSize: "0.875rem",
+                    fontWeight: "500",
+                  }}
                 >
                   Contact Us
                 </Typography>
@@ -238,6 +252,7 @@ const NavBar = ({ refContactUS }) => {
                 boxSizing: "border-box",
                 width: drawerWidth,
               },
+              position: "fixed",
             }}
           >
             {mainDrawer}

@@ -32,8 +32,8 @@ export default function Footer({refContactUS}) {
         
           <Box
             sx={{
-              width: "110%",
-              height: { xs: "20vh", sm: "35vh", lg: "50vh" },
+              width: "100%",
+              height: { xs: "20vh", sm: "25vh", lg: "50vh" },
               position: "relative",
             }}
           >
@@ -41,7 +41,7 @@ export default function Footer({refContactUS}) {
               component="img"
               src={footerWave}
               alt="footer wave"
-              sx={{ width: "100%", bottom: "0",left:'-10px', position: "absolute" }}
+              sx={{ width: "100%", bottom: "0",left:'0', position: "absolute" }}
             />
           </Box>
           <Box sx={{ width: "100%", bgcolor: "#313131" }}>
@@ -156,7 +156,7 @@ export default function Footer({refContactUS}) {
                     <Stack direction="column" sx={{ marginTop: "2%" }}>
                       <Typography
                         component={Link}
-                        to="/"
+                        to="/Home"
                         sx={{ color: "white", textDecoration: "none" }}
                       >
                         Home

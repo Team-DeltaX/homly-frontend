@@ -124,9 +124,9 @@ export default function Home() {
           overflow: "hidden",
         }}
       >
-        <Container maxWidth="xl" style={{ padding: 0 }}>
+        <Container maxWidth="xl" style={{ padding: 0}}>
           <NavBar refContactUS={refContactUS}/>
-          <Container maxWidth="lg" sx={{ bgcolor: "white" }}>
+          <Container maxWidth="lg" sx={{ bgcolor: "white",marginTop:{xs:'20px',sm:'10px',ms:'0'} }}>
             <Container
               sx={{
                 bgcolor: "white",

@@ -22,7 +22,7 @@ export default function PlacesCard(props) {
             component="img"
             src={props.img}
             alt=""
-            sx={{ width: "100%", objectFit: "cover"}}
+            sx={{ width: "100%", objectFit: "cover",height:{sm:'100%',md:'auto'}}}
           />
           <Box
             sx={{
