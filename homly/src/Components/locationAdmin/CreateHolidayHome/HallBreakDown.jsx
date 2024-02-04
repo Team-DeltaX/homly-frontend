@@ -4,7 +4,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 
 
 
-const HallBreakDown = ({ hallCode, hallAc, floorLevel, hallNoOfAdults, hallNoOfChildren, hallRental, handleHallDelete }) => {
+const HallBreakDown = ({ hallCode, hallAc, floorLevel, hallNoOfAdults, hallNoOfChildren, hallRental, handleHallDelete,handleHallEdit,index }) => {
 
 
 
@@ -39,7 +39,7 @@ const HallBreakDown = ({ hallCode, hallAc, floorLevel, hallNoOfAdults, hallNoOfC
 
             </Box>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: '1em' }}>
-                <Button size='small' variant='contained' sx={{ backgroundColor: 'primary.main' }}>Edit Row</Button>
+                <Button size='small' variant='contained' sx={{ backgroundColor: 'primary.main' }} onClick={() => handleHallEdit(index)}>Edit Row</Button>
 
                 <Box>
                     <CancelIcon sx={{ cursor: 'pointer' }} onClick={() => handleHallDelete(hallCode)} />
