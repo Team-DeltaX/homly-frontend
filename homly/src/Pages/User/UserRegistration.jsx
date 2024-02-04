@@ -255,7 +255,7 @@ const UserRegistration = () => {
                   <Typography sx={{ paddingRight: "2%", fontWeight: "bold" }}>
                     Have an account
                   </Typography>
-                  <Button variant="outlined" component={Link} to="/Login">
+                  <Button variant="outlined" component={Link} to="/">
                     Login
                   </Button>
                 </Box>

@@ -99,14 +99,14 @@ const App = () => (
     <Router>
       <Suspense fallback={<div>loading</div>}>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/Home" element={<Home />} />
           <Route path="/HolidayHomes" element={<HolidayHome />} />
           <Route path="/HolidayHomeDetails" element={<HolidayHomeDetails />} />
           <Route path="/MyProfile" element={<Profile />} />
           {/* <Route path="/ContactUs" element={<ContactUs />} /> */}
           {/* <Route path="/paymentGateway" element={<PaymentGateway />} /> */}
           <Route path="/Registration" element={<UserRegistration />} />
-          <Route path="/Login" element={<UserLogin />} />
+          <Route path="/" element={<UserLogin />} />
           {/* <Route path="/MyProfile" element={<PersonalDetails />} /> */}
           {/* <Route
             path="/MyProfile/PersonalDetails"

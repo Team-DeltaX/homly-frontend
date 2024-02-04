@@ -53,12 +53,12 @@ const settings = [
   { name: "Logout" },
 ];
 const pages = [
-  { name: "Home", path: "/" },
+  { name: "Home", path: "/Home" },
   { name: "Holiday Homes", path: "/holidayHomes" },
 ];
 
 const respSidePages = [
-  { name: "Home", path: "/" },
+  { name: "Home", path: "/Home" },
   { name: "Holiday Homes", path: "/holidayHomes" },
   { name: "My Profile", path: "/myProfile" },
 ];

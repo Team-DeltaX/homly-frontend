@@ -34,23 +34,23 @@ import "./NavBar.css"
 const drawerWidth = 240;
 const settings = [{ name: "My Profile", path: '/myProfile' }, { name: "Logout" }];
 const pages = [
-    { name: "Home", path: "/" },
+    { name: "Home", path: "/Home" },
     { name: "Holiday Homes", path: "/holidayHomes" },
     { name: "Contact Us", path: "/contactUs" }
 ];
 
 const respSidePages = [
-    { name: "Home", path: "/" },
+    { name: "Home", path: "/Home" },
     { name: "Holiday Homes", path: "/holidayHomes" },
     { name: "Contact Us", path: "/contactUs" },
     { name: "My Profile", path: '/myProfile' },
 ];
 
 
-const notifications = [
-    { title: "notification 1", description: "this is notification 1.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,", type: 'canceled' }, 
-    { title: "notification 2", description: "this is notification 2", type: '' }, 
-    { title: "notification 3", description: "this is notification 3", type: '' }];
+// const notifications = [
+//     { title: "notification 1", description: "this is notification 1.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,", type: 'canceled' }, 
+//     { title: "notification 2", description: "this is notification 2", type: '' }, 
+//     { title: "notification 3", description: "this is notification 3", type: '' }];
 
 
 

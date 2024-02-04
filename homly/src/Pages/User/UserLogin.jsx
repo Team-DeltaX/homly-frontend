@@ -82,7 +82,7 @@ const UserLogin = () => {
         }}
       >
         <Container maxWidth="xl" style={{ padding: 0 }}>
-          <Container className="registration-box-container">
+          <Container className="registration-box-container" >
             <Grid
               container
               sx={{
@@ -90,6 +90,7 @@ const UserLogin = () => {
                 backgroundColor: "grey1",
                 borderRadius: "10px",
                 boxShadow: 1,
+                height: {xs:'auto',md:"60vh"},
               }}
               className="registration-box"
             >
@@ -141,121 +142,122 @@ const UserLogin = () => {
                     Sign up
                   </Button>
                 </Box>
-                <Box
-                  paddingLeft={"5%"}
-                  marginBottom={"5%"}
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <form
-                    autoComplete="off"
-                    onSubmit={handleSubmit}
-                    onReset={handleReset}
+                <Box sx={{height:'70%',display:'flex',alignItems:'flex-end'}}>
+                  <Box
+                    paddingLeft={"5%"}
+                    marginBottom={"5%"}
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
                   >
-                    <TextField
-                      sx={{ marginBottom: " 6%", width: "90%" }}
-                      id="textfield-serviceNumber"
-                      label="Service Number"
-                      required
-                      error={errorServiceNumber}
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <BadgeIcon />
-                          </InputAdornment>
-                        ),
-                      }}
-                      InputLabelProps={{
-                        shrink: focusedServiceNo || countChar(serviceNo) !== 0,
-                        style: {
-                          marginLeft:
-                            focusedServiceNo || countChar(serviceNo) !== 0
-                              ? 0
-                              : 35,
-                        },
-                      }}
-                      onFocus={() => setFocusedServiceNo(true)}
-                      onBlur={() => setFocusedServiceNo(false)}
-                      onChange={(e) => {
-                        setServiceNo(e.target.value);
-                      }}
-                      value={serviceNo}
-                      size="small"
-                      helperText={
-                        errorServiceNumber
-                          ? "Your are not an employee of Homly"
-                          : ""
-                      }
-                      fullWidth
-                    />
-                    <TextField
-                      sx={{ marginBottom: "6%", width: "90%" }}
-                      id="textfield-password"
-                      label="Password"
-                      required
-                      error={false}
-                      type={showPassword ? "text" : "password"}
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <PasswordIcon sx={{ p: 0.25, ml: -0.5, mr: 1 }} />
-                          </InputAdornment>
-                        ),
-
-                        endAdornment: (
-                          <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={handleClickShowPassword}
-                            onMouseDown={handleMouseDownPassword}
-                            edge="end"
-                          >
-                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                          </IconButton>
-                        ),
-                      }}
-                      InputLabelProps={{
-                        shrink: focusedPassword || countChar(password) !== 0,
-                        style: {
-                          marginLeft:
-                            focusedPassword || countChar(password) !== 0
-                              ? 0
-                              : 35,
-                        },
-                      }}
-                      onFocus={() => setFocusedPassword(true)}
-                      onBlur={() => setFocusedPassword(false)}
-                      onChange={(e) => {
-                        setPassword(e.target.value);
-                      }}
-                      value={password}
-                      size="small"
-                      helperText={""}
-                      fullWidth
-                    />
-                    <Box
-                      sx={{
-                        display: "flex",
-                        justifyContent: "flex-end",
-                        width: "90%",
-                      }}
+                    <form
+                      autoComplete="off"
+                      onSubmit={handleSubmit}
+                      onReset={handleReset}
                     >
-                      <Button
-                        type="reset"
-                        variant="outlined"
-                        color="primary"
-                        sx={{ marginRight: "2%" }}
+                      <TextField
+                        sx={{ marginBottom: " 6%", width: "90%" }}
+                        id="textfield-serviceNumber"
+                        label="Service Number"
+                        required
+                        error={errorServiceNumber}
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <BadgeIcon />
+                            </InputAdornment>
+                          ),
+                        }}
+                        InputLabelProps={{
+                          shrink: focusedServiceNo || countChar(serviceNo) !== 0,
+                          style: {
+                            marginLeft:
+                              focusedServiceNo || countChar(serviceNo) !== 0
+                                ? 0
+                                : 35,
+                          },
+                        }}
+                        onFocus={() => setFocusedServiceNo(true)}
+                        onBlur={() => setFocusedServiceNo(false)}
+                        onChange={(e) => {
+                          setServiceNo(e.target.value);
+                        }}
+                        value={serviceNo}
+                        size="small"
+                        helperText={
+                          errorServiceNumber
+                            ? "Your are not an employee of Homly"
+                            : ""
+                        }
+                        fullWidth
+                      />
+                      <TextField
+                        sx={{ marginBottom: "6%", width: "90%" }}
+                        id="textfield-password"
+                        label="Password"
+                        required
+                        error={false}
+                        type={showPassword ? "text" : "password"}
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <PasswordIcon sx={{ p: 0.25, ml: -0.5, mr: 1 }} />
+                            </InputAdornment>
+                          ),
+                          endAdornment: (
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={handleClickShowPassword}
+                              onMouseDown={handleMouseDownPassword}
+                              edge="end"
+                            >
+                              {showPassword ? <VisibilityOff /> : <Visibility />}
+                            </IconButton>
+                          ),
+                        }}
+                        InputLabelProps={{
+                          shrink: focusedPassword || countChar(password) !== 0,
+                          style: {
+                            marginLeft:
+                              focusedPassword || countChar(password) !== 0
+                                ? 0
+                                : 35,
+                          },
+                        }}
+                        onFocus={() => setFocusedPassword(true)}
+                        onBlur={() => setFocusedPassword(false)}
+                        onChange={(e) => {
+                          setPassword(e.target.value);
+                        }}
+                        value={password}
+                        size="small"
+                        helperText={""}
+                        fullWidth
+                      />
+                      <Box
+                        sx={{
+                          display: "flex",
+                          justifyContent: "flex-end",
+                          width: "90%",
+                        }}
                       >
-                        Reset
-                      </Button>
-                      <Button type="submit" variant="contained" color="primary"  >
-                        Login
-                      </Button>
-                    </Box>
-                  </form>
+                        <Button
+                          type="reset"
+                          variant="outlined"
+                          color="primary"
+                          sx={{ marginRight: "2%" }}
+                        >
+                          Reset
+                        </Button>
+                        <Button type="submit" variant="contained" color="primary"  >
+                          Login
+                        </Button>
+                      </Box>
+                    </form>
+                  </Box>
                 </Box>
               </Grid>
             </Grid>
