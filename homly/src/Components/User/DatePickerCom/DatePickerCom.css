@@ -1,0 +1,14 @@
+.rdrDefinedRangesWrapper{
+    display: none !important;
+}
+/* .rdrCalendarWrapper{
+    display: none !important;
+} */
+
+.rdrDateDisplayWrapper {
+    height: 80px;
+    /* background: #58c885; */
+}
+
+
+

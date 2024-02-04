@@ -1,0 +1,60 @@
+/* Group 384 */
+
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap");
+
+p {
+  margin: 0;
+}
+
+.group-384 {
+  width: 669px;
+  height: 540px;
+  padding: 410px 332px 54px 65px;
+  border-radius: 16px;
+  box-sizing: border-box;
+  background-color: rgba(194, 198, 204, 1);
+}
+.host-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  box-sizing: border-box;
+}
+.host-image {
+  width: 76px;
+  height: 100%;
+  border-radius: 38px;
+  background-color: rgba(255, 255, 255, 1);
+}
+
+.group-063 {
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  box-sizing: border-box;
+}
+.listed-by {
+  color: rgba(72, 72, 72, 1);
+  font-size: 12px;
+  line-height: 12px;
+  font-family: Montserrat, sans-serif;
+  font-weight: 500;
+}
+
+.john-doberman {
+  color: rgba(72, 72, 72, 1);
+  font-size: 18px;
+  line-height: 18px;
+  font-family: Montserrat, sans-serif;
+  font-weight: 700;
+}
+
+.for-10005000 {
+  color: rgba(72, 72, 72, 1);
+  font-size: 16px;
+  line-height: 16px;
+  font-family: Montserrat, sans-serif;
+  font-weight: 500;
+}

@@ -1,4 +1,4 @@
-import { Box, Button, Grid, TextField, ThemeProvider } from "@mui/material";
+import { Box, Button, Grid, TextField, ThemeProvider, Typography } from "@mui/material";
 import css from "./Css/viewadmin.css";
 import theme from "../../HomlyTheme";
 import EditIcon from "@mui/icons-material/EditCalendar";
@@ -8,7 +8,7 @@ import { useState } from "react";
 
 const ViewAdminCard2 = (props) => {
   const [disabled, setDisabled] = useState(true);
-  const [serviceno, setServiceno] = useState(props.data.Service_number);
+  const [AdminNo, setAdminNo] = useState(props.data.Service_number);
   const [username, setUsername] = useState(props.data.User_name);
   const [password, setPassword] = useState(props.data.Nic_number);
   const [contactnumber, setContactnumber] = useState(props.data.Service_number);
@@ -18,7 +18,7 @@ const ViewAdminCard2 = (props) => {
 
   const handlesave = () => {
     const dataobj = {
-      serviceno: serviceno,
+      Adminno: AdminNo,
       username: username,
       password: password,
       contactno: contactnumber,
@@ -42,28 +42,25 @@ const ViewAdminCard2 = (props) => {
           borderRadius: "15px",
           alignItems: { xs: "center" },
           columnGap: "30px",
-          boxShadow:'rgba(0, 0, 0, 0.1) 0px 4px 12px;'
+          boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px;",
         }}
       >
         <Box sx={{ padding: "10px" }}>
           <AccountCircleIcon sx={{ color: "Black", fontSize: "70px" }} />
         </Box>
         <Box sx={{ padding: "10px" }}>
-          <Box>Service Number</Box>
+          <Box>Admin Number</Box>
           <Box>
             <TextField
               disabled={disabled}
               onChange={(e) => {
-                setServiceno(e.target.value);
+                setAdminNo(e.target.value);
               }}
-              value={serviceno}
+              value={AdminNo}
               size="small"
               type="text"
               sx={{
                 backgroundColor: "white",
-                
-                
-                
               }}
               alignItems="center"
             ></TextField>
@@ -80,7 +77,6 @@ const ViewAdminCard2 = (props) => {
               alignItems="center"
               sx={{
                 backgroundColor: "white",
-                
               }}
               size="small"
             ></TextField>
@@ -95,11 +91,10 @@ const ViewAdminCard2 = (props) => {
                 setPassword(e.target.value);
               }}
               size="small"
-              type="password"
+              type="text"
               value={password}
               sx={{
                 backgroundColor: "white",
-              
               }}
               alignItems="center"
             ></TextField>
@@ -116,7 +111,6 @@ const ViewAdminCard2 = (props) => {
               alignItems="center"
               sx={{
                 backgroundColor: "white",
-              
               }}
               size="small"
             ></TextField>
@@ -135,7 +129,6 @@ const ViewAdminCard2 = (props) => {
               value={email}
               sx={{
                 backgroundColor: "white",
-             
               }}
               alignItems="center"
             ></TextField>
@@ -152,7 +145,6 @@ const ViewAdminCard2 = (props) => {
               alignItems="center"
               sx={{
                 backgroundColor: "white",
-              
               }}
               size="small"
             ></TextField>
@@ -167,7 +159,7 @@ const ViewAdminCard2 = (props) => {
             marginTop: "10px",
           }}
         >
-          <Button
+          {/* <Button
             startIcon={<EditIcon />}
             sx={{ width: "90px", borderRadius: "15px", height: "30px" }}
             variant="contained"
@@ -175,20 +167,20 @@ const ViewAdminCard2 = (props) => {
               setDisabled(!disabled);
             }}
           >
-            Edit
-          </Button>
+            <Typography>Edit</Typography>
+          </Button> */}
           {/* <Box>{dataobj}</Box> */}
           <Box sx={{ height: "20px" }}></Box>
           <Button
-            startIcon={<SaveIcon />}
-            disabled={disabled}
+           
+            
             sx={{ width: "90px", height: "30px", borderRadius: "15px" }}
             variant="contained"
             onClick={() => {
               handlesave();
             }}
           >
-            Save
+           <Typography>Disable</Typography>
           </Button>
         </Box>
       </Box>

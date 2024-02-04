@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 
-import NavBar from '../../Components/NavBar/NavBar'
-import PersonalDetailsGrid from "../../Components/PersonalDetailsGrid/PersonalDetailsGrid";
-import UpdateButton from "../../Components/PersonalDetailsGrid/UpdateButton";
+import NavBar from '../../Components/User/NavBar/NavBar'
+import PersonalDetailsGrid from "../../Components/User/PersonalDetailsGrid/PersonalDetailsGrid";
+import UpdateButton from "../../Components/User/PersonalDetailsGrid/UpdateButton";
 
 import { EditPersonalDetailsContext } from "../../Contexts/EditPersonalDetailsContext";
 

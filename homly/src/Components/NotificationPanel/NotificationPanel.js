@@ -50,6 +50,7 @@ const NotificationPanel = (props) => {
         </IconButton>
       </Tooltip>
       <Menu
+        // disableScrollLock={true}
         sx={{ mt: "45px",width:"20%" }}
         id="menu-appbar"
         anchorEl={anchorElUser}
@@ -67,6 +68,7 @@ const NotificationPanel = (props) => {
       >
         {props.notifications.map((item) => (
           <MenuItem
+            
             key={item.title}
             display={"flex"}
             sx={{m:0.5 ,borderRadius: "10px",boxShadow: "0px 39px 64px -55px rgba(0,0,0,0.75)",flexDirection: "column",alignItems:"flex-start"}}

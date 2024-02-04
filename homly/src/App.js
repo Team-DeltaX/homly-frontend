@@ -4,6 +4,10 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import EditPersonalDetailsContextProvider from "./Contexts/EditPersonalDetailsContext";
 import "../src/Styles/styles.css";
 import ManageHomes from "../src/Pages/locationAdmin/ManageHomes";
+import HolidayHomeEdit from "./Pages/locationAdmin/HolidayHomeEdit";
+
+
+
 
 // user pages import start
 
@@ -35,13 +39,14 @@ import ManageHomes from "../src/Pages/locationAdmin/ManageHomes";
 import Home from "../src/Pages/User/Home";
 import HolidayHome from "../src/Pages/User/HolidayHome";
 import Profile from "../src/Pages/User/Profile";
-import ContactUs from "../src/Pages/User/ContactUs";
+// import ContactUs from "../src/Pages/User/ContactUs";
 import UserRegistration from "../src/Pages/User/UserRegistration";
 import UserLogin from "../src/Pages/User/UserLogin";
-import PersonalDetails from "../src/Pages/User/PersonalDetails";
-import UserSecurity from "../src/Pages/User/UserSecurity";
-import PaymentDetails from "../src/Pages/User/PaymentDetails";
-import MyReservation from "../src/Pages/User/MyReservation";
+// import PersonalDetails from "../src/Pages/User/PersonalDetails";
+// import UserSecurity from "../src/Pages/User/UserSecurity";
+// import PaymentDetails from "../src/Pages/User/PaymentDetails";
+// import MyReservation from "../src/Pages/User/MyReservation";
+import HolidayHomeDetails from '../src/Pages/User/HolidayHomeDetails';
 
 const PrimaryDashboard = lazy(() => import("./Pages/PrimaryAdmin/PrimaryDashboard"));
 const PrimaryReservations = lazy(() => import("./Pages/PrimaryAdmin/PrimaryReservations"));
@@ -55,34 +60,34 @@ const PrimaryViewAdmin = lazy(() => import("./Pages/PrimaryAdmin/PrimaryViewAdmi
 const PrimaryAuthorizations = lazy(() => import("./Pages/PrimaryAdmin/PrimaryAuthorizations"));
 
 
-
-
-
-
-
 // user pages import end
 // location admin import start
 
-const LocationDashboard = lazy(()=>
+const LocationDashboard = lazy(() =>
   import("../src/Pages/locationAdmin/Dashboard")
 )
-const HolidayHomesDetails = lazy(()=>
+const HolidayHomesDetails = lazy(() =>
   import("../src/Pages/locationAdmin/HolidayHomeDetails")
 )
 
-const CreateHolidayHome = lazy(()=>
+const CreateHolidayHome = lazy(() =>
   import("../src/Pages/locationAdmin/CreateHolidayHome")
 )
-const FeedBack = lazy(()=>
+const FeedBack = lazy(() =>
   import("../src/Pages/locationAdmin/Feedback")
 )
-const Reservations = lazy(()=>
+const Reservations = lazy(() =>
   import("../src/Pages/locationAdmin/Reservations")
 )
 
-const Report = lazy(()=>
+const Report = lazy(() =>
   import("../src/Pages/locationAdmin/Report")
 )
+
+// const HolidayHomeEdit = lazy(()=>
+//   import("../src/Pages/locationAdmin/HolidayHomeEdit")
+// )
+
 // const LocationManageHomes =lazy(()=>{
 //   import("../src/Pages/locationAdmin/ManageHomes")
 // }) 
@@ -96,45 +101,49 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/HolidayHomes" element={<HolidayHome />} />
+          <Route path="/HolidayHomeDetails" element={<HolidayHomeDetails />} />
           <Route path="/MyProfile" element={<Profile />} />
-          <Route path="/ContactUs" element={<ContactUs />} />
+          {/* <Route path="/ContactUs" element={<ContactUs />} /> */}
           {/* <Route path="/paymentGateway" element={<PaymentGateway />} /> */}
           <Route path="/Registration" element={<UserRegistration />} />
           <Route path="/Login" element={<UserLogin />} />
           {/* <Route path="/MyProfile" element={<PersonalDetails />} /> */}
-          <Route
+          {/* <Route
             path="/MyProfile/PersonalDetails"
             element={<PersonalDetails />}
-          />
-          <Route path="/MyProfile/Security" element={<UserSecurity />} />
+          /> */}
+          {/* <Route path="/MyProfile/Security" element={<UserSecurity />} />
           <Route
             path="/MyProfile/PaymentDetails"
             element={<PaymentDetails />}
-          />
-          <Route path="/MyProfile/MyReservation" element={<MyReservation />} />
+          /> */}
+          {/* <Route path="/MyProfile/MyReservation" element={<MyReservation />} /> */}
 
-          <Route path="/locationadmin/dashboard" element={<LocationDashboard/>}/>
-          <Route path="/locationadmin/holidayhomes/manage" element={<ManageHomes/>}/>
-          <Route path="/locationadmin/holidayhomes/details" element={<HolidayHomesDetails/>}/>
-          <Route path="/locationadmin/feedback" element={<FeedBack/>}/>
-          <Route path="/locationadmin/reservations" element={<Reservations/>}/>
-          <Route path="/locationadmin/report" element={<Report/>}/>
-          <Route path="/locationadmin/holidayhomes/createholidayhome" element={<CreateHolidayHome/>}/>
-
-
-
+          <Route path="/locationadmin/dashboard" element={<LocationDashboard />} />
+          <Route path="/locationadmin/manage" element={<ManageHomes />} />
+          <Route path="/locationadmin/details" element={<HolidayHomesDetails />} />
+          <Route path="/locationadmin/feedback" element={<FeedBack />} />
+          <Route path="/locationadmin/reservations" element={<Reservations />} />
+          <Route path="/locationadmin/report" element={<Report />} />
+          <Route path="/locationadmin/holidayhomes/createholidayhome" element={<CreateHolidayHome />} />
+          <Route path="/locationadmin/holidayhomes/editholidayhome" element={<HolidayHomeEdit />} />
 
 
-          <Route path='/primaryadmin/dashboard' element={<PrimaryDashboard/>}></Route>
-          <Route path='/primaryadmin/reservations' element={<PrimaryReservations/>}></Route>
-          <Route path='/primaryadmin/holidayhomes' element={<PrimaryHolidayHomes/>}></Route>
-          <Route path='/primaryadmin/report' element={<PrimaryReport/>}></Route>
-          <Route path='/primaryadmin/blacklistedusers/manage' element={<PrimaryManageBlacklistedUsers/>}></Route>
-          <Route path='/primaryadmin/blacklistedusers/history' element={<PrimaryBlacklistHistory/>}></Route>
-          <Route path='/primaryadmin/blacklistedusers/complaints' element={<PrimaryComplaints/>}></Route>
-          <Route path='/primaryadmin/addadmin' element={<PrimaryAddAdmin/>}></Route>
-          <Route path='/primaryadmin/viewadmin' element={<PrimaryViewAdmin/>}></Route>
-          <Route path='/primaryadmin/authorizations' element={<PrimaryAuthorizations/>}></Route>
+
+
+
+
+
+          <Route path='/primaryadmin/dashboard' element={<PrimaryDashboard />}></Route>
+          <Route path='/primaryadmin/reservations' element={<PrimaryReservations />}></Route>
+          <Route path='/primaryadmin/holidayhomes' element={<PrimaryHolidayHomes />}></Route>
+          <Route path='/primaryadmin/report' element={<PrimaryReport />}></Route>
+          <Route path='/primaryadmin/blacklistedusers/manage' element={<PrimaryManageBlacklistedUsers />}></Route>
+          <Route path='/primaryadmin/blacklistedusers/history' element={<PrimaryBlacklistHistory />}></Route>
+          <Route path='/primaryadmin/blacklistedusers/complaints' element={<PrimaryComplaints />}></Route>
+          <Route path='/primaryadmin/addadmin' element={<PrimaryAddAdmin />}></Route>
+          <Route path='/primaryadmin/viewadmin' element={<PrimaryViewAdmin />}></Route>
+          <Route path='/primaryadmin/authorizations' element={<PrimaryAuthorizations />}></Route>
 
 
 
