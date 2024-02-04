@@ -60,7 +60,7 @@ const UserLogin = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrorServiceNumber(false);
-    Navigate('/');
+    Navigate('/Home');
   };
 
   const handleReset = (e) => {

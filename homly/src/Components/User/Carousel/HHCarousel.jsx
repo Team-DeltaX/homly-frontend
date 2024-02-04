@@ -69,14 +69,14 @@ export default function HHCarousel(props) {
           .sort((a, b) => b.rating - a.rating)
           .slice(0, 6)
           .map((item) => (
-            <HolidayHomeCard
-              key={item.HHId}
-              HHName={item.name}
-              HHLocation={item.address}
-              HHPrice={item.price}
-              HHRating={item.rating}
-              HHImage={item.image}
-            />
+              <HolidayHomeCard
+                key={item.HHId}
+                HHName={item.name}
+                HHLocation={item.address}
+                HHPrice={item.price}
+                HHRating={item.rating}
+                HHImage={item.image}
+              />
           ))}
       </Carousel>
       {/* <HolidayHomeCard /> */}

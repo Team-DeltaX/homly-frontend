@@ -1,5 +1,13 @@
-.activePage {
-    background: aqua;
+.activePage::after {
+    content: "";
+    position: absolute;
+    width: 80%;
+    height: 7px;
+    background: #872341;
+    bottom:0px;
+    right:0;
+    border-radius: 10px;
+    /* background: rgb(255, 179, 0); */
 }
 
 .activeSidePage {

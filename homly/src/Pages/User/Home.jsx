@@ -27,6 +27,9 @@ import BrowseMoreCom from "../../Components/User/BrowseMore/BrowseMoreCom";
 import Footer from "../../Components/User/Footer/Footer";
 import HHCarousel from "../../Components/User/Carousel/HHCarousel";
 
+import AOS from "aos";
+import "aos/dist/aos.css";
+
 const reservedDates = [
   "2024/01/27",
   "2024/01/28",
@@ -80,6 +83,7 @@ const reservedDates = [
 // ];
 
 export default function Home() {
+  const refContactUS = React.useRef(null);
   const [APIData, setAPIData] = useState([]);
   const [sortedByRating, setSortedByRating] = useState([]);
   const [selectionRange, setSelectRange] = useState({
@@ -89,6 +93,9 @@ export default function Home() {
   });
 
   const [district, setDistrict] = useState("");
+  useEffect(() => {
+    AOS.init();
+  }, []);
 
   useEffect(() => {
     axios
@@ -118,7 +125,7 @@ export default function Home() {
         }}
       >
         <Container maxWidth="xl" style={{ padding: 0 }}>
-          <NavBar />
+          <NavBar refContactUS={refContactUS}/>
           <Container maxWidth="lg" sx={{ bgcolor: "white" }}>
             <Container
               sx={{
@@ -376,7 +383,7 @@ export default function Home() {
                 </Stack>
                 <OurPlaces />
               </Stack>
-              <Stack sx={{ margin: "5% 0 0 0" }}>
+              <Stack data-aos="fade-left" data-aos-duration="900" sx={{ margin: "5% 0 0 0" }}>
                 <BrowseMoreCom />
               </Stack>
             </Container>
@@ -393,8 +400,8 @@ export default function Home() {
               }}
             ></Container>
           </Container>
-          <Box>
-            <Footer />
+          <Box >
+            <Footer refContactUS={refContactUS}/>
           </Box>
         </Container>
       </Box>
