@@ -1,14 +1,14 @@
 import React from 'react';
 import { Container, Box } from "@mui/material";
-import NavBar from "../../Components/NavBar/NavBar";
-import MainHolidayHomePhoto from '../../Components/User/HolidayHomeDetailsGrid/MainHolidayHomePhoto';
+import NavBar from "../../Components/User/NavBar/NavBar";
+// import MainHolidayHomePhoto from '../../Components/User/HolidayHomeDetailsGrid/MainHolidayHomePhoto';
 import HolidayHomeGrid from '../../Components/User/HolidayHomeDetailsGrid/HolidayHomeGrid';
 
 export default function HolidayHomeDetails() {
   return (
     <div>
     <Box
-      className="main_container"
+      // className="main_container"
       sx={{
         width: "100%",
         overflow: "hidden",

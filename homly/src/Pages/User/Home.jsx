@@ -6,8 +6,6 @@ import {
   ThemeProvider,
   Stack,
   Grid,
-  MenuItem,
-  FormControl,
   Divider,
 } from "@mui/material";
 import axios from "axios";
@@ -19,7 +17,7 @@ import theme from "../../HomlyTheme";
 // import MyReservationCard from "../../Components/MyReservationCard/MyReservationCard";
 
 import DatePickerCom from "../../Components/User/DatePickerCom/DatePickerCom";
-import HolidayHomeCard from "../../Components/User/HHCard/HolidayHomeCard";
+// import HolidayHomeCard from "../../Components/User/HHCard/HolidayHomeCard";
 
 import "./UserStyle.css";
 import Topbg from "../../Assets/images/LandingPageTop.png";
