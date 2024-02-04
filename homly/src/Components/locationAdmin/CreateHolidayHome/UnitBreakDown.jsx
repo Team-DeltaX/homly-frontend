@@ -15,7 +15,7 @@ import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 
 
-const UnitBreakDown = ({ unitCode, unitAc, floorLevel, unitNoOfAdults, unitNoOfChildren, unitRemarks, unitRental, selectedRooms, roomArray, setRoomArray, handleUnitDelete }) => {
+const UnitBreakDown = ({ unitCode, unitAc, floorLevel, unitNoOfAdults, unitNoOfChildren, unitRemarks, unitRental, selectedRooms, roomArray, setRoomArray, handleUnitDelete ,handleUnitEdit,index}) => {
     const [open, setOpen] = useState(false);
     const [fullWidth, setFullWidth] = useState(true);
     const [maxWidth, setMaxWidth] = useState('sm');
@@ -84,9 +84,10 @@ const UnitBreakDown = ({ unitCode, unitAc, floorLevel, unitNoOfAdults, unitNoOfC
     };
 
     // Sure dialog for remove unit
-    const [openUnitRemove, setOpenUnitRemove] = useState(false);
+
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+    const [openUnitRemove, setOpenUnitRemove] = useState(false);//unit remove state pop up
 
     const handleOpenUnitRemove = () => {
         setOpenUnitRemove(true);
@@ -130,7 +131,7 @@ const UnitBreakDown = ({ unitCode, unitAc, floorLevel, unitNoOfAdults, unitNoOfC
             </Box>
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '1em', width: "100%" }}>
                 <Button size='small' variant='contained' sx={{ backgroundColor: 'primary.main' }} onClick={handleClickOpen}>Attach Rooms</Button>
-                <Button size='small' variant='contained' sx={{ backgroundColor: 'primary.main' }}>Edit Row</Button>
+                <Button size='small' variant='contained' sx={{ backgroundColor: 'primary.main' }} onClick={()=>handleUnitEdit(index)}>Edit Row</Button>
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                     <Typography variant='p'>Room Attached?</Typography>
                     <Checkbox {...label} disabled={selectedRooms.length === 0 ? true : false} checked={selectedRooms.length === 0 ? false : true} />
@@ -331,7 +332,7 @@ const UnitBreakDown = ({ unitCode, unitAc, floorLevel, unitNoOfAdults, unitNoOfC
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button autoFocus onClick={() => handleUnitDelete(unitCode, selectedRooms)}>
+                    <Button autoFocus onClick={() => { handleCloseUnitRemove(); handleUnitDelete(unitCode, selectedRooms); }}>
                         Yes
                     </Button>
                     <Button onClick={handleCloseUnitRemove} autoFocus>

@@ -7,6 +7,7 @@ import Box from '@mui/material/Box';
 import OngoingReservationList from '../../Reservations/OngoingReservationList';
 import PastReservationList from '../../Reservations/PastReservationList';
 import SpecialReservationList from '../../Reservations/SpecialReservationList';
+import AddSpecialReservationPopUp from '../../Reservations/AddSpecialReservationPopUp';
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -50,6 +51,7 @@ export default function PrimaryAdminBasicTabs(props) {
 
   return (
     <Box sx={{ width: '100%' }}>
+      <Box><AddSpecialReservationPopUp /></Box>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
           <Tab label="Ongoing Reservations" {...a11yProps(0)} />

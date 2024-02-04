@@ -9,7 +9,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
 
-const HomeDetailsView = () => {
+const HomeDetailsView = ({ setSubmit }) => {
 
   const [value, setValue] = useState({
     name: '', address: '', district: '', description: '', contactNo1: '', contactNo2: '', category: '', status: ''
@@ -22,9 +22,7 @@ const HomeDetailsView = () => {
 
   const handleNameChange = (e) => {
     setValue({ ...value, name: e.target.value });
-    const name_regex = /^[a-zA-Z]+$/;
-
-
+    const name_regex = /^[a-zA-Z\s]+$/;
     if (e.target.value.length > 0) {
       if (!name_regex.test(e.target.value)) {
         setError({ ...error, name: true });
@@ -116,18 +114,32 @@ const HomeDetailsView = () => {
                 label="Age"
                 onChange={handleDistrictChange}
               >
-                <MenuItem value={"January"}>January</MenuItem>
-                <MenuItem value={"February"}>February</MenuItem>
-                <MenuItem value={"March"}>March</MenuItem>
-                <MenuItem value={"April"}>April</MenuItem>
-                <MenuItem value={"May"}>May</MenuItem>
-                <MenuItem value={"June"}>June</MenuItem>
-                <MenuItem value={"July"}>July</MenuItem>
-                <MenuItem value={"August"}>August</MenuItem>
-                <MenuItem value={"September"}>September</MenuItem>
-                <MenuItem value={"October"}>October</MenuItem>
-                <MenuItem value={"November"}>November</MenuItem>
-                <MenuItem value={"December"}>December</MenuItem>
+                <MenuItem value={"Colombo"}>Colombo</MenuItem>
+                <MenuItem value={"Gampaha"}>Gampaha</MenuItem>
+                <MenuItem value={"Kalutara"}>Kalutara</MenuItem>
+                <MenuItem value={"Kandy"}>Kandy</MenuItem>
+                <MenuItem value={"Matale"}>Matale</MenuItem>
+                <MenuItem value={"Nuwara Eliya"}>Nuwara Eliya</MenuItem>
+                <MenuItem value={"Galle"}>Galle</MenuItem>
+                <MenuItem value={"Matara"}>Matara</MenuItem>
+                <MenuItem value={"Hambantota"}>Hambantota</MenuItem>
+                <MenuItem value={"Jaffna"}>Jaffna</MenuItem>
+                <MenuItem value={"Kilinochchi"}>Kilinochchi</MenuItem>
+                <MenuItem value={"Mannar"}>Mannar</MenuItem>
+                <MenuItem value={"Vavuniya"}>Vavuniya</MenuItem>
+                <MenuItem value={"Mullaitivu"}>Mullaitivu</MenuItem>
+                <MenuItem value={"Batticaloa"}>Batticaloa</MenuItem>
+                <MenuItem value={"Ampara"}>Ampara</MenuItem>
+                <MenuItem value={"Trincomalee"}>Trincomalee</MenuItem>
+                <MenuItem value={"Kurunegala"}>Kurunegala</MenuItem>
+                <MenuItem value={"Puttalam"}>Puttalam</MenuItem>
+                <MenuItem value={"Anuradhapura"}>Anuradhapura</MenuItem>
+                <MenuItem value={"Polonnaruwa"}>Polonnaruwa</MenuItem>
+                <MenuItem value={"Badulla"}>Badulla</MenuItem>
+                <MenuItem value={"Monaragala"}>Monaragala</MenuItem>
+                <MenuItem value={"Ratnapura"}>Ratnapura</MenuItem>
+                <MenuItem value={"Kegalle"}>Kegalle</MenuItem>
+
               </Select>
             </FormControl>
           </Box>

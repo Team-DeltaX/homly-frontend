@@ -6,6 +6,7 @@
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.15.2",
+    "@mui/joy": "^5.0.0-beta.24",
     "@mui/material": "^5.15.2",
     "@mui/styled-engine-sc": "^6.0.0-alpha.10",
     "@mui/x-charts": "^6.19.1",
@@ -21,7 +22,13 @@
     "dayjs": "^1.11.10",
     "notistack": "^3.0.1",
     "react": "^18.2.0",
+
     "react-avatar-editor": "^13.0.2",
+
+
+    "react-big-calendar": "^1.8.7",
+
+
     "react-csv": "^2.2.2",
     "react-date-range": "^2.0.0-alpha.4",
     "react-dom": "^18.2.0",
@@ -30,7 +37,12 @@
     "react-router-dom": "^6.21.1",
     "react-scripts": "5.0.1",
     "react-select": "^5.8.0",
+
+    "react-select": "^5.8.0",
+
+
     "react-to-pdf": "^1.0.1",
+
     "react-window": "^1.8.10",
     "stripe": "^14.10.0",
     "styled-components": "^6.1.6",
