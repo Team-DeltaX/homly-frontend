@@ -21,6 +21,7 @@ import { PieChart } from '@mui/x-charts/PieChart';
 
 import Income from "../../Components/PrimaryAdmin/Income";
 import PDashboardCon from "../../Components/PrimaryAdmin/PDashboardCon";
+import SimpleLineChart from "../../Components/PrimaryAdmin/SimpleLineChart";
 
 
 
@@ -113,7 +114,9 @@ const PrimaryDashboard = () => {
                         
                       </Box>
                       
-                      <SimpleCharts />
+                      {/* <SimpleCharts /> */}
+
+                      <SimpleLineChart/>
                      
                     </Box>
                   </Grid>
