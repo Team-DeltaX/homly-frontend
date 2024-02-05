@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Box } from "@mui/material";
-import NavBar from "../../Components/NavBar/NavBar";
+import NavBar from "../../Components/User/NavBar/NavBar";
 import MainHolidayHomePhoto from '../../Components/User/HolidayHomeDetailsGrid/MainHolidayHomePhoto';
 import HolidayHomeGrid from '../../Components/User/HolidayHomeDetailsGrid/HolidayHomeGrid';
 
