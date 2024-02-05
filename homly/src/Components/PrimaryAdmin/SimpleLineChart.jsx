@@ -14,10 +14,18 @@ export default function SimpleLineChart() {
     const Home1 = [4000, 3000, 2000, 2780, 1890, 2390, 3490];
     const Home2 = [2400, 1398, 9800, 3908, 4800, 3800, 4300];
     const Home3 = [2434, 2398, 6345, 9533, 4999, 7600, 1000];
-      const [xaxis,setXasis]=React.useState([])
+    const [xaxisd,setXasisd]=React.useState([])
 
     
-    const xLabels = xaxis
+    const xLabels =  [
+        xaxisd[0],
+        xaxisd[1],
+        xaxisd[2],
+        xaxisd[3],
+        xaxisd[4],
+        xaxisd[5],
+        xaxisd[6],
+      ];
     const HolidayHomes = [
       { id: "1", name: "hh1" },
       { id: "2", name: "hh2" },
@@ -54,20 +62,18 @@ export default function SimpleLineChart() {
     for (let i = 6; i >= 0; i--) {
       const date = new Date();
       date.setDate(today.getDate() - i);
-      dates.push(date.toISOString().split('T')[0]); // Format as YYYY-MM-DD
+      dates.push(date.toISOString().split('T')[0]); 
     }
   
     return dates;
   };
-  React.useEffect(()=>{
-    setXasis(getLastSevenDays)
-
-
-
-  },[])
+  React.useEffect(() => {
+    setXasisd(getLastSevenDays()); 
+  }, []);
+  
   return (
     <Box sx={{ marginTop: "40px" }}>
-       
+        {/* {xaxisd} */}
       <Box
         sx={{
           display: "flex",
