@@ -47,6 +47,7 @@ import UserLogin from "../src/Pages/User/UserLogin";
 // import PaymentDetails from "../src/Pages/User/PaymentDetails";
 // import MyReservation from "../src/Pages/User/MyReservation";
 import HolidayHomeDetails from '../src/Pages/User/HolidayHomeDetails';
+import SearchPage from '../src/Pages/User/SearchPage'
 
 const PrimaryDashboard = lazy(() => import("./Pages/PrimaryAdmin/PrimaryDashboard"));
 const PrimaryReservations = lazy(() => import("./Pages/PrimaryAdmin/PrimaryReservations"));
@@ -107,6 +108,7 @@ const App = () => (
           {/* <Route path="/paymentGateway" element={<PaymentGateway />} /> */}
           <Route path="/Registration" element={<UserRegistration />} />
           <Route path="/Login" element={<UserLogin />} />
+          <Route path="/Search" element={<SearchPage/>}/>
           {/* <Route path="/MyProfile" element={<PersonalDetails />} /> */}
           {/* <Route
             path="/MyProfile/PersonalDetails"
