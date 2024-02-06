@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   Container,
   Box,
@@ -39,51 +39,9 @@ const reservedDates = [
   "2024/02/07",
 ];
 
-// const holidayHomes = [
-//   {
-//     id: 1,
-//     name: "Holiday Home 1",
-//     address: "No2, Colombo 1",
-//     rating: 4.7,
-//     price: 5000,
-//   },
-//   {
-//     id: 2,
-//     name: "Holiday Home 2",
-//     address: "No2, Kuruneagala",
-//     rating: 4.6,
-//     price: 5000,
-//     image: "https://picsum.photos/200",
-//   },
-//   {
-//     id: 3,
-//     name: "Holiday Home 3",
-//     address: "Bandaranayaka Mawatha, Moratuwa",
-//     rating: 4.6,
-//     price: 5000,
-//     image: "https://picsum.photos/200",
-//   },
-//   {
-//     id: 4,
-//     name: "Holiday Home 4",
-//     address:'No 5,Nuwara Eliya',
-//     rating: 5,
-//     price: 5000,
-//     image: "https://picsum.photos/200",
-//   },
-//   {
-//     id: 5,
-//     name: "Holiday Home 5",
-//     address: "No2, Colombo 1",
-//     rating: 4.4,
-//     price: 5000,
-//     image: "https://picsum.photos/200",
-//   }
-
-// ];
 
 export default function Home() {
-  const refContactUS = React.useRef(null);
+  const refContactUS = useRef(null);
   const [APIData, setAPIData] = useState([]);
   const [sortedByRating, setSortedByRating] = useState([]);
   const [selectionRange, setSelectRange] = useState({
@@ -111,14 +69,11 @@ export default function Home() {
     sortedByRating.sort((a, b) => b.rating - a.rating);
   }, [sortedByRating]);
 
-  console.log(sortedByRating);
-  // console.log(APIData[0].name)
-  // const [isVisible, setIsVisible] = useState(true);
+  // console.log(sortedByRating);
 
   return (
     <ThemeProvider theme={theme}>
       <Box
-        className="main-container-homepage"
         sx={{
           width: "100%",
           overflow: "hidden",
