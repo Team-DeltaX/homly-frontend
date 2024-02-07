@@ -11,9 +11,16 @@ import { Box } from "@mui/material";
 
 export default function SimpleLineChart() {
 
-    const Home1 = [4000, 3000, 2000, 2780, 1890, 2390, 3490];
-    const Home2 = [2400, 1398, 9800, 3908, 4800, 3800, 4300];
-    const Home3 = [2434, 2398, 6345, 9533, 4999, 7600, 1000];
+    const [h1data,setH1data]=React.useState([])
+    const [h2data,setH2data]=React.useState([])
+    const [h3data,setH3data]=React.useState([])
+
+    const Home1 = h1data
+    // [4000, 3000, 2000, 2780, 1890, 2390, 3490];
+    const Home2 = h2data
+    // [2400, 1398, 9800, 3908, 4800, 3800, 4300];
+    const Home3 =h3data
+    // [2434, 2398, 6345, 9533, 4999, 7600, 1000];
     const [xaxisd,setXasisd]=React.useState([])
 
     
@@ -46,14 +53,18 @@ export default function SimpleLineChart() {
 
   const handleChangehh1 = (event) => {
     SetHolidayHome1(event.target.value);
+    setH1data([4000, 3000, 2000, 2780, 1890, 2390, 3490])
+    
   };
 
   const handleChangehh2 = (event) => {
     SetHolidayHome2(event.target.value);
+    setH2data([2400, 1398, 9800, 3908, 4800, 3800, 4300])
   };
 
   const handleChangehh3 = (event) => {
     SetHolidayHome3(event.target.value);
+    setH3data([2434, 2398, 6345, 9533, 4999, 7600, 1000])
   };
   const getLastSevenDays = () => {
     const dates = [];
