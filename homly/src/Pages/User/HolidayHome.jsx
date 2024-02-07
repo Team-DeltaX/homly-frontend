@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from "react";
-import { Container, Box, ThemeProvider } from "@mui/material";
+import { Container, Box, ThemeProvider, Pagination } from "@mui/material";
 import NavBar from "../../Components/User/NavBar/NavBar";
 import Footer from "../../Components/User/Footer/Footer";
 import theme from "../../HomlyTheme";
@@ -34,6 +34,17 @@ export default function HolidayHomeDetails() {
                 height: "100dvh",
               }}
             ></Container>
+            <Box
+              sx={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                padding: "20px",
+              }}
+            >
+              <Pagination count={10} variant="outlined" shape="rounded" color="primary"/>
+            </Box>
           </Container>
           <Box>
             <Footer refContactUS={refContactUS} />
