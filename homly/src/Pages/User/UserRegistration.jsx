@@ -1,6 +1,7 @@
 import { React } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
+import axios from "axios";
 import {
   Box,
   Container,
@@ -33,7 +34,7 @@ import { Link } from "react-router-dom";
 
 // import AvatarImage from "../Components/AvatarImage"
 
-const Img = styled('img')({
+const Img = styled("img")({
   // margin: "auto",
   display: "block",
   width: "40%",
@@ -132,8 +133,8 @@ const UserRegistration = () => {
     e.preventDefault();
 
     // console.log('2',ServiceNo,checkServiceNo(ServiceNo))
-    // const formData = { ServiceNo, Email, ContactNo, Password, ConfirmPassword };
-    // const product = JSON.stringify(formData);
+    const formData = { ServiceNo, Password, Email, ContactNo, image };
+    const product = JSON.stringify(formData);
 
     if (
       !checkServiceNo(ServiceNo) &&
@@ -141,21 +142,47 @@ const UserRegistration = () => {
       !checkContactNo(ContactNo) &&
       !errorConfirmPassword
     ) {
-      console.log(ServiceNo, Email, ContactNo, Password, ConfirmPassword);
+      console.log(ServiceNo, Email, ContactNo, Password);
 
-      // fetch("http://localhost:8000/homlyDb", {
+      try {
+        const addUser = async () => {
+          try {
+            const response = await fetch("http://localhost:3002/users/add", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(formData),
+            });
+
+            if (response.ok) {
+              alert("User added successfully!");
+              setServiceNo("");
+              setEmail("");
+              setContactNo("");
+              setPassword("");
+              setConfirmPassword("");
+              setImage(null);
+              // You can perform additional actions after a successful user addition
+            } else {
+              alert("Failed to add user");
+            }
+          } catch (error) {
+            alert("Error adding user:", error);
+          }
+        };
+
+        addUser();
+      } catch (error) {
+        alert("Error adding user:", error);
+      }
+      // fetch("http://localhost:3002/users/add", {
       //   method: "POST",
       //   headers: { "Content-Type": "application/json" },
       //   body: product,
       // }).then(() => {
       //   console.log("new product added");
       // });
-
-      setServiceNo("");
-      setEmail("");
-      setContactNo("");
-      setPassword("");
-      setConfirmPassword("");
     }
   };
 
@@ -189,7 +216,7 @@ const UserRegistration = () => {
               container
               sx={{
                 // height: "85%",
-                height: 'auto',
+                height: "auto",
                 backgroundColor: "grey1",
                 borderRadius: "10px",
                 boxShadow: 1,
@@ -268,16 +295,39 @@ const UserRegistration = () => {
                     onReset={handleReset}
                   >
                     {/* <AvatarImage /> */}
-                    <ProfilePicUploadPopup open={open} setOpen={setOpen}  setImage={setImage}/>
-                    <Stack direction='row' sx={{margin:'2% 0',height: {xs:80,sm:100},width:'100%' }}>
+                    <ProfilePicUploadPopup
+                      open={open}
+                      setOpen={setOpen}
+                      setImage={setImage}
+                    />
+                    <Stack
+                      direction="row"
+                      sx={{
+                        margin: "2% 0",
+                        height: { xs: 80, sm: 100 },
+                        width: "100%",
+                      }}
+                    >
                       <Avatar
                         alt="Remy Sharp"
                         src={image}
-                        sx={{ width: {xs:80,sm:100}, height: {xs:80,sm:100} }}
+                        sx={{
+                          width: { xs: 80, sm: 100 },
+                          height: { xs: 80, sm: 100 },
+                        }}
                       />
-                      <Box sx={{height:'100%',display:'flex',alignItems:'center',marginLeft:{xs:'8px'}}}>
-
-                      <Button variant="outlined" onClick={handleClickOpen} > Upload Profile Picture</Button>
+                      <Box
+                        sx={{
+                          height: "100%",
+                          display: "flex",
+                          alignItems: "center",
+                          marginLeft: { xs: "8px" },
+                        }}
+                      >
+                        <Button variant="outlined" onClick={handleClickOpen}>
+                          {" "}
+                          Upload Profile Picture
+                        </Button>
                       </Box>
                     </Stack>
                     <TextField
