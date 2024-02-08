@@ -10,12 +10,14 @@ import theme from '../../HomlyTheme';
 import SideNavbar from '../../Components/locationAdmin/SideNavbar'
 import PageTitle from '../../Components/locationAdmin/PageTitle';
 import CustomSelect from '../../Components/locationAdmin/CustomSelect/CustomSelect';
+import CalendarDetails from '../../Components/locationAdmin/CreateHolidayHome/popups/CalendarDetails';
 
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import moment from 'moment'
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import Select from 'react-select'
+
 
 
 
@@ -29,6 +31,11 @@ const HolidayHomeDetails = () => {
     const [selectedYear, setSelectedYear] = useState('');
     const [selectedMonth, setSelectedMonth] = useState('');
     const [selectedHolidayHome, setSelectedHolidayHome] = useState('');
+
+    const [displayedRange, setDisplayedRange] = useState({
+        start: moment().startOf('month'),
+        end: moment().endOf('month'),
+    });
 
 
     const myEventsList = [
@@ -95,9 +102,24 @@ const HolidayHomeDetails = () => {
 
     const handleSearch = () => {
 
-        const newDate = moment(`${selectedYear}-${selectedMonth}-01T00:00:00`).toDate();
+        console.log(selectedYear);
+        console.log(selectedMonth);
+
+        if (selectedYear && selectedMonth) {
+            const newDate = moment(`${selectedYear}-${selectedMonth}-01T00:00:00`, 'YYYY-MM').toDate();
+            const startOfMonth = moment(newDate).startOf('month');
+            const endOfMonth = moment(newDate).endOf('month');
+            setDisplayedRange({
+                start: startOfMonth,
+                end: endOfMonth,
+            });
+            console.log("displayedRange updated:", displayedRange);
+        }
 
     };
+
+
+
 
     const handleClear = () => {
         setSelectedYear('');
@@ -105,26 +127,31 @@ const HolidayHomeDetails = () => {
         setSelectedHolidayHome('');
     }
 
-    const [displayedRange, setDisplayedRange] = useState({
-        start: moment().startOf('month'),
-        end: moment().endOf('month'),
-    });
+    // popup
+    const [open, setOpen] = useState(false);
+    const [date, setDate] = useState('');
 
-    const handleDateClick = (event) => {
-        // const selectedDate = moment(event.start);
-        // const today = selectedDate.format('MMMM D, YYYY');
-        // const selectedMonth = selectedDate.format('MMMM');
-        // const selectedYear = selectedDate.format('YYYY');
-        // // const currentMonth = displayedRange.start.format('MMMM');
-        // console.log(selectedMonth);
-        // console.log(selectedYear);
-        console.log("hello");
-        console.log('Clicked event:', event);
+    const handleClickOpen = (event) => {
+
         const selectedDate = moment(event.start);
-        console.log('Selected Date:', selectedDate.format('MMMM D, YYYY'));
+        const newDate = selectedDate.format('MMMM D, YYYY');
+        setDate(newDate);
+        setOpen(true);
+    };
+
+    const handleClose = (value) => {
+        setOpen(false);
 
     };
 
+    const changeCalendarManually = (newDate) => {
+        const startOfMonth = moment(newDate).startOf('month');
+        const endOfMonth = moment(newDate).endOf('month');
+        setDisplayedRange({
+            start: startOfMonth,
+            end: endOfMonth,
+        });
+    };
     return (
         <ThemeProvider theme={theme}>
             <Box className="main_container" sx={{ width: "100%", backgroundColor: 'primary.main', overflow: 'hidden' }}>
@@ -141,6 +168,7 @@ const HolidayHomeDetails = () => {
                                         <Select
                                             sx={{ backgroundColor: "white", opacity: "1", zIndex: "1000" }}
                                             className="basic-single"
+                                            classNames="select_editholidayhome"
                                             classNamePrefix={"Holiday Home"}
                                             isSearchable={true}
                                             name="color"
@@ -155,6 +183,9 @@ const HolidayHomeDetails = () => {
                                     <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em' }}>
                                         <TextField id="outlined-required" label="Year" placeholder='Year' size='small' value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)} />
                                     </Box>
+                                    {/* <Button variant="contained" onClick={() => changeCalendarManually(moment("2022-03-01"))}>
+                                        Change Calendar
+                                    </Button> */}
                                     <Box>
                                         <Select
                                             sx={{ backgroundColor: "white", opacity: "1", zIndex: "1000" }}
@@ -176,7 +207,7 @@ const HolidayHomeDetails = () => {
                                     </Box>
 
                                 </Box>
-                                <Box sx={{ width: "90%", height: '430px', margin: '0 auto' }}>
+                                <Box sx={{ width: "90%", height: '430px', margin: '0 auto', zIndex: -1 }}>
 
                                     <Calendar
                                         localizer={localizer}
@@ -188,12 +219,18 @@ const HolidayHomeDetails = () => {
                                         }}
                                         toolbar={true}
                                         ref={calendarRef}
-                                        onSelectSlot={handleDateClick}
-                                        
+                                        onSelectSlot={handleClickOpen}
                                         selectable
+                                        startAccessor={(event) => moment(event.start)}
+                                        endAccessor={(event) => moment(event.end)}
+                                        defaultDate={displayedRange.start.startOf('month')}
 
                                     />
                                 </Box>
+
+                                <CalendarDetails open={open} handleClose={handleClose} date={date} />
+
+
 
 
                             </Box>

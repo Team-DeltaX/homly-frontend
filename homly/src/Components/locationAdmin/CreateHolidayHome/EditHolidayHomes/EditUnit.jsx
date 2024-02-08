@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Box, Button, Typography, TextField, Paper } from '@mui/material'
 import CancelIcon from '@mui/icons-material/Cancel';
 
@@ -31,13 +31,13 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
             // Editing an existing room
             const editedUnit = unitArray[editIndex];
             setUnitValues({
-                unitCode : editedUnit.unitCode,
-                unitAC : editedUnit.unitAc,
-                floorLevel : editedUnit.floorLevel,
-                unitRemark : editedUnit.unitRemark,
-                unitRental : editedUnit.unitRental,
-                roomAttached : editedUnit.roomAttached,
-                selectedRooms : editedUnit.selectedRooms
+                unitCode: editedUnit.unitCode,
+                unitAC: editedUnit.unitAc,
+                floorLevel: editedUnit.floorLevel,
+                unitRemark: editedUnit.unitRemark,
+                unitRental: editedUnit.unitRental,
+                roomAttached: editedUnit.roomAttached,
+                selectedRooms: editedUnit.selectedRooms
 
             });
         } else {
@@ -68,6 +68,7 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
 
 
     const handleClickOpenUnit = () => {
+        setUnitValues({ unitCode: '', unitAc: '', floorLevel: '', unitRemark: '', unitRental: '', roomAttached: false, });
         setOpenUnit(true);
     };
 
@@ -120,30 +121,63 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
 
         }
 
-        if (unitExist) {
-            setOpenUnitExistAlert(true);
-            return;
+        // if (unitExist) {
+        //     setOpenUnitExistAlert(true);
+        //     return;
+        // }
+
+        if (isEditMode && editIndex !== null) {
+            // Editing an existing room
+            const updatedUnitArray = [...unitArray];
+            updatedUnitArray[editIndex] = {
+                ...updatedUnitArray[editIndex],
+                ...unitValues,
+                unitRentalArray: [...unitRentalArray], // Copy the rentalArray as well
+            };
+            setUnitArray(updatedUnitArray);
+        } else {
+            // Adding a new room
+            // const updatedValues = { ...unitValues, unitRentalArray };
+            // setUnitArray([...unitArray, updatedValues]);
+
+            const newUnit = {
+                ...unitValues,
+                selectedRooms: [],
+                unitRentalArray
+            };
+            setUnitArray([...unitArray, newUnit]);
+
         }
 
-        const newUnit = {
-            ...unitValues,
-            selectedRooms: [],
-            unitRentalArray
-        };
-        setUnitArray([...unitArray, newUnit]);
         setUnitRentalArray([]);
-        setUnitValues({ unitCode: '', unitAc: '', floorLevel: '', unitRemark: '', unitRental: '', roomAttached: false, })
         setOpenUnit(false);
+        setIsEditMode(false);
+        setEditIndex(null);
     };
 
     console.log(unitArray);
 
-    const handleUnitEdit = (index) =>{
+    const handleUnitEdit = (index) => {
         const editedUnit = unitArray[index];
 
-        console.log(editedUnit.unitCode);
-        console.log(editedUnit.unitRentalArray);
-        console.log(editedUnit.selectedRooms);
+        setUnitValues({
+            unitCode: editedUnit.unitCode,
+            unitAC: editedUnit.unitAc,
+            floorLevel: editedUnit.floorLevel,
+            unitRemark: editedUnit.unitRemark,
+            unitRental: editedUnit.unitRental,
+            roomAttached: editedUnit.roomAttached,
+            selectedRooms: editedUnit.selectedRooms
+
+
+        })
+
+        setUnitRentalArray(editedUnit.unitRentalArray);
+
+
+        setOpenUnit(true)
+        setEditIndex(index);
+        setIsEditMode(true);
 
 
 
@@ -265,18 +299,23 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
             <Box sx={{ display: 'flex', justifyContent: 'flex-start', marginTop: "12px", marginBottom: "12px" }}>
                 <Button size='small' variant='contained' sx={{ backgroundColor: 'primary.main' }} onClick={handleClickOpenUnit}>Add Unit</Button>
             </Box>
-            {unitArray.length === 0
-                ?
-                <Box sx={{ display: 'flex', padding: "2em", justifyContent: 'center' }}>
 
-                    <Typography variant='p' sx={{ color: 'grey' }}>No Units Added Yet</Typography>
-                </Box>
-                :
-                unitArray.map((item, index) => {
-                    return (
-                        <UnitBreakDown key={index} unitCode={item.unitCode} unitAc={item.unitAc} floorLevel={item.floorLevel} unitNoOfAdults={item.unitNoOfAdults} unitNoOfChildren={item.unitNoOfChildren} unitRemarks={item.unitRemarks} unitRental={item.unitRental} roomArray={roomArray} setRoomArray={setRoomArray} selectedRooms={item.selectedRooms} handleUnitDelete={handleUnitDelete} handleUnitEdit={handleUnitEdit} index={index} />
-                    )
-                })}
+            <fieldset style={{ borderRadius: '8px' }}>
+                <legend>Rooms Breakdown</legend>
+                {unitArray.length === 0
+                    ?
+                    <Box sx={{ display: 'flex', padding: "2em", justifyContent: 'center' }}>
+
+                        <Typography variant='p' sx={{ color: 'grey' }}>No Units Added Yet</Typography>
+                    </Box>
+                    :
+                    unitArray.map((item, index) => {
+                        return (
+                            <UnitBreakDown key={index} unitCode={item.unitCode} unitAc={item.unitAc} floorLevel={item.floorLevel} unitNoOfAdults={item.unitNoOfAdults} unitNoOfChildren={item.unitNoOfChildren} unitRemarks={item.unitRemarks} unitRental={item.unitRental} roomArray={roomArray} setRoomArray={setRoomArray} selectedRooms={item.selectedRooms} handleUnitDelete={handleUnitDelete} handleUnitEdit={handleUnitEdit} index={index} />
+                        )
+                    })}
+
+            </fieldset>
 
 
 

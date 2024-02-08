@@ -18,6 +18,8 @@ import EditHolidayHomeBreakdown from '../../Components/locationAdmin/CreateHolid
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
+    
+
 
     return (
         <div
@@ -55,6 +57,10 @@ const HolidayHomeEdit = () => {
 
     const [showNav, setShowNav] = useState('nav_grid_deactive');
     const [value, setValue] = useState(0);
+
+    const [roomArray, setRoomArray] = useState([]);
+    const [unitArray, setUnitArray] = useState([]);
+    const [hallArray, setHallArray] = useState([]);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -94,7 +100,7 @@ const HolidayHomeEdit = () => {
                                         </Box>
                                     </CustomTabPanel>
                                     <CustomTabPanel value={value} index={1}>
-                                        <EditHolidayHomeBreakdown />
+                                        <EditHolidayHomeBreakdown roomArray={roomArray} setRoomArray={setRoomArray} unitArray={unitArray} setUnitArray={setUnitArray} hallArray={hallArray} setHallArray={setHallArray}  />
                                         <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginRight: "1.5em" }}>
                                             <Button variant="contained" sx={{ marginTop: '1em' }} onClick={handleNextToHall}>Next</Button>
                                         </Box>
