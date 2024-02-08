@@ -136,11 +136,6 @@ const UserRegistration = () => {
     type: "",
     message: "",
   });
-  // const [isOpen, setIsOpen] = useState(false);
-
-  // const handleAlertClick = () => {
-  //   setErrorStatus({...errorStatus, isOpen:true});
-  // };
 
   const handleAlertClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -164,47 +159,6 @@ const UserRegistration = () => {
     ) {
       console.log(ServiceNo, Email, ContactNo, Password);
 
-      // try {
-      //   const addUser = async () => {
-      //     try {
-      //       const response = await fetch("http://localhost:3002/users/add", {
-      //         method: "POST",
-      //         headers: {
-      //           "Content-Type": "application/json",
-      //         },
-      //         body: JSON.stringify(formData),
-      //       });
-
-      //       if (response.ok) {
-      //         alert(response.message);
-
-      //         // setServiceNo("");
-      //         // setEmail("");
-      //         // setContactNo("");
-      //         // setPassword("");
-      //         // setConfirmPassword("");
-      //         // setImage(null);
-      //         // You can perform additional actions after a successful user addition
-      //       } else {
-      //         alert(response.message);
-      //       }
-      //     } catch (error) {
-      //       alert("Error adding user:", error);
-      //     }
-      //   };
-
-      //   addUser();
-      // } catch (error) {
-      //   alert("Error adding user:", error);
-      // }
-      // fetch("http://localhost:3002/users/add", {
-      //   method: "POST",
-      //   headers: { "Content-Type": "application/json" },
-      //   body: product,
-      // }).then(() => {
-      //   console.log("new product added");
-      // });
-
       axios
         .post("http://localhost:3002/users/add", formData)
         .then((res) => {
@@ -216,15 +170,6 @@ const UserRegistration = () => {
               type: "success",
               message: res.data.message,
             });
-            // <Snackbar
-            //   open={isOpen}
-            //   autoHideDuration={6000}
-            //   onClose={handleAlertClose}
-            // >
-            //   <Alert severity="success" onClose={handleAlertClose}>
-            //     {res.data.message}
-            //   </Alert>
-            // </Snackbar>;
           } else {
             setErrorStatus({
               ...errorStatus,
@@ -232,16 +177,6 @@ const UserRegistration = () => {
               type: "error",
               message: res.data.message,
             });
-            // <Snackbar
-            //   open={isOpen}
-            //   autoHideDuration={6000}
-            //   onClose={handleAlertClose}
-            // >
-            //   <Alert severity="error" onClose={handleAlertClose}>
-            //     {res.data.message}
-            //   </Alert>
-            //   ;
-            // </Snackbar>;
           }
         })
         .catch((error) => {
@@ -281,7 +216,9 @@ const UserRegistration = () => {
             autoHideDuration={6000}
             onClose={handleAlertClose}
           >
-            <Alert severity={errorStatus.type} onClose={handleAlertClose}>{errorStatus.message}</Alert>
+            <Alert severity={errorStatus.type} onClose={handleAlertClose}>
+              {errorStatus.message}
+            </Alert>
           </Snackbar>
 
           <Container className="registration-box-container">

@@ -1,5 +1,6 @@
 import { React } from "react";
 import { useState } from "react";
+import axios from "axios";
 import {
   Box,
   Container,
@@ -11,9 +12,11 @@ import {
   InputAdornment,
   IconButton,
   TextField,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 
-import { Link,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import BadgeIcon from "@mui/icons-material/Badge";
@@ -57,10 +60,48 @@ const UserLogin = () => {
   // navigate to home
   const Navigate = useNavigate();
 
+  const [errorStatus, setErrorStatus] = useState({
+    isOpen: false,
+    type: "",
+    message: "",
+  });
+
+  const handleAlertClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setErrorStatus({ ...errorStatus, isOpen: false });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrorServiceNumber(false);
-    Navigate('/Home');
+    const formData = { serviceNo, password, };
+    axios
+      .post("http://localhost:3002/users/login",formData)
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.success) {
+          setErrorStatus({
+            ...errorStatus,
+            isOpen: true,
+            type: "success",
+            message: res.data.message,
+          });
+          Navigate("/Home");
+        } else {
+          setErrorStatus({
+            ...errorStatus,
+            isOpen: true,
+            type: "error",
+            message: res.data.message,
+          });
+        }
+      })
+      .catch((error) => {
+        alert("Error adding user:", error);
+      });
   };
 
   const handleReset = (e) => {
@@ -69,9 +110,6 @@ const UserLogin = () => {
     setPassword("");
   };
 
-
-  
-  
   return (
     <ThemeProvider theme={theme}>
       <Box
@@ -82,15 +120,24 @@ const UserLogin = () => {
         }}
       >
         <Container maxWidth="xl" style={{ padding: 0 }}>
-          <Container className="registration-box-container" >
+          {/* error snack bar */}
+          <Snackbar
+            open={errorStatus.isOpen}
+            autoHideDuration={6000}
+            onClose={handleAlertClose}
+          >
+            <Alert severity={errorStatus.type} onClose={handleAlertClose}>
+              {errorStatus.message}
+            </Alert>
+          </Snackbar>
+          <Container className="registration-box-container">
             <Grid
               container
               sx={{
-                height: "auto",
                 backgroundColor: "grey1",
                 borderRadius: "10px",
                 boxShadow: 1,
-                height: {xs:'auto',md:"60vh"},
+                height: { xs: "auto", md: "60vh" },
               }}
               className="registration-box"
             >
@@ -142,7 +189,13 @@ const UserLogin = () => {
                     Sign up
                   </Button>
                 </Box>
-                <Box sx={{height:'70%',display:'flex',alignItems:'flex-end'}}>
+                <Box
+                  sx={{
+                    height: "70%",
+                    display: "flex",
+                    alignItems: "flex-end",
+                  }}
+                >
                   <Box
                     paddingLeft={"5%"}
                     marginBottom={"5%"}
@@ -172,7 +225,8 @@ const UserLogin = () => {
                           ),
                         }}
                         InputLabelProps={{
-                          shrink: focusedServiceNo || countChar(serviceNo) !== 0,
+                          shrink:
+                            focusedServiceNo || countChar(serviceNo) !== 0,
                           style: {
                             marginLeft:
                               focusedServiceNo || countChar(serviceNo) !== 0
@@ -214,7 +268,11 @@ const UserLogin = () => {
                               onMouseDown={handleMouseDownPassword}
                               edge="end"
                             >
-                              {showPassword ? <VisibilityOff /> : <Visibility />}
+                              {showPassword ? (
+                                <VisibilityOff />
+                              ) : (
+                                <Visibility />
+                              )}
                             </IconButton>
                           ),
                         }}
@@ -252,7 +310,11 @@ const UserLogin = () => {
                         >
                           Reset
                         </Button>
-                        <Button type="submit" variant="contained" color="primary"  >
+                        <Button
+                          type="submit"
+                          variant="contained"
+                          color="primary"
+                        >
                           Login
                         </Button>
                       </Box>
