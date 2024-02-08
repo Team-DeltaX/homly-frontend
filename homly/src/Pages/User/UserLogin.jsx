@@ -26,6 +26,8 @@ import theme from "../../HomlyTheme";
 import "./UserStyle.css";
 import logo from "../../Assets/images/logo.png";
 import wave from "../../Assets/images/wave.png";
+import ForgetPasswordPopup from "../../Components/User/ForgetPassword/ForgetPasswordPopup";
+import ErrorSnackbar from "../../Components/User/ErrorSnackbar";
 
 const Img = styled("img")({
   display: "block",
@@ -61,7 +63,6 @@ const UserLogin = () => {
   const Navigate = useNavigate();
 
   const [errorStatus, setErrorStatus] = useState({
-    isOpen: false,
     type: "",
     message: "",
   });
@@ -77,9 +78,9 @@ const UserLogin = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrorServiceNumber(false);
-    const formData = { serviceNo, password, };
+    const formData = { serviceNo, password };
     axios
-      .post("http://localhost:3002/users/login",formData)
+      .post("http://localhost:3002/users/login", formData)
       .then((res) => {
         console.log(res.data);
         if (res.data.success) {
@@ -98,9 +99,16 @@ const UserLogin = () => {
             message: res.data.message,
           });
         }
+        setServiceNo("");
+        setPassword("");
       })
       .catch((error) => {
-        alert("Error adding user:", error);
+        setErrorStatus({
+          ...errorStatus,
+          isOpen: true,
+          type: "error",
+          message: "Something went wrong",
+        });
       });
   };
 
@@ -108,6 +116,13 @@ const UserLogin = () => {
     e.preventDefault();
     setServiceNo("");
     setPassword("");
+  };
+
+  // popup
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
   };
 
   return (
@@ -121,15 +136,15 @@ const UserLogin = () => {
       >
         <Container maxWidth="xl" style={{ padding: 0 }}>
           {/* error snack bar */}
-          <Snackbar
-            open={errorStatus.isOpen}
-            autoHideDuration={6000}
-            onClose={handleAlertClose}
-          >
-            <Alert severity={errorStatus.type} onClose={handleAlertClose}>
-              {errorStatus.message}
-            </Alert>
-          </Snackbar>
+          <ErrorSnackbar
+            isOpen={errorStatus.isOpen}
+            type={errorStatus.type}
+            message={errorStatus.message}
+            handleAlertClose={handleAlertClose}
+          />
+
+          {/* forget password popup */}
+          <ForgetPasswordPopup open={open} setOpen={setOpen} />
           <Container className="registration-box-container">
             <Grid
               container
@@ -295,6 +310,17 @@ const UserLogin = () => {
                         helperText={""}
                         fullWidth
                       />
+                      <Box
+                        sx={{
+                          display: "flex",
+                          justifyContent: "center",
+                          width: "90%",
+                        }}
+                      >
+                        <Button variant="text" onClick={handleClickOpen}>
+                          Forget Password
+                        </Button>
+                      </Box>
                       <Box
                         sx={{
                           display: "flex",

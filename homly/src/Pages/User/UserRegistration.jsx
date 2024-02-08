@@ -26,6 +26,7 @@ import CallIcon from "@mui/icons-material/Call";
 import PasswordIcon from "@mui/icons-material/Password";
 
 import ProfilePicUploadPopup from "../../Components/User/ProfilePicUploadPopup";
+import ErrorSnackbar from "../../Components/User/ErrorSnackbar";
 
 import theme from "../../HomlyTheme";
 import "./UserStyle.css";
@@ -178,9 +179,21 @@ const UserRegistration = () => {
               message: res.data.message,
             });
           }
+          setServiceNo("");
+          setEmail("");
+          setContactNo("");
+          setPassword("");
+          setConfirmPassword("");
+          setImage(null);
         })
         .catch((error) => {
-          alert("Error adding user:", error);
+          // alert("Error adding user:", error);
+          setErrorStatus({
+            ...errorStatus,
+            isOpen: true,
+            type: "error",
+            message: "Something went wrong",
+          });
         });
     }
   };
@@ -192,6 +205,7 @@ const UserRegistration = () => {
     setContactNo("");
     setPassword("");
     setConfirmPassword("");
+    setImage(null);
   };
 
   const [open, setOpen] = useState(false);
@@ -211,15 +225,13 @@ const UserRegistration = () => {
       >
         <Container maxWidth="xl" style={{ padding: 0 }}>
           {/* error snack bar */}
-          <Snackbar
-            open={errorStatus.isOpen}
-            autoHideDuration={6000}
-            onClose={handleAlertClose}
-          >
-            <Alert severity={errorStatus.type} onClose={handleAlertClose}>
-              {errorStatus.message}
-            </Alert>
-          </Snackbar>
+          {/* error snack bar */}
+          <ErrorSnackbar
+            isOpen={errorStatus.isOpen}
+            type={errorStatus.type}
+            message={errorStatus.message}
+            handleAlertClose={handleAlertClose}
+          />
 
           <Container className="registration-box-container">
             <Grid
