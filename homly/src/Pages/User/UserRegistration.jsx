@@ -15,6 +15,8 @@ import {
   TextField,
   Stack,
   Avatar,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 
 import { Visibility, VisibilityOff } from "@mui/icons-material";
@@ -129,12 +131,30 @@ const UserRegistration = () => {
 
   // console.log(dbServiceNo)
 
+  const [errorStatus, setErrorStatus] = useState({
+    isOpen: false,
+    type: "",
+    message: "",
+  });
+  // const [isOpen, setIsOpen] = useState(false);
+
+  // const handleAlertClick = () => {
+  //   setErrorStatus({...errorStatus, isOpen:true});
+  // };
+
+  const handleAlertClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setErrorStatus({ ...errorStatus, isOpen: false });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
     // console.log('2',ServiceNo,checkServiceNo(ServiceNo))
     const formData = { ServiceNo, Password, Email, ContactNo, image };
-    const product = JSON.stringify(formData);
 
     if (
       !checkServiceNo(ServiceNo) &&
@@ -144,38 +164,39 @@ const UserRegistration = () => {
     ) {
       console.log(ServiceNo, Email, ContactNo, Password);
 
-      try {
-        const addUser = async () => {
-          try {
-            const response = await fetch("http://localhost:3002/users/add", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(formData),
-            });
+      // try {
+      //   const addUser = async () => {
+      //     try {
+      //       const response = await fetch("http://localhost:3002/users/add", {
+      //         method: "POST",
+      //         headers: {
+      //           "Content-Type": "application/json",
+      //         },
+      //         body: JSON.stringify(formData),
+      //       });
 
-            if (response.ok) {
-              alert("User added successfully!");
-              setServiceNo("");
-              setEmail("");
-              setContactNo("");
-              setPassword("");
-              setConfirmPassword("");
-              setImage(null);
-              // You can perform additional actions after a successful user addition
-            } else {
-              alert("Failed to add user");
-            }
-          } catch (error) {
-            alert("Error adding user:", error);
-          }
-        };
+      //       if (response.ok) {
+      //         alert(response.message);
 
-        addUser();
-      } catch (error) {
-        alert("Error adding user:", error);
-      }
+      //         // setServiceNo("");
+      //         // setEmail("");
+      //         // setContactNo("");
+      //         // setPassword("");
+      //         // setConfirmPassword("");
+      //         // setImage(null);
+      //         // You can perform additional actions after a successful user addition
+      //       } else {
+      //         alert(response.message);
+      //       }
+      //     } catch (error) {
+      //       alert("Error adding user:", error);
+      //     }
+      //   };
+
+      //   addUser();
+      // } catch (error) {
+      //   alert("Error adding user:", error);
+      // }
       // fetch("http://localhost:3002/users/add", {
       //   method: "POST",
       //   headers: { "Content-Type": "application/json" },
@@ -183,6 +204,49 @@ const UserRegistration = () => {
       // }).then(() => {
       //   console.log("new product added");
       // });
+
+      axios
+        .post("http://localhost:3002/users/add", formData)
+        .then((res) => {
+          console.log(res.data);
+          if (res.data.success) {
+            setErrorStatus({
+              ...errorStatus,
+              isOpen: true,
+              type: "success",
+              message: res.data.message,
+            });
+            // <Snackbar
+            //   open={isOpen}
+            //   autoHideDuration={6000}
+            //   onClose={handleAlertClose}
+            // >
+            //   <Alert severity="success" onClose={handleAlertClose}>
+            //     {res.data.message}
+            //   </Alert>
+            // </Snackbar>;
+          } else {
+            setErrorStatus({
+              ...errorStatus,
+              isOpen: true,
+              type: "error",
+              message: res.data.message,
+            });
+            // <Snackbar
+            //   open={isOpen}
+            //   autoHideDuration={6000}
+            //   onClose={handleAlertClose}
+            // >
+            //   <Alert severity="error" onClose={handleAlertClose}>
+            //     {res.data.message}
+            //   </Alert>
+            //   ;
+            // </Snackbar>;
+          }
+        })
+        .catch((error) => {
+          alert("Error adding user:", error);
+        });
     }
   };
 
@@ -211,6 +275,15 @@ const UserRegistration = () => {
         }}
       >
         <Container maxWidth="xl" style={{ padding: 0 }}>
+          {/* error snack bar */}
+          <Snackbar
+            open={errorStatus.isOpen}
+            autoHideDuration={6000}
+            onClose={handleAlertClose}
+          >
+            <Alert severity={errorStatus.type} onClose={handleAlertClose}>{errorStatus.message}</Alert>
+          </Snackbar>
+
           <Container className="registration-box-container">
             <Grid
               container
