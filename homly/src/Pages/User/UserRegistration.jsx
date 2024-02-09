@@ -33,6 +33,7 @@ import wave from "../../Assets/images/wave.png";
 
 import { Link } from "react-router-dom";
 import InputPasswordWithIcon from "../../Components/User/TextField/InputPasswordWithIcon";
+import InputTextWithIcon from "../../Components/User/TextField/InputTextWithIcon";
 
 // import AvatarImage from "../Components/AvatarImage"
 
@@ -59,6 +60,19 @@ const UserRegistration = () => {
   const [focusedContactNo, setFocusedContactNo] = useState(false);
 
   // const [focusedConfirmPassword, setFocusedConfirmPassword] = useState(false);
+  const [details, setDetails] = useState({
+    serviceNo: "",
+    email: "",
+    contactNo: "",
+    password: "",
+    confirmPassword: "",
+    image: "",
+  });
+
+  const [detailsError, setDetailsError] = useState({
+    serviceNo: false,
+    confirmPassword: false,
+  });
 
   const [ServiceNo, setServiceNo] = useState("");
   const [Email, setEmail] = useState("");
@@ -348,7 +362,33 @@ const UserRegistration = () => {
                         </Button>
                       </Box>
                     </Stack>
-                    <TextField
+
+                    <InputTextWithIcon
+                      lable={"Service Number"}
+                      icon={<BadgeIcon />}
+                      inputType={"text"}
+                      error={errorServiceNumber}
+                      helperText={errorServiceNumber ? "Your are not an employee of Homly" : ""}
+                      required={true}
+                      inputValue={ServiceNo}
+                      setInputValue={setServiceNo}
+                    />
+                    <InputTextWithIcon
+                      lable={"Email"}
+                      icon={<EmailIcon />}
+                      inputType={"email"}
+                      error={checkEmail(Email)}
+                      helperText={checkEmail(Email) ? "invalid email address" : ""}
+                      required={true}
+                      inputValue={Email}
+                      setInputValue={setEmail}
+                    />
+
+
+
+
+
+                    {/* <TextField
                       sx={{ marginBottom: " 6%", width: "90%" }}
                       id="textfield-serviceNumber"
                       label="Service Number"
@@ -383,8 +423,8 @@ const UserRegistration = () => {
                           : ""
                       }
                       fullWidth
-                    />
-                    <TextField
+                    /> */}
+                    {/* <TextField
                       sx={{ marginBottom: " 6%", width: "90%" }}
                       id="textfield-email"
                       label="Email"
@@ -414,7 +454,7 @@ const UserRegistration = () => {
                         checkEmail(Email) ? "invalid email address" : ""
                       }
                       fullWidth
-                    />
+                    /> */}
 
                     <TextField
                       sx={{ marginBottom: " 6%", width: "90%" }}
@@ -464,7 +504,9 @@ const UserRegistration = () => {
                     <InputPasswordWithIcon
                       lable={"Confirm Password"}
                       icon={<PasswordIcon sx={{ p: 0.25, ml: -0.5, mr: 1 }} />}
-                      helperText={errorConfirmPassword ? "password not match" : ""}
+                      helperText={
+                        errorConfirmPassword ? "password not match" : ""
+                      }
                       error={errorConfirmPassword}
                       Password={ConfirmPassword}
                       setPassword={setConfirmPassword}
