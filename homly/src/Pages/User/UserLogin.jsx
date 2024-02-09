@@ -9,14 +9,10 @@ import {
   ThemeProvider,
   styled,
   Button,
-  InputAdornment,
-  IconButton,
-  TextField,
 } from "@mui/material";
 
 import { Link, useNavigate } from "react-router-dom";
 
-import { Visibility, VisibilityOff } from "@mui/icons-material";
 import BadgeIcon from "@mui/icons-material/Badge";
 import PasswordIcon from "@mui/icons-material/Password";
 
@@ -26,6 +22,8 @@ import logo from "../../Assets/images/logo.png";
 import wave from "../../Assets/images/wave.png";
 import ForgetPasswordPopup from "../../Components/User/ForgetPassword/ForgetPasswordPopup";
 import ErrorSnackbar from "../../Components/User/ErrorSnackbar";
+import InputTextWithIcon from "../../Components/User/TextField/InputTextWithIcon";
+import InputPasswordWithIcon from "../../Components/User/TextField/InputPasswordWithIcon";
 
 const Img = styled("img")({
   display: "block",
@@ -39,23 +37,7 @@ const UserLogin = () => {
   const [serviceNo, setServiceNo] = useState("");
   const [password, setPassword] = useState("");
 
-  const [focusedServiceNo, setFocusedServiceNo] = useState(false);
-  const [focusedPassword, setFocusedPassword] = useState(false);
-
   const [errorServiceNumber, setErrorServiceNumber] = useState(false);
-  //   const [errorPassword, setErrorPassword] = useState(false);
-
-  const [showPassword, setShowPassword] = useState(false);
-
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
-  const countChar = (str) => {
-    let withoutSpace = str.replace(/\s/g, "");
-    let len = withoutSpace.length;
-    return len;
-  };
 
   // navigate to home
   const Navigate = useNavigate();
@@ -82,6 +64,8 @@ const UserLogin = () => {
       .then((res) => {
         console.log(res.data);
         if (res.data.success) {
+          setServiceNo("");
+          setPassword("");
           setErrorStatus({
             ...errorStatus,
             isOpen: true,
@@ -90,6 +74,8 @@ const UserLogin = () => {
           });
           Navigate("/Home");
         } else {
+          setServiceNo("");
+          setPassword("");
           setErrorStatus({
             ...errorStatus,
             isOpen: true,
@@ -97,8 +83,6 @@ const UserLogin = () => {
             message: res.data.message,
           });
         }
-        setServiceNo("");
-        setPassword("");
       })
       .catch((error) => {
         setErrorStatus({
@@ -209,22 +193,42 @@ const UserLogin = () => {
                     alignItems: "flex-end",
                   }}
                 >
-                  <Box
-                    paddingLeft={"5%"}
-                    marginBottom={"5%"}
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
+                  <Box paddingLeft={"5%"} marginBottom={"5%"} width="100%">
                     <form
+                      action=""
                       autoComplete="off"
+                      width="100%"
                       onSubmit={handleSubmit}
                       onReset={handleReset}
                     >
-                      <TextField
+                      <InputTextWithIcon
+                        lable={"Service Number"}
+                        icon={<BadgeIcon />}
+                        inputType={"text"}
+                        error={errorServiceNumber}
+                        helperText={
+                          errorServiceNumber
+                            ? "Your are not an employee of Homly"
+                            : ""
+                        }
+                        required={true}
+                        inputValue={serviceNo}
+                        setInputValue={setServiceNo}
+                      />
+                      <InputPasswordWithIcon
+                        lable={"Password"}
+                        icon={
+                          <PasswordIcon sx={{ p: 0.25, ml: -0.5, mr: 1 }} />
+                        }
+                        helperText={""}
+                        error={false}
+                        Password={password}
+                        setPassword={setPassword}
+                        ConfirmPassword={null}
+                        checkConfirmPassword={null}
+                        isCheck={false}
+                      />
+                      {/* <TextField
                         sx={{ marginBottom: " 6%", width: "90%" }}
                         id="textfield-serviceNumber"
                         label="Service Number"
@@ -260,8 +264,8 @@ const UserLogin = () => {
                             : ""
                         }
                         fullWidth
-                      />
-                      <TextField
+                      /> */}
+                      {/* <TextField
                         sx={{ marginBottom: "6%", width: "90%" }}
                         id="textfield-password"
                         label="Password"
@@ -307,7 +311,7 @@ const UserLogin = () => {
                         size="small"
                         helperText={""}
                         fullWidth
-                      />
+                      /> */}
                       <Box
                         sx={{
                           display: "flex",

@@ -10,14 +10,11 @@ import {
   ThemeProvider,
   styled,
   Button,
-  InputAdornment,
-  IconButton,
-  TextField,
   Stack,
   Avatar,
 } from "@mui/material";
 
-import { Visibility, VisibilityOff } from "@mui/icons-material";
+// import { Visibility, VisibilityOff } from "@mui/icons-material";
 import BadgeIcon from "@mui/icons-material/Badge";
 import EmailIcon from "@mui/icons-material/Email";
 import CallIcon from "@mui/icons-material/Call";
@@ -32,6 +29,8 @@ import logo from "../../Assets/images/logo.png";
 import wave from "../../Assets/images/wave.png";
 
 import { Link } from "react-router-dom";
+import InputPasswordWithIcon from "../../Components/User/TextField/InputPasswordWithIcon";
+import InputTextWithIcon from "../../Components/User/TextField/InputTextWithIcon";
 
 // import AvatarImage from "../Components/AvatarImage"
 
@@ -53,12 +52,6 @@ const UserRegistration = () => {
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
   const phoneRegex = /^[0-9]{10}$/;
 
-  const [focusedServiceNo, setFocusedServiceNo] = useState(false);
-  const [focusedEmail, setFocusedEmail] = useState(false);
-  const [focusedContactNo, setFocusedContactNo] = useState(false);
-  const [focusedPassword, setFocusedPassword] = useState(false);
-  const [focusedConfirmPassword, setFocusedConfirmPassword] = useState(false);
-
   const [ServiceNo, setServiceNo] = useState("");
   const [Email, setEmail] = useState("");
   const [ContactNo, setContactNo] = useState("");
@@ -69,24 +62,22 @@ const UserRegistration = () => {
   const [errorServiceNumber, setErrorServiceNumber] = useState(false);
   const [errorConfirmPassword, setErrorConfirmPassword] = useState(false);
 
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
+  // const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const [dbServiceNo, setDbServiceNo] = useState(null);
 
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
-  const handleClickShowConfirmPassword = () =>
-    setShowConfirmPassword((show) => !show);
+  // const handleClickShowConfirmPassword = () =>
+  //   setShowConfirmPassword((show) => !show);
 
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
+  // const handleMouseDownPassword = (event) => {
+  //   event.preventDefault();
+  // };
 
-  const countChar = (str) => {
-    let withoutSpace = str.replace(/\s/g, "");
-    let len = withoutSpace.length;
-    return len;
-  };
+  // const countChar = (str) => {
+  //   let withoutSpace = str.replace(/\s/g, "");
+  //   let len = withoutSpace.length;
+  //   return len;
+  // };
 
   const checkEmail = (email) => {
     return email.length > 0 && !emailRegex.test(email);
@@ -96,9 +87,6 @@ const UserRegistration = () => {
     return contactNo.length > 0 && !phoneRegex.test(contactNo);
   };
 
-  const checkConfirmPassword = (cpw, pw) => {
-    setErrorConfirmPassword(cpw.length > 0 && cpw !== pw);
-  };
 
   const checkServiceNo = (sn) => {
     // setDbServiceNo("1000");
@@ -349,7 +337,73 @@ const UserRegistration = () => {
                         </Button>
                       </Box>
                     </Stack>
-                    <TextField
+
+                    <InputTextWithIcon
+                      lable={"Service Number"}
+                      icon={<BadgeIcon />}
+                      inputType={"text"}
+                      error={errorServiceNumber}
+                      helperText={
+                        errorServiceNumber
+                          ? "Your are not an employee of Homly"
+                          : ""
+                      }
+                      required={true}
+                      inputValue={ServiceNo}
+                      setInputValue={setServiceNo}
+                    />
+                    <InputTextWithIcon
+                      lable={"Email"}
+                      icon={<EmailIcon />}
+                      inputType={"email"}
+                      error={checkEmail(Email)}
+                      helperText={
+                        checkEmail(Email) ? "invalid email address" : ""
+                      }
+                      required={true}
+                      inputValue={Email}
+                      setInputValue={setEmail}
+                    />
+                    <InputTextWithIcon
+                      lable={"Contact Number"}
+                      icon={<CallIcon />}
+                      inputType={"text"}
+                      error={checkContactNo(ContactNo)}
+                      helperText={
+                        checkContactNo(ContactNo)
+                          ? "invalid contact number"
+                          : ""
+                      }
+                      required={true}
+                      inputValue={ContactNo}
+                      setInputValue={setContactNo}
+                    />
+                    <InputPasswordWithIcon
+                      lable={"Password"}
+                      icon={<PasswordIcon sx={{ p: 0.25, ml: -0.5, mr: 1 }} />}
+                      helperText={""}
+                      error={false}
+                      Password={Password}
+                      setPassword={setPassword}
+                      ConfirmPassword={ConfirmPassword}
+                      isCheck={true}
+                      setErrorConfirmPassword={setErrorConfirmPassword}
+                    />
+                    <InputPasswordWithIcon
+                      lable={"Confirm Password"}
+                      icon={<PasswordIcon sx={{ p: 0.25, ml: -0.5, mr: 1 }} />}
+                      helperText={
+                        errorConfirmPassword ? "Password not match" : ""
+                      }
+                      error={errorConfirmPassword}
+                      Password={ConfirmPassword}
+                      setPassword={setConfirmPassword}
+                      ConfirmPassword={Password}
+                      isCheck={true}
+                      setErrorConfirmPassword={setErrorConfirmPassword}
+                    />
+
+                    {/* <TextField
                       sx={{ marginBottom: " 6%", width: "90%" }}
                       id="textfield-serviceNumber"
                       label="Service Number"
@@ -384,8 +438,8 @@ const UserRegistration = () => {
                           : ""
                       }
                       fullWidth
-                    />
-                    <TextField
+                    /> */}
+                    {/* <TextField
                       sx={{ marginBottom: " 6%", width: "90%" }}
                       id="textfield-email"
                       label="Email"
@@ -415,9 +469,9 @@ const UserRegistration = () => {
                         checkEmail(Email) ? "invalid email address" : ""
                       }
                       fullWidth
-                    />
+                    /> */}
 
-                    <TextField
+                    {/* <TextField
                       sx={{ marginBottom: " 6%", width: "90%" }}
                       id="textfield-contactNumber"
                       label="Contact Number"
@@ -450,8 +504,9 @@ const UserRegistration = () => {
                           : ""
                       }
                       fullWidth
-                    />
-                    <TextField
+                    /> */}
+
+                    {/* <TextField
                       sx={{ marginBottom: "6%", width: "90%" }}
                       id="textfield-password"
                       label="Password"
@@ -495,8 +550,9 @@ const UserRegistration = () => {
                       size="small"
                       helperText={""}
                       fullWidth
-                    />
-                    <TextField
+                    /> */}
+
+                    {/* <TextField
                       sx={{ marginBottom: " 6%", width: "90%" }}
                       id="textfield-confirmPassword"
                       label="Confirm Password"
@@ -549,7 +605,8 @@ const UserRegistration = () => {
                         errorConfirmPassword ? "password not match" : ""
                       }
                       fullWidth
-                    />
+                    /> */}
+
                     <Box
                       sx={{
                         display: "flex",

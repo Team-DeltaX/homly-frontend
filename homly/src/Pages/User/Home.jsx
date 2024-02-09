@@ -298,21 +298,6 @@ export default function Home() {
                   </Stack>
                   <Box>
                     <HHCarousel sortedByRating={sortedByRating} />
-                    {/* <Stack direction="row" spacing={2}>
-                      {sortedByRating
-                        .sort((a, b) => b.rating - a.rating)
-                        .slice(0, 4)
-                        .map((item) => (
-                          <HolidayHomeCard
-                            key={item.HHId}
-                            HHName={item.name}
-                            HHLocation={item.address}
-                            HHPrice={item.price}
-                            HHRating={item.rating}
-                            HHImage={item.image}
-                          />
-                        ))}
-                    </Stack> */}
                   </Box>
                 </Stack>
               </Box>
@@ -339,6 +324,7 @@ export default function Home() {
                 <OurPlaces />
               </Stack>
               <Stack data-aos="fade-left" data-aos-duration="900" sx={{ margin: "5% 0 0 0" }}>
+                {/* browse more holiday homes */}
                 <BrowseMoreCom />
               </Stack>
             </Container>
