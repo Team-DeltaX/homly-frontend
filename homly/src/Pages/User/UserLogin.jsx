@@ -12,8 +12,6 @@ import {
   InputAdornment,
   IconButton,
   TextField,
-  Snackbar,
-  Alert,
 } from "@mui/material";
 
 import { Link, useNavigate } from "react-router-dom";

@@ -15,8 +15,6 @@ import {
   TextField,
   Stack,
   Avatar,
-  Snackbar,
-  Alert,
 } from "@mui/material";
 
 import { Visibility, VisibilityOff } from "@mui/icons-material";
@@ -224,7 +222,6 @@ const UserRegistration = () => {
         }}
       >
         <Container maxWidth="xl" style={{ padding: 0 }}>
-          {/* error snack bar */}
           {/* error snack bar */}
           <ErrorSnackbar
             isOpen={errorStatus.isOpen}
