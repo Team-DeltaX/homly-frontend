@@ -87,9 +87,6 @@ const UserRegistration = () => {
     return contactNo.length > 0 && !phoneRegex.test(contactNo);
   };
 
-  const checkConfirmPassword = (cpw, pw) => {
-    setErrorConfirmPassword(cpw.length > 0 && cpw !== pw);
-  };
 
   const checkServiceNo = (sn) => {
     // setDbServiceNo("1000");
@@ -389,21 +386,21 @@ const UserRegistration = () => {
                       Password={Password}
                       setPassword={setPassword}
                       ConfirmPassword={ConfirmPassword}
-                      checkConfirmPassword={checkConfirmPassword}
                       isCheck={true}
+                      setErrorConfirmPassword={setErrorConfirmPassword}
                     />
                     <InputPasswordWithIcon
                       lable={"Confirm Password"}
                       icon={<PasswordIcon sx={{ p: 0.25, ml: -0.5, mr: 1 }} />}
                       helperText={
-                        errorConfirmPassword ? "password not match" : ""
+                        errorConfirmPassword ? "Password not match" : ""
                       }
                       error={errorConfirmPassword}
                       Password={ConfirmPassword}
                       setPassword={setConfirmPassword}
                       ConfirmPassword={Password}
-                      checkConfirmPassword={checkConfirmPassword}
                       isCheck={true}
+                      setErrorConfirmPassword={setErrorConfirmPassword}
                     />
 
                     {/* <TextField

@@ -13,7 +13,8 @@ export default function ForgetPasswordPopup({ open, setOpen }) {
   const [value, setValue] = useState({
     serviceNo: "",
     email: "",
-    newPassword:""
+    password: "",
+    confirmPassword: "",
   });
 
   const [errorStatus, setErrorStatus] = useState({
@@ -33,6 +34,12 @@ export default function ForgetPasswordPopup({ open, setOpen }) {
   const handleClose = () => {
     setOpen(false);
     setSelectedComponent(0);
+    setValue({
+      serviceNo: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    });
   };
   const middleComponent = [
     <EnterDetailCom
@@ -44,11 +51,11 @@ export default function ForgetPasswordPopup({ open, setOpen }) {
       setValue={setValue}
     />,
     <EnterOtpCom
-    handleClose={handleClose}
-    setSelectedComponent={setSelectedComponent}
-    errorStatus={errorStatus}
-    setErrorStatus={setErrorStatus}
-    value={value}
+      handleClose={handleClose}
+      setSelectedComponent={setSelectedComponent}
+      errorStatus={errorStatus}
+      setErrorStatus={setErrorStatus}
+      value={value}
     />,
     <ChangePasswordCom
       handleClose={handleClose}
@@ -70,7 +77,9 @@ export default function ForgetPasswordPopup({ open, setOpen }) {
       />
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Reset Password</DialogTitle>
-        <Box sx={{ width:{xs:"300px",sm:"500px"}  }}>{middleComponent[selectedComponent]}</Box>
+        <Box sx={{ width: { xs: "300px", sm: "500px" } }}>
+          {middleComponent[selectedComponent]}
+        </Box>
       </Dialog>
     </ThemeProvider>
   );

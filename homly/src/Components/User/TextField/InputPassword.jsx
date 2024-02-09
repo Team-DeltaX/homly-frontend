@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
   ThemeProvider,
   TextField,
-  InputAdornment,
   IconButton,
 } from "@mui/material";
 
@@ -10,16 +9,15 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 import theme from "../../../HomlyTheme";
 
-export default function InputPasswordWithIcon({
+export default function InputPassword({
   lable,
-  icon,
   helperText,
   error,
-  Password,
+  password,
   setPassword,
-  ConfirmPassword,
+  confirmPassword,
   isCheck,
-  setErrorConfirmPassword,
+  setErrorConfirmPassword
 }) {
   const [focusedPassword, setFocusedPassword] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -47,13 +45,6 @@ export default function InputPasswordWithIcon({
         error={error}
         type={showPassword ? "text" : "password"}
         InputProps={{
-            
-          startAdornment: (
-            <InputAdornment position="start">
-              {icon}
-            </InputAdornment>
-          ),
-
           endAdornment: (
             <IconButton
               aria-label="toggle password visibility"
@@ -66,20 +57,17 @@ export default function InputPasswordWithIcon({
           ),
         }}
         InputLabelProps={{
-          shrink: focusedPassword || countChar(Password) !== 0,
-          style: {
-            marginLeft: focusedPassword || countChar(Password) !== 0 ? 0 : 35,
-          },
+          shrink: focusedPassword || countChar(password) !== 0,
         }}
         onFocus={() => setFocusedPassword(true)}
         onBlur={() => setFocusedPassword(false)}
         onChange={(e) => {
-            setPassword(e.target.value);
-            if (isCheck) {
-                checkConfirmPassword(ConfirmPassword, e.target.value);
-            }
+          setPassword(e.target.value);
+          if (isCheck) {
+            checkConfirmPassword(confirmPassword, e.target.value);
+          }
         }}
-        value={Password}
+        value={password}
         size="small"
         helperText={helperText}
         fullWidth

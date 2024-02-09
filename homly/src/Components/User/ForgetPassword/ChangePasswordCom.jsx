@@ -9,6 +9,7 @@ import {
   Button,
 } from "@mui/material";
 import theme from "../../../HomlyTheme";
+import InputPassword from "../TextField/InputPassword";
 export default function ChangePasswordCom({
   handleClose,
   setSelectedComponent,
@@ -17,65 +18,61 @@ export default function ChangePasswordCom({
   value,
   setValue,
 }) {
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [errorConfirmPassword, setErrorConfirmPassword] = useState(false);
   const handleSubmit = (e) => {
     e.preventDefault();
     // setSelectedComponent(1);
-    const formData = {serviceNo:value.serviceNo,email:value.email}
-    axios.post("http://localhost:3002/users/forgetPassword/details", formData)
-    .then((res) => {
-        if(res.data.success){
-            setErrorStatus({
-                ...errorStatus,
-                isOpen: true,
-                type: "success",
-                message: res.data.message,
-            })
-            setSelectedComponent(1)
-        }else{
-            setErrorStatus({
-                ...errorStatus,
-                isOpen: true,
-                type: "error",
-                message: res.data.message,
-            })
+    // const formData = {serviceNo:value.serviceNo,email:value.email}
+    // axios.post("http://localhost:3002/users/forgetPassword/details", formData)
+    // .then((res) => {
+    //     if(res.data.success){
+    //         setErrorStatus({
+    //             ...errorStatus,
+    //             isOpen: true,
+    //             type: "success",
+    //             message: res.data.message,
+    //         })
+    //         setSelectedComponent(1)
+    //     }else{
+    //         setErrorStatus({
+    //             ...errorStatus,
+    //             isOpen: true,
+    //             type: "error",
+    //             message: res.data.message,
+    //         })
 
-        }
-    });
+    //     }
+    // });
   };
 
   return (
     <ThemeProvider theme={theme}>
       <form onSubmit={handleSubmit}>
-        <DialogContent sx={{ height: { xs: "130px", sm: "110px" } }}>
-          <DialogContentText>
-            Enter the service number and email address to reset your password
+        <DialogContent sx={{ height: { xs: "130px", sm: "160px" } , overflowY:'unset' }}>
+          <DialogContentText sx={{marginBottom:'10px'}}>
+            Enter new password
           </DialogContentText>
-          <TextField
-            autoFocus
-            required
-            margin="dense"
-            id="serviceNo"
-            label="Service Number"
-            type="text"
-            size="small"
-            fullWidth
-            variant="outlined"
-            onChange={(e) => setValue({ ...value, serviceNo: e.target.value })}
-            value={value.serviceNo}
+          <InputPassword
+            lable={"Password"}
+            helperText={""}
+            error={false}
+            password={value.password}
+            setPassword={(newValue) => setValue({ ...value, password: newValue })}
+            confirmPassword={value.confirmPassword}
+            isCheck={true}
+            setErrorConfirmPassword={setErrorConfirmPassword}
           />
-          <TextField
-            autoFocus
-            required
-            margin="dense"
-            id="email"
-            name="email"
-            label="Email Address"
-            type="email"
-            size="small"
-            fullWidth
-            variant="outlined"
-            onChange={(e) => setValue({ ...value, email: e.target.value })}
-            value={value.email}
+          <InputPassword
+            lable={"Confirm Password"}
+            helperText={errorConfirmPassword?"Password not match":""}
+            error={errorConfirmPassword}
+            password={value.confirmPassword}
+            setPassword={(newValue) => setValue({ ...value, confirmPassword: newValue })}
+            confirmPassword={value.password}
+            isCheck={true}
+            setErrorConfirmPassword={setErrorConfirmPassword}
           />
         </DialogContent>
         <DialogActions>

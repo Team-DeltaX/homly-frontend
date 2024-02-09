@@ -26,6 +26,8 @@ import logo from "../../Assets/images/logo.png";
 import wave from "../../Assets/images/wave.png";
 import ForgetPasswordPopup from "../../Components/User/ForgetPassword/ForgetPasswordPopup";
 import ErrorSnackbar from "../../Components/User/ErrorSnackbar";
+import InputTextWithIcon from "../../Components/User/TextField/InputTextWithIcon";
+import InputPasswordWithIcon from "../../Components/User/TextField/InputPasswordWithIcon";
 
 const Img = styled("img")({
   display: "block",
@@ -209,22 +211,40 @@ const UserLogin = () => {
                     alignItems: "flex-end",
                   }}
                 >
-                  <Box
-                    paddingLeft={"5%"}
-                    marginBottom={"5%"}
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
+                  <Box paddingLeft={"5%"} marginBottom={"5%"} width="100%">
+                  <form
+                    action=""
+                    autoComplete="off"
+                    width="100%"
+                    onSubmit={handleSubmit}
+                    onReset={handleReset}
                   >
-                    <form
-                      autoComplete="off"
-                      onSubmit={handleSubmit}
-                      onReset={handleReset}
-                    >
-                      <TextField
+                      <InputTextWithIcon
+                      lable={"Service Number"}
+                      icon={<BadgeIcon />}
+                      inputType={"text"}
+                      error={errorServiceNumber}
+                      helperText={
+                        errorServiceNumber
+                          ? "Your are not an employee of Homly"
+                          : ""
+                      }
+                      required={true}
+                      inputValue={serviceNo}
+                      setInputValue={setServiceNo}
+                    />
+                    <InputPasswordWithIcon
+                      lable={"Password"}
+                      icon={<PasswordIcon sx={{ p: 0.25, ml: -0.5, mr: 1 }} />}
+                      helperText={""}
+                      error={false}
+                      Password={password}
+                      setPassword={setPassword}
+                      ConfirmPassword={null}
+                      checkConfirmPassword={null}
+                      isCheck={false}
+                    />
+                      {/* <TextField
                         sx={{ marginBottom: " 6%", width: "90%" }}
                         id="textfield-serviceNumber"
                         label="Service Number"
@@ -260,8 +280,8 @@ const UserLogin = () => {
                             : ""
                         }
                         fullWidth
-                      />
-                      <TextField
+                      /> */}
+                      {/* <TextField
                         sx={{ marginBottom: "6%", width: "90%" }}
                         id="textfield-password"
                         label="Password"
@@ -307,7 +327,7 @@ const UserLogin = () => {
                         size="small"
                         helperText={""}
                         fullWidth
-                      />
+                      /> */}
                       <Box
                         sx={{
                           display: "flex",

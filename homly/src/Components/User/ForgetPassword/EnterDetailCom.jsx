@@ -17,37 +17,38 @@ export default function EnterDetailCom({
   value,
   setValue,
 }) {
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // setSelectedComponent(1);
-    const formData = {serviceNo:value.serviceNo,email:value.email}
-    axios.post("http://localhost:3002/users/forgetPassword/details", formData)
-    .then((res) => {
-        if(res.data.success){
-            setErrorStatus({
-                ...errorStatus,
-                isOpen: true,
-                type: "success",
-                message: res.data.message,
-            })
-            setSelectedComponent(1)
-        }else{
-            setErrorStatus({
-                ...errorStatus,
-                isOpen: true,
-                type: "error",
-                message: res.data.message,
-            })
+    setSelectedComponent(1);
+    // const formData = {serviceNo:value.serviceNo,email:value.email}
+    // axios.post("http://localhost:3002/users/forgetPassword/details", formData)
+    // .then((res) => {
+    //     if(res.data.success){
+    //         setErrorStatus({
+    //             ...errorStatus,
+    //             isOpen: true,
+    //             type: "success",
+    //             message: res.data.message,
+    //         })
+    //         setSelectedComponent(1)
+    //     }else{
+    //         setErrorStatus({
+    //             ...errorStatus,
+    //             isOpen: true,
+    //             type: "error",
+    //             message: res.data.message,
+    //         })
 
-        }
-    });
+    //     }
+    // });
   };
 
   return (
     <ThemeProvider theme={theme}>
       <form onSubmit={handleSubmit}>
-        <DialogContent sx={{ height: { xs: "130px", sm: "110px" } }}>
-          <DialogContentText>
+        <DialogContent sx={{ height: { xs: "130px", sm: "160px" } , overflowY:'unset' }}>
+          <DialogContentText sx={{marginBottom:'10px'}}>
             Enter the service number and email address to reset your password
           </DialogContentText>
           <TextField
