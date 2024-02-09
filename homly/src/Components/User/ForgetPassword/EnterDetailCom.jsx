@@ -9,6 +9,7 @@ import {
   Button,
 } from "@mui/material";
 import theme from "../../../HomlyTheme";
+import InputText from "../TextField/InputText";
 export default function EnterDetailCom({
   handleClose,
   setSelectedComponent,
@@ -50,7 +51,25 @@ export default function EnterDetailCom({
           <DialogContentText sx={{marginBottom:'10px'}}>
             Enter the service number and email address to reset your password
           </DialogContentText>
-          <TextField
+          <InputText 
+            lable={"Service Number"}
+            inputType={"text"}
+            error={false}
+            helperText={""}
+            required={true}
+            inputValue={value.serviceNo}
+            setInputValue={(val)=>setValue({...value,serviceNo:val})}
+          />
+          <InputText 
+            lable={"Email Address"}
+            inputType={"email"}
+            error={false}
+            helperText={""}
+            required={true}
+            inputValue={value.email}
+            setInputValue={(val)=>setValue({...value,email:val})}
+          />
+          {/* <TextField
             autoFocus
             required
             margin="dense"
@@ -76,7 +95,7 @@ export default function EnterDetailCom({
             variant="outlined"
             onChange={(e) => setValue({ ...value, email: e.target.value })}
             value={value.email}
-          />
+          /> */}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
