@@ -5,11 +5,12 @@ import {
   DialogActions,
   DialogContent,
   DialogContentText,
-  TextField,
   Button,
 } from "@mui/material";
 import theme from "../../../HomlyTheme";
+import './forgetPassword.css'
 import OtpInput from "react-otp-input";
+import { ClassNames } from "@emotion/react";
 
 export default function EnterDetailCom({
   handleClose,
@@ -44,6 +45,7 @@ export default function EnterDetailCom({
     // });
   };
 
+  
   return (
     <ThemeProvider theme={theme}>
       <form onSubmit={handleSubmit}>
@@ -52,9 +54,11 @@ export default function EnterDetailCom({
           <OtpInput
             value={otp}
             onChange={setOtp}
-            numInputs={4}
-            renderSeparator={<span>-</span>}
+            numInputs={6}
+            renderSeparator={<span>&nbsp;</span>}
             renderInput={(props) => <input {...props} />}
+            inputStyle={'otp-inputs'}
+            containerStyle={'otp-inputs-container'}
           />
         </DialogContent>
         <DialogActions>
