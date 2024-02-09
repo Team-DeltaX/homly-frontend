@@ -18,14 +18,12 @@ export default function ProfilePicUploadPopup({ setOpen, open, setImage }) {
   const [tempImage, setTempImage] = useState(null);
   const [scale, setScale] = useState(1);
   const [isVisible, setIsVisible] = useState(false);
-  //   const [tempImage2, setTempImage2] = useState(null);
   const handleClose = () => {
     setOpen(false);
     setIsVisible(false);
   };
 
   const handleSubmit = () => {
-    // setOpen(false);
     if (editedImageRef.current) {
       const canvas = editedImageRef.current.getImageScaledToCanvas();
       const dataURL = canvas.toDataURL();
@@ -56,15 +54,6 @@ export default function ProfilePicUploadPopup({ setOpen, open, setImage }) {
       <Dialog
         open={open}
         onClose={handleClose}
-        // PaperProps={{
-        //   component: "form",
-        //   onSubmit: (event) => {
-        //     event.preventDefault();
-
-        //     console.log(email);
-        //     handleClose();
-        //   },
-        // }}
       >
         <DialogTitle>Upload Image</DialogTitle>
         <DialogContent>

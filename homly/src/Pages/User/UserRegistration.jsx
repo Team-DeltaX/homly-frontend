@@ -1,6 +1,7 @@
 import { React } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
+import axios from "axios";
 import {
   Box,
   Container,
@@ -9,20 +10,18 @@ import {
   ThemeProvider,
   styled,
   Button,
-  InputAdornment,
-  IconButton,
-  TextField,
   Stack,
   Avatar,
 } from "@mui/material";
 
-import { Visibility, VisibilityOff } from "@mui/icons-material";
+// import { Visibility, VisibilityOff } from "@mui/icons-material";
 import BadgeIcon from "@mui/icons-material/Badge";
 import EmailIcon from "@mui/icons-material/Email";
 import CallIcon from "@mui/icons-material/Call";
 import PasswordIcon from "@mui/icons-material/Password";
 
 import ProfilePicUploadPopup from "../../Components/User/ProfilePicUploadPopup";
+import ErrorSnackbar from "../../Components/User/ErrorSnackbar";
 
 import theme from "../../HomlyTheme";
 import "./UserStyle.css";
@@ -30,10 +29,12 @@ import logo from "../../Assets/images/logo.png";
 import wave from "../../Assets/images/wave.png";
 
 import { Link } from "react-router-dom";
+import InputPasswordWithIcon from "../../Components/User/TextField/InputPasswordWithIcon";
+import InputTextWithIcon from "../../Components/User/TextField/InputTextWithIcon";
 
 // import AvatarImage from "../Components/AvatarImage"
 
-const Img = styled('img')({
+const Img = styled("img")({
   // margin: "auto",
   display: "block",
   width: "40%",
@@ -51,12 +52,6 @@ const UserRegistration = () => {
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
   const phoneRegex = /^[0-9]{10}$/;
 
-  const [focusedServiceNo, setFocusedServiceNo] = useState(false);
-  const [focusedEmail, setFocusedEmail] = useState(false);
-  const [focusedContactNo, setFocusedContactNo] = useState(false);
-  const [focusedPassword, setFocusedPassword] = useState(false);
-  const [focusedConfirmPassword, setFocusedConfirmPassword] = useState(false);
-
   const [ServiceNo, setServiceNo] = useState("");
   const [Email, setEmail] = useState("");
   const [ContactNo, setContactNo] = useState("");
@@ -67,24 +62,22 @@ const UserRegistration = () => {
   const [errorServiceNumber, setErrorServiceNumber] = useState(false);
   const [errorConfirmPassword, setErrorConfirmPassword] = useState(false);
 
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
+  // const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const [dbServiceNo, setDbServiceNo] = useState(null);
 
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
-  const handleClickShowConfirmPassword = () =>
-    setShowConfirmPassword((show) => !show);
+  // const handleClickShowConfirmPassword = () =>
+  //   setShowConfirmPassword((show) => !show);
 
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
+  // const handleMouseDownPassword = (event) => {
+  //   event.preventDefault();
+  // };
 
-  const countChar = (str) => {
-    let withoutSpace = str.replace(/\s/g, "");
-    let len = withoutSpace.length;
-    return len;
-  };
+  // const countChar = (str) => {
+  //   let withoutSpace = str.replace(/\s/g, "");
+  //   let len = withoutSpace.length;
+  //   return len;
+  // };
 
   const checkEmail = (email) => {
     return email.length > 0 && !emailRegex.test(email);
@@ -94,9 +87,6 @@ const UserRegistration = () => {
     return contactNo.length > 0 && !phoneRegex.test(contactNo);
   };
 
-  const checkConfirmPassword = (cpw, pw) => {
-    setErrorConfirmPassword(cpw.length > 0 && cpw !== pw);
-  };
 
   const checkServiceNo = (sn) => {
     // setDbServiceNo("1000");
@@ -128,12 +118,25 @@ const UserRegistration = () => {
 
   // console.log(dbServiceNo)
 
+  const [errorStatus, setErrorStatus] = useState({
+    isOpen: false,
+    type: "",
+    message: "",
+  });
+
+  const handleAlertClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setErrorStatus({ ...errorStatus, isOpen: false });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
     // console.log('2',ServiceNo,checkServiceNo(ServiceNo))
-    // const formData = { ServiceNo, Email, ContactNo, Password, ConfirmPassword };
-    // const product = JSON.stringify(formData);
+    const formData = { ServiceNo, Password, Email, ContactNo, image };
 
     if (
       !checkServiceNo(ServiceNo) &&
@@ -141,21 +144,43 @@ const UserRegistration = () => {
       !checkContactNo(ContactNo) &&
       !errorConfirmPassword
     ) {
-      console.log(ServiceNo, Email, ContactNo, Password, ConfirmPassword);
+      console.log(ServiceNo, Email, ContactNo, Password);
 
-      // fetch("http://localhost:8000/homlyDb", {
-      //   method: "POST",
-      //   headers: { "Content-Type": "application/json" },
-      //   body: product,
-      // }).then(() => {
-      //   console.log("new product added");
-      // });
-
-      setServiceNo("");
-      setEmail("");
-      setContactNo("");
-      setPassword("");
-      setConfirmPassword("");
+      axios
+        .post("http://localhost:3002/users/add", formData)
+        .then((res) => {
+          console.log(res.data);
+          if (res.data.success) {
+            setErrorStatus({
+              ...errorStatus,
+              isOpen: true,
+              type: "success",
+              message: res.data.message,
+            });
+          } else {
+            setErrorStatus({
+              ...errorStatus,
+              isOpen: true,
+              type: "error",
+              message: res.data.message,
+            });
+          }
+          setServiceNo("");
+          setEmail("");
+          setContactNo("");
+          setPassword("");
+          setConfirmPassword("");
+          setImage(null);
+        })
+        .catch((error) => {
+          // alert("Error adding user:", error);
+          setErrorStatus({
+            ...errorStatus,
+            isOpen: true,
+            type: "error",
+            message: "Something went wrong",
+          });
+        });
     }
   };
 
@@ -166,6 +191,7 @@ const UserRegistration = () => {
     setContactNo("");
     setPassword("");
     setConfirmPassword("");
+    setImage(null);
   };
 
   const [open, setOpen] = useState(false);
@@ -184,12 +210,20 @@ const UserRegistration = () => {
         }}
       >
         <Container maxWidth="xl" style={{ padding: 0 }}>
+          {/* error snack bar */}
+          <ErrorSnackbar
+            isOpen={errorStatus.isOpen}
+            type={errorStatus.type}
+            message={errorStatus.message}
+            handleAlertClose={handleAlertClose}
+          />
+
           <Container className="registration-box-container">
             <Grid
               container
               sx={{
                 // height: "85%",
-                height: 'auto',
+                height: "auto",
                 backgroundColor: "grey1",
                 borderRadius: "10px",
                 boxShadow: 1,
@@ -268,19 +302,108 @@ const UserRegistration = () => {
                     onReset={handleReset}
                   >
                     {/* <AvatarImage /> */}
-                    <ProfilePicUploadPopup open={open} setOpen={setOpen}  setImage={setImage}/>
-                    <Stack direction='row' sx={{margin:'2% 0',height: {xs:80,sm:100},width:'100%' }}>
+                    <ProfilePicUploadPopup
+                      open={open}
+                      setOpen={setOpen}
+                      setImage={setImage}
+                    />
+                    <Stack
+                      direction="row"
+                      sx={{
+                        margin: "2% 0",
+                        height: { xs: 80, sm: 100 },
+                        width: "100%",
+                      }}
+                    >
                       <Avatar
                         alt="Remy Sharp"
                         src={image}
-                        sx={{ width: {xs:80,sm:100}, height: {xs:80,sm:100} }}
+                        sx={{
+                          width: { xs: 80, sm: 100 },
+                          height: { xs: 80, sm: 100 },
+                        }}
                       />
-                      <Box sx={{height:'100%',display:'flex',alignItems:'center',marginLeft:{xs:'8px'}}}>
-
-                      <Button variant="outlined" onClick={handleClickOpen} > Upload Profile Picture</Button>
+                      <Box
+                        sx={{
+                          height: "100%",
+                          display: "flex",
+                          alignItems: "center",
+                          marginLeft: { xs: "8px" },
+                        }}
+                      >
+                        <Button variant="outlined" onClick={handleClickOpen}>
+                          {" "}
+                          Upload Profile Picture
+                        </Button>
                       </Box>
                     </Stack>
-                    <TextField
+
+                    <InputTextWithIcon
+                      lable={"Service Number"}
+                      icon={<BadgeIcon />}
+                      inputType={"text"}
+                      error={errorServiceNumber}
+                      helperText={
+                        errorServiceNumber
+                          ? "Your are not an employee of Homly"
+                          : ""
+                      }
+                      required={true}
+                      inputValue={ServiceNo}
+                      setInputValue={setServiceNo}
+                    />
+                    <InputTextWithIcon
+                      lable={"Email"}
+                      icon={<EmailIcon />}
+                      inputType={"email"}
+                      error={checkEmail(Email)}
+                      helperText={
+                        checkEmail(Email) ? "invalid email address" : ""
+                      }
+                      required={true}
+                      inputValue={Email}
+                      setInputValue={setEmail}
+                    />
+                    <InputTextWithIcon
+                      lable={"Contact Number"}
+                      icon={<CallIcon />}
+                      inputType={"text"}
+                      error={checkContactNo(ContactNo)}
+                      helperText={
+                        checkContactNo(ContactNo)
+                          ? "invalid contact number"
+                          : ""
+                      }
+                      required={true}
+                      inputValue={ContactNo}
+                      setInputValue={setContactNo}
+                    />
+                    <InputPasswordWithIcon
+                      lable={"Password"}
+                      icon={<PasswordIcon sx={{ p: 0.25, ml: -0.5, mr: 1 }} />}
+                      helperText={""}
+                      error={false}
+                      Password={Password}
+                      setPassword={setPassword}
+                      ConfirmPassword={ConfirmPassword}
+                      isCheck={true}
+                      setErrorConfirmPassword={setErrorConfirmPassword}
+                    />
+                    <InputPasswordWithIcon
+                      lable={"Confirm Password"}
+                      icon={<PasswordIcon sx={{ p: 0.25, ml: -0.5, mr: 1 }} />}
+                      helperText={
+                        errorConfirmPassword ? "Password not match" : ""
+                      }
+                      error={errorConfirmPassword}
+                      Password={ConfirmPassword}
+                      setPassword={setConfirmPassword}
+                      ConfirmPassword={Password}
+                      isCheck={true}
+                      setErrorConfirmPassword={setErrorConfirmPassword}
+                    />
+
+                    {/* <TextField
                       sx={{ marginBottom: " 6%", width: "90%" }}
                       id="textfield-serviceNumber"
                       label="Service Number"
@@ -315,8 +438,8 @@ const UserRegistration = () => {
                           : ""
                       }
                       fullWidth
-                    />
-                    <TextField
+                    /> */}
+                    {/* <TextField
                       sx={{ marginBottom: " 6%", width: "90%" }}
                       id="textfield-email"
                       label="Email"
@@ -346,9 +469,9 @@ const UserRegistration = () => {
                         checkEmail(Email) ? "invalid email address" : ""
                       }
                       fullWidth
-                    />
+                    /> */}
 
-                    <TextField
+                    {/* <TextField
                       sx={{ marginBottom: " 6%", width: "90%" }}
                       id="textfield-contactNumber"
                       label="Contact Number"
@@ -381,8 +504,9 @@ const UserRegistration = () => {
                           : ""
                       }
                       fullWidth
-                    />
-                    <TextField
+                    /> */}
+
+                    {/* <TextField
                       sx={{ marginBottom: "6%", width: "90%" }}
                       id="textfield-password"
                       label="Password"
@@ -426,8 +550,9 @@ const UserRegistration = () => {
                       size="small"
                       helperText={""}
                       fullWidth
-                    />
-                    <TextField
+                    /> */}
+
+                    {/* <TextField
                       sx={{ marginBottom: " 6%", width: "90%" }}
                       id="textfield-confirmPassword"
                       label="Confirm Password"
@@ -480,7 +605,8 @@ const UserRegistration = () => {
                         errorConfirmPassword ? "password not match" : ""
                       }
                       fullWidth
-                    />
+                    /> */}
+
                     <Box
                       sx={{
                         display: "flex",

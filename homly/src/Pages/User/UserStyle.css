@@ -153,6 +153,11 @@
   height:360px !important;
 }
 
+/* hide scroll bar */
+::-webkit-scrollbar {
+  display: none;
+}
+
 
 /* .select__control{
   border: none !important;

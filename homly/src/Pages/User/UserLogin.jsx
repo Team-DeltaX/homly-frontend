@@ -1,5 +1,6 @@
 import { React } from "react";
 import { useState } from "react";
+import axios from "axios";
 import {
   Box,
   Container,
@@ -8,14 +9,10 @@ import {
   ThemeProvider,
   styled,
   Button,
-  InputAdornment,
-  IconButton,
-  TextField,
 } from "@mui/material";
 
-import { Link,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-import { Visibility, VisibilityOff } from "@mui/icons-material";
 import BadgeIcon from "@mui/icons-material/Badge";
 import PasswordIcon from "@mui/icons-material/Password";
 
@@ -23,6 +20,10 @@ import theme from "../../HomlyTheme";
 import "./UserStyle.css";
 import logo from "../../Assets/images/logo.png";
 import wave from "../../Assets/images/wave.png";
+import ForgetPasswordPopup from "../../Components/User/ForgetPassword/ForgetPasswordPopup";
+import ErrorSnackbar from "../../Components/User/ErrorSnackbar";
+import InputTextWithIcon from "../../Components/User/TextField/InputTextWithIcon";
+import InputPasswordWithIcon from "../../Components/User/TextField/InputPasswordWithIcon";
 
 const Img = styled("img")({
   display: "block",
@@ -36,31 +37,61 @@ const UserLogin = () => {
   const [serviceNo, setServiceNo] = useState("");
   const [password, setPassword] = useState("");
 
-  const [focusedServiceNo, setFocusedServiceNo] = useState(false);
-  const [focusedPassword, setFocusedPassword] = useState(false);
-
   const [errorServiceNumber, setErrorServiceNumber] = useState(false);
-  //   const [errorPassword, setErrorPassword] = useState(false);
-
-  const [showPassword, setShowPassword] = useState(false);
-
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
-  const countChar = (str) => {
-    let withoutSpace = str.replace(/\s/g, "");
-    let len = withoutSpace.length;
-    return len;
-  };
 
   // navigate to home
   const Navigate = useNavigate();
 
+  const [errorStatus, setErrorStatus] = useState({
+    type: "",
+    message: "",
+  });
+
+  const handleAlertClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setErrorStatus({ ...errorStatus, isOpen: false });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrorServiceNumber(false);
-    Navigate('/');
+    const formData = { serviceNo, password };
+    axios
+      .post("http://localhost:3002/users/login", formData)
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.success) {
+          setServiceNo("");
+          setPassword("");
+          setErrorStatus({
+            ...errorStatus,
+            isOpen: true,
+            type: "success",
+            message: res.data.message,
+          });
+          Navigate("/Home");
+        } else {
+          setServiceNo("");
+          setPassword("");
+          setErrorStatus({
+            ...errorStatus,
+            isOpen: true,
+            type: "error",
+            message: res.data.message,
+          });
+        }
+      })
+      .catch((error) => {
+        setErrorStatus({
+          ...errorStatus,
+          isOpen: true,
+          type: "error",
+          message: "Something went wrong",
+        });
+      });
   };
 
   const handleReset = (e) => {
@@ -69,9 +100,13 @@ const UserLogin = () => {
     setPassword("");
   };
 
+  // popup
+  const [open, setOpen] = useState(false);
 
-  
-  
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <Box
@@ -82,15 +117,24 @@ const UserLogin = () => {
         }}
       >
         <Container maxWidth="xl" style={{ padding: 0 }}>
-          <Container className="registration-box-container" >
+          {/* error snack bar */}
+          <ErrorSnackbar
+            isOpen={errorStatus.isOpen}
+            type={errorStatus.type}
+            message={errorStatus.message}
+            handleAlertClose={handleAlertClose}
+          />
+
+          {/* forget password popup */}
+          <ForgetPasswordPopup open={open} setOpen={setOpen} />
+          <Container className="registration-box-container">
             <Grid
               container
               sx={{
-                height: "auto",
                 backgroundColor: "grey1",
                 borderRadius: "10px",
                 boxShadow: 1,
-                height: {xs:'auto',md:"60vh"},
+                height: { xs: "auto", md: "60vh" },
               }}
               className="registration-box"
             >
@@ -142,23 +186,49 @@ const UserLogin = () => {
                     Sign up
                   </Button>
                 </Box>
-                <Box sx={{height:'70%',display:'flex',alignItems:'flex-end'}}>
-                  <Box
-                    paddingLeft={"5%"}
-                    marginBottom={"5%"}
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
+                <Box
+                  sx={{
+                    height: "70%",
+                    display: "flex",
+                    alignItems: "flex-end",
+                  }}
+                >
+                  <Box paddingLeft={"5%"} marginBottom={"5%"} width="100%">
                     <form
+                      action=""
                       autoComplete="off"
+                      width="100%"
                       onSubmit={handleSubmit}
                       onReset={handleReset}
                     >
-                      <TextField
+                      <InputTextWithIcon
+                        lable={"Service Number"}
+                        icon={<BadgeIcon />}
+                        inputType={"text"}
+                        error={errorServiceNumber}
+                        helperText={
+                          errorServiceNumber
+                            ? "Your are not an employee of Homly"
+                            : ""
+                        }
+                        required={true}
+                        inputValue={serviceNo}
+                        setInputValue={setServiceNo}
+                      />
+                      <InputPasswordWithIcon
+                        lable={"Password"}
+                        icon={
+                          <PasswordIcon sx={{ p: 0.25, ml: -0.5, mr: 1 }} />
+                        }
+                        helperText={""}
+                        error={false}
+                        Password={password}
+                        setPassword={setPassword}
+                        ConfirmPassword={null}
+                        checkConfirmPassword={null}
+                        isCheck={false}
+                      />
+                      {/* <TextField
                         sx={{ marginBottom: " 6%", width: "90%" }}
                         id="textfield-serviceNumber"
                         label="Service Number"
@@ -172,7 +242,8 @@ const UserLogin = () => {
                           ),
                         }}
                         InputLabelProps={{
-                          shrink: focusedServiceNo || countChar(serviceNo) !== 0,
+                          shrink:
+                            focusedServiceNo || countChar(serviceNo) !== 0,
                           style: {
                             marginLeft:
                               focusedServiceNo || countChar(serviceNo) !== 0
@@ -193,8 +264,8 @@ const UserLogin = () => {
                             : ""
                         }
                         fullWidth
-                      />
-                      <TextField
+                      /> */}
+                      {/* <TextField
                         sx={{ marginBottom: "6%", width: "90%" }}
                         id="textfield-password"
                         label="Password"
@@ -214,7 +285,11 @@ const UserLogin = () => {
                               onMouseDown={handleMouseDownPassword}
                               edge="end"
                             >
-                              {showPassword ? <VisibilityOff /> : <Visibility />}
+                              {showPassword ? (
+                                <VisibilityOff />
+                              ) : (
+                                <Visibility />
+                              )}
                             </IconButton>
                           ),
                         }}
@@ -236,7 +311,18 @@ const UserLogin = () => {
                         size="small"
                         helperText={""}
                         fullWidth
-                      />
+                      /> */}
+                      <Box
+                        sx={{
+                          display: "flex",
+                          justifyContent: "center",
+                          width: "90%",
+                        }}
+                      >
+                        <Button variant="text" onClick={handleClickOpen}>
+                          Forget Password
+                        </Button>
+                      </Box>
                       <Box
                         sx={{
                           display: "flex",
@@ -252,7 +338,11 @@ const UserLogin = () => {
                         >
                           Reset
                         </Button>
-                        <Button type="submit" variant="contained" color="primary"  >
+                        <Button
+                          type="submit"
+                          variant="contained"
+                          color="primary"
+                        >
                           Login
                         </Button>
                       </Box>
