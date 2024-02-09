@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ThemeProvider, TextField, InputAdornment } from "@mui/material";
+import { ThemeProvider, TextField} from "@mui/material";
 import theme from "../../../HomlyTheme";
 
 export default function InputText({
