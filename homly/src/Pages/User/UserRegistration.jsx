@@ -11,13 +11,13 @@ import {
   styled,
   Button,
   InputAdornment,
-  IconButton,
+  // IconButton,
   TextField,
   Stack,
   Avatar,
 } from "@mui/material";
 
-import { Visibility, VisibilityOff } from "@mui/icons-material";
+// import { Visibility, VisibilityOff } from "@mui/icons-material";
 import BadgeIcon from "@mui/icons-material/Badge";
 import EmailIcon from "@mui/icons-material/Email";
 import CallIcon from "@mui/icons-material/Call";
@@ -32,6 +32,7 @@ import logo from "../../Assets/images/logo.png";
 import wave from "../../Assets/images/wave.png";
 
 import { Link } from "react-router-dom";
+import InputPasswordWithIcon from "../../Components/User/TextField/InputPasswordWithIcon";
 
 // import AvatarImage from "../Components/AvatarImage"
 
@@ -56,8 +57,8 @@ const UserRegistration = () => {
   const [focusedServiceNo, setFocusedServiceNo] = useState(false);
   const [focusedEmail, setFocusedEmail] = useState(false);
   const [focusedContactNo, setFocusedContactNo] = useState(false);
-  const [focusedPassword, setFocusedPassword] = useState(false);
-  const [focusedConfirmPassword, setFocusedConfirmPassword] = useState(false);
+
+  // const [focusedConfirmPassword, setFocusedConfirmPassword] = useState(false);
 
   const [ServiceNo, setServiceNo] = useState("");
   const [Email, setEmail] = useState("");
@@ -69,18 +70,16 @@ const UserRegistration = () => {
   const [errorServiceNumber, setErrorServiceNumber] = useState(false);
   const [errorConfirmPassword, setErrorConfirmPassword] = useState(false);
 
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
+  // const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const [dbServiceNo, setDbServiceNo] = useState(null);
 
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
-  const handleClickShowConfirmPassword = () =>
-    setShowConfirmPassword((show) => !show);
+  // const handleClickShowConfirmPassword = () =>
+  //   setShowConfirmPassword((show) => !show);
 
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
+  // const handleMouseDownPassword = (event) => {
+  //   event.preventDefault();
+  // };
 
   const countChar = (str) => {
     let withoutSpace = str.replace(/\s/g, "");
@@ -451,7 +450,28 @@ const UserRegistration = () => {
                       }
                       fullWidth
                     />
-                    <TextField
+
+                    <InputPasswordWithIcon
+                      lable={"Password"}
+                      icon={<PasswordIcon sx={{ p: 0.25, ml: -0.5, mr: 1 }} />}
+                      helperText={""}
+                      error={false}
+                      Password={Password}
+                      setPassword={setPassword}
+                      ConfirmPassword={ConfirmPassword}
+                      checkConfirmPassword={checkConfirmPassword}
+                    />
+                    <InputPasswordWithIcon
+                      lable={"Confirm Password"}
+                      icon={<PasswordIcon sx={{ p: 0.25, ml: -0.5, mr: 1 }} />}
+                      helperText={errorConfirmPassword ? "password not match" : ""}
+                      error={errorConfirmPassword}
+                      Password={ConfirmPassword}
+                      setPassword={setConfirmPassword}
+                      ConfirmPassword={Password}
+                      checkConfirmPassword={checkConfirmPassword}
+                    />
+                    {/* <TextField
                       sx={{ marginBottom: "6%", width: "90%" }}
                       id="textfield-password"
                       label="Password"
@@ -495,8 +515,9 @@ const UserRegistration = () => {
                       size="small"
                       helperText={""}
                       fullWidth
-                    />
-                    <TextField
+                    /> */}
+
+                    {/* <TextField
                       sx={{ marginBottom: " 6%", width: "90%" }}
                       id="textfield-confirmPassword"
                       label="Confirm Password"
@@ -549,7 +570,8 @@ const UserRegistration = () => {
                         errorConfirmPassword ? "password not match" : ""
                       }
                       fullWidth
-                    />
+                    /> */}
+
                     <Box
                       sx={{
                         display: "flex",
