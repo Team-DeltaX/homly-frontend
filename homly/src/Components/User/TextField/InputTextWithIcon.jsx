@@ -21,6 +21,7 @@ export default function InputTextWithIcon({
   return (
     <ThemeProvider theme={theme}>
       <TextField
+      autoComplete="off"
         sx={{ marginBottom: " 6%", width: "90%" }}
         id={lable}
         label={lable}

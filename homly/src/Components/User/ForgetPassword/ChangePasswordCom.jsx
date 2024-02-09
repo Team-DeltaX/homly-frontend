@@ -5,7 +5,6 @@ import {
   DialogActions,
   DialogContent,
   DialogContentText,
-  TextField,
   Button,
 } from "@mui/material";
 import theme from "../../../HomlyTheme";
@@ -17,34 +16,34 @@ export default function ChangePasswordCom({
   setErrorStatus,
   value,
   setValue,
+  setOpen,
 }) {
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+ 
   const [errorConfirmPassword, setErrorConfirmPassword] = useState(false);
   const handleSubmit = (e) => {
     e.preventDefault();
-    // setSelectedComponent(1);
-    // const formData = {serviceNo:value.serviceNo,email:value.email}
-    // axios.post("http://localhost:3002/users/forgetPassword/details", formData)
-    // .then((res) => {
-    //     if(res.data.success){
-    //         setErrorStatus({
-    //             ...errorStatus,
-    //             isOpen: true,
-    //             type: "success",
-    //             message: res.data.message,
-    //         })
-    //         setSelectedComponent(1)
-    //     }else{
-    //         setErrorStatus({
-    //             ...errorStatus,
-    //             isOpen: true,
-    //             type: "error",
-    //             message: res.data.message,
-    //         })
+    const formData = {serviceNo:value.serviceNo,password:value.password}
+    axios.post("http://localhost:3002/users//forgetPassword/reset", formData)
+    .then((res) => {
+        if(res.data.success){
+            setErrorStatus({
+                ...errorStatus,
+                isOpen: true,
+                type: "success",
+                message: res.data.message,
+            })
+            setSelectedComponent(0);
+            setOpen(false)
+        }else{
+            setErrorStatus({
+                ...errorStatus,
+                isOpen: true,
+                type: "error",
+                message: res.data.message,
+            })
 
-    //     }
-    // });
+        }
+    });
   };
 
   return (
@@ -77,7 +76,7 @@ export default function ChangePasswordCom({
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button type="submit">Next</Button>
+          <Button type="submit">Confirm</Button>
         </DialogActions>
       </form>
     </ThemeProvider>

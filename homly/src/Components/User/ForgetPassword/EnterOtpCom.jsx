@@ -6,6 +6,7 @@ import {
   DialogContent,
   DialogContentText,
   Button,
+  Box,
 } from "@mui/material";
 import theme from "../../../HomlyTheme";
 import "./forgetPassword.css";
@@ -22,36 +23,59 @@ export default function EnterDetailCom({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setSelectedComponent(2);
-    // if (otp.length === 6) {
-    //     const formData = {serviceNo:value.serviceNo,otp:otp}
-    //   axios.post("http://localhost:3002/users/forgetPassword/otp", formData)
-    //   .then((res) => {
-    //       if(res.data.success){
-    //           setErrorStatus({
-    //               ...errorStatus,
-    //               isOpen: true,
-    //               type: "success",
-    //               message: res.data.message,
-    //           })
-    //           // setSelectedComponent(1)
-    //       }else{
-    //           setErrorStatus({
-    //               ...errorStatus,
-    //               isOpen: true,
-    //               type: "error",
-    //               message: res.data.message,
-    //           })
-    //       }
-    //   });
-    // } else {
-    //   setErrorStatus({
-    //     ...errorStatus,
-    //     isOpen: true,
-    //     type: "error",
-    //     message: "Enter Valid OTP",
-    //   });
-    // }
+    if (otp.length === 6) {
+      const formData = { serviceNo: value.serviceNo, otp: otp };
+      axios
+        .post("http://localhost:3002/users/forgetPassword/otp", formData)
+        .then((res) => {
+          if (res.data.success) {
+            setErrorStatus({
+              ...errorStatus,
+              isOpen: true,
+              type: "success",
+              message: res.data.message,
+            });
+            setSelectedComponent(2);
+          } else {
+            setErrorStatus({
+              ...errorStatus,
+              isOpen: true,
+              type: "error",
+              message: res.data.message,
+            });
+          }
+        });
+    } else {
+      setErrorStatus({
+        ...errorStatus,
+        isOpen: true,
+        type: "error",
+        message: "Enter Valid OTP",
+      });
+    }
+  };
+
+  const handleNewOTP = () => {
+    const formData = { serviceNo: value.serviceNo, email: value.email };
+    axios
+      .post("http://localhost:3002/users/forgetPassword/details", formData)
+      .then((res) => {
+        if (res.data.success) {
+          setErrorStatus({
+            ...errorStatus,
+            isOpen: true,
+            type: "success",
+            message: res.data.message,
+          });
+        } else {
+          setErrorStatus({
+            ...errorStatus,
+            isOpen: true,
+            type: "error",
+            message: res.data.message,
+          });
+        }
+      });
   };
 
   return (
@@ -72,6 +96,16 @@ export default function EnterDetailCom({
             inputStyle={"otp-inputs"}
             containerStyle={"otp-inputs-container"}
           />
+          <Box
+            sx={{
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Button onClick={handleNewOTP}>Try Again</Button>
+          </Box>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>

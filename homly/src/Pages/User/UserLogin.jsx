@@ -41,23 +41,7 @@ const UserLogin = () => {
   const [serviceNo, setServiceNo] = useState("");
   const [password, setPassword] = useState("");
 
-  const [focusedServiceNo, setFocusedServiceNo] = useState(false);
-  const [focusedPassword, setFocusedPassword] = useState(false);
-
   const [errorServiceNumber, setErrorServiceNumber] = useState(false);
-  //   const [errorPassword, setErrorPassword] = useState(false);
-
-  const [showPassword, setShowPassword] = useState(false);
-
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
-  const countChar = (str) => {
-    let withoutSpace = str.replace(/\s/g, "");
-    let len = withoutSpace.length;
-    return len;
-  };
 
   // navigate to home
   const Navigate = useNavigate();
@@ -84,6 +68,8 @@ const UserLogin = () => {
       .then((res) => {
         console.log(res.data);
         if (res.data.success) {
+          setServiceNo("");
+          setPassword("");
           setErrorStatus({
             ...errorStatus,
             isOpen: true,
@@ -92,6 +78,8 @@ const UserLogin = () => {
           });
           Navigate("/Home");
         } else {
+          setServiceNo("");
+          setPassword("");
           setErrorStatus({
             ...errorStatus,
             isOpen: true,
@@ -99,8 +87,6 @@ const UserLogin = () => {
             message: res.data.message,
           });
         }
-        setServiceNo("");
-        setPassword("");
       })
       .catch((error) => {
         setErrorStatus({
@@ -212,38 +198,40 @@ const UserLogin = () => {
                   }}
                 >
                   <Box paddingLeft={"5%"} marginBottom={"5%"} width="100%">
-                  <form
-                    action=""
-                    autoComplete="off"
-                    width="100%"
-                    onSubmit={handleSubmit}
-                    onReset={handleReset}
-                  >
+                    <form
+                      action=""
+                      autoComplete="off"
+                      width="100%"
+                      onSubmit={handleSubmit}
+                      onReset={handleReset}
+                    >
                       <InputTextWithIcon
-                      lable={"Service Number"}
-                      icon={<BadgeIcon />}
-                      inputType={"text"}
-                      error={errorServiceNumber}
-                      helperText={
-                        errorServiceNumber
-                          ? "Your are not an employee of Homly"
-                          : ""
-                      }
-                      required={true}
-                      inputValue={serviceNo}
-                      setInputValue={setServiceNo}
-                    />
-                    <InputPasswordWithIcon
-                      lable={"Password"}
-                      icon={<PasswordIcon sx={{ p: 0.25, ml: -0.5, mr: 1 }} />}
-                      helperText={""}
-                      error={false}
-                      Password={password}
-                      setPassword={setPassword}
-                      ConfirmPassword={null}
-                      checkConfirmPassword={null}
-                      isCheck={false}
-                    />
+                        lable={"Service Number"}
+                        icon={<BadgeIcon />}
+                        inputType={"text"}
+                        error={errorServiceNumber}
+                        helperText={
+                          errorServiceNumber
+                            ? "Your are not an employee of Homly"
+                            : ""
+                        }
+                        required={true}
+                        inputValue={serviceNo}
+                        setInputValue={setServiceNo}
+                      />
+                      <InputPasswordWithIcon
+                        lable={"Password"}
+                        icon={
+                          <PasswordIcon sx={{ p: 0.25, ml: -0.5, mr: 1 }} />
+                        }
+                        helperText={""}
+                        error={false}
+                        Password={password}
+                        setPassword={setPassword}
+                        ConfirmPassword={null}
+                        checkConfirmPassword={null}
+                        isCheck={false}
+                      />
                       {/* <TextField
                         sx={{ marginBottom: " 6%", width: "90%" }}
                         id="textfield-serviceNumber"

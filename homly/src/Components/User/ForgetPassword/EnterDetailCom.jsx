@@ -20,28 +20,27 @@ export default function EnterDetailCom({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setSelectedComponent(1);
-    // const formData = {serviceNo:value.serviceNo,email:value.email}
-    // axios.post("http://localhost:3002/users/forgetPassword/details", formData)
-    // .then((res) => {
-    //     if(res.data.success){
-    //         setErrorStatus({
-    //             ...errorStatus,
-    //             isOpen: true,
-    //             type: "success",
-    //             message: res.data.message,
-    //         })
-    //         setSelectedComponent(1)
-    //     }else{
-    //         setErrorStatus({
-    //             ...errorStatus,
-    //             isOpen: true,
-    //             type: "error",
-    //             message: res.data.message,
-    //         })
+    const formData = {serviceNo:value.serviceNo,email:value.email}
+    axios.post("http://localhost:3002/users/forgetPassword/details", formData)
+    .then((res) => {
+        if(res.data.success){
+            setErrorStatus({
+                ...errorStatus,
+                isOpen: true,
+                type: "success",
+                message: res.data.message,
+            })
+            setSelectedComponent(1)
+        }else{
+            setErrorStatus({
+                ...errorStatus,
+                isOpen: true,
+                type: "error",
+                message: res.data.message,
+            })
 
-    //     }
-    // });
+        }
+    });
   };
 
   return (

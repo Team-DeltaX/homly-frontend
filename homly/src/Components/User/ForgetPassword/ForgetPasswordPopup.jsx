@@ -64,6 +64,7 @@ export default function ForgetPasswordPopup({ open, setOpen }) {
       setErrorStatus={setErrorStatus}
       value={value}
       setValue={setValue}
+      setOpen={setOpen}
     />,
   ];
 

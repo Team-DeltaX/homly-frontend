@@ -1,9 +1,5 @@
 import React, { useState } from "react";
-import {
-  ThemeProvider,
-  TextField,
-  IconButton,
-} from "@mui/material";
+import { ThemeProvider, TextField, IconButton } from "@mui/material";
 
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
@@ -17,7 +13,7 @@ export default function InputPassword({
   setPassword,
   confirmPassword,
   isCheck,
-  setErrorConfirmPassword
+  setErrorConfirmPassword,
 }) {
   const [focusedPassword, setFocusedPassword] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -38,6 +34,7 @@ export default function InputPassword({
   return (
     <ThemeProvider theme={theme}>
       <TextField
+        autoComplete="new-password"
         sx={{ marginBottom: "6%", width: "90%" }}
         id={lable}
         label={lable}

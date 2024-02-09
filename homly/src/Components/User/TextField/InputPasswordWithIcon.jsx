@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState} from "react";
 import {
   ThemeProvider,
   TextField,
@@ -40,6 +40,7 @@ export default function InputPasswordWithIcon({
   return (
     <ThemeProvider theme={theme}>
       <TextField
+        autoComplete="new-password"
         sx={{ marginBottom: "6%", width: "90%" }}
         id={lable}
         label={lable}
@@ -47,11 +48,8 @@ export default function InputPasswordWithIcon({
         error={error}
         type={showPassword ? "text" : "password"}
         InputProps={{
-            
           startAdornment: (
-            <InputAdornment position="start">
-              {icon}
-            </InputAdornment>
+            <InputAdornment position="start">{icon}</InputAdornment>
           ),
 
           endAdornment: (
@@ -74,10 +72,10 @@ export default function InputPasswordWithIcon({
         onFocus={() => setFocusedPassword(true)}
         onBlur={() => setFocusedPassword(false)}
         onChange={(e) => {
-            setPassword(e.target.value);
-            if (isCheck) {
-                checkConfirmPassword(ConfirmPassword, e.target.value);
-            }
+          setPassword(e.target.value);
+          if (isCheck) {
+            checkConfirmPassword(ConfirmPassword, e.target.value);
+          }
         }}
         value={Password}
         size="small"
