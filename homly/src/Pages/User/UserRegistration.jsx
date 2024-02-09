@@ -10,9 +10,6 @@ import {
   ThemeProvider,
   styled,
   Button,
-  InputAdornment,
-  // IconButton,
-  TextField,
   Stack,
   Avatar,
 } from "@mui/material";
@@ -55,25 +52,6 @@ const UserRegistration = () => {
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
   const phoneRegex = /^[0-9]{10}$/;
 
-  const [focusedServiceNo, setFocusedServiceNo] = useState(false);
-  const [focusedEmail, setFocusedEmail] = useState(false);
-  const [focusedContactNo, setFocusedContactNo] = useState(false);
-
-  // const [focusedConfirmPassword, setFocusedConfirmPassword] = useState(false);
-  const [details, setDetails] = useState({
-    serviceNo: "",
-    email: "",
-    contactNo: "",
-    password: "",
-    confirmPassword: "",
-    image: "",
-  });
-
-  const [detailsError, setDetailsError] = useState({
-    serviceNo: false,
-    confirmPassword: false,
-  });
-
   const [ServiceNo, setServiceNo] = useState("");
   const [Email, setEmail] = useState("");
   const [ContactNo, setContactNo] = useState("");
@@ -95,11 +73,11 @@ const UserRegistration = () => {
   //   event.preventDefault();
   // };
 
-  const countChar = (str) => {
-    let withoutSpace = str.replace(/\s/g, "");
-    let len = withoutSpace.length;
-    return len;
-  };
+  // const countChar = (str) => {
+  //   let withoutSpace = str.replace(/\s/g, "");
+  //   let len = withoutSpace.length;
+  //   return len;
+  // };
 
   const checkEmail = (email) => {
     return email.length > 0 && !emailRegex.test(email);
@@ -368,7 +346,11 @@ const UserRegistration = () => {
                       icon={<BadgeIcon />}
                       inputType={"text"}
                       error={errorServiceNumber}
-                      helperText={errorServiceNumber ? "Your are not an employee of Homly" : ""}
+                      helperText={
+                        errorServiceNumber
+                          ? "Your are not an employee of Homly"
+                          : ""
+                      }
                       required={true}
                       inputValue={ServiceNo}
                       setInputValue={setServiceNo}
@@ -378,15 +360,51 @@ const UserRegistration = () => {
                       icon={<EmailIcon />}
                       inputType={"email"}
                       error={checkEmail(Email)}
-                      helperText={checkEmail(Email) ? "invalid email address" : ""}
+                      helperText={
+                        checkEmail(Email) ? "invalid email address" : ""
+                      }
                       required={true}
                       inputValue={Email}
                       setInputValue={setEmail}
                     />
-
-
-
-
+                    <InputTextWithIcon
+                      lable={"Contact Number"}
+                      icon={<CallIcon />}
+                      inputType={"text"}
+                      error={checkContactNo(ContactNo)}
+                      helperText={
+                        checkContactNo(ContactNo)
+                          ? "invalid contact number"
+                          : ""
+                      }
+                      required={true}
+                      inputValue={ContactNo}
+                      setInputValue={setContactNo}
+                    />
+                    <InputPasswordWithIcon
+                      lable={"Password"}
+                      icon={<PasswordIcon sx={{ p: 0.25, ml: -0.5, mr: 1 }} />}
+                      helperText={""}
+                      error={false}
+                      Password={Password}
+                      setPassword={setPassword}
+                      ConfirmPassword={ConfirmPassword}
+                      checkConfirmPassword={checkConfirmPassword}
+                      isCheck={true}
+                    />
+                    <InputPasswordWithIcon
+                      lable={"Confirm Password"}
+                      icon={<PasswordIcon sx={{ p: 0.25, ml: -0.5, mr: 1 }} />}
+                      helperText={
+                        errorConfirmPassword ? "password not match" : ""
+                      }
+                      error={errorConfirmPassword}
+                      Password={ConfirmPassword}
+                      setPassword={setConfirmPassword}
+                      ConfirmPassword={Password}
+                      checkConfirmPassword={checkConfirmPassword}
+                      isCheck={true}
+                    />
 
                     {/* <TextField
                       sx={{ marginBottom: " 6%", width: "90%" }}
@@ -456,7 +474,7 @@ const UserRegistration = () => {
                       fullWidth
                     /> */}
 
-                    <TextField
+                    {/* <TextField
                       sx={{ marginBottom: " 6%", width: "90%" }}
                       id="textfield-contactNumber"
                       label="Contact Number"
@@ -489,30 +507,8 @@ const UserRegistration = () => {
                           : ""
                       }
                       fullWidth
-                    />
+                    /> */}
 
-                    <InputPasswordWithIcon
-                      lable={"Password"}
-                      icon={<PasswordIcon sx={{ p: 0.25, ml: -0.5, mr: 1 }} />}
-                      helperText={""}
-                      error={false}
-                      Password={Password}
-                      setPassword={setPassword}
-                      ConfirmPassword={ConfirmPassword}
-                      checkConfirmPassword={checkConfirmPassword}
-                    />
-                    <InputPasswordWithIcon
-                      lable={"Confirm Password"}
-                      icon={<PasswordIcon sx={{ p: 0.25, ml: -0.5, mr: 1 }} />}
-                      helperText={
-                        errorConfirmPassword ? "password not match" : ""
-                      }
-                      error={errorConfirmPassword}
-                      Password={ConfirmPassword}
-                      setPassword={setConfirmPassword}
-                      ConfirmPassword={Password}
-                      checkConfirmPassword={checkConfirmPassword}
-                    />
                     {/* <TextField
                       sx={{ marginBottom: "6%", width: "90%" }}
                       id="textfield-password"

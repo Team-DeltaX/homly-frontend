@@ -18,6 +18,7 @@ export default function InputPasswordWithIcon({
   Password,
   setPassword,
   ConfirmPassword,
+  isCheck,
   checkConfirmPassword,
 }) {
   const [focusedPassword, setFocusedPassword] = useState(false);
@@ -42,6 +43,7 @@ export default function InputPasswordWithIcon({
         error={error}
         type={showPassword ? "text" : "password"}
         InputProps={{
+            
           startAdornment: (
             <InputAdornment position="start">
               {icon}
@@ -68,8 +70,10 @@ export default function InputPasswordWithIcon({
         onFocus={() => setFocusedPassword(true)}
         onBlur={() => setFocusedPassword(false)}
         onChange={(e) => {
-          setPassword(e.target.value);
-          checkConfirmPassword(ConfirmPassword, e.target.value);
+            setPassword(e.target.value);
+            if (isCheck) {
+                checkConfirmPassword(ConfirmPassword, e.target.value);
+            }
         }}
         value={Password}
         size="small"
