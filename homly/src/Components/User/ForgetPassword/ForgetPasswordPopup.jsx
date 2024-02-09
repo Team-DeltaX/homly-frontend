@@ -4,10 +4,17 @@ import theme from "../../../HomlyTheme";
 
 import EnterDetailCom from "./EnterDetailCom";
 import EnterOtpCom from "./EnterOtpCom";
+import ChangePasswordCom from "./ChangePasswordCom";
 import ErrorSnackbar from "../ErrorSnackbar";
 
 export default function ForgetPasswordPopup({ open, setOpen }) {
   const [selectedComponent, setSelectedComponent] = useState(0);
+
+  const [value, setValue] = useState({
+    serviceNo: "",
+    email: "",
+    newPassword:""
+  });
 
   const [errorStatus, setErrorStatus] = useState({
     isOpen: false,
@@ -33,12 +40,23 @@ export default function ForgetPasswordPopup({ open, setOpen }) {
       setSelectedComponent={setSelectedComponent}
       errorStatus={errorStatus}
       setErrorStatus={setErrorStatus}
+      value={value}
+      setValue={setValue}
     />,
     <EnterOtpCom
+    handleClose={handleClose}
+    setSelectedComponent={setSelectedComponent}
+    errorStatus={errorStatus}
+    setErrorStatus={setErrorStatus}
+    value={value}
+    />,
+    <ChangePasswordCom
       handleClose={handleClose}
       setSelectedComponent={setSelectedComponent}
       errorStatus={errorStatus}
       setErrorStatus={setErrorStatus}
+      value={value}
+      setValue={setValue}
     />,
   ];
 

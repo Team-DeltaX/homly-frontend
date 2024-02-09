@@ -8,48 +8,55 @@ import {
   Button,
 } from "@mui/material";
 import theme from "../../../HomlyTheme";
-import './forgetPassword.css'
+import "./forgetPassword.css";
 import OtpInput from "react-otp-input";
-import { ClassNames } from "@emotion/react";
 
 export default function EnterDetailCom({
   handleClose,
   setSelectedComponent,
   errorStatus,
   setErrorStatus,
+  value
 }) {
   const [otp, setOtp] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // axios.post("http://localhost:3002/users/forgetPassword/details", value)
-    // .then((res) => {
-    //     if(res.data.success){
-    //         setErrorStatus({
-    //             ...errorStatus,
-    //             isOpen: true,
-    //             type: "success",
-    //             message: res.data.message,
-    //         })
-    //         // setSelectedComponent(1)
-    //     }else{
-    //         setErrorStatus({
-    //             ...errorStatus,
-    //             isOpen: true,
-    //             type: "error",
-    //             message: res.data.message,
-    //         })
-
-    //     }
-    // });
+    if (otp.length === 6) {
+        const formData = {serviceNo:value.serviceNo,otp:otp}
+      axios.post("http://localhost:3002/users/forgetPassword/otp", formData)
+      .then((res) => {
+          if(res.data.success){
+              setErrorStatus({
+                  ...errorStatus,
+                  isOpen: true,
+                  type: "success",
+                  message: res.data.message,
+              })
+              // setSelectedComponent(1)
+          }else{
+              setErrorStatus({
+                  ...errorStatus,
+                  isOpen: true,
+                  type: "error",
+                  message: res.data.message,
+              })
+          }
+      });
+    } else {
+      setErrorStatus({
+        ...errorStatus,
+        isOpen: true,
+        type: "error",
+        message: "Enter Valid OTP",
+      });
+    }
   };
 
-  
   return (
     <ThemeProvider theme={theme}>
       <form onSubmit={handleSubmit}>
-        <DialogContent sx={{  height:{xs:'130px',sm:'110px' }}}>
+        <DialogContent sx={{ height: { xs: "130px", sm: "110px" } }}>
           <DialogContentText>Check your email for the OTP</DialogContentText>
           <OtpInput
             value={otp}
@@ -57,8 +64,8 @@ export default function EnterDetailCom({
             numInputs={6}
             renderSeparator={<span>&nbsp;</span>}
             renderInput={(props) => <input {...props} />}
-            inputStyle={'otp-inputs'}
-            containerStyle={'otp-inputs-container'}
+            inputStyle={"otp-inputs"}
+            containerStyle={"otp-inputs-container"}
           />
         </DialogContent>
         <DialogActions>

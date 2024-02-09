@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import {
   ThemeProvider,
@@ -9,7 +9,7 @@ import {
   Button,
 } from "@mui/material";
 import theme from "../../../HomlyTheme";
-export default function EnterDetailCom({
+export default function ChangePasswordCom({
   handleClose,
   setSelectedComponent,
   errorStatus,
