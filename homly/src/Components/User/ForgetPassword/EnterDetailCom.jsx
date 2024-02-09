@@ -68,33 +68,6 @@ export default function EnterDetailCom({
             inputValue={value.email}
             setInputValue={(val)=>setValue({...value,email:val})}
           />
-          {/* <TextField
-            autoFocus
-            required
-            margin="dense"
-            id="serviceNo"
-            label="Service Number"
-            type="text"
-            size="small"
-            fullWidth
-            variant="outlined"
-            onChange={(e) => setValue({ ...value, serviceNo: e.target.value })}
-            value={value.serviceNo}
-          />
-          <TextField
-            autoFocus
-            required
-            margin="dense"
-            id="email"
-            name="email"
-            label="Email Address"
-            type="email"
-            size="small"
-            fullWidth
-            variant="outlined"
-            onChange={(e) => setValue({ ...value, email: e.target.value })}
-            value={value.email}
-          /> */}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
