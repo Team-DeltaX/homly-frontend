@@ -5,7 +5,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormHelperText from "@mui/material/FormHelperText";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 
 
@@ -118,7 +118,7 @@ export default function SimpleLineChart() {
               })}
             </Select>
             <FormHelperText>
-              select Home one to analyse {HolidayHome1}
+            {HolidayHome1===""?"select Home two to analyse":<Typography sx={{color:'green'}}>6.87 Total Ratings</Typography>}
             </FormHelperText>
           </FormControl>
         </Box>
@@ -147,7 +147,7 @@ export default function SimpleLineChart() {
                 return <MenuItem value={hh.id}>{hh.name}</MenuItem>;
               })}
             </Select>
-            <FormHelperText>select Home two to analyse</FormHelperText>
+            <FormHelperText>{HolidayHome2===""?"select Home two to analyse":<Typography sx={{color:'red'}}>3.87 Total Ratings</Typography>}</FormHelperText>
           </FormControl>
         </Box>
 
@@ -177,7 +177,7 @@ export default function SimpleLineChart() {
               })}
             </Select>
 
-            <FormHelperText>select Home three to analyse </FormHelperText>
+            <FormHelperText>{HolidayHome3===""?"select Home two to analyse":<Typography sx={{color:'green'}}>6.87 Total Ratings</Typography>} </FormHelperText>
           </FormControl>
         </Box>
       </Box>
