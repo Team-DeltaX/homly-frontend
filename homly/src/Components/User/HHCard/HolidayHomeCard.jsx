@@ -5,8 +5,6 @@ import {
   Stack,
   Box,
   Typography,
-  Rating,
-  Divider,
 } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
 import theme from "../../../HomlyTheme";
