@@ -13,6 +13,8 @@ import PersonalDetailsGrid from "../PersonalDetailsGrid/PersonalDetailsGrid";
 import theme from "../../../HomlyTheme";
 
 const PersonalDetails = () => {
+    const [contactNo, setContactNo] = useState("");
+    const [email, setEmail] = useState("");
   return (
     <ThemeProvider theme={theme}>
       <Box>
@@ -64,12 +66,14 @@ const PersonalDetails = () => {
                 lable="Contact Number"
                 value={"0123456798"}
                 editable={true}
+                setContactNo={setContactNo}
               />
               <PersonalDetailsGrid
                 id="email"
                 lable="Email"
                 value={"0123456798"}
                 editable={true}
+                setEmail={setEmail}
               />
             </CardContent>
           </Card>
