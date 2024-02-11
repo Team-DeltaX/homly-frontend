@@ -40,7 +40,7 @@ import "./Profile.css";
 // import "../../Components/NavBar/NavBar.css";
 
 // pages component
-import PersonalDetailsCom from "../../Components/User/MyProfile/PersonalDetailsCom";
+import PersonalDetails from "../../Components/User/MyProfile/PersonalDetails";
 import PaymentDetailsCom from "../../Components/User/MyProfile/PaymentDetailsCom";
 import Security from "../../Components/User/MyProfile/Security";
 import MyReservation from "../../Components/User/MyProfile/MyReservation";
@@ -70,7 +70,7 @@ const sidePages = [
 ];
 
 const tabComponent = [
-  <PersonalDetailsCom />,
+  <PersonalDetails />,
   <Security />,
   <PaymentDetailsCom />,
   <MyReservation />,
