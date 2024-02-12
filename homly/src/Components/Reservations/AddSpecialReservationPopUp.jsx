@@ -46,59 +46,63 @@ export default function AddSpecialReservationPopUp() {
         <DialogTitle id="responsive-dialog-title">
           {"Add Special Reservation"}
         </DialogTitle>
-        <DialogContent>
-            <TextField
-                autoFocus
-                required
+
+        <form action="" >
+          <DialogContent>
+              <TextField
+                  autoFocus
+                  required
+                  margin="dense"
+                  id="specialreservationno"
+                  name="specialreservationno"
+                  label="Special Reservation Number"
+                  type="text"
+                  fullWidth
+                  variant="outlined"
+              />
+              <TextField
+                  autoFocus
+                  required
+                  margin="dense"
+                  id="serviceno"
+                  name="serviceno"
+                  label="Service Number"
+                  type="text"
+                  fullWidth
+                  variant="outlined"
+              />
+              <TextField fullWidth
+                id="outlined-select-holidayhome"
                 margin="dense"
-                id="specialreservationno"
-                name="specialreservationno"
-                label="Special Reservation Number"
-                type="text"
+                select
+                label="Select the holiday home"
+                // defaultValue="EUR"
+              >
+                {currencies.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
+              <BasicDatePicker
                 fullWidth
-                variant="outlined"
-            />
-            <TextField
-                autoFocus
-                required
-                margin="dense"
-                id="serviceno"
-                name="serviceno"
-                label="Service Number"
-                type="text"
+                title="Check In Date"
+              />
+              <BasicDatePicker
                 fullWidth
-                variant="outlined"
-            />
-            <TextField fullWidth
-              id="outlined-select-holidayhome"
-              margin="dense"
-              select
-              label="Select the holiday home"
-              // defaultValue="EUR"
-            >
-              {currencies.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
-                </MenuItem>
-              ))}
-            </TextField>
-            <BasicDatePicker
-              fullWidth
-              title="Check In Date"
-            />
-            <BasicDatePicker
-              fullWidth
-              title="Check Out Date"
-            />
-        </DialogContent>
-        <DialogActions>
-          <Button autoFocus onClick={handleClose}>
-            Submit
-          </Button>
-          <Button onClick={handleClose} autoFocus>
-            Close
-          </Button>
-        </DialogActions>
+                title="Check Out Date"
+              />
+          </DialogContent>
+          <DialogActions>
+            <Button type='submit' autoFocus>
+              Submit
+            </Button>
+            <Button onClick={handleClose} autoFocus>
+              Close
+            </Button>
+          </DialogActions>
+        </form>
+        
       </Dialog>
     </React.Fragment>
   );
