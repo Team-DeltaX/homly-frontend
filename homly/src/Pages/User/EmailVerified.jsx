@@ -50,8 +50,8 @@ const EmailVerified = () => {
       >
         <Container maxWidth="xl" sx={{ padding: 0}}>
           <Container maxWidth="lg" sx={{ display:'flex',alignItems:'center',justifyContent:'center',height:'90vh' }}>
-              <Stack direction='column'>
-                  <Box component='img' src={details.verified  === "true" ? verifiedEmailImg : errEmailImg} sx={{ filter: "drop-shadow(5px 13px 10px  rgba(0,0,0,0.62))"}} />
+              <Stack direction='column' sx={{justifyContent:'center',alignItems:'center'}}>
+                  <Box component='img' src={details.verified  === "true" ? verifiedEmailImg : errEmailImg} sx={{ filter: "drop-shadow(5px 13px 10px  rgba(0,0,0,0.62))",width:'400px',height:'450px'}} />
                   <Typography variant="h4" sx={{textAlign:'center',color:'text.primary',fontWeight:'bold'}}>{details.message}</Typography>
                   <Button variant="outlined" component={Link} to= {details.verified  === "true" ? "/" : "/Registration"}>
                   {details.verified === "true" ? "Login Now" : "Register Again"}
