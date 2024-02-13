@@ -6,6 +6,7 @@ import {
   Card,
   CardContent,
   CardActions,
+  Button,
 } from "@mui/material";
 
 import PersonalDetailsGrid from "../PersonalDetailsGrid/PersonalDetailsGrid";
@@ -13,8 +14,41 @@ import PersonalDetailsGrid from "../PersonalDetailsGrid/PersonalDetailsGrid";
 import theme from "../../../HomlyTheme";
 
 const PersonalDetails = () => {
-    const [contactNo, setContactNo] = useState("");
-    const [email, setEmail] = useState("");
+  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+  const phoneRegex = /^[0-9]{10}$/;
+
+
+  const [data, setData] = useState({
+    serviceNo: "214002",
+    name: "John Doe",
+    nic: "123456789V",
+    work: "Colombo",
+    address: "No 1, Colombo",
+    contactNo: "0123456798",
+    email: "apb@gmail.com",
+  });
+
+  const [isEnable, setIsEnable] = useState(false);
+
+  const checkEmail = (email) => {
+    return email.length > 0 && !emailRegex.test(email);
+  };
+
+  const checkContactNo = (contactNo) => {
+    return contactNo.length > 0 && !phoneRegex.test(contactNo);
+  };
+
+  const handleEdit = () => {
+    setIsEnable(true);
+  };
+  const handleUpdate = () => {
+    setIsEnable(false);
+  };
+
+  const handleCancel = () => {
+    setIsEnable(false);
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <Box>
@@ -34,48 +68,84 @@ const PersonalDetails = () => {
               <PersonalDetailsGrid
                 id="serviceNo"
                 lable="Service Number"
-                value={"214002"}
+                value={data.serviceNo}
                 editable={false}
               />
               <PersonalDetailsGrid
                 id="name"
                 lable="Name"
-                value={"214002"}
+                value={data.name}
                 editable={false}
               />
               <PersonalDetailsGrid
                 id="nic"
                 lable="NIC Number"
-                value={"214002"}
+                value={data.nic}
                 editable={false}
               />
               <PersonalDetailsGrid
                 id="work"
                 lable="Work Location"
-                value={"214002"}
+                value={data.work}
                 editable={false}
               />
               <PersonalDetailsGrid
                 id="address"
                 lable="Residantal Address"
-                value={"214002"}
+                value={data.address}
                 editable={false}
               />
               <PersonalDetailsGrid
                 id="contactNo"
                 lable="Contact Number"
-                value={"0123456798"}
-                editable={true}
-                setContactNo={setContactNo}
+                value={data.contactNo}
+                editable={isEnable}
+                setData={(value) => {
+                  setData({ ...data, contactNo: value });
+                }}
+                error={checkContactNo(data.contactNo)}
+                helperText={checkContactNo(data.contactNo) ? "Invalid Contact Number" : ""}
               />
               <PersonalDetailsGrid
                 id="email"
                 lable="Email"
-                value={"0123456798"}
-                editable={true}
-                setEmail={setEmail}
+                value={data.email}
+                editable={isEnable}
+                setData={(value) => {
+                  setData({ ...data, email: value });
+                }}
+                error={checkEmail(data.email)}
+                helperText={checkEmail(data.email) ? "Invalid Email" : ""}
               />
             </CardContent>
+            <CardActions sx={{justifyContent:'flex-end'}}>
+              <Button
+                variant="outlined"
+                size="small"
+                onClick={handleCancel}
+              >
+                Cancel
+              </Button>
+              {isEnable ? (
+                <Button
+                  variant="contained"
+                  size="small"
+                  sx={{ backgroundColor: "primary.main", marginLeft: "2%" }}
+                  onClick={handleUpdate}
+                >
+                  Update
+                </Button>
+              ) : (
+                <Button
+                  variant="contained"
+                  size="small"
+                  sx={{ backgroundColor: "primary.main", marginLeft: "2%" }}
+                  onClick={handleEdit}
+                >
+                  Edit
+                </Button>
+              )}
+            </CardActions>
           </Card>
         </Box>
       </Box>
