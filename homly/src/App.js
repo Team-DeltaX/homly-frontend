@@ -42,6 +42,7 @@ import PersonalDetails from "../src/Pages/User/PersonalDetails";
 import UserSecurity from "../src/Pages/User/UserSecurity";
 import PaymentDetails from "../src/Pages/User/PaymentDetails";
 import MyReservation from "../src/Pages/User/MyReservation";
+import ViewHolidayHome from "./Pages/PrimaryAdmin/ViewHolidayHome";
 
 const PrimaryDashboard = lazy(() => import("./Pages/PrimaryAdmin/PrimaryDashboard"));
 const PrimaryReservations = lazy(() => import("./Pages/PrimaryAdmin/PrimaryReservations"));
@@ -135,6 +136,7 @@ const App = () => (
           <Route path='/primaryadmin/addadmin' element={<PrimaryAddAdmin/>}></Route>
           <Route path='/primaryadmin/viewadmin' element={<PrimaryViewAdmin/>}></Route>
           <Route path='/primaryadmin/authorizations' element={<PrimaryAuthorizations/>}></Route>
+          <Route path='/primaryadmin/viewholidayhome' element={<ViewHolidayHome/>}></Route>
 
 
 
