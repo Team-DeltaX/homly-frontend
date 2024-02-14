@@ -1,5 +1,5 @@
-import { React } from "react";
-import { useState } from "react";
+import  React  from "react";
+import { useState, useContext } from "react";
 import axios from "axios";
 import {
   Box,
@@ -25,6 +25,9 @@ import ErrorSnackbar from "../../Components/User/ErrorSnackbar";
 import InputTextWithIcon from "../../Components/User/TextField/InputTextWithIcon";
 import InputPasswordWithIcon from "../../Components/User/TextField/InputPasswordWithIcon";
 
+// import auth context
+import { AuthContext } from "../../Contexts/AuthContext";
+
 const Img = styled("img")({
   display: "block",
   width: "40%",
@@ -34,12 +37,13 @@ const Img = styled("img")({
 });
 
 const UserLogin = () => {
+  const { setIsLogged,setAuthServiceNumber } = useContext(AuthContext);
   const [serviceNo, setServiceNo] = useState("");
   const [password, setPassword] = useState("");
 
   const [errorServiceNumber, setErrorServiceNumber] = useState(false);
 
-  // navigate to home
+  // navigate 
   const Navigate = useNavigate();
 
   const [errorStatus, setErrorStatus] = useState({
@@ -72,6 +76,8 @@ const UserLogin = () => {
             type: "success",
             message: res.data.message,
           });
+          setIsLogged(true);
+          setAuthServiceNumber(serviceNo);
           Navigate("/Home");
         } else {
           setServiceNo("");
