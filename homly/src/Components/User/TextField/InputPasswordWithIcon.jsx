@@ -20,6 +20,7 @@ export default function InputPasswordWithIcon({
   ConfirmPassword,
   isCheck,
   setErrorConfirmPassword,
+  marginBottom,
 }) {
   const [focusedPassword, setFocusedPassword] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -41,7 +42,7 @@ export default function InputPasswordWithIcon({
     <ThemeProvider theme={theme}>
       <TextField
         autoComplete="new-password"
-        sx={{ marginBottom: "6%", width: "90%" }}
+        sx={{ marginBottom: marginBottom? marginBottom : '5%', width: "90%" }}
         id={lable}
         label={lable}
         required

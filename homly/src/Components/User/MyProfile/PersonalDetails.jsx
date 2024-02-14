@@ -123,6 +123,7 @@ const PersonalDetails = () => {
                 variant="outlined"
                 size="small"
                 onClick={handleCancel}
+                sx={{ width: "70px"}}
               >
                 Cancel
               </Button>
@@ -130,7 +131,7 @@ const PersonalDetails = () => {
                 <Button
                   variant="contained"
                   size="small"
-                  sx={{ backgroundColor: "primary.main", marginLeft: "2%" }}
+                  sx={{ backgroundColor: "primary.main", marginLeft: "2%",width:'70px' }}
                   onClick={handleUpdate}
                 >
                   Update
@@ -139,7 +140,7 @@ const PersonalDetails = () => {
                 <Button
                   variant="contained"
                   size="small"
-                  sx={{ backgroundColor: "primary.main", marginLeft: "2%" }}
+                  sx={{ backgroundColor: "primary.main", marginLeft: "2%",width:'70px' }}
                   onClick={handleEdit}
                 >
                   Edit
