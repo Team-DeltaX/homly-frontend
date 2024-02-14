@@ -31,6 +31,7 @@
     "react-material-ui-carousel": "^3.4.2",
     "react-multi-carousel": "^2.8.4",
     "react-otp-input": "^3.1.1",
+    "react-password-strength-bar": "^0.4.1",
     "react-router-dom": "^6.21.1",
     "react-scripts": "5.0.1",
     "react-select": "^5.8.0",

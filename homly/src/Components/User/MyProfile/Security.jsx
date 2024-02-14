@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import {
   Box,
-  //   Container,
   ThemeProvider,
   Typography,
   Card,
@@ -15,10 +14,6 @@ import {
   CardActions,
 } from "@mui/material";
 
-// import PersonalDetailsGrid from "../PersonalDetailsGrid/PersonalDetailsGrid";
-// import UpdateButton from "../PersonalDetailsGrid/UpdateButton";
-
-// import { EditPersonalDetailsContext } from "../../Contexts/EditPersonalDetailsContext";
 import PasswordComGrid from "./PasswordComGrid";
 import theme from "../../../HomlyTheme";
 
@@ -37,7 +32,6 @@ const gridData = [
 ];
 
 const Security = () => {
-  // const { userPersonalDetails } = useContext(EditPersonalDetailsContext);
   const [password, setPassword] = useState({
     currentPass: "",
     newPass: "",
@@ -64,6 +58,11 @@ const Security = () => {
     console.log("update");
     setIsUpdate(true);
   };
+
+  const handleCancel = () => {
+    setPassword({ currentPass: "", newPass: "", confirmPass: "" });
+    setError({ currentPass: false, newPass: false, confirmPass: false });
+  }
 
   const checkConfirmPassword = (cpw, pw) => {
     let check = cpw.length > 0 && cpw !== pw;
@@ -107,7 +106,7 @@ const Security = () => {
                 {gridData.map((data) => (
                   <Grid container sx={{ width: "100%" }} key={data.id}>
                     <PasswordComGrid
-                      id={data.id}
+                      id={data.lable}
                       lable={data.lable}
                       placeholder={data.placeholder}
                       password={password}
@@ -119,12 +118,21 @@ const Security = () => {
                   </Grid>
                 ))}
               </CardContent>
-              <CardActions sx={{ width: "92%", justifyContent: "flex-end" }}>
+              <CardActions sx={{  justifyContent: "flex-end" }}>
                 <Stack direction={"row"} sx={{ justifyContent: "flex-end" }}>
                   <Button
                     variant="contained"
                     size="small"
-                    sx={{ backgroundColor: "primary.main", width: "10%" }}
+                    sx={{ backgroundColor: "primary.main", width: "70px" }}
+                    onClick={handleCancel}
+                    disabled={!isEnable}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    variant="contained"
+                    size="small"
+                    sx={{ backgroundColor: "primary.main", width: "70px" }}
                     onClick={handleUpdateData}
                     disabled={!isEnable}
                   >

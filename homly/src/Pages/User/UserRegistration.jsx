@@ -31,6 +31,7 @@ import wave from "../../Assets/images/wave.png";
 import { Link } from "react-router-dom";
 import InputPasswordWithIcon from "../../Components/User/TextField/InputPasswordWithIcon";
 import InputTextWithIcon from "../../Components/User/TextField/InputTextWithIcon";
+import PasswordStrength from "../../Components/User/PasswordStrength";
 
 // import AvatarImage from "../Components/AvatarImage"
 
@@ -61,6 +62,7 @@ const UserRegistration = () => {
 
   const [errorServiceNumber, setErrorServiceNumber] = useState(false);
   const [errorConfirmPassword, setErrorConfirmPassword] = useState(false);
+  const [passwordStrength, setPasswordStrength] = useState(0);
 
   // const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -86,7 +88,6 @@ const UserRegistration = () => {
   const checkContactNo = (contactNo) => {
     return contactNo.length > 0 && !phoneRegex.test(contactNo);
   };
-
 
   const checkServiceNo = (sn) => {
     // setDbServiceNo("1000");
@@ -142,12 +143,13 @@ const UserRegistration = () => {
       !checkServiceNo(ServiceNo) &&
       !checkEmail(Email) &&
       !checkContactNo(ContactNo) &&
-      !errorConfirmPassword
+      !errorConfirmPassword && 
+      passwordStrength > 0
     ) {
       console.log(ServiceNo, Email, ContactNo, Password);
 
       axios
-        .post("http://localhost:3002/users/add", formData)
+        .post("http://localhost:3002/users/register", formData)
         .then((res) => {
           console.log(res.data);
           if (res.data.success) {
@@ -293,7 +295,10 @@ const UserRegistration = () => {
                     Login
                   </Button>
                 </Box>
-                <Box paddingLeft={"5%"} marginBottom={"5%"} width="100%">
+                <Box
+                  paddingLeft={"5%"}
+                  marginBottom={"2%"}
+                >
                   <form
                     action=""
                     autoComplete="off"
@@ -332,7 +337,6 @@ const UserRegistration = () => {
                         }}
                       >
                         <Button variant="outlined" onClick={handleClickOpen}>
-                          {" "}
                           Upload Profile Picture
                         </Button>
                       </Box>
@@ -378,17 +382,27 @@ const UserRegistration = () => {
                       inputValue={ContactNo}
                       setInputValue={setContactNo}
                     />
-                    <InputPasswordWithIcon
-                      lable={"Password"}
-                      icon={<PasswordIcon sx={{ p: 0.25, ml: -0.5, mr: 1 }} />}
-                      helperText={""}
-                      error={false}
-                      Password={Password}
-                      setPassword={setPassword}
-                      ConfirmPassword={ConfirmPassword}
-                      isCheck={true}
-                      setErrorConfirmPassword={setErrorConfirmPassword}
-                    />
+                    <Stack
+                      direction="column"
+                    >
+                      <InputPasswordWithIcon
+                        lable={"Password"}
+                        icon={
+                          <PasswordIcon sx={{ p: 0.25, ml: -0.5, mr: 1 }} />
+                        }
+                        helperText={""}
+                        error={false}
+                        Password={Password}
+                        setPassword={setPassword}
+                        ConfirmPassword={ConfirmPassword}
+                        isCheck={true}
+                        setErrorConfirmPassword={setErrorConfirmPassword}
+                        marginBottom={"0"}
+                      />
+                      <Box sx={{ width: "90%" }}>
+                        <PasswordStrength password={Password} setPasswordStrength={setPasswordStrength}/>
+                      </Box>
+                    </Stack>
                     <InputPasswordWithIcon
                       lable={"Confirm Password"}
                       icon={<PasswordIcon sx={{ p: 0.25, ml: -0.5, mr: 1 }} />}

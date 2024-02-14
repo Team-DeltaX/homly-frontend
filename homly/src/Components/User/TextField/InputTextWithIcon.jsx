@@ -11,6 +11,7 @@ export default function InputTextWithIcon({
   required,
   inputValue,
   setInputValue,
+  marginBottom,
 }) {
   const [focused, setFocused] = useState(false);
   const countChar = (str) => {
@@ -21,8 +22,8 @@ export default function InputTextWithIcon({
   return (
     <ThemeProvider theme={theme}>
       <TextField
-      autoComplete="off"
-        sx={{ marginBottom: " 6%", width: "90%" }}
+        autoComplete="off"
+        sx={{ marginBottom: marginBottom ? marginBottom : "5%", width: "90%" }}
         id={lable}
         label={lable}
         required={required}
