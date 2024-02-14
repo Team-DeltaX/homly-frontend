@@ -5,20 +5,21 @@ import CancelIcon from '@mui/icons-material/Cancel';
 
 
 
-const RoomBreakdown = ({ roomCode, roomAC, roomType, noOfBeds, noOfAdults, noOfChildren, roomRemarks, roomRental, groupByUnit, handleRoomDelete }) => {
+const RoomBreakdown = ({ roomCode, roomAc, roomType, noOfBeds, noOfAdults, noOfChildren, roomRemarks, roomRental, groupByUnit, handleRoomDelete, handleRoomEdit, index }) => {
 
     const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
+
 
     return (
         <Paper elevation={8} sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', padding: "10px", marginBottom: "10px" }}>
             <Box sx={{ display: 'flex', gap: '1em' }}>
                 <Box className="card_item">
-                    <Typography variant='p' className='card_item_title'>Room Code</Typography>
+                    <Typography variant='p' className='card_item_title'>Room No</Typography>
                     <Typography variant='p' className='card_item_value'>{roomCode}</Typography>
                 </Box>
                 <Box className="card_item">
                     <Typography variant='p' className='card_item_title'>AC/Non AC</Typography>
-                    <Typography variant='p' className='card_item_value'>{roomAC}</Typography>
+                    <Typography variant='p' className='card_item_value'>{roomAc}</Typography>
                 </Box>
                 <Box className="card_item">
                     <Typography variant='p' className='card_item_title'>Room Type</Typography>
@@ -34,14 +35,14 @@ const RoomBreakdown = ({ roomCode, roomAC, roomType, noOfBeds, noOfAdults, noOfC
                 </Box>
                 <Box className="card_item">
                     <Typography variant='p' className='card_item_title'>Rental</Typography>
-                    <Typography variant='p' className='card_item_value'>{groupByUnit ? "true" : "false"}</Typography>
+                    <Typography variant='p' className='card_item_value'>{roomRental}</Typography>
                 </Box>
 
 
 
             </Box>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: '1em' }}>
-                <Button size='small' variant='contained' sx={{ backgroundColor: 'primary.main' }}>Edit Row</Button>
+                <Button size='small' variant='contained' sx={{ backgroundColor: 'primary.main' }} onClick={() => handleRoomEdit(index)}>Edit Row</Button>
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                     <Typography variant='p'>Group by Unit</Typography>
 
@@ -49,7 +50,7 @@ const RoomBreakdown = ({ roomCode, roomAC, roomType, noOfBeds, noOfAdults, noOfC
 
                 </Box>
                 <Box>
-                    <CancelIcon sx={{ cursor: "pointer" }} onClick={() => handleRoomDelete(roomCode)} />
+                    <CancelIcon sx={{ cursor: "pointer" }} onClick={() => handleRoomDelete(roomCode, groupByUnit,noOfAdults,noOfChildren)} />
                 </Box>
 
             </Box>
