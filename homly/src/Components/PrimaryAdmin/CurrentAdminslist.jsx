@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
 import ViewAdminCard2 from "./ViewAdminCard2";
 import CurrentAdminCard from "./CurrentAdminCard";
+import axios from 'axios'
 
 const CurrentAdminslist=()=>{
     const data = [
@@ -80,7 +81,13 @@ const CurrentAdminslist=()=>{
       const [blacklistedusers, setBlacklistedusers] = useState([]);
     
       useEffect(() => {
-        setBlacklistedusers(data);
+        axios.get('http://localhost:3002/locationadmin/all')
+        .then(res=>{
+          console.log(res.data)
+          setBlacklistedusers(res.data)
+        }).catch(err=>{
+          console.log(err)
+        })
       }, []);
     
     return(
@@ -90,7 +97,7 @@ const CurrentAdminslist=()=>{
               >
                 {blacklistedusers.map((item) => {
                   return (
-                    <CurrentAdminCard data={item} key={item.Service_number} />
+                    <CurrentAdminCard data={item} key={item.AdminNo} />
                   );
                 })}
               </Box> 

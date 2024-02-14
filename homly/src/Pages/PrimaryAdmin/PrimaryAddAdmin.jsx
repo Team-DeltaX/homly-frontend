@@ -106,13 +106,13 @@ const PrimaryAddAdmin = () => {
     .then(res=>{
       setnacktext('Admin Added Sucessfully!')
       handleClick();
-      res.status(200).send("sucess")
+      
      
     })
     .catch(error=>{
       setnacktext('Somthing Went Wrong,Please Try Again!')
       handleClick();
-      console.log(error)
+      console.log(`error is  nm ${error}`)
 
     })
 

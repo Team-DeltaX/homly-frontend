@@ -50,7 +50,7 @@ const CurrentAdminCard = (props) => {
               // onChange={(e) => {
               //   setAdminNo(e.target.value);
               // }}
-              value={props.data.Service_number}
+              value={props.data.AdminNo}
               size="small"
               type="text"
               sx={{
@@ -67,7 +67,7 @@ const CurrentAdminCard = (props) => {
               //   setUsername(e.target.value);
               // }}
               type="text"
-              value={props.data.User_name}
+              value={props.data.UserName}
               alignItems="center"
               sx={{
                 backgroundColor: "white",
@@ -86,7 +86,7 @@ const CurrentAdminCard = (props) => {
               // }}
               size="small"
               type="text"
-              value={props.data.Nic_number}
+              value={props.data.Password}
               sx={{
                 backgroundColor: "white",
               }}
@@ -101,7 +101,7 @@ const CurrentAdminCard = (props) => {
               //   setContactnumber(e.target.value);
               // }}
               type="text"
-              value={props.data.Service_number}
+              value={props.data.ContactNo}
               alignItems="center"
               sx={{
                 backgroundColor: "white",
@@ -120,7 +120,7 @@ const CurrentAdminCard = (props) => {
               // }}
               size="small"
               type="text"
-              value={props.data.Nic_number}
+              value={props.data.Email}
               sx={{
                 backgroundColor: "white",
               }}
@@ -135,7 +135,7 @@ const CurrentAdminCard = (props) => {
               //   setworkLocation(e.target.value);
               // }}
               type="text"
-              value={props.data.Nic_number}
+              value={props.data.WorkLocation}
               alignItems="center"
               sx={{
                 backgroundColor: "white",
