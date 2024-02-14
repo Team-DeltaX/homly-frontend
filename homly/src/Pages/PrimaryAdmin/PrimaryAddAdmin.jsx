@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import SideNavbar from "../../Components/PrimaryAdmin/SideNavbar";
 // import ComplaintCard from '../../Components/PrimaryAdmin/ComplaintCard';
 import Box from "@mui/material/Box";
+import axios from "axios";
 import {
   Button,
   Container,
@@ -33,6 +34,7 @@ const PrimaryAddAdmin = () => {
   const [adminerror, setadminerror] = useState(false);
   const [usernameerror, setUsernameerror] = useState(false);
   const [worklocationeerror, setWorklocationerror] = useState(false);
+  const [snacktext,setnacktext]=useState('')
 
   //sncak bar
   //     const [open, setOpen] = React.useState(false);
@@ -90,16 +92,34 @@ const PrimaryAddAdmin = () => {
       SetSubstitute("Null");
     }
 
-    console.log({
+    const data={
       AdminNo: adminno,
       UserName: username,
-      password: password,
-      contactNumber: contactno,
+      Password: password,
+      ContactNo: contactno,
       Email: email,
       WorkLocation: worklocation,
-      RepleceAdminNo: substitute,
-    });
-    handleClick();
+      Disabled:false,
+      Sub: substitute,
+    }
+    axios.post('http://localhost:3002/locationadmin/add',data)
+    .then(res=>{
+      setnacktext('Admin Added Sucessfully!')
+      handleClick();
+      res.status(200).send("sucess")
+     
+    })
+    .catch(error=>{
+      setnacktext('Somthing Went Wrong,Please Try Again!')
+      handleClick();
+      console.log(error)
+
+    })
+
+
+
+
+    
     setadminno("");
     setUsername("");
     setContactno("");
@@ -129,6 +149,7 @@ const PrimaryAddAdmin = () => {
 
   const handleClick = () => {
     setOpen(true);
+
   };
 
   const handleClose = (event, reason) => {
@@ -193,6 +214,7 @@ const PrimaryAddAdmin = () => {
                 <AutohideSnackbar
                   handleClick={handleClick}
                   handleClose={handleClose}
+                  snacktext={snacktext}
                   open={open}
                   setOpen={setOpen}
                 />
