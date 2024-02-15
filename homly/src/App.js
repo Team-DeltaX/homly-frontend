@@ -8,13 +8,14 @@ import PrimaryAdminRouter from "./Routers/PrimaryAdminRouter";
 import AuthContextProvider from "./Contexts/AuthContext";
 
 import "../src/Styles/styles.css";
+import Loader from "./Components/Loader/Loader";
 
 
 
 const App = () => (
   <AuthContextProvider>
     <Router>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<Loader/>}>
         <UserRouter />
         <LocationAdminRouter />
         <PrimaryAdminRouter />
