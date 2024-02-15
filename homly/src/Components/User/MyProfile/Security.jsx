@@ -15,21 +15,10 @@ import {
 } from "@mui/material";
 
 import PasswordComGrid from "./PasswordComGrid";
+
+
 import theme from "../../../HomlyTheme";
 
-const gridData = [
-  {
-    id: "currentPass",
-    lable: "Current Password",
-    placeholder: "Enter Current Password",
-  },
-  { id: "newPass", lable: "New Password", placeholder: "Enter New Password" },
-  {
-    id: "confirmPass",
-    lable: "Confirm New Password",
-    placeholder: "Confirm New Password",
-  },
-];
 
 const Security = () => {
   const [password, setPassword] = useState({
@@ -63,6 +52,9 @@ const Security = () => {
     setPassword({ currentPass: "", newPass: "", confirmPass: "" });
     setError({ currentPass: false, newPass: false, confirmPass: false });
   };
+
+  const [passwordStrength, setPasswordStrength] = useState(0);
+
 
 
   useEffect(() => {
@@ -99,7 +91,7 @@ const Security = () => {
                   width: "100%",
                 }}
               >
-                <Grid container sx={{ width: "100%" }} key={gridData[0].id}>
+                <Stack direction='column' sx={{ width: "100%" }}>
                   <PasswordComGrid
                     lable={"Current Password"}
                     placeholder={"Current Password"}
@@ -111,21 +103,23 @@ const Security = () => {
                     }
                     isCheck={false}
                   />
-                  <PasswordComGrid
-                    lable={"New Password"}
-                    placeholder={"New Password"}
-                    helperText={""}
-                    error={error.newPass}
-                    password={password.newPass}
-                    setPassword={(e) =>
-                      setPassword({ ...password, newPass: e })
-                    }
-                    confirmPassword={password.confirmPass}
-                    isCheck={true}
-                    setErrorConfirmPassword={(e) =>
-                      setError({ ...error, confirmPass: e })
-                    }
-                  />
+                    <PasswordComGrid
+                      lable={"New Password"}
+                      placeholder={"New Password"}
+                      helperText={""}
+                      error={error.newPass}
+                      password={password.newPass}
+                      setPassword={(e) =>
+                        setPassword({ ...password, newPass: e })
+                      }
+                      confirmPassword={password.confirmPass}
+                      isCheck={true}
+                      setErrorConfirmPassword={(e) =>
+                        setError({ ...error, confirmPass: e })
+                      }
+                      setPasswordStrength={setPasswordStrength}
+                    />
+                  
                   <PasswordComGrid
                     lable={"Confirm Password"}
                     placeholder={"Confirm New Password"}
@@ -161,14 +155,14 @@ const Security = () => {
                       setError={setError}
                       checkConfirmPassword={checkConfirmPassword}
                     /> */}
-                </Grid>
+                </Stack>
               </CardContent>
               <CardActions sx={{ justifyContent: "flex-end" }}>
                 <Stack direction={"row"} sx={{ justifyContent: "flex-end" }}>
                   <Button
                     variant="contained"
                     size="small"
-                    sx={{ backgroundColor: "primary.main", width: "70px" }}
+                    sx={{ backgroundColor: "primary.main", width: "70px", marginRight:'10px' }}
                     onClick={handleCancel}
                     disabled={!isEnable}
                   >
