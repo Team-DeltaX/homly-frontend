@@ -186,12 +186,14 @@ const CurrentAdminCard = (props) => {
                 </Button> */}
           {/* <Box>{dataobj}</Box> */}
           <Box sx={{ height: "20px" }}></Box>
-          <Button
-            sx={{ width: "90px", height: "30px", borderRadius: "15px" }}
+     <Button
+         
+            sx={{ width: "90px", height: "30px", borderRadius: "15px", }}
             variant="contained"
             onClick={() => {
               handleClick(props.data.AdminNo);
             }}
+            
           >
             <Typography>Disable</Typography>
           </Button>
