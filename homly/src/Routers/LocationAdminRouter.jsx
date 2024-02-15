@@ -1,5 +1,5 @@
 import React, { lazy } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 const LocationDashboard = lazy(() =>
   import("../Pages/locationAdmin/Dashboard")

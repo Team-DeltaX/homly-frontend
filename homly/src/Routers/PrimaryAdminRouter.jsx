@@ -1,8 +1,8 @@
 import React, { lazy } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 const PrimaryDashboard = lazy(() =>
-  import("../Pages/PrimaryAdmin/PrimaryDashboard")
+  import("../Pages/PrimaryAdmin/PrimaryDashboard" )
 );
 const PrimaryReservations = lazy(() =>
   import("../Pages/PrimaryAdmin/PrimaryReservations")
