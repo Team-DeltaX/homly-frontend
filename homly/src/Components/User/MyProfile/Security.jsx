@@ -62,12 +62,8 @@ const Security = () => {
   const handleCancel = () => {
     setPassword({ currentPass: "", newPass: "", confirmPass: "" });
     setError({ currentPass: false, newPass: false, confirmPass: false });
-  }
-
-  const checkConfirmPassword = (cpw, pw) => {
-    let check = cpw.length > 0 && cpw !== pw;
-    setError({ ...error, confirmPass: check });
   };
+
 
   useEffect(() => {
     setIsEnable(
@@ -77,7 +73,7 @@ const Security = () => {
         !error.confirmPass &&
         !error.password
     );
-  }, [password,error]);
+  }, [password, error]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -103,22 +99,71 @@ const Security = () => {
                   width: "100%",
                 }}
               >
-                {gridData.map((data) => (
-                  <Grid container sx={{ width: "100%" }} key={data.id}>
-                    <PasswordComGrid
-                      id={data.lable}
-                      lable={data.lable}
-                      placeholder={data.placeholder}
+                <Grid container sx={{ width: "100%" }} key={gridData[0].id}>
+                  <PasswordComGrid
+                    lable={"Current Password"}
+                    placeholder={"Current Password"}
+                    helperText={""}
+                    error={error.currentPass}
+                    password={password.currentPass}
+                    setPassword={(e) =>
+                      setPassword({ ...password, currentPass: e })
+                    }
+                    isCheck={false}
+                  />
+                  <PasswordComGrid
+                    lable={"New Password"}
+                    placeholder={"New Password"}
+                    helperText={""}
+                    error={error.newPass}
+                    password={password.newPass}
+                    setPassword={(e) =>
+                      setPassword({ ...password, newPass: e })
+                    }
+                    confirmPassword={password.confirmPass}
+                    isCheck={true}
+                    setErrorConfirmPassword={(e) =>
+                      setError({ ...error, confirmPass: e })
+                    }
+                  />
+                  <PasswordComGrid
+                    lable={"Confirm Password"}
+                    placeholder={"Confirm New Password"}
+                    helperText={
+                      error.confirmPass ? "Password does not match" : ""
+                    }
+                    error={error.confirmPass}
+                    password={password.confirmPass}
+                    setPassword={(e) =>
+                      setPassword({ ...password, confirmPass: e })
+                    }
+                    confirmPassword={password.newPass}
+                    isCheck={true}
+                    setErrorConfirmPassword={(e) =>
+                      setError({ ...error, confirmPass: e })
+                    }
+                  />
+                  {/* <PasswordComGrid
+                      lable={gridData[1].lable}
+                      placeholder={gridData[1].placeholder}
                       password={password}
                       setPassword={setPassword}
                       error={error}
                       setError={setError}
                       checkConfirmPassword={checkConfirmPassword}
                     />
-                  </Grid>
-                ))}
+                    <PasswordComGrid
+                      lable={gridData[2].lable}
+                      placeholder={gridData[2].placeholder}
+                      password={password}
+                      setPassword={setPassword}
+                      error={error}
+                      setError={setError}
+                      checkConfirmPassword={checkConfirmPassword}
+                    /> */}
+                </Grid>
               </CardContent>
-              <CardActions sx={{  justifyContent: "flex-end" }}>
+              <CardActions sx={{ justifyContent: "flex-end" }}>
                 <Stack direction={"row"} sx={{ justifyContent: "flex-end" }}>
                   <Button
                     variant="contained"
