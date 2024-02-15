@@ -7,6 +7,7 @@ import {
   Typography,
 } from "@mui/material";
 import theme from "../../HomlyTheme";
+import axios from 'axios'
 
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useState } from "react";
@@ -21,8 +22,26 @@ const CurrentAdminCard = (props) => {
   // const [worklocation, setworkLocation] = useState(props.data.Nic_number);
   // const [displayr, setDisplayr] = useState(false);
 
-  const handleClick = () => {
-    console.log("adminDisabled");
+  const handleClick = (id) => {
+    axios.put(`http://localhost:3002/locationadmin/disable/${id}`,{
+      dis:true
+    })
+    .then(res=>{
+      // setnacktext('Admin Added Sucessfully!')
+      // handleClick();
+      props.fetchadmins();
+      console.log('response')
+      
+     
+    })
+    .catch(error=>{
+      // setnacktext('Somthing Went Wrong,May be admin no duplicaion,Please Try Again!')
+      // handleClick();
+      console.log(`error is  nm ${error}`)
+
+    })
+
+
   };
 
   return (
@@ -169,7 +188,7 @@ const CurrentAdminCard = (props) => {
             sx={{ width: "90px", height: "30px", borderRadius: "15px" }}
             variant="contained"
             onClick={() => {
-              handleClick();
+              handleClick(props.data.AdminNo);
             }}
           >
             <Typography>Disable</Typography>

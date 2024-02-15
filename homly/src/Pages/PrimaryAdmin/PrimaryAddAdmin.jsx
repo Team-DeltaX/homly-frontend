@@ -110,7 +110,7 @@ const PrimaryAddAdmin = () => {
      
     })
     .catch(error=>{
-      setnacktext('Somthing Went Wrong,Please Try Again!')
+      setnacktext('Somthing Went Wrong,May be admin no duplicaion,Please Try Again!')
       handleClick();
       console.log(`error is  nm ${error}`)
 
