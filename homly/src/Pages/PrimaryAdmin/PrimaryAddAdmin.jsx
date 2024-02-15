@@ -35,6 +35,8 @@ const PrimaryAddAdmin = () => {
   const [usernameerror, setUsernameerror] = useState(false);
   const [worklocationeerror, setWorklocationerror] = useState(false);
   const [snacktext,setnacktext]=useState('')
+  const [showNav, setShowNav] = useState("nav_grid_deactive");
+  const [open, setOpen] = React.useState(false);
 
   //sncak bar
   //     const [open, setOpen] = React.useState(false);
@@ -144,8 +146,7 @@ const PrimaryAddAdmin = () => {
   };
 
   //SnackBar
-  const [showNav, setShowNav] = useState("nav_grid_deactive");
-  const [open, setOpen] = React.useState(false);
+
 
   const handleClick = () => {
     setOpen(true);

@@ -30,7 +30,8 @@ const CurrentAdminCard = (props) => {
       // setnacktext('Admin Added Sucessfully!')
       // handleClick();
       props.fetchadmins();
-      console.log('response')
+      props.setsnacktext('Admin Disabled Successfully!');
+      props.handlesnack();
       
      
     })
@@ -115,6 +116,7 @@ const CurrentAdminCard = (props) => {
           <Box>Contact Number</Box>
           <Box>
             <TextField
+            disabled={true}
               // disabled={disabled}
               // onChange={(e) => {
               //   setContactnumber(e.target.value);
