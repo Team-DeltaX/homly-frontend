@@ -44,13 +44,13 @@ const CareTakerDetailsView = () => {
             <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
               <Typography variant='p' sx={{ color: 'black' }}>Name</Typography>
             </Box>
-            <TextField value={value.caretakerName} required id="outlined-required" label="Enter Name" placeholder='Enter Name' fullWidth size='small' />
+            <TextField value={value.caretakerName} required id="outlined-required" label="Enter Name" placeholder='Enter Name' fullWidth size='small' disabled/>
           </Box>
           <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
             <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
               <Typography variant='p' sx={{ color: 'black' }}>Contact No</Typography>
             </Box>
-            <TextField value={value.caretakerContactNo} required id="outlined-required" label="Enter Contact No" placeholder='Enter Contact No' fullWidth size='small'  />
+            <TextField value={value.caretakerContactNo} required id="outlined-required" label="Enter Contact No" placeholder='Enter Contact No' fullWidth size='small' disabled  />
           </Box>
           <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
             <Box sx={{ minWidth: '100px', maxWidth: '100px' }} className="label_container">
@@ -73,13 +73,13 @@ const CareTakerDetailsView = () => {
             <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
               <Typography variant='p' sx={{ color: 'black' }}>Address</Typography>
             </Box>
-            <TextField value={value.caretakerAddress} multiline id="outlined-required" label="Enter Address" placeholder='Enter Address' fullWidth size='small' required  />
+            <TextField value={value.caretakerAddress} multiline id="outlined-required" label="Enter Address" placeholder='Enter Address' fullWidth size='small' required disabled />
           </Box>
           <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
             <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
               <Typography variant='p' sx={{ color: 'black' }}>Description</Typography>
             </Box>
-            <TextField value={value.caretakerDescription} id="outlined-required" label="Enter Description" placeholder='Enter Description' fullWidth size='small'  />
+            <TextField value={value.caretakerDescription} id="outlined-required" label="Enter Description" placeholder='Enter Description' fullWidth size='small' disabled  />
           </Box>
           <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '1em', marginBottom: '12px' }}>
             <Box sx={{ minWidth: '100px', maxWidth: '100px' }} className="label_container">
@@ -101,13 +101,13 @@ const CareTakerDetailsView = () => {
               <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                 <Typography variant='p' sx={{ color: 'black' }}>Name</Typography>
               </Box>
-              <TextField value={valueSecond.caretakerName} required id="outlined-required" label="Enter Name" placeholder='Enter Name' fullWidth size='small'/>
+              <TextField value={valueSecond.caretakerName} required id="outlined-required" label="Enter Name" placeholder='Enter Name' fullWidth size='small' disabled/>
             </Box>
             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
               <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                 <Typography variant='p' sx={{ color: 'black' }}>Contact No</Typography>
               </Box>
-              <TextField value={valueSecond.caretakerContactNo} required id="outlined-required" label="Enter Contact No" placeholder='Enter Contact No' fullWidth size='small'/>
+              <TextField value={valueSecond.caretakerContactNo} required id="outlined-required" label="Enter Contact No" placeholder='Enter Contact No' fullWidth size='small' disabled/>
             </Box>
             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
               <Box sx={{ minWidth: '100px', maxWidth: '100px' }} className="label_container">
@@ -118,6 +118,7 @@ const CareTakerDetailsView = () => {
                   aria-labelledby="demo-controlled-radio-buttons-group"
                   name="controlled-radio-buttons-group"
                   value={valueSecond.caretakerStatus}
+                  
                 
                 >
                   <FormControlLabel value="Active" control={<Radio />} label="Active" />
@@ -147,7 +148,7 @@ const CareTakerDetailsView = () => {
               </Box>
             </Box>
             <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '1em' }}>
-              <Button variant="contained" size="small" onClick={handleRemoveClick}>Remove</Button>
+              <Button variant="contained" size="small" onClick={handleRemoveClick}>Collapse</Button>
             </Box>
           </Box>
 
@@ -157,7 +158,7 @@ const CareTakerDetailsView = () => {
 
         <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '2em', marginBottom: '1em' }}>
           {!showSecondCaretaker && (
-            <Button variant="outlined" size="small" onClick={handleAddMoreClick}>Add More</Button>
+            <Button variant="outlined" size="small" onClick={handleAddMoreClick}>View More</Button>
           )}
         </Box>
 

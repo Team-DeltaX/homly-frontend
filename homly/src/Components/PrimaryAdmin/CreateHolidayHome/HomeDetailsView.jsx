@@ -12,7 +12,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 const HomeDetailsView = ({ setSubmit }) => {
 
   const [value, setValue] = useState({
-    name: 'Nipun Resort', address: 'Nuwara Eliya,pundaluoya', district: 'Matale', description: 'Holidayhome description is here mulitple lines can be insert', contactNo1: '0712345321', contactNo2: '', category: 'exclusive', status: 'Active'
+    name: 'Nipun Resort', address: 'Nuwara Eliya,pundaluoya', district: 'Matale', description: 'Holidayhome description is here mulitple lines can be insert', contactNo1: '0712345321', contactNo2: ' ', category: 'exclusive', status: 'Active'
   })
 
 
@@ -27,13 +27,13 @@ const HomeDetailsView = ({ setSubmit }) => {
           <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
             <Typography variant='p' sx={{ color: 'black' }}>Name</Typography>
           </Box>
-          <TextField value={value.name} className='input_field' required id="outlined-required" label="Enter Name" placeholder='Enter Name' fullWidth size='small' />
+          <TextField value={value.name} className='input_field' required id="outlined-required" label="Enter Name" placeholder='Enter Name' fullWidth size='small' disabled />
         </Box>
         <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
           <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
             <Typography variant='p' sx={{ color: 'black' }}>Address</Typography>
           </Box>
-          <TextField value={value.address} required id="outlined-required" label="Enter Address" placeholder='Enter Address' fullWidth size='small' />
+          <TextField value={value.address} required id="outlined-required" label="Enter Address" placeholder='Enter Address' fullWidth size='small' disabled />
         </Box>
         <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
           <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
@@ -87,19 +87,19 @@ const HomeDetailsView = ({ setSubmit }) => {
           <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
             <Typography variant='p' sx={{ color: 'black' }}>Description</Typography>
           </Box>
-          <TextField value={value.description} required multiline id="outlined-required" label="Enter Description" placeholder='Enter Description' fullWidth size='small' />
+          <TextField value={value.description} required multiline id="outlined-required" label="Enter Description" placeholder='Enter Description' fullWidth size='small' disabled />
         </Box>
         <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
           <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
             <Typography variant='p' sx={{ color: 'black' }}>Contact No 1</Typography>
           </Box>
-          <TextField value={value.contactNo1} required id="outlined-required" label="Enter Contact No" placeholder='Enter Contact No' fullWidth size='small' />
+          <TextField value={value.contactNo1} required id="outlined-required" label="Enter Contact No" placeholder='Enter Contact No' fullWidth size='small' disabled />
         </Box>
         <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
           <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
             <Typography variant='p' sx={{ color: 'black' }}>Contact No 2</Typography>
           </Box>
-          <TextField value={value.contactNo2} id="outlined-required" label="Enter Contact No2" placeholder='Enter Contact No2' fullWidth size='small' />
+          <TextField value={value.contactNo2} id="outlined-required" label="Enter Contact No2" placeholder='Enter Contact No2' fullWidth size='small' disabled/>
         </Box>
 
         <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>

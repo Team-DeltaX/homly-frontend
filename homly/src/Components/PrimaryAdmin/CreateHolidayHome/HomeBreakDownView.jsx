@@ -77,19 +77,19 @@ const HomeBreakDownView = () => {
               <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                 <Typography variant='p' sx={{ color: 'black' }}>Maximum Adults</Typography>
               </Box>
-              <TextField value={adultsCount} type='number' id="outlined-required" label="Maximum Adults" placeholder='Maximum Adults' fullWidth size='small' />
+              <TextField value={adultsCount} type='number' id="outlined-required" label="Maximum Adults" placeholder='Maximum Adults' fullWidth size='small' disabled />
             </Box>
             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
               <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                 <Typography variant='p' sx={{ color: 'black' }}>Maximum Childern</Typography>
               </Box>
-              <TextField value={childCount} type='number' id="outlined-required" label="Maximum Children" placeholder='Maximum Children' fullWidth size='small' />
+              <TextField value={childCount} type='number' id="outlined-required" label="Maximum Children" placeholder='Maximum Children' fullWidth size='small' disabled/>
             </Box>
             <FormGroup sx={{ display: 'flex', width: '100%' }}>
-              <FormControlLabel control={<Checkbox />} label="Free wifi" />
-              <FormControlLabel control={<Checkbox />} label="AC" />
-              <FormControlLabel control={<Checkbox />} label="Parking" />
-              <FormControlLabel control={<Checkbox />} label="Kitchen" />
+              <FormControlLabel control={<Checkbox />} label="Free wifi" disabled />
+              <FormControlLabel control={<Checkbox />} label="AC" disabled />
+              <FormControlLabel control={<Checkbox />} label="Parking" disabled/>
+              <FormControlLabel control={<Checkbox />} label="Kitchen" disabled/>
 
             </FormGroup>
           </Grid>
@@ -98,25 +98,25 @@ const HomeBreakDownView = () => {
               <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                 <Typography variant='p' sx={{ color: 'black' }}>Other Charges</Typography>
               </Box>
-              <TextField type='number' id="outlined-required" label="Other Charges" placeholder='Other Charges' fullWidth size='small' />
+              <TextField type='number' id="outlined-required" label="Other Charges" placeholder='Other Charges' fullWidth size='small' disabled />
             </Box>
             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
               <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                 <Typography variant='p' sx={{ color: 'black' }}>Service Charges</Typography>
               </Box>
-              <TextField type='number' id="outlined-required" label="Service Charges" placeholder='Service Charges' fullWidth size='small' />
+              <TextField type='number' id="outlined-required" label="Service Charges" placeholder='Service Charges' fullWidth size='small' disabled />
             </Box>
             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
               <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                 <Typography variant='p' sx={{ color: 'black' }}>Total Rental</Typography>
               </Box>
-              <TextField type='number' id="outlined-required" label="Total Rental" placeholder='Total Rental' fullWidth size='small' required />
+              <TextField type='number' id="outlined-required" label="Total Rental" placeholder='Total Rental' fullWidth size='small' required disabled/>
             </Box>
             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
               <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                 <Typography variant='p' sx={{ color: 'black' }}>Enter facilities</Typography>
               </Box>
-              <TextField id="outlined-required" label="Facilities" placeholder='Enter Facilities' fullWidth size='small' />
+              <TextField id="outlined-required" label="Facilities" placeholder='Enter Facilities' fullWidth size='small' disabled />
             </Box>
           </Grid>
 
