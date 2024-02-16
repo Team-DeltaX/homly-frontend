@@ -20,6 +20,7 @@ export default function InputText({
   return (
     <ThemeProvider theme={theme}>
       <TextField
+      className="input-textfield"
       autoComplete="off"
         sx={{ marginBottom: " 6%", width: "90%" }}
         id={lable}

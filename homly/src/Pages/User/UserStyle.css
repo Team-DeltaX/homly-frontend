@@ -48,11 +48,7 @@
   right: 0;
 }
 
-#textfield-serviceNumber-helper-text,
-#textfield-email-helper-text,
-#textfield-contactNumber-helper-text,
-#textfield-password-helper-text,
-#textfield-confirmPassword-helper-text {
+.css-1iai66b-MuiFormHelperText-root {
   position: absolute !important;
   bottom: -20px !important;
 }
