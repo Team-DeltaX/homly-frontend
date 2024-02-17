@@ -6,6 +6,7 @@ import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
 import holidayhome from '../../Assets/images/holidayHome.jpg';
 import './Reservation.css';
 import ViewPopUp from './ViewPopup';
+import SpecailReservationViewPopup from './SpecialReservationViewPopup';
 // import AddComplainPopUp from './AddComplainPopUp';
 
 const SpecialReservationCard = ({reservation}) => {
@@ -25,7 +26,7 @@ const SpecialReservationCard = ({reservation}) => {
                         <h2>{ reservation.holidayhomename }</h2>
                         <p>Check In : { reservation.checkindate }</p>
                         <p>Check Out : { reservation.checoutdate }</p>
-                        <ViewPopUp reservation={reservation}/>
+                        {/* <SpecailReservationViewPopup reservation={reservation}/> */}
                     </Stack>
                     {/* <h2>{ reservation.holidayhomename }</h2>
                     <p>Check In : { reservation.checkindate }</p>
