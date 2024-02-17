@@ -129,7 +129,7 @@ const UserLogin = () => {
             <Grid
               container
               sx={{
-                backgroundColor: "grey1",
+                backgroundColor: "#FEF2F4",
                 borderRadius: "10px",
                 boxShadow: 1,
                 height: { xs: "auto", md: "60vh" },

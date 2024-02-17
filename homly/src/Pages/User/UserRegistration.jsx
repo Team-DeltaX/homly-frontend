@@ -143,7 +143,7 @@ const UserRegistration = () => {
       !checkServiceNo(ServiceNo) &&
       !checkEmail(Email) &&
       !checkContactNo(ContactNo) &&
-      !errorConfirmPassword && 
+      !errorConfirmPassword &&
       passwordStrength > 0
     ) {
       console.log(ServiceNo, Email, ContactNo, Password);
@@ -211,23 +211,28 @@ const UserRegistration = () => {
           overflow: "hidden",
         }}
       >
-        <Container maxWidth="xl" style={{ padding: 0 }}>
+        <Container maxWidth="xl" style={{ padding: 0,height:"95vh" }}>
           {/* error snack bar */}
           <ErrorSnackbar
             isOpen={errorStatus.isOpen}
             type={errorStatus.type}
             message={errorStatus.message}
-            setIsOpen={(value) => setErrorStatus({ ...errorStatus, isOpen: value })}
+            setIsOpen={(value) =>
+              setErrorStatus({ ...errorStatus, isOpen: value })
+            }
             // handleAlertClose={handleAlertClose}
           />
 
-          <Container className="registration-box-container">
+          <Container
+            className="registration-box-container"
+            sx={{ display: "flex", height: "100%", alignItems: "center" }}
+          >
             <Grid
               container
               sx={{
                 // height: "85%",
                 height: "auto",
-                backgroundColor: "grey1",
+                backgroundColor: "#FEF2F4",
                 borderRadius: "10px",
                 boxShadow: 1,
               }}
@@ -296,10 +301,7 @@ const UserRegistration = () => {
                     Login
                   </Button>
                 </Box>
-                <Box
-                  paddingLeft={"5%"}
-                  marginBottom={"2%"}
-                >
+                <Box paddingLeft={"10%"} marginBottom={"2%"}>
                   <form
                     action=""
                     autoComplete="off"
@@ -338,7 +340,14 @@ const UserRegistration = () => {
                         }}
                       >
                         <Button variant="outlined" onClick={handleClickOpen}>
-                          Upload Profile Picture
+                          <Typography
+                            sx={{
+                              fontSize: { xs: "0.7rem" },
+                              fontWeight: "bold",
+                            }}
+                          >
+                            Upload Profile Picture
+                          </Typography>
                         </Button>
                       </Box>
                     </Stack>
@@ -383,9 +392,7 @@ const UserRegistration = () => {
                       inputValue={ContactNo}
                       setInputValue={setContactNo}
                     />
-                    <Stack
-                      direction="column"
-                    >
+                    <Stack direction="column">
                       <InputPasswordWithIcon
                         lable={"Password"}
                         icon={
@@ -401,7 +408,10 @@ const UserRegistration = () => {
                         marginBottom={"0"}
                       />
                       <Box sx={{ width: "90%" }}>
-                        <PasswordStrength password={Password} setPasswordStrength={setPasswordStrength}/>
+                        <PasswordStrength
+                          password={Password}
+                          setPasswordStrength={setPasswordStrength}
+                        />
                       </Box>
                     </Stack>
                     <InputPasswordWithIcon
@@ -417,210 +427,6 @@ const UserRegistration = () => {
                       isCheck={true}
                       setErrorConfirmPassword={setErrorConfirmPassword}
                     />
-
-                    {/* <TextField
-                      sx={{ marginBottom: " 6%", width: "90%" }}
-                      id="textfield-serviceNumber"
-                      label="Service Number"
-                      required
-                      error={errorServiceNumber}
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <BadgeIcon />
-                          </InputAdornment>
-                        ),
-                      }}
-                      InputLabelProps={{
-                        shrink: focusedServiceNo || countChar(ServiceNo) !== 0,
-                        style: {
-                          marginLeft:
-                            focusedServiceNo || countChar(ServiceNo) !== 0
-                              ? 0
-                              : 35,
-                        },
-                      }}
-                      onFocus={() => setFocusedServiceNo(true)}
-                      onBlur={() => setFocusedServiceNo(false)}
-                      onChange={(e) => {
-                        setServiceNo(e.target.value);
-                      }}
-                      value={ServiceNo}
-                      size="small"
-                      helperText={
-                        errorServiceNumber
-                          ? "Your are not an employee of Homly"
-                          : ""
-                      }
-                      fullWidth
-                    /> */}
-                    {/* <TextField
-                      sx={{ marginBottom: " 6%", width: "90%" }}
-                      id="textfield-email"
-                      label="Email"
-                      required
-                      error={checkEmail(Email)}
-                      type="email"
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <EmailIcon />
-                          </InputAdornment>
-                        ),
-                      }}
-                      InputLabelProps={{
-                        shrink: focusedEmail || countChar(Email) !== 0,
-                        style: {
-                          marginLeft:
-                            focusedEmail || countChar(Email) !== 0 ? 0 : 35,
-                        },
-                      }}
-                      onFocus={() => setFocusedEmail(true)}
-                      onBlur={() => setFocusedEmail(false)}
-                      onChange={(e) => setEmail(e.target.value)}
-                      value={Email}
-                      size="small"
-                      helperText={
-                        checkEmail(Email) ? "invalid email address" : ""
-                      }
-                      fullWidth
-                    /> */}
-
-                    {/* <TextField
-                      sx={{ marginBottom: " 6%", width: "90%" }}
-                      id="textfield-contactNumber"
-                      label="Contact Number"
-                      required
-                      error={checkContactNo(ContactNo)}
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <CallIcon />
-                          </InputAdornment>
-                        ),
-                      }}
-                      InputLabelProps={{
-                        shrink: focusedContactNo || countChar(ContactNo) !== 0,
-                        style: {
-                          marginLeft:
-                            focusedContactNo || countChar(ContactNo) !== 0
-                              ? 0
-                              : 35,
-                        },
-                      }}
-                      onFocus={() => setFocusedContactNo(true)}
-                      onBlur={() => setFocusedContactNo(false)}
-                      onChange={(e) => setContactNo(e.target.value)}
-                      value={ContactNo}
-                      size="small"
-                      helperText={
-                        checkContactNo(ContactNo)
-                          ? "invalid contact number"
-                          : ""
-                      }
-                      fullWidth
-                    /> */}
-
-                    {/* <TextField
-                      sx={{ marginBottom: "6%", width: "90%" }}
-                      id="textfield-password"
-                      label="Password"
-                      required
-                      error={false}
-                      type={showPassword ? "text" : "password"}
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <PasswordIcon sx={{ p: 0.25, ml: -0.5, mr: 1 }} />
-                          </InputAdornment>
-                        ),
-
-                        endAdornment: (
-                          <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={handleClickShowPassword}
-                            onMouseDown={handleMouseDownPassword}
-                            edge="end"
-                          >
-                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                          </IconButton>
-                        ),
-                      }}
-                      InputLabelProps={{
-                        shrink: focusedPassword || countChar(Password) !== 0,
-                        style: {
-                          marginLeft:
-                            focusedPassword || countChar(Password) !== 0
-                              ? 0
-                              : 35,
-                        },
-                      }}
-                      onFocus={() => setFocusedPassword(true)}
-                      onBlur={() => setFocusedPassword(false)}
-                      onChange={(e) => {
-                        setPassword(e.target.value);
-                        checkConfirmPassword(ConfirmPassword, e.target.value);
-                      }}
-                      value={Password}
-                      size="small"
-                      helperText={""}
-                      fullWidth
-                    /> */}
-
-                    {/* <TextField
-                      sx={{ marginBottom: " 6%", width: "90%" }}
-                      id="textfield-confirmPassword"
-                      label="Confirm Password"
-                      required
-                      error={errorConfirmPassword}
-                      type={showConfirmPassword ? "text" : "password"}
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <PasswordIcon sx={{ p: 0.25, ml: -0.5, mr: 1 }} />
-                          </InputAdornment>
-                        ),
-
-                        endAdornment: (
-                          <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={handleClickShowConfirmPassword}
-                            onMouseDown={handleMouseDownPassword}
-                            edge="end"
-                          >
-                            {showConfirmPassword ? (
-                              <VisibilityOff />
-                            ) : (
-                              <Visibility />
-                            )}
-                          </IconButton>
-                        ),
-                      }}
-                      InputLabelProps={{
-                        shrink:
-                          focusedConfirmPassword ||
-                          countChar(ConfirmPassword) !== 0,
-                        style: {
-                          marginLeft:
-                            focusedConfirmPassword ||
-                            countChar(ConfirmPassword) !== 0
-                              ? 0
-                              : 35,
-                        },
-                      }}
-                      onFocus={() => setFocusedConfirmPassword(true)}
-                      onBlur={() => setFocusedConfirmPassword(false)}
-                      onChange={(e) => {
-                        setConfirmPassword(e.target.value);
-                        checkConfirmPassword(e.target.value, Password);
-                      }}
-                      value={ConfirmPassword}
-                      size="small"
-                      helperText={
-                        errorConfirmPassword ? "password not match" : ""
-                      }
-                      fullWidth
-                    /> */}
 
                     <Box
                       sx={{
