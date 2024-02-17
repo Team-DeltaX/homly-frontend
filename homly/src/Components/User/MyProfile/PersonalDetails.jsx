@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import {
   Box,
@@ -19,6 +19,7 @@ import ProfilePicUploadPopup from "../ProfilePicUploadPopup";
 import ErrorSnackbar from "../ErrorSnackbar";
 
 import { AuthContext } from "../../../Contexts/AuthContext";
+import { Email } from "@mui/icons-material";
 
 const PersonalDetails = () => {
   const { authServiceNumber } = useContext(AuthContext);
@@ -60,6 +61,25 @@ const PersonalDetails = () => {
   const handleEdit = () => {
     setIsEnable(true);
   };
+
+  useEffect(() => {
+    axios
+    .get(`http://localhost:3002/users/auth/${authServiceNumber}`)
+    .then((res) => {
+      if (Response) {
+        console.log("apidata",res.data)
+        setData({...data, email: res.data.email, contactNo: res.data.contact_number, image: res.data.image});
+      }else{
+        setErrorStatus({
+          ...errorStatus,
+          isOpen: true,
+          type: "error",
+          message: res.data.message,  
+        });
+      }
+    })
+  },[])
+
   const handleUpdate = () => {
     if (!checkEmail(data.email) && !checkContactNo(data.contactNo)) {
       const formData = {
