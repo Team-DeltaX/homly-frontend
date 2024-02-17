@@ -10,12 +10,12 @@ const PersonalDetailsGrid = (props) => {
   
   return (
     <Grid container key={props.id} sx={{ width: "100%",marginBottom:'16px' }}>
-      <Grid item xs={12} sm={4} md={4}>
+      <Grid item xs={12} sm={4} md={4} sx={{display:'flex',justifyContent:'center'}}>
         <Typography variant="h6" fontWeight={"bold"} sx={{margin:'4px 0'}}>
           {props.lable}
         </Typography>
       </Grid>
-      <Grid item xs={9} sm={6} md={6}>
+      <Grid item xs={12} sm={6} md={6} sx={{display:'flex',justifyContent:'center'}}>
         {props.editable? 
           <TextField
             id="outlined-basic"

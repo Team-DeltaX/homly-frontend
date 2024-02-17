@@ -4,7 +4,7 @@ import { useState, createContext, useEffect } from "react";
 export const AuthContext = createContext();
 
 const AuthContextProvider = ({ children }) => {
-  const [isLogged, setIsLogged] = useState(false);
+  const [isLogged, setIsLogged] = useState(true);
   const [authServiceNumber, setAuthServiceNumber] = useState(null);
 
   return (

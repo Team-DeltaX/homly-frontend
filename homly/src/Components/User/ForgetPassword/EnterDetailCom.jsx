@@ -21,7 +21,7 @@ export default function EnterDetailCom({
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = {serviceNo:value.serviceNo,email:value.email}
-    axios.post("http://localhost:3002/users/forgetPassword/details", formData)
+    axios.post("http://localhost:3002/users/forgetPassword/", formData)
     .then((res) => {
         if(res.data.success){
             setErrorStatus({

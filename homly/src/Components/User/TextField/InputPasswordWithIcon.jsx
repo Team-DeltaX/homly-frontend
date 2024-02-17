@@ -41,8 +41,9 @@ export default function InputPasswordWithIcon({
   return (
     <ThemeProvider theme={theme}>
       <TextField
+      className="input-textfield"
         autoComplete="new-password"
-        sx={{ marginBottom: marginBottom? marginBottom : '5%', width: "90%" }}
+        sx={{ marginBottom: marginBottom? marginBottom : {xs:'7%',sm:'6%',md:'5%'}, width: "90%" }}
         id={lable}
         label={lable}
         required

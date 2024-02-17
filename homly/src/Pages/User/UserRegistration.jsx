@@ -149,7 +149,7 @@ const UserRegistration = () => {
       console.log(ServiceNo, Email, ContactNo, Password);
 
       axios
-        .post("http://localhost:3002/users/register", formData)
+        .post("http://localhost:3002/users", formData)
         .then((res) => {
           console.log(res.data);
           if (res.data.success) {
