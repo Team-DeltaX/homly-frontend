@@ -1,12 +1,11 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import axios from "axios";
 import {
   Box,
   ThemeProvider,
   Typography,
   Card,
   CardContent,
-  Grid,
   Button,
   Stack,
   Snackbar,
@@ -14,13 +13,16 @@ import {
   CardActions,
 } from "@mui/material";
 
-import PasswordComGrid from "./PasswordComGrid";
+// import auth context
+import { AuthContext } from "../../../Contexts/AuthContext";
 
+import ErrorSnackbar from "../ErrorSnackbar";
+import PasswordComGrid from "./PasswordComGrid";
 
 import theme from "../../../HomlyTheme";
 
-
 const Security = () => {
+  const {authServiceNumber} = useContext(AuthContext);
   const [password, setPassword] = useState({
     currentPass: "",
     newPass: "",
@@ -31,31 +33,55 @@ const Security = () => {
     newPass: false,
     confirmPass: false,
   });
-  const [isUpdate, setIsUpdate] = useState(false);
-
+  
   const [isEnable, setIsEnable] = useState(false);
 
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setIsUpdate(false);
-  };
-
-  const handleUpdateData = () => {
-    // handleUpdate();
-    console.log("update");
-    setIsUpdate(true);
-  };
+  
 
   const handleCancel = () => {
     setPassword({ currentPass: "", newPass: "", confirmPass: "" });
     setError({ currentPass: false, newPass: false, confirmPass: false });
   };
+  const [errorStatus, setErrorStatus] = useState({
+    isOpen: false,
+    type: "",
+    message: "",
+  });
 
   const [passwordStrength, setPasswordStrength] = useState(0);
 
+  const handleUpdateData = () => {
 
+    const formData = {serviceNo:authServiceNumber, oldPassword:password.currentPass, newPassword:password.newPass}
+    axios
+    .put("http://localhost:3002/users/auth/password",formData )
+    .then((res) => {
+      if (res.data.success) {
+        setErrorStatus({
+          ...errorStatus,
+          isOpen: true,
+          type: "success",
+          message: res.data.message,
+        });
+      }else{
+        setErrorStatus({
+          ...errorStatus,
+          isOpen: true,
+          type: "error",
+          message: res.data.message,
+        });
+      }
+    })
+    .catch((err) => {
+      setErrorStatus({
+        ...errorStatus,
+        isOpen: true,
+        type: "error",
+        message: err.message,
+      });
+    });
+    console.log("update");
+  };
 
   useEffect(() => {
     setIsEnable(
@@ -91,7 +117,7 @@ const Security = () => {
                   width: "100%",
                 }}
               >
-                <Stack direction='column' sx={{ width: "100%" }}>
+                <Stack direction="column" sx={{ width: "100%" }}>
                   <PasswordComGrid
                     lable={"Current Password"}
                     placeholder={"Current Password"}
@@ -103,23 +129,23 @@ const Security = () => {
                     }
                     isCheck={false}
                   />
-                    <PasswordComGrid
-                      lable={"New Password"}
-                      placeholder={"New Password"}
-                      helperText={""}
-                      error={error.newPass}
-                      password={password.newPass}
-                      setPassword={(e) =>
-                        setPassword({ ...password, newPass: e })
-                      }
-                      confirmPassword={password.confirmPass}
-                      isCheck={true}
-                      setErrorConfirmPassword={(e) =>
-                        setError({ ...error, confirmPass: e })
-                      }
-                      setPasswordStrength={setPasswordStrength}
-                    />
-                  
+                  <PasswordComGrid
+                    lable={"New Password"}
+                    placeholder={"New Password"}
+                    helperText={""}
+                    error={error.newPass}
+                    password={password.newPass}
+                    setPassword={(e) =>
+                      setPassword({ ...password, newPass: e })
+                    }
+                    confirmPassword={password.confirmPass}
+                    isCheck={true}
+                    setErrorConfirmPassword={(e) =>
+                      setError({ ...error, confirmPass: e })
+                    }
+                    setPasswordStrength={setPasswordStrength}
+                  />
+
                   <PasswordComGrid
                     lable={"Confirm Password"}
                     placeholder={"Confirm New Password"}
@@ -137,7 +163,6 @@ const Security = () => {
                       setError({ ...error, confirmPass: e })
                     }
                   />
-                  
                 </Stack>
               </CardContent>
               <CardActions sx={{ justifyContent: "flex-end" }}>
@@ -145,7 +170,11 @@ const Security = () => {
                   <Button
                     variant="contained"
                     size="small"
-                    sx={{ backgroundColor: "primary.main", width: "70px", marginRight:'10px' }}
+                    sx={{
+                      backgroundColor: "primary.main",
+                      width: "70px",
+                      marginRight: "10px",
+                    }}
                     onClick={handleCancel}
                     disabled={!isEnable}
                   >
@@ -160,28 +189,18 @@ const Security = () => {
                   >
                     Update
                   </Button>
-                  <Snackbar
-                    autoHideDuration={3000}
-                    onClose={handleClose}
-                    open={isUpdate}
-                  >
-                    <Alert
-                      onClose={handleClose}
-                      severity="error"
-                      variant="filled"
-                      sx={{
-                        width: "100%",
-                        backgroundColor: "success.light",
-                      }}
-                    >
-                      "Successfully Updated!"
-                    </Alert>
-                  </Snackbar>
                 </Stack>
               </CardActions>
             </form>
           </Card>
         </Box>
+        <ErrorSnackbar
+            isOpen={errorStatus.isOpen}
+            type={errorStatus.type}
+            message={errorStatus.message}
+            setIsOpen={(value) => setErrorStatus({ ...errorStatus, isOpen: value })}
+            // handleAlertClose={handleAlertClose}
+          />
       </Box>
     </ThemeProvider>
   );

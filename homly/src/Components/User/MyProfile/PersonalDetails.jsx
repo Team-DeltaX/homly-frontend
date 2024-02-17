@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 import {
   Box,
@@ -18,12 +18,15 @@ import theme from "../../../HomlyTheme";
 import ProfilePicUploadPopup from "../ProfilePicUploadPopup";
 import ErrorSnackbar from "../ErrorSnackbar";
 
+import { AuthContext } from "../../../Contexts/AuthContext";
+
 const PersonalDetails = () => {
+  const { authServiceNumber } = useContext(AuthContext);
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
   const phoneRegex = /^[0-9]{10}$/;
 
   const [data, setData] = useState({
-    serviceNo: "214002",
+    serviceNo: authServiceNumber,
     name: "John Doe",
     nic: "123456789V",
     work: "Colombo",
@@ -31,11 +34,6 @@ const PersonalDetails = () => {
     contactNo: "0123456798",
     email: "apb@gmail.com",
     image: "",
-  });
-
-  const [detailsError, setDetailsError] = useState({
-    email: false,
-    contactNo: false,
   });
 
   const [errorStatus, setErrorStatus] = useState({
@@ -52,47 +50,52 @@ const PersonalDetails = () => {
   };
 
   const checkEmail = (email) => {
-    const error = email.length > 0 && !emailRegex.test(email);
-    setDetailsError({ ...detailsError, email: error });
-    return error;
+    return email.length > 0 && !emailRegex.test(email);
   };
 
   const checkContactNo = (contactNo) => {
-    const error = contactNo.length > 0 && !phoneRegex.test(contactNo);
-    setDetailsError({ ...detailsError, contactNo: error });
-    return error;
+    return contactNo.length > 0 && !phoneRegex.test(contactNo);
   };
 
   const handleEdit = () => {
     setIsEnable(true);
   };
   const handleUpdate = () => {
-    if(!detailsError.email && !detailsError.contactNo){
+    if (!checkEmail(data.email) && !checkContactNo(data.contactNo)) {
       const formData = {
         serviceNo: data.serviceNo,
         email: data.email,
         contactNo: data.contactNo,
         image: data.image,
       };
-      axios.put("http://localhost:3002/users/auth", formData).then((res) => {
-        if (res.data.success) {
-          setErrorStatus({
-            ...errorStatus,
-            isOpen: true,
-            type: "success",
-            message: res.data.message,
-          }).catch((err) => {
+      axios
+        .put("http://localhost:3002/users/auth", formData)
+        .then((res) => {
+          if (res.data.success) {
+            setErrorStatus({
+              ...errorStatus,
+              isOpen: true,
+              type: "success",
+              message: res.data.message,
+            });
+          }else{
             setErrorStatus({
               ...errorStatus,
               isOpen: true,
               type: "error",
-              message: err.message,
+              message: res.data.message,
             });
+          }
+        })
+        .catch((err) => {
+          setErrorStatus({
+            ...errorStatus,
+            isOpen: true,
+            type: "error",
+            message: err.message,
           });
-        }
-      });
+        });
       setIsEnable(false);
-
     }
   };
 
