@@ -8,8 +8,6 @@ import {
   CardContent,
   Button,
   Stack,
-  Snackbar,
-  Alert,
   CardActions,
 } from "@mui/material";
 
@@ -51,36 +49,39 @@ const Security = () => {
   const [passwordStrength, setPasswordStrength] = useState(0);
 
   const handleUpdateData = () => {
+    if(passwordStrength > 1){
 
-    const formData = {serviceNo:authServiceNumber, oldPassword:password.currentPass, newPassword:password.newPass}
-    axios
-    .put("http://localhost:3002/users/auth/password",formData )
-    .then((res) => {
-      if (res.data.success) {
-        setErrorStatus({
-          ...errorStatus,
-          isOpen: true,
-          type: "success",
-          message: res.data.message,
-        });
-      }else{
+      const formData = {serviceNo:authServiceNumber, oldPassword:password.currentPass, newPassword:password.newPass}
+      axios
+      .put("http://localhost:3002/users/auth/password",formData )
+      .then((res) => {
+        if (res.data.success) {
+          setErrorStatus({
+            ...errorStatus,
+            isOpen: true,
+            type: "success",
+            message: res.data.message,
+          });
+        }else{
+          setErrorStatus({
+            ...errorStatus,
+            isOpen: true,
+            type: "error",
+            message: res.data.message,
+          });
+        }
+      })
+      .catch((err) => {
         setErrorStatus({
           ...errorStatus,
           isOpen: true,
           type: "error",
-          message: res.data.message,
+          message: err.message,
         });
-      }
-    })
-    .catch((err) => {
-      setErrorStatus({
-        ...errorStatus,
-        isOpen: true,
-        type: "error",
-        message: err.message,
       });
-    });
-    console.log("update");
+      setPassword({ currentPass: "", newPass: "", confirmPass: "" });     
+      console.log("update");
+    }
   };
 
   useEffect(() => {
@@ -199,7 +200,6 @@ const Security = () => {
             type={errorStatus.type}
             message={errorStatus.message}
             setIsOpen={(value) => setErrorStatus({ ...errorStatus, isOpen: value })}
-            // handleAlertClose={handleAlertClose}
           />
       </Box>
     </ThemeProvider>

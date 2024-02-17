@@ -19,7 +19,6 @@ import ProfilePicUploadPopup from "../ProfilePicUploadPopup";
 import ErrorSnackbar from "../ErrorSnackbar";
 
 import { AuthContext } from "../../../Contexts/AuthContext";
-import { Email } from "@mui/icons-material";
 
 const PersonalDetails = () => {
   const { authServiceNumber } = useContext(AuthContext);
@@ -78,6 +77,7 @@ const PersonalDetails = () => {
         });
       }
     })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
 
   const handleUpdate = () => {
