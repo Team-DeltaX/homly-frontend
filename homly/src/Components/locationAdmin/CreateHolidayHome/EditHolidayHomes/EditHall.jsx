@@ -157,10 +157,10 @@ const EditHall = ({ hallArray, setHallArray }) => {
             setOpenHallFillAlert(true);
             return;
         }
-        // if (hallExist) {
-        //     setOpenHallExistAlert(true);
-        //     return;
-        // }
+        if (hallExist) {
+            setOpenHallExistAlert(true);
+            return;
+        }
 
         if (isEditMode && editIndex !== null) {
             // Editing an existing room

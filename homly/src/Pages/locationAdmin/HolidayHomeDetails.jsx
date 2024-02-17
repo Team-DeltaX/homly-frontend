@@ -134,6 +134,7 @@ const HolidayHomeDetails = () => {
     const handleClickOpen = (event) => {
 
         const selectedDate = moment(event.start);
+        console.log(selectedDate);
         const newDate = selectedDate.format('MMMM D, YYYY');
         setDate(newDate);
         setOpen(true);

@@ -121,10 +121,10 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
 
         }
 
-        // if (unitExist) {
-        //     setOpenUnitExistAlert(true);
-        //     return;
-        // }
+        if (unitExist) {
+            setOpenUnitExistAlert(true);
+            return;
+        }
 
         if (isEditMode && editIndex !== null) {
             // Editing an existing room

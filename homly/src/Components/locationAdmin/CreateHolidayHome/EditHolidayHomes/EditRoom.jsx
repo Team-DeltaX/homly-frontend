@@ -128,10 +128,10 @@ const EditRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount }) =>
             return;
         }
 
-        // if (roomExist) {
-        //     setOpenRoomExistAlert(true);
-        //     return;
-        // }
+        if (roomExist) {
+            setOpenRoomExistAlert(true);
+            return;
+        }
 
 
 
