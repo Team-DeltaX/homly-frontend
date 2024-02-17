@@ -11,6 +11,7 @@ import axios from 'axios'
 
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useState } from "react";
+import ConfirmPopup from "./ConfirmPopup";
 
 const CurrentAdminCard = (props) => {
   // const [disabled, setDisabled] = useState(true);
@@ -21,14 +22,21 @@ const CurrentAdminCard = (props) => {
   // const [email, setEmail] = useState(props.data.Nic_number);
   // const [worklocation, setworkLocation] = useState(props.data.Nic_number);
   // const [displayr, setDisplayr] = useState(false);
+  const [open,setOpen]=useState(false);
 
-  const sendmail=(email)=>{
-    axios.post(`http://localhost:3002/locationadmin/sendmail/${email}`)
+  const resetpassword=(email,username,adminno)=>{
+    axios.post("http://localhost:3002/locationadmin/resetpassword",{
+      UserName:username,
+      Email:email,
+      AdminNo:adminno
+
+    })
     .then(res=>{
       console.log('sucessfully sent')
     }).catch(error=>{
       console.log(`error occured when send mail error is ${error}`)
     })
+    setOpen(false)
   }
 
   const handleClick = (id) => {
@@ -250,6 +258,7 @@ const CurrentAdminCard = (props) => {
        </Button>
 
 {/* reset password */}
+         <ConfirmPopup open={open} setOpen={setOpen} title={"Reset Password"} text={"Are you sure you want to reset this Admin password?"} data={props.data} controlfunction={resetpassword}/>
 
 
 
@@ -258,7 +267,8 @@ const CurrentAdminCard = (props) => {
          sx={{ width: "165px", height: "30px", borderRadius: "15px", marginTop:'5px'}}
          variant="contained"
          onClick={() => {
-          sendmail(props.data.Email)
+          // resetpassword(props.data.Email,props.data.UserName,props.data.AdminNo)
+          setOpen(true)
            
          }}
          
