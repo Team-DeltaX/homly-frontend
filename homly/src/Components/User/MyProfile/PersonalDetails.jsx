@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import axios from "axios";
 import {
   Box,
   ThemeProvider,
@@ -15,13 +16,17 @@ import PersonalDetailsGrid from "../PersonalDetailsGrid/PersonalDetailsGrid";
 
 import theme from "../../../HomlyTheme";
 import ProfilePicUploadPopup from "../ProfilePicUploadPopup";
+import ErrorSnackbar from "../ErrorSnackbar";
+
+import { AuthContext } from "../../../Contexts/AuthContext";
 
 const PersonalDetails = () => {
+  const { authServiceNumber } = useContext(AuthContext);
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
   const phoneRegex = /^[0-9]{10}$/;
 
   const [data, setData] = useState({
-    serviceNo: "214002",
+    serviceNo: authServiceNumber,
     name: "John Doe",
     nic: "123456789V",
     work: "Colombo",
@@ -29,6 +34,12 @@ const PersonalDetails = () => {
     contactNo: "0123456798",
     email: "apb@gmail.com",
     image: "",
+  });
+
+  const [errorStatus, setErrorStatus] = useState({
+    isOpen: false,
+    type: "",
+    message: "",
   });
 
   const [isEnable, setIsEnable] = useState(false);
@@ -49,8 +60,63 @@ const PersonalDetails = () => {
   const handleEdit = () => {
     setIsEnable(true);
   };
+
+  useEffect(() => {
+    axios
+    .get(`http://localhost:3002/users/auth/${authServiceNumber}`)
+    .then((res) => {
+      if (Response) {
+        console.log("apidata",res.data)
+        setData({...data, email: res.data.email, contactNo: res.data.contact_number, image: res.data.image});
+      }else{
+        setErrorStatus({
+          ...errorStatus,
+          isOpen: true,
+          type: "error",
+          message: res.data.message,  
+        });
+      }
+    })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
+
   const handleUpdate = () => {
-    setIsEnable(false);
+    if (!checkEmail(data.email) && !checkContactNo(data.contactNo)) {
+      const formData = {
+        serviceNo: data.serviceNo,
+        email: data.email,
+        contactNo: data.contactNo,
+        image: data.image,
+      };
+      axios
+        .put("http://localhost:3002/users/auth", formData)
+        .then((res) => {
+          if (res.data.success) {
+            setErrorStatus({
+              ...errorStatus,
+              isOpen: true,
+              type: "success",
+              message: res.data.message,
+            });
+          }else{
+            setErrorStatus({
+              ...errorStatus,
+              isOpen: true,
+              type: "error",
+              message: res.data.message,
+            });
+          }
+        })
+        .catch((err) => {
+          setErrorStatus({
+            ...errorStatus,
+            isOpen: true,
+            type: "error",
+            message: err.message,
+          });
+        });
+      setIsEnable(false);
+    }
   };
 
   const handleCancel = () => {
@@ -73,8 +139,8 @@ const PersonalDetails = () => {
         >
           <Card sx={{ width: { xs: "100%", sm: "90%" } }}>
             <CardContent>
-              <Stack direction="row" sx={{ flexWrap:'wrap' }}>
-                <Box sx={{ width:{xs:'100%',sm:'70%'} }}>
+              <Stack direction="row" sx={{ flexWrap: "wrap" }}>
+                <Box sx={{ width: { xs: "100%", sm: "70%" } }}>
                   <PersonalDetailsGrid
                     id="serviceNo"
                     lable="Service Number"
@@ -132,7 +198,7 @@ const PersonalDetails = () => {
                     helperText={checkEmail(data.email) ? "Invalid Email" : ""}
                   />
                 </Box>
-                <Box sx={{ height:'210px',width:{xs:'100%',sm:'20%'} }}>
+                <Box sx={{ height: "210px", width: { xs: "100%", sm: "20%" } }}>
                   {/* <AvatarImage /> */}
                   <ProfilePicUploadPopup
                     open={open}
@@ -162,10 +228,14 @@ const PersonalDetails = () => {
                         display: "flex",
                         alignItems: "center",
                         marginTop: "15px",
-                        marginLeft:  "8px" ,
+                        marginLeft: "8px",
                       }}
                     >
-                      <Button variant="outlined" onClick={handleClickOpen} disabled={!isEnable}>
+                      <Button
+                        variant="outlined"
+                        onClick={handleClickOpen}
+                        disabled={!isEnable}
+                      >
                         Edit Profile Picture
                       </Button>
                     </Box>
@@ -212,6 +282,14 @@ const PersonalDetails = () => {
             </CardActions>
           </Card>
         </Box>
+        <ErrorSnackbar
+          isOpen={errorStatus.isOpen}
+          type={errorStatus.type}
+          message={errorStatus.message}
+          setIsOpen={(value) =>
+            setErrorStatus({ ...errorStatus, isOpen: value })
+          }
+        />
       </Box>
     </ThemeProvider>
   );

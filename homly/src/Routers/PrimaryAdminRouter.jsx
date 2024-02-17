@@ -1,8 +1,8 @@
 import React, { lazy } from "react";
-import { Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 const PrimaryDashboard = lazy(() =>
-  import("../Pages/PrimaryAdmin/PrimaryDashboard" )
+  import("../Pages/PrimaryAdmin/PrimaryDashboard")
 );
 const PrimaryReservations = lazy(() =>
   import("../Pages/PrimaryAdmin/PrimaryReservations")
@@ -33,37 +33,37 @@ const PrimaryAuthorizations = lazy(() =>
 const PrimaryAdminRouter = () => (
   <Routes>
     <Route
-      path="/primaryadmin/dashboard"
+      path="/dashboard"
       element={<PrimaryDashboard />}
     ></Route>
     <Route
-      path="/primaryadmin/reservations"
+      path="/reservations"
       element={<PrimaryReservations />}
     ></Route>
     <Route
-      path="/primaryadmin/holidayhomes"
+      path="/holidayhomes"
       element={<PrimaryHolidayHomes />}
     ></Route>
-    <Route path="/primaryadmin/report" element={<PrimaryReport />}></Route>
+    <Route path="/report" element={<PrimaryReport />}></Route>
     <Route
-      path="/primaryadmin/blacklistedusers/manage"
+      path="/blacklistedusers/manage"
       element={<PrimaryManageBlacklistedUsers />}
     ></Route>
     <Route
-      path="/primaryadmin/blacklistedusers/history"
+      path="/blacklistedusers/history"
       element={<PrimaryBlacklistHistory />}
     ></Route>
     <Route
-      path="/primaryadmin/blacklistedusers/complaints"
+      path="/blacklistedusers/complaints"
       element={<PrimaryComplaints />}
     ></Route>
-    <Route path="/primaryadmin/addadmin" element={<PrimaryAddAdmin />}></Route>
+    <Route path="/addadmin" element={<PrimaryAddAdmin />}></Route>
     <Route
-      path="/primaryadmin/viewadmin"
+      path="/viewadmin"
       element={<PrimaryViewAdmin />}
     ></Route>
     <Route
-      path="/primaryadmin/authorizations"
+      path="/authorizations"
       element={<PrimaryAuthorizations />}
     ></Route>
   </Routes>

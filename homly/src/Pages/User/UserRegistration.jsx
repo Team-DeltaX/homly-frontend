@@ -125,13 +125,13 @@ const UserRegistration = () => {
     message: "",
   });
 
-  const handleAlertClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
+  // const handleAlertClose = (event, reason) => {
+  //   if (reason === "clickaway") {
+  //     return;
+  //   }
 
-    setErrorStatus({ ...errorStatus, isOpen: false });
-  };
+  //   setErrorStatus({ ...errorStatus, isOpen: false });
+  // };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -217,7 +217,8 @@ const UserRegistration = () => {
             isOpen={errorStatus.isOpen}
             type={errorStatus.type}
             message={errorStatus.message}
-            handleAlertClose={handleAlertClose}
+            setIsOpen={(value) => setErrorStatus({ ...errorStatus, isOpen: value })}
+            // handleAlertClose={handleAlertClose}
           />
 
           <Container className="registration-box-container">
