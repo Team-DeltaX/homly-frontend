@@ -137,24 +137,7 @@ const Security = () => {
                       setError({ ...error, confirmPass: e })
                     }
                   />
-                  {/* <PasswordComGrid
-                      lable={gridData[1].lable}
-                      placeholder={gridData[1].placeholder}
-                      password={password}
-                      setPassword={setPassword}
-                      error={error}
-                      setError={setError}
-                      checkConfirmPassword={checkConfirmPassword}
-                    />
-                    <PasswordComGrid
-                      lable={gridData[2].lable}
-                      placeholder={gridData[2].placeholder}
-                      password={password}
-                      setPassword={setPassword}
-                      error={error}
-                      setError={setError}
-                      checkConfirmPassword={checkConfirmPassword}
-                    /> */}
+                  
                 </Stack>
               </CardContent>
               <CardActions sx={{ justifyContent: "flex-end" }}>
