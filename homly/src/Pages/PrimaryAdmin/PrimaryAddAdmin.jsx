@@ -328,7 +328,7 @@ const PrimaryAddAdmin = () => {
                         </Grid>
                       </Grid>
                     </Grid>
-                    <Grid item sm={12}>
+                    {/* <Grid item sm={12}>
                       <Grid
                         container
                         width={"60%"}
@@ -338,9 +338,9 @@ const PrimaryAddAdmin = () => {
                           padding: "10px",
                         }}
                       >
-                        <Grid item md={6} sm={12} xs={12}>
-                          <InputLabel>Password</InputLabel>
-                        </Grid>
+                        <Grid item md={6} sm={12} xs={12}> */}
+                          {/* <InputLabel>Password</InputLabel> */}
+                        {/* </Grid>
                         <Grid item md={6} sm={12} xs={12}>
                           <TextField
                             value={password}
@@ -370,10 +370,10 @@ const PrimaryAddAdmin = () => {
                               password length should be greater than 8
                               characters
                             </Typography>
-                          )}
-                        </Grid>
-                      </Grid>
-                    </Grid>
+                          )} */}
+                        {/* </Grid> */}
+                      {/* </Grid> */}
+                    {/* </Grid> */}
                     <Grid item sm={12}>
                       <Grid
                         container

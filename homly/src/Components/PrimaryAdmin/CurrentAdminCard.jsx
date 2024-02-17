@@ -22,6 +22,15 @@ const CurrentAdminCard = (props) => {
   // const [worklocation, setworkLocation] = useState(props.data.Nic_number);
   // const [displayr, setDisplayr] = useState(false);
 
+  const sendmail=(email)=>{
+    axios.post(`http://localhost:3002/locationadmin/sendmail/${email}`)
+    .then(res=>{
+      console.log('sucessfully sent')
+    }).catch(error=>{
+      console.log(`error occured when send mail error is ${error}`)
+    })
+  }
+
   const handleClick = (id) => {
     axios.put(`http://localhost:3002/locationadmin/disable/${id}`,{
       dis:true
@@ -63,6 +72,9 @@ const CurrentAdminCard = (props) => {
           <AccountCircleIcon sx={{ color: "Black", fontSize: "70px" }} />
         </Box>
         <Box sx={{ padding: "10px" }}>
+
+
+
           <Box>Admin Number</Box>
           <Box>
             <TextField
@@ -78,25 +90,11 @@ const CurrentAdminCard = (props) => {
               }}
               alignItems="center"
             ></TextField>
+            {/* {props.data.AdminNo} */}
           </Box>
-          <Box>User Name</Box>
-          <Box>
-            <TextField
-              disabled={true}
-              // onChange={(e) => {
-              //   setUsername(e.target.value);
-              // }}
-              type="text"
-              value={props.data.UserName}
-              alignItems="center"
-              sx={{
-                backgroundColor: "white",
-              }}
-              size="small"
-            ></TextField>
-          </Box>
-        </Box>
-        <Box sx={{ padding: "10px" }}>
+
+
+          
           <Box>Password</Box>
           <Box>
             <TextField
@@ -113,6 +111,37 @@ const CurrentAdminCard = (props) => {
               alignItems="center"
             ></TextField>
           </Box>
+
+
+        </Box>
+
+
+
+
+        <Box sx={{ padding: "10px" }}>
+        <Box>User Name</Box>
+          <Box>
+            <TextField
+              disabled={true}
+              // onChange={(e) => {
+              //   setUsername(e.target.value);
+              // }}
+              type="text"
+              value={props.data.UserName}
+              alignItems="center"
+              sx={{
+                backgroundColor: "white",
+              }}
+              size="small"
+            ></TextField>
+          </Box>
+
+
+
+        
+
+
+
           <Box>Contact Number</Box>
           <Box>
             <TextField
@@ -130,24 +159,15 @@ const CurrentAdminCard = (props) => {
               size="small"
             ></TextField>
           </Box>
+
+
+
         </Box>
+
+
+
         <Box sx={{ padding: "10px" }}>
-          <Box>E-mail</Box>
-          <Box>
-            <TextField
-              disabled={true}
-              // onChange={(e) => {
-              //   setEmail(e.target.value);
-              // }}
-              size="small"
-              type="text"
-              value={props.data.Email}
-              sx={{
-                backgroundColor: "white",
-              }}
-              alignItems="center"
-            ></TextField>
-          </Box>
+          
           <Box>WorkLocation</Box>
           <Box>
             <TextField
@@ -164,10 +184,26 @@ const CurrentAdminCard = (props) => {
               size="small"
             ></TextField>
           </Box>
+          <Box>E-mail</Box>
+          <Box>
+            <TextField
+              disabled={true}
+              // onChange={(e) => {
+              //   setEmail(e.target.value);
+              // }}
+              size="small"
+              type="text"
+              value={props.data.Email}
+              sx={{
+                backgroundColor: "white",
+              }}
+              alignItems="center"
+            ></TextField>
+          </Box>
         </Box>
         <Box
           sx={{
-            padding: "35px",
+            padding: "10px",
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between",
@@ -186,9 +222,10 @@ const CurrentAdminCard = (props) => {
                 </Button> */}
           {/* <Box>{dataobj}</Box> */}
           <Box sx={{ height: "20px" }}></Box>
+          {/* disable admin button */}
      <Button
          
-            sx={{ width: "90px", height: "30px", borderRadius: "15px", }}
+            sx={{ width: "165px", height: "30px", borderRadius: "15px", }}
             variant="contained"
             onClick={() => {
               handleClick(props.data.AdminNo);
@@ -197,6 +234,40 @@ const CurrentAdminCard = (props) => {
           >
             <Typography>Disable</Typography>
           </Button>
+          {/* edit button */}
+
+
+          <Button
+         
+         sx={{ width: "165px", height: "30px", borderRadius: "15px",marginTop:'5px' }}
+         variant="contained"
+         onClick={() => {
+           
+         }}
+         
+       >
+         <Typography>Edit</Typography>
+       </Button>
+
+{/* reset password */}
+
+
+
+       <Button
+         
+         sx={{ width: "165px", height: "30px", borderRadius: "15px", marginTop:'5px'}}
+         variant="contained"
+         onClick={() => {
+          sendmail(props.data.Email)
+           
+         }}
+         
+       >
+         <Typography>Reset Password</Typography>
+       </Button>
+
+
+
         </Box>
       </Box>
     </ThemeProvider>
