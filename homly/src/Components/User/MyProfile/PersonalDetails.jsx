@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import {
   Box,
   ThemeProvider,
@@ -15,6 +16,7 @@ import PersonalDetailsGrid from "../PersonalDetailsGrid/PersonalDetailsGrid";
 
 import theme from "../../../HomlyTheme";
 import ProfilePicUploadPopup from "../ProfilePicUploadPopup";
+import ErrorSnackbar from "../ErrorSnackbar";
 
 const PersonalDetails = () => {
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -31,6 +33,17 @@ const PersonalDetails = () => {
     image: "",
   });
 
+  const [detailsError, setDetailsError] = useState({
+    email: false,
+    contactNo: false,
+  });
+
+  const [errorStatus, setErrorStatus] = useState({
+    isOpen: false,
+    type: "",
+    message: "",
+  });
+
   const [isEnable, setIsEnable] = useState(false);
 
   const [open, setOpen] = useState(false);
@@ -39,18 +52,48 @@ const PersonalDetails = () => {
   };
 
   const checkEmail = (email) => {
-    return email.length > 0 && !emailRegex.test(email);
+    const error = email.length > 0 && !emailRegex.test(email);
+    setDetailsError({ ...detailsError, email: error });
+    return error;
   };
 
   const checkContactNo = (contactNo) => {
-    return contactNo.length > 0 && !phoneRegex.test(contactNo);
+    const error = contactNo.length > 0 && !phoneRegex.test(contactNo);
+    setDetailsError({ ...detailsError, contactNo: error });
+    return error;
   };
 
   const handleEdit = () => {
     setIsEnable(true);
   };
   const handleUpdate = () => {
-    setIsEnable(false);
+    if(!detailsError.email && !detailsError.contactNo){
+      const formData = {
+        serviceNo: data.serviceNo,
+        email: data.email,
+        contactNo: data.contactNo,
+        image: data.image,
+      };
+      axios.put("http://localhost:3002/users/auth", formData).then((res) => {
+        if (res.data.success) {
+          setErrorStatus({
+            ...errorStatus,
+            isOpen: true,
+            type: "success",
+            message: res.data.message,
+          }).catch((err) => {
+            setErrorStatus({
+              ...errorStatus,
+              isOpen: true,
+              type: "error",
+              message: err.message,
+            });
+          });
+        }
+      });
+      setIsEnable(false);
+
+    }
   };
 
   const handleCancel = () => {
@@ -73,8 +116,8 @@ const PersonalDetails = () => {
         >
           <Card sx={{ width: { xs: "100%", sm: "90%" } }}>
             <CardContent>
-              <Stack direction="row" sx={{ flexWrap:'wrap' }}>
-                <Box sx={{ width:{xs:'100%',sm:'70%'} }}>
+              <Stack direction="row" sx={{ flexWrap: "wrap" }}>
+                <Box sx={{ width: { xs: "100%", sm: "70%" } }}>
                   <PersonalDetailsGrid
                     id="serviceNo"
                     lable="Service Number"
@@ -132,7 +175,7 @@ const PersonalDetails = () => {
                     helperText={checkEmail(data.email) ? "Invalid Email" : ""}
                   />
                 </Box>
-                <Box sx={{ height:'210px',width:{xs:'100%',sm:'20%'} }}>
+                <Box sx={{ height: "210px", width: { xs: "100%", sm: "20%" } }}>
                   {/* <AvatarImage /> */}
                   <ProfilePicUploadPopup
                     open={open}
@@ -162,10 +205,14 @@ const PersonalDetails = () => {
                         display: "flex",
                         alignItems: "center",
                         marginTop: "15px",
-                        marginLeft:  "8px" ,
+                        marginLeft: "8px",
                       }}
                     >
-                      <Button variant="outlined" onClick={handleClickOpen} disabled={!isEnable}>
+                      <Button
+                        variant="outlined"
+                        onClick={handleClickOpen}
+                        disabled={!isEnable}
+                      >
                         Edit Profile Picture
                       </Button>
                     </Box>
@@ -212,6 +259,14 @@ const PersonalDetails = () => {
             </CardActions>
           </Card>
         </Box>
+        <ErrorSnackbar
+          isOpen={errorStatus.isOpen}
+          type={errorStatus.type}
+          message={errorStatus.message}
+          setIsOpen={(value) =>
+            setErrorStatus({ ...errorStatus, isOpen: value })
+          }
+        />
       </Box>
     </ThemeProvider>
   );
