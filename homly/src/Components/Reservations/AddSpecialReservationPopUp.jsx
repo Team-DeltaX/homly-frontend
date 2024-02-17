@@ -13,9 +13,24 @@ import BasicDatePicker from '../Common/BasicDatePicker';
 
 const currencies = [
   {
-    value: 'JPY',
-    label: '¥',
+    value: 'ANU1',
+    label: 'Anuradhapura-1',
     code: 'HH001',
+  },
+  {
+    value: 'ANU2',
+    label: 'Anuradhapura-2',
+    code: 'HH002',
+  },
+  {
+    value: 'KRNG',
+    label: 'Kurunagala-1',
+    code: 'HH004',
+  },
+  {
+    value: 'KGL',
+    label: 'Kegalle-1',
+    code: 'HH005',
   },
 ];
 
