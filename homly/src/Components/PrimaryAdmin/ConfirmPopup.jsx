@@ -7,7 +7,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-export default function ConfirmPopup({open, setOpen,title,text,controlfunction,data}) {
+export default function ConfirmPopup({open, setOpen,title,text,controlfunction}) {
 
   
 
@@ -45,7 +45,7 @@ export default function ConfirmPopup({open, setOpen,title,text,controlfunction,d
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
           <Button onClick={()=>{
-             controlfunction(data.Email,data.UserName,data.AdminNo)
+             controlfunction()
 
            
           }}>Ok</Button>

@@ -130,13 +130,13 @@ const PrimaryAddAdmin = () => {
     setPassword("");
     SetSubstitute("");
   };
-  const ValidatePassword = (password) => {
-    if (password.length <= 8) {
-      setPassworderror(true);
-    } else {
-      setPassworderror(false);
-    }
-  };
+  // const ValidatePassword = (password) => {
+  //   if (password.length <= 8) {
+  //     setPassworderror(true);
+  //   } else {
+  //     setPassworderror(false);
+  //   }
+  // };
   const ValidateContact = (contactno) => {
     if (!validatemobile(contactno)) {
       setMobileerror(true);
