@@ -103,7 +103,7 @@ export default function AdminLoginPage() {
                 sx={{
                   width: { xs: "90%", sm: "70%" },
                   height: "90%",
-                  padding: "10px",
+                  padding: "20px",
                   justifyContent: "flex-end",
                 }}
               >
@@ -113,7 +113,7 @@ export default function AdminLoginPage() {
                     sx={{
                       width: "100%",
                       alignItems: "center",
-                      marginBottom: { xs: "2%", sm: "15%" },
+                      marginBottom: { xs: "2%", md: "10%" },
                     }}
                   >
                     <InputTextWithIcon
@@ -141,7 +141,7 @@ export default function AdminLoginPage() {
                     direction="row"
                     sx={{
                       width: "100%",
-                      justifyContent: "center",
+                      justifyContent: "space-between",
                       marginTop: "20px",
                       flexWrap: "wrap-reverse",
                     }}
@@ -157,7 +157,14 @@ export default function AdminLoginPage() {
                       component={Link}
                       to="/"
                     >
-                      User Login
+                      <ArrowBackIosNewIcon
+                        sx={{
+                          fontSize: "1rem",
+                          fontWeight: "bold",
+                          marginRight: "10px",
+                        }}
+                      />{" "}
+                      <Typography>User Login</Typography>
                     </Button>
                     <Box
                       sx={{

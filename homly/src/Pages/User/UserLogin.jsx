@@ -16,6 +16,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import BadgeIcon from "@mui/icons-material/Badge";
 import PasswordIcon from "@mui/icons-material/Password";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 import theme from "../../HomlyTheme";
 import "./UserStyle.css";
@@ -171,7 +172,7 @@ const UserLogin = () => {
                     justifyContent: "flex-end",
                     alignItems: "baseline",
                     padding: "5%",
-                    marginBottom:{xs:"20px",sm:0}
+                    marginBottom: { xs: "20px", sm: 0 },
                   }}
                 >
                   <Typography sx={{ paddingRight: "2%", fontWeight: "bold" }}>
@@ -238,23 +239,40 @@ const UserLogin = () => {
                           Forget Password
                         </Button>
                       </Box>
-                      <Stack direction='row' sx={{  width: "90%",justifyContent:"space-between",marginTop:"20px",flexWrap:"wrap-reverse" }}>
+                      <Stack
+                        direction="row"
+                        sx={{
+                          width: "90%",
+                          justifyContent: "space-between",
+                          marginTop: "20px",
+                          flexWrap: "wrap-reverse",
+                        }}
+                      >
                         <Button
                           variant="contained"
                           color="primary"
-                          sx={{ width:{xs:"100%",sm:"auto"} ,marginTop:{xs:"10px",sm:0}}}
+                          sx={{
+                            width: { xs: "100%", sm: "auto" },
+                            marginTop: { xs: "10px", sm: 0 },
+                          }}
                           component={Link}
                           to="/Admin/Login"
                         >
-                          Admin Login
+                          <Typography>Admin Login</Typography>
+                          <ArrowForwardIosIcon
+                            sx={{
+                              fontSize: "1rem",
+                              fontWeight: "bold",
+                              marginLeft: "10px",
+                            }}
+                          />
                         </Button>
                         <Box
                           sx={{
-                            width: {xs:"100%",sm:'auto'},
+                            width: { xs: "100%", sm: "auto" },
                             display: "flex",
                             justifyContent: "center",
                             alignItems: "center",
-                            
                           }}
                         >
                           <Button
