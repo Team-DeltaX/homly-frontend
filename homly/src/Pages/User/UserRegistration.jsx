@@ -1,6 +1,4 @@
-import { React } from "react";
-import { useEffect } from "react";
-import { useState } from "react";
+import  React , { useState }  from "react";
 import axios from "axios";
 import {
   Box,
@@ -33,21 +31,17 @@ import InputPasswordWithIcon from "../../Components/User/TextField/InputPassword
 import InputTextWithIcon from "../../Components/User/TextField/InputTextWithIcon";
 import PasswordStrength from "../../Components/User/PasswordStrength";
 
-// import AvatarImage from "../Components/AvatarImage"
 
 const Img = styled("img")({
-  // margin: "auto",
   display: "block",
   width: "40%",
   height: "40%%",
   padding: "5%",
   filter: "drop-shadow(17px 18px 90px  #872341)",
-  // filter: "drop-shadow(17px 18px 90px -8px rgba(0,0,0,0.64))",
 });
 
-let vh = window.innerHeight * 0.01;
-// Then we set the value in the --vh custom property to the root of the document
-document.documentElement.style.setProperty("--vh", `${vh}px`);
+// let vh = window.innerHeight * 0.01;
+// document.documentElement.style.setProperty("--vh", `${vh}px`);
 
 const UserRegistration = () => {
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -83,7 +77,6 @@ const UserRegistration = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // console.log('2',ServiceNo,checkServiceNo(ServiceNo))
     const formData = { ServiceNo, Password, Email, ContactNo, image };
 
     if (
@@ -121,7 +114,6 @@ const UserRegistration = () => {
           setImage(null);
         })
         .catch((error) => {
-          // alert("Error adding user:", error);
           setErrorStatus({
             ...errorStatus,
             isOpen: true,
@@ -151,7 +143,6 @@ const UserRegistration = () => {
   return (
     <ThemeProvider theme={theme}>
       <Box
-        // className="main_container"
         sx={{
           width: "100%",
           overflow: "hidden",
@@ -166,7 +157,6 @@ const UserRegistration = () => {
             setIsOpen={(value) =>
               setErrorStatus({ ...errorStatus, isOpen: value })
             }
-            // handleAlertClose={handleAlertClose}
           />
 
           <Container
@@ -176,7 +166,6 @@ const UserRegistration = () => {
             <Grid
               container
               sx={{
-                // height: "85%",
                 height: "auto",
                 backgroundColor: "#FEF2F4",
                 borderRadius: "10px",
