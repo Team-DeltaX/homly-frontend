@@ -32,40 +32,16 @@ const PrimaryAuthorizations = lazy(() =>
 
 const PrimaryAdminRouter = () => (
   <Routes>
-    <Route
-      path="/dashboard"
-      element={<PrimaryDashboard />}
-    ></Route>
-    <Route
-      path="/reservations"
-      element={<PrimaryReservations />}
-    ></Route>
-    <Route
-      path="/holidayhomes"
-      element={<PrimaryHolidayHomes />}
-    ></Route>
+    <Route path="/dashboard" element={<PrimaryDashboard />}></Route>
+    <Route path="/reservations" element={<PrimaryReservations />}></Route>
+    <Route path="/holidayhomes" element={<PrimaryHolidayHomes />}></Route>
     <Route path="/report" element={<PrimaryReport />}></Route>
-    <Route
-      path="/blacklistedusers/manage"
-      element={<PrimaryManageBlacklistedUsers />}
-    ></Route>
-    <Route
-      path="/blacklistedusers/history"
-      element={<PrimaryBlacklistHistory />}
-    ></Route>
-    <Route
-      path="/blacklistedusers/complaints"
-      element={<PrimaryComplaints />}
-    ></Route>
+    <Route path="/blacklistedusers/manage"element={<PrimaryManageBlacklistedUsers />}></Route>
+    <Route path="/blacklistedusers/history"element={<PrimaryBlacklistHistory />}></Route>
+    <Route path="/blacklistedusers/complaints"element={<PrimaryComplaints />}></Route>
     <Route path="/addadmin" element={<PrimaryAddAdmin />}></Route>
-    <Route
-      path="/viewadmin"
-      element={<PrimaryViewAdmin />}
-    ></Route>
-    <Route
-      path="/authorizations"
-      element={<PrimaryAuthorizations />}
-    ></Route>
+    <Route path="/viewadmin" element={<PrimaryViewAdmin />}></Route>
+    <Route path="/authorizations" element={<PrimaryAuthorizations />}></Route>
   </Routes>
 );
 

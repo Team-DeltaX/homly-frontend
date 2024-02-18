@@ -1,6 +1,4 @@
-import { React } from "react";
-import { useEffect } from "react";
-import { useState } from "react";
+import  React , { useState }  from "react";
 import axios from "axios";
 import {
   Box,
@@ -33,21 +31,17 @@ import InputPasswordWithIcon from "../../Components/User/TextField/InputPassword
 import InputTextWithIcon from "../../Components/User/TextField/InputTextWithIcon";
 import PasswordStrength from "../../Components/User/PasswordStrength";
 
-// import AvatarImage from "../Components/AvatarImage"
 
 const Img = styled("img")({
-  // margin: "auto",
   display: "block",
   width: "40%",
   height: "40%%",
   padding: "5%",
   filter: "drop-shadow(17px 18px 90px  #872341)",
-  // filter: "drop-shadow(17px 18px 90px -8px rgba(0,0,0,0.64))",
 });
 
-let vh = window.innerHeight * 0.01;
-// Then we set the value in the --vh custom property to the root of the document
-document.documentElement.style.setProperty("--vh", `${vh}px`);
+// let vh = window.innerHeight * 0.01;
+// document.documentElement.style.setProperty("--vh", `${vh}px`);
 
 const UserRegistration = () => {
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -60,26 +54,8 @@ const UserRegistration = () => {
   const [ConfirmPassword, setConfirmPassword] = useState("");
   const [image, setImage] = useState(null);
 
-  const [errorServiceNumber, setErrorServiceNumber] = useState(false);
   const [errorConfirmPassword, setErrorConfirmPassword] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState(0);
-
-  // const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
-  const [dbServiceNo, setDbServiceNo] = useState(null);
-
-  // const handleClickShowConfirmPassword = () =>
-  //   setShowConfirmPassword((show) => !show);
-
-  // const handleMouseDownPassword = (event) => {
-  //   event.preventDefault();
-  // };
-
-  // const countChar = (str) => {
-  //   let withoutSpace = str.replace(/\s/g, "");
-  //   let len = withoutSpace.length;
-  //   return len;
-  // };
 
   const checkEmail = (email) => {
     return email.length > 0 && !emailRegex.test(email);
@@ -89,35 +65,6 @@ const UserRegistration = () => {
     return contactNo.length > 0 && !phoneRegex.test(contactNo);
   };
 
-  const checkServiceNo = (sn) => {
-    // setDbServiceNo("1000");
-    let len = dbServiceNo === null ? 0 : dbServiceNo.length;
-    if (sn.length > 0 && len !== 0) {
-      for (let i = 0; i < len; i++) {
-        if (dbServiceNo[i].serviceNumber === sn) {
-          setErrorServiceNumber(false);
-          console.log("1", errorServiceNumber);
-          return false;
-        } else {
-          setErrorServiceNumber(true);
-          console.log("1", errorServiceNumber);
-        }
-      }
-      return true;
-    }
-  };
-
-  useEffect(() => {
-    fetch("https://65ac00f8fcd1c9dcffc76f52.mockapi.io/homly/api/employee")
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        setDbServiceNo(data);
-      });
-  }, []);
-
-  // console.log(dbServiceNo)
 
   const [errorStatus, setErrorStatus] = useState({
     isOpen: false,
@@ -125,25 +72,17 @@ const UserRegistration = () => {
     message: "",
   });
 
-  // const handleAlertClose = (event, reason) => {
-  //   if (reason === "clickaway") {
-  //     return;
-  //   }
-
-  //   setErrorStatus({ ...errorStatus, isOpen: false });
-  // };
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // console.log('2',ServiceNo,checkServiceNo(ServiceNo))
     const formData = { ServiceNo, Password, Email, ContactNo, image };
 
     if (
-      !checkServiceNo(ServiceNo) &&
       !checkEmail(Email) &&
       !checkContactNo(ContactNo) &&
-      !errorConfirmPassword && 
+      !errorConfirmPassword &&
       passwordStrength > 0
     ) {
       console.log(ServiceNo, Email, ContactNo, Password);
@@ -175,7 +114,6 @@ const UserRegistration = () => {
           setImage(null);
         })
         .catch((error) => {
-          // alert("Error adding user:", error);
           setErrorStatus({
             ...errorStatus,
             isOpen: true,
@@ -205,29 +143,31 @@ const UserRegistration = () => {
   return (
     <ThemeProvider theme={theme}>
       <Box
-        // className="main_container"
         sx={{
           width: "100%",
           overflow: "hidden",
         }}
       >
-        <Container maxWidth="xl" style={{ padding: 0 }}>
+        <Container maxWidth="xl" style={{ padding: 0,height:"95vh" }}>
           {/* error snack bar */}
           <ErrorSnackbar
             isOpen={errorStatus.isOpen}
             type={errorStatus.type}
             message={errorStatus.message}
-            setIsOpen={(value) => setErrorStatus({ ...errorStatus, isOpen: value })}
-            // handleAlertClose={handleAlertClose}
+            setIsOpen={(value) =>
+              setErrorStatus({ ...errorStatus, isOpen: value })
+            }
           />
 
-          <Container className="registration-box-container">
+          <Container
+            className="registration-box-container"
+            sx={{ display: "flex", height: "100%", alignItems: "center" }}
+          >
             <Grid
               container
               sx={{
-                // height: "85%",
                 height: "auto",
-                backgroundColor: "grey1",
+                backgroundColor: "#FEF2F4",
                 borderRadius: "10px",
                 boxShadow: 1,
               }}
@@ -296,10 +236,7 @@ const UserRegistration = () => {
                     Login
                   </Button>
                 </Box>
-                <Box
-                  paddingLeft={"5%"}
-                  marginBottom={"2%"}
-                >
+                <Box paddingLeft={"10%"} marginBottom={"2%"}>
                   <form
                     action=""
                     autoComplete="off"
@@ -338,7 +275,14 @@ const UserRegistration = () => {
                         }}
                       >
                         <Button variant="outlined" onClick={handleClickOpen}>
-                          Upload Profile Picture
+                          <Typography
+                            sx={{
+                              fontSize: { xs: "0.7rem" },
+                              fontWeight: "bold",
+                            }}
+                          >
+                            Upload Profile Picture
+                          </Typography>
                         </Button>
                       </Box>
                     </Stack>
@@ -347,12 +291,8 @@ const UserRegistration = () => {
                       lable={"Service Number"}
                       icon={<BadgeIcon />}
                       inputType={"text"}
-                      error={errorServiceNumber}
-                      helperText={
-                        errorServiceNumber
-                          ? "Your are not an employee of Homly"
-                          : ""
-                      }
+                      error={false}
+                      helperText={""}
                       required={true}
                       inputValue={ServiceNo}
                       setInputValue={setServiceNo}
@@ -383,9 +323,7 @@ const UserRegistration = () => {
                       inputValue={ContactNo}
                       setInputValue={setContactNo}
                     />
-                    <Stack
-                      direction="column"
-                    >
+                    <Stack direction="column">
                       <InputPasswordWithIcon
                         lable={"Password"}
                         icon={
@@ -401,7 +339,10 @@ const UserRegistration = () => {
                         marginBottom={"0"}
                       />
                       <Box sx={{ width: "90%" }}>
-                        <PasswordStrength password={Password} setPasswordStrength={setPasswordStrength}/>
+                        <PasswordStrength
+                          password={Password}
+                          setPasswordStrength={setPasswordStrength}
+                        />
                       </Box>
                     </Stack>
                     <InputPasswordWithIcon
@@ -417,210 +358,6 @@ const UserRegistration = () => {
                       isCheck={true}
                       setErrorConfirmPassword={setErrorConfirmPassword}
                     />
-
-                    {/* <TextField
-                      sx={{ marginBottom: " 6%", width: "90%" }}
-                      id="textfield-serviceNumber"
-                      label="Service Number"
-                      required
-                      error={errorServiceNumber}
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <BadgeIcon />
-                          </InputAdornment>
-                        ),
-                      }}
-                      InputLabelProps={{
-                        shrink: focusedServiceNo || countChar(ServiceNo) !== 0,
-                        style: {
-                          marginLeft:
-                            focusedServiceNo || countChar(ServiceNo) !== 0
-                              ? 0
-                              : 35,
-                        },
-                      }}
-                      onFocus={() => setFocusedServiceNo(true)}
-                      onBlur={() => setFocusedServiceNo(false)}
-                      onChange={(e) => {
-                        setServiceNo(e.target.value);
-                      }}
-                      value={ServiceNo}
-                      size="small"
-                      helperText={
-                        errorServiceNumber
-                          ? "Your are not an employee of Homly"
-                          : ""
-                      }
-                      fullWidth
-                    /> */}
-                    {/* <TextField
-                      sx={{ marginBottom: " 6%", width: "90%" }}
-                      id="textfield-email"
-                      label="Email"
-                      required
-                      error={checkEmail(Email)}
-                      type="email"
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <EmailIcon />
-                          </InputAdornment>
-                        ),
-                      }}
-                      InputLabelProps={{
-                        shrink: focusedEmail || countChar(Email) !== 0,
-                        style: {
-                          marginLeft:
-                            focusedEmail || countChar(Email) !== 0 ? 0 : 35,
-                        },
-                      }}
-                      onFocus={() => setFocusedEmail(true)}
-                      onBlur={() => setFocusedEmail(false)}
-                      onChange={(e) => setEmail(e.target.value)}
-                      value={Email}
-                      size="small"
-                      helperText={
-                        checkEmail(Email) ? "invalid email address" : ""
-                      }
-                      fullWidth
-                    /> */}
-
-                    {/* <TextField
-                      sx={{ marginBottom: " 6%", width: "90%" }}
-                      id="textfield-contactNumber"
-                      label="Contact Number"
-                      required
-                      error={checkContactNo(ContactNo)}
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <CallIcon />
-                          </InputAdornment>
-                        ),
-                      }}
-                      InputLabelProps={{
-                        shrink: focusedContactNo || countChar(ContactNo) !== 0,
-                        style: {
-                          marginLeft:
-                            focusedContactNo || countChar(ContactNo) !== 0
-                              ? 0
-                              : 35,
-                        },
-                      }}
-                      onFocus={() => setFocusedContactNo(true)}
-                      onBlur={() => setFocusedContactNo(false)}
-                      onChange={(e) => setContactNo(e.target.value)}
-                      value={ContactNo}
-                      size="small"
-                      helperText={
-                        checkContactNo(ContactNo)
-                          ? "invalid contact number"
-                          : ""
-                      }
-                      fullWidth
-                    /> */}
-
-                    {/* <TextField
-                      sx={{ marginBottom: "6%", width: "90%" }}
-                      id="textfield-password"
-                      label="Password"
-                      required
-                      error={false}
-                      type={showPassword ? "text" : "password"}
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <PasswordIcon sx={{ p: 0.25, ml: -0.5, mr: 1 }} />
-                          </InputAdornment>
-                        ),
-
-                        endAdornment: (
-                          <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={handleClickShowPassword}
-                            onMouseDown={handleMouseDownPassword}
-                            edge="end"
-                          >
-                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                          </IconButton>
-                        ),
-                      }}
-                      InputLabelProps={{
-                        shrink: focusedPassword || countChar(Password) !== 0,
-                        style: {
-                          marginLeft:
-                            focusedPassword || countChar(Password) !== 0
-                              ? 0
-                              : 35,
-                        },
-                      }}
-                      onFocus={() => setFocusedPassword(true)}
-                      onBlur={() => setFocusedPassword(false)}
-                      onChange={(e) => {
-                        setPassword(e.target.value);
-                        checkConfirmPassword(ConfirmPassword, e.target.value);
-                      }}
-                      value={Password}
-                      size="small"
-                      helperText={""}
-                      fullWidth
-                    /> */}
-
-                    {/* <TextField
-                      sx={{ marginBottom: " 6%", width: "90%" }}
-                      id="textfield-confirmPassword"
-                      label="Confirm Password"
-                      required
-                      error={errorConfirmPassword}
-                      type={showConfirmPassword ? "text" : "password"}
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <PasswordIcon sx={{ p: 0.25, ml: -0.5, mr: 1 }} />
-                          </InputAdornment>
-                        ),
-
-                        endAdornment: (
-                          <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={handleClickShowConfirmPassword}
-                            onMouseDown={handleMouseDownPassword}
-                            edge="end"
-                          >
-                            {showConfirmPassword ? (
-                              <VisibilityOff />
-                            ) : (
-                              <Visibility />
-                            )}
-                          </IconButton>
-                        ),
-                      }}
-                      InputLabelProps={{
-                        shrink:
-                          focusedConfirmPassword ||
-                          countChar(ConfirmPassword) !== 0,
-                        style: {
-                          marginLeft:
-                            focusedConfirmPassword ||
-                            countChar(ConfirmPassword) !== 0
-                              ? 0
-                              : 35,
-                        },
-                      }}
-                      onFocus={() => setFocusedConfirmPassword(true)}
-                      onBlur={() => setFocusedConfirmPassword(false)}
-                      onChange={(e) => {
-                        setConfirmPassword(e.target.value);
-                        checkConfirmPassword(e.target.value, Password);
-                      }}
-                      value={ConfirmPassword}
-                      size="small"
-                      helperText={
-                        errorConfirmPassword ? "password not match" : ""
-                      }
-                      fullWidth
-                    /> */}
 
                     <Box
                       sx={{

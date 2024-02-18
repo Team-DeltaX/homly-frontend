@@ -2,6 +2,7 @@ import React, { Suspense } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import UserRouter from "./Routers/UserRouter";
+import AdminRouter from "./Routers/AdminRouter";
 import LocationAdminRouter from "./Routers/LocationAdminRouter";
 import PrimaryAdminRouter from "./Routers/PrimaryAdminRouter";
 
@@ -18,6 +19,7 @@ const App = () => (
         <Routes>
 
         <Route path="*" element={<UserRouter />} />
+        <Route path="/admin/*" element={<AdminRouter/>} />
         <Route path="/locationadmin/*" element={<LocationAdminRouter />} />
         <Route path="/primaryadmin/*" element={<PrimaryAdminRouter />} />
         </Routes>
