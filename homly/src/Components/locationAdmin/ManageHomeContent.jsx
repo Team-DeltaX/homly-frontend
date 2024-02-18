@@ -1,9 +1,10 @@
 import { Box, Button, Typography, Container } from '@mui/material'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import axios from 'axios';
 
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import Input from './Input';
@@ -50,6 +51,21 @@ const ManageHomeContent = () => {
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
+
+    const [data, setData] = React.useState([]);
+
+    useEffect(() => {
+        axios.get('http://localhost:3002/locationadmin/holidayhome/')
+            .then((res) => {
+                if (Response) {
+                    console.log(res.data);
+                    setData(res.data);
+                } else {
+                    console.log("No data found");
+                }
+            })
+    }, [])
+
 
     return (
         <Box >
