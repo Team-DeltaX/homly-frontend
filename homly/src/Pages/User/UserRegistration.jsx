@@ -60,26 +60,8 @@ const UserRegistration = () => {
   const [ConfirmPassword, setConfirmPassword] = useState("");
   const [image, setImage] = useState(null);
 
-  const [errorServiceNumber, setErrorServiceNumber] = useState(false);
   const [errorConfirmPassword, setErrorConfirmPassword] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState(0);
-
-  // const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
-  const [dbServiceNo, setDbServiceNo] = useState(null);
-
-  // const handleClickShowConfirmPassword = () =>
-  //   setShowConfirmPassword((show) => !show);
-
-  // const handleMouseDownPassword = (event) => {
-  //   event.preventDefault();
-  // };
-
-  // const countChar = (str) => {
-  //   let withoutSpace = str.replace(/\s/g, "");
-  //   let len = withoutSpace.length;
-  //   return len;
-  // };
 
   const checkEmail = (email) => {
     return email.length > 0 && !emailRegex.test(email);
@@ -89,35 +71,6 @@ const UserRegistration = () => {
     return contactNo.length > 0 && !phoneRegex.test(contactNo);
   };
 
-  const checkServiceNo = (sn) => {
-    // setDbServiceNo("1000");
-    let len = dbServiceNo === null ? 0 : dbServiceNo.length;
-    if (sn.length > 0 && len !== 0) {
-      for (let i = 0; i < len; i++) {
-        if (dbServiceNo[i].serviceNumber === sn) {
-          setErrorServiceNumber(false);
-          console.log("1", errorServiceNumber);
-          return false;
-        } else {
-          setErrorServiceNumber(true);
-          console.log("1", errorServiceNumber);
-        }
-      }
-      return true;
-    }
-  };
-
-  useEffect(() => {
-    fetch("https://65ac00f8fcd1c9dcffc76f52.mockapi.io/homly/api/employee")
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        setDbServiceNo(data);
-      });
-  }, []);
-
-  // console.log(dbServiceNo)
 
   const [errorStatus, setErrorStatus] = useState({
     isOpen: false,
@@ -125,13 +78,7 @@ const UserRegistration = () => {
     message: "",
   });
 
-  // const handleAlertClose = (event, reason) => {
-  //   if (reason === "clickaway") {
-  //     return;
-  //   }
-
-  //   setErrorStatus({ ...errorStatus, isOpen: false });
-  // };
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -140,7 +87,6 @@ const UserRegistration = () => {
     const formData = { ServiceNo, Password, Email, ContactNo, image };
 
     if (
-      !checkServiceNo(ServiceNo) &&
       !checkEmail(Email) &&
       !checkContactNo(ContactNo) &&
       !errorConfirmPassword &&
@@ -356,12 +302,8 @@ const UserRegistration = () => {
                       lable={"Service Number"}
                       icon={<BadgeIcon />}
                       inputType={"text"}
-                      error={errorServiceNumber}
-                      helperText={
-                        errorServiceNumber
-                          ? "Your are not an employee of Homly"
-                          : ""
-                      }
+                      error={false}
+                      helperText={""}
                       required={true}
                       inputValue={ServiceNo}
                       setInputValue={setServiceNo}

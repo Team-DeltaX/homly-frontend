@@ -12,7 +12,6 @@ import { Link, useNavigate } from "react-router-dom";
 
 import BadgeIcon from "@mui/icons-material/Badge";
 import PasswordIcon from "@mui/icons-material/Password";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 
 import InputTextWithIcon from "../Components/User/TextField/InputTextWithIcon";
