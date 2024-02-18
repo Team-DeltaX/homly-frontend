@@ -144,7 +144,11 @@ const PrimaryViewAdmins = () => {
               </Box> */}
               
               
-              <CustomTabPanel/>
+            
+              <Box >
+              <CustomTabPanel />
+
+              </Box>
 
              
               

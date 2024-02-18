@@ -32,7 +32,8 @@ const CurrentAdminslist = () => {
       .then((res) => {
         SetLoad(false);
         console.log(res.data);
-        setBlacklistedusers(res.data);
+         //reverse array to keep new ones first 
+        setBlacklistedusers(res.data.reverse());
       })
       .catch((err) => {
         console.log(err);

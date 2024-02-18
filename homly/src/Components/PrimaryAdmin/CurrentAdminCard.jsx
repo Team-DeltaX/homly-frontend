@@ -80,6 +80,7 @@ const CurrentAdminCard = (props) => {
       })
       .then((res) => {
         console.log("sucessfully sent");
+        props.fetchadmins()
       })
       .catch((error) => {
         console.log(`error occured when send mail error is ${error}`);
