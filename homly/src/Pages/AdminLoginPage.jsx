@@ -8,10 +8,12 @@ import {
   Button,
 } from "@mui/material/";
 
-// import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import BadgeIcon from "@mui/icons-material/Badge";
 import PasswordIcon from "@mui/icons-material/Password";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 
 import InputTextWithIcon from "../Components/User/TextField/InputTextWithIcon";
 import InputPasswordWithIcon from "../Components/User/TextField/InputPasswordWithIcon";
@@ -35,7 +37,7 @@ export default function AdminLoginPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setOpen(true)
+    setOpen(true);
   };
 
   return (
@@ -137,19 +139,46 @@ export default function AdminLoginPage() {
                   </Stack>
                   <Stack
                     direction="row"
-                    sx={{ width: "100%", justifyContent: "center" }}
+                    sx={{
+                      width: "100%",
+                      justifyContent: "center",
+                      marginTop: "20px",
+                      flexWrap: "wrap-reverse",
+                    }}
                   >
                     <Button
-                      type="reset"
-                      variant="outlined"
+                      variant="contained"
                       color="primary"
-                      sx={{ marginRight: "2%" }}
+                      sx={{
+                        width: { xs: "100%", sm: "auto" },
+                        marginTop: { xs: "10px", sm: 0 },
+                        marginRight: { xs: 0, sm: "3%" },
+                      }}
+                      component={Link}
+                      to="/"
                     >
-                      Reset
+                      User Login
                     </Button>
-                    <Button type="submit" variant="contained" color="primary">
-                      Login
-                    </Button>
+                    <Box
+                      sx={{
+                        width: { xs: "100%", sm: "auto" },
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Button
+                        type="reset"
+                        variant="outlined"
+                        color="primary"
+                        sx={{ marginRight: "2%" }}
+                      >
+                        Reset
+                      </Button>
+                      <Button type="submit" variant="contained" color="primary">
+                        Login
+                      </Button>
+                    </Box>
                   </Stack>
                 </form>
               </Stack>
