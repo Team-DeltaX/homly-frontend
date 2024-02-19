@@ -122,6 +122,7 @@ const UserLogin = () => {
             isOpen={errorStatus.isOpen}
             type={errorStatus.type}
             message={errorStatus.message}
+            setIsOpen={(val) => setErrorStatus({ ...errorStatus, isOpen: val })}
           />
 
           {/* forget password popup */}

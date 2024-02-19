@@ -1,4 +1,4 @@
-import  React , { useState }  from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import {
   Box,
@@ -12,7 +12,6 @@ import {
   Avatar,
 } from "@mui/material";
 
-// import { Visibility, VisibilityOff } from "@mui/icons-material";
 import BadgeIcon from "@mui/icons-material/Badge";
 import EmailIcon from "@mui/icons-material/Email";
 import CallIcon from "@mui/icons-material/Call";
@@ -30,7 +29,6 @@ import { Link } from "react-router-dom";
 import InputPasswordWithIcon from "../../Components/User/TextField/InputPasswordWithIcon";
 import InputTextWithIcon from "../../Components/User/TextField/InputTextWithIcon";
 import PasswordStrength from "../../Components/User/PasswordStrength";
-
 
 const Img = styled("img")({
   display: "block",
@@ -65,19 +63,14 @@ const UserRegistration = () => {
     return contactNo.length > 0 && !phoneRegex.test(contactNo);
   };
 
-
   const [errorStatus, setErrorStatus] = useState({
     isOpen: false,
     type: "",
     message: "",
   });
 
-  
-
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    const formData = { ServiceNo, Password, Email, ContactNo, image };
 
     if (
       !checkEmail(Email) &&
@@ -87,6 +80,13 @@ const UserRegistration = () => {
     ) {
       console.log(ServiceNo, Email, ContactNo, Password);
 
+      const formData = {
+        ServiceNo,
+        Password,
+        Email: Email.toLowerCase(),
+        ContactNo,
+        image,
+      };
       axios
         .post("http://localhost:3002/users", formData)
         .then((res) => {
@@ -148,15 +148,13 @@ const UserRegistration = () => {
           overflow: "hidden",
         }}
       >
-        <Container maxWidth="xl" style={{ padding: 0,height:"95vh" }}>
+        <Container maxWidth="xl" style={{ padding: 0, height: "95vh" }}>
           {/* error snack bar */}
           <ErrorSnackbar
             isOpen={errorStatus.isOpen}
             type={errorStatus.type}
             message={errorStatus.message}
-            setIsOpen={(value) =>
-              setErrorStatus({ ...errorStatus, isOpen: value })
-            }
+            setIsOpen={(val) => setErrorStatus({ ...errorStatus, isOpen: val })}
           />
 
           <Container

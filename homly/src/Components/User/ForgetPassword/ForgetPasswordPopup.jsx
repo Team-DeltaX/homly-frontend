@@ -23,14 +23,6 @@ export default function ForgetPasswordPopup({ open, setOpen }) {
     message: "",
   });
 
-  const handleAlertClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setErrorStatus({ ...errorStatus, isOpen: false });
-  };
-
   const handleClose = () => {
     setOpen(false);
     setSelectedComponent(0);
@@ -74,7 +66,7 @@ export default function ForgetPasswordPopup({ open, setOpen }) {
         isOpen={errorStatus.isOpen}
         type={errorStatus.type}
         message={errorStatus.message}
-        handleAlertClose={handleAlertClose}
+        setIsOpen={(val) => setErrorStatus({ ...errorStatus, isOpen: val })}
       />
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Reset Password</DialogTitle>
