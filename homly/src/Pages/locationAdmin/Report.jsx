@@ -27,13 +27,21 @@ const Report = () => {
                         <Grid className={showNav} xs={3} sx={{ backgroundColor: "primary.main", height: "100vh" }}>
                             <SideNavbar setShowNav={setShowNav}></SideNavbar>
                         </Grid>
-                        <Grid className='container_grid' xs={9} sx={{ backgroundColor: 'white', borderTopLeftRadius: '20px', padding: '10px 30px', height: '100vh', position: 'relative' }}>
-                            <Box sx={{ height: "100%" }}>
+
+                        {/* <Grid className='container_grid' xs={9} sx={{backgroundColor:'white',borderTopLeftRadius:'20px',padding:'10px 30px',height:'100vh',position:'relative'}}>
+                            <Box sx={{height:"100%"}}>
+                                <PageTitle setShowNav={setShowNav} title={'Report'} bell={true}/>
+                               { /*comment*/ }
+                               dinali
+
+                            <Grid className='container_grid' xs={9} sx={{ backgroundColor: 'white', borderTopLeftRadius: '20px', padding: '10px 30px', height: '100vh', position: 'relative' }}>
+                                <Box sx={{ height: "100%" }}>
                                 <PageTitle setShowNav={setShowNav} title={'Report'} bell={true} />
+
                                 
 
                             </Box>
-                        </Grid>
+                        </Grid> */}
                     </Grid>
                 </Container>
             </Box>
