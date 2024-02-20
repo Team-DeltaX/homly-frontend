@@ -1,9 +1,10 @@
 // // import '../App.css';
 // import PageTopnb from '../../Components/PrimaryAdmin/PageTopnb'
-import React, {  useState } from "react";
+import React, {  useContext, useState } from "react";
 import SideNavbar from "../../Components/PrimaryAdmin/SideNavbar";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import Box from "@mui/material/Box";
+import { CustomTabContext } from "../../Contexts/primryadmin/CustomTabContext";
 import {
   Button,
   Container,
@@ -12,11 +13,7 @@ import {
   Typography,
 } from "@mui/material";
 import theme from "../../HomlyTheme";
-// import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
-// import Search from '../../Components/PrimaryAdmin/Search';
-// import ViewAdminsCard from '../../Components/PrimaryAdmin/ViewAdminCard';
 import { Link } from "react-router-dom";
-// import ViewAdminCard2 from "../../Components/PrimaryAdmin/ViewAdminCard2";
 import PageTop from "../../Components/PrimaryAdmin/PageTop";
 import CustomTabPanel from '../../Components/PrimaryAdmin/CustomTabPanel'
 const PrimaryViewAdmins = () => {
@@ -99,6 +96,8 @@ const PrimaryViewAdmins = () => {
   // }, []);
 
   const [showNav, setShowNav] = useState("nav_grid_deactive");
+  
+  const{ load,SetLoad}=useContext(CustomTabContext)
 
   return (
     <ThemeProvider theme={theme}>
@@ -143,11 +142,19 @@ const PrimaryViewAdmins = () => {
                   );
                 })}
               </Box> */}
-              <CustomTabPanel/>
+              
+              
+            
+              <Box >
+              <CustomTabPanel />
+
+              </Box>
+
+             
               
               <Box>
-                <Link to="/primaryadmin/addadmin">
-                  <Button
+               {!load && <Box><Link to="/primaryadmin/addadmin">
+                <Button
                     sx={{
                       marginLeft: { md: "75%", xs: "10%" },
                       width: "170px",
@@ -159,7 +166,7 @@ const PrimaryViewAdmins = () => {
                   >
                     <Typography>Add Admin</Typography>
                   </Button>
-                </Link>
+                </Link></Box>}
               </Box>
             </Grid>
           </Grid>

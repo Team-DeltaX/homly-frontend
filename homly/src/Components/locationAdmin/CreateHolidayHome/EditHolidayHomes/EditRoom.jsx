@@ -148,7 +148,7 @@ const EditRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount }) =>
                 rentalArray: [...rentalArray], // Copy the rentalArray as well
             };
 
-        
+
             setRoomArray(updatedRoomArray);
             setAdultsCount(prevCount => prevCount + parseInt(values.NoOfAdults, 10));
             setChildCount(prevCount => prevCount + parseInt(values.NoOfChildren, 10));

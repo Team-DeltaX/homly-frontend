@@ -6,6 +6,9 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import CurrentAdminslist from "./CurrentAdminslist";
 import DisabledAdminslist from "../../Components/PrimaryAdmin/DisabledAdminslist";
+import theme from "../../HomlyTheme";
+import { ThemeProvider } from "@emotion/react";
+
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -48,7 +51,8 @@ export default function BasicTabs() {
   };
 
   return (
-    <Box sx={{ width: "100%" }}>
+  <ThemeProvider theme={theme}>
+      <Box sx={{ width: "100%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
           value={value}
@@ -66,5 +70,6 @@ export default function BasicTabs() {
         <DisabledAdminslist />
       </CustomTabPanel>
     </Box>
+  </ThemeProvider>
   );
 }

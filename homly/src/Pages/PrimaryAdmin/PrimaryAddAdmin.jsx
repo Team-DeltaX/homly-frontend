@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import SideNavbar from "../../Components/PrimaryAdmin/SideNavbar";
 // import ComplaintCard from '../../Components/PrimaryAdmin/ComplaintCard';
 import Box from "@mui/material/Box";
+import axios from "axios";
 import {
   Button,
   Container,
@@ -33,6 +34,9 @@ const PrimaryAddAdmin = () => {
   const [adminerror, setadminerror] = useState(false);
   const [usernameerror, setUsernameerror] = useState(false);
   const [worklocationeerror, setWorklocationerror] = useState(false);
+  const [snacktext,setnacktext]=useState('')
+  const [showNav, setShowNav] = useState("nav_grid_deactive");
+  const [open, setOpen] = React.useState(false);
 
   //sncak bar
   //     const [open, setOpen] = React.useState(false);
@@ -90,16 +94,34 @@ const PrimaryAddAdmin = () => {
       SetSubstitute("Null");
     }
 
-    console.log({
+    const data={
       AdminNo: adminno,
       UserName: username,
-      password: password,
-      contactNumber: contactno,
+      Password: password,
+      ContactNo: contactno,
       Email: email,
       WorkLocation: worklocation,
-      RepleceAdminNo: substitute,
-    });
-    handleClick();
+      Disabled:false,
+      Sub: substitute,
+    }
+    axios.post('http://localhost:3002/locationadmin/add',data)
+    .then(res=>{
+      setnacktext('Admin Added Sucessfully!')
+      handleClick();
+      
+     
+    })
+    .catch(error=>{
+      setnacktext('Somthing Went Wrong,May be admin no duplicaion,Please Try Again!')
+      handleClick();
+      console.log(`error is  nm ${error}`)
+
+    })
+
+
+
+
+    
     setadminno("");
     setUsername("");
     setContactno("");
@@ -108,13 +130,13 @@ const PrimaryAddAdmin = () => {
     setPassword("");
     SetSubstitute("");
   };
-  const ValidatePassword = (password) => {
-    if (password.length <= 8) {
-      setPassworderror(true);
-    } else {
-      setPassworderror(false);
-    }
-  };
+  // const ValidatePassword = (password) => {
+  //   if (password.length <= 8) {
+  //     setPassworderror(true);
+  //   } else {
+  //     setPassworderror(false);
+  //   }
+  // };
   const ValidateContact = (contactno) => {
     if (!validatemobile(contactno)) {
       setMobileerror(true);
@@ -124,11 +146,11 @@ const PrimaryAddAdmin = () => {
   };
 
   //SnackBar
-  const [showNav, setShowNav] = useState("nav_grid_deactive");
-  const [open, setOpen] = React.useState(false);
+
 
   const handleClick = () => {
     setOpen(true);
+
   };
 
   const handleClose = (event, reason) => {
@@ -193,6 +215,7 @@ const PrimaryAddAdmin = () => {
                 <AutohideSnackbar
                   handleClick={handleClick}
                   handleClose={handleClose}
+                  snacktext={snacktext}
                   open={open}
                   setOpen={setOpen}
                 />
@@ -305,7 +328,7 @@ const PrimaryAddAdmin = () => {
                         </Grid>
                       </Grid>
                     </Grid>
-                    <Grid item sm={12}>
+                    {/* <Grid item sm={12}>
                       <Grid
                         container
                         width={"60%"}
@@ -315,9 +338,9 @@ const PrimaryAddAdmin = () => {
                           padding: "10px",
                         }}
                       >
-                        <Grid item md={6} sm={12} xs={12}>
-                          <InputLabel>Password</InputLabel>
-                        </Grid>
+                        <Grid item md={6} sm={12} xs={12}> */}
+                          {/* <InputLabel>Password</InputLabel> */}
+                        {/* </Grid>
                         <Grid item md={6} sm={12} xs={12}>
                           <TextField
                             value={password}
@@ -347,10 +370,10 @@ const PrimaryAddAdmin = () => {
                               password length should be greater than 8
                               characters
                             </Typography>
-                          )}
-                        </Grid>
-                      </Grid>
-                    </Grid>
+                          )} */}
+                        {/* </Grid> */}
+                      {/* </Grid> */}
+                    {/* </Grid> */}
                     <Grid item sm={12}>
                       <Grid
                         container

@@ -7,10 +7,14 @@ import Box from "@mui/material/Box";
 import { Container, Grid, ThemeProvider } from "@mui/material";
 import theme from "../../HomlyTheme";
 import Pagetop from "../../Components/PrimaryAdmin/PageTop";
+import PrimaryAdminBasicTabs from '../../Components/PrimaryAdmin/Reservations/PrimaryAdminBasicTabs';
+
+import SearchNew from '../../Components/PrimaryAdmin/SearchNew'
 
 
 const PrimaryReservations = () => {
     const [showNav, setShowNav] = useState("nav_grid_deactive");
+    const [search, setSearch] = useState("");
 
   return (
     <ThemeProvider theme={theme}>
@@ -44,6 +48,8 @@ const PrimaryReservations = () => {
               >
                 {/* <h1>Reservations</h1> */}
                 <Pagetop setShowNav={setShowNav} heading={"Reservations"} />
+                <SearchNew setSearch={setSearch} search={search} />
+                <PrimaryAdminBasicTabs setSearch={setSearch} search={search}/>
 
               </Grid>
             </Grid>
