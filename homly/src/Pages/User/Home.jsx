@@ -42,7 +42,6 @@ const reservedDates = [
 
 export default function Home() {
   const refContactUS = useRef(null);
-  const [APIData, setAPIData] = useState([]);
   const [sortedByRating, setSortedByRating] = useState([]);
   const [selectionRange, setSelectRange] = useState({
     startDate: new Date(),
@@ -59,7 +58,6 @@ export default function Home() {
     axios
       .get(`https://65ac00f8fcd1c9dcffc76f52.mockapi.io/homly/api/HolidayHomes`)
       .then((response) => {
-        setAPIData(response.data);
         setSortedByRating(response.data);
       });
     // APIData.sort((a, b) => b.rating - a.rating);
