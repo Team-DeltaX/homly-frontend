@@ -6,7 +6,7 @@ import theme from '../../HomlyTheme'
 const SearchNew=(props)=>{
     const [searchbox,setSearchbox]=useState('')
     return<ThemeProvider theme={theme}>
-      <Box sx={{width:'100%',paddingLeft:'20px',paddingBottom:'20px',display:'flex',justifyContent:'flex-end',flexDirection:'row',columnGap:'10px'}}>
+      <Box sx={{width:'100%',paddingLeft:'20px',paddingBottom:{xs:'20px',md:'0px'},display:'flex',justifyContent:'flex-end',flexDirection:'row',columnGap:'10px'}}>
           <Box><TextField
            InputProps={{
               startAdornment: (

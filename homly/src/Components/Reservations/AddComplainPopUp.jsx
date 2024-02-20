@@ -78,7 +78,7 @@ export default function AddComplainPopUp({reservation}) {
             label="Service No"
             type="text"
             fullWidth
-            variant="standard"
+            variant="outlined"
           />
           <TextField
             autoFocus
@@ -91,7 +91,7 @@ export default function AddComplainPopUp({reservation}) {
             label="Reservation No"
             type="text"
             fullWidth
-            variant="standard"
+            variant="outlined"
           />
           <TextField
             autoFocus
@@ -102,11 +102,13 @@ export default function AddComplainPopUp({reservation}) {
             label=""
             type="date"
             fullWidth
-            variant="standard"
+            variant="outlined"
           />
           <TextArea 
             margin="dense"
+            label="Date"
             inputProps = {"Reason"}
+            maxLength="parent.maxLength"
           />
         </DialogContent>
         <DialogActions>

@@ -18,9 +18,10 @@ import DashViewAdminBox from "../../Components/PrimaryAdmin/DashViewAdminBox";
 import { Link } from "react-router-dom";
 import SimpleCharts from "../../Components/PrimaryAdmin/Simplecharts";
 import { PieChart } from '@mui/x-charts/PieChart';
-import CircularProgress from '@mui/joy/CircularProgress';
-import Populer from "../../Components/PrimaryAdmin/Populer";
+
 import Income from "../../Components/PrimaryAdmin/Income";
+import PDashboardCon from "../../Components/PrimaryAdmin/PDashboardCon";
+import SimpleLineChart from "../../Components/PrimaryAdmin/SimpleLineChart";
 
 
 
@@ -67,9 +68,10 @@ const PrimaryDashboard = () => {
                     sx={{
                       backgroundColor: "white",
                       overflow: "auto",
-                      maxHeight: "100vh",
+                      maxHeight: {md:'645px',xs:'auto'},
                     }}
                   >
+                    <PDashboardCon/>
                     <Box
                       sx={{
                         display: "flex",
@@ -112,7 +114,9 @@ const PrimaryDashboard = () => {
                         
                       </Box>
                       
-                      <SimpleCharts />
+                      {/* <SimpleCharts /> */}
+
+                      <SimpleLineChart/>
                      
                     </Box>
                   </Grid>

@@ -1,5 +1,5 @@
 import React, {  lazy, useContext } from "react";
-import { Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import { AuthContext } from "../Contexts/AuthContext";
 

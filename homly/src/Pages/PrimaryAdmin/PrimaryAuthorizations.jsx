@@ -1,7 +1,6 @@
 
-// import '../App.css';
-import { createPortal } from 'react-dom';
-import React,{useEffect, useState} from 'react'
+
+import React,{ useState} from 'react'
 import SideNavbar from '../../Components/PrimaryAdmin/SideNavbar'
 // import ComplaintCard from '../../Components/PrimaryAdmin/ComplaintCard';
 import Box from '@mui/material/Box';
@@ -44,7 +43,7 @@ const PrimaryAuthorizations = () => {
                     <Grid className='container_grid' xs={9} sx={{backgroundColor:'white',borderTopLeftRadius:'20px',padding:'0 20px'}}>
                     <Pagetop setShowNav={setShowNav} heading={"Authorizations"}/>
                 
-                    <Box sx={{marginTop:'2%',marginLeft:"2%",maxHeight:"540px",overflow:"scroll",}}>
+                    <Box sx={{marginTop:'2%',marginLeft:"2%",maxHeight:"630px",overflow:"scroll",}}>
                        <Box sx={{display:'flex',flexWrap:'wrap'}}>
                 
                 

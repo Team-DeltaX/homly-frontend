@@ -1,8 +1,8 @@
 import React, { lazy } from "react";
-import { Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 const PrimaryDashboard = lazy(() =>
-  import("../Pages/PrimaryAdmin/PrimaryDashboard" )
+  import("../Pages/PrimaryAdmin/PrimaryDashboard")
 );
 const PrimaryReservations = lazy(() =>
   import("../Pages/PrimaryAdmin/PrimaryReservations")
@@ -32,40 +32,16 @@ const PrimaryAuthorizations = lazy(() =>
 
 const PrimaryAdminRouter = () => (
   <Routes>
-    <Route
-      path="/primaryadmin/dashboard"
-      element={<PrimaryDashboard />}
-    ></Route>
-    <Route
-      path="/primaryadmin/reservations"
-      element={<PrimaryReservations />}
-    ></Route>
-    <Route
-      path="/primaryadmin/holidayhomes"
-      element={<PrimaryHolidayHomes />}
-    ></Route>
-    <Route path="/primaryadmin/report" element={<PrimaryReport />}></Route>
-    <Route
-      path="/primaryadmin/blacklistedusers/manage"
-      element={<PrimaryManageBlacklistedUsers />}
-    ></Route>
-    <Route
-      path="/primaryadmin/blacklistedusers/history"
-      element={<PrimaryBlacklistHistory />}
-    ></Route>
-    <Route
-      path="/primaryadmin/blacklistedusers/complaints"
-      element={<PrimaryComplaints />}
-    ></Route>
-    <Route path="/primaryadmin/addadmin" element={<PrimaryAddAdmin />}></Route>
-    <Route
-      path="/primaryadmin/viewadmin"
-      element={<PrimaryViewAdmin />}
-    ></Route>
-    <Route
-      path="/primaryadmin/authorizations"
-      element={<PrimaryAuthorizations />}
-    ></Route>
+    <Route path="/dashboard" element={<PrimaryDashboard />}></Route>
+    <Route path="/reservations" element={<PrimaryReservations />}></Route>
+    <Route path="/holidayhomes" element={<PrimaryHolidayHomes />}></Route>
+    <Route path="/report" element={<PrimaryReport />}></Route>
+    <Route path="/blacklistedusers/manage"element={<PrimaryManageBlacklistedUsers />}></Route>
+    <Route path="/blacklistedusers/history"element={<PrimaryBlacklistHistory />}></Route>
+    <Route path="/blacklistedusers/complaints"element={<PrimaryComplaints />}></Route>
+    <Route path="/addadmin" element={<PrimaryAddAdmin />}></Route>
+    <Route path="/viewadmin" element={<PrimaryViewAdmin />}></Route>
+    <Route path="/authorizations" element={<PrimaryAuthorizations />}></Route>
   </Routes>
 );
 

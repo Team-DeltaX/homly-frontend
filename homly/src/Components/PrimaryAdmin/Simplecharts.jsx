@@ -10,7 +10,7 @@ export default function SimpleCharts() {
           xAxis={[
             {
               id: 'barCategories',
-              data: ['Colombo', 'Nuwaraeliya', 'kandy','galle','jaffna','B','anuradhapura','kaluthara','colombo2','colombo3','colombo4','colombo5'],
+              data: ['Admin1', 'Admin2', 'Admin3','Admin4','Admin5','Admin6','Admin7','Admin8','Admin9','Admin10','Admin11','Admin12'],
               scaleType: 'band',
             },
           ]}
@@ -21,7 +21,7 @@ export default function SimpleCharts() {
               color:'#002347'
             },
           ]}
-          width={730}
+          width={window.innerHeight<100?'100':'730'}
           height={300}
         />
      

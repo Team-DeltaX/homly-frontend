@@ -1,4 +1,4 @@
-import  React  from "react";
+import React from "react";
 import { useState, useContext } from "react";
 import axios from "axios";
 import {
@@ -8,6 +8,7 @@ import {
   Typography,
   ThemeProvider,
   styled,
+  Stack,
   Button,
 } from "@mui/material";
 
@@ -15,6 +16,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import BadgeIcon from "@mui/icons-material/Badge";
 import PasswordIcon from "@mui/icons-material/Password";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 import theme from "../../HomlyTheme";
 import "./UserStyle.css";
@@ -37,27 +39,19 @@ const Img = styled("img")({
 });
 
 const UserLogin = () => {
-  const { setIsLogged,setAuthServiceNumber } = useContext(AuthContext);
+  const { setIsLogged, setAuthServiceNumber } = useContext(AuthContext);
   const [serviceNo, setServiceNo] = useState("");
   const [password, setPassword] = useState("");
 
   const [errorServiceNumber, setErrorServiceNumber] = useState(false);
 
-  // navigate 
+  // navigate
   const Navigate = useNavigate();
 
   const [errorStatus, setErrorStatus] = useState({
     type: "",
     message: "",
   });
-
-  const handleAlertClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setErrorStatus({ ...errorStatus, isOpen: false });
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -128,7 +122,7 @@ const UserLogin = () => {
             isOpen={errorStatus.isOpen}
             type={errorStatus.type}
             message={errorStatus.message}
-            handleAlertClose={handleAlertClose}
+            setIsOpen={(val) => setErrorStatus({ ...errorStatus, isOpen: val })}
           />
 
           {/* forget password popup */}
@@ -137,7 +131,7 @@ const UserLogin = () => {
             <Grid
               container
               sx={{
-                backgroundColor: "grey1",
+                backgroundColor: "#FEF2F4",
                 borderRadius: "10px",
                 boxShadow: 1,
                 height: { xs: "auto", md: "60vh" },
@@ -179,6 +173,7 @@ const UserLogin = () => {
                     justifyContent: "flex-end",
                     alignItems: "baseline",
                     padding: "5%",
+                    marginBottom: { xs: "20px", sm: 0 },
                   }}
                 >
                   <Typography sx={{ paddingRight: "2%", fontWeight: "bold" }}>
@@ -234,90 +229,6 @@ const UserLogin = () => {
                         checkConfirmPassword={null}
                         isCheck={false}
                       />
-                      {/* <TextField
-                        sx={{ marginBottom: " 6%", width: "90%" }}
-                        id="textfield-serviceNumber"
-                        label="Service Number"
-                        required
-                        error={errorServiceNumber}
-                        InputProps={{
-                          startAdornment: (
-                            <InputAdornment position="start">
-                              <BadgeIcon />
-                            </InputAdornment>
-                          ),
-                        }}
-                        InputLabelProps={{
-                          shrink:
-                            focusedServiceNo || countChar(serviceNo) !== 0,
-                          style: {
-                            marginLeft:
-                              focusedServiceNo || countChar(serviceNo) !== 0
-                                ? 0
-                                : 35,
-                          },
-                        }}
-                        onFocus={() => setFocusedServiceNo(true)}
-                        onBlur={() => setFocusedServiceNo(false)}
-                        onChange={(e) => {
-                          setServiceNo(e.target.value);
-                        }}
-                        value={serviceNo}
-                        size="small"
-                        helperText={
-                          errorServiceNumber
-                            ? "Your are not an employee of Homly"
-                            : ""
-                        }
-                        fullWidth
-                      /> */}
-                      {/* <TextField
-                        sx={{ marginBottom: "6%", width: "90%" }}
-                        id="textfield-password"
-                        label="Password"
-                        required
-                        error={false}
-                        type={showPassword ? "text" : "password"}
-                        InputProps={{
-                          startAdornment: (
-                            <InputAdornment position="start">
-                              <PasswordIcon sx={{ p: 0.25, ml: -0.5, mr: 1 }} />
-                            </InputAdornment>
-                          ),
-                          endAdornment: (
-                            <IconButton
-                              aria-label="toggle password visibility"
-                              onClick={handleClickShowPassword}
-                              onMouseDown={handleMouseDownPassword}
-                              edge="end"
-                            >
-                              {showPassword ? (
-                                <VisibilityOff />
-                              ) : (
-                                <Visibility />
-                              )}
-                            </IconButton>
-                          ),
-                        }}
-                        InputLabelProps={{
-                          shrink: focusedPassword || countChar(password) !== 0,
-                          style: {
-                            marginLeft:
-                              focusedPassword || countChar(password) !== 0
-                                ? 0
-                                : 35,
-                          },
-                        }}
-                        onFocus={() => setFocusedPassword(true)}
-                        onBlur={() => setFocusedPassword(false)}
-                        onChange={(e) => {
-                          setPassword(e.target.value);
-                        }}
-                        value={password}
-                        size="small"
-                        helperText={""}
-                        fullWidth
-                      /> */}
                       <Box
                         sx={{
                           display: "flex",
@@ -329,29 +240,59 @@ const UserLogin = () => {
                           Forget Password
                         </Button>
                       </Box>
-                      <Box
+                      <Stack
+                        direction="row"
                         sx={{
-                          display: "flex",
-                          justifyContent: "flex-end",
                           width: "90%",
+                          justifyContent: "space-between",
+                          marginTop: "20px",
+                          flexWrap: "wrap-reverse",
                         }}
                       >
                         <Button
-                          type="reset"
-                          variant="outlined"
-                          color="primary"
-                          sx={{ marginRight: "2%" }}
-                        >
-                          Reset
-                        </Button>
-                        <Button
-                          type="submit"
                           variant="contained"
                           color="primary"
+                          sx={{
+                            width: { xs: "100%", sm: "auto" },
+                            marginTop: { xs: "10px", sm: 0 },
+                          }}
+                          component={Link}
+                          to="/Admin/Login"
                         >
-                          Login
+                          <Typography>Admin Login</Typography>
+                          <ArrowForwardIosIcon
+                            sx={{
+                              fontSize: "1rem",
+                              fontWeight: "bold",
+                              marginLeft: "10px",
+                            }}
+                          />
                         </Button>
-                      </Box>
+                        <Box
+                          sx={{
+                            width: { xs: "100%", sm: "auto" },
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          <Button
+                            type="reset"
+                            variant="outlined"
+                            color="primary"
+                            sx={{ marginRight: "2%" }}
+                          >
+                            Reset
+                          </Button>
+                          <Button
+                            type="submit"
+                            variant="contained"
+                            color="primary"
+                          >
+                            Login
+                          </Button>
+                        </Box>
+                      </Stack>
                     </form>
                   </Box>
                 </Box>

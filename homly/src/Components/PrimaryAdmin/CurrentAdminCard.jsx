@@ -7,9 +7,11 @@ import {
   Typography,
 } from "@mui/material";
 import theme from "../../HomlyTheme";
+import axios from "axios";
 
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useState } from "react";
+import ConfirmPopup from "./ConfirmPopup";
 
 const CurrentAdminCard = (props) => {
   // const [disabled, setDisabled] = useState(true);
@@ -20,9 +22,89 @@ const CurrentAdminCard = (props) => {
   // const [email, setEmail] = useState(props.data.Nic_number);
   // const [worklocation, setworkLocation] = useState(props.data.Nic_number);
   // const [displayr, setDisplayr] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [opend, setOpend] = useState(false);
+  const [Disabled,setDisabled]=useState(true)
+  const [buttonname,setbuttonname]=useState('Edit')
+  const [mobileerror,setmobileerror]=useState(false)
+  const [emaileerror,setemailerror]=useState(false)
+  const [contact,setContact]=useState(props.data.ContactNo)
+  const [email,setemail]=useState(props.data.Email)
+  const validatemobile = (number) => {
+    const pattern = /^(?:\+94|0)?(?:7\d{8}|[1-9]\d{8})$/;
+    setmobileerror(!pattern.test(number))
+  };
+  const validateemail = (email) => {
+    const pattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    if (pattern.test(email)) {
+      setemailerror(false);
+    } else {
+      setemailerror(true);
+    }
+  };
+
+
+  const handlesave=()=>{
+    console.log("saved");
+    setbuttonname('Edit')
+    props. Seteditadmin('')
+    setDisabled(true)
+    axios
+    .put("http://localhost:3002/locationadmin", {
+      AdminNo:props.data.AdminNo,
+      Email: email,
+      ContactNo:contact
+    })
+    .then((res) => {
+      props.fetchadmins();
+      console.log("sucessfully updated");
+    })
+    .catch((error) => {
+      console.log(`error occured when updating error is ${error}`);
+    });
+  
+
+  }
+
+
+ 
+
+
+
+  const resetpassword = () => {
+    axios
+      .post("http://localhost:3002/locationadmin/resetpassword", {
+        UserName: props.data.UserName,
+        Email: props.data.Email,
+        AdminNo: props.data.AdminNo,
+      })
+      .then((res) => {
+        console.log("sucessfully sent");
+        props.fetchadmins()
+      })
+      .catch((error) => {
+        console.log(`error occured when send mail error is ${error}`);
+      });
+    setOpen(false);
+  };
 
   const handleClick = () => {
-    console.log("adminDisabled");
+    axios
+      .put(`http://localhost:3002/locationadmin/disable/${props.data.AdminNo}`, {
+        dis: true,
+      })
+      .then((res) => {
+        // setnacktext('Admin Added Sucessfully!')
+        // handleClick();
+        props.fetchadmins();
+        props.setsnacktext("Admin Disabled Successfully!");
+        props.handlesnack();
+      })
+      .catch((error) => {
+        // setnacktext('Somthing Went Wrong,May be admin no duplicaion,Please Try Again!')
+        // handleClick();
+        console.log(`error is  nm ${error}`);
+      });
   };
 
   return (
@@ -50,7 +132,7 @@ const CurrentAdminCard = (props) => {
               // onChange={(e) => {
               //   setAdminNo(e.target.value);
               // }}
-              value={props.data.Service_number}
+              value={props.data.AdminNo}
               size="small"
               type="text"
               sx={{
@@ -58,25 +140,9 @@ const CurrentAdminCard = (props) => {
               }}
               alignItems="center"
             ></TextField>
+            {/* {props.data.AdminNo} */}
           </Box>
-          <Box>User Name</Box>
-          <Box>
-            <TextField
-              disabled={true}
-              // onChange={(e) => {
-              //   setUsername(e.target.value);
-              // }}
-              type="text"
-              value={props.data.User_name}
-              alignItems="center"
-              sx={{
-                backgroundColor: "white",
-              }}
-              size="small"
-            ></TextField>
-          </Box>
-        </Box>
-        <Box sx={{ padding: "10px" }}>
+
           <Box>Password</Box>
           <Box>
             <TextField
@@ -86,22 +152,46 @@ const CurrentAdminCard = (props) => {
               // }}
               size="small"
               type="text"
-              value={props.data.Nic_number}
+              value={props.data.Password}
               sx={{
                 backgroundColor: "white",
               }}
               alignItems="center"
             ></TextField>
           </Box>
+        </Box>
+
+        <Box sx={{ padding: "10px" }}>
+          <Box>User Name</Box>
+          <Box>
+            <TextField
+              disabled={true}
+              // onChange={(e) => {
+              //   setUsername(e.target.value);
+              // }}
+              type="text"
+              value={props.data.UserName}
+              alignItems="center"
+              sx={{
+                backgroundColor: "white",
+              }}
+              size="small"
+            ></TextField>
+          </Box>
+
           <Box>Contact Number</Box>
           <Box>
             <TextField
+            error={mobileerror}
+            
+              disabled={Disabled}
               // disabled={disabled}
-              // onChange={(e) => {
-              //   setContactnumber(e.target.value);
-              // }}
+              onChange={(e) => {
+                validatemobile(e.target.value)
+                setContact(e.target.value)
+              }}
               type="text"
-              value={props.data.Service_number}
+              value={contact}
               alignItems="center"
               sx={{
                 backgroundColor: "white",
@@ -110,23 +200,8 @@ const CurrentAdminCard = (props) => {
             ></TextField>
           </Box>
         </Box>
+
         <Box sx={{ padding: "10px" }}>
-          <Box>E-mail</Box>
-          <Box>
-            <TextField
-              disabled={true}
-              // onChange={(e) => {
-              //   setEmail(e.target.value);
-              // }}
-              size="small"
-              type="text"
-              value={props.data.Nic_number}
-              sx={{
-                backgroundColor: "white",
-              }}
-              alignItems="center"
-            ></TextField>
-          </Box>
           <Box>WorkLocation</Box>
           <Box>
             <TextField
@@ -135,7 +210,7 @@ const CurrentAdminCard = (props) => {
               //   setworkLocation(e.target.value);
               // }}
               type="text"
-              value={props.data.Nic_number}
+              value={props.data.WorkLocation}
               alignItems="center"
               sx={{
                 backgroundColor: "white",
@@ -143,10 +218,28 @@ const CurrentAdminCard = (props) => {
               size="small"
             ></TextField>
           </Box>
+          <Box>E-mail</Box>
+          <Box>
+            <TextField
+            error={emaileerror}
+              disabled={Disabled}
+              onChange={(e) => {
+                validateemail(e.target.value)
+                setemail(e.target.value)
+              }}
+              size="small"
+              type="text"
+              value={email}
+              sx={{
+                backgroundColor: "white",
+              }}
+              alignItems="center"
+            ></TextField>
+          </Box>
         </Box>
         <Box
           sx={{
-            padding: "35px",
+            padding: "10px",
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between",
@@ -165,14 +258,74 @@ const CurrentAdminCard = (props) => {
                 </Button> */}
           {/* <Box>{dataobj}</Box> */}
           <Box sx={{ height: "20px" }}></Box>
+          {/* disable admin button */}
+          <ConfirmPopup
+            open={opend}
+            setOpen={setOpend}
+            title={"Admin Disable Confirmation"}
+            text={"Are you sure you want to Disable this Admin?"}
+            data={props.data}
+            controlfunction={handleClick}
+          />
           <Button
-            sx={{ width: "90px", height: "30px", borderRadius: "15px" }}
+            sx={{ width: "165px", height: "30px", borderRadius: "15px" }}
             variant="contained"
             onClick={() => {
-              handleClick();
+              setOpend(true)
             }}
           >
             <Typography>Disable</Typography>
+          </Button>
+          {/* edit button */}
+
+          <Button
+            sx={{
+              width: "165px",
+              height: "30px",
+              borderRadius: "15px",
+              marginTop: "5px",
+            }}
+            variant="contained"
+            onClick={() => {
+              if(props.editadmin===''){
+                setDisabled(false)
+                props. Seteditadmin(props.data.AdminNo)
+                setbuttonname('Save')
+              }
+              if(buttonname=='Save' && mobileerror==false && emaileerror==false){
+                handlesave()
+              }
+              
+
+            }}
+          >
+            <Typography>{buttonname}</Typography>
+          </Button>
+
+          {/* reset password */}
+          <ConfirmPopup
+            open={open}
+            setOpen={setOpen}
+            title={"Reset Password"}
+            text={"Are you sure you want to reset this Admin password?"}
+            data={props.data}
+            controlfunction={resetpassword}
+          />
+
+          <Button
+            sx={{
+              width: "165px",
+              height: "30px",
+              borderRadius: "15px",
+              marginTop: "5px",
+            }}
+            variant="contained"
+            onClick={() => {
+              // resetpassword(props.data.Email,props.data.UserName,props.data.AdminNo)
+              setOpen(true);
+            }}
+          >
+            <Typography>Reset Password</Typography>
           </Button>
         </Box>
       </Box>

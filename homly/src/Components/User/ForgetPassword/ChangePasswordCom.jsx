@@ -23,7 +23,7 @@ export default function ChangePasswordCom({
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = {serviceNo:value.serviceNo,password:value.password}
-    axios.post("http://localhost:3002/users//forgetPassword/reset", formData)
+    axios.put("http://localhost:3002/users/forgetPassword/reset", formData)
     .then((res) => {
         if(res.data.success){
             setErrorStatus({
@@ -43,7 +43,14 @@ export default function ChangePasswordCom({
             })
 
         }
-    });
+    }).catch((err)=>{
+        setErrorStatus({
+            ...errorStatus,
+            isOpen: true,
+            type: "error",
+            message: "Somthing went wrong",
+        })
+    })
   };
 
   return (

@@ -1,5 +1,5 @@
 import React, { lazy } from "react";
-import { Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 const LocationDashboard = lazy(() =>
   import("../Pages/locationAdmin/Dashboard")
@@ -22,18 +22,18 @@ const HolidayHomeEdit = lazy(() =>
 
 const LocationAdminRouter = () => (
   <Routes>
-    <Route path="/locationadmin/dashboard" element={<LocationDashboard />} />
-    <Route path="/locationadmin/manage" element={<ManageHomes />} />
-    <Route path="/locationadmin/details" element={<HolidayHomesDetails />} />
-    <Route path="/locationadmin/feedback" element={<FeedBack />} />
-    <Route path="/locationadmin/reservations" element={<Reservations />} />
-    <Route path="/locationadmin/report" element={<Report />} />
+    <Route path="/dashboard" element={<LocationDashboard />} />
+    <Route path="/manage" element={<ManageHomes />} />
+    <Route path="/details" element={<HolidayHomesDetails />} />
+    <Route path="/feedback" element={<FeedBack />} />
+    <Route path="/reservations" element={<Reservations />} />
+    <Route path="/report" element={<Report />} />
     <Route
-      path="/locationadmin/holidayhomes/createholidayhome"
+      path="/holidayhomes/createholidayhome"
       element={<CreateHolidayHome />}
     />
     <Route
-      path="/locationadmin/holidayhomes/editholidayhome"
+      path="/holidayhomes/editholidayhome"
       element={<HolidayHomeEdit />}
     />
   </Routes>

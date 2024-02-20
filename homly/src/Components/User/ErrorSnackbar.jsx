@@ -6,8 +6,14 @@ export default function ErrorSnackbar({
   isOpen,
   type,
   message,
-  handleAlertClose,
+  setIsOpen
 }) {
+  const handleAlertClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setIsOpen(false);
+  };
   return (
     <ThemeProvider theme={theme}>
       <Snackbar

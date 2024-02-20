@@ -46,16 +46,17 @@ function a11yProps(index) {
 }
 
 
-const EditHolidayHomeBreakdown = () => {
+const EditHolidayHomeBreakdown = ({ roomArray, setRoomArray, unitArray, setUnitArray, hallArray, setHallArray }) => {
     const [value, setValue] = useState(0);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
 
-    const [roomArray, setRoomArray] = useState([]);
-    const [unitArray, setUnitArray] = useState([]);
-    const [hallArray, setHallArray] = useState([]);
+
+    const [adultsCount, setAdultsCount] = useState(0);
+    const [childCount, setChildCount] = useState(0);
+
 
 
 
@@ -71,13 +72,13 @@ const EditHolidayHomeBreakdown = () => {
                             <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                 <Typography variant='p' sx={{ color: 'black' }}>Maximum Adults</Typography>
                             </Box>
-                            <TextField type='number' id="outlined-required" label="Maximum Adults" placeholder='Maximum Adults' fullWidth size='small' />
+                            <TextField value={adultsCount} type='number' id="outlined-required" label="Maximum Adults" placeholder='Maximum Adults' fullWidth size='small' />
                         </Box>
                         <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                             <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                 <Typography variant='p' sx={{ color: 'black' }}>Maximum Childern</Typography>
                             </Box>
-                            <TextField type='number' id="outlined-required" label="Maximum Children" placeholder='Maximum Children' fullWidth size='small' />
+                            <TextField value={childCount} type='number' id="outlined-required" label="Maximum Children" placeholder='Maximum Children' fullWidth size='small' />
                         </Box>
                     </Grid>
                     <Grid item md={6} sm={12} xs={12}>
@@ -135,7 +136,7 @@ const EditHolidayHomeBreakdown = () => {
                             </Tabs>
                         </Box>
                         <CustomTabPanel value={value} index={0}>
-                            <EditRoom roomArray={roomArray} setRoomArray={setRoomArray} />
+                            <EditRoom roomArray={roomArray} setRoomArray={setRoomArray} setAdultsCount={setAdultsCount} setChildCount={setChildCount} />
                         </CustomTabPanel>
                         <CustomTabPanel value={value} index={1}>
                             <EditUnit roomArray={roomArray} setRoomArray={setRoomArray} unitArray={unitArray} setUnitArray={setUnitArray} />
