@@ -1,7 +1,7 @@
 import React from "react";
 import {
   Box,
-  Stack,
+  // Stack,
   //   Container,
   ThemeProvider,
   Typography,
@@ -40,7 +40,7 @@ const MyReservation = () => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            margin: { xs: "3% 0 20% 0" },
+            margin: { xs: "3% 0 20% 0", sm: "3% 0 0 0" },
           }}
         >
           <Card sx={{ width: { xs: "100%", sm: "90%" } }}>
@@ -50,6 +50,18 @@ const MyReservation = () => {
                 onChange={handleTabChange}
                 textColor="secondary"
                 aria-label="secondary tabs example"
+                sx={{
+                  "& .css-1qqs86a-MuiButtonBase-root-MuiTab-root.Mui-selected ":{
+                    bgcolor: "primary.main",
+                    color: "white",
+                    fontWeight:'bold'
+                  },
+                  "& .css-1qqs86a-MuiButtonBase-root-MuiTab-root ":{
+                    padding: "10px !important",
+                    border: "1px solid #872341",
+                  },
+                  
+                }}
                 // sx={{
                 //   width: "100%",
                 //   display: "flex",

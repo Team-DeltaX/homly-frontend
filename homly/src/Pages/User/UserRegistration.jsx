@@ -12,7 +12,8 @@ import {
   InputAdornment,
   IconButton,
   TextField,
-  FormControl,
+  Stack,
+  Avatar,
 } from "@mui/material";
 
 import { Visibility, VisibilityOff } from "@mui/icons-material";
@@ -20,6 +21,8 @@ import BadgeIcon from "@mui/icons-material/Badge";
 import EmailIcon from "@mui/icons-material/Email";
 import CallIcon from "@mui/icons-material/Call";
 import PasswordIcon from "@mui/icons-material/Password";
+
+import ProfilePicUploadPopup from "../../Components/User/ProfilePicUploadPopup";
 
 import theme from "../../HomlyTheme";
 import "./UserStyle.css";
@@ -30,7 +33,7 @@ import { Link } from "react-router-dom";
 
 // import AvatarImage from "../Components/AvatarImage"
 
-const Img = styled("img")({
+const Img = styled('img')({
   // margin: "auto",
   display: "block",
   width: "40%",
@@ -59,6 +62,7 @@ const UserRegistration = () => {
   const [ContactNo, setContactNo] = useState("");
   const [Password, setPassword] = useState("");
   const [ConfirmPassword, setConfirmPassword] = useState("");
+  const [image, setImage] = useState(null);
 
   const [errorServiceNumber, setErrorServiceNumber] = useState(false);
   const [errorConfirmPassword, setErrorConfirmPassword] = useState(false);
@@ -164,10 +168,16 @@ const UserRegistration = () => {
     setConfirmPassword("");
   };
 
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <Box
-        className="main_container"
+        // className="main_container"
         sx={{
           width: "100%",
           overflow: "hidden",
@@ -179,6 +189,7 @@ const UserRegistration = () => {
               container
               sx={{
                 // height: "85%",
+                height: 'auto',
                 backgroundColor: "grey1",
                 borderRadius: "10px",
                 boxShadow: 1,
@@ -249,8 +260,26 @@ const UserRegistration = () => {
                   </Button>
                 </Box>
                 <Box paddingLeft={"5%"} marginBottom={"5%"} width="100%">
-                  <form action="" autoComplete="off" width="100%" onSubmit={handleSubmit} onReset={handleReset}>
+                  <form
+                    action=""
+                    autoComplete="off"
+                    width="100%"
+                    onSubmit={handleSubmit}
+                    onReset={handleReset}
+                  >
                     {/* <AvatarImage /> */}
+                    <ProfilePicUploadPopup open={open} setOpen={setOpen}  setImage={setImage}/>
+                    <Stack direction='row' sx={{margin:'2% 0',height: {xs:80,sm:100},width:'100%' }}>
+                      <Avatar
+                        alt="Remy Sharp"
+                        src={image}
+                        sx={{ width: {xs:80,sm:100}, height: {xs:80,sm:100} }}
+                      />
+                      <Box sx={{height:'100%',display:'flex',alignItems:'center',marginLeft:{xs:'8px'}}}>
+
+                      <Button variant="outlined" onClick={handleClickOpen} > Upload Profile Picture</Button>
+                      </Box>
+                    </Stack>
                     <TextField
                       sx={{ marginBottom: " 6%", width: "90%" }}
                       id="textfield-serviceNumber"
@@ -452,7 +481,13 @@ const UserRegistration = () => {
                       }
                       fullWidth
                     />
-                    <Box sx={{display:'flex',justifyContent:'flex-end',width:'90%'}}>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "flex-end",
+                        width: "90%",
+                      }}
+                    >
                       <Button
                         type="reset"
                         variant="outlined"
@@ -461,11 +496,7 @@ const UserRegistration = () => {
                       >
                         Reset
                       </Button>
-                      <Button
-                        type="submit"
-                        variant="contained"
-                        color="primary"
-                      >
+                      <Button type="submit" variant="contained" color="primary">
                         Register
                       </Button>
                     </Box>

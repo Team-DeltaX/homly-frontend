@@ -195,7 +195,7 @@ const MyProfile = () => {
   const drawer = (
     <div>
       <Toolbar />
-      <Box sx={{ width: "100%" }}>
+      <Box sx={{ width: "100%",marginTop:'64px' }}>
         <Tabs
           orientation="vertical"
           value={value}
@@ -363,7 +363,7 @@ const MyProfile = () => {
                 variant="permanent"
                 sx={{
                   display: { xs: "none", sm: "none", md: "block" },
-                  marginTop: { xs: "0px", sm: "0px", md: "64px" },
+                  // marginTop: { xs: "0px", sm: "0px", md: "64px" },
                   "& .MuiDrawer-paper": {
                     // boxSizing: "border-box",
                     width: drawerWidth,
