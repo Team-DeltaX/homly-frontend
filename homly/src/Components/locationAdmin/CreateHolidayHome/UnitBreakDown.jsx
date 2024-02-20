@@ -15,10 +15,16 @@ import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 
 
-const UnitBreakDown = ({ unitCode, unitAc, floorLevel, unitNoOfAdults, unitNoOfChildren, unitRemarks, unitRental, selectedRooms, roomArray, setRoomArray, handleUnitDelete ,handleUnitEdit,index}) => {
+const UnitBreakDown = ({ unitCode, unitAc, floorLevel, unitNoOfAdults, unitNoOfChildren, unitRemarks, unitRental, selectedRooms, roomArray, setRoomArray, handleUnitDelete, handleUnitEdit, index, roomAttached }) => {
     const [open, setOpen] = useState(false);
     const [fullWidth, setFullWidth] = useState(true);
     const [maxWidth, setMaxWidth] = useState('sm');
+
+    const [unitChildCount, setUnitChildCount] = useState(0);
+    const [unitAdultCount, setUnitAdultCount] = useState(0);
+    const [unitRoomCount, setUnitRoomCount] = useState(0);
+
+
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -27,6 +33,16 @@ const UnitBreakDown = ({ unitCode, unitAc, floorLevel, unitNoOfAdults, unitNoOfC
 
 
     const handleClose = () => {
+        let adults = 0;
+        let children = 0;
+        selectedRooms.map((room) => {
+            adults += parseInt(room.NoOfAdults, 10);
+            children += parseInt(room.NoOfChildren, 10);
+
+        })
+        setUnitAdultCount(adults);
+        setUnitChildCount(children);
+        setUnitRoomCount(selectedRooms.length);
         setOpen(false);
     };
 
@@ -115,15 +131,15 @@ const UnitBreakDown = ({ unitCode, unitAc, floorLevel, unitNoOfAdults, unitNoOfC
                 </Box>
                 <Box className="card_item">
                     <Typography variant='p' className='card_item_title'>Number of Rooms</Typography>
-                    <Typography variant='p' className='card_item_value'></Typography>
+                    <Typography variant='p' className='card_item_value'>{unitRoomCount}</Typography>
                 </Box>
                 <Box className="card_item">
                     <Typography variant='p' className='card_item_title'>Adults</Typography>
-                    <Typography variant='p' className='card_item_value'>{unitNoOfAdults}</Typography>
+                    <Typography variant='p' className='card_item_value'>{unitAdultCount}</Typography>
                 </Box>
                 <Box className="card_item">
                     <Typography variant='p' className='card_item_title'>Children</Typography>
-                    <Typography variant='p' className='card_item_value'>{unitNoOfChildren}</Typography>
+                    <Typography variant='p' className='card_item_value'>{unitChildCount}</Typography>
                 </Box>
 
 
@@ -131,7 +147,7 @@ const UnitBreakDown = ({ unitCode, unitAc, floorLevel, unitNoOfAdults, unitNoOfC
             </Box>
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '1em', width: "100%" }}>
                 <Button size='small' variant='contained' sx={{ backgroundColor: 'primary.main' }} onClick={handleClickOpen}>Attach Rooms</Button>
-                <Button size='small' variant='contained' sx={{ backgroundColor: 'primary.main' }} onClick={()=>handleUnitEdit(index)}>Edit Row</Button>
+                <Button size='small' variant='contained' sx={{ backgroundColor: 'primary.main' }} onClick={() => handleUnitEdit(index)}>Edit Row</Button>
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                     <Typography variant='p'>Room Attached?</Typography>
                     <Checkbox {...label} disabled={selectedRooms.length === 0 ? true : false} checked={selectedRooms.length === 0 ? false : true} />
@@ -171,7 +187,7 @@ const UnitBreakDown = ({ unitCode, unitAc, floorLevel, unitNoOfAdults, unitNoOfC
                                     </Box>
                                     <Box sx={{ display: 'flex', gap: '1em', marginBottom: '1em', alignItems: 'center' }}>
                                         <Typography variant='p' className='card_item_title'>Selected Room Count</Typography>
-                                        <Typography variant='p' className='card_item_value attach_room_value'>03</Typography>
+                                        <Typography variant='p' className='card_item_value attach_room_value'>{unitRoomCount}</Typography>
                                     </Box>
                                 </Box>
                             </Box>
@@ -280,8 +296,8 @@ const UnitBreakDown = ({ unitCode, unitAc, floorLevel, unitNoOfAdults, unitNoOfC
                         </DialogContent>
 
                         <DialogActions>
-                            <Button variant='contained' onClick={handleClose}>Save</Button>
-                            <Button variant='outlined' onClick={handleClose}>Close</Button>
+                            <Button variant='contained' onClick={handleClose}>Done</Button>
+
                         </DialogActions>
 
                     </form>
@@ -327,7 +343,13 @@ const UnitBreakDown = ({ unitCode, unitAc, floorLevel, unitNoOfAdults, unitNoOfC
 
                                 }
                             </Box>
-                            <Typography variant='p'>Rooms will be seperated from the Unit.</Typography>
+                            {selectedRooms.length > 0 ?
+                                <Typography variant='p'>Rooms will be seperated from the Unit.</Typography>
+
+                                :
+
+                                <Typography variant='p'>{unitCode} will be removed</Typography>
+                            }
                         </Box>
                     </DialogContentText>
                 </DialogContent>

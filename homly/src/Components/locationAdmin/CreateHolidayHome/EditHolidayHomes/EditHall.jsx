@@ -157,10 +157,10 @@ const EditHall = ({ hallArray, setHallArray }) => {
             setOpenHallFillAlert(true);
             return;
         }
-        // if (hallExist) {
-        //     setOpenHallExistAlert(true);
-        //     return;
-        // }
+        if (hallExist) {
+            setOpenHallExistAlert(true);
+            return;
+        }
 
         if (isEditMode && editIndex !== null) {
             // Editing an existing room
@@ -274,19 +274,24 @@ const EditHall = ({ hallArray, setHallArray }) => {
                 <Button size='small' variant='contained' sx={{ backgroundColor: 'primary.main' }} onClick={handleClickOpenHall}>Add Hall</Button>
             </Box>
 
-            {hallArray.length === 0
-                ?
-                <Box sx={{ display: 'flex', padding: "2em", justifyContent: 'center' }}>
+            <fieldset style={{ borderRadius: '8px' }}>
+                <legend>Rooms Breakdown</legend>
 
-                    <Typography variant='p' sx={{ color: 'grey' }}>No Halls Added Yet</Typography>
-                </Box>
-                :
-                hallArray.map((item, index) => {
-                    return (
+                {hallArray.length === 0
+                    ?
+                    <Box sx={{ display: 'flex', padding: "2em", justifyContent: 'center' }}>
 
-                        <HallBreakDown key={index} hallCode={item.hallCode} hallAc={item.hallAc} floorLevel={item.floorLevel} hallNoOfAdults={item.hallNoOfAdults} hallNoOfChildren={item.hallNoOfChildren} hallRemarks={item.hallRemarks} hallRental={item.hallRental} handleHallDelete={handleHallDelete} handleHallEdit={handleHallEdit} index={index} />
-                    )
-                })}
+                        <Typography variant='p' sx={{ color: 'grey' }}>No Halls Added Yet</Typography>
+                    </Box>
+                    :
+                    hallArray.map((item, index) => {
+                        return (
+
+                            <HallBreakDown key={index} hallCode={item.hallCode} hallAc={item.hallAc} floorLevel={item.floorLevel} hallNoOfAdults={item.hallNoOfAdults} hallNoOfChildren={item.hallNoOfChildren} hallRemarks={item.hallRemarks} hallRental={item.hallRental} handleHallDelete={handleHallDelete} handleHallEdit={handleHallEdit} index={index} />
+                        )
+                    })}
+
+            </fieldset>
 
 
             {/* Add new Hall popup */}
