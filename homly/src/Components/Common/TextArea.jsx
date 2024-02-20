@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { TextareaAutosize as BaseTextareaAutosize } from '@mui/base/TextareaAutosize';
 import { styled } from '@mui/system';
-import TextField from '@mui/material/TextField';
 
 // type Props = {
 //     parameter: string;
@@ -37,7 +36,7 @@ export default function Textarea(props) {
   const Textarea = styled(BaseTextareaAutosize)(
     ({ theme }) => `
     box-sizing: border-box;
-    width: 320px;
+    width: 100%;
     font-family: 'IBM Plex Sans', sans-serif;
     font-size: 0.875rem;
     font-weight: 400;
@@ -49,14 +48,14 @@ export default function Textarea(props) {
     border: 1px solid ${theme.palette.mode === 'dark' ? grey[700] : grey[200]};
     box-shadow: 0px 2px 2px ${theme.palette.mode === 'dark' ? grey[900] : grey[50]};
 
-    &:hover {
-      border-color: ${blue[400]};
-    }
+    // &:hover {
+    //   border-color: ${blue[400]};
+    // }
 
-    &:focus {
-      border-color: ${blue[400]};
-      box-shadow: 0 0 0 3px ${theme.palette.mode === 'dark' ? blue[600] : blue[200]};
-    }
+    // &:focus {
+    //   border-color: ${blue[400]};
+    //   box-shadow: 0 0 0 3px ${theme.palette.mode === 'dark' ? blue[600] : blue[200]};
+    // }
 
     // firefox
     &:focus-visible {
@@ -68,6 +67,6 @@ export default function Textarea(props) {
 
   return (
     //<Textarea aria-label="minimum height" minRows={3} placeholder={parameter} />
-    <Textarea sx={{width:"100%"}} aria-label="minimum height" minRows={3} id="reason" type="reason" inputProps={inputProps} placeholder={props.inputProps} />
+    <Textarea aria-label="minimum height" minRows={3} id="reason" type="reason" inputProps={inputProps} placeholder={props.inputProps} />
   );
 }
