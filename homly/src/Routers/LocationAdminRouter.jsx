@@ -29,11 +29,11 @@ const LocationAdminRouter = () => (
     <Route path="/reservations" element={<Reservations />} />
     <Route path="/report" element={<Report />} />
     <Route
-      path="/locationadmin/holidayhomes/createholidayhome"
+      path="/holidayhomes/createholidayhome"
       element={<CreateHolidayHome />}
     />
     <Route
-      path="/locationadmin/holidayhomes/editholidayhome"
+      path="/holidayhomes/editholidayhome"
       element={<HolidayHomeEdit />}
     />
   </Routes>
