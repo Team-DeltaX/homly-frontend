@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   Container,
   Box,
@@ -27,6 +27,9 @@ import BrowseMoreCom from "../../Components/User/BrowseMore/BrowseMoreCom";
 import Footer from "../../Components/User/Footer/Footer";
 import HHCarousel from "../../Components/User/Carousel/HHCarousel";
 
+import AOS from "aos";
+import "aos/dist/aos.css";
+
 const reservedDates = [
   "2024/01/27",
   "2024/01/28",
@@ -36,50 +39,9 @@ const reservedDates = [
   "2024/02/07",
 ];
 
-// const holidayHomes = [
-//   {
-//     id: 1,
-//     name: "Holiday Home 1",
-//     address: "No2, Colombo 1",
-//     rating: 4.7,
-//     price: 5000,
-//   },
-//   {
-//     id: 2,
-//     name: "Holiday Home 2",
-//     address: "No2, Kuruneagala",
-//     rating: 4.6,
-//     price: 5000,
-//     image: "https://picsum.photos/200",
-//   },
-//   {
-//     id: 3,
-//     name: "Holiday Home 3",
-//     address: "Bandaranayaka Mawatha, Moratuwa",
-//     rating: 4.6,
-//     price: 5000,
-//     image: "https://picsum.photos/200",
-//   },
-//   {
-//     id: 4,
-//     name: "Holiday Home 4",
-//     address:'No 5,Nuwara Eliya',
-//     rating: 5,
-//     price: 5000,
-//     image: "https://picsum.photos/200",
-//   },
-//   {
-//     id: 5,
-//     name: "Holiday Home 5",
-//     address: "No2, Colombo 1",
-//     rating: 4.4,
-//     price: 5000,
-//     image: "https://picsum.photos/200",
-//   }
-
-// ];
 
 export default function Home() {
+  const refContactUS = useRef(null);
   const [APIData, setAPIData] = useState([]);
   const [sortedByRating, setSortedByRating] = useState([]);
   const [selectionRange, setSelectRange] = useState({
@@ -89,6 +51,9 @@ export default function Home() {
   });
 
   const [district, setDistrict] = useState("");
+  useEffect(() => {
+    AOS.init();
+  }, []);
 
   useEffect(() => {
     axios
@@ -104,22 +69,19 @@ export default function Home() {
     sortedByRating.sort((a, b) => b.rating - a.rating);
   }, [sortedByRating]);
 
-  console.log(sortedByRating);
-  // console.log(APIData[0].name)
-  // const [isVisible, setIsVisible] = useState(true);
+  // console.log(sortedByRating);
 
   return (
     <ThemeProvider theme={theme}>
       <Box
-        className="main-container-homepage"
         sx={{
           width: "100%",
           overflow: "hidden",
         }}
       >
-        <Container maxWidth="xl" style={{ padding: 0 }}>
-          <NavBar />
-          <Container maxWidth="lg" sx={{ bgcolor: "white" }}>
+        <Container maxWidth="xl" style={{ padding: 0}}>
+          <NavBar refContactUS={refContactUS}/>
+          <Container maxWidth="lg" sx={{ bgcolor: "white",marginTop:{xs:'20px',sm:'10px',ms:'0'} }}>
             <Container
               sx={{
                 bgcolor: "white",
@@ -336,21 +298,6 @@ export default function Home() {
                   </Stack>
                   <Box>
                     <HHCarousel sortedByRating={sortedByRating} />
-                    {/* <Stack direction="row" spacing={2}>
-                      {sortedByRating
-                        .sort((a, b) => b.rating - a.rating)
-                        .slice(0, 4)
-                        .map((item) => (
-                          <HolidayHomeCard
-                            key={item.HHId}
-                            HHName={item.name}
-                            HHLocation={item.address}
-                            HHPrice={item.price}
-                            HHRating={item.rating}
-                            HHImage={item.image}
-                          />
-                        ))}
-                    </Stack> */}
                   </Box>
                 </Stack>
               </Box>
@@ -376,7 +323,8 @@ export default function Home() {
                 </Stack>
                 <OurPlaces />
               </Stack>
-              <Stack sx={{ margin: "5% 0 0 0" }}>
+              <Stack data-aos="fade-left" data-aos-duration="900" sx={{ margin: "5% 0 0 0" }}>
+                {/* browse more holiday homes */}
                 <BrowseMoreCom />
               </Stack>
             </Container>
@@ -393,8 +341,8 @@ export default function Home() {
               }}
             ></Container>
           </Container>
-          <Box>
-            <Footer />
+          <Box >
+            <Footer refContactUS={refContactUS}/>
           </Box>
         </Container>
       </Box>
