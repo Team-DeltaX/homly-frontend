@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import EditPersonalDetailsContextProvider from "./Contexts/EditPersonalDetailsContext";
 import "../src/Styles/styles.css";
 import ManageHomes from "../src/Pages/locationAdmin/ManageHomes";
+
+import { CustomTabProvider } from "./Contexts/primryadmin/CustomTabContext";
 import HolidayHomeEdit from "./Pages/locationAdmin/HolidayHomeEdit";
 
 
@@ -95,6 +97,7 @@ const Report = lazy(() =>
 // location admin import end
 
 const App = () => (
+  <CustomTabProvider>
   <EditPersonalDetailsContextProvider>
     <Router>
       <Suspense fallback={<div>loading</div>}>
@@ -155,6 +158,7 @@ const App = () => (
       </Suspense>
     </Router>
   </EditPersonalDetailsContextProvider>
+   </CustomTabProvider>
 );
 
 export default App;

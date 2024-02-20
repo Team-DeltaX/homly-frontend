@@ -61,7 +61,7 @@ const PrimaryComplaints = () => {
                     <Pagetop setShowNav={setShowNav} heading={"Complaints"}/>
                 
                     <Box sx={{marginTop:'2%',marginLeft:"2%",maxHeight:{md:"510px",xs:'600px'},overflow:"scroll",padding:"3%"}}>
-                      {data.map((data)=>{
+                      {blacklistedusers.map((data)=>{
                             return(
                                <ComplaintCard  handlepopup={handlepopup} data={data} setSelecteduser={setSelecteduser}/>
                             )

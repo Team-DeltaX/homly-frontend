@@ -1,7 +1,6 @@
 
-// import '../App.css';
-import { createPortal } from 'react-dom';
-import React,{useEffect, useState} from 'react'
+
+import React,{ useState} from 'react'
 import SideNavbar from '../../Components/PrimaryAdmin/SideNavbar'
 // import ComplaintCard from '../../Components/PrimaryAdmin/ComplaintCard';
 import Box from '@mui/material/Box';
