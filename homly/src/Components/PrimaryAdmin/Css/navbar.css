@@ -1,0 +1,121 @@
+/*..................................................... navbar.....................................  */
+.dashicon {
+    margin-left: 20px;
+}
+
+.user_image {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+}
+
+.sidenav_item {
+    padding-left: 50px;
+    gap: 20px;
+}
+
+.submenu_item {
+    padding-left: 70px;
+}
+
+
+@media screen and (max-width:920px) {
+    .sidenav_item {
+        padding-left: 30px;
+    }
+
+    .submenu_item {
+        padding-left: 50px;
+    }
+
+}
+
+
+.sidenav_link {
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.sidenav_submenulink {
+    text-decoration: none;
+}
+
+/* page title customization */
+
+.page_title {
+    margin-bottom: 15px;
+}
+
+
+
+
+
+/* customization navbar for mobile device */
+@media screen and (max-width:890px) {
+
+    .nav_grid_deactive {
+        position: absolute;
+        z-index: 100000;
+        right: -50%;
+        min-width: 50%;
+        Transition: all 0.5s ease-in;
+
+
+    }
+
+    .nav_grid_active {
+        position: absolute;
+        z-index: 100000;
+        right: 0%;
+        min-width: 50%;
+        transition: all 0.5s ease-in;
+    }
+
+
+    .container_grid {
+        display: block;
+        min-width: 100%;
+        border-top-left-radius: 0px !important;
+        height: 100vh;
+    }
+
+    .burger_icon {
+        display: block !important;
+    }
+
+    .close_icon {
+        display: block !important;
+
+    }
+
+    .nav_header {
+        padding-top: 40px;
+    }
+
+    .page_title {
+        font-size: 2rem !important;
+    }
+
+
+}
+
+@media screen and (max-width:600px) {
+
+    .nav_grid_active {
+        min-width: 60%;
+    }
+
+
+    .sidenav_item {
+        padding-left: 12px;
+    }
+
+    .submenu_item {
+        padding-left: 35px;
+    }
+
+    .page_title {
+        font-size: 1.3rem !important;
+    }
+
+}
