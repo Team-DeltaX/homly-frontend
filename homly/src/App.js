@@ -126,7 +126,7 @@ const App = () => (
           <Route path="/locationadmin/reservations" element={<Reservations />} />
           <Route path="/locationadmin/report" element={<Report />} />
           <Route path="/locationadmin/holidayhomes/createholidayhome" element={<CreateHolidayHome />} />
-          <Route path="/locationadmin/holidayhomes/editholidayhome" element={<HolidayHomeEdit />} />
+          <Route path="/locationadmin/holidayhomes/editholidayhome/:homeId" element={<HolidayHomeEdit />} />
 
 
 

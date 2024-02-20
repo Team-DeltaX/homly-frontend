@@ -52,19 +52,26 @@ const ManageHomeContent = () => {
         setValue(newValue);
     };
 
-    const [data, setData] = React.useState([]);
+    const [pending, setPending] = React.useState([]);
+    const [inactive, setInactive] = React.useState([]);
+    const [active, setActive] = React.useState([]);
 
     useEffect(() => {
         axios.get('http://localhost:3002/locationadmin/holidayhome/')
             .then((res) => {
                 if (Response) {
-                    console.log(res.data);
-                    setData(res.data);
+                    setPending(res.data.pending);
+                    setActive(res.data.active);
+                    setInactive(res.data.inactive);
+
+
                 } else {
                     console.log("No data found");
                 }
             })
     }, [])
+
+    console.log(pending);
 
 
     return (
@@ -79,38 +86,46 @@ const ManageHomeContent = () => {
                     <Box sx={{ width: '100%' }}>
                         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                             <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                                <Tab label="Pending" {...a11yProps(0)} />
-                                <Tab label="Inactive" {...a11yProps(1)} />
-                                <Tab label="Active" {...a11yProps(2)} />
+                                <Tab label="Active" {...a11yProps(0)} />
+                                <Tab label="Pending" {...a11yProps(1)} />
+                                <Tab label="InActive" {...a11yProps(2)} />
                             </Tabs>
                         </Box>
                         <CustomTabPanel value={value} index={0}>
-                            <Box className="homes_container_header"><Typography variant='p' className='header_title'>Pending Holiday Homes</Typography><hr /></Box>
+                            <Box className="homes_container_header"><Typography variant='p' className='header_title'>Active Holiday Homes</Typography><hr /></Box>
                             <Box className="homes_container" sx={{ overflowY: "scroll", maxHeight: "60vh" }}>
                                 <Box className="homes_container_body">
-                                    <HolidayHomeCard />
-                                    <HolidayHomeCard />
-                                    <HolidayHomeCard />
-                                    <HolidayHomeCard />
-
-                                </Box>
-                            </Box>
-                        </CustomTabPanel>
-                        <CustomTabPanel value={value} index={1}>
-                            <Box className="homes_container_header"><Typography variant='p' className='header_title'>Inactive Holiday Homes</Typography><hr /></Box>
-                            <Box className="homes_container" sx={{ overflowY: "scroll", maxHeight: "60vh" }}>
-                                <Box className="homes_container_body">
-                                    <HolidayHomeCard />
+                                    {active.map((item) => {
+                                        return (
+                                            <HolidayHomeCard key={item.HolidayHomeId} HolidayHomeName={item.Name} Category={item.Category} HolidayHomeId={item.HolidayHomeId} />
+                                        )
+                                    })}
 
                                 </Box>
                             </Box>
                         </CustomTabPanel>
                         <CustomTabPanel value={value} index={2}>
-                            <Box className="homes_container_header"><Typography variant='p' className='header_title'>Active Holiday Homes</Typography><hr /></Box>
+                            <Box className="homes_container_header"><Typography variant='p' className='header_title'>Pending Holiday Homes</Typography><hr /></Box>
                             <Box className="homes_container" sx={{ overflowY: "scroll", maxHeight: "60vh" }}>
                                 <Box className="homes_container_body">
-                                    <HolidayHomeCard />
-                                    <HolidayHomeCard />
+                                    {pending.map((item) => {
+                                        return (
+                                            <HolidayHomeCard key={item.HolidayHomeId} HolidayHomeName={item.Name} Category={item.Category} HolidayHomeId={item.HolidayHomeId} />
+                                        )
+                                    })}
+
+                                </Box>
+                            </Box>
+                        </CustomTabPanel>
+                        <CustomTabPanel value={value} index={1}>
+                            <Box className="homes_container_header"><Typography variant='p' className='header_title'>InActive Holiday Homes</Typography><hr /></Box>
+                            <Box className="homes_container" sx={{ overflowY: "scroll", maxHeight: "60vh" }}>
+                                <Box className="homes_container_body">
+                                    {inactive.map((item) => {
+                                        return (
+                                            <HolidayHomeCard key={item.HolidayHomeId} HolidayHomeName={item.Name} Category={item.Category} HolidayHomeId={item.HolidayHomeId} />
+                                        )
+                                    })}
 
                                 </Box>
                             </Box>

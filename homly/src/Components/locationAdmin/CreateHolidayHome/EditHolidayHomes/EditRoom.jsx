@@ -16,6 +16,9 @@ import Alert from '@mui/material/Alert';
 
 import RoomBreakdown from '../RoomBreakdown';
 
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+
 const EditRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount }) => {
     // open pop up for add room
     const [open, setOpen] = useState(false);
@@ -25,6 +28,10 @@ const EditRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount }) =>
     const [isEditMode, setIsEditMode] = useState(false);
     const [editIndex, setEditIndex] = useState(null);
 
+
+    const [values, setValues] = useState({
+        roomCode: '', roomAc: '', RoomType: '', NoOfBeds: '', NoOfAdults: '', NoOfChildren: '', roomRemarks: '', roomRental: '', groupByUnit: false,
+    })
 
 
     useEffect(() => {
@@ -103,10 +110,6 @@ const EditRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount }) =>
         setOpenRoomExistAlert(false);
     };
 
-
-    const [values, setValues] = useState({
-        roomCode: '', roomAc: '', RoomType: '', NoOfBeds: '', NoOfAdults: '', NoOfChildren: '', roomRemarks: '', roomRental: '', groupByUnit: false,
-    })
 
 
 
@@ -204,8 +207,6 @@ const EditRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount }) =>
 
 
     }
-
-
 
     const [error, setError] = useState({
         ctName: false, ctAddress: false, ctDescription: false, ctContactNo: false
@@ -309,9 +310,6 @@ const EditRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount }) =>
 
     console.log(roomArray);
 
-
-
-
     return (
         <Box>
             <Box sx={{ display: 'flex', justifyContent: 'flex-start', marginTop: "12px", marginBottom: '12px' }}>
@@ -336,11 +334,6 @@ const EditRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount }) =>
                     })}
 
             </fieldset>
-
-
-
-
-
 
             {/* Add new room popup */}
             <React.Fragment>
@@ -519,9 +512,6 @@ const EditRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount }) =>
                     </form>
                 </Dialog>
             </React.Fragment>
-
-
-
 
             {/* alert remove room */}
             <div>

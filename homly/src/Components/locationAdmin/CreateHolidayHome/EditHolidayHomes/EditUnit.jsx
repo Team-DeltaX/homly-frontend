@@ -16,6 +16,8 @@ import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 
 import UnitBreakDown from '../UnitBreakDown';
+
+
 const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
 
     const [openUnit, setOpenUnit] = useState(false);
@@ -24,6 +26,10 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
 
     const [isEditMode, setIsEditMode] = useState(false);
     const [editIndex, setEditIndex] = useState(null);
+
+    const [unitValues, setUnitValues] = useState({
+        unitCode: '', unitAc: '', floorLevel: '', unitRemark: '', unitRental: '', roomAttached: false, selectedRooms: []
+    });
 
 
     useEffect(() => {
@@ -81,9 +87,7 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
     });
 
 
-    const [unitValues, setUnitValues] = useState({
-        unitCode: '', unitAc: '', floorLevel: '', unitRemark: '', unitRental: '', roomAttached: false, selectedRooms: []
-    })
+
     const [unitExist, setUnitExist] = useState(false);
     const handleUnitCodeChange = (e) => {
         const unitCodeExists = unitArray.some(unit => unit.unitCode === e.target.value);
@@ -310,8 +314,9 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
                     </Box>
                     :
                     unitArray.map((item, index) => {
+                        console.log(item.roomAttached);
                         return (
-                            <UnitBreakDown key={index} unitCode={item.unitCode} unitAc={item.unitAc} floorLevel={item.floorLevel} unitNoOfAdults={item.unitNoOfAdults} unitNoOfChildren={item.unitNoOfChildren} unitRemarks={item.unitRemarks} unitRental={item.unitRental} roomArray={roomArray} setRoomArray={setRoomArray} selectedRooms={item.selectedRooms} handleUnitDelete={handleUnitDelete} handleUnitEdit={handleUnitEdit} index={index} />
+                            <UnitBreakDown key={index} unitCode={item.unitCode} unitAc={item.unitAc} floorLevel={item.floorLevel} unitNoOfAdults={item.unitNoOfAdults} unitNoOfChildren={item.unitNoOfChildren} unitRemarks={item.unitRemarks} unitRental={item.unitRental} roomArray={roomArray} setRoomArray={setRoomArray} selectedRooms={item.selectedRooms} handleUnitDelete={handleUnitDelete} handleUnitEdit={handleUnitEdit} index={index} roomAttached={item.roomAttached} />
                         )
                     })}
 
