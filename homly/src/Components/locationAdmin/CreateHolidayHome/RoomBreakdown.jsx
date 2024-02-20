@@ -50,7 +50,7 @@ const RoomBreakdown = ({ roomCode, roomAc, roomType, noOfBeds, noOfAdults, noOfC
 
                 </Box>
                 <Box>
-                    <CancelIcon sx={{ cursor: "pointer" }} onClick={() => handleRoomDelete(roomCode, groupByUnit)} />
+                    <CancelIcon sx={{ cursor: "pointer" }} onClick={() => handleRoomDelete(roomCode, groupByUnit,noOfAdults,noOfChildren)} />
                 </Box>
 
             </Box>

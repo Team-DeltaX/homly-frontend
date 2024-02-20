@@ -16,7 +16,10 @@ import Alert from '@mui/material/Alert';
 
 import RoomBreakdown from '../RoomBreakdown';
 
-const EditRoom = ({ roomArray, setRoomArray }) => {
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+
+const EditRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount }) => {
     // open pop up for add room
     const [open, setOpen] = useState(false);
     const [fullWidth, setFullWidth] = useState(true);
@@ -24,6 +27,12 @@ const EditRoom = ({ roomArray, setRoomArray }) => {
 
     const [isEditMode, setIsEditMode] = useState(false);
     const [editIndex, setEditIndex] = useState(null);
+
+
+    const [values, setValues] = useState({
+        roomCode: '', roomAc: '', RoomType: '', NoOfBeds: '', NoOfAdults: '', NoOfChildren: '', roomRemarks: '', roomRental: '', groupByUnit: false,
+    })
+
 
     useEffect(() => {
         if (isEditMode && editIndex !== null) {
@@ -102,10 +111,6 @@ const EditRoom = ({ roomArray, setRoomArray }) => {
     };
 
 
-    const [values, setValues] = useState({
-        roomCode: '', roomAc: '', RoomType: '', NoOfBeds: '', NoOfAdults: '', NoOfChildren: '', roomRemarks: '', roomRental: '', groupByUnit: false,
-    })
-
 
 
 
@@ -126,13 +131,13 @@ const EditRoom = ({ roomArray, setRoomArray }) => {
             return;
         }
 
-        // if (roomExist) {
-        //     setOpenRoomExistAlert(true);
-        //     return;
-        // }
+        if (roomExist) {
+            setOpenRoomExistAlert(true);
+            return;
+        }
 
 
-        
+
         if (isEditMode && editIndex !== null) {
             // Editing an existing room
             const updatedRoomArray = [...roomArray];
@@ -155,15 +160,23 @@ const EditRoom = ({ roomArray, setRoomArray }) => {
         setOpen(false);
         setIsEditMode(false);
         setEditIndex(null);
+
+        setAdultsCount(prevCount => prevCount + parseInt(values.NoOfAdults, 10));
+        setChildCount(prevCount => prevCount + parseInt(values.NoOfChildren, 10));
+
+
     };
 
-    const handleRoomDelete = (roomCode, groupByUnit) => { //for room breakdown component
+    const handleRoomDelete = (roomCode, groupByUnit, noOfAdults, noOfChildren) => { //for room breakdown component
         if (groupByUnit) {
             setOpenAlert(true);
         }
         else {
             const newRoomArray = roomArray.filter((item) => item.roomCode !== roomCode);
             setRoomArray(newRoomArray);
+            setAdultsCount(prevCount => prevCount - parseInt(noOfAdults, 10));
+            setChildCount(prevCount => prevCount - parseInt(noOfChildren, 10));
+
 
         }
     }
@@ -194,8 +207,6 @@ const EditRoom = ({ roomArray, setRoomArray }) => {
 
 
     }
-
-
 
     const [error, setError] = useState({
         ctName: false, ctAddress: false, ctDescription: false, ctContactNo: false
@@ -299,33 +310,30 @@ const EditRoom = ({ roomArray, setRoomArray }) => {
 
     console.log(roomArray);
 
-
-
-
     return (
         <Box>
             <Box sx={{ display: 'flex', justifyContent: 'flex-start', marginTop: "12px", marginBottom: '12px' }}>
                 <Button size='small' variant='contained' sx={{ backgroundColor: 'primary.main' }} onClick={handleClickOpen}>Add Room</Button>
             </Box>
 
-            {roomArray.length === 0
-                ?
-                <Box sx={{ display: 'flex', padding: "2em", justifyContent: 'center' }}>
+            <fieldset style={{ borderRadius: '8px' }}>
+                <legend>Rooms Breakdown</legend>
 
-                    <Typography variant='p' sx={{ color: 'grey', textAlign: 'center' }}>No Rooms Added Yet <br></br>Add Rooms to Submit form</Typography>
-                </Box>
-                :
-                roomArray.map((item, index) => {
+                {roomArray.length === 0
+                    ?
+                    <Box sx={{ display: 'flex', padding: "2em", justifyContent: 'center' }}>
 
-                    return (
-                        <RoomBreakdown key={index} roomCode={item.roomCode} roomAc={item.roomAc} roomType={item.RoomType} noOfBeds={item.NoOfBeds} noOfAdults={item.NoOfAdults} noOfChildren={item.NoOfChildren} roomRemarks={item.roomRemarks} roomRental={item.roomRental} groupByUnit={item.groupByUnit} handleRoomEdit={handleRoomEdit} handleRoomDelete={handleRoomDelete} index={index} />
-                    )
-                })}
+                        <Typography variant='p' sx={{ color: 'grey', textAlign: 'center' }}>No Rooms Added Yet <br></br>Add Rooms to Submit form</Typography>
+                    </Box>
+                    :
+                    roomArray.map((item, index) => {
 
+                        return (
+                            <RoomBreakdown key={index} roomCode={item.roomCode} roomAc={item.roomAc} roomType={item.RoomType} noOfBeds={item.NoOfBeds} noOfAdults={item.NoOfAdults} noOfChildren={item.NoOfChildren} roomRemarks={item.roomRemarks} roomRental={item.roomRental} groupByUnit={item.groupByUnit} handleRoomEdit={handleRoomEdit} handleRoomDelete={handleRoomDelete} index={index} />
+                        )
+                    })}
 
-
-
-
+            </fieldset>
 
             {/* Add new room popup */}
             <React.Fragment>
@@ -504,9 +512,6 @@ const EditRoom = ({ roomArray, setRoomArray }) => {
                     </form>
                 </Dialog>
             </React.Fragment>
-
-
-
 
             {/* alert remove room */}
             <div>

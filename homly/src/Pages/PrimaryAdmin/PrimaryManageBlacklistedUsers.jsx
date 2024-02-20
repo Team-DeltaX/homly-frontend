@@ -198,6 +198,7 @@ const PrimaryManageBlacklistedUsers = () => {
       image: "http://dummyimage.com/162x100.png/5fa2dd/ffffff",
     },
   ];
+  //csv headers
   const headers = [
     {
       label: "Service Number",
@@ -212,12 +213,15 @@ const PrimaryManageBlacklistedUsers = () => {
       key: "date",
     },
   ];
+ 
+  const [blacklistedusers, setBlacklistedusers] = useState([]);
+
+  //csv
   const csvLink = {
     filename: "blacklisteduserslist.csv",
     headers: headers,
-    data: data,
+    data: blacklistedusers,
   };
-  const [blacklistedusers, setBlacklistedusers] = useState([]);
 
   useEffect(() => {
     setBlacklistedusers(data);

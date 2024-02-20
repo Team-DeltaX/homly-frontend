@@ -9,11 +9,12 @@ import PrimaryAdminRouter from "./Routers/PrimaryAdminRouter";
 import AuthContextProvider from "./Contexts/AuthContext";
 
 import "../src/Styles/styles.css";
-
+import { CustomTabProvider } from "./Contexts/primryadmin/CustomTabContext";
 
 
 const App = () => (
   <AuthContextProvider>
+  <CustomTabProvider>
     <Router>
       <Suspense fallback={<div>Loading...</div>} >
         <Routes>
@@ -27,6 +28,7 @@ const App = () => (
         
       </Suspense>
     </Router>
+   </CustomTabProvider>
   </AuthContextProvider>
 );
 

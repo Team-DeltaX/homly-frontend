@@ -1,7 +1,7 @@
 
 
 import './style.css';
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 
 import { Grid, ThemeProvider, Container, Box, Typography, Button } from '@mui/material';
@@ -16,8 +16,12 @@ import EditHolidayHomeDetails from '../../Components/locationAdmin/CreateHoliday
 import EditCaretakerDetails from '../../Components/locationAdmin/CreateHolidayHome/EditHolidayHomes/EditCaretakerDetails';
 import EditHolidayHomeBreakdown from '../../Components/locationAdmin/CreateHolidayHome/EditHolidayHomes/EditHolidayHomeBreakdown';
 
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
+
+
 
     return (
         <div
@@ -56,6 +60,12 @@ const HolidayHomeEdit = () => {
     const [showNav, setShowNav] = useState('nav_grid_deactive');
     const [value, setValue] = useState(0);
 
+    const [roomArray, setRoomArray] = useState([]);
+    const [unitArray, setUnitArray] = useState([]);
+    const [hallArray, setHallArray] = useState([]);
+
+
+
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
@@ -67,6 +77,49 @@ const HolidayHomeEdit = () => {
     const handleNextToHall = () => {
         setValue(2);
     }
+
+    const { homeId } = useParams();
+
+    useEffect(() => {
+
+        axios.get(`http://localhost:3002/locationadmin/holidayhome/${homeId}`)
+            .then((res) => {
+                if (Response) {
+                    const roomDetails = res.data.room;
+                    setRoomArray(roomDetails);
+
+                } else {
+                    console.log("No data found");
+                }
+            })
+        axios.get(`http://localhost:3002/locationadmin/holidayhome/${homeId}`)
+            .then((res) => {
+                if (Response) {
+                    const unitDetails = res.data.unit;
+                    setUnitArray(unitDetails);
+
+
+
+                } else {
+                    console.log("No data found");
+                }
+            })
+
+
+
+        axios.get(`http://localhost:3002/locationadmin/holidayhome/${homeId}`)
+            .then((res) => {
+                if (Response) {
+                    const hallDetails = res.data.hall;
+                    setHallArray(hallDetails);
+
+
+                } else {
+                    console.log("No data found");
+                }
+            })
+    }, [homeId])
+
 
     return (
         <ThemeProvider theme={theme}>
@@ -94,7 +147,7 @@ const HolidayHomeEdit = () => {
                                         </Box>
                                     </CustomTabPanel>
                                     <CustomTabPanel value={value} index={1}>
-                                        <EditHolidayHomeBreakdown />
+                                        <EditHolidayHomeBreakdown roomArray={roomArray} setRoomArray={setRoomArray} unitArray={unitArray} setUnitArray={setUnitArray} hallArray={hallArray} setHallArray={setHallArray} />
                                         <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginRight: "1.5em" }}>
                                             <Button variant="contained" sx={{ marginTop: '1em' }} onClick={handleNextToHall}>Next</Button>
                                         </Box>
