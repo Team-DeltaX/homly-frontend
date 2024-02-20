@@ -1,10 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, Typography, TextField, Grid } from '@mui/material'
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+
 const EditCaretakerDetails = () => {
+
     const [value, setValue] = useState({
         caretakerName: '', caretakerContactNo: '', caretakerStatus: '', caretakerAddress: '', caretakerDescription: '',
     })
@@ -12,6 +16,36 @@ const EditCaretakerDetails = () => {
     const [valueSecond, setValueSecond] = useState({
         caretakerName: '', caretakerContactNo: '', caretakerStatus: '', caretakerAddress: '', caretakerDescription: '',
     })
+
+
+    const { homeId } = useParams();
+    useEffect(() => {
+        axios.get(`http://localhost:3002/locationadmin/holidayhome/${homeId}`)
+            .then((res) => {
+                if (Response) {
+                    const caretakerDetails = res.data.caretaker;
+
+                    setValue({
+                        caretakerName: caretakerDetails[0].Name, caretakerContactNo: caretakerDetails[0].ContactNo, caretakerStatus: caretakerDetails[0].Status, caretakerAddress: caretakerDetails[0].Address, caretakerDescription: caretakerDetails[0].Description,
+                    })
+
+                    if (caretakerDetails[1]) {
+                        setValueSecond({
+                            caretakerName: caretakerDetails[1].Name || "", caretakerContactNo: caretakerDetails[1].ContactNo || "", caretakerStatus: caretakerDetails[1].Status || "", caretakerAddress: caretakerDetails[1].Address || "", caretakerDescription: caretakerDetails[1].Description || "",
+                        })
+
+                    }
+
+                } else {
+                    console.log("No data found");
+                }
+            })
+        console.log(value.caretakerName);
+    }, [])
+
+
+    console.log(value.caretakerName);
+
 
     const [error, setError] = useState({
         ctName: false, ctAddress: false, ctDescription: false, ctContactNo: false
@@ -107,13 +141,13 @@ const EditCaretakerDetails = () => {
                             <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                 <Typography variant='p' sx={{ color: 'black' }}>Name</Typography>
                             </Box>
-                            <TextField error={error.ctName} required id="outlined-required" label="Enter Name" placeholder='Enter Name' fullWidth size='small' onChange={handleNameChange} helperText={error.ctName ? "Invalid Input" : ''} />
+                            <TextField error={error.ctName} required id="outlined-required" label="Enter Name" placeholder='Enter Name' fullWidth size='small' onChange={handleNameChange} helperText={error.ctName ? "Invalid Input" : ''} value={value.caretakerName} />
                         </Box>
                         <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                             <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                 <Typography variant='p' sx={{ color: 'black' }}>Contact No</Typography>
                             </Box>
-                            <TextField required id="outlined-required" label="Enter Contact No" placeholder='Enter Contact No' fullWidth size='small' onChange={handleContactNoChange} />
+                            <TextField required id="outlined-required" label="Enter Contact No" placeholder='Enter Contact No' fullWidth size='small' onChange={handleContactNoChange} value={value.caretakerContactNo} />
                         </Box>
                         <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                             <Box sx={{ minWidth: '100px', maxWidth: '100px' }} className="label_container">
@@ -123,12 +157,12 @@ const EditCaretakerDetails = () => {
                                 <RadioGroup
                                     aria-labelledby="demo-controlled-radio-buttons-group"
                                     name="controlled-radio-buttons-group"
-                                    value={value.status}
+                                    value={value.caretakerStatus}
                                     onChange={handlestatusChange}
 
                                 >
-                                    <FormControlLabel value="Active" control={<Radio />} label="Active" />
-                                    <FormControlLabel value="Inactive" control={<Radio />} label="Inactive" />
+                                    <FormControlLabel value="active" control={<Radio />} label="Active" />
+                                    <FormControlLabel value="inactive" control={<Radio />} label="Inactive" />
                                 </RadioGroup>
                             </Box>
                         </Box>
@@ -137,13 +171,13 @@ const EditCaretakerDetails = () => {
                             <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                 <Typography variant='p' sx={{ color: 'black' }}>Address</Typography>
                             </Box>
-                            <TextField multiline id="outlined-required" label="Enter Address" placeholder='Enter Address' fullWidth size='small' required onChange={handleAddressChange} />
+                            <TextField multiline id="outlined-required" label="Enter Address" placeholder='Enter Address' fullWidth size='small' required onChange={handleAddressChange} value={value.caretakerAddress} />
                         </Box>
                         <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                             <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                 <Typography variant='p' sx={{ color: 'black' }}>Description</Typography>
                             </Box>
-                            <TextField id="outlined-required" label="Enter Description" placeholder='Enter Description' fullWidth size='small' onChange={handleDescriptionChange} />
+                            <TextField id="outlined-required" label="Enter Description" placeholder='Enter Description' fullWidth size='small' onChange={handleDescriptionChange} value={value.caretakerDescription} />
                         </Box>
                         <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '1em', marginBottom: '12px' }}>
                             <Box sx={{ minWidth: '100px', maxWidth: '100px' }} className="label_container">
@@ -160,13 +194,13 @@ const EditCaretakerDetails = () => {
                             <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                 <Typography variant='p' sx={{ color: 'black' }}>Name</Typography>
                             </Box>
-                            <TextField error={error.ctName} required id="outlined-required" label="Enter Name" placeholder='Enter Name' fullWidth size='small' onChange={handleNameChangeSecond} helperText={error.ctName ? "Invalid Input" : ''} />
+                            <TextField error={error.ctName} required id="outlined-required" label="Enter Name" placeholder='Enter Name' fullWidth size='small' onChange={handleNameChangeSecond} helperText={error.ctName ? "Invalid Input" : ''} value={valueSecond.caretakerName} />
                         </Box>
                         <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                             <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                 <Typography variant='p' sx={{ color: 'black' }}>Contact No</Typography>
                             </Box>
-                            <TextField required id="outlined-required" label="Enter Contact No" placeholder='Enter Contact No' fullWidth size='small' onChange={handleContactNoChangeSecond} />
+                            <TextField required id="outlined-required" label="Enter Contact No" placeholder='Enter Contact No' fullWidth size='small' onChange={handleContactNoChangeSecond} value={valueSecond.caretakerContactNo} />
                         </Box>
                         <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                             <Box sx={{ minWidth: '100px', maxWidth: '100px' }} className="label_container">
@@ -176,12 +210,12 @@ const EditCaretakerDetails = () => {
                                 <RadioGroup
                                     aria-labelledby="demo-controlled-radio-buttons-group"
                                     name="controlled-radio-buttons-group"
-                                    value={valueSecond.status}
+                                    value={valueSecond.caretakerStatus}
                                     onChange={handlestatusChangeSecond}
 
                                 >
-                                    <FormControlLabel value="Active" control={<Radio />} label="Active" />
-                                    <FormControlLabel value="Inactive" control={<Radio />} label="Inactive" />
+                                    <FormControlLabel value="active" control={<Radio />} label="Active" />
+                                    <FormControlLabel value="inactive" control={<Radio />} label="Inactive" />
                                 </RadioGroup>
                             </Box>
                         </Box>
@@ -190,13 +224,13 @@ const EditCaretakerDetails = () => {
                             <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                 <Typography variant='p' sx={{ color: 'black' }}>Address</Typography>
                             </Box>
-                            <TextField multiline id="outlined-required" label="Enter Address" placeholder='Enter Address' fullWidth size='small' required onChange={handleAddressChangeSecond} />
+                            <TextField multiline id="outlined-required" label="Enter Address" placeholder='Enter Address' fullWidth size='small' required onChange={handleAddressChangeSecond} value={valueSecond.caretakerAddress} />
                         </Box>
                         <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                             <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                 <Typography variant='p' sx={{ color: 'black' }}>Description</Typography>
                             </Box>
-                            <TextField id="outlined-required" label="Enter Description" placeholder='Enter Description' fullWidth size='small' onChange={handleDescriptionChangeSecond} />
+                            <TextField id="outlined-required" label="Enter Description" placeholder='Enter Description' fullWidth size='small' onChange={handleDescriptionChangeSecond} value={valueSecond.caretakerDescription} />
                         </Box>
                         <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '1em', marginBottom: '12px' }}>
                             <Box sx={{ minWidth: '100px', maxWidth: '100px' }} className="label_container">

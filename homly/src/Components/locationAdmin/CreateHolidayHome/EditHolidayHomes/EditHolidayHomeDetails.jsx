@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, TextField, Typography, Grid } from '@mui/material'
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -7,6 +7,8 @@ import Select from '@mui/material/Select';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 const EditHolidayHomeDetails = () => {
 
@@ -17,6 +19,39 @@ const EditHolidayHomeDetails = () => {
     const [error, setError] = useState({
         name: false, address: false, description: false, contactNo1: false, contactNo2: false
     });
+
+
+    const { homeId } = useParams();
+
+    useEffect(() => {
+        axios.get(`http://localhost:3002/locationadmin/holidayhome/${homeId}`)
+            .then((res) => {
+                if (Response) {
+                    const homeDetails = res.data.homeDetails;
+                    const contactNo = res.data.contactNo;
+
+                    // Extract relevant data from response and set to 'value' state
+                    setValue({
+                        name: homeDetails.Name || '',
+                        address: homeDetails.Address || '',
+                        district: 'Kegalle', // Add the logic to get district if available
+                        description: homeDetails.Description || '',
+                        contactNo1: (contactNo && contactNo.length > 0) ? contactNo[0].ContactNo : '',
+                        contactNo2: (contactNo && contactNo.length > 1) ? contactNo[1].ContactNo : '',
+                        category: homeDetails.Category || '',
+                        status: homeDetails.Status || ''
+                    });
+
+
+                } else {
+                    console.log("No data found");
+                }
+            })
+    }, [])
+
+
+
+
 
 
     const handleNameChange = (e) => {
@@ -91,7 +126,7 @@ const EditHolidayHomeDetails = () => {
                             <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                 <Typography variant='p' sx={{ color: 'black' }}>Name</Typography>
                             </Box>
-                            <TextField error={error.name} className='input_field' required id="outlined-required" label="Enter Name" placeholder='Enter Name' fullWidth size='small' onChange={handleNameChange} helperText={error.name ? "Invalid Input" : ''} />
+                            <TextField error={error.name} className='input_field' required id="outlined-required" label="Enter Name" placeholder='Enter Name' fullWidth size='small' onChange={handleNameChange} helperText={error.name ? "Invalid Input" : ''} value={value.name} />
                         </Box>
                         <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                             <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
@@ -144,7 +179,7 @@ const EditHolidayHomeDetails = () => {
                             <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                 <Typography variant='p' sx={{ color: 'black' }}>Contact No 1</Typography>
                             </Box>
-                            <TextField error={error.contactNo1} required id="outlined-required" label="Enter Contact No" placeholder='Enter Contact No' fullWidth size='small' onChange={handleContactNo1Change} helperText={error.contactNo1 ? "There should be 10 digits" : ''} />
+                            <TextField error={error.contactNo1} required id="outlined-required" label="Enter Contact No" placeholder='Enter Contact No' fullWidth size='small' onChange={handleContactNo1Change} helperText={error.contactNo1 ? "There should be 10 digits" : ''} value={value.contactNo1} />
                         </Box>
                         <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                             <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
@@ -159,7 +194,7 @@ const EditHolidayHomeDetails = () => {
                                         size='small'
                                         labelId="demo-simple-select-label"
                                         id="demo-simple-select"
-                                        value={value.catogery}
+                                        value={value.category}
                                         label="Age"
                                         onChange={handleCategoryChange}
                                     >
@@ -185,19 +220,19 @@ const EditHolidayHomeDetails = () => {
                             <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                 <Typography variant='p' sx={{ color: 'black' }}>Address</Typography>
                             </Box>
-                            <TextField required id="outlined-required" label="Enter Address" placeholder='Enter Address' fullWidth size='small' onChange={handleAddressChange} />
+                            <TextField required id="outlined-required" label="Enter Address" placeholder='Enter Address' fullWidth size='small' onChange={handleAddressChange} value={value.address} />
                         </Box>
                         <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                             <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                 <Typography variant='p' sx={{ color: 'black' }}>Description</Typography>
                             </Box>
-                            <TextField required multiline id="outlined-required" label="Enter Description" placeholder='Enter Description' fullWidth size='small' onChange={handleDisriptionChange} />
+                            <TextField required multiline id="outlined-required" label="Enter Description" placeholder='Enter Description' fullWidth size='small' onChange={handleDisriptionChange} value={value.description} />
                         </Box>
                         <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                             <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                 <Typography variant='p' sx={{ color: 'black' }}>Contact No 2</Typography>
                             </Box>
-                            <TextField error={error.contactNo2} id="outlined-required" label="Enter Contact No2" placeholder='Enter Contact No2' fullWidth size='small' onChange={handleContactNo2Change} helperText={error.contactNo2 ? "There should be 10 digits" : ''} />
+                            <TextField error={error.contactNo2} id="outlined-required" label="Enter Contact No2" placeholder='Enter Contact No2' fullWidth size='small' onChange={handleContactNo2Change} helperText={error.contactNo2 ? "There should be 10 digits" : ''} value={value.contactNo2} />
                         </Box>
                         <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                             <Box sx={{ minWidth: '100px', maxWidth: '100px' }} className="label_container">
@@ -211,8 +246,8 @@ const EditHolidayHomeDetails = () => {
                                     onChange={handlestatusChange}
 
                                 >
-                                    <FormControlLabel value="Active" control={<Radio />} label="Active" sx={{ display: "inline-block", width: "fit-content" }} />
-                                    <FormControlLabel value="Inactive" control={<Radio />} label="Inactive" />
+                                    <FormControlLabel value="active" control={<Radio />} label="Active" sx={{ display: "inline-block", width: "fit-content" }} />
+                                    <FormControlLabel value="inactive" control={<Radio />} label="Inactive" />
                                 </RadioGroup>
                             </Box>
                         </Box>
