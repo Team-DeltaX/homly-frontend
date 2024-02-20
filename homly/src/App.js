@@ -14,21 +14,21 @@ import { CustomTabProvider } from "./Contexts/primryadmin/CustomTabContext";
 
 const App = () => (
   <AuthContextProvider>
-  <CustomTabProvider>
-    <Router>
-      <Suspense fallback={<div>Loading...</div>} >
-        <Routes>
+    <CustomTabProvider>
+      <Router>
+        <Suspense fallback={<div>Loading...</div>} >
+          <Routes>
 
-        <Route path="*" element={<UserRouter />} />
-        <Route path="/admin/*" element={<AdminRouter/>} />
-        <Route path="/locationadmin/*" element={<LocationAdminRouter />} />
-        <Route path="/primaryadmin/*" element={<PrimaryAdminRouter />} />
-        </Routes>
+            <Route path="*" element={<UserRouter />} />
+            <Route path="/admin/*" element={<AdminRouter />} />
+            <Route path="/locationadmin/*" element={<LocationAdminRouter />} />
+            <Route path="/primaryadmin/*" element={<PrimaryAdminRouter />} />
+          </Routes>
 
-        
-      </Suspense>
-    </Router>
-   </CustomTabProvider>
+
+        </Suspense>
+      </Router>
+    </CustomTabProvider>
   </AuthContextProvider>
 );
 

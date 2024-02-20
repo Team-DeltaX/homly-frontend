@@ -46,16 +46,16 @@ function a11yProps(index) {
 }
 
 
-const EditHolidayHomeBreakdown = ({ roomArray, setRoomArray, unitArray, setUnitArray, hallArray, setHallArray }) => {
+const EditHolidayHomeBreakdown = ({roomArray,setRoomArray,unitArray,setUnitArray,hallArray,setHallArray}) => {
     const [value, setValue] = useState(0);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
 
-
-    const [adultsCount, setAdultsCount] = useState(0);
-    const [childCount, setChildCount] = useState(0);
+    
+  const [adultsCount,setAdultsCount] = useState(0);
+  const [childCount,setChildCount] = useState(0);
 
 
 
@@ -136,7 +136,7 @@ const EditHolidayHomeBreakdown = ({ roomArray, setRoomArray, unitArray, setUnitA
                             </Tabs>
                         </Box>
                         <CustomTabPanel value={value} index={0}>
-                            <EditRoom roomArray={roomArray} setRoomArray={setRoomArray} setAdultsCount={setAdultsCount} setChildCount={setChildCount} />
+                            <EditRoom roomArray={roomArray} setRoomArray={setRoomArray} setAdultsCount={setAdultsCount} setChildCount={setChildCount}  />
                         </CustomTabPanel>
                         <CustomTabPanel value={value} index={1}>
                             <EditUnit roomArray={roomArray} setRoomArray={setRoomArray} unitArray={unitArray} setUnitArray={setUnitArray} />
