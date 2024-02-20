@@ -80,6 +80,8 @@ const HolidayHomeEdit = () => {
 
     const { homeId } = useParams();
 
+
+
     useEffect(() => {
 
         axios.get(`http://localhost:3002/locationadmin/holidayhome/${homeId}`)
@@ -118,6 +120,8 @@ const HolidayHomeEdit = () => {
                     console.log("No data found");
                 }
             })
+
+
     }, [homeId])
 
 

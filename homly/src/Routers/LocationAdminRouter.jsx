@@ -33,7 +33,7 @@ const LocationAdminRouter = () => (
       element={<CreateHolidayHome />}
     />
     <Route
-      path="/holidayhomes/editholidayhome"
+      path="/holidayhomes/editholidayhome/:homeId"
       element={<HolidayHomeEdit />}
     />
   </Routes>

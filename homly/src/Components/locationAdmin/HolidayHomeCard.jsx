@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 
 const HolidayHomeCard = ({ HolidayHomeId, HolidayHomeName, Category }) => {
-    console.log(HolidayHomeName)
+    console.log(HolidayHomeId);
     return (
         <Paper elevation={3} className='home_card' sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around', padding: "5px 8px", alignItems: 'center', backgroundColor: 'grey1', borderRadius: "15px", marginBottom: "1em" }}>
             <Box className="home_image">
