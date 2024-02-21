@@ -39,17 +39,21 @@ export default function AdminLoginPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const formData = {};
+    const formData = {adminId, password};
     axios
-      .post("http://localhost:5000/admin/login", formData)
+      .post("http://localhost:3002/admin/", formData)
       .then((res) => {
-        if (res.data.sucess) {
+        console.log(res);
+        if (res.data.success) {
           setErrorStatus({
             ...errorStatus,
             isOpen: true,
             type: "success",
             message:res.data.message,
           });
+          if(!res.data.verified){
+            setOpen(true);
+          }
         }else{
           setErrorStatus({
             ...errorStatus,
@@ -67,7 +71,6 @@ export default function AdminLoginPage() {
           message: "Server Error",
         });
       });
-    setOpen(true);
   };
 
   return (
@@ -233,6 +236,7 @@ export default function AdminLoginPage() {
             isOpen={errorStatus.isOpen}
             type={errorStatus.type}
             message={errorStatus.message}
+            setIsOpen={(val)=>setErrorStatus({...errorStatus, isOpen: val})}
           />
         </Container>
       </Box>
