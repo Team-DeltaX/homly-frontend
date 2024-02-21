@@ -8,6 +8,8 @@ import {
   Button,
 } from "@mui/material/";
 
+import axios from "axios";
+
 import { Link, useNavigate } from "react-router-dom";
 
 import BadgeIcon from "@mui/icons-material/Badge";
@@ -28,6 +30,7 @@ export default function AdminLoginPage() {
   const [password, setPassword] = useState("");
 
   const [errorStatus, setErrorStatus] = useState({
+    isOpen: false,
     type: "",
     message: "",
   });
@@ -36,6 +39,34 @@ export default function AdminLoginPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const formData = {};
+    axios
+      .post("http://localhost:5000/admin/login", formData)
+      .then((res) => {
+        if (res.data.sucess) {
+          setErrorStatus({
+            ...errorStatus,
+            isOpen: true,
+            type: "success",
+            message:res.data.message,
+          });
+        }else{
+          setErrorStatus({
+            ...errorStatus,
+            isOpen: true,
+            type: "error",
+            message: res.data.message,
+          });
+        }
+      })
+      .catch((err) => {
+        setErrorStatus({
+          ...errorStatus,
+          isOpen: true,
+          type: "error",
+          message: "Server Error",
+        });
+      });
     setOpen(true);
   };
 
