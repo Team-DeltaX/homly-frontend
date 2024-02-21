@@ -22,6 +22,7 @@ import { AuthContext } from "../../../Contexts/AuthContext";
 
 const PersonalDetails = () => {
   const { authServiceNumber } = useContext(AuthContext);
+
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
   const phoneRegex = /^[0-9]{10}$/;
 
@@ -62,30 +63,32 @@ const PersonalDetails = () => {
   };
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:3002/users/auth/${authServiceNumber}`)
-      .then((res) => {
-        if (Response) {
-          console.log("apidata", res.data);
-          setData({
-            ...data,
-            name:res.data.name,
-            nic: res.data.nic,
-            work: res.data.work,
-            address: res.data.address,
-            email: res.data.email,
-            contactNo: res.data.contactNo,
-            image: res.data.image,
-          });
-        } else {
-          setErrorStatus({
-            ...errorStatus,
-            isOpen: true,
-            type: "error",
-            message: res.data.message,
-          });
-        }
-      });
+    if (authServiceNumber) {
+      axios
+        .get(`http://localhost:3002/users/auth/${authServiceNumber}`)
+        .then((res) => {
+          if (Response) {
+            console.log("apidata", res.data);
+            setData({
+              ...data,
+              name: res.data.name,
+              nic: res.data.nic,
+              work: res.data.work,
+              address: res.data.address,
+              email: res.data.email,
+              contactNo: res.data.contactNo,
+              image: res.data.image,
+            });
+          } else {
+            setErrorStatus({
+              ...errorStatus,
+              isOpen: true,
+              type: "error",
+              message: res.data.message,
+            });
+          }
+        });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
