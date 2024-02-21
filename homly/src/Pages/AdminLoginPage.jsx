@@ -35,11 +35,14 @@ export default function AdminLoginPage() {
     message: "",
   });
 
+  // navigate
+  const Navigate = useNavigate();
+
   const [open, setOpen] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const formData = {adminId, password};
+    const formData = { adminId, password };
     axios
       .post("http://localhost:3002/admin/", formData)
       .then((res) => {
@@ -49,12 +52,18 @@ export default function AdminLoginPage() {
             ...errorStatus,
             isOpen: true,
             type: "success",
-            message:res.data.message,
+            message: res.data.message,
           });
-          if(!res.data.verified){
+          if (!res.data.verified) {
             setOpen(true);
+          }else{
+            if(res.data.role === "LocationAdmin"){
+              Navigate("/Locationadmin/Dashboard");
+            }else{
+              Navigate("/Primaryadmin/Dashboard");
+            }
           }
-        }else{
+        } else {
           setErrorStatus({
             ...errorStatus,
             isOpen: true,
@@ -236,7 +245,7 @@ export default function AdminLoginPage() {
             isOpen={errorStatus.isOpen}
             type={errorStatus.type}
             message={errorStatus.message}
-            setIsOpen={(val)=>setErrorStatus({...errorStatus, isOpen: val})}
+            setIsOpen={(val) => setErrorStatus({ ...errorStatus, isOpen: val })}
           />
         </Container>
       </Box>

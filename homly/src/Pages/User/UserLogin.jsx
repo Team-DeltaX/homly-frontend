@@ -49,6 +49,7 @@ const UserLogin = () => {
   const Navigate = useNavigate();
 
   const [errorStatus, setErrorStatus] = useState({
+    isOpen: false,
     type: "",
     message: "",
   });
