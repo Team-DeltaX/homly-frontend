@@ -12,6 +12,7 @@ import axios from "axios";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useState } from "react";
 import ConfirmPopup from "./ConfirmPopup";
+import Copy from "./Copy";
 
 const CurrentAdminCard = (props) => {
   // const [disabled, setDisabled] = useState(true);
@@ -116,19 +117,21 @@ const CurrentAdminCard = (props) => {
           margin: "10px",
           padding: "0px",
           borderRadius: "15px",
-          alignItems: { xs: "center" },
+          alignItems: { xs: "center",md:'normal' },
           columnGap: "30px",
           boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px;",
         }}
       >
-        <Box sx={{ padding: "10px" }}>
-          <AccountCircleIcon sx={{ color: "Black", fontSize: "70px" }} />
+        <Box sx={{ padding: "10px",display:'flex',justifyContent:'center',alignItems:'center'}}>
+          <AccountCircleIcon sx={{ color: "Black", fontSize: "70px",}} />
         </Box>
         <Box sx={{ padding: "10px" }}>
           <Box>Admin Number</Box>
           <Box>
             <TextField
+            
               disabled={true}
+            
               // onChange={(e) => {
               //   setAdminNo(e.target.value);
               // }}
@@ -137,27 +140,43 @@ const CurrentAdminCard = (props) => {
               type="text"
               sx={{
                 backgroundColor: "white",
+                "& fieldset": { border: 'none' },
+                
+                
               }}
+            
               alignItems="center"
+              
             ></TextField>
             {/* {props.data.AdminNo} */}
           </Box>
 
-          <Box>Password</Box>
-          <Box>
+          <Box>E-mail</Box>
+          <Box sx={{display:'flex',flexDirection:'row'}}>
+         
             <TextField
-              disabled={true}
-              // onChange={(e) => {
-              //   setPassword(e.target.value);
-              // }}
+            error={emaileerror}
+              disabled={Disabled}
+              onChange={(e) => {
+                validateemail(e.target.value)
+                setemail(e.target.value)
+              }}
               size="small"
               type="text"
-              value={props.data.Password}
+              value={email}
               sx={{
                 backgroundColor: "white",
+                "& fieldset": { border: props.editadmin===props.data.AdminNo? "1px solid #ccc" : "none",},
+                
               }}
+              InputProps={{
+                inputProps: {
+                    style: { textAlign: "left" },
+                }
+            }}
               alignItems="center"
             ></TextField>
+             <Copy text={props.data.Email}/>
           </Box>
         </Box>
 
@@ -174,6 +193,7 @@ const CurrentAdminCard = (props) => {
               alignItems="center"
               sx={{
                 backgroundColor: "white",
+                "& fieldset": { border: 'none' },
               }}
               size="small"
             ></TextField>
@@ -195,13 +215,14 @@ const CurrentAdminCard = (props) => {
               alignItems="center"
               sx={{
                 backgroundColor: "white",
+              "& fieldset": { border: props.editadmin===props.data.AdminNo? "1px solid #ccc" : "none",}
               }}
               size="small"
             ></TextField>
           </Box>
         </Box>
 
-        <Box sx={{ padding: "10px" }}>
+        <Box sx={{ padding: "10px" ,display:'flex',flexDirection:'column',justifyContent:'flex-start'}}>
           <Box>WorkLocation</Box>
           <Box>
             <TextField
@@ -214,11 +235,12 @@ const CurrentAdminCard = (props) => {
               alignItems="center"
               sx={{
                 backgroundColor: "white",
+                 "& fieldset": { border: 'none' },
               }}
               size="small"
             ></TextField>
           </Box>
-          <Box>E-mail</Box>
+          {/* <Box>E-mail</Box>
           <Box>
             <TextField
             error={emaileerror}
@@ -235,11 +257,11 @@ const CurrentAdminCard = (props) => {
               }}
               alignItems="center"
             ></TextField>
-          </Box>
+          </Box> */}
         </Box>
         <Box
           sx={{
-            padding: "10px",
+            padding: "20px",
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between",
@@ -257,7 +279,7 @@ const CurrentAdminCard = (props) => {
                   <Typography>Edit</Typography>
                 </Button> */}
           {/* <Box>{dataobj}</Box> */}
-          <Box sx={{ height: "20px" }}></Box>
+          {/* <Box sx={{ height: "20px" }}></Box> */}
           {/* disable admin button */}
           <ConfirmPopup
             open={opend}
@@ -268,7 +290,7 @@ const CurrentAdminCard = (props) => {
             controlfunction={handleClick}
           />
           <Button
-            sx={{ width: "165px", height: "30px", borderRadius: "15px" }}
+            sx={{ width: "165px", height: "30px", borderRadius: "15px", }}
             variant="contained"
             onClick={() => {
               setOpend(true)

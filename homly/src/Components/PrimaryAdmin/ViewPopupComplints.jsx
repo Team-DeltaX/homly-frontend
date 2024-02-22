@@ -87,7 +87,7 @@ const ViewPopupComplaints = (props) => {
                                 <Box><Typography sx={{ flex: 2 }} h6>Service Number</Typography></Box>
                                 <Box ><TextField
 
-                                    disabled value={props.selecteduser.Service_number} size="small" sx={{ width: '85%', margin: "5px" }}></TextField></Box>
+                                    disabled value={props.selecteduser.ServiceNo} size="small" sx={{ width: '85%', margin: "5px" }}></TextField></Box>
                             </Box>
 
                             <Box sx={{
@@ -99,7 +99,7 @@ const ViewPopupComplaints = (props) => {
                                 margin: '10px'
                             }}>
                                 <Box><Typography h6>Reservation Number</Typography></Box>
-                                <Box  ><TextField disabled value={props.selecteduser.Nic_number} size="small" sx={{ width: '85%', margin: "5px" }}></TextField></Box>
+                                <Box  ><TextField disabled value={props.selecteduser.ReservationNo} size="small" sx={{ width: '85%', margin: "5px" }}></TextField></Box>
                             </Box>
 
                             <Box sx={{
@@ -111,7 +111,7 @@ const ViewPopupComplaints = (props) => {
                                 margin: '10px'
                             }}>
                                 <Box><Typography h6>Date</Typography></Box>
-                                <Box ><TextField value={props.selecteduser.date} disabled size="small" sx={{ width: '85%', margin: "5px" }}></TextField></Box>
+                                <Box ><TextField value={props.selecteduser.created_at} disabled size="small" sx={{ width: '85%', margin: "5px" }}></TextField></Box>
                             </Box>
                             <Box sx={{
                                 // width:"100%",
@@ -122,7 +122,7 @@ const ViewPopupComplaints = (props) => {
                                 margin: '10px'
                             }}>
                                 <Box><Typography h6>Description</Typography></Box>
-                                <Box  ><TextField multiline maxRows={2} disabled value="111 ee e eeeee eeeeeeee eeeeeee eeeeeeeeeee" size="small" sx={{ width: '85%', margin: "5px", }}></TextField></Box>
+                                <Box  ><TextField multiline maxRows={2} disabled value={props.selecteduser.Reson} size="small" sx={{ width: '85%', margin: "5px", }}></TextField></Box>
                             </Box>
 
 

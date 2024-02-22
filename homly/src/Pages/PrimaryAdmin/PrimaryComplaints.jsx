@@ -10,6 +10,7 @@ import theme from '../../HomlyTheme';
 import Pagetop from '../../Components/PrimaryAdmin/PageTop';
 // import Search from '../../Components/PrimaryAdmin/Search';
 import ViewPopupComplaints from '../../Components/PrimaryAdmin/ViewPopupComplints';
+import axios from 'axios';
 
 const PrimaryComplaints = () => {
 
@@ -32,10 +33,22 @@ const PrimaryComplaints = () => {
         { Service_number: 9, Nic_number: 948, User_name: 'Yvon Inchbald', date: '7/17/2023', image: 'http://dummyimage.com/172x100.png/5fa2dd/ffffff' },
         { Service_number: 10, Nic_number: 4, User_name: 'Torrie White', date: '6/10/2023', image: 'http://dummyimage.com/162x100.png/5fa2dd/ffffff' }
     ];
-    const [blacklistedusers, setBlacklistedusers] = useState([]);
+    const [complaints, setcomplaints] = useState([]);
+
+
+    const fetchcomplaints=()=>{
+        axios.get('http://localhost:3002/locationadmin/complaints')
+        .then(res=>{
+            setcomplaints(res.data)
+            
+
+        }).catch(err=>{
+            console.log(err)
+        })
+    }
    
     useEffect(() => {
-        setBlacklistedusers(data)
+       fetchcomplaints();
 
     }, [])
 
@@ -61,7 +74,7 @@ const PrimaryComplaints = () => {
                     <Pagetop setShowNav={setShowNav} heading={"Complaints"}/>
                 
                     <Box sx={{marginTop:'2%',marginLeft:"2%",maxHeight:{md:"510px",xs:'600px'},overflow:"scroll",padding:"3%"}}>
-                      {blacklistedusers.map((data)=>{
+                      {complaints.map((data)=>{
                             return(
                                <ComplaintCard  handlepopup={handlepopup} data={data} setSelecteduser={setSelecteduser}/>
                             )
