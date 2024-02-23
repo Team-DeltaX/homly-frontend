@@ -67,6 +67,7 @@ const ComplaintCard = (props) => {
             onClick={() => {
               props.handlepopup();
               props.setSelecteduser(props.data);
+              props.fetchprevcomplaints();
             }}
           >
             <Typography>View</Typography>

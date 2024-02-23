@@ -34,6 +34,25 @@ const PrimaryComplaints = () => {
         { Service_number: 10, Nic_number: 4, User_name: 'Torrie White', date: '6/10/2023', image: 'http://dummyimage.com/162x100.png/5fa2dd/ffffff' }
     ];
     const [complaints, setcomplaints] = useState([]);
+    const [prevcomplaints,setPrevcomplaints]=useState([])
+
+
+
+
+    const fetchprevcomplaints=()=>{
+        axios.get(`http://localhost:3002/locationadmin/complaint/${selecteduser.ServiceNo}`)
+        .then((res)=>{
+          setPrevcomplaints(res.data)
+          console.log('---------fetch prev complaints--------')
+        //   console.log(res.data)
+          console.log(prevcomplaints[0])
+    
+        })
+        .catch(err=>{
+          console.log(err)
+        })
+    
+    }
 
 
     const fetchcomplaints=()=>{
@@ -61,7 +80,7 @@ const PrimaryComplaints = () => {
         <Box className="main_continer" sx={{width:"100%",backgroundColor:'primary.main',height:"100vh",overflow:'hidden'}}>
 
 
-        {popup && <ViewPopupComplaints handlepopup={handlepopup} selecteduser={selecteduser}/>}
+        {popup && <ViewPopupComplaints handlepopup={handlepopup} selecteduser={selecteduser} complaints={complaints} prevcomplaints={prevcomplaints}/>}
 
 
 
@@ -74,9 +93,10 @@ const PrimaryComplaints = () => {
                     <Pagetop setShowNav={setShowNav} heading={"Complaints"}/>
                 
                     <Box sx={{marginTop:'2%',marginLeft:"2%",maxHeight:{md:"510px",xs:'600px'},overflow:"scroll",padding:"3%"}}>
-                      {complaints.map((data)=>{
+                      {complaints.filter(data => data.Marked === false)
+                      .map((data)=>{
                             return(
-                               <ComplaintCard  handlepopup={handlepopup} data={data} setSelecteduser={setSelecteduser}/>
+                               <ComplaintCard  handlepopup={handlepopup} data={data} setSelecteduser={setSelecteduser} fetchprevcomplaints={fetchprevcomplaints}/>
                             )
                         })}
                       </Box>
