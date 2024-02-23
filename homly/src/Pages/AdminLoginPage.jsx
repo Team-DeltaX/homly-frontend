@@ -189,7 +189,7 @@ export default function AdminLoginPage() {
                     }}
                   >
                     <Button
-                      variant="contained"
+                      variant="outlined"
                       color="primary"
                       sx={{
                         width: { xs: "100%", sm: "auto" },
