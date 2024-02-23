@@ -1,11 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Box, Typography, TextField, Button } from '@mui/material'
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
 
-const CareTakerDetailsView = () => {
+const CareTakerDetailsView = ({ submit, setSubmit }) => {
+  const [secondCaretaker, setSecondCaretaker] = useState(false);
+
   const [value, setValue] = useState({
     caretakerName: '', caretakerContactNo: '', caretakerStatus: '', caretakerAddress: '', caretakerDescription: '',
   })
@@ -17,6 +19,27 @@ const CareTakerDetailsView = () => {
   const [error, setError] = useState({
     ctName: false, ctAddress: false, ctDescription: false, ctContactNo: false
   });
+
+  useEffect(() => {
+    const isFirstCaretakerComplete =
+      value.caretakerName !== '' &&
+      value.caretakerContactNo !== '' &&
+      value.caretakerStatus !== '' &&
+      value.caretakerAddress !== '';
+
+    const isSecondCaretakerComplete =
+      valueSecond.caretakerName !== '' &&
+      valueSecond.caretakerContactNo !== '' &&
+      valueSecond.caretakerStatus !== '' &&
+      valueSecond.caretakerAddress !== '';
+
+    if (secondCaretaker) {
+      setSubmit(isFirstCaretakerComplete && isSecondCaretakerComplete);
+    } else {
+      setSubmit(isFirstCaretakerComplete);
+    }
+  }, [value, valueSecond, secondCaretaker, setSubmit]);
+
 
   const handleNameChange = (e) => {
     setValue({ ...value, caretakerName: e.target.value });
@@ -106,10 +129,12 @@ const CareTakerDetailsView = () => {
 
   const handleAddMoreClick = () => {
     setShowSecondCaretaker(true);
+    setSecondCaretaker(true);
   };
 
   const handleRemoveClick = () => {
     setShowSecondCaretaker(false);
+    setSecondCaretaker(false);
   }
 
 
