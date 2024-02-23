@@ -145,7 +145,6 @@ const UnitBreakDown = ({ unitCode, unitAc, floorLevel, unitNoOfAdults, unitNoOfC
             <Box sx={{ display: 'flex', gap: '1em', marginBottom: '1em' }}>
                 <Box className="card_item">
                     <Typography variant='p' className='card_item_title'>Unit No</Typography>
-                    <Typography variant='p' className='card_item_title'>Unit No</Typography>
                     <Typography variant='p' className='card_item_value'>{unitCode}</Typography>
                 </Box>
                 <Box className="card_item">
@@ -159,17 +158,17 @@ const UnitBreakDown = ({ unitCode, unitAc, floorLevel, unitNoOfAdults, unitNoOfC
                 <Box className="card_item">
                     <Typography variant='p' className='card_item_title'>Number of Rooms</Typography>
                     <Typography variant='p' className='card_item_value'>{unitRoomCount}</Typography>
-                    <Typography variant='p' className='card_item_value'>{unitRoomCount}</Typography>
+
                 </Box>
                 <Box className="card_item">
                     <Typography variant='p' className='card_item_title'>Adults</Typography>
                     <Typography variant='p' className='card_item_value'>{unitAdultCount}</Typography>
-                    <Typography variant='p' className='card_item_value'>{unitAdultCount}</Typography>
+
                 </Box>
                 <Box className="card_item">
                     <Typography variant='p' className='card_item_title'>Children</Typography>
                     <Typography variant='p' className='card_item_value'>{unitChildCount}</Typography>
-                    <Typography variant='p' className='card_item_value'>{unitChildCount}</Typography>
+
                 </Box>
 
 

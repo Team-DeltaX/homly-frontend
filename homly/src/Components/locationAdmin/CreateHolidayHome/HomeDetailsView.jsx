@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Box, TextField, Typography } from '@mui/material'
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -18,6 +18,39 @@ const HomeDetailsView = ({ setSubmit }) => {
   const [error, setError] = useState({
     name: false, address: false, description: false, contactNo1: false, contactNo2: false
   });
+
+
+
+  // if (value.name !== '' && value.address !== '' && value.district !== '' && value.description !== '' && value.contactNo1 !== '' && value.category !== '' && value.status !== '') {
+  //   setSubmit({ ...setSubmit, holidayhomeDetails: true });
+  // } else {
+  //   setSubmit({ ...setSubmit, holidayhomeDetails: false });
+  // }
+
+  // useEffect(() => {
+  //   if (value.name !== '' && value.address !== '' && value.district !== '' && value.description !== '' && value.contactNo1 !== '' && value.category !== '' && value.status !== '') {
+  //     setSubmit(true);
+  //   } else {
+  //     setSubmit(false);
+  //   }
+  // }, [value, setSubmit]);
+
+  useEffect(() => {
+    const isDetailsComplete =
+      value.name !== '' &&
+      value.address !== '' &&
+      value.district !== '' &&
+      value.description !== '' &&
+      value.contactNo1 !== '' &&
+      value.category !== '' &&
+      value.status !== '';
+
+    setSubmit(prevSubmit => ({
+      ...prevSubmit,
+      holidayhomeDetails: isDetailsComplete
+    }));
+  }, [value]);
+
 
 
   const handleNameChange = (e) => {
@@ -209,7 +242,31 @@ const HomeDetailsView = ({ setSubmit }) => {
         </Box>
         <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '1em', marginBottom: '12px' }}>
           <Box sx={{ minWidth: '100px', maxWidth: '100px' }} className="label_container">
-            <Typography variant='p' sx={{ color: 'black' }}>Image</Typography>
+            <Typography variant='p' sx={{ color: 'black' }}>Main Image</Typography>
+          </Box>
+          <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
+            <input type="file" />
+          </Box>
+        </Box>
+        <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '1em', marginBottom: '12px' }}>
+          <Box sx={{ minWidth: '100px', maxWidth: '100px' }} className="label_container">
+            <Typography variant='p' sx={{ color: 'black' }}>Image 1</Typography>
+          </Box>
+          <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
+            <input type="file" />
+          </Box>
+        </Box>
+        <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '1em', marginBottom: '12px' }}>
+          <Box sx={{ minWidth: '100px', maxWidth: '100px' }} className="label_container">
+            <Typography variant='p' sx={{ color: 'black' }}>Image 2</Typography>
+          </Box>
+          <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
+            <input type="file" />
+          </Box>
+        </Box>
+        <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '1em', marginBottom: '12px' }}>
+          <Box sx={{ minWidth: '100px', maxWidth: '100px' }} className="label_container">
+            <Typography variant='p' sx={{ color: 'black' }}>Image 3</Typography>
           </Box>
           <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
             <input type="file" />
