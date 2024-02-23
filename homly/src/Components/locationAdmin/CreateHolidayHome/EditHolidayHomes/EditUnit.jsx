@@ -54,7 +54,7 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
                 groupByUnit: false,
             });
         }
-    }, [isEditMode, editIndex, roomArray]);
+    }, [isEditMode, editIndex, roomArray, unitArray]);
 
     //dropdowns 
 
@@ -153,6 +153,8 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
         setOpenUnit(false);
         setIsEditMode(false);
         setEditIndex(null);
+
+        console.log(unitArray);
     };
 
     console.log(unitArray);
@@ -301,7 +303,7 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
             </Box>
 
             <fieldset style={{ borderRadius: '8px' }}>
-                <legend>Rooms Breakdown</legend>
+                <legend>Units Breakdown</legend>
                 {unitArray.length === 0
                     ?
                     <Box sx={{ display: 'flex', padding: "2em", justifyContent: 'center' }}>
