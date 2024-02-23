@@ -49,7 +49,7 @@ function a11yProps(index) {
     'aria-controls': `simple-tabpanel-${index}`,
   };
 }
-const HomeBreakDownView = ({ submit, setSubmit }) => {
+const HomeBreakDownView = ({ setSubmit, setAllValues, submitClicked }) => {
 
   const [value, setValue] = useState(0);
 
@@ -112,6 +112,15 @@ const HomeBreakDownView = ({ submit, setSubmit }) => {
       setSubmit(false);
     }
   }, [totalRental, roomArray, unitArray, setSubmit]);
+
+
+  useEffect(() => {
+    if (submitClicked) {
+      setAllValues((prev) => {
+        return { ...prev, "adultsCount": adultsCount, "childCount": childCount, "otherCharges": otherCharges, "serviceCharges": serviceCharges, "totalRental": totalRental, "facilities": facilities, "gym": gym, "kitchen": kitchen, "park": park, "wifi": wifi, "roomArray": roomArray, "unitArray": unitArray, "hallArray": hallArray }
+      });
+    }
+  }, [submitClicked]);
 
 
 
