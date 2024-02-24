@@ -65,9 +65,11 @@ const ComplaintCard = (props) => {
           <Button
             variant="contained"
             onClick={() => {
-              props.handlepopup();
-              props.setSelecteduser(props.data);
-              props.fetchprevcomplaints();
+               props.setSelecteduser(props.data);
+                // props.fetchprevcomplaints()
+               props.handlepopup();
+             
+              
             }}
           >
             <Typography>View</Typography>

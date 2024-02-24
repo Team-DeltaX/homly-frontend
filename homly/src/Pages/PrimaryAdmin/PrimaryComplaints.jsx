@@ -16,36 +16,32 @@ const PrimaryComplaints = () => {
 
     const [popup,setpopup]=useState(false)
     const [selecteduser,setSelecteduser]=useState({})
+    const [complaints, setcomplaints] = useState([]);
+    const [prevcomplaints,setPrevcomplaints]=useState([])
+   
+
 
     const handlepopup=()=>{
         setpopup(!popup)
     }
 
-    const data = [
-        { Service_number: 1, Nic_number: 27, User_name: 'Lonnie Antonioni', date: '1/31/2023', image: 'http://dummyimage.com/130x100.png/cc0000/ffffff' },
-        { Service_number: 2, Nic_number: 1014, User_name: 'Carlita Cominello', date: '9/13/2023', image: 'http://dummyimage.com/100x100.png/5fa2dd/ffffff' },
-        { Service_number: 3, Nic_number: 929, User_name: 'Rosene Loweth', date: '7/18/2023', image: 'http://dummyimage.com/187x100.png/dddddd/000000' },
-        { Service_number: 4, Nic_number: 32, User_name: 'Brittan Furby', date: '8/25/2023', image: 'http://dummyimage.com/122x100.png/5fa2dd/ffffff' },
-        { Service_number: 5, Nic_number: 9910, User_name: 'Zebulon Pinson', date: '9/25/2023', image: 'http://dummyimage.com/130x100.png/5fa2dd/ffffff' },
-        { Service_number: 6, Nic_number: 56905, User_name: 'Ara Tembey', date: '11/26/2023', image: 'http://dummyimage.com/157x100.png/5fa2dd/ffffff' },
-        { Service_number: 7, Nic_number: 9742, User_name: 'Alleyn Melliard', date: '8/8/2023', image: 'http://dummyimage.com/156x100.png/dddddd/000000' },
-        { Service_number: 8, Nic_number: 6, User_name: 'Wilfrid Grinyer', date: '5/9/2023', image: 'http://dummyimage.com/100x100.png/5fa2dd/ffffff' },
-        { Service_number: 9, Nic_number: 948, User_name: 'Yvon Inchbald', date: '7/17/2023', image: 'http://dummyimage.com/172x100.png/5fa2dd/ffffff' },
-        { Service_number: 10, Nic_number: 4, User_name: 'Torrie White', date: '6/10/2023', image: 'http://dummyimage.com/162x100.png/5fa2dd/ffffff' }
-    ];
-    const [complaints, setcomplaints] = useState([]);
-    const [prevcomplaints,setPrevcomplaints]=useState([])
+
+    
 
 
 
 
     const fetchprevcomplaints=()=>{
-        axios.get(`http://localhost:3002/locationadmin/complaint/${selecteduser.ServiceNo}`)
+        console.log('start')
+        axios.get(`http://localhost:3002/admin/auth/locationadmin/complaint/${selecteduser.ServiceNo}`)
         .then((res)=>{
           setPrevcomplaints(res.data)
+          console.log('finish')
           console.log('---------fetch prev complaints--------')
         //   console.log(res.data)
           console.log(prevcomplaints[0])
+        //   setLen(prevcomplaints.length)
+        //   console.log(len)
     
         })
         .catch(err=>{
@@ -56,9 +52,10 @@ const PrimaryComplaints = () => {
 
 
     const fetchcomplaints=()=>{
-        axios.get('http://localhost:3002/locationadmin/complaints')
+        axios.get('http://localhost:3002/admin/auth/locationadmin/complaints')
         .then(res=>{
             setcomplaints(res.data)
+            
             
 
         }).catch(err=>{
@@ -80,7 +77,7 @@ const PrimaryComplaints = () => {
         <Box className="main_continer" sx={{width:"100%",backgroundColor:'primary.main',height:"100vh",overflow:'hidden'}}>
 
 
-        {popup && <ViewPopupComplaints handlepopup={handlepopup} selecteduser={selecteduser} complaints={complaints} prevcomplaints={prevcomplaints}/>}
+        {popup && <ViewPopupComplaints handlepopup={handlepopup} selecteduser={selecteduser} complaints={complaints} fetchprevcomplaints={fetchprevcomplaints}  prevcomplaints={prevcomplaints} popup={popup} />}
 
 
 
@@ -96,7 +93,7 @@ const PrimaryComplaints = () => {
                       {complaints.filter(data => data.Marked === false)
                       .map((data)=>{
                             return(
-                               <ComplaintCard  handlepopup={handlepopup} data={data} setSelecteduser={setSelecteduser} fetchprevcomplaints={fetchprevcomplaints}/>
+                               <ComplaintCard  handlepopup={handlepopup} data={data} setSelecteduser={setSelecteduser} />
                             )
                         })}
                       </Box>

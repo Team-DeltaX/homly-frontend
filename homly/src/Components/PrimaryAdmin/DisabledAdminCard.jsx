@@ -23,7 +23,7 @@ const DisabledAdminCard = (props) => {
   // const [displayr, setDisplayr] = useState(false);
 
   const sendmail=(email)=>{
-    axios.post(`http://localhost:3002/locationadmin/sendmail/${email}`)
+    axios.post(`http://localhost:3002/admin/auth/locationadmin/sendmail/${email}`)
     .then(res=>{
       console.log('sucessfully sent')
     }).catch(error=>{
@@ -32,7 +32,7 @@ const DisabledAdminCard = (props) => {
   }
 
   const handleClick = (id) => {
-    axios.put(`http://localhost:3002/locationadmin/disable/${id}`,{
+    axios.put(`http://localhost:3002/admin/auth/locationadmin/disable/${id}`,{
       dis:true
     })
     .then(res=>{

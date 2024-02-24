@@ -28,7 +28,7 @@ const CurrentAdminslist = () => {
   const fetchadmins = () => {
     SetLoad(true);
     axios
-      .get("http://localhost:3002/locationadmin/all")
+      .get("http://localhost:3002/admin/auth/locationadmin/all")
       .then((res) => {
         SetLoad(false);
         console.log(res.data);

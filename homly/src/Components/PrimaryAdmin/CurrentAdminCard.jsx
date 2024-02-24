@@ -74,7 +74,7 @@ const CurrentAdminCard = (props) => {
 
   const resetpassword = () => {
     axios
-      .post("http://localhost:3002/locationadmin/resetpassword", {
+      .post("http://localhost:3002/admin/auth/locationadmin/resetpassword", {
         UserName: props.data.UserName,
         Email: props.data.Email,
         AdminNo: props.data.AdminNo,
@@ -91,7 +91,7 @@ const CurrentAdminCard = (props) => {
 
   const handleClick = () => {
     axios
-      .put(`http://localhost:3002/locationadmin/disable/${props.data.AdminNo}`, {
+      .put(`http://localhost:3002/admin/auth/locationadmin/disable/${props.data.AdminNo}`, {
         dis: true,
       })
       .then((res) => {

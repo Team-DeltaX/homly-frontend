@@ -19,40 +19,52 @@ const ViewPopupComplaints = (props) => {
   const [reson, setReson] = useState("");
   const [expand, setExpand] = useState(false);
 
-  const data = [
-    {
-      Service_number: 1,
-      Nic_number: 27,
-      User_name: "Lonnie Antonioni",
-      date: "1/31/2023",
-      description:
-        "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available",
-    },
-    {
-      Service_number: 2,
-      Nic_number: 1014,
-      User_name: "Carlita Cominello",
-      date: "9/13/2023",
-      description:
-        "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available",
-    },
-  ];
+  // const data = [
+  //   {
+  //     Service_number: 1,
+  //     Nic_number: 27,
+  //     User_name: "Lonnie Antonioni",
+  //     date: "1/31/2023",
+  //     description:
+  //       "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available",
+  //   },
+  //   {
+  //     Service_number: 2,
+  //     Nic_number: 1014,
+  //     User_name: "Carlita Cominello",
+  //     date: "9/13/2023",
+  //     description:
+  //       "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available",
+  //   },
+  // ];
 
-//   const fetchcomplaints=()=>{
-//     axios.get('http://localhost:3002/locationadmin/complaints')
-//     .then(res=>{
-//         setPrevcomplaints(res.data)
-        
+  //   const fetchcomplaints=()=>{
+  //     axios.get('http://localhost:3002/locationadmin/complaints')
+  //     .then(res=>{
+  //         setPrevcomplaints(res.data)
 
-//     }).catch(err=>{
-//         console.log(err)
-//     })
-// }
-  
-  
+  //     }).catch(err=>{
+  //         console.log(err)
+  //     })
+  // }
+
+  useEffect(() => {
+    props.fetchprevcomplaints();
+  }, [props.popup]);
 
  
 
+  const getonlydate=(date)=>{
+    const dateTimeString = props.prevcomplaints[date].created_at;
+    const dateObject = new Date(dateTimeString);
+    const year = dateObject.getFullYear();
+    const month = String(dateObject.getMonth() + 1).padStart(2, "0");
+    const day = String(dateObject.getDate()).padStart(2, "0");
+  
+    const dateOnlyString = `${year}-${month}-${day}`;
+    return dateOnlyString
+
+  }
   return (
     <ThemeProvider theme={theme}>
       <Box
@@ -82,7 +94,7 @@ const ViewPopupComplaints = (props) => {
               backgroundColor: "white",
               borderRadius: "10px",
               padding: "20px",
-              width: { md: "500px", sx: "400px" },
+              width: { md: "500px", xs: "350px" },
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
@@ -139,7 +151,7 @@ const ViewPopupComplaints = (props) => {
                 </Box>
               </Box> */}
 
-<Box
+              <Box
                 sx={{
                   // width:"100%",
                   display: "flex",
@@ -147,8 +159,7 @@ const ViewPopupComplaints = (props) => {
                   justifyContent: "space-between",
                   alignItems: "center",
                   margin: "10px",
-                  marginTop: { md: "5px", xs: "199px" },
-
+                  marginTop: { md: "5px", xs: "129px" },
                 }}
               >
                 <Box sx={{ flex: 1 }}>
@@ -163,7 +174,6 @@ const ViewPopupComplaints = (props) => {
                   ></TextField>
                 </Box>
               </Box>
-
 
               <Box
                 sx={{
@@ -280,7 +290,7 @@ const ViewPopupComplaints = (props) => {
                         setExpand(!expand);
                       }}
                       sx={{
-                        width: "95%",
+                        width: "330px",
                         boxShadow: "rgba(0, 0, 0, 0.05) 0px 0px 0px 1px",
                       }}
                     >
@@ -289,7 +299,20 @@ const ViewPopupComplaints = (props) => {
                         aria-controls="panel2-content"
                         id="panel2-header"
                       >
-                        <Typography>Complaint on {props.prevcomplaints[0].created_at}</Typography>
+                        <Typography >
+                          
+                            <Box>Complaint on</Box>
+                            
+                          
+                          
+                        </Typography>
+                        <Typography >
+                          
+                          
+                          <Box > {getonlydate(0)}</Box>
+                        
+                        
+                      </Typography>
                       </AccordionSummary>
                       <AccordionDetails>
                         <Typography>{props.prevcomplaints[0].Reson}</Typography>
@@ -305,7 +328,7 @@ const ViewPopupComplaints = (props) => {
                         setExpand(!expand);
                       }}
                       sx={{
-                        width: "95%",
+                        width: "330px",
                         boxShadow: "rgba(0, 0, 0, 0.05) 0px 0px 0px 1px",
                       }}
                     >
@@ -314,7 +337,9 @@ const ViewPopupComplaints = (props) => {
                         aria-controls="panel2-content"
                         id="panel2-header"
                       >
-                        <Typography>Complaint on {props.prevcomplaints[1].created_at}</Typography>
+                        <Typography>
+                          Complaint on {getonlydate(1)}
+                        </Typography>
                       </AccordionSummary>
                       <AccordionDetails>
                         <Typography>{props.prevcomplaints[1].Reson}</Typography>
@@ -339,11 +364,11 @@ const ViewPopupComplaints = (props) => {
                 {/* <Box><Typography sx={{fontFamily:'roboto',}} h6>Service Number</Typography></Box>
                             <Box ></Box> */}
                 <Button variant="contained" sx={{ marginRight: "3%" }}>
-                  Send Warning
+                  <Typography sx={{fontSize:'11px'}}>Send Warning</Typography>
                 </Button>
 
                 <Button variant="contained" sx={{ marginRight: "3%" }}>
-                  Add To Blacklist
+                  <Typography sx={{fontSize:'11px'}}>Add To Blacklist</Typography>
                 </Button>
                 <Button
                   variant="outlined"
@@ -352,7 +377,7 @@ const ViewPopupComplaints = (props) => {
                     props.handlepopup();
                   }}
                 >
-                  Mark
+                 <Typography sx={{fontSize:'11px'}} > Mark</Typography>
                 </Button>
               </Box>
             </Box>
