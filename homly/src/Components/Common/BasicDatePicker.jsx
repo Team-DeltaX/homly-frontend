@@ -16,6 +16,7 @@ export default function BasicDatePicker({title, date, setDate}) {
           value={date}
           disablePast={true}
           onChange={(newValue) => setDate(newValue)}
+          slotProps={{ textField: { fullWidth: true } }}
         />
       </DemoContainer>
     </LocalizationProvider>
