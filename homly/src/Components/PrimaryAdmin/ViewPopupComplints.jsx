@@ -14,10 +14,15 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import CancelIcon from "@mui/icons-material/Cancel";
 import axios from "axios";
+import ConfirmPopup from "./ConfirmPopup";
 
 const ViewPopupComplaints = (props) => {
   const [reson, setReson] = useState("");
   const [expand, setExpand] = useState(false);
+  // const [opend, setOpend] = useState(false);
+  const [Open, setOpen] = useState(false);
+
+  
 
   // const data = [
   //   {
@@ -52,6 +57,13 @@ const ViewPopupComplaints = (props) => {
     props.fetchprevcomplaints();
   }, [props.popup]);
 
+  const handleclick=()=>{
+    console.log('handle')
+    setOpen(false);
+    
+
+  }
+
  
 
   const getonlydate=(date)=>{
@@ -64,7 +76,12 @@ const ViewPopupComplaints = (props) => {
     const dateOnlyString = `${year}-${month}-${day}`;
     return dateOnlyString
 
+
+
   }
+ 
+
+
   return (
     <ThemeProvider theme={theme}>
       <Box
@@ -366,15 +383,29 @@ const ViewPopupComplaints = (props) => {
                 <Button variant="contained" sx={{ marginRight: "3%" }}>
                   <Typography sx={{fontSize:'11px'}}>Send Warning</Typography>
                 </Button>
+                <ConfirmPopup
+            open={Open}
+            setOpen={setOpen}
+            title={"Black List User Confirmation"}
+            text={"Are you sure you want to Blacklist This User?"}
+            
+            controlfunction={handleclick}
+          />
 
-                <Button variant="contained" sx={{ marginRight: "3%" }}>
+                <Button variant="contained" sx={{ marginRight: "3%" }}
+                onClick={()=>{setOpen(true)}}
+                >
+               
                   <Typography sx={{fontSize:'11px'}}>Add To Blacklist</Typography>
                 </Button>
                 <Button
                   variant="outlined"
                   sx={{ marginRight: "5%" }}
                   onClick={() => {
+                    setOpen(true)
+                    
                     props.handlepopup();
+                    
                   }}
                 >
                  <Typography sx={{fontSize:'11px'}} > Mark</Typography>
