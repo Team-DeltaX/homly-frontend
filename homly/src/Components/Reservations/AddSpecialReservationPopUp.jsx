@@ -12,8 +12,9 @@ import MenuItem from '@mui/material/MenuItem';
 import BasicDatePicker from '../Common/BasicDatePicker';
 import { useState } from "react";
 import axios from 'axios';
+import dayjs, { Dayjs } from 'dayjs';
 
-const currencies = [
+const HH = [
   {
     value: 'ANU1',
     label: 'Anuradhapura-1',
@@ -41,21 +42,22 @@ export default function AddSpecialReservationPopUp() {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
-  const [SpecailReservationID, setSpecailReservationID] = useState("");
+  const [HolidayHomeName, SetHolidayHomeName] = useState("");
   const [ServiceNo, setServiceNo] = useState("");
-  const [CheckinDate, setCheckinDate] = useState("");
-  const [CheckoutDate, setCheckoutDate] = useState("");
 
-  const handlesubmit = () => {
+  const [CheckinDate, setCheckinDate] = useState(dayjs(new Date()));
+  
+  const [CheckoutDate, setCheckoutDate] = useState(dayjs(new Date()));
 
+  const handlesubmit = (e) => {
     const data={
-      SpecailReservationID:SpecailReservationID,
       ServiceNo:ServiceNo,
-      HolidayHome:"HolidayHome1",
+      HolidayHome:HolidayHomeName,
       CheckinDate:CheckinDate,
       CheckoutDate:CheckoutDate,
     }
-    axios.post('http://localhost:3002/locationadmin/reservations',data)
+    console.log("aruna",data);
+    axios.post('http://localhost:3002/admin/auth/locationadmin/reservations',data)
     .then(res=>{
       console.log("add special reservation successfully")
      
@@ -100,22 +102,9 @@ export default function AddSpecialReservationPopUp() {
         <DialogTitle id="responsive-dialog-title">
           {"Add Special Reservation"}
         </DialogTitle>
-        <DialogContent>
-            <TextField
-                autoFocus
-                required
-                onChange={(e) => {
-                  setSpecailReservationID(e.target.value);
-                }}
-                value={SpecailReservationID}
-                margin="dense"
-                id="specialreservationno"
-                name="specialreservationno"
-                label="Special Reservation Number"
-                type="text"
-                fullWidth
-                variant="outlined"
-            />
+        
+          <form onSubmit={ () => console.log("sumbited")}>
+          <DialogContent>
             <TextField
                 autoFocus
                 required
@@ -136,39 +125,48 @@ export default function AddSpecialReservationPopUp() {
               margin="dense"
               select
               label="Select the holiday home"
+              required
+              onChange={(e) => {
+                SetHolidayHomeName(e.target.value);
+              }}
+              value={HolidayHomeName}
               // defaultValue="EUR"
             >
-              {currencies.map((option) => (
+              {HH.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
                   {option.label}
                 </MenuItem>
               ))}
             </TextField>
-            <BasicDatePicker
+            {/* <BasicDatePicker
               fullWidth
               onChange={(e) => {
-                setCheckinDate(e.target.value);
+                setCheckinDate(dayjs('2019-01-25').format('DD/MM/YYYY'));
               }}
               value={CheckinDate}
               title="Check In Date"
-            />
+            /> */}
             <BasicDatePicker
-              fullWidth
-              onChange={(e) => {
-                setCheckoutDate(e.target.value);
-              }}
-              value={CheckoutDate}
+              date={CheckinDate}
+              setDate={setCheckinDate}
+              title="Check in Date"
+            />             
+            <BasicDatePicker
+              date={CheckoutDate}
+              setDate={setCheckoutDate}
               title="Check Out Date"
-            />
+            />             
+          
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handlesubmit}>
+          <Button type='submit' autoFocus onClick={handlesubmit}>
             Submit
           </Button>
           <Button onClick={handleClose} autoFocus>
             Close
           </Button>
         </DialogActions>
+        </form>
       </Dialog>
     </React.Fragment>
   );

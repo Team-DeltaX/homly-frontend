@@ -8,6 +8,7 @@ import './Reservation.css';
 import ViewPopUp from './ViewPopup';
 import SpecailReservationViewPopup from './SpecialReservationViewPopup';
 // import AddComplainPopUp from './AddComplainPopUp';
+import dayjs, { Dayjs } from 'dayjs';
 
 const SpecialReservationCard = ({reservation}) => {
     return(
@@ -18,14 +19,14 @@ const SpecialReservationCard = ({reservation}) => {
                 </Grid>
                 <Grid Item xs={4} md={4} sx={{justifyContent:"center", alignItems:"center"}}>
                     <h2>{ reservation.receiptName }</h2>
-                    <p>Reservation Number  { reservation.recervationNO }</p>
+                    <p>Reservation Number  { reservation.SpecailReservationID }</p>
                     <p>Amount { reservation.amount }</p>
                 </Grid>
                 <Grid xs={5} md={5} className="section2" sx={{display:'flex',justifyContent:"flex-end", alignItems:"center"}}>
                     <Stack direction="column" justifyContent="flex-end" alignItems="flex-end" spacing={0.5}>
                         <h2>{ reservation.holidayhomename }</h2>
-                        <p>Check In : { reservation.checkindate }</p>
-                        <p>Check Out : { reservation.checoutdate }</p>
+                        <p>Check In : { dayjs(reservation.CheckinDate).format('DD/MM/YYYY')}</p>
+                        <p>Check Out : { dayjs(reservation.CheckoutDate).format('DD/MM/YYYY')}</p>
                         {/* <SpecailReservationViewPopup reservation={reservation}/> */}
                     </Stack>
                     {/* <h2>{ reservation.holidayhomename }</h2>
