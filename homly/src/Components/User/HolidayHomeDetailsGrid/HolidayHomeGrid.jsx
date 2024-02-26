@@ -12,6 +12,7 @@ const Item = styled(Paper)(({ theme }) => ({
     ...theme.typography.body2,
     padding: theme.spacing(1),
     textAlign: 'center',
+    borderRadius: 2,
     color: theme.palette.text.secondary,
 }));
   
@@ -204,13 +205,13 @@ export default function HolidayHomeGrid() {
       ])
   return (
     <Grid container spacing={2}>
-        <Grid xs={8}>
-            <Item><img className="reservation-photo" src={<MainHolidayHomePhoto />} alt="" /></Item>
+        <Grid md={8} sm={12}>
+            <img className="reservation-photo" src={holidayhome} alt="HH PHOTO 1" width={"100%"} height={"460vh"} style={{ borderRadius: '2%' }}/>
         </Grid>
-        <Grid xs={4}>
+        <Grid md={4} sm={12}>
             <Stack spacing={2}>
-              <Item>Item 1</Item>
-              <Item>Item 2</Item>
+                <img className="reservation-photo" src={holidayhome} alt="HH PHOTO 2" width={"100%"} height={"222vh"} style={{ borderRadius: '4%' }}/>
+                <img className="reservation-photo" src={holidayhome} alt="HH PHOTO 3" width={"100%"} height={"222vh"} style={{ borderRadius: '4%' }}/>
             </Stack>
         </Grid>
     </Grid> 

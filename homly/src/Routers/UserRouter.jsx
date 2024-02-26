@@ -12,10 +12,8 @@ const HolidayHomeDetails = lazy(() =>
   import("../Pages/User/HolidayHomeDetails")
 );
 const EmailVerified = lazy(() => import("../Pages/User/EmailVerified"));
-const NotFoundPage = lazy(() => import("../Pages/NotFountPage"));
 
 const UserRouter = () =>{
-  const {isLogged} = useContext(AuthContext);
   
   return(
       <Routes>
