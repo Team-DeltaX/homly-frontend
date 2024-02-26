@@ -11,23 +11,23 @@ import AuthContextProvider from "./Contexts/AuthContext";
 import "../src/Styles/styles.css";
 import Loader from "./Components/Loader/Loader";
 import { CustomTabProvider } from "./Contexts/primryadmin/CustomTabContext";
+import { SearchProvider } from "./Contexts/primryadmin/Searchcontext";
 
 const App = () => (
   <AuthContextProvider>
     <CustomTabProvider>
-      <Router>
-        <Suspense fallback={<Loader/>}>
-          <Routes>
-
-            <Route path="*" element={<UserRouter />} />
-            <Route path="/admin/*" element={<AdminRouter />} />
-            <Route path="/locationadmin/*" element={<LocationAdminRouter />} />
-            <Route path="/primaryadmin/*" element={<PrimaryAdminRouter />} />
-          </Routes>
-
-
-        </Suspense>
-      </Router>
+      <SearchProvider>
+        <Router>
+          <Suspense fallback={<Loader/>}>
+            <Routes>
+              <Route path="*" element={<UserRouter />} />
+              <Route path="/admin/*" element={<AdminRouter />} />
+              <Route path="/locationadmin/*" element={<LocationAdminRouter />} />
+              <Route path="/primaryadmin/*" element={<PrimaryAdminRouter />} />
+            </Routes>
+          </Suspense>
+        </Router>
+      </SearchProvider>
     </CustomTabProvider>
   </AuthContextProvider>
 );
