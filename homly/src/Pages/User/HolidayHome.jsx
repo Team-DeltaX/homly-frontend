@@ -5,7 +5,7 @@ import Footer from "../../Components/User/Footer/Footer";
 import theme from "../../HomlyTheme";
 import AOS from "aos";
 import "aos/dist/aos.css";
-export default function HolidayHomeDetails() {
+export default function HolidayHomes() {
   const refContactUS = useRef(null);
   useEffect(() => {
     AOS.init();
