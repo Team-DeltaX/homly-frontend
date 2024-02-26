@@ -57,7 +57,7 @@ const UserLogin = () => {
     e.preventDefault();
     const formData = { serviceNo, password };
     axios
-      .post("http://localhost:3002/users/login", formData)
+      .post("http://localhost:3002/users/login", formData,{withCredentials: true})
       .then((res) => {
         console.log(res.data);
         if (res.data.success) {
