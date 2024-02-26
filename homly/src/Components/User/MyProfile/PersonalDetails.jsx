@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
   Box,
@@ -62,10 +63,12 @@ const PersonalDetails = () => {
     setIsEnable(true);
   };
 
+  const Navigate = useNavigate();
+
   useEffect(() => {
     if (authServiceNumber) {
       axios
-        .get(`http://localhost:3002/users/auth/${authServiceNumber}`)
+        .get(`http://localhost:3002/users/auth/${authServiceNumber}`,{withCredentials: true})
         .then((res) => {
           if (Response) {
             console.log("apidata", res.data);
@@ -87,6 +90,25 @@ const PersonalDetails = () => {
               message: res.data.message,
             });
           }
+        }).catch((err) => {
+          console.log("error", err);
+          if(!err.response.data.autherized){
+            setErrorStatus({
+              ...errorStatus,
+              isOpen: true,
+              type: "error",
+              message: "Unautherized Access",
+            });
+            Navigate("/");
+          }else{
+            setErrorStatus({
+              ...errorStatus,
+              isOpen: true,
+              type: "error",
+              message: "Server Error",
+            });
+          }
+          
         });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
