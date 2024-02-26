@@ -26,6 +26,8 @@ import MainHolidayHomePhoto from "../../Components/User/HolidayHomeDetailsGrid/M
 
 // import MainHolidayHomePhoto from '../../Components/User/HolidayHomeDetailsGrid/MainHolidayHomePhoto';
 import HolidayHomeGrid from "../../Components/User/HolidayHomeDetailsGrid/HolidayHomeGrid";
+import AddReservationPopUp from "../../Components/Reservations/AddReservationPopUp";
+
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -77,9 +79,7 @@ export default function HolidayHomeDetails() {
                 </Typography>
               </Grid>
               <Grid md={4}>
-                <Button variant="contained" style={{ float: "right" }}>
-                  Reserve Now
-                </Button>
+                <AddReservationPopUp />
               </Grid>
               <Grid md={12}>
                 <HolidayHomeGrid />
