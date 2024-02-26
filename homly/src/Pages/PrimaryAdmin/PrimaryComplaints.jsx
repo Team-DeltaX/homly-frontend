@@ -38,8 +38,8 @@ const PrimaryComplaints = () => {
           setPrevcomplaints(res.data)
           console.log('finish')
           console.log('---------fetch prev complaints--------')
-        //   console.log(res.data)
-          console.log(prevcomplaints[0])
+          console.log(res.data)
+          // console.log(prevcomplaints[0])
         //   setLen(prevcomplaints.length)
         //   console.log(len)
     

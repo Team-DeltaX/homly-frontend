@@ -12,7 +12,7 @@ const Copy = (props) => {
 
   return (
     <>
-      <IconButton onClick={handleClick} size="small" sx={{color:'#dddddd'}}>
+      <IconButton onClick={handleClick} size="small" sx={{color:'#dddddd',borderRadius:'3px'}}>
         <ContentCopyIcon/>
       </IconButton>
       {/* <Snackbar

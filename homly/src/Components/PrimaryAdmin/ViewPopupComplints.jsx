@@ -13,14 +13,16 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import CancelIcon from "@mui/icons-material/Cancel";
-import axios from "axios";
+// import axios from "axios";
 import ConfirmPopup from "./ConfirmPopup";
+import axios from "axios";
 
 const ViewPopupComplaints = (props) => {
   const [reson, setReson] = useState("");
   const [expand, setExpand] = useState(false);
   // const [opend, setOpend] = useState(false);
   const [Open, setOpen] = useState(false);
+  const [disable,Setdisable]=useState(false)
 
   
 
@@ -52,9 +54,20 @@ const ViewPopupComplaints = (props) => {
   //         console.log(err)
   //     })
   // }
+  const check_already_exists=()=>{
+    axios.get(`http://localhost:3002/admin/auth/isexist/${props.selecteduser.ServiceNo}`)
+    .then((res)=>{
+      Setdisable(res.data.exist)
+      
+    }).catch(err=>{
+      console.log(err)
+    })
+
+  }
 
   useEffect(() => {
     props.fetchprevcomplaints();
+    check_already_exists();
   }, [props.popup]);
 
   const handleclick=()=>{
@@ -300,7 +313,7 @@ const ViewPopupComplaints = (props) => {
                 {/* {props.complaints.filter(data=>((data.Marked===true)&&(data.ServiceNo===props.selecteduser.ServiceNo))).map(data =>  setPrevcomplaints(prevArray => [...prevArray, data.Reson]))} */}
 
                 <div>
-                  {props.prevcomplaints.length >= 1 ? (
+                  {props.prevcomplaints.length >0 ? (
                     <Accordion
                       expanded={!expand}
                       onClick={() => {
@@ -326,19 +339,19 @@ const ViewPopupComplaints = (props) => {
                         <Typography >
                           
                           
-                          <Box > {getonlydate(0)}</Box>
+                          <Box > {getonlydate(props.prevcomplaints.length-1)}</Box>
                         
                         
                       </Typography>
                       </AccordionSummary>
                       <AccordionDetails>
-                        <Typography>{props.prevcomplaints[0].Reson}</Typography>
+                        <Typography>{props.prevcomplaints[props.prevcomplaints.length-1].Reson}</Typography>
                       </AccordionDetails>
                     </Accordion>
                   ) : (
                     ""
                   )}
-                  {props.prevcomplaints.length == 2 ? (
+                  {props.prevcomplaints.length >=2 ? (
                     <Accordion
                       expanded={expand}
                       onClick={() => {
@@ -355,11 +368,11 @@ const ViewPopupComplaints = (props) => {
                         id="panel2-header"
                       >
                         <Typography>
-                          Complaint on {getonlydate(1)}
+                          Complaint on {getonlydate(props.prevcomplaints.length-2)}
                         </Typography>
                       </AccordionSummary>
                       <AccordionDetails>
-                        <Typography>{props.prevcomplaints[1].Reson}</Typography>
+                        <Typography>{props.prevcomplaints[props.prevcomplaints.length-2].Reson}</Typography>
                       </AccordionDetails>
                     </Accordion>
                   ) : (
@@ -394,6 +407,7 @@ const ViewPopupComplaints = (props) => {
 
                 <Button variant="contained" sx={{ marginRight: "3%" }}
                 onClick={()=>{setOpen(true)}}
+                disabled={disable}
                 >
                
                   <Typography sx={{fontSize:'11px'}}>Add To Blacklist</Typography>
@@ -410,7 +424,9 @@ const ViewPopupComplaints = (props) => {
                 >
                  <Typography sx={{fontSize:'11px'}} > Mark</Typography>
                 </Button>
+                
               </Box>
+              {disable &&<Typography sx={{color:'red',fontSize:'10px'}}>Note:This User Alread Blacklisted!</Typography>}
             </Box>
           </Box>
         </Box>
