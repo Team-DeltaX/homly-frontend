@@ -1,7 +1,6 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState,  useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useCookies } from 'react-cookie';
 import {
   Box,
   ThemeProvider,
@@ -20,13 +19,8 @@ import theme from "../../../HomlyTheme";
 import ProfilePicUploadPopup from "../ProfilePicUploadPopup";
 import ErrorSnackbar from "../ErrorSnackbar";
 
-import { AuthContext } from "../../../Contexts/AuthContext";
-
-
 
 const PersonalDetails = () => {
-  const { authServiceNumber } = useContext(AuthContext);
-  const [cookies, setCookie] = useCookies(['serviceNo']);
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
   const phoneRegex = /^[0-9]{10}$/;
 

@@ -13,6 +13,9 @@ import {
   ToggleButton,
   Divider,
 } from "@mui/material";
+import axios from "axios";
+
+import ErrorSnackbar from "./ErrorSnackbar";
 import theme from "../../HomlyTheme";
 
 
@@ -37,6 +40,12 @@ const styleSelected = {
 
 export default function UserInterestedPopup({ open, setOpen }) {
 
+  const [errorStatus, setErrorStatus] = useState({
+    isOpen: false,
+    type: "",
+    message: "",
+  });
+
   const [interests, setInterests] = useState([]);
 
   const handleClose = () => {
@@ -53,7 +62,37 @@ export default function UserInterestedPopup({ open, setOpen }) {
   const handleSubmit = () => {
     if(interests.length>0){
       console.log("submitted", interests);
-      setOpen(false);
+      const formData = {fac1:interests[0], fac2:interests[1], fac3:interests[2]};
+      axios
+      .post("http://localhost:3002/users/auth/interested",formData,{withCredentials:true})
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.success) {
+          setErrorStatus({
+            ...errorStatus,
+            isOpen: true,
+            type: "success",
+            message: res.data.message,
+          });
+        } else {
+          setErrorStatus({
+            ...errorStatus,
+            isOpen: true,
+            type: "error",
+            message: res.data.message,
+          });
+        }
+      
+      }).catch((err) => {
+        console.log(err);
+        setErrorStatus({
+          ...errorStatus,
+          isOpen: true,
+          type: "error",
+          message: err.message,
+        });
+      });
+      // setOpen(false);
     }else{
       console.log("skipped");
       setOpen(false);
@@ -110,6 +149,15 @@ export default function UserInterestedPopup({ open, setOpen }) {
         <Button onClick={handleSubmit}>{interests.length>0?"Confirm":"Skip"}</Button>
       </DialogActions>
     </Dialog>
+    {/* error snack bar */}
+    <ErrorSnackbar
+          isOpen={errorStatus.isOpen}
+          type={errorStatus.type}
+          message={errorStatus.message}
+          setIsOpen={(value) =>
+            setErrorStatus({ ...errorStatus, isOpen: value })
+          }
+        />
     </ThemeProvider>
   );
 }
