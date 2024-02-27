@@ -317,8 +317,10 @@ const PrimaryManageBlacklistedUsers = () => {
                   {" "}
                   <Button
                     sx={{
-                      marginLeft: "5%",
+                      marginLeft: "2%",
                       marginTop: { xs: "10%", sm: "1.5%" },
+                      position:'absolute',
+                      top:'88%'
                     }}
                     component="label"
                     variant="contained"
