@@ -4,8 +4,11 @@ import HomeDetailsView from "./HomeDetailsView";
 import CareTakerDetailsView from "./CareTakerDetailsView";
 import HomeBreakDownView from "./HomeBreakDownView";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 
 const CreateHolidayHomeContent = () => {
+  const navigate = useNavigate();
 
   const [submitDisable, setSubmitDisable] = useState(true);
   const [submitClicked, setSubmitClicked] = useState(false);
@@ -21,13 +24,14 @@ const CreateHolidayHomeContent = () => {
     setSubmitClicked(true);
     axios.post("http://localhost:3002/locationadmin/holidayhome/", { allValues })
       .then((res) => {
+        // window.location.href("/locationadmin/manage");
         console.log(res);
+        navigate("/locationadmin/manage");
       }
       )
       .catch((err) => {
         console.log(err);
-      })
-
+      });
   };
 
   console.log(allValues);

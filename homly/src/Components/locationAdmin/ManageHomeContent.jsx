@@ -108,7 +108,7 @@ const ManageHomeContent = () => {
                             <Box className="homes_container_header"><Typography variant='p' className='header_title'>Pending Holiday Homes</Typography><hr /></Box>
                             <Box className="homes_container" sx={{ overflowY: "scroll", maxHeight: "60vh" }}>
                                 <Box className="homes_container_body">
-                                    {pending.map((item) => {
+                                    {inactive.map((item) => {
                                         return (
                                             <HolidayHomeCard key={item.HolidayHomeId} HolidayHomeName={item.Name} Category={item.Category} HolidayHomeId={item.HolidayHomeId} />
                                         )
@@ -120,8 +120,9 @@ const ManageHomeContent = () => {
                         <CustomTabPanel value={value} index={1}>
                             <Box className="homes_container_header"><Typography variant='p' className='header_title'>InActive Holiday Homes</Typography><hr /></Box>
                             <Box className="homes_container" sx={{ overflowY: "scroll", maxHeight: "60vh" }}>
+
                                 <Box className="homes_container_body">
-                                    {inactive.map((item) => {
+                                    {pending.map((item) => {
                                         return (
                                             <HolidayHomeCard key={item.HolidayHomeId} HolidayHomeName={item.Name} Category={item.Category} HolidayHomeId={item.HolidayHomeId} />
                                         )
