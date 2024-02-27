@@ -1,7 +1,40 @@
 import { Box, Button, ThemeProvider, Typography } from "@mui/material";
 import theme from "../../HomlyTheme";
+import { useEffect, useState } from "react";
+import axios from "axios";
+
 
 const BlacklistedUsersCardNew=(props)=>{
+    const [User,SetUser]=useState({})
+    const [Employee,SetEmployee]=useState({})
+    
+    const fetchfromemployee=()=>{
+        axios.get(`http://localhost:3002/admin/auth/locationadmin/employee/${props.data.ServiceNo}`)
+        .then((res)=>{
+            SetEmployee(res.data[0])
+            
+            console.log(res.data)
+        })
+        .catch(error=>{
+            console.log(error)
+        })
+    }
+
+    const fetchfromuser=()=>{
+        axios.get(`http://localhost:3002/admin/auth/locationadmin/user/${props.data.ServiceNo}`)
+        .then((res)=>{
+            SetUser(res.data[0])
+            console.log(User)
+        })
+        .catch(error=>{
+            console.log(Employee)
+        })
+    }
+    useEffect(()=>{
+        fetchfromemployee();
+        fetchfromuser();
+
+    },[])
     return <ThemeProvider theme={theme}>
         <Box sx={{
             display:"flex",
@@ -13,7 +46,7 @@ const BlacklistedUsersCardNew=(props)=>{
             borderRadius:'15px',
             margin:'10px'
         
-        }} key={props.data.Service_number}>
+        }} key={props.data.ServiceNo}>
             <Box sx={{
         
                 width:{md:'10%'}
@@ -25,7 +58,7 @@ const BlacklistedUsersCardNew=(props)=>{
                 width:{md:'18%'}
                 }}>
                 <Typography sx={{textAlign:'center'}} >Service Number</Typography>
-                <Typography sx={{fontWeight:'light',textAlign:'center'}} >{props.data.Service_number}</Typography>
+                <Typography sx={{fontWeight:'light',textAlign:'center'}} >{props.data.ServiceNo}</Typography>
             </Box>
             <Box sx={{
         
@@ -33,7 +66,7 @@ const BlacklistedUsersCardNew=(props)=>{
         
                 }}>
                 <Typography sx={{textAlign:'center'}} >User Name</Typography>
-                <Typography sx={{fontWeight:'light',textAlign:'center'}} >{props.data.User_name}</Typography>
+                <Typography sx={{fontWeight:'light',textAlign:'center'}} >{Employee.name}</Typography>
             </Box>
             <Box sx={{
         
@@ -41,14 +74,14 @@ const BlacklistedUsersCardNew=(props)=>{
         
                 }}>
                 <Typography sx={{textAlign:'center'}} >Nic Number</Typography>
-                <Typography sx={{fontWeight:'light',textAlign:'center'}} >{props.data.Nic_number}</Typography>
+                <Typography sx={{fontWeight:'light',textAlign:'center'}} >{Employee.nic}</Typography>
             </Box>
             <Box sx={{
         
                 width:{md:'18%'}
                 }}>
                 <Typography sx={{textAlign:'center'}} >Blacklisted Date</Typography>
-                <Typography sx={{fontWeight:'light',textAlign:'center'}} >{props.data.date}</Typography>
+                <Typography sx={{fontWeight:'light',textAlign:'center'}} >{props.data.Date.slice(0, 10)}</Typography>
             </Box>
             <Box sx={{
         

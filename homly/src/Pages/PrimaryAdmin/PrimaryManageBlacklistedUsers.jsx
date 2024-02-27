@@ -116,11 +116,13 @@ import SearchNew from "../../Components/PrimaryAdmin/SearchNew";
 import "../../Components/PrimaryAdmin/Css/fontchange.css";
 
 import { CSVLink } from "react-csv";
+import axios from "axios";
 
 const PrimaryManageBlacklistedUsers = () => {
   const [search, setSearch] = useState("");
   const [popup, setpopup] = useState(false);
   const [selecteduser, setSelecteduser] = useState({});
+  
 
   const handlepopup = () => {
     setpopup(!popup);
@@ -202,15 +204,15 @@ const PrimaryManageBlacklistedUsers = () => {
   const headers = [
     {
       label: "Service Number",
-      key: "Service_number",
+      key: "ServiceNo",
     },
     {
-      label: "Nic Number",
-      key: "Nic_number",
+      label: "Black List Reason",
+      key: "BlackListReason",
     },
     {
       label: "Blacklisted Date",
-      key: "date",
+      key: "Date",
     },
   ];
  
@@ -224,10 +226,23 @@ const PrimaryManageBlacklistedUsers = () => {
   };
 
   useEffect(() => {
-    setBlacklistedusers(data);
+    fetch_current_blacklist()
   }, []);
 
   const [showNav, setShowNav] = useState("nav_grid_deactive");
+
+  const fetch_current_blacklist=()=>{
+    axios
+    .get("http://localhost:3002/admin/auth/blacklistusers")
+    .then((res) => {
+      
+      setBlacklistedusers(res.data.reverse());
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -268,6 +283,7 @@ const PrimaryManageBlacklistedUsers = () => {
             >
               <Pagetop setShowNav={setShowNav} heading={"Manage Blacklist"} />
               <SearchNew setSearch={setSearch} search={search} />
+             
 
               <Box
                 sx={{
@@ -279,15 +295,12 @@ const PrimaryManageBlacklistedUsers = () => {
               >
                 {blacklistedusers
                   .filter((data) => {
-                    const serviceNumberString = String(data.Service_number);
+                    const serviceNumberString = String(data.ServiceNo);
                     return search.toLowerCase() === ""
                       ? data
                       : serviceNumberString
                           .toLowerCase()
-                          .startsWith(search.toLocaleLowerCase()) ||
-                          data.User_name.toLowerCase().startsWith(
-                            search.toLocaleLowerCase()
-                          );
+                          .startsWith(search.toLocaleLowerCase()) 
                   })
                   .map((data) => {
                     return (

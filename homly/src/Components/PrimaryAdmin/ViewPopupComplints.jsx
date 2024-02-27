@@ -24,6 +24,7 @@ const ViewPopupComplaints = (props) => {
   const [Open, setOpen] = useState(false);
   const [disable,Setdisable]=useState(false)
 
+
   
 
   // const data = [
@@ -64,6 +65,23 @@ const ViewPopupComplaints = (props) => {
     })
 
   }
+  
+  const handleaddtoblacklist=()=>{
+    axios.post('http://localhost:3002/admin/auth/blacklist',{
+      Reason: reson,
+      ServiceNo: props.selecteduser.ServiceNo
+    }).then(res=>{
+      console.log(res)
+    }).catch(err=>{
+      console.log(err)
+    })
+
+    
+    setOpen(false)
+    props.handlepopup();
+    
+  }
+
 
   useEffect(() => {
     props.fetchprevcomplaints();
@@ -402,17 +420,23 @@ const ViewPopupComplaints = (props) => {
             title={"Black List User Confirmation"}
             text={"Are you sure you want to Blacklist This User?"}
             
-            controlfunction={handleclick}
+            controlfunction={handleaddtoblacklist}
           />
 
                 <Button variant="contained" sx={{ marginRight: "3%" }}
-                onClick={()=>{setOpen(true)}}
+                onClick={()=>{
+                 if(reson!==""){
+                  setOpen(true)
+                 }  
+                
+                }}
                 disabled={disable}
                 >
                
                   <Typography sx={{fontSize:'11px'}}>Add To Blacklist</Typography>
                 </Button>
                 <Button
+                
                   variant="outlined"
                   sx={{ marginRight: "5%" }}
                   onClick={() => {
