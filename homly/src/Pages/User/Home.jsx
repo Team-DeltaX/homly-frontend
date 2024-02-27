@@ -9,7 +9,6 @@ import {
   Divider,
 } from "@mui/material";
 import axios from "axios";
-// import Select from "react-select";
 import SearchIcon from "@mui/icons-material/Search";
 
 import NavBar from "../../Components/User/NavBar/NavBar";
@@ -26,6 +25,7 @@ import OurPlaces from "../../Components/User/OurPlaces/OurPlaces";
 import BrowseMoreCom from "../../Components/User/BrowseMore/BrowseMoreCom";
 import Footer from "../../Components/User/Footer/Footer";
 import HHCarousel from "../../Components/User/Carousel/HHCarousel";
+import UserInterestedPopup from "../../Components/User/UserInterestedPopup";
 
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -49,6 +49,8 @@ export default function Home() {
     key: "selection",
   });
 
+  const [insterestedPopup, setInsterestedPopup] = useState(false);
+
   const [district, setDistrict] = useState("");
   useEffect(() => {
     AOS.init();
@@ -60,7 +62,9 @@ export default function Home() {
       .then((response) => {
         setSortedByRating(response.data);
       });
+      setInsterestedPopup(true);
     // APIData.sort((a, b) => b.rating - a.rating);
+
   }, []);
 
   useEffect(() => {
@@ -78,7 +82,11 @@ export default function Home() {
         }}
       >
         <Container maxWidth="xl" style={{ padding: 0}}>
+          {/* navbar */}
           <NavBar refContactUS={refContactUS}/>
+          {/* user interested popup */}
+          <UserInterestedPopup open={insterestedPopup} setOpen={setInsterestedPopup} />
+
           <Container maxWidth="lg" sx={{ bgcolor: "white",marginTop:{xs:'20px',sm:'10px',ms:'0'} }}>
             <Container
               sx={{
