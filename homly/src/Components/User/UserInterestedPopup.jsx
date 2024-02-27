@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import theme from "../../HomlyTheme";
 
+
 // change toggle button style
 const style = {
   margin: "2px",
@@ -32,7 +33,10 @@ const styleSelected = {
   
 }
 
+
+
 export default function UserInterestedPopup({ open, setOpen }) {
+
   const [interests, setInterests] = useState([]);
 
   const handleClose = () => {
@@ -40,10 +44,10 @@ export default function UserInterestedPopup({ open, setOpen }) {
   };
 
   const handleFormat = (event, newInterest) => {
-    if(interests.length < 4){
+    // select maximum 3 interests
+    if(newInterest.length<=3){
       setInterests(newInterest);
-    } 
-    console.log(interests,);
+    }
   };
 
   const handleSubmit = () => {
