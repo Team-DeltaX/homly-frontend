@@ -8,8 +8,10 @@ import {
   Button,
   ThemeProvider,
   Box,
+  Stack,
   ToggleButtonGroup,
   ToggleButton,
+  Divider,
 } from "@mui/material";
 import theme from "../../HomlyTheme";
 
@@ -19,27 +21,41 @@ const style = {
   border: "1px solid #872341",
   borderRadius: "50px",
   padding: "5px 30px",
-  
+}
+
+const styleSelected = {
+  margin: "2px",
+  border: "1px solid #872341",
+  borderRadius: "50px",
+  padding: "5px 30px",
+  backgroundColor: "#f8abc3",
   
 }
 
 export default function UserInterestedPopup({ open, setOpen }) {
   const [interests, setInterests] = useState([]);
-  const [count, setCount] = useState(0);
 
   const handleClose = () => {
     setOpen(false);
   };
 
   const handleFormat = (event, newInterest) => {
-    if(newInterest.length > 3){
-
-    }else{
+    if(interests.length < 4){
       setInterests(newInterest);
-      setCount(count + 1);
-    }
-    console.log(interests);
+    } 
+    console.log(interests,);
   };
+
+  const handleSubmit = () => {
+    if(interests.length>0){
+      console.log("submitted", interests);
+      setOpen(false);
+    }else{
+      console.log("skipped");
+      setOpen(false);
+    }
+
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -50,32 +66,44 @@ export default function UserInterestedPopup({ open, setOpen }) {
           Hello there! Let's customize your experience. Pick your top 3
           interests in order
         </DialogContentText>
-        <Box sx={{margin:"7px 0"}}>
-          <ToggleButtonGroup
-            value={interests}
-            onChange={handleFormat}
-            aria-label="interests facilities"
-            sx={{
-                flexWrap: "wrap",
-              
-              ".css-q9gk48-MuiButtonBase-root-MuiToggleButton-root.Mui-selected, .css-q9gk48-MuiButtonBase-root-MuiToggleButton-root.Mui-selected:hover": {
-                backgroundColor: "#f8abc3",
-              },
-            }}
-          >
-            
-            <ToggleButton value="food" aria-label="food" style={style}>Food</ToggleButton>
-            <ToggleButton value="location" aria-label="location" style={style}>Location</ToggleButton>
-            <ToggleButton value="wifi" aria-label="wifi" style={style}>wifi</ToggleButton>
-            <ToggleButton value="staff" aria-label="staff" style={style}>Staff</ToggleButton>
-            <ToggleButton value="money" aria-label="money" style={style}>Value For money</ToggleButton>
-            <ToggleButton value="bold6" aria-label="food6" style={style}>Food</ToggleButton>
-          </ToggleButtonGroup>
-        </Box>
+        <Stack direction='column'>
+          <Box >
+          <ToggleButtonGroup sx={{flexWrap:"wrap"}}>
+            {
+              interests.map((interest, index) => {
+                return <ToggleButton value={interest} aria-label={interest} style={styleSelected} disabled>{interest}</ToggleButton>
+              })
+            }
+            </ToggleButtonGroup>
+            <Divider sx={{display:interests.length>0?"block":"none",marginTop:"3px",}}/>
+          </Box>
+          <Box sx={{margin:"7px 0"}}>
+            <ToggleButtonGroup
+              value={interests}
+              onChange={handleFormat}
+              aria-label="interests facilities"
+              sx={{
+                  flexWrap: "wrap",
+          
+                ".css-q9gk48-MuiButtonBase-root-MuiToggleButton-root.Mui-selected, .css-q9gk48-MuiButtonBase-root-MuiToggleButton-root.Mui-selected:hover": {
+                  backgroundColor: "#f8abc3",
+                },
+              }}
+            >
+          
+              <ToggleButton value="food" aria-label="food" style={style}>Food</ToggleButton>
+              <ToggleButton value="location" aria-label="location" style={style}>Location</ToggleButton>
+              <ToggleButton value="wifi" aria-label="wifi" style={style}>wifi</ToggleButton>
+              <ToggleButton value="staff" aria-label="staff" style={style}>Staff</ToggleButton>
+              <ToggleButton value="Value For money" aria-label="money" style={style}>Value For money</ToggleButton>
+              <ToggleButton value="bold6" aria-label="food6" style={style}>Food</ToggleButton>
+            </ToggleButtonGroup>
+          </Box>
+        </Stack>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>close</Button>
-        <Button onClick={handleClose}>Agree</Button>
+        <Button onClick={handleSubmit}>{interests.length>0?"Confirm":"Skip"}</Button>
       </DialogActions>
     </Dialog>
     </ThemeProvider>
