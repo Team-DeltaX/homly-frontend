@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import SearchIcon from "@mui/icons-material/Search";
+import { useNavigate } from "react-router-dom";
 
 import NavBar from "../../Components/User/NavBar/NavBar";
 import theme from "../../HomlyTheme";
@@ -39,7 +40,6 @@ const reservedDates = [
   "2024/02/07",
 ];
 
-
 export default function Home() {
   const refContactUS = useRef(null);
   const [sortedByRating, setSortedByRating] = useState([]);
@@ -50,6 +50,8 @@ export default function Home() {
   });
 
   const [insterestedPopup, setInsterestedPopup] = useState(false);
+
+  const Navigate = useNavigate();
 
   const [district, setDistrict] = useState("");
   useEffect(() => {
@@ -62,9 +64,25 @@ export default function Home() {
       .then((response) => {
         setSortedByRating(response.data);
       });
-      setInsterestedPopup(true);
-    // APIData.sort((a, b) => b.rating - a.rating);
 
+    axios
+      .get("http://localhost:3002/users/auth/interested",{withCredentials:true})
+      .then((response) => {
+        if (response.data.updated) {
+          setInsterestedPopup(false);
+        } else {
+          setInsterestedPopup(true);
+        }
+      })
+      .catch((err) => {
+        if (!err.response.data.autherized) {
+          Navigate("/");
+        } else {
+          
+          setInsterestedPopup(true);
+        }
+      });
+    // APIData.sort((a, b) => b.rating - a.rating);
   }, []);
 
   useEffect(() => {
@@ -81,13 +99,22 @@ export default function Home() {
           overflow: "hidden",
         }}
       >
-        <Container maxWidth="xl" style={{ padding: 0}}>
+        <Container maxWidth="xl" style={{ padding: 0 }}>
           {/* navbar */}
-          <NavBar refContactUS={refContactUS}/>
+          <NavBar refContactUS={refContactUS} />
           {/* user interested popup */}
-          <UserInterestedPopup open={insterestedPopup} setOpen={setInsterestedPopup} />
+          <UserInterestedPopup
+            open={insterestedPopup}
+            setOpen={setInsterestedPopup}
+          />
 
-          <Container maxWidth="lg" sx={{ bgcolor: "white",marginTop:{xs:'20px',sm:'10px',ms:'0'} }}>
+          <Container
+            maxWidth="lg"
+            sx={{
+              bgcolor: "white",
+              marginTop: { xs: "20px", sm: "10px", ms: "0" },
+            }}
+          >
             <Container
               sx={{
                 bgcolor: "white",
@@ -329,7 +356,11 @@ export default function Home() {
                 </Stack>
                 <OurPlaces />
               </Stack>
-              <Stack data-aos="fade-left" data-aos-duration="900" sx={{ margin: "5% 0 0 0" }}>
+              <Stack
+                data-aos="fade-left"
+                data-aos-duration="900"
+                sx={{ margin: "5% 0 0 0" }}
+              >
                 {/* browse more holiday homes */}
                 <BrowseMoreCom />
               </Stack>
@@ -347,8 +378,8 @@ export default function Home() {
               }}
             ></Container>
           </Container>
-          <Box >
-            <Footer refContactUS={refContactUS}/>
+          <Box>
+            <Footer refContactUS={refContactUS} />
           </Box>
         </Container>
       </Box>
