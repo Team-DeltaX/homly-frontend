@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import HomeDetailsView from "./HomeDetailsView";
 import CareTakerDetailsView from "./CareTakerDetailsView";
 import HomeBreakDownView from "./HomeBreakDownView";
+import axios from "axios";
 
 const CreateHolidayHomeContent = () => {
 
@@ -18,20 +19,31 @@ const CreateHolidayHomeContent = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setSubmitClicked(true);
+    axios.post("http://localhost:3002/locationadmin/holidayhome/", { allValues })
+      .then((res) => {
+        console.log(res);
+      }
+      )
+      .catch((err) => {
+        console.log(err);
+      })
 
   };
+
+  console.log(allValues);
 
   const [holidayHomeSubmit, setHolidayHomeSubmit] = useState(false);
   const [caretakerSubmit, setCaretakerSubmit] = useState(false);
   const [homeBreakdownSubmit, setHomeBreakdownSubmit] = useState(false);
 
   useEffect(() => {
-    if (holidayHomeSubmit && caretakerSubmit && homeBreakdownSubmit) {
+    if (holidayHomeSubmit || caretakerSubmit || homeBreakdownSubmit) {
       setSubmitDisable(false);
     } else {
       setSubmitDisable(true); // Make sure to set to false or true explicitly
     }
   }, [holidayHomeSubmit, caretakerSubmit, homeBreakdownSubmit]);
+
 
 
   return (

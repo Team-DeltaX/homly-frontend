@@ -31,6 +31,7 @@ const HomeDetailsView = ({ setSubmit, allValues, setAllValues, submitClicked }) 
       value.district !== '' &&
       value.description !== '' &&
       value.contactNo1 !== '' &&
+      value.contactNo2 !== '' &&
       value.category !== '' &&
       value.status !== '';
 
