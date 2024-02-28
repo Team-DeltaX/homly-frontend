@@ -11,6 +11,8 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import ViewRoomBreakdown from './ViewRoomBreakdown';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 const ViewRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount }) => {
     // open pop up for add room
@@ -20,7 +22,9 @@ const ViewRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount }) =>
 
     const [isEditMode, setIsEditMode] = useState(false);
     const [editIndex, setEditIndex] = useState(null);
+    const [data, setData] = useState([]);
 
+    const { homeId } = useParams();
 
 
     useEffect(() => {
@@ -201,15 +205,41 @@ const ViewRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount }) =>
 
         });
 
-        setRentalArray(editedRoom.rentalArray);
 
 
-        setOpen(true);
-        setEditIndex(index);
-        setIsEditMode(true);
+        axios.get(`http://localhost:3002/locationadmin/holidayhome/rental/${homeId}/${editedRoom.roomCode}`)
+            .then(res => {
+                console.log("get")
+                const rental = res.data.roomRental;
+                console.log(rental)
+                for (let i = 0; i < rental.length; i++) {
+                    console.log("in")
+                    console.log(rental[i].Month);
+                    setRental({
+                        district: rental[i].Month,
+                        weekDays: rental[i].WeekRental,
+                        weekEnds: rental[i].WeekEndRental,
+                    });
+
+                    console.log("rental", rental);
+
+                    setRentalArray(rental); // Use functional update
+                    console.log("rental array", rentalArray);
+                }
+
+
+                setOpen(true);
+                setEditIndex(index);
+                setIsEditMode(true);
+
+            })
+            .catch(err => {
+                console.log(err);
+            });
 
 
     }
+
 
 
 
@@ -219,63 +249,16 @@ const ViewRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount }) =>
 
     const [roomExist, setRoomExist] = useState(false);
 
-    const handleRoomCodeChange = (e) => {
-        const roomCodeExists = roomArray.some(room => room.roomCode === e.target.value);
-        if (roomCodeExists) {
-            setRoomExist(true);
-        }
-        else {
-            setRoomExist(false);
-        }
-        setValues({ ...values, roomCode: e.target.value });
-
-    }
-    const handleRoomAcChange = (e) => {
-        setValues({ ...values, roomAc: e.target.value });
-    }
-
-    const handleRoomTypeChange = (e) => {
-        setValues({ ...values, RoomType: e.target.value });
-    }
-
-    const handleNoOfBedsChange = (e) => {
-        setValues({ ...values, NoOfBeds: e.target.value });
-    }
-
-    const handleNoOfAdults = (e) => {
-        setValues({ ...values, NoOfAdults: e.target.value });
-    }
-
-    const handleNoOfChildren = (e) => {
-        setValues({ ...values, NoOfChildren: e.target.value });
-    }
 
 
-    const handleRemarksChange = (e) => {
-        setValues({ ...values, roomRemarks: e.target.value });
-    }
 
-    const handleRentalChange = (e) => {
-        setValues({ ...values, roomRental: e.target.value });
-    }
+
 
     const [rental, setRental] = useState({
         district: '', weekDays: '', weekEnds: ''
     });
 
-    const handleDistrict = (e) => {
-        setRental({ ...rental, district: e.target.value });
-    }
 
-    const handleWeekdays = (e) => {
-        setRental({ ...rental, weekDays: e.target.value });
-        setNewRoomWeekDayValue(e.target.value);
-    }
-
-    const handleWeekends = (e) => {
-        setRental({ ...rental, weekEnds: e.target.value });
-        setNewRoomWeekendValue(e.target.value);
-    }
 
     const [newRoomWeekDayValue, setNewRoomWeekDayValue] = useState('')
     const [newRoomWeekendValue, setNewRoomWeekendValue] = useState('')
@@ -362,7 +345,7 @@ const ViewRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount }) =>
                                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                     <Typography variant='p' sx={{ color: 'black' }}>Room No</Typography>
                                 </Box>
-                                <TextField className='input_field' required id="outlined-required" label="Enter Room No" placeholder='Enter No' fullWidth size='small' onChange={handleRoomCodeChange} helperText={roomExist ? "Already exist" : ''} value={values.roomCode} />
+                                <TextField className='input_field' required id="outlined-required" label="Enter Room No" placeholder='Enter No' fullWidth size='small' value={values.roomCode} />
                             </Box>
                             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
@@ -379,7 +362,7 @@ const ViewRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount }) =>
                                         id="demo-simple-select"
                                         value={values.roomAc}
                                         label="Age"
-                                        onChange={handleRoomAcChange}
+
                                     >
                                         <MenuItem value={"AC"}>AC</MenuItem>
                                         <MenuItem value={"Non-AC"}>Non-AC</MenuItem>
@@ -402,7 +385,7 @@ const ViewRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount }) =>
                                         id="demo-simple-select"
                                         value={values.RoomType}
                                         label="Age"
-                                        onChange={handleRoomTypeChange}
+
                                     >
                                         <MenuItem value={"SingleRoom"}>Single Room</MenuItem>
                                         <MenuItem value={"DoubleRoom"}>Double Room</MenuItem>
@@ -415,79 +398,34 @@ const ViewRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount }) =>
                                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                     <Typography variant='p' sx={{ color: 'black' }}>Number Of Beds</Typography>
                                 </Box>
-                                <TextField type='number' error={error.ctName} required id="outlined-required" label="" placeholder='No of beds' fullWidth size='small' onChange={handleNoOfBedsChange} helperText={error.ctName ? "Invalid Input" : ''} value={values.NoOfBeds} />
+                                <TextField type='number' error={error.ctName} required id="outlined-required" label="" placeholder='No of beds' fullWidth size='small' value={values.NoOfBeds} />
                             </Box>
                             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                     <Typography variant='p' sx={{ color: 'black' }}>Number Of Adults</Typography>
                                 </Box>
-                                <TextField type='number' error={error.ctName} required id="outlined-required" label="" placeholder='No of Adults' fullWidth size='small' onChange={handleNoOfAdults} helperText={error.ctName ? "Invalid Input" : ''} value={values.NoOfAdults} />
+                                <TextField type='number' error={error.ctName} required id="outlined-required" label="" placeholder='No of Adults' fullWidth size='small' value={values.NoOfAdults} />
                             </Box>
                             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                     <Typography variant='p' sx={{ color: 'black' }}>Number Of Children</Typography>
                                 </Box>
-                                <TextField type='number' error={error.ctName} required id="outlined-required" label="" placeholder='No of Children' fullWidth size='small' onChange={handleNoOfChildren} helperText={error.ctName ? "Invalid Input" : ''} value={values.NoOfChildren} />
+                                <TextField type='number' error={error.ctName} required id="outlined-required" label="" placeholder='No of Children' fullWidth size='small' value={values.NoOfChildren} />
                             </Box>
 
                             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                     <Typography variant='p' sx={{ color: 'black' }}>Remark</Typography>
                                 </Box>
-                                <TextField error={error.ctName} required id="outlined-required" label="Remark" placeholder='Enter Remark' fullWidth size='small' onChange={handleRemarksChange} helperText={error.ctName ? "Invalid Input" : ''} value={values.roomRemarks} />
+                                <TextField error={error.ctName} required id="outlined-required" label="Remark" placeholder='Enter Remark' fullWidth size='small' value={values.roomRemarks} />
                             </Box>
                             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                     <Typography variant='p' sx={{ color: 'black' }}>Rental</Typography>
                                 </Box>
-                                <TextField type='number' error={error.ctName} required id="outlined-required" label="Rental" placeholder='Rental' fullWidth size='small' onChange={handleRentalChange} helperText={error.ctName ? "Invalid Input" : ''} value={values.roomRental} />
+                                <TextField type='number' error={error.ctName} required id="outlined-required" label="Rental" placeholder='Rental' fullWidth size='small' value={values.roomRental} />
                             </Box>
                             <Box className="rental_container">
-                                <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
-                                    <Typography variant='p' sx={{ color: 'black' }}>Add Rental</Typography>
-                                </Box>
-
-                                <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
-                                    <Box sx={{ width: "100%", display: 'flex', gap: "1em", justifyContent: 'space-around', marginTop: '20px' }} >
-                                        <FormControl sx={{}}>
-                                            <InputLabel id="demo-simple-select-label">District</InputLabel>
-                                            <Select
-                                                required
-
-                                                size='small'
-                                                labelId="demo-simple-select-label"
-                                                id="demo-simple-select"
-                                                value={value.district}
-                                                label="Age"
-                                                sx={{ width: "150px" }}
-                                                onChange={handleDistrict}
-
-
-                                            >
-                                                <MenuItem value={"January"}>January</MenuItem>
-                                                <MenuItem value={"February"}>February</MenuItem>
-                                                <MenuItem value={"March"}>March</MenuItem>
-                                                <MenuItem value={"April"}>April</MenuItem>
-                                                <MenuItem value={"May"}>May</MenuItem>
-                                                <MenuItem value={"June"}>June</MenuItem>
-                                                <MenuItem value={"July"}>July</MenuItem>
-                                                <MenuItem value={"August"}>August</MenuItem>
-                                                <MenuItem value={"September"}>September</MenuItem>
-                                                <MenuItem value={"October"}>October</MenuItem>
-                                                <MenuItem value={"November"}>November</MenuItem>
-                                                <MenuItem value={"December"}>December</MenuItem>
-
-                                            </Select>
-                                        </FormControl>
-
-                                        <TextField type='number' id="outlined-required" label="WeekDays" placeholder='WeekDays' value={newRoomWeekDayValue} size='small' onChange={handleWeekdays} helperText={error.ctName ? "Invalid Input" : ''} sx={{ width: "200px" }} />
-                                        <TextField type='number' id="outlined-required" label="Weekend" placeholder='Weekend' value={newRoomWeekendValue} size='small' onChange={handleWeekends} helperText={error.ctName ? "Invalid Input" : ''} sx={{ width: "200px" }} />
-                                        <Button variant='contained' size='small' onClick={handleAdd} >Add</Button>
-
-
-                                    </Box>
-                                </Box>
-
 
                                 {rentalArray.map((item, index) => {
                                     return (
@@ -495,17 +433,16 @@ const ViewRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount }) =>
                                             <Paper sx={{ display: 'flex', padding: "1.2em 2em", justifyContent: 'space-between', marginBottom: "1em" }}>
                                                 <Box>
                                                     <Typography variant='p' sx={{ color: 'black', marginRight: '0.6em', fontWeight: "bold" }}>Month</Typography>
-                                                    <Typography variant='p' sx={{ color: 'grey', fontWeight: '500' }}>{item.district}</Typography>
+                                                    <Typography variant='p' sx={{ color: 'grey', fontWeight: '500' }}>{item.Month}</Typography>
                                                 </Box>
                                                 <Box>
                                                     <Typography variant='p' sx={{ color: 'black', marginRight: '0.6em', fontWeight: "bold" }}>WeekDays</Typography>
-                                                    <Typography variant='p' sx={{ color: 'grey', fontWeight: '500' }}>{item.weekDays}</Typography>
+                                                    <Typography variant='p' sx={{ color: 'grey', fontWeight: '500' }}>{item.WeekRental}</Typography>
                                                 </Box>
                                                 <Box>
                                                     <Typography variant='p' sx={{ color: 'black', marginRight: '0.6em', fontWeight: 'bold' }}>WeekEnd</Typography>
-                                                    <Typography variant='p' sx={{ color: 'grey', fontWeight: '500' }}>{item.weekEnds}</Typography>
+                                                    <Typography variant='p' sx={{ color: 'grey', fontWeight: '500' }}>{item.WeekEndRental}</Typography>
                                                 </Box>
-                                                <CancelIcon sx={{ cursor: 'pointer' }} onClick={() => handleRemoveRentalItem(index)} />
                                             </Paper>
                                         </Box>
                                     )

@@ -55,6 +55,28 @@ const HomeBreakDownViewOnly = ({ setAllValues }) => {
 
   const { homeId } = useParams();
 
+
+  const [value, setValue] = useState(0);
+
+  const [roomArray, setRoomArray] = useState([]);
+  const [unitArray, setUnitArray] = useState([]);
+  const [hallArray, setHallArray] = useState([]);
+
+
+
+  const [adultsCount, setAdultsCount] = useState(0);
+  const [childCount, setChildCount] = useState(0);
+  const [otherCharges, setOtherCharges] = useState();
+  const [serviceCharges, setServiceCharges] = useState();
+  const [totalRental, setTotalRental] = useState();
+  const [facilities, setFacilities] = useState('');
+  const [gym, setGym] = useState(false);
+  const [kitchen, setKitchen] = useState(false);
+  const [park, setPark] = useState(false);
+  const [wifi, setWifi] = useState(false);
+  const [pool, setPool] = useState(false);
+  const [bar, setBar] = useState(false);
+
   useEffect(() => {
 
     console.log(homeId);
@@ -123,10 +145,6 @@ const HomeBreakDownViewOnly = ({ setAllValues }) => {
       })
 
 
-
-
-
-
   }, [homeId])
 
 
@@ -136,73 +154,10 @@ const HomeBreakDownViewOnly = ({ setAllValues }) => {
 
 
 
-  const [value, setValue] = useState(0);
-
-  const [roomArray, setRoomArray] = useState([]);
-  const [unitArray, setUnitArray] = useState([]);
-  const [hallArray, setHallArray] = useState([]);
-
-
-
-  const [adultsCount, setAdultsCount] = useState(0);
-  const [childCount, setChildCount] = useState(0);
-  const [otherCharges, setOtherCharges] = useState();
-  const [serviceCharges, setServiceCharges] = useState();
-  const [totalRental, setTotalRental] = useState();
-  const [facilities, setFacilities] = useState('');
-  const [gym, setGym] = useState(false);
-  const [kitchen, setKitchen] = useState(false);
-  const [park, setPark] = useState(false);
-  const [wifi, setWifi] = useState(false);
-  const [pool, setPool] = useState(false);
-  const [bar, setBar] = useState(false);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
-  // const handleOtherChargesChange = (e) => {
-  //   setOtherCharges(e.target.value);
-  // }
-
-
-  // const handleServiceChargesChange = (e) => {
-  //   setServiceCharges(e.target.value);
-  // }
-
-  // const handleTotalRentalChange = (e) => {
-  //   setTotalRental(e.target.value);
-  // }
-
-  // const handlefacilityChange = (e) => {
-  //   setFacilities(e.target.value);
-  // }
-
-  // const hangleGymChange = (e) => {
-  //   setGym(e.target.checked);
-  // }
-
-  // const handleKitchenChange = (e) => {
-  //   setKitchen(e.target.checked);
-  // }
-
-  // const handleParkChange = (e) => {
-
-  //   setPark(e.target.checked);
-  // }
-
-  // const handleWifiChange = (e) => {
-  //   setWifi(e.target.checked);
-  // }
-
-  // const handlePoolChange = (e) => {
-  //   setPool(e.target.checked);
-  // }
-
-  // const handleBarChange = (e) => {
-  //   setBar(e.target.checked);
-
-  // }
 
 
 
@@ -229,14 +184,14 @@ const HomeBreakDownViewOnly = ({ setAllValues }) => {
             <FormGroup sx={{ display: 'flex', width: '100%', gap: "0.5em ", marginTop: "1em" }}>
               <Box sx={{ display: "flex", gap: "1em" }}>
 
-                <FormControlLabel control={<Checkbox />} label="Gym" checked={gym} />
-                <FormControlLabel control={<Checkbox />} label="Park" checked={park} />
-                <FormControlLabel control={<Checkbox />} label="Kitchen" checked={kitchen} />
+                <FormControlLabel control={<Checkbox />} label="Gym" checked={gym === "1" ? true : gym === "0" ? false : undefined} />
+                <FormControlLabel control={<Checkbox />} label="Park" checked={park === "1" ? true : park === "0" ? false : undefined} />
+                <FormControlLabel control={<Checkbox />} label="Kitchen" checked={kitchen === "1" ? true : kitchen === "0" ? false : undefined} />
               </Box>
               <Box sx={{ display: "flex", gap: "1em" }}>
-                <FormControlLabel control={<Checkbox />} label="Bar" checked={bar} />
-                <FormControlLabel control={<Checkbox />} label="Wifi" checked={wifi} />
-                <FormControlLabel control={<Checkbox />} label="Pool" checked={pool} />
+                <FormControlLabel control={<Checkbox />} label="Bar" checked={bar === "1" ? true : bar === "0" ? false : undefined} />
+                <FormControlLabel control={<Checkbox />} label="Wifi" checked={wifi === "1" ? true : wifi === "0" ? false : undefined} />
+                <FormControlLabel control={<Checkbox />} label="Pool" checked={pool === "1" ? true : pool === "0" ? false : undefined} />
 
               </Box>
 
@@ -247,25 +202,25 @@ const HomeBreakDownViewOnly = ({ setAllValues }) => {
               <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                 <Typography variant='p' sx={{ color: 'black' }}>Other Charges</Typography>
               </Box>
-              <TextField value={otherCharges} type='number' id="outlined-required" label="Other Charges" placeholder='Other Charges' fullWidth size='small' />
+              <TextField value={otherCharges} type='number' id="outlined-required" placeholder='Other Charges' fullWidth size='small' />
             </Box>
             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
               <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                 <Typography variant='p' sx={{ color: 'black' }}>Service Charges</Typography>
               </Box>
-              <TextField value={serviceCharges} type='number' id="outlined-required" label="Service Charges" placeholder='Service Charges' fullWidth size='small' />
+              <TextField value={serviceCharges} type='number' id="outlined-required" placeholder='Service Charges' fullWidth size='small' />
             </Box>
             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
               <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                 <Typography variant='p' sx={{ color: 'black' }}>Total Rental</Typography>
               </Box>
-              <TextField value={totalRental} type='number' id="outlined-required" label="Total Rental" placeholder='Total Rental' fullWidth size='small' required />
+              <TextField value={totalRental} type='number' id="outlined-required" placeholder='Total Rental' fullWidth size='small' required />
             </Box>
             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
               <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
-                <Typography value={facilities} variant='p' sx={{ color: 'black' }}>Enter facilities</Typography>
+                <Typography variant='p' sx={{ color: 'black' }}>Enter facilities</Typography>
               </Box>
-              <TextField id="outlined-required" label="Facilities" placeholder='Enter Facilities' fullWidth size='small' />
+              <TextField value={facilities} id="outlined-required" placeholder='Enter Facilities' fullWidth size='small' />
             </Box>
           </Grid>
 

@@ -288,9 +288,10 @@ const CareTakerDetailsViewOnly = ({ setAllValues }) => {
         )}
 
         <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '2em', marginBottom: '1em' }}>
-          {!showSecondCaretaker && (
-            <Button variant="outlined" size="small" onClick={handleAddMoreClick}>View More</Button>
-          )}
+          {valueSecond.caretakerName !== '' ?
+            !showSecondCaretaker && (
+              <Button variant="outlined" size="small" onClick={handleAddMoreClick}>View More</Button>
+            ) : ''}
         </Box>
 
 

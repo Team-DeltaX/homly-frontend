@@ -320,14 +320,19 @@ const ViewUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
                             .then((res) => {
                                 if (Response) {
                                     const srDetails = res.data.selectedRoom;
+                                    console.log(srDetails);
                                     for (let i = 0; i < srDetails.length; i++) {
                                         axios.get(`http://localhost:3002/locationadmin/holidayhome/room/${homeId}/${srDetails[i].roomCode}`)
                                             .then((res) => {
-                                                if (Response) {
-                                                    const room = res.data;
+                                                const room = res.data;
+                                                // Check if 'room' already exists in 'selectedRooms' array
+                                                const existingRoomIndex = item.selectedRooms.findIndex(existingRoom => existingRoom.roomCode === room.roomCode);
+                                                if (existingRoomIndex === -1) {
+                                                    // If not found, push 'room' into 'selectedRooms'
                                                     item.selectedRooms.push(room);
                                                 } else {
-                                                    console.log("No data found");
+                                                    // If found, update the existing item with the new data
+                                                    item.selectedRooms[existingRoomIndex] = room;
                                                 }
                                             })
                                     }
@@ -346,6 +351,8 @@ const ViewUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
                     })}
 
             </fieldset>
+
+
 
 
 

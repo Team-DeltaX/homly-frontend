@@ -11,9 +11,14 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+
 import ViewHallBreakDown from './ViewHallBreakDown';
 
 const ViewHall = ({ hallArray, setHallArray }) => {
+
+    const { homeId } = useParams();
 
     const [open, setOpen] = useState(false);
     const [openHall, setOpenHall] = useState(false);
@@ -212,13 +217,40 @@ const ViewHall = ({ hallArray, setHallArray }) => {
 
         });
 
+        axios.get(`http://localhost:3002/locationadmin/holidayhome/rental/${homeId}/${editedHall.hallCode}`)
+            .then(res => {
+                console.log("get")
+                const rental = res.data.roomRental;
+                console.log(rental)
+                for (let i = 0; i < rental.length; i++) {
+                    console.log("in")
+                    console.log(rental[i].Month);
+                    setHallRental({
+                        district: rental[i].Month,
+                        weekDays: rental[i].WeekRental,
+                        weekEnds: rental[i].WeekEndRental,
+                    });
 
-        setHallRentalArray(editedHall.hallRentalArray);
+                    console.log("rental", rental);
+
+                    setHallRentalArray(rental); // Use functional update
+                    console.log("rental array", hallRentalArray);
+                }
 
 
-        setOpenHall(true);
-        setEditIndex(index);
-        setIsEditMode(true);
+                setOpenHall(true);
+                setEditIndex(index);
+                setIsEditMode(true);
+
+            })
+            .catch(err => {
+                console.log(err);
+            });
+
+
+
+
+
 
 
     }
@@ -362,50 +394,9 @@ const ViewHall = ({ hallArray, setHallArray }) => {
                                 </Box>
                                 <TextField type='number' error={error.ctName} required id="outlined-required" label="Rental" placeholder='Rental' fullWidth size='small' onChange={handleHallRentalChange} helperText={error.ctName ? "Invalid Input" : ''} value={hallValues.hallRental} />
                             </Box>
-                            <Box className="rental_container">
-                                <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
-                                    <Typography variant='p' sx={{ color: 'black' }}>Add Rental</Typography>
-                                </Box>
-
-                                <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
-                                    <Box sx={{ width: "100%", display: 'flex', justifyContent: 'space-around', marginTop: '20px' }} >
-                                        <FormControl sx={{}}>
-                                            <InputLabel id="demo-simple-select-label">Month</InputLabel>
-                                            <Select
-                                                required
-
-                                                size='small'
-                                                labelId="demo-simple-select-label"
-                                                id="demo-simple-select"
-                                                value={value.district}
-                                                label="Age"
-                                                sx={{ width: "150px" }}
-                                                onChange={handleHallDistrict}
+                            <Box className="rental_container" sx={{ marginBottom: "20px" }}>
 
 
-                                            >
-                                                <MenuItem value={"January"}>January</MenuItem>
-                                                <MenuItem value={"February"}>February</MenuItem>
-                                                <MenuItem value={"March"}>March</MenuItem>
-                                                <MenuItem value={"April"}>April</MenuItem>
-                                                <MenuItem value={"May"}>May</MenuItem>
-                                                <MenuItem value={"June"}>June</MenuItem>
-                                                <MenuItem value={"July"}>July</MenuItem>
-                                                <MenuItem value={"August"}>August</MenuItem>
-                                                <MenuItem value={"September"}>September</MenuItem>
-                                                <MenuItem value={"October"}>October</MenuItem>
-                                                <MenuItem value={"November"}>November</MenuItem>
-                                                <MenuItem value={"December"}>December</MenuItem>
-
-                                            </Select>
-                                        </FormControl>
-                                        <TextField type='number' id="outlined-required" label="WeekDays" placeholder='WeekDays' size='small' onChange={handleHallWeekdays} helperText={error.ctName ? "Invalid Input" : ''} sx={{ width: "150px" }} />
-                                        <TextField type='number' id="outlined-required" label="Weekend" placeholder='Weekend' size='small' onChange={handleHallWeekends} helperText={error.ctName ? "Invalid Input" : ''} sx={{ width: "150px" }} />
-                                        <Button variant='contained' size='small' onClick={handleHallAdd} >Add</Button>
-
-
-                                    </Box>
-                                </Box>
 
 
                                 {hallRentalArray.map((item, index) => {
@@ -414,17 +405,16 @@ const ViewHall = ({ hallArray, setHallArray }) => {
                                             <Paper sx={{ display: 'flex', padding: "1.2em 2em", justifyContent: 'space-between', marginBottom: "1em" }}>
                                                 <Box>
                                                     <Typography variant='p' sx={{ color: 'black', marginRight: '0.6em', fontWeight: "bold" }}>Month</Typography>
-                                                    <Typography variant='p' sx={{ color: 'grey', fontWeight: '500' }}>{item.district}</Typography>
+                                                    <Typography variant='p' sx={{ color: 'grey', fontWeight: '500' }}>{item.Month}</Typography>
                                                 </Box>
                                                 <Box>
                                                     <Typography variant='p' sx={{ color: 'black', marginRight: '0.6em', fontWeight: "bold" }}>WeekDays</Typography>
-                                                    <Typography variant='p' sx={{ color: 'grey', fontWeight: '500' }}>{item.weekDays}</Typography>
+                                                    <Typography variant='p' sx={{ color: 'grey', fontWeight: '500' }}>{item.WeekRental}</Typography>
                                                 </Box>
                                                 <Box>
                                                     <Typography variant='p' sx={{ color: 'black', marginRight: '0.6em', fontWeight: 'bold' }}>WeekEnd</Typography>
-                                                    <Typography variant='p' sx={{ color: 'grey', fontWeight: '500' }}>{item.weekEnds}</Typography>
+                                                    <Typography variant='p' sx={{ color: 'grey', fontWeight: '500' }}>{item.WeekEndRental}</Typography>
                                                 </Box>
-                                                <CancelIcon sx={{ cursor: 'pointer' }} onClick={() => handleRemoveRentalItem(index)} />
 
                                             </Paper>
                                         </Box>
@@ -436,7 +426,7 @@ const ViewHall = ({ hallArray, setHallArray }) => {
 
                         </DialogContent>
                         <DialogActions>
-                            <Button variant='contained' onClick={handleSaveHall}>Save</Button>
+
                             <Button variant='outlined' onClick={handleCloseHall}>Close</Button>
                         </DialogActions>
 
