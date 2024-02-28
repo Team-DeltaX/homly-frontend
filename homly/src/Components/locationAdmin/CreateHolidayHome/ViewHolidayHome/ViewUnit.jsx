@@ -18,6 +18,7 @@ import axios from 'axios';
 import { useParams } from 'react-router';
 
 import UnitBreakDown from '../UnitBreakDown';
+import ViewUnitBreakDown from './ViewUnitBreakDown';
 const ViewUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
 
     const { homeId } = useParams();
@@ -296,7 +297,6 @@ const ViewUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
         setOpenHallExistAlert(false);
     };
 
-    console.log(unitArray);
 
 
 
@@ -314,12 +314,22 @@ const ViewUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
                     </Box>
                     :
                     unitArray.map((item, index) => {
+                        item.selectedRooms = [];
+
                         axios.get(`http://localhost:3002/locationadmin/holidayhome/${homeId}/${item.unitCode}`)
                             .then((res) => {
                                 if (Response) {
                                     const srDetails = res.data.selectedRoom;
                                     for (let i = 0; i < srDetails.length; i++) {
-                                        console.log(srDetails[i].roomCode);
+                                        axios.get(`http://localhost:3002/locationadmin/holidayhome/room/${homeId}/${srDetails[i].roomCode}`)
+                                            .then((res) => {
+                                                if (Response) {
+                                                    const room = res.data;
+                                                    item.selectedRooms.push(room);
+                                                } else {
+                                                    console.log("No data found");
+                                                }
+                                            })
                                     }
                                 } else {
                                     console.log("No data found");
@@ -331,7 +341,7 @@ const ViewUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
 
                         return (
                             // <UnitBreakDown key={index} unitCode={item.unitCode} unitAc={item.unitAc} floorLevel={item.floorLevel} unitNoOfAdults={item.unitNoOfAdults} unitNoOfChildren={item.unitNoOfChildren} unitRemarks={item.unitRemarks} unitRental={item.unitRental} roomArray={roomArray} setRoomArray={setRoomArray} selectedRooms={item.selectedRooms} handleUnitDelete={handleUnitDelete} handleUnitEdit={handleUnitEdit} index={index} />
-                            <UnitBreakDown key={index} unitCode={item.unitCode} unitAc={item.unitAc} floorLevel={item.floorLevel} unitRemarks={item.unitRemarks} unitRental={item.unitRental} roomArray={roomArray} setRoomArray={setRoomArray} selectedRooms={item.selectedRooms} handleUnitDelete={handleUnitDelete} handleUnitEdit={handleUnitEdit} index={index} />
+                            <ViewUnitBreakDown key={index} unitCode={item.unitCode} unitAc={item.unitAc} floorLevel={item.floorLevel} unitRemarks={item.unitRemarks} unitRental={item.unitRental} roomArray={roomArray} setRoomArray={setRoomArray} selectedRooms={item.selectedRooms} handleUnitDelete={handleUnitDelete} handleUnitEdit={handleUnitEdit} index={index} />
                         )
                     })}
 
