@@ -10,9 +10,7 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
-
-
-import RoomBreakdown from '../RoomBreakdown';
+import ViewRoomBreakdown from './ViewRoomBreakdown';
 
 const ViewRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount }) => {
     // open pop up for add room
@@ -337,7 +335,7 @@ const ViewRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount }) =>
                     roomArray.map((item, index) => {
 
                         return (
-                            <RoomBreakdown key={index} roomCode={item.roomCode} roomAc={item.roomAc} roomType={item.RoomType} noOfBeds={item.NoOfBeds} noOfAdults={item.NoOfAdults} noOfChildren={item.NoOfChildren} roomRemarks={item.roomRemarks} roomRental={item.roomRental} groupByUnit={item.groupByUnit} handleRoomEdit={handleRoomEdit} handleRoomDelete={handleRoomDelete} index={index} />
+                            <ViewRoomBreakdown key={index} roomCode={item.roomCode} roomAc={item.roomAc} roomType={item.RoomType} noOfBeds={item.NoOfBeds} noOfAdults={item.NoOfAdults} noOfChildren={item.NoOfChildren} roomRemarks={item.roomRemarks} roomRental={item.roomRental} groupByUnit={item.groupByUnit} handleRoomEdit={handleRoomEdit} handleRoomDelete={handleRoomDelete} index={index} />
                         )
                     })}
 

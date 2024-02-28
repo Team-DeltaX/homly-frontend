@@ -4,8 +4,37 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+
 
 const CareTakerDetailsViewOnly = ({ setAllValues }) => {
+
+  const { homeId } = useParams();
+  useEffect(() => {
+    axios.get(`http://localhost:3002/locationadmin/holidayhome/${homeId}`)
+      .then((res) => {
+        if (Response) {
+          const caretakerDetails = res.data.caretaker;
+
+          setValue({
+            caretakerName: caretakerDetails[0].Name, caretakerContactNo: caretakerDetails[0].ContactNo, caretakerStatus: caretakerDetails[0].Status, caretakerAddress: caretakerDetails[0].Address, caretakerDescription: caretakerDetails[0].Description,
+          })
+
+          if (caretakerDetails[1]) {
+            setValueSecond({
+              caretakerName: caretakerDetails[1].Name || "", caretakerContactNo: caretakerDetails[1].ContactNo || "", caretakerStatus: caretakerDetails[1].Status || "", caretakerAddress: caretakerDetails[1].Address || "", caretakerDescription: caretakerDetails[1].Description || "",
+            })
+
+          }
+
+        } else {
+          console.log("No data found");
+        }
+      })
+    console.log(value.caretakerName);
+  }, [])
+
   const [secondCaretaker, setSecondCaretaker] = useState(false);
 
   const [value, setValue] = useState({
@@ -137,11 +166,6 @@ const CareTakerDetailsViewOnly = ({ setAllValues }) => {
   }
 
 
-
-
-
-
-
   return (
     <Box>
 
@@ -152,13 +176,13 @@ const CareTakerDetailsViewOnly = ({ setAllValues }) => {
             <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
               <Typography variant='p' sx={{ color: 'black' }}>Name</Typography>
             </Box>
-            <TextField required id="outlined-required" label="Enter Name" placeholder='Enter Name' fullWidth size='small' />
+            <TextField value={value.caretakerName} required id="outlined-required" label="Enter Name" placeholder='Enter Name' fullWidth size='small' />
           </Box>
           <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
             <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
               <Typography variant='p' sx={{ color: 'black' }}>Contact No</Typography>
             </Box>
-            <TextField required id="outlined-required" label="Enter Contact No" placeholder='Enter Contact No' fullWidth size='small' />
+            <TextField value={value.caretakerContactNo} required id="outlined-required" label="Enter Contact No" placeholder='Enter Contact No' fullWidth size='small' />
           </Box>
           <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
             <Box sx={{ minWidth: '100px', maxWidth: '100px' }} className="label_container">
@@ -168,8 +192,7 @@ const CareTakerDetailsViewOnly = ({ setAllValues }) => {
               <RadioGroup
                 aria-labelledby="demo-controlled-radio-buttons-group"
                 name="controlled-radio-buttons-group"
-                value={value.status}
-                onChange={handlestatusChange}
+                value={value.caretakerStatus}
 
               >
                 <FormControlLabel value="Active" control={<Radio />} label="Active" />
@@ -182,13 +205,13 @@ const CareTakerDetailsViewOnly = ({ setAllValues }) => {
             <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
               <Typography variant='p' sx={{ color: 'black' }}>Address</Typography>
             </Box>
-            <TextField multiline id="outlined-required" label="Enter Address" placeholder='Enter Address' fullWidth size='small' required onChange={handleAddressChange} />
+            <TextField value={value.caretakerAddress} multiline id="outlined-required" label="Enter Address" placeholder='Enter Address' fullWidth size='small' required />
           </Box>
           <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
             <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
               <Typography variant='p' sx={{ color: 'black' }}>Description</Typography>
             </Box>
-            <TextField id="outlined-required" label="Enter Description" placeholder='Enter Description' fullWidth size='small' onChange={handleDescriptionChange} />
+            <TextField value={value.caretakerDescription} id="outlined-required" label="Enter Description" placeholder='Enter Description' fullWidth size='small' />
           </Box>
           <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '1em', marginBottom: '12px' }}>
             <Box sx={{ minWidth: '100px', maxWidth: '100px' }} className="label_container">
@@ -210,13 +233,13 @@ const CareTakerDetailsViewOnly = ({ setAllValues }) => {
               <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                 <Typography variant='p' sx={{ color: 'black' }}>Name</Typography>
               </Box>
-              <TextField error={error.ctName} required id="outlined-required" label="Enter Name" placeholder='Enter Name' fullWidth size='small' onChange={handleNameChangeSecond} helperText={error.ctName ? "Invalid Input" : ''} />
+              <TextField value={valueSecond.caretakerName} required id="outlined-required" label="Enter Name" placeholder='Enter Name' fullWidth size='small' />
             </Box>
             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
               <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                 <Typography variant='p' sx={{ color: 'black' }}>Contact No</Typography>
               </Box>
-              <TextField required id="outlined-required" label="Enter Contact No" placeholder='Enter Contact No' fullWidth size='small' onChange={handleContactNoChangeSecond} />
+              <TextField value={valueSecond.caretakerContactNo} required id="outlined-required" label="Enter Contact No" placeholder='Enter Contact No' fullWidth size='small' />
             </Box>
             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
               <Box sx={{ minWidth: '100px', maxWidth: '100px' }} className="label_container">
@@ -226,8 +249,8 @@ const CareTakerDetailsViewOnly = ({ setAllValues }) => {
                 <RadioGroup
                   aria-labelledby="demo-controlled-radio-buttons-group"
                   name="controlled-radio-buttons-group"
-                  value={value.status}
-                  onChange={handlestatusChangeSecond}
+                  value={valueSecond.caretakerStatus}
+
                 >
                   <FormControlLabel value="Active" control={<Radio />} label="Active" />
                   <FormControlLabel value="Inactive" control={<Radio />} label="Inactive" />
@@ -238,13 +261,13 @@ const CareTakerDetailsViewOnly = ({ setAllValues }) => {
               <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                 <Typography variant='p' sx={{ color: 'black' }}>Address</Typography>
               </Box>
-              <TextField multiline id="outlined-required" label="Enter Address" placeholder='Enter Address' fullWidth size='small' required onChange={handleAddressChangeSecond} />
+              <TextField value={valueSecond.caretakerAddress} multiline id="outlined-required" label="Enter Address" placeholder='Enter Address' fullWidth size='small' required />
             </Box>
             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
               <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                 <Typography variant='p' sx={{ color: 'black' }}>Description</Typography>
               </Box>
-              <TextField id="outlined-required" label="Enter Description" placeholder='Enter Description' fullWidth size='small' onChange={handleDescriptionChangeSecond} />
+              <TextField value={valueSecond.caretakerDescription} id="outlined-required" label="Enter Description" placeholder='Enter Description' fullWidth size='small' />
             </Box>
             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '1em', marginBottom: '12px' }}>
               <Box sx={{ minWidth: '100px', maxWidth: '100px' }} className="label_container">
@@ -266,7 +289,7 @@ const CareTakerDetailsViewOnly = ({ setAllValues }) => {
 
         <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '2em', marginBottom: '1em' }}>
           {!showSecondCaretaker && (
-            <Button variant="outlined" size="small" onClick={handleAddMoreClick}>Add More</Button>
+            <Button variant="outlined" size="small" onClick={handleAddMoreClick}>View More</Button>
           )}
         </Box>
 

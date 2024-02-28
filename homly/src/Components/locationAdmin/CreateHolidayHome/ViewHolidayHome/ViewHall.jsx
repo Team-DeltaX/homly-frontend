@@ -11,9 +11,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 
-
-
-import HallBreakDown from '../HallBreakDown';
+import ViewHallBreakDown from './ViewHallBreakDown';
 
 const ViewHall = ({ hallArray, setHallArray }) => {
 
@@ -284,7 +282,7 @@ const ViewHall = ({ hallArray, setHallArray }) => {
                     hallArray.map((item, index) => {
                         return (
 
-                            <HallBreakDown key={index} hallCode={item.hallCode} hallAc={item.hallAc} floorLevel={item.floorLevel} hallNoOfAdults={item.hallNoOfAdults} hallNoOfChildren={item.hallNoOfChildren} hallRemarks={item.hallRemarks} hallRental={item.hallRental} handleHallDelete={handleHallDelete} handleHallEdit={handleHallEdit} index={index} />
+                            <ViewHallBreakDown key={index} hallCode={item.hallCode} hallAc={item.hallAc} floorLevel={item.floorLevel} hallNoOfAdults={item.hallNoOfAdults} hallNoOfChildren={item.hallNoOfChildren} hallRemarks={item.hallRemarks} hallRental={item.hallRental} handleHallDelete={handleHallDelete} handleHallEdit={handleHallEdit} index={index} />
                         )
                     })}
 
