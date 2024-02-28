@@ -144,7 +144,7 @@ const ViewPopupManage=(props)=>{
                                 alignItems:'center',
                                 margin:'5px'
                             }}>
-                                <Box><Typography  h6>Personal Address</Typography></Box>
+                                {/* <Box><Typography  h6>Personal Address</Typography></Box>
                                 <Box ><TextField disabled size="small" sx={{width:'85%',margin:"5px"}}></TextField></Box>
                             </Box>
                             <Box sx={{
@@ -156,7 +156,7 @@ const ViewPopupManage=(props)=>{
                                 margin:'5px'
                             }}>
                                 <Box><Typography  h6>Residental District</Typography></Box>
-                                <Box ><TextField disabled size="small" sx={{width:'85%',margin:"5px"}}></TextField></Box>
+                                <Box ><TextField disabled size="small" sx={{width:'85%',margin:"5px"}}></TextField></Box> */}
                             </Box>
                             <Box sx={{
                                 // width:"100%",
@@ -203,8 +203,8 @@ const ViewPopupManage=(props)=>{
                                 <Box ></Box> */}
 
                             
-                                        <Button disabled={(removeReson?.trim().length ?? 0) === 0}  variant='contained' sx={{marginRight:'3%'}}  >Remove</Button>
-                                        <Button variant='outlined' sx={{marginRight:'5%'}} onClick={()=>{props.handlepopup()}} >Close</Button>
+                                        <Button disabled={(removeReson?.trim().length ?? 0) === 0}  variant='contained' sx={{marginRight:'3%'}}  ><Typography>Remove</Typography></Button>
+                                        <Button variant='outlined' sx={{marginRight:'5%'}} onClick={()=>{props.handlepopup()}} ><Typography>Close</Typography></Button>
                             </Box>
                        </Box>
             

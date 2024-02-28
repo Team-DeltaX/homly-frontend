@@ -178,8 +178,8 @@ const PrimaryBlacklistHistory = () => {
                   padding: "1.5%",
                 }}
               >
-
-                {blacklistedusers.filter((data) => {
+                {blacklistedusers
+                  .filter((data) => {
                     const serviceNumberString = String(data.Service_number);
                     return search.toLowerCase() === ""
                       ? data
@@ -189,15 +189,16 @@ const PrimaryBlacklistHistory = () => {
                           data.User_name.toLowerCase().startsWith(
                             search.toLocaleLowerCase()
                           );
-                  }).map((data) => {
-                  return (
-                    <BlacklistHistoryCard
-                      handlepopup={handlepopup}
-                      data={data}
-                      setSelecteduser={setSelecteduser}
-                    />
-                  );
-                })}
+                  })
+                  .map((data) => {
+                    return (
+                      <BlacklistHistoryCard
+                        handlepopup={handlepopup}
+                        data={data}
+                        setSelecteduser={setSelecteduser}
+                      />
+                    );
+                  })}
               </Box>
               <CSVLink {...csvLink}>
                 <Button
