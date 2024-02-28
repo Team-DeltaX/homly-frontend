@@ -79,7 +79,7 @@ const ViewPopupManage=(props)=>{
                                 marginTop:{md:'5px',xs:'199px'}
                             }}>
                                 <Box><Typography  h6>Service Number</Typography></Box>
-                                <Box ><TextField disabled value={props.selecteduser.Service_number} size="small" sx={{width:'85%',margin:"5px"}}></TextField></Box>
+                                <Box ><TextField disabled value={props.selectemp.service_number} size="small" sx={{width:'85%',margin:"5px"}}></TextField></Box>
                             </Box>
                             <Box sx={{
                                 // width:"100%",
@@ -90,7 +90,7 @@ const ViewPopupManage=(props)=>{
                                 margin:'5px'
                             }}>
                                 <Box><Typography  h6>User Name</Typography></Box>
-                                <Box  ><TextField disabled value={props.selecteduser.User_name}  size="small" sx={{width:'85%',margin:"5px"}}></TextField></Box>
+                                <Box  ><TextField disabled value={props.selectemp.name}  size="small" sx={{width:'85%',margin:"5px"}}></TextField></Box>
                             </Box>
                             <Box sx={{
                                 // width:"100%",
@@ -101,7 +101,7 @@ const ViewPopupManage=(props)=>{
                                 margin:'5px'
                             }}>
                                 <Box><Typography  h6>Contact Number</Typography></Box>
-                                <Box ><TextField disabled size="small" sx={{width:'85%',margin:"5px"}}></TextField></Box>
+                                <Box ><TextField disabled size="small" sx={{width:'85%',margin:"5px"}} value={props.selectuser.contact_number}></TextField></Box>
                             </Box>
                             <Box sx={{
                                 // width:"100%",
@@ -110,9 +110,10 @@ const ViewPopupManage=(props)=>{
                                 justifyContent:"space-between",
                                 alignItems:'center',
                                 margin:'5px'
+                                
                             }}>
                                 <Box><Typography  h6>E-mail</Typography></Box>
-                                <Box ><TextField disabled size="small" sx={{width:'85%',margin:"5px"}}></TextField></Box>
+                                <Box ><TextField disabled size="small" sx={{width:'85%',margin:"5px"}} value={props.selectuser.email}></TextField></Box>
                             </Box>
                             <Box sx={{
                                 // width:"100%",
@@ -123,7 +124,7 @@ const ViewPopupManage=(props)=>{
                                 margin:'5px'
                             }}>
                                 <Box><Typography  h6>Nic Number</Typography></Box>
-                                <Box ><TextField disabled size="small" sx={{width:'85%',margin:"5px"}}></TextField></Box>
+                                <Box ><TextField disabled size="small" sx={{width:'85%',margin:"5px"}} value={props.selectemp.nic}></TextField></Box>
                             </Box>
                             <Box sx={{
                                 // width:"100%",
@@ -134,7 +135,7 @@ const ViewPopupManage=(props)=>{
                                 margin:'5px'
                             }}>
                                 <Box><Typography  h6>Work Location</Typography></Box>
-                                <Box ><TextField disabled size="small" sx={{width:'85%',margin:"5px"}}></TextField></Box>
+                                <Box ><TextField disabled size="small" sx={{width:'85%',margin:"5px"}} value={props.selectemp.work_place}></TextField></Box>
                             </Box>
                             <Box sx={{
                                 // width:"100%",
@@ -167,7 +168,7 @@ const ViewPopupManage=(props)=>{
                                 margin:'5px'
                             }}>
                                 <Box><Typography  h6>Blacklisted Date</Typography></Box>
-                                <Box ><TextField disabled size="small" sx={{width:'85%',margin:"5px"}}></TextField></Box>
+                                <Box ><TextField disabled size="small" sx={{width:'85%',margin:"5px"}} value={props. selecteduser.Date}></TextField></Box>
                             </Box>
                             <Box sx={{
                                 // width:"100%",
@@ -178,7 +179,7 @@ const ViewPopupManage=(props)=>{
                                 margin:'5px'
                             }}>
                                 <Box><Typography  h6>Blacklist Reason</Typography></Box>
-                                <Box ><TextField disabled size="small" sx={{width:'85%',margin:"5px"}}></TextField></Box>
+                                <Box ><TextField disabled size="small" sx={{width:'85%',margin:"5px"}} value={props. selecteduser.BlackListReason}></TextField></Box>
                             </Box>
                             <Box sx={{
                                 // width:"100%",

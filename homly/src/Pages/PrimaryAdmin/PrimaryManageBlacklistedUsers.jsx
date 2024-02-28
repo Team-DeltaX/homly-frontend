@@ -121,7 +121,14 @@ import axios from "axios";
 const PrimaryManageBlacklistedUsers = () => {
   const [search, setSearch] = useState("");
   const [popup, setpopup] = useState(false);
+  //for each user datacame from blacklist table
   const [selecteduser, setSelecteduser] = useState({});
+   //for each user datacame from user table
+  const [selectuser, setSelectuser] = useState({});
+     //for each user datacame from employee table
+
+  const [selectemp,setselectemp]=useState({});
+ 
   
 
   const handlepopup = () => {
@@ -233,7 +240,7 @@ const PrimaryManageBlacklistedUsers = () => {
 
   const fetch_current_blacklist=()=>{
     axios
-    .get("http://localhost:3002/admin/auth/blacklistusers")
+    .get("http://localhost:3002/admin/auth/blacklist")
     .then((res) => {
       
       setBlacklistedusers(res.data.reverse());
@@ -259,6 +266,10 @@ const PrimaryManageBlacklistedUsers = () => {
           <ViewPopupManage
             handlepopup={handlepopup}
             selecteduser={selecteduser}
+            selectuser={selectuser}
+            selectemp={selectemp}
+            
+           
           />
         )}
         <Container maxWidth="xl" style={{ padding: "0px" }}>
@@ -308,6 +319,10 @@ const PrimaryManageBlacklistedUsers = () => {
                         handlepopup={handlepopup}
                         data={data}
                         setSelecteduser={setSelecteduser}
+                        setSelectuser={setSelectuser}
+                        setselectemp={setselectemp}
+                       
+                       
                       />
                     );
                   })}

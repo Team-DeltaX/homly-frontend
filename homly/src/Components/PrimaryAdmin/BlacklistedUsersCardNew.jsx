@@ -5,15 +5,16 @@ import axios from "axios";
 
 
 const BlacklistedUsersCardNew=(props)=>{
+   
     const [User,SetUser]=useState({})
     const [Employee,SetEmployee]=useState({})
-    
     const fetchfromemployee=()=>{
         axios.get(`http://localhost:3002/admin/auth/locationadmin/employee/${props.data.ServiceNo}`)
         .then((res)=>{
             SetEmployee(res.data[0])
+            console.log('----------emp emp-------')
             
-            console.log(res.data)
+            console.log(Employee)
         })
         .catch(error=>{
             console.log(error)
@@ -24,10 +25,10 @@ const BlacklistedUsersCardNew=(props)=>{
         axios.get(`http://localhost:3002/admin/auth/locationadmin/user/${props.data.ServiceNo}`)
         .then((res)=>{
             SetUser(res.data[0])
-            console.log(User)
+            // console.log(User)
         })
         .catch(error=>{
-            console.log(Employee)
+            console.log(error)
         })
     }
     useEffect(()=>{
@@ -90,6 +91,8 @@ const BlacklistedUsersCardNew=(props)=>{
             <Button variant='contained'  onClick={()=>{
                 props.handlepopup()
                 props.setSelecteduser(props.data)
+                props.setSelectuser(User)
+                props.setselectemp(Employee)
         
                 }}><Typography>View</Typography></Button>
             </Box>

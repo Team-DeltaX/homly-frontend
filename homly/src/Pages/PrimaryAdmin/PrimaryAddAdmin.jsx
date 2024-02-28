@@ -230,7 +230,7 @@ const PrimaryAddAdmin = () => {
                       borderRadius: "20px",
                     }}
                   >
-                    <Grid item sm={12}>
+                    {/* <Grid item sm={12}>
                       <Grid
                         container
                         width={"60%"}
@@ -243,7 +243,7 @@ const PrimaryAddAdmin = () => {
                         <Grid item md={6} sm={12} xs={12}>
                           <InputLabel>Admin Number</InputLabel>
                         </Grid>
-                        <Grid item md={6} sm={12} xs={12}>
+                        <Grid item md={6} sm={12} xs={12}> */}
                           {/* <TextField
                     
                                     required={true}
@@ -256,7 +256,7 @@ const PrimaryAddAdmin = () => {
                     
                     
                                    ></TextField> */}
-                          <TextField
+                          {/* <TextField
                             value={adminno}
                             required={true}
                             onChange={(e) => {
@@ -281,7 +281,7 @@ const PrimaryAddAdmin = () => {
                           ></TextField>
                         </Grid>
                       </Grid>
-                    </Grid>
+                    </Grid> */}
                     <Grid item sm={12}>
                       <Grid
                         container
