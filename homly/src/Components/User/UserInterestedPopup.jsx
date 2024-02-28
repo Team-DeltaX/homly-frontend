@@ -77,12 +77,7 @@ export default function UserInterestedPopup({ open, setOpen }) {
       .then((res) => {
         console.log(res.data);
         if (res.data.success) {
-          setErrorStatus({
-            ...errorStatus,
-            isOpen: true,
-            type: "success",
-            message: res.data.message,
-          });
+          setOpen(false);
         } else {
           setErrorStatus({
             ...errorStatus,
@@ -94,13 +89,7 @@ export default function UserInterestedPopup({ open, setOpen }) {
       })
       .catch((err) => {
         console.log(err);
-        if (!err.response.data.autherized) {
-          setErrorStatus({
-            ...errorStatus,
-            isOpen: true,
-            type: "error",
-            message: "Unautherized Access",
-          });
+        if (err.response.data.autherized === false) {
           Navigate("/");
         } else {
           setErrorStatus({
@@ -111,8 +100,6 @@ export default function UserInterestedPopup({ open, setOpen }) {
           });
         }
       });
-
-    setOpen(false);
   };
 
   return (

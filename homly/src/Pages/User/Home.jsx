@@ -66,23 +66,23 @@ export default function Home() {
       });
 
     axios
-      .get("http://localhost:3002/users/auth/interested",{withCredentials:true})
-      .then((response) => {
-        if (response.data.updated) {
+      .get("http://localhost:3002/users/auth/test", { withCredentials: true })
+      .then((res) => {
+        console.log(res);
+        if(res.data.updated){
           setInsterestedPopup(false);
-        } else {
+        }else{
           setInsterestedPopup(true);
         }
       })
       .catch((err) => {
-        if (!err.response.data.autherized) {
+        console.log(err);
+        if(err.response.data.autherized === false){
           Navigate("/");
-        } else {
-          
-          setInsterestedPopup(true);
         }
       });
-    // APIData.sort((a, b) => b.rating - a.rating);
+
+    //
   }, []);
 
   useEffect(() => {
