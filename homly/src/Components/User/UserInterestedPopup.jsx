@@ -178,14 +178,14 @@ export default function UserInterestedPopup({ open, setOpen }) {
                   Staff
                 </ToggleButton>
                 <ToggleButton
-                  value="Value For money"
+                  value="value for money"
                   aria-label="money"
                   style={style}
                 >
                   Value For money
                 </ToggleButton>
-                <ToggleButton value="bold6" aria-label="food6" style={style}>
-                  Food
+                <ToggleButton value="furniture" aria-label="furniture" style={style}>
+                furniture
                 </ToggleButton>
               </ToggleButtonGroup>
             </Box>
