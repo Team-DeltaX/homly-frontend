@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {
   Box,
@@ -55,6 +55,8 @@ const UserRegistration = () => {
   const [errorConfirmPassword, setErrorConfirmPassword] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState(0);
 
+  const [isDiabled, setIsDisabled] = useState(true);
+
   const checkEmail = (email) => {
     return email.length > 0 && !emailRegex.test(email);
   };
@@ -68,6 +70,20 @@ const UserRegistration = () => {
     type: "",
     message: "",
   });
+
+  useEffect(() => {
+    if (
+      !checkEmail(Email) &&
+      !checkContactNo(ContactNo) &&
+      !errorConfirmPassword &&
+      passwordStrength > 0
+    ) {
+      setIsDisabled(false);}
+    else {
+      setIsDisabled(true);
+    }
+
+  }, [Email,ContactNo,errorConfirmPassword,passwordStrength]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -372,7 +388,7 @@ const UserRegistration = () => {
                       >
                         Reset
                       </Button>
-                      <Button type="submit" variant="contained" color="primary">
+                      <Button type="submit" variant="contained" color="primary" disabled={isDiabled}>
                         Register
                       </Button>
                     </Box>

@@ -9,8 +9,8 @@ import {
   Divider,
 } from "@mui/material";
 import axios from "axios";
-// import Select from "react-select";
 import SearchIcon from "@mui/icons-material/Search";
+import { useNavigate } from "react-router-dom";
 
 import NavBar from "../../Components/User/NavBar/NavBar";
 import theme from "../../HomlyTheme";
@@ -26,6 +26,7 @@ import OurPlaces from "../../Components/User/OurPlaces/OurPlaces";
 import BrowseMoreCom from "../../Components/User/BrowseMore/BrowseMoreCom";
 import Footer from "../../Components/User/Footer/Footer";
 import HHCarousel from "../../Components/User/Carousel/HHCarousel";
+import UserInterestedPopup from "../../Components/User/UserInterestedPopup";
 
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -39,7 +40,6 @@ const reservedDates = [
   "2024/02/07",
 ];
 
-
 export default function Home() {
   const refContactUS = useRef(null);
   const [sortedByRating, setSortedByRating] = useState([]);
@@ -48,6 +48,10 @@ export default function Home() {
     endDate: new Date(),
     key: "selection",
   });
+
+  const [insterestedPopup, setInsterestedPopup] = useState(false);
+
+  const Navigate = useNavigate();
 
   const [district, setDistrict] = useState("");
   useEffect(() => {
@@ -60,7 +64,25 @@ export default function Home() {
       .then((response) => {
         setSortedByRating(response.data);
       });
-    // APIData.sort((a, b) => b.rating - a.rating);
+
+    axios
+      .get("http://localhost:3002/users/auth/test", { withCredentials: true })
+      .then((res) => {
+        console.log(res);
+        if(res.data.updated){
+          setInsterestedPopup(false);
+        }else{
+          setInsterestedPopup(true);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        if(err.response.data.autherized === false){
+          Navigate("/");
+        }
+      });
+
+    //
   }, []);
 
   useEffect(() => {
@@ -77,9 +99,22 @@ export default function Home() {
           overflow: "hidden",
         }}
       >
-        <Container maxWidth="xl" style={{ padding: 0}}>
-          <NavBar refContactUS={refContactUS}/>
-          <Container maxWidth="lg" sx={{ bgcolor: "white",marginTop:{xs:'20px',sm:'10px',ms:'0'} }}>
+        <Container maxWidth="xl" style={{ padding: 0 }}>
+          {/* navbar */}
+          <NavBar refContactUS={refContactUS} />
+          {/* user interested popup */}
+          <UserInterestedPopup
+            open={insterestedPopup}
+            setOpen={setInsterestedPopup}
+          />
+
+          <Container
+            maxWidth="lg"
+            sx={{
+              bgcolor: "white",
+              marginTop: { xs: "20px", sm: "10px", ms: "0" },
+            }}
+          >
             <Container
               sx={{
                 bgcolor: "white",
@@ -321,7 +356,11 @@ export default function Home() {
                 </Stack>
                 <OurPlaces />
               </Stack>
-              <Stack data-aos="fade-left" data-aos-duration="900" sx={{ margin: "5% 0 0 0" }}>
+              <Stack
+                data-aos="fade-left"
+                data-aos-duration="900"
+                sx={{ margin: "5% 0 0 0" }}
+              >
                 {/* browse more holiday homes */}
                 <BrowseMoreCom />
               </Stack>
@@ -339,8 +378,8 @@ export default function Home() {
               }}
             ></Container>
           </Container>
-          <Box >
-            <Footer refContactUS={refContactUS}/>
+          <Box>
+            <Footer refContactUS={refContactUS} />
           </Box>
         </Container>
       </Box>

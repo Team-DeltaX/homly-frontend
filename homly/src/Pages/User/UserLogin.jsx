@@ -43,22 +43,21 @@ const UserLogin = () => {
   const [serviceNo, setServiceNo] = useState("");
   const [password, setPassword] = useState("");
 
-  const [errorServiceNumber, setErrorServiceNumber] = useState(false);
 
   // navigate
   const Navigate = useNavigate();
 
   const [errorStatus, setErrorStatus] = useState({
+    isOpen: false,
     type: "",
     message: "",
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setErrorServiceNumber(false);
     const formData = { serviceNo, password };
     axios
-      .post("http://localhost:3002/users/login", formData)
+      .post("http://localhost:3002/users/login", formData,{withCredentials: true})
       .then((res) => {
         console.log(res.data);
         if (res.data.success) {
@@ -206,12 +205,8 @@ const UserLogin = () => {
                         lable={"Service Number"}
                         icon={<BadgeIcon />}
                         inputType={"text"}
-                        error={errorServiceNumber}
-                        helperText={
-                          errorServiceNumber
-                            ? "Your are not an employee of Homly"
-                            : ""
-                        }
+                        error={false}
+                        helperText={""}
                         required={true}
                         inputValue={serviceNo}
                         setInputValue={setServiceNo}
@@ -250,7 +245,7 @@ const UserLogin = () => {
                         }}
                       >
                         <Button
-                          variant="contained"
+                          variant="outlined"
                           color="primary"
                           sx={{
                             width: { xs: "100%", sm: "auto" },
