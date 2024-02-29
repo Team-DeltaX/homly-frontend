@@ -5,6 +5,8 @@ import axios from "axios";
 
 
 const BlacklistedUsersCardNew=(props)=>{
+
+    
    
     const [User,SetUser]=useState({})
     const [Employee,SetEmployee]=useState({})
@@ -31,6 +33,10 @@ const BlacklistedUsersCardNew=(props)=>{
             console.log(error)
         })
     }
+
+    const handleremovefromblacklist=()=>{
+        axios.delete("http://localhost:3002/admin/auth/unblacklist")
+    }
     useEffect(()=>{
         fetchfromemployee();
         fetchfromuser();
@@ -52,7 +58,7 @@ const BlacklistedUsersCardNew=(props)=>{
         
                 width:{md:'10%'}
                 }}>
-                <img src={props.data.image} height="50px" width="50px" style={{ borderRadius: '50%' }}></img>
+                <img src="https://img.nbc.com/files/images/2023/2/08/Blacklist_S10-Logo-1920x1080.jpg" height="50px" width="50px" style={{ borderRadius: '50%' }}></img>
             </Box>
             <Box sx={{
         

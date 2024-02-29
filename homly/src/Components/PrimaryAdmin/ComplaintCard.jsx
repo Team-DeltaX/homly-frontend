@@ -36,7 +36,7 @@ const ComplaintCard = (props) => {
       >
         <Box>
           <img
-            src="http://dummyimage.com/130x100.png/cc0000/ffffff"
+            src="https://educationpro.a2sweb.com/demo/backend/themes/black/assets/custom/img/Complain.png"
             height="50px"
             width="50px"
             style={{ borderRadius: "50%" }}

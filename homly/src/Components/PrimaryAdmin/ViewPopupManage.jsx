@@ -101,7 +101,7 @@ const ViewPopupManage=(props)=>{
                                 margin:'5px'
                             }}>
                                 <Box><Typography  h6>Contact Number</Typography></Box>
-                                <Box ><TextField disabled size="small" sx={{width:'85%',margin:"5px"}} value={props.selectuser.contact_number}></TextField></Box>
+                                <Box ><TextField disabled size="small" sx={{width:'85%',margin:"5px"}} value={props.selectuser &&props.selectuser.contact_number}></TextField></Box>
                             </Box>
                             <Box sx={{
                                 // width:"100%",
@@ -113,7 +113,7 @@ const ViewPopupManage=(props)=>{
                                 
                             }}>
                                 <Box><Typography  h6>E-mail</Typography></Box>
-                                <Box ><TextField disabled size="small" sx={{width:'85%',margin:"5px"}} value={props.selectuser.email}></TextField></Box>
+                                <Box ><TextField disabled size="small" sx={{width:'85%',margin:"5px"}} value={props.selectuser &&props.selectuser.email}></TextField></Box>
                             </Box>
                             <Box sx={{
                                 // width:"100%",

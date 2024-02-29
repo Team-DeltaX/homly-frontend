@@ -411,8 +411,8 @@ const ViewPopupComplaints = (props) => {
               >
                 {/* <Box><Typography sx={{fontFamily:'roboto',}} h6>Service Number</Typography></Box>
                             <Box ></Box> */}
-                <Button variant="contained" sx={{ marginRight: "3%" }}>
-                  <Typography sx={{fontSize:'11px'}}>Send Warning</Typography>
+                <Button variant="contained" sx={{ marginRight: "3%", }}>
+                  <Typography sx={{fontSize:'10px'}}>Send Warning</Typography>
                 </Button>
                 <ConfirmPopup
             open={Open}
@@ -433,7 +433,7 @@ const ViewPopupComplaints = (props) => {
                 disabled={disable}
                 >
                
-                  <Typography sx={{fontSize:'11px'}}>Add To Blacklist</Typography>
+                  <Typography sx={{fontSize:'10px'}}>Add To Blacklist</Typography>
                 </Button>
                 <Button
                 
