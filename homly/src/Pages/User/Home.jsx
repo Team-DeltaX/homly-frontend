@@ -27,6 +27,7 @@ import BrowseMoreCom from "../../Components/User/BrowseMore/BrowseMoreCom";
 import Footer from "../../Components/User/Footer/Footer";
 import HHCarousel from "../../Components/User/Carousel/HHCarousel";
 import UserInterestedPopup from "../../Components/User/UserInterestedPopup";
+import UserInterestedHolidayHomes from "../../Components/User/UserInterestedHolidayHomes/UserInterestedHolidayHomes";
 
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -48,6 +49,8 @@ export default function Home() {
     endDate: new Date(),
     key: "selection",
   });
+
+  const [isDisplayInterest, setIsDisplayInterest] = useState(false);
 
   const [insterestedPopup, setInsterestedPopup] = useState(false);
 
@@ -193,39 +196,7 @@ export default function Home() {
                             setDistrict={setDistrict}
                             district={district}
                           />
-                          {/* <Typography
-                              sx={{
-                                display: isVisible ? "flex" : "none",
-                                fontSize: "0.7rem",
-                                fontWeight: "regular",
-                                position: "absolute",
-                                bottom: "5px",
-                              }}
-                            >
-                              Which district do you prefer
-                            </Typography> */}
-
-                          {/* <Select
-                              size="small"
-                              sx={{ width: "100%", position: "relative" }}
-                              id="select-district"
-                              value={district}
-                              onChange={(e) => {
-                                setDistrict(e.target.value);
-                                setIsVisible(false);
-                              }}
-                            >
-                              {districts.map((name) => (
-                                <MenuItem
-                                  key={name}
-                                  value={name}
-                                  // style={getStyles(name, personName, theme)}
-                                >
-                                  {name}
-                                </MenuItem>
-                              ))}
-                            </Select> */}
-                          {/* </FormControl> */}
+                        
                         </Stack>
                       </Grid>
 
@@ -236,24 +207,7 @@ export default function Home() {
                         sm={6}
                         sx={{ padding: { xs: "3%", sm: "0 3%" } }}
                       >
-                        {/* <Stack direction='column'>
-                            <Typography>Location</Typography>
-                            <Typography>Location</Typography>
-                          </Stack>
-                          <Stack direction='column'>
-                            <Typography>Location</Typography>
-                            <Typography>Location</Typography>
-                          </Stack> */}
-                        {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DemoContainer components={["DateRangePicker"]}>
-                              <DateRangePicker
-                                localeText={{
-                                  start: "Check-in",
-                                  end: "Check-out",
-                                }}
-                              />
-                            </DemoContainer>
-                          </LocalizationProvider> */}
+                        
                         <DatePickerCom
                           selectionRange={selectionRange}
                           setSelectRange={setSelectRange}
@@ -356,6 +310,10 @@ export default function Home() {
                 </Stack>
                 <OurPlaces />
               </Stack>
+                {/* intersed */}
+                <Box >
+                  <UserInterestedHolidayHomes setIsDisplayInterest={setIsDisplayInterest} />
+                </Box>
               <Stack
                 data-aos="fade-left"
                 data-aos-duration="900"
