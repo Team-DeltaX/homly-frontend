@@ -268,6 +268,7 @@ const PrimaryManageBlacklistedUsers = () => {
             selecteduser={selecteduser}
             selectuser={selectuser}
             selectemp={selectemp}
+            fetch_current_blacklist={fetch_current_blacklist}
             
            
           />

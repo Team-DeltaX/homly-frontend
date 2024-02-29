@@ -34,9 +34,7 @@ const BlacklistedUsersCardNew=(props)=>{
         })
     }
 
-    const handleremovefromblacklist=()=>{
-        axios.delete("http://localhost:3002/admin/auth/unblacklist",{})
-    }
+  
     useEffect(()=>{
         fetchfromemployee();
         fetchfromuser();
