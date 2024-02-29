@@ -22,7 +22,8 @@ const CreateHolidayHomeContent = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setSubmitClicked(true);
-    axios.post("http://localhost:3002/locationadmin/holidayhome/", { allValues })
+    console.log(allValues);
+    axios.post("http://localhost:3002/admin/auth/locationadmin/holidayhome/", { allValues })
       .then((res) => {
         // window.location.href("/locationadmin/manage");
         console.log(res);
@@ -34,7 +35,6 @@ const CreateHolidayHomeContent = () => {
       });
   };
 
-  console.log(allValues);
 
   const [holidayHomeSubmit, setHolidayHomeSubmit] = useState(false);
   const [caretakerSubmit, setCaretakerSubmit] = useState(false);

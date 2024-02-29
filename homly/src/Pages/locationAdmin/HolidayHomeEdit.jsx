@@ -84,7 +84,7 @@ const HolidayHomeEdit = () => {
 
     useEffect(() => {
 
-        axios.get(`http://localhost:3002/locationadmin/holidayhome/${homeId}`)
+        axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/${homeId}`)
             .then((res) => {
                 if (Response) {
                     const roomDetails = res.data.room;
@@ -94,7 +94,7 @@ const HolidayHomeEdit = () => {
                     console.log("No data found");
                 }
             })
-        axios.get(`http://localhost:3002/locationadmin/holidayhome/${homeId}`)
+        axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/${homeId}`)
             .then((res) => {
                 if (Response) {
                     const unitDetails = res.data.unit;
@@ -109,7 +109,7 @@ const HolidayHomeEdit = () => {
 
 
 
-        axios.get(`http://localhost:3002/locationadmin/holidayhome/${homeId}`)
+        axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/${homeId}`)
             .then((res) => {
                 if (Response) {
                     const hallDetails = res.data.hall;

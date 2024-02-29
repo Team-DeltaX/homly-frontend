@@ -24,7 +24,7 @@ const EditHolidayHomeDetails = () => {
     const { homeId } = useParams();
 
     useEffect(() => {
-        axios.get(`http://localhost:3002/locationadmin/holidayhome/${homeId}`)
+        axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/${homeId}`)
             .then((res) => {
                 if (Response) {
                     const homeDetails = res.data.homeDetails;

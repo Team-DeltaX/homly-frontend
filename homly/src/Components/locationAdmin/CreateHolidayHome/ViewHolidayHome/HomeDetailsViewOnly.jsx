@@ -16,11 +16,11 @@ const HomeDetailsViewOnly = () => {
   const { homeId } = useParams();
 
   useEffect(() => {
-    axios.get(`http://localhost:3002/locationadmin/holidayhome/${homeId}`)
+    axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/${homeId}`)
       .then((res) => {
         if (Response) {
-          const homeDetails = res.data.homeDetails;
-          const contactNo = res.data.contactNo;
+          const homeDetails = res.data.homeDetails[0];
+          const contactNo = res.data.contactNo[0];
 
           // Extract relevant data from response and set to 'value' state
           setValue({
