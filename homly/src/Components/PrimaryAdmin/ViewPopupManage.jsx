@@ -24,6 +24,7 @@ const ViewPopupManage = (props) => {
       )
       .then((res) => {
         console.log("remove from blacklist sucess");
+        props.fetch_current_blacklist();
       })
       .catch((error) => {
 
@@ -58,13 +59,13 @@ const ViewPopupManage = (props) => {
       { withCredentials: true }
     ) .then((res) => {
         console.log("added to blacklist history sucess");
-        props.fetch_current_blacklist();
+        
       })
       .catch((error) => {
         console.log(error);
       });
 
-      props.fetch_current_blacklist();
+     
   };
 
   return (
