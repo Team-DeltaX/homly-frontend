@@ -61,18 +61,21 @@ export default function HHCarouselforInterest({ interestedHH }) {
         slidesToSlide={1}
         swipeable
       >
-        { interestedHH && interestedHH.map((hh) => (
-          <HolidayHomeCard
-            key={hh.holiday_home.HolidayHomeId}
-            HHName={hh.holiday_home.Name}
-            HHLocation={hh.holiday_home.Address}
-            HHPrice={hh.holiday_home.TotalRental}
-            HHRating={hh.holiday_home.wifi_rating}
-            HHImage={
-              "https://www.ribbyhall.co.uk/uploads/images/featured/holiday-home-featured-1.jpg"
-            }
-          />
-        ))}
+        {interestedHH &&
+          interestedHH.map((hh) => (
+            <div data-aos="fade-right" data-aos-duration="700">
+              <HolidayHomeCard
+                key={hh.holiday_home.HolidayHomeId}
+                HHName={hh.holiday_home.Name}
+                HHLocation={hh.holiday_home.Address}
+                HHPrice={hh.holiday_home.TotalRental}
+                HHRating={hh.holiday_home.wifi_rating}
+                HHImage={
+                  "https://www.ribbyhall.co.uk/uploads/images/featured/holiday-home-featured-1.jpg"
+                }
+              />
+            </div>
+          ))}
       </Carousel>
     </ThemeProvider>
   );
