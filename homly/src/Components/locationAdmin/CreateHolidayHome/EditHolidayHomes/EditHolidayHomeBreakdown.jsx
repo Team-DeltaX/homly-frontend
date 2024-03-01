@@ -70,10 +70,10 @@ const EditHolidayHomeBreakdown = ({ roomArray, setRoomArray, unitArray, setUnitA
     const { homeId } = useParams();
 
     useEffect(() => {
-        axios.get(`http://localhost:3002/locationadmin/holidayhome/${homeId}`)
+        axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/${homeId}`)
             .then((res) => {
                 if (Response) {
-                    const homeDetails = res.data.homeDetails;
+                    const homeDetails = res.data.homeDetails[0];
                     setAdultsCount(homeDetails.MaxNoOfAdults);
                     setChildCount(homeDetails.MaxNoOfChildren);
                     setOtherCharges(homeDetails.OtherCharge);

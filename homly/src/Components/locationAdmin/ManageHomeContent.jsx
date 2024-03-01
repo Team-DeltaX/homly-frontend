@@ -78,7 +78,7 @@ const ManageHomeContent = () => {
         <Box >
             <Box className="search_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: "flex-end", gap: "1em" }}>
                 <Link to="/locationadmin/holidayhomes/createholidayhome"><Button variant="contained" sx={{ backgroundColor: "primary.main", textTransform: "capitalize", fontWeight: "bold", color: "white" }} startIcon={<ControlPointIcon />} ><Typography sx={{ fontFamily: "sans-serif" }} variant='p'>Create New</Typography> </Button></Link>
-                <Input label={"Search"} icon={<SearchIcon />} />
+                {/* <Input label={"Search"} icon={<SearchIcon />} /> */}
             </Box>
             <Container maxWidth={'md'}>
                 <Box className="holidayhomes_card_container" sx={{ marginTop: "20px", padding: "0 40px" }}>

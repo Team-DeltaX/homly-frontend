@@ -16,7 +16,13 @@ import Alert from '@mui/material/Alert';
 
 import RoomBreakdown from '../RoomBreakdown';
 
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+
+
 const EditRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount }) => {
+
+    const { homeId } = useParams();
     // open pop up for add room
     const [open, setOpen] = useState(false);
     const [fullWidth, setFullWidth] = useState(true);
@@ -205,12 +211,36 @@ const EditRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount }) =>
 
         });
 
-        setRentalArray(editedRoom.rentalArray);
+        axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/rental/${homeId}/${editedRoom.roomCode}`)
+            .then(res => {
+                console.log("get")
+                const rental = res.data.roomRental;
+                console.log(rental)
+                for (let i = 0; i < rental.length; i++) {
+                    console.log("in")
+                    console.log(rental[i].Month);
+                    setRental({
+                        district: rental[i].Month,
+                        weekDays: rental[i].WeekRental,
+                        weekEnds: rental[i].WeekEndRental,
+                    });
+
+                    console.log("rental", rental);
+
+                    setRentalArray(rental); // Use functional update
+                    console.log("rental array", rentalArray);
+                }
 
 
-        setOpen(true);
-        setEditIndex(index);
-        setIsEditMode(true);
+                setOpen(true);
+                setEditIndex(index);
+                setIsEditMode(true);
+
+            })
+            .catch(err => {
+                console.log(err);
+            });
+
 
 
     }
@@ -501,15 +531,15 @@ const EditRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount }) =>
                                             <Paper sx={{ display: 'flex', padding: "1.2em 2em", justifyContent: 'space-between', marginBottom: "1em" }}>
                                                 <Box>
                                                     <Typography variant='p' sx={{ color: 'black', marginRight: '0.6em', fontWeight: "bold" }}>Month</Typography>
-                                                    <Typography variant='p' sx={{ color: 'grey', fontWeight: '500' }}>{item.district}</Typography>
+                                                    <Typography variant='p' sx={{ color: 'grey', fontWeight: '500' }}>{item.Month}</Typography>
                                                 </Box>
                                                 <Box>
                                                     <Typography variant='p' sx={{ color: 'black', marginRight: '0.6em', fontWeight: "bold" }}>WeekDays</Typography>
-                                                    <Typography variant='p' sx={{ color: 'grey', fontWeight: '500' }}>{item.weekDays}</Typography>
+                                                    <Typography variant='p' sx={{ color: 'grey', fontWeight: '500' }}>{item.WeekRental}</Typography>
                                                 </Box>
                                                 <Box>
                                                     <Typography variant='p' sx={{ color: 'black', marginRight: '0.6em', fontWeight: 'bold' }}>WeekEnd</Typography>
-                                                    <Typography variant='p' sx={{ color: 'grey', fontWeight: '500' }}>{item.weekEnds}</Typography>
+                                                    <Typography variant='p' sx={{ color: 'grey', fontWeight: '500' }}>{item.WeekEndRental}</Typography>
                                                 </Box>
                                                 <CancelIcon sx={{ cursor: 'pointer' }} onClick={() => handleRemoveRentalItem(index)} />
                                             </Paper>

@@ -64,6 +64,9 @@ const HolidayHomeEdit = () => {
     const [unitArray, setUnitArray] = useState([]);
     const [hallArray, setHallArray] = useState([]);
 
+    const [updated, setUpdated] = useState(false);
+    const [updatedValues, setUpdatedValues] = useState([]);
+
 
 
     const handleChange = (event, newValue) => {
@@ -76,6 +79,10 @@ const HolidayHomeEdit = () => {
 
     const handleNextToHall = () => {
         setValue(2);
+    }
+
+    const handleUpdate = () => {
+        console.log("update")
     }
 
     const { homeId } = useParams();
@@ -145,7 +152,7 @@ const HolidayHomeEdit = () => {
                                         </Tabs>
                                     </Box>
                                     <CustomTabPanel value={value} index={0}>
-                                        <EditHolidayHomeDetails />
+                                        <EditHolidayHomeDetails updated={updated} setUpdatedValues={setUpdatedValues} />
                                         <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginRight: "1.5em" }}>
                                             <Button variant="contained" sx={{ marginTop: '1em' }} onClick={handleNextToUnit}>Next</Button>
                                         </Box>
@@ -159,7 +166,7 @@ const HolidayHomeEdit = () => {
                                     <CustomTabPanel value={value} index={2}>
                                         <EditCaretakerDetails />
                                         <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginRight: "1.5em" }}>
-                                            <Button variant="contained" sx={{ marginTop: '1em' }} onClick={handleNextToUnit}>Get Approval</Button>
+                                            <Button variant="contained" sx={{ marginTop: '1em' }} onClick={handleUpdate}>Get Approval</Button>
                                         </Box>
 
                                     </CustomTabPanel>

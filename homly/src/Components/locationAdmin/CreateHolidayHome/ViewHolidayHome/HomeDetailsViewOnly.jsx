@@ -20,7 +20,7 @@ const HomeDetailsViewOnly = () => {
       .then((res) => {
         if (Response) {
           const homeDetails = res.data.homeDetails[0];
-          const contactNo = res.data.contactNo[0];
+          const contactNo = res.data.contactNo;
 
           // Extract relevant data from response and set to 'value' state
           setValue({

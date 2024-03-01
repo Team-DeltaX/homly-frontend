@@ -25,6 +25,7 @@ const EditCaretakerDetails = () => {
                 if (Response) {
                     const caretakerDetails = res.data.caretaker;
 
+
                     setValue({
                         caretakerName: caretakerDetails[0].Name, caretakerContactNo: caretakerDetails[0].ContactNo, caretakerStatus: caretakerDetails[0].Status, caretakerAddress: caretakerDetails[0].Address, caretakerDescription: caretakerDetails[0].Description,
                     })
@@ -161,8 +162,8 @@ const EditCaretakerDetails = () => {
                                     onChange={handlestatusChange}
 
                                 >
-                                    <FormControlLabel value="active" control={<Radio />} label="Active" />
-                                    <FormControlLabel value="inactive" control={<Radio />} label="Inactive" />
+                                    <FormControlLabel value="Active" control={<Radio />} label="Active" />
+                                    <FormControlLabel value="Inactive" control={<Radio />} label="Inactive" />
                                 </RadioGroup>
                             </Box>
                         </Box>
@@ -214,8 +215,8 @@ const EditCaretakerDetails = () => {
                                     onChange={handlestatusChangeSecond}
 
                                 >
-                                    <FormControlLabel value="active" control={<Radio />} label="Active" />
-                                    <FormControlLabel value="inactive" control={<Radio />} label="Inactive" />
+                                    <FormControlLabel value="Active" control={<Radio />} label="Active" />
+                                    <FormControlLabel value="Inactive" control={<Radio />} label="Inactive" />
                                 </RadioGroup>
                             </Box>
                         </Box>

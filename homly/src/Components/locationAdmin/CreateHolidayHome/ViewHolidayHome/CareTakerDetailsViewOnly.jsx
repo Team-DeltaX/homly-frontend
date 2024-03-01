@@ -11,29 +11,29 @@ import { useParams } from 'react-router-dom';
 const CareTakerDetailsViewOnly = ({ setAllValues }) => {
 
   const { homeId } = useParams();
-  // useEffect(() => {
-  //   axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/${homeId}`)
-  //     .then((res) => {
-  //       if (Response) {
-  //         const caretakerDetails = res.data.caretaker;
+  useEffect(() => {
+    axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/${homeId}`)
+      .then((res) => {
+        if (Response) {
+          const caretakerDetails = res.data.caretaker;
 
-  //         setValue({
-  //           caretakerName: caretakerDetails[0].Name, caretakerContactNo: caretakerDetails[0].ContactNo, caretakerStatus: caretakerDetails[0].Status, caretakerAddress: caretakerDetails[0].Address, caretakerDescription: caretakerDetails[0].Description,
-  //         })
+          setValue({
+            caretakerName: caretakerDetails[0].Name, caretakerContactNo: caretakerDetails[0].ContactNo, caretakerStatus: caretakerDetails[0].Status, caretakerAddress: caretakerDetails[0].Address, caretakerDescription: caretakerDetails[0].Description,
+          })
 
-  //         if (caretakerDetails[1]) {
-  //           setValueSecond({
-  //             caretakerName: caretakerDetails[1].Name || "", caretakerContactNo: caretakerDetails[1].ContactNo || "", caretakerStatus: caretakerDetails[1].Status || "", caretakerAddress: caretakerDetails[1].Address || "", caretakerDescription: caretakerDetails[1].Description || "",
-  //           })
+          if (caretakerDetails[1]) {
+            setValueSecond({
+              caretakerName: caretakerDetails[1].Name || "", caretakerContactNo: caretakerDetails[1].ContactNo || "", caretakerStatus: caretakerDetails[1].Status || "", caretakerAddress: caretakerDetails[1].Address || "", caretakerDescription: caretakerDetails[1].Description || "",
+            })
 
-  //         }
+          }
 
-  //       } else {
-  //         console.log("No data found");
-  //       }
-  //     })
-  //   console.log(value.caretakerName);
-  // }, [])
+        } else {
+          console.log("No data found");
+        }
+      })
+    console.log(value.caretakerName);
+  }, [])
 
   const [secondCaretaker, setSecondCaretaker] = useState(false);
 

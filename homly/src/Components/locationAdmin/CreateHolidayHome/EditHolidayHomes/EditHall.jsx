@@ -16,7 +16,12 @@ import Alert from '@mui/material/Alert';
 
 import HallBreakDown from '../HallBreakDown';
 
+import axios from 'axios'
+import { useParams } from 'react-router-dom';
+
 const EditHall = ({ hallArray, setHallArray }) => {
+
+    const { homeId } = useParams();
 
     const [open, setOpen] = useState(false);
     const [openHall, setOpenHall] = useState(false);
@@ -216,12 +221,35 @@ const EditHall = ({ hallArray, setHallArray }) => {
         });
 
 
-        setHallRentalArray(editedHall.hallRentalArray);
+        axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/rental/${homeId}/${editedHall.hallCode}`)
+            .then(res => {
+                console.log("get")
+                const rental = res.data.roomRental;
+                console.log(rental)
+                for (let i = 0; i < rental.length; i++) {
+                    console.log("in")
+                    console.log(rental[i].Month);
+                    setHallRental({
+                        district: rental[i].Month,
+                        weekDays: rental[i].WeekRental,
+                        weekEnds: rental[i].WeekEndRental,
+                    });
+
+                    console.log("rental", rental);
+
+                    setHallRentalArray(rental); // Use functional update
+                    console.log("rental array", hallRentalArray);
+                }
 
 
-        setOpenHall(true);
-        setEditIndex(index);
-        setIsEditMode(true);
+                setOpenHall(true);
+                setEditIndex(index);
+                setIsEditMode(true);
+
+            })
+            .catch(err => {
+                console.log(err);
+            });
 
 
     }

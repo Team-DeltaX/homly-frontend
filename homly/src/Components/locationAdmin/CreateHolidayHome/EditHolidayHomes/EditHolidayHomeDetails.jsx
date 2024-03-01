@@ -27,8 +27,9 @@ const EditHolidayHomeDetails = () => {
         axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/${homeId}`)
             .then((res) => {
                 if (Response) {
-                    const homeDetails = res.data.homeDetails;
+                    const homeDetails = res.data.homeDetails[0];
                     const contactNo = res.data.contactNo;
+
 
                     // Extract relevant data from response and set to 'value' state
                     setValue({
@@ -246,8 +247,8 @@ const EditHolidayHomeDetails = () => {
                                     onChange={handlestatusChange}
 
                                 >
-                                    <FormControlLabel value="active" control={<Radio />} label="Active" sx={{ display: "inline-block", width: "fit-content" }} />
-                                    <FormControlLabel value="inactive" control={<Radio />} label="Inactive" />
+                                    <FormControlLabel value="Active" control={<Radio />} label="Active" sx={{ display: "inline-block", width: "fit-content" }} />
+                                    <FormControlLabel value="Inactive" control={<Radio />} label="Inactive" />
                                 </RadioGroup>
                             </Box>
                         </Box>
