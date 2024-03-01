@@ -1,34 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { ThemeProvider, Stack, Box, Divider, Typography } from "@mui/material";
-import axios from "axios";
+
 
 import theme from "../../../HomlyTheme";
 
 import "react-multi-carousel/lib/styles.css";
 import HHCarouselforInterest from "../Carousel/HHCarouselforInterest";
 
-const UserInterestedHolidayHomes = ({ setIsDisplayInterest }) => {
-  const [interestedHH, setInterestedHH] = useState();
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:3002/users/holidayhomes/sort", {
-        withCredentials: true,
-      })
-      .then((res) => {
-        console.log(res.data);
-        if (res.data.interested) {
-          console.log(res.data.interested_hh);
-          setInterestedHH(res.data.interested_hh);
-          setIsDisplayInterest(true);
-        } else {
-          setIsDisplayInterest(false);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+const UserInterestedHolidayHomes = ({  interestedHH }) => {
 
   return (
     <ThemeProvider theme={theme}>
@@ -40,7 +19,7 @@ const UserInterestedHolidayHomes = ({ setIsDisplayInterest }) => {
               fontWeight: "bold",
             }}
           >
-            Top Rated Holiday Homes
+            Your Perfect Stay Awaits: Discover Holiday Homes Aligned with Your Interests!
           </Typography>
 
           <Divider
