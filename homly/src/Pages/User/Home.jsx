@@ -27,18 +27,11 @@ import BrowseMoreCom from "../../Components/User/BrowseMore/BrowseMoreCom";
 import Footer from "../../Components/User/Footer/Footer";
 import HHCarousel from "../../Components/User/Carousel/HHCarousel";
 import UserInterestedPopup from "../../Components/User/UserInterestedPopup";
+import UserInterestedHolidayHomes from "../../Components/User/UserInterestedHolidayHomes/UserInterestedHolidayHomes";
 
 import AOS from "aos";
 import "aos/dist/aos.css";
 
-const reservedDates = [
-  "2024/01/27",
-  "2024/01/28",
-  "2024/02/04",
-  "2024/02/05",
-  "2024/01/30",
-  "2024/02/07",
-];
 
 export default function Home() {
   const refContactUS = useRef(null);
@@ -49,7 +42,13 @@ export default function Home() {
     key: "selection",
   });
 
+  const [interestedHH, setInterestedHH] = useState();
+
+  const [isDisplayInterest, setIsDisplayInterest] = useState(false);
+
   const [insterestedPopup, setInsterestedPopup] = useState(false);
+
+  const [interestsIsSubmited, setInterestsIsSubmited] = useState(false);
 
   const Navigate = useNavigate();
 
@@ -83,7 +82,29 @@ export default function Home() {
       });
 
     //
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3002/users/holidayhomes/sort", {
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.interested) {
+          console.log(res.data.interested_hh);
+          setInterestedHH(res.data.interested_hh);
+          setIsDisplayInterest(true);
+        } else {
+          setIsDisplayInterest(false);
+        }
+      })
+      .catch((err) => {
+        setIsDisplayInterest(false);
+        console.log(err);
+      });
+  }, [interestsIsSubmited]);
 
   useEffect(() => {
     sortedByRating.sort((a, b) => b.rating - a.rating);
@@ -106,6 +127,7 @@ export default function Home() {
           <UserInterestedPopup
             open={insterestedPopup}
             setOpen={setInsterestedPopup}
+            setInterestsIsSubmited={setInterestsIsSubmited}
           />
 
           <Container
@@ -193,39 +215,7 @@ export default function Home() {
                             setDistrict={setDistrict}
                             district={district}
                           />
-                          {/* <Typography
-                              sx={{
-                                display: isVisible ? "flex" : "none",
-                                fontSize: "0.7rem",
-                                fontWeight: "regular",
-                                position: "absolute",
-                                bottom: "5px",
-                              }}
-                            >
-                              Which district do you prefer
-                            </Typography> */}
-
-                          {/* <Select
-                              size="small"
-                              sx={{ width: "100%", position: "relative" }}
-                              id="select-district"
-                              value={district}
-                              onChange={(e) => {
-                                setDistrict(e.target.value);
-                                setIsVisible(false);
-                              }}
-                            >
-                              {districts.map((name) => (
-                                <MenuItem
-                                  key={name}
-                                  value={name}
-                                  // style={getStyles(name, personName, theme)}
-                                >
-                                  {name}
-                                </MenuItem>
-                              ))}
-                            </Select> */}
-                          {/* </FormControl> */}
+                        
                         </Stack>
                       </Grid>
 
@@ -236,28 +226,10 @@ export default function Home() {
                         sm={6}
                         sx={{ padding: { xs: "3%", sm: "0 3%" } }}
                       >
-                        {/* <Stack direction='column'>
-                            <Typography>Location</Typography>
-                            <Typography>Location</Typography>
-                          </Stack>
-                          <Stack direction='column'>
-                            <Typography>Location</Typography>
-                            <Typography>Location</Typography>
-                          </Stack> */}
-                        {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DemoContainer components={["DateRangePicker"]}>
-                              <DateRangePicker
-                                localeText={{
-                                  start: "Check-in",
-                                  end: "Check-out",
-                                }}
-                              />
-                            </DemoContainer>
-                          </LocalizationProvider> */}
+                        
                         <DatePickerCom
                           selectionRange={selectionRange}
                           setSelectRange={setSelectRange}
-                          reservedDates={reservedDates}
                         />
                       </Grid>
 
@@ -356,6 +328,10 @@ export default function Home() {
                 </Stack>
                 <OurPlaces />
               </Stack>
+                {/* intersed */}
+                <Box>
+                  {isDisplayInterest?<UserInterestedHolidayHomes setIsDisplayInterest={setIsDisplayInterest} interestedHH={interestedHH}/>:""}
+                </Box>
               <Stack
                 data-aos="fade-left"
                 data-aos-duration="900"

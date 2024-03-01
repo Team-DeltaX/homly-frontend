@@ -12,6 +12,7 @@ import {
   ToggleButtonGroup,
   ToggleButton,
   Divider,
+  Typography,
 } from "@mui/material";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -35,7 +36,11 @@ const styleSelected = {
   backgroundColor: "#f8abc3",
 };
 
-export default function UserInterestedPopup({ open, setOpen }) {
+export default function UserInterestedPopup({
+  open,
+  setOpen,
+  setInterestsIsSubmited,
+}) {
   const [errorStatus, setErrorStatus] = useState({
     isOpen: false,
     type: "",
@@ -43,6 +48,7 @@ export default function UserInterestedPopup({ open, setOpen }) {
   });
 
   const [interests, setInterests] = useState([]);
+  const [error, setError] = useState("");
 
   const Navigate = useNavigate();
 
@@ -59,47 +65,53 @@ export default function UserInterestedPopup({ open, setOpen }) {
 
   const handleSubmit = () => {
     let formData = {};
-    if (interests.length > 0) {
-      console.log("submitted", interests);
-       formData = {
-        fac1: interests[0],
-        fac2: interests[1],
-        fac3: interests[2],
-      };
+
+    if (interests.length < 3 && interests.length > 0) {
+      setError("Select 3 interests to continue.");
     } else {
-      console.log("skipped");
-       formData = {};
+      if (interests.length === 3) {
+        console.log("submitted", interests);
+        formData = {
+          fac1: interests[0],
+          fac2: interests[1],
+          fac3: interests[2],
+        };
+      } else {
+        console.log("skipped");
+        formData = {};
+      }
+      axios
+        .post("http://localhost:3002/users/auth/interested", formData, {
+          withCredentials: true,
+        })
+        .then((res) => {
+          console.log(res.data);
+          if (res.data.success) {
+            setOpen(false);
+            setInterestsIsSubmited(true);
+          } else {
+            setErrorStatus({
+              ...errorStatus,
+              isOpen: true,
+              type: "error",
+              message: res.data.message,
+            });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          if (err.response.data.autherized === false) {
+            Navigate("/");
+          } else {
+            setErrorStatus({
+              ...errorStatus,
+              isOpen: true,
+              type: "error",
+              message: "Server Error",
+            });
+          }
+        });
     }
-    axios
-      .post("http://localhost:3002/users/auth/interested", formData, {
-        withCredentials: true,
-      })
-      .then((res) => {
-        console.log(res.data);
-        if (res.data.success) {
-          setOpen(false);
-        } else {
-          setErrorStatus({
-            ...errorStatus,
-            isOpen: true,
-            type: "error",
-            message: res.data.message,
-          });
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        if (err.response.data.autherized === false) {
-          Navigate("/");
-        } else {
-          setErrorStatus({
-            ...errorStatus,
-            isOpen: true,
-            type: "error",
-            message: "Server Error",
-          });
-        }
-      });
   };
 
   return (
@@ -171,11 +183,16 @@ export default function UserInterestedPopup({ open, setOpen }) {
                 >
                   Value For money
                 </ToggleButton>
-                <ToggleButton value="furniture" aria-label="furniture" style={style}>
-                furniture
+                <ToggleButton
+                  value="furniture"
+                  aria-label="furniture"
+                  style={style}
+                >
+                  furniture
                 </ToggleButton>
               </ToggleButtonGroup>
             </Box>
+            <Typography color="error">{error}</Typography>
           </Stack>
         </DialogContent>
         <DialogActions>
