@@ -24,7 +24,7 @@ const UserRouter = () =>{
         <Route path="/Home" element={ <Home />} />
         <Route path="/HolidayHomes" element={<HolidayHome />} />
         <Route path="/HolidayHomeDetails" element={<HolidayHomeDetails />} />
-        <Route path="/MyProfile" element={isLogged ? <Profile /> : <NotFoundPage/>} />
+        <Route path="/MyProfile" element={<Profile />} />
         <Route path="/Registration/Success" element={<EmailVerified />} />
       </Routes>
   )
