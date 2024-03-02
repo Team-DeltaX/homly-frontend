@@ -1,12 +1,14 @@
 import { Box } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ViewAdminCard2 from "./ViewAdminCard2";
 import DisabledAdminCard from "./DisabledAdminCard";
 import AutohideSnackbar from "../../Components/PrimaryAdmin/AutohideSnackbar";
-
+import { SearchContext } from "../../Contexts/primryadmin/Searchcontext";
 import axios from 'axios'
 
 const DisabledAdminslist = () => {
+  const {Search,SetSearch}=useContext(SearchContext)
+
   const [blacklistedusers, setBlacklistedusers] = useState([]);
   const [open, setOpen] = useState(false);
   const [snacktext,setsnacktext]=useState('')
@@ -25,7 +27,7 @@ const DisabledAdminslist = () => {
 
 
   const fetchadmins=()=>{
-    axios.get('http://localhost:3002/locationadmin/all')
+    axios.get('http://localhost:3002/admin/auth/locationadmin/all')
     .then(res=>{
       console.log(res.data)
       //reverse array to keep new ones first 
@@ -39,6 +41,7 @@ const DisabledAdminslist = () => {
 
   useEffect(() => {
     fetchadmins();
+    
   }, []);
 
 return(
@@ -54,7 +57,13 @@ return(
               open={open}
               setOpen={setOpen}
             />
-            {blacklistedusers.filter(item=>item.Disabled===true).map((item) => {
+            {blacklistedusers.filter(item=>{
+              return (   ( item.Disabled===true) &&(Search.toLowerCase() === ""
+              ? item
+              : (item.WorkLocation
+              .toLowerCase()
+              .startsWith(Search.toLowerCase()))))
+            }).map((item) => {
               return (
                 <DisabledAdminCard data={item} key={item.AdminNo} fetchadmins={fetchadmins} setsnacktext={setsnacktext} handlesnack={handleClick} />
               );

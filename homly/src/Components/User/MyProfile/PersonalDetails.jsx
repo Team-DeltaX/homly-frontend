@@ -1,4 +1,5 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState,  useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
   Box,
@@ -18,22 +19,19 @@ import theme from "../../../HomlyTheme";
 import ProfilePicUploadPopup from "../ProfilePicUploadPopup";
 import ErrorSnackbar from "../ErrorSnackbar";
 
-import { AuthContext } from "../../../Contexts/AuthContext";
 
 const PersonalDetails = () => {
-  const { authServiceNumber } = useContext(AuthContext);
-
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
   const phoneRegex = /^[0-9]{10}$/;
 
   const [data, setData] = useState({
-    serviceNo: authServiceNumber,
-    name: "John Doe",
-    nic: "123456789V",
-    work: "Colombo",
-    address: "No 1, Colombo",
-    contactNo: "0123456798",
-    email: "apb@gmail.com",
+    serviceNo: "",
+    name: "",
+    nic: "",
+    work: "",
+    address: "",
+    contactNo: "",
+    email: "",
     image: "",
   });
 
@@ -51,44 +49,83 @@ const PersonalDetails = () => {
   };
 
   const checkEmail = (email) => {
-    return email.length > 0 && !emailRegex.test(email);
+    if (email) {
+      if (email.length > 0 && !emailRegex.test(email)) {
+        return true;
+      }
+    }
+    return false;
   };
 
   const checkContactNo = (contactNo) => {
-    return contactNo.length > 0 && !phoneRegex.test(contactNo);
+    if (contactNo) {
+      if (contactNo.length > 0 && !phoneRegex.test(contactNo)) {
+        return true;
+      }
+    }
+    return false;
   };
 
   const handleEdit = () => {
     setIsEnable(true);
   };
 
+  const Navigate = useNavigate();
+
+  
+
   useEffect(() => {
-    if (authServiceNumber) {
-      axios
-        .get(`http://localhost:3002/users/auth/${authServiceNumber}`)
-        .then((res) => {
-          if (Response) {
-            console.log("apidata", res.data);
-            setData({
-              ...data,
-              name: res.data.name,
-              nic: res.data.nic,
-              work: res.data.work,
-              address: res.data.address,
-              email: res.data.email,
-              contactNo: res.data.contactNo,
-              image: res.data.image,
-            });
-          } else {
-            setErrorStatus({
-              ...errorStatus,
-              isOpen: true,
-              type: "error",
-              message: res.data.message,
-            });
-          }
-        });
-    }
+    // try{
+        axios
+          .get(`http://localhost:3002/users/auth/details`, {
+            withCredentials: true,
+          })
+          .then((res) => {
+            if (Response) {
+              console.log("apidata sd", res.data);
+              setData({
+                ...data,
+                serviceNo: res.data.serviceNo,
+                name: res.data.name,
+                nic: res.data.nic,
+                work: res.data.work,
+                address: res.data.address,
+                email: res.data.email,
+                contactNo: res.data.contactNo,
+                image: res.data.image,
+              });
+            } else {
+              setErrorStatus({
+                ...errorStatus,
+                isOpen: true,
+                type: "error",
+                message: res.data.message,
+              });
+            }
+          })
+          .catch((err) => {
+            console.log("error", err);
+            if (!err.response.data.autherized) {
+              setErrorStatus({
+                ...errorStatus,
+                isOpen: true,
+                type: "error",
+                message: "Unautherized Access",
+              });
+              Navigate("/");
+            } else {
+              setErrorStatus({
+                ...errorStatus,
+                isOpen: true,
+                type: "error",
+                message: "Server Error",
+              });
+            }
+          });
+      
+    // }catch(err){
+    //   Navigate("/");
+    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

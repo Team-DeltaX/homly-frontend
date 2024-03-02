@@ -4,7 +4,7 @@ import ViewAdminCard2 from "./ViewAdminCard2";
 import CurrentAdminCard from "./CurrentAdminCard";
 import AutohideSnackbar from "../../Components/PrimaryAdmin/AutohideSnackbar";
 import { CustomTabContext } from "../../Contexts/primryadmin/CustomTabContext";
-
+import { SearchContext } from "../../Contexts/primryadmin/Searchcontext";
 import axios from "axios";
 
 const CurrentAdminslist = () => {
@@ -13,6 +13,7 @@ const CurrentAdminslist = () => {
   const [snacktext, setsnacktext] = useState("");
   const { load, SetLoad } = useContext(CustomTabContext);
   const [editadmin,Seteditadmin]=useState('')
+  const {Search,SetSearch}=useContext(SearchContext)
 
   const handleClick = () => {
     setOpen(true);
@@ -28,7 +29,7 @@ const CurrentAdminslist = () => {
   const fetchadmins = () => {
     SetLoad(true);
     axios
-      .get("http://localhost:3002/locationadmin/all")
+      .get("http://localhost:3002/admin/auth/locationadmin/all")
       .then((res) => {
         SetLoad(false);
         console.log(res.data);
@@ -58,7 +59,14 @@ const CurrentAdminslist = () => {
       ) : (
         <Box>
           {blacklistedusers
-            .filter((item) => item.Disabled === false)
+            .filter((item) =>{
+              return  (   ( item.Disabled===false) &&(Search.toLowerCase() === ""
+              ? item
+              : (item.WorkLocation
+              .toLowerCase()
+              .startsWith(Search.toLowerCase()))))
+         
+            })
             .map((item) => {
               return (
                 <CurrentAdminCard

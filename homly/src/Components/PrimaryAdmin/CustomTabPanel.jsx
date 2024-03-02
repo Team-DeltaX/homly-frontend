@@ -59,8 +59,8 @@ export default function BasicTabs() {
           onChange={handleChange}
           aria-label="basic tabs example"
         >
-          <Tab label="Ongoing Admins" {...a11yProps(0)} />
-          <Tab label="Disabled Admins" {...a11yProps(1)} />
+          <Tab label="Ongoing Admins" {...a11yProps(0)} sx={{fontFamily:'roboto'}}/>
+          <Tab label="Disabled Admins" {...a11yProps(1)} sx={{fontFamily:'roboto'}} />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>

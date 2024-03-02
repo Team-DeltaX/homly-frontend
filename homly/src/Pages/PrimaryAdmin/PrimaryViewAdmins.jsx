@@ -16,6 +16,8 @@ import theme from "../../HomlyTheme";
 import { Link } from "react-router-dom";
 import PageTop from "../../Components/PrimaryAdmin/PageTop";
 import CustomTabPanel from '../../Components/PrimaryAdmin/CustomTabPanel'
+import { SearchContext } from "../../Contexts/primryadmin/Searchcontext";
+import SearchNew from "../../Components/PrimaryAdmin/SearchNew";
 const PrimaryViewAdmins = () => {
   // const data = [
   //   {
@@ -96,8 +98,11 @@ const PrimaryViewAdmins = () => {
   // }, []);
 
   const [showNav, setShowNav] = useState("nav_grid_deactive");
-  
+  // const [search, setSearch] = useState("");
+
+
   const{ load,SetLoad}=useContext(CustomTabContext)
+  const {Search,SetSearch}=useContext(SearchContext)
 
   return (
     <ThemeProvider theme={theme}>
@@ -119,6 +124,7 @@ const PrimaryViewAdmins = () => {
               sx={{ backgroundColor: "primary.main", height: "100vh" }}
             >
               <SideNavbar setShowNav={showNav}></SideNavbar>
+
             </Grid>
             <Grid
               className="container_grid"
@@ -131,6 +137,7 @@ const PrimaryViewAdmins = () => {
             >
               <Box>
                 <PageTop setShowNav={setShowNav} heading={"View Admins"} />
+                <SearchNew setSearch={SetSearch} search={Search}></SearchNew>
               </Box>
              
               {/* <Box
@@ -146,7 +153,11 @@ const PrimaryViewAdmins = () => {
               
             
               <Box >
+              
+             
               <CustomTabPanel />
+
+              
 
               </Box>
 
@@ -157,14 +168,14 @@ const PrimaryViewAdmins = () => {
                 <Button
                     sx={{
                       marginLeft: { md: "75%", xs: "10%" },
-                      width: "170px",
+                      width: "150px",
                       marginTop: { xs: "8%", md: "1%" },
                     }}
                     component="label"
                     variant="contained"
                     startIcon={<AddCircleIcon />}
                   >
-                    <Typography>Add Admin</Typography>
+                    <Typography sx={{fontSize:'13px'}}>Add Admin</Typography>
                   </Button>
                 </Link></Box>}
               </Box>

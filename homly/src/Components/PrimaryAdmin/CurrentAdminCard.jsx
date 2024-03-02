@@ -12,6 +12,7 @@ import axios from "axios";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useState } from "react";
 import ConfirmPopup from "./ConfirmPopup";
+import Copy from "./Copy";
 
 const CurrentAdminCard = (props) => {
   // const [disabled, setDisabled] = useState(true);
@@ -50,7 +51,7 @@ const CurrentAdminCard = (props) => {
     props. Seteditadmin('')
     setDisabled(true)
     axios
-    .put("http://localhost:3002/locationadmin", {
+    .put("http://localhost:3002/admin/auth/locationadmin", {
       AdminNo:props.data.AdminNo,
       Email: email,
       ContactNo:contact
@@ -73,7 +74,7 @@ const CurrentAdminCard = (props) => {
 
   const resetpassword = () => {
     axios
-      .post("http://localhost:3002/locationadmin/resetpassword", {
+      .post("http://localhost:3002/admin/auth/locationadmin/resetpassword", {
         UserName: props.data.UserName,
         Email: props.data.Email,
         AdminNo: props.data.AdminNo,
@@ -90,7 +91,7 @@ const CurrentAdminCard = (props) => {
 
   const handleClick = () => {
     axios
-      .put(`http://localhost:3002/locationadmin/disable/${props.data.AdminNo}`, {
+      .put(`http://localhost:3002/admin/auth/locationadmin/disable/${props.data.AdminNo}`, {
         dis: true,
       })
       .then((res) => {
@@ -116,19 +117,21 @@ const CurrentAdminCard = (props) => {
           margin: "10px",
           padding: "0px",
           borderRadius: "15px",
-          alignItems: { xs: "center" },
-          columnGap: "30px",
+          alignItems: { xs: "center",md:'normal' },
+          columnGap: "84px",
           boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px;",
         }}
       >
-        <Box sx={{ padding: "10px" }}>
-          <AccountCircleIcon sx={{ color: "Black", fontSize: "70px" }} />
+        <Box sx={{ padding: "10px",display:'flex',justifyContent:'center',alignItems:'center'}}>
+          <AccountCircleIcon sx={{ color: "Black", fontSize: "70px",}} />
         </Box>
-        <Box sx={{ padding: "10px" }}>
+        <Box sx={{ padding: "10px" ,textAlign:'center'}}>
           <Box>Admin Number</Box>
           <Box>
-            <TextField
+            {/* <TextField
+            
               disabled={true}
+            
               // onChange={(e) => {
               //   setAdminNo(e.target.value);
               // }}
@@ -137,34 +140,56 @@ const CurrentAdminCard = (props) => {
               type="text"
               sx={{
                 backgroundColor: "white",
+                "& fieldset": { border: 'none' },
+                
+                
               }}
+            
               alignItems="center"
-            ></TextField>
-            {/* {props.data.AdminNo} */}
+              
+            ></TextField> */}
+           <Typography sx={{color:'grey'}}> {props.data.AdminNo}</Typography>
           </Box>
 
-          <Box>Password</Box>
-          <Box>
-            <TextField
-              disabled={true}
-              // onChange={(e) => {
-              //   setPassword(e.target.value);
-              // }}
-              size="small"
-              type="text"
-              value={props.data.Password}
-              sx={{
-                backgroundColor: "white",
-              }}
-              alignItems="center"
-            ></TextField>
+          <Box>E-mail</Box>
+          <Box sx={{display:'flex',flexDirection:'row'}}>
+         
+         {props.editadmin===props.data.AdminNo?
+          <TextField
+          error={emaileerror}
+            disabled={Disabled}
+            onChange={(e) => {
+              validateemail(e.target.value)
+              setemail(e.target.value)
+            }}
+            size="small"
+            type="text"
+            value={email}
+            sx={{
+              backgroundColor: "white",
+              "& fieldset": { border: props.editadmin===props.data.AdminNo? "1px solid #ccc" : "none",},
+              
+            }}
+            InputProps={{
+              inputProps: {
+                  style: { textAlign: "left" },
+              }
+          }}
+            alignItems="center"
+          ></TextField>:   <Typography style={{color:'grey', overflowX: 'scroll', textOverflow: 'ellipsis', whiteSpace: 'nowrap', width: '100px' }}> {props.data.Email}</Typography>
+         }
+           
+                    
+
+             <Copy text={props.data.Email}/>
           </Box>
         </Box>
 
-        <Box sx={{ padding: "10px" }}>
+        <Box sx={{ padding: "10px",textAlign:'center' }}>
           <Box>User Name</Box>
           <Box>
-            <TextField
+            
+            {/* <TextField
               disabled={true}
               // onChange={(e) => {
               //   setUsername(e.target.value);
@@ -174,37 +199,50 @@ const CurrentAdminCard = (props) => {
               alignItems="center"
               sx={{
                 backgroundColor: "white",
+                "& fieldset": { border: 'none' },
               }}
               size="small"
-            ></TextField>
+            ></TextField> */}
+                       <Typography sx={{color:'grey'}}> {props.data.UserName}</Typography>
+
+                       
+
           </Box>
 
           <Box>Contact Number</Box>
-          <Box>
-            <TextField
-            error={mobileerror}
+          <Box sx={{textAlign:'center'}}>
+          {props.editadmin===props.data.AdminNo?
+         <TextField
+         error={mobileerror}
+         
+           disabled={Disabled}
+           // disabled={disabled}
+           onChange={(e) => {
+             validatemobile(e.target.value)
+             setContact(e.target.value)
+           }}
+           type="text"
+           value={contact}
+           alignItems="center"
+           sx={{
+             backgroundColor: "white",
+           "& fieldset": { border: props.editadmin===props.data.AdminNo? "1px solid #ccc" : "none",}
+           }}
+           size="small"
+         ></TextField>:   <Typography style={{color:'grey', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', width: '100px' }}>  {props.data.ContactNo}</Typography>
+         }
+           
             
-              disabled={Disabled}
-              // disabled={disabled}
-              onChange={(e) => {
-                validatemobile(e.target.value)
-                setContact(e.target.value)
-              }}
-              type="text"
-              value={contact}
-              alignItems="center"
-              sx={{
-                backgroundColor: "white",
-              }}
-              size="small"
-            ></TextField>
+
+
+
           </Box>
         </Box>
 
-        <Box sx={{ padding: "10px" }}>
+        <Box sx={{ padding: "10px" ,display:'flex',flexDirection:'column',justifyContent:'flex-start',textAlign:'center'}}>
           <Box>WorkLocation</Box>
           <Box>
-            <TextField
+            {/* <TextField
               disabled={true}
               // onChange={(e) => {
               //   setworkLocation(e.target.value);
@@ -214,11 +252,14 @@ const CurrentAdminCard = (props) => {
               alignItems="center"
               sx={{
                 backgroundColor: "white",
+                 "& fieldset": { border: 'none' },
               }}
               size="small"
-            ></TextField>
+            ></TextField> */}
+                       <Typography sx={{color:'grey',marginTop:'5px'}}> {props.data.WorkLocation}</Typography>
+
           </Box>
-          <Box>E-mail</Box>
+          {/* <Box>E-mail</Box>
           <Box>
             <TextField
             error={emaileerror}
@@ -235,11 +276,11 @@ const CurrentAdminCard = (props) => {
               }}
               alignItems="center"
             ></TextField>
-          </Box>
+          </Box> */}
         </Box>
         <Box
           sx={{
-            padding: "10px",
+            padding: "20px",
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between",
@@ -257,7 +298,7 @@ const CurrentAdminCard = (props) => {
                   <Typography>Edit</Typography>
                 </Button> */}
           {/* <Box>{dataobj}</Box> */}
-          <Box sx={{ height: "20px" }}></Box>
+          {/* <Box sx={{ height: "20px" }}></Box> */}
           {/* disable admin button */}
           <ConfirmPopup
             open={opend}
@@ -268,22 +309,23 @@ const CurrentAdminCard = (props) => {
             controlfunction={handleClick}
           />
           <Button
-            sx={{ width: "165px", height: "30px", borderRadius: "15px" }}
+            sx={{ width: "137px", height: "25px", borderRadius: "15px", }}
             variant="contained"
             onClick={() => {
               setOpend(true)
             }}
           >
-            <Typography>Disable</Typography>
+            <Typography sx={{fontSize:'12px'}}>Disable</Typography>
           </Button>
           {/* edit button */}
 
           <Button
             sx={{
-              width: "165px",
-              height: "30px",
+              width: "137px",
+              height: "25px",
               borderRadius: "15px",
               marginTop: "5px",
+              
             }}
             variant="contained"
             onClick={() => {
@@ -299,7 +341,7 @@ const CurrentAdminCard = (props) => {
 
             }}
           >
-            <Typography>{buttonname}</Typography>
+            <Typography sx={{fontSize:'12px'}}>{buttonname}</Typography>
           </Button>
 
           {/* reset password */}
@@ -314,8 +356,8 @@ const CurrentAdminCard = (props) => {
 
           <Button
             sx={{
-              width: "165px",
-              height: "30px",
+              width: "137px",
+              height: "25px",
               borderRadius: "15px",
               marginTop: "5px",
             }}
@@ -325,7 +367,7 @@ const CurrentAdminCard = (props) => {
               setOpen(true);
             }}
           >
-            <Typography>Reset Password</Typography>
+            <Typography sx={{fontSize:'12px'}}>Reset Password</Typography>
           </Button>
         </Box>
       </Box>
