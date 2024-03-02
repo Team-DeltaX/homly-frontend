@@ -210,11 +210,8 @@ const PrimaryBlacklistHistory = () => {
                     return search.toLowerCase() === ""
                       ? data
                       : (data.ServiceNo)
-                          .toLowerCase()
-                          .startsWith(search.toLocaleLowerCase()) ||
-                          data.User_name.toLowerCase().startsWith(
-                            search.toLocaleLowerCase()
-                          );
+                      .toLowerCase()
+                      .startsWith(search.toLocaleLowerCase())
                   })
                   .map((data) => {
                     return (
