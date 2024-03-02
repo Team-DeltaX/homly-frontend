@@ -48,7 +48,7 @@ function a11yProps(index) {
 }
 
 
-const EditHolidayHomeBreakdown = ({ roomArray, setRoomArray, unitArray, setUnitArray, hallArray, setHallArray }) => {
+const EditHolidayHomeBreakdown = ({ roomArray, setRoomArray, unitArray, setUnitArray, hallArray, setHallArray, updated, setUpdatedValues }) => {
 
     const [value, setValue] = useState(0);
 
@@ -91,6 +91,16 @@ const EditHolidayHomeBreakdown = ({ roomArray, setRoomArray, unitArray, setUnitA
                 }
             })
     }, [])
+
+
+    useEffect(() => {
+
+        const details = { "adultsCount": adultsCount, "childCount": childCount, "otherCharges": otherCharges, "serviceCharges": serviceCharges, "totalRental": totalRental, "facilities": facilities, "gym": gym, "kitchen": kitchen, "park": park, "wifi": wifi, "pool": pool, "bar": bar }
+        setUpdatedValues((prev) => {
+            return { ...prev, "homeBreakDown": details }
+        });
+
+    }, [updated]);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);

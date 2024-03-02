@@ -10,7 +10,11 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
-const EditHolidayHomeDetails = () => {
+
+const EditHolidayHomeDetails = ({ updated, setUpdatedValues }) => {
+
+
+    const [initialValues, setInitialValues] = useState({})
 
     const [value, setValue] = useState({
         name: '', address: '', district: '', description: '', contactNo1: '', contactNo2: '', category: '', status: ''
@@ -50,6 +54,20 @@ const EditHolidayHomeDetails = () => {
             })
     }, [])
 
+
+    useEffect(() => {
+        console.log("value", value);
+
+        setUpdatedValues(prev => ({
+            ...prev,
+            holidayHomeDetails: value
+        }));
+        console.log(updated);
+
+
+
+
+    }, [value])
 
 
 

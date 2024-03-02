@@ -18,6 +18,7 @@ import EditHolidayHomeBreakdown from '../../Components/locationAdmin/CreateHolid
 
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
 
@@ -57,6 +58,8 @@ function a11yProps(index) {
 
 const HolidayHomeEdit = () => {
 
+    const navigate = useNavigate();
+
     const [showNav, setShowNav] = useState('nav_grid_deactive');
     const [value, setValue] = useState(0);
 
@@ -66,6 +69,7 @@ const HolidayHomeEdit = () => {
 
     const [updated, setUpdated] = useState(false);
     const [updatedValues, setUpdatedValues] = useState([]);
+
 
 
 
@@ -82,7 +86,8 @@ const HolidayHomeEdit = () => {
     }
 
     const handleUpdate = () => {
-        console.log("update")
+        setUpdated(true)
+        console.log(updatedValues);
     }
 
     const { homeId } = useParams();
@@ -131,6 +136,23 @@ const HolidayHomeEdit = () => {
 
     }, [homeId])
 
+    useEffect(() => {
+        console.log("Inside useEffect");
+        console.log("updated:", updated);
+
+        if (updated) {
+            console.log("in the axios");
+            axios.post("http://localhost:3002/admin/auth/locationadmin/holidayhome/update", { updatedValues })
+                .then((res) => {
+                    console.log(res);
+                    navigate("/locationadmin/manage");
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
+    }, [updated]);
+
 
     return (
         <ThemeProvider theme={theme}>
@@ -158,7 +180,7 @@ const HolidayHomeEdit = () => {
                                         </Box>
                                     </CustomTabPanel>
                                     <CustomTabPanel value={value} index={1}>
-                                        <EditHolidayHomeBreakdown roomArray={roomArray} setRoomArray={setRoomArray} unitArray={unitArray} setUnitArray={setUnitArray} hallArray={hallArray} setHallArray={setHallArray} />
+                                        <EditHolidayHomeBreakdown roomArray={roomArray} setRoomArray={setRoomArray} unitArray={unitArray} setUnitArray={setUnitArray} hallArray={hallArray} setHallArray={setHallArray} updated={updated} setUpdatedValues={setUpdatedValues} />
                                         <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginRight: "1.5em" }}>
                                             <Button variant="contained" sx={{ marginTop: '1em' }} onClick={handleNextToHall}>Next</Button>
                                         </Box>
