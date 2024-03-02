@@ -302,7 +302,7 @@ const PrimaryManageBlacklistedUsers = () => {
               <Box
                 sx={{
                   marginTop: "1%",
-                  maxHeight: "470px",
+                  maxHeight: {md:"470px",xs:'630px'},
                   overflow: "scroll",
                   padding: "2%",
                 }}

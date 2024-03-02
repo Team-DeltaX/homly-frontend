@@ -110,15 +110,23 @@ const PrimaryBlacklistHistory = () => {
   const headers = [
     {
       label: "Service Number",
-      key: "Service_number",
+      key: "ServiceNo",
     },
     {
-      label: "Nic Number",
-      key: "Nic_number",
+      label: "Removed Date",
+      key: "RemovedDate",
     },
     {
       label: "Blacklisted Date",
-      key: "date",
+      key: "BlacklistedDate",
+    },
+    {
+      label: "Blacklist Reason",
+      key: "Addreason",
+    },
+    {
+      label: "Removed Reason",
+      key: "RemoveReason",
     },
   ];
   const [blacklisthistory, setBlacklisthistory] = useState([]);
@@ -199,7 +207,7 @@ const PrimaryBlacklistHistory = () => {
               <Box
                 sx={{
                   marginTop: "2%",
-                  maxHeight: "460px",
+                  maxHeight: {md:"470px",xs:'630px'},
                   overflow: "scroll",
                   padding: "1.5%",
                 }}
@@ -230,8 +238,13 @@ const PrimaryBlacklistHistory = () => {
               <CSVLink {...csvLink}>
                 <Button
                   sx={{
-                    marginLeft: "5%",
-                    marginTop: { xs: "4%", sm: "15px", md: "15px" },
+                    // marginLeft: "5%",
+                    // marginTop: { xs: "4%", sm: "15px", md: "15px" },
+
+                    marginLeft: "2%",
+                    marginTop: { xs: "10%", sm: "1.5%" },
+                    position:'absolute',
+                    top:'88%'
                   }}
                   component="label"
                   variant="contained"
