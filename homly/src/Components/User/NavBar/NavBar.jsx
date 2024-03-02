@@ -31,10 +31,6 @@ import theme from "../../../HomlyTheme";
 import "./NavBar.css";
 
 const drawerWidth = 240;
-const settings = [
-  { name: "My Profile", path: "/myProfile" },
-  { name: "Logout" },
-];
 const pages = [
   { name: "Home", path: "/Home" },
   { name: "Holiday Homes", path: "/holidayHomes" },
@@ -152,7 +148,7 @@ const NavBar = ({ refContactUS }) => {
               display={{ xs: "none", sm: "none", md: "flex" }}
             >
               {pages.map((page) => (
-                <Box sx={{ position: "relative" }}>
+                <Box sx={{ position: "relative" }} key={page.name}>
                   <NavLink
                     key={page.name}
                     to={page.path}
@@ -215,16 +211,16 @@ const NavBar = ({ refContactUS }) => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {settings.map((setting) => (
-                  <MenuItem
-                    key={setting.name}
-                    onClick={handleCloseUserMenu}
-                    component={setting.name === "My Profile" ? Link : ""}
-                    to={setting.path}
-                  >
-                    <Typography textAlign="center">{setting.name}</Typography>
-                  </MenuItem>
-                ))}
+                <MenuItem
+                  onClick={handleCloseUserMenu}
+                  component={Link}
+                  to="/myProfile"
+                >
+                  <Typography textAlign="center">My Profile</Typography>
+                </MenuItem>
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">Logout</Typography>
+                </MenuItem>
               </Menu>
             </Box>
           </Stack>
@@ -257,22 +253,6 @@ const NavBar = ({ refContactUS }) => {
           >
             {mainDrawer}
           </Drawer>
-          {/* <Drawer
-                        variant="permanent"
-                        sx={{
-                            display: { xs: "none", sm: "none", md: "block" },
-                            "& .MuiDrawer-paper": {
-                                boxSizing: "border-box",
-                                width: drawerWidth,
-                                color: "white",
-                                
-                            },
-                            bgcolor: "primary.main",
-                        }}
-                        open
-                    >
-                        {drawer}
-                    </Drawer> */}
         </Box>
       </Box>
     </ThemeProvider>

@@ -75,7 +75,7 @@ const PersonalDetails = () => {
   
 
   useEffect(() => {
-    // try{
+    try{
         axios
           .get(`http://localhost:3002/users/auth/details`, {
             withCredentials: true,
@@ -123,9 +123,9 @@ const PersonalDetails = () => {
             }
           });
       
-    // }catch(err){
-    //   Navigate("/");
-    // }
+    }catch(err){
+      Navigate("/");
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

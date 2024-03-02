@@ -63,7 +63,7 @@ export default function HHCarouselforInterest({ interestedHH }) {
       >
         {interestedHH &&
           interestedHH.map((hh) => (
-            <div data-aos="fade-right" data-aos-duration="700">
+            <div data-aos="fade-right" data-aos-duration="700" key={hh.holiday_home.HolidayHomeId}>
               <HolidayHomeCard
                 key={hh.holiday_home.HolidayHomeId}
                 HHName={hh.holiday_home.Name}

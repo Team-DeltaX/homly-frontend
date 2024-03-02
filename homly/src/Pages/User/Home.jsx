@@ -87,7 +87,7 @@ export default function Home() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3002/users/holidayhomes/sort", {
+      .get("http://localhost:3002/users/auth/holidayhomes/sort", {
         withCredentials: true,
       })
       .then((res) => {
