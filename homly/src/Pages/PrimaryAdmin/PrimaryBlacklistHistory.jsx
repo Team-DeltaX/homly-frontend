@@ -23,6 +23,8 @@ const PrimaryBlacklistHistory = () => {
 
   const [popup, setpopup] = useState(false);
   const [selecteduser, setSelecteduser] = useState({});
+  const [SelectEmp,SetSelectEmp]=useState({});
+  const [SelectUser,SetSelectUser]=useState({});
 
   // const [User,SetUser]=useState({})
   // const [Employee,SetEmployee]=useState({})
@@ -119,20 +121,23 @@ const PrimaryBlacklistHistory = () => {
       key: "date",
     },
   ];
-  const [blacklistedusers, setBlacklistedusers] = useState([]);
+  const [blacklisthistory, setBlacklisthistory] = useState([]);
   //csv
   const csvLink = {
     filename: "blacklisteduserslist.csv",
     headers: headers,
-    data: blacklistedusers,
+    data: blacklisthistory,
   };
 
   const getblacklisthistory=()=>{
     axios.get('http://localhost:3002/admin/auth/blacklisthistory')
     .then((res)=>{
-      setBlacklistedusers(res.data);
-      console.log(res.data)
+      const sortedData = res.data.sort((a, b) => -(a.BlackListHistoryId - b.BlackListHistoryId) );
+
+      setBlacklisthistory(sortedData);
+      
       console.log("blacklist history fetched")
+      
     })
     .catch(()=>{
       console.log("error in getting blacklist history")
@@ -162,6 +167,8 @@ const PrimaryBlacklistHistory = () => {
           <ViewPopupHistory
             handlepopup={handlepopup}
             selecteduser={selecteduser}
+            SelectEmp={SelectEmp}
+            SelectUser={SelectUser}
           />
         )}
         <Container maxWidth="xl" style={{ padding: "0px" }}>
@@ -192,17 +199,17 @@ const PrimaryBlacklistHistory = () => {
               <Box
                 sx={{
                   marginTop: "2%",
-                  maxHeight: "490px",
+                  maxHeight: "460px",
                   overflow: "scroll",
                   padding: "1.5%",
                 }}
               >
-                {blacklistedusers
+                {blacklisthistory
                   .filter((data) => {
-                    const serviceNumberString = String(data.Service_number);
+                    // const serviceNumberString = String(data.Service_number);
                     return search.toLowerCase() === ""
                       ? data
-                      : serviceNumberString
+                      : (data.ServiceNo)
                           .toLowerCase()
                           .startsWith(search.toLocaleLowerCase()) ||
                           data.User_name.toLowerCase().startsWith(
@@ -215,6 +222,8 @@ const PrimaryBlacklistHistory = () => {
                         handlepopup={handlepopup}
                         data={data}
                         setSelecteduser={setSelecteduser}
+                        SetSelectEmp={SetSelectEmp}
+                        SetSelectUser={SetSelectUser}
                       
                        
                       />

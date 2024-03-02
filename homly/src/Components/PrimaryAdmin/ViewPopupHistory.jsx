@@ -105,7 +105,7 @@ const ViewPopupManage = (props) => {
               <Box>
                 <TextField
                   disabled
-                  value={props.selecteduser.Service_number}
+                  value={props.SelectEmp.service_number}
                   size="small"
                   sx={{ width: "85%", margin: "5px" }}
                 ></TextField>
@@ -128,7 +128,7 @@ const ViewPopupManage = (props) => {
               <Box>
                 <TextField
                   disabled
-                  value={props.selecteduser.User_name}
+                  value={props.SelectEmp.name}
                   size="small"
                   sx={{ width: "85%", margin: "5px" }}
                 ></TextField>
@@ -150,6 +150,7 @@ const ViewPopupManage = (props) => {
               </Box>
               <Box>
                 <TextField
+                value={props.SelectUser.contact_number}
                   disabled
                   size="small"
                   sx={{ width: "85%", margin: "5px" }}
@@ -172,6 +173,7 @@ const ViewPopupManage = (props) => {
               </Box>
               <Box>
                 <TextField
+                  value={props.SelectUser.email}
                   disabled
                   size="small"
                   sx={{ width: "85%", margin: "5px" }}
@@ -194,6 +196,7 @@ const ViewPopupManage = (props) => {
               </Box>
               <Box>
                 <TextField
+                  value={props.SelectEmp.nic}
                   disabled
                   size="small"
                   sx={{ width: "85%", margin: "5px" }}
@@ -216,6 +219,7 @@ const ViewPopupManage = (props) => {
               </Box>
               <Box>
                 <TextField
+                  value={props.SelectEmp.work_place}
                   disabled
                   size="small"
                   sx={{ width: "85%", margin: "5px" }}
@@ -237,7 +241,10 @@ const ViewPopupManage = (props) => {
                 <Typography h6>Personal Address</Typography>
               </Box>
               <Box>
+                
+             
                 <TextField
+                 value={props.SelectEmp.address}
                   disabled
                   size="small"
                   sx={{ width: "85%", margin: "5px" }}
@@ -245,27 +252,7 @@ const ViewPopupManage = (props) => {
               </Box>
             </Box>
 
-            <Box
-              sx={{
-                // width:"100%",
-                display: "flex",
-                flexDirection: { md: "row", xs: "column" },
-                justifyContent: "space-between",
-                alignItems: "center",
-                margin: "5px",
-              }}
-            >
-              <Box>
-                <Typography h6>Residental District</Typography>
-              </Box>
-              <Box>
-                <TextField
-                  disabled
-                  size="small"
-                  sx={{ width: "85%", margin: "5px" }}
-                ></TextField>
-              </Box>
-            </Box>
+            
 
             <Box
               sx={{
@@ -282,6 +269,7 @@ const ViewPopupManage = (props) => {
               </Box>
               <Box>
                 <TextField
+                value={props.selecteduser.BlacklistedDate}
                   disabled
                   size="small"
                   sx={{ width: "85%", margin: "5px" }}
@@ -304,6 +292,7 @@ const ViewPopupManage = (props) => {
               </Box>
               <Box>
                 <TextField
+                 value={props.selecteduser.Addreason}
                   disabled
                   size="small"
                   sx={{ width: "85%", margin: "5px" }}
@@ -325,6 +314,7 @@ const ViewPopupManage = (props) => {
               </Box>
               <Box>
                 <TextField
+                 value={props.selecteduser.RemoveReason}
                   disabled
                   size="small"
                   sx={{ width: "85%", margin: "5px" }}

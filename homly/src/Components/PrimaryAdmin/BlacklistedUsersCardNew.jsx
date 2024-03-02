@@ -14,7 +14,8 @@ const BlacklistedUsersCardNew=(props)=>{
         axios.get(`http://localhost:3002/admin/auth/locationadmin/employee/${props.data.ServiceNo}`)
         .then((res)=>{
             SetEmployee(res.data[0])
-            console.log('----------emp emp-------')
+            console.log('----------fetched from employee-------')
+            
             
             console.log(Employee)
         })
@@ -27,7 +28,8 @@ const BlacklistedUsersCardNew=(props)=>{
         axios.get(`http://localhost:3002/admin/auth/locationadmin/user/${props.data.ServiceNo}`)
         .then((res)=>{
             SetUser(res.data[0])
-            // console.log(User)
+            console.log('----------fetched from user-------')
+
         })
         .catch(error=>{
             console.log(error)
@@ -39,7 +41,7 @@ const BlacklistedUsersCardNew=(props)=>{
         fetchfromemployee();
         fetchfromuser();
 
-    },[])
+    },[props.data.ServiceNo])
     return <ThemeProvider theme={theme}>
         <Box sx={{
             display:"flex",
