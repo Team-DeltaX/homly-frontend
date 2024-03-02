@@ -1,4 +1,5 @@
 import * as React from "react";
+import Box from '@mui/material/Box';
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -16,12 +17,19 @@ import dayjs, { Dayjs } from "dayjs";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import Typography from '@mui/material/Typography';
 
 export default function ScrollDialog() {
   const [open, setOpen] = React.useState(false);
   const [scroll, setScroll] = React.useState("paper");
   const [HolidayHomeName, SetHolidayHomeName] = useState("");
   const [ServiceNo, setServiceNo] = useState("");
+  const [Price, setPrice] = useState(600);
+  const [NoOfAdults, setNoOfAdults] = useState("");
+  const [NoOfChildren, setNoOfChildren] = useState("");
+  const [NoOfSingleRooms, setNoOfSingleRooms] = useState("");
+  const [NoOfDoubleRooms, setNoOfDoubleRooms] = useState("");
+  const [NoOfTripleRooms, setNoOfTripleRooms] = useState("");
 
   const [CheckinDate, setCheckinDate] = useState(dayjs(new Date()));
 
@@ -40,6 +48,8 @@ export default function ScrollDialog() {
       HolidayHome: HolidayHomeName,
       CheckinDate: CheckinDate,
       CheckoutDate: CheckoutDate,
+
+      Price: Price,
     };
     console.log("aruna", data);
     //     axios
@@ -139,6 +149,10 @@ export default function ScrollDialog() {
                 date={CheckinDate}
                 setDate={setCheckinDate}
                 title="Check in Date"
+                onChange={(e) => {
+                  setCheckinDate(e.target.value);
+                }}
+                value={CheckinDate}
                 />
                 <BasicDatePicker
                 required
@@ -146,6 +160,10 @@ export default function ScrollDialog() {
                 date={CheckoutDate}
                 setDate={setCheckoutDate}
                 title="Check Out Date"
+                onChange={(e) => {
+                  setCheckoutDate(e.target.value);
+                }}
+                value={CheckoutDate}
                 />
                 <TextField
                 fullWidth
@@ -191,7 +209,7 @@ export default function ScrollDialog() {
                     </Select>
                 </FormControl>
                 <FormControl sx={{ flex: "1" }}>
-                    <InputLabel htmlFor="grouped-select">Dobule Rooms</InputLabel>
+                    <InputLabel htmlFor="grouped-select">Double Rooms</InputLabel>
                     <Select
                     required
                     native
@@ -225,6 +243,12 @@ export default function ScrollDialog() {
                     </Select>
                 </FormControl>
                 </div>
+                <Box component="section" sx={{ p: 2 }}>
+                <Typography variant="h6" gutterBottom>
+                  Total Price :  
+                  <Typography variant="h5" gutterBottom style={{display: 'inline-block', marginLeft: '10px', color: 'green'}}>{Price }</Typography>
+                </Typography>
+                </Box>
             </DialogContentText>
           </DialogContent>
           <DialogActions>
