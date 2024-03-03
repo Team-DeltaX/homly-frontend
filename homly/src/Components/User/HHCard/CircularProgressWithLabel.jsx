@@ -32,6 +32,7 @@ const CircularProgressWithLabel = ({ label, value }) => {
 
   useEffect(() => {
     setFacility(changeFacilityName(label));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
