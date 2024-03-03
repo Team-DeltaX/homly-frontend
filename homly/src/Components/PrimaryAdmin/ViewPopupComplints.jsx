@@ -65,6 +65,14 @@ const ViewPopupComplaints = (props) => {
     })
 
   }
+  const mark_on_open=()=>{
+    axios.put("http://localhost:3002/admin/auth/markcomplaint",{
+      ServiceNo:props.selecteduser.ServiceNo
+    }).then(()=>{
+      console.log('marked as blacklisted')
+      props.fetchcomplaints();
+    })
+  }
   
   const handleaddtoblacklist=()=>{
     axios.post('http://localhost:3002/admin/auth/blacklist',{
@@ -86,7 +94,8 @@ const ViewPopupComplaints = (props) => {
   useEffect(() => {
     props.fetchprevcomplaints();
     check_already_exists();
-  }, [props.popup]);
+    mark_on_open();
+    }, [props.popup]);
 
   const handleclick=()=>{
     console.log('handle')

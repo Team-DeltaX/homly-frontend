@@ -82,6 +82,7 @@ const PrimaryComplaints = () => {
             handlepopup={handlepopup}
             selecteduser={selecteduser}
             complaints={complaints}
+            fetchcomplaints={fetchcomplaints}
             fetchprevcomplaints={fetchprevcomplaints}
             prevcomplaints={prevcomplaints}
             popup={popup}

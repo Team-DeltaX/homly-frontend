@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SideNavbar from "../../Components/PrimaryAdmin/SideNavbar";
 // import ComplaintCard from '../../Components/PrimaryAdmin/ComplaintCard';
 import Box from "@mui/material/Box";
@@ -8,10 +8,23 @@ import Pagetop from "../../Components/PrimaryAdmin/PageTop";
 // import Search from '../../Components/PrimaryAdmin/Search';
 import AuthorizationsCard from "../../Components/PrimaryAdmin/authorizationsCard";
 import Model from "../../Components/PrimaryAdmin/Model";
+import axios from "axios";
 // import { Mode } from '@mui/icons-material';
 
 const PrimaryAuthorizations = () => {
   const [popup, setpopup] = useState(false);
+  const [Pending, SetPending] = useState([]);
+  const get_pending = () => {
+    
+    axios
+      .get("http://localhost:3002/admin/auth/locationadmin/holidayhome/pending")
+      .then((res) => {
+        SetPending(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   const data = [
     {
       Service_number: 1,
@@ -86,6 +99,9 @@ const PrimaryAuthorizations = () => {
   ];
 
   const [showNav, setShowNav] = useState("nav_grid_deactive");
+  useEffect(() => {
+    get_pending();
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
@@ -98,7 +114,7 @@ const PrimaryAuthorizations = () => {
           overflow: "hidden",
         }}
       >
-        {popup && <Model setpopup={setpopup} popup={popup} />}
+        {/* {popup && <Model setpopup={setpopup} popup={popup} />} */}
         <Container maxWidth="xl" style={{ padding: "0px" }}>
           <Grid container sx={{ position: "relative" }}>
             <Grid
@@ -118,6 +134,7 @@ const PrimaryAuthorizations = () => {
               }}
             >
               <Pagetop setShowNav={setShowNav} heading={"Authorizations"} />
+          
 
               <Box
                 sx={{
@@ -129,9 +146,14 @@ const PrimaryAuthorizations = () => {
               >
                 <Box sx={{ display: "flex", flexWrap: "wrap" }}>
                   {/* {createPortal(<Model/>,document.body)} */}
-                  {data.map((item) => {
+                  {Pending.map((item) => {
                     return (
-                      <AuthorizationsCard setpopup={setpopup} popup={popup} />
+                      <AuthorizationsCard
+                        setpopup={setpopup}
+                        popup={popup}
+                        data={item}
+                        get_pending={get_pending}
+                      />
                     );
                   })}
                 </Box>
