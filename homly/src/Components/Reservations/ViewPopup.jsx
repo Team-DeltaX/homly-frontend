@@ -16,6 +16,7 @@ import holidayhome from '../../Assets/images/holidayHome.jpg';
 import Stack from '@mui/material/Stack';
 import Divider from '@mui/material/Divider';
 import { alignProperty } from '@mui/material/styles/cssUtils';
+import dayjs, { Dayjs } from 'dayjs';
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -95,23 +96,23 @@ export default function ViewPopUp(props) {
               <Grid xs={4}>
                 <Item sx={{boxShadow: "none"}}>
                   <Typography variant="h6" align="left" display="block" gutterBottom>{ props.reservation.receiptName }</Typography>
-                  <Typography variant="body2" align="left" display="block" gutterBottom>Reservation Number  { props.reservation.recervationNO }</Typography>
-                  <Typography variant="body2" align="left" display="block" gutterBottom>Amount { props.reservation.amount }</Typography>
+                  <Typography variant="body2" align="left" display="block" gutterBottom>Reservation Number  { props.reservation.ReservationId }</Typography>
+                  <Typography variant="body2" align="left" display="block" gutterBottom>Amount { props.reservation.Price }</Typography>
                 </Item>
               </Grid>
               <Grid xs={4}>
                 <Item sx={{boxShadow: "none"}}>
                   <Typography variant="h6" align="right" display="block" gutterBottom>{ props.reservation.holidayhomename }</Typography>
-                  <Typography variant="body2" align="right" display="block" gutterBottom>Check In : { props.reservation.checkindate }</Typography>
-                  <Typography variant="body4" align="right" display="block" gutterBottom>Check Out : { props.reservation.checoutdate }</Typography>
+                  <Typography variant="body2" align="right" display="block" gutterBottom>Check In : { dayjs(props.reservation.CheckinDate).format('DD/MM/YYYY') }</Typography>
+                  <Typography variant="body4" align="right" display="block" gutterBottom>Check Out : { dayjs(props.reservation.CheckoutDate).format('DD/MM/YYYY') }</Typography>
                 </Item>
               </Grid>
               <Grid xs={5}>
                 <Item sx={{boxShadow: "none"}}>
                 <Stack direction="column" spacing={1} sx={{ width: '100%', maxWidth: 500 }}>
                   <item>
-                   <Typography variant="body2" align="left" display="block" gutterBottom>No. of Rooms : { props.reservation.noOfRooms }</Typography>
-                   <Typography variant="body3" align="left" display="block" gutterBottom>No. of Halls : { props.reservation.noOfHalls }</Typography>
+                   <Typography variant="body2" align="left" display="block" gutterBottom>No. of Rooms : { props.reservation.NoOfSingleRooms }</Typography>
+                   <Typography variant="body3" align="left" display="block" gutterBottom>No. of Halls : { props.reservation.NoOfHalls }</Typography>
                   </item>
                   <item>
                     <Typography variant="body3" align="left" display="block" gutterBottom>Reserved date : { props.reservation.reservedDate }</Typography>

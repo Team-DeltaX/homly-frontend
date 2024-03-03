@@ -30,7 +30,7 @@ export default function ScrollDialog() {
   const [NoOfSingleRooms, setNoOfSingleRooms] = useState("");
   const [NoOfDoubleRooms, setNoOfDoubleRooms] = useState("");
   const [NoOfTripleRooms, setNoOfTripleRooms] = useState("");
-
+  const [NoOfHalls, setNoOfHalls] = useState("");
   const [CheckinDate, setCheckinDate] = useState(dayjs(new Date()));
 
   const [CheckoutDate, setCheckoutDate] = useState(dayjs(new Date()));
@@ -53,6 +53,7 @@ export default function ScrollDialog() {
       NoOfSingleRooms: NoOfSingleRooms,
       NoOfDoubleRooms: NoOfDoubleRooms,
       NoOfTripleRooms: NoOfTripleRooms,
+      NoOfHalls:NoOfHalls,
       Price: Price,
     };
     console.log("aruna", data);
@@ -255,6 +256,17 @@ export default function ScrollDialog() {
                     </Select>
                 </FormControl>
                 </div>
+                <TextField
+                fullWidth
+                required
+                margin="dense"
+                id="outlined-number"
+                label="No. of Halls"
+                type="number"
+                InputLabelProps={{
+                    shrink: true,
+                }}
+                />
                 <Box component="section" sx={{ p: 2 }}>
                 <Typography variant="h6" gutterBottom>
                   Total Price :  
