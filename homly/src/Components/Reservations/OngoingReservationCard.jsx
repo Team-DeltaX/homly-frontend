@@ -8,7 +8,10 @@ import './Reservation.css';
 import ViewPopUp from './ViewPopup';
 
 const OngoingReservationCard = ({reservation}) => {
+
+    
     return(
+     
         <Grid container spacing={2} className="reservation-preview" key={reservation.id} >
             <Grid container className="columnData" sx={{width:'100%'}}> 
                 <Grid Item xs={3} md={3} sx={{display:'flex',justifyContent:"center", alignItems:"center"}}>
@@ -16,7 +19,7 @@ const OngoingReservationCard = ({reservation}) => {
                 </Grid>
                 <Grid Item xs={4} md={4} sx={{justifyContent:"center", alignItems:"center"}}>
                     <h2>{ reservation.receiptName }</h2>
-                    <p>Reservation Number  { reservation.recervationNO }</p>
+                    <p>Reservation Number  { reservation.ReservationId}</p>
                     <p>Amount { reservation.amount }</p>
                 </Grid>
                 <Grid xs={5} md={5} className="section2" sx={{display:'flex',justifyContent:"flex-end", alignItems:"center"}}>

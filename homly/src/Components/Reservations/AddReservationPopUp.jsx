@@ -48,7 +48,11 @@ export default function ScrollDialog() {
       HolidayHome: HolidayHomeName,
       CheckinDate: CheckinDate,
       CheckoutDate: CheckoutDate,
-
+      NoOfAdults: NoOfAdults,
+      NoOfChildren: NoOfChildren,
+      NoOfSingleRooms: NoOfSingleRooms,
+      NoOfDoubleRooms: NoOfDoubleRooms,
+      NoOfTripleRooms: NoOfTripleRooms,
       Price: Price,
     };
     console.log("aruna", data);
@@ -204,12 +208,12 @@ export default function ScrollDialog() {
                     <Select
                     required
                     native
-                    defaultValue=""
+                    defaultValue="0"
                     id="grouped-native-select"
                     label="Grouping"
                     >
                     <option aria-label="None" value="" />
-                    <option value={1}>0</option>
+                    <option value={0}>0</option>
                     <option value={1}>1</option>
                     <option value={2}>2</option>
                     <option value={3}>3</option>
@@ -221,12 +225,12 @@ export default function ScrollDialog() {
                     <Select
                     required
                     native
-                    defaultValue=""
+                    defaultValue="0"
                     id="grouped-native-select"
                     label="Grouping"
                     >
                     <option aria-label="None" value="" />
-                    <option value={1}>0</option>
+                    <option value={0}>0</option>
                     <option value={1}>1</option>
                     <option value={2}>2</option>
                     <option value={3}>3</option>
@@ -238,12 +242,12 @@ export default function ScrollDialog() {
                     <Select
                     required
                     native
-                    defaultValue=""
+                    defaultValue="0"
                     id="grouped-native-select"
                     label="Grouping"
                     >
                     <option aria-label="None" value="" />
-                    <option value={1}>0</option>
+                    <option value={0}>0</option>
                     <option value={1}>1</option>
                     <option value={2}>2</option>
                     <option value={3}>3</option>

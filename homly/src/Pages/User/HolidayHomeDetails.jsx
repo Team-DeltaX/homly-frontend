@@ -76,6 +76,7 @@ export default function HolidayHomeDetails() {
               <Grid md={8}>
                 <Typography variant="h4" gutterBottom>
                   Holiday Home Name
+                  
                 </Typography>
               </Grid>
               <Grid md={4}>

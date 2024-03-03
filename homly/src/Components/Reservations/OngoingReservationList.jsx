@@ -195,7 +195,7 @@ const OngoingReservationList = (props) => {
   ])
   const fetchadmins = () => {
     axios
-      .get("http://localhost:3002/admin/auth/primaryadmin/reservations")
+      .get("http://localhost:3002/users/reservation/")
       .then((res) => {
         console.log(res.data);
          //reverse array to keep new ones first 
@@ -212,6 +212,7 @@ const OngoingReservationList = (props) => {
   return (
     <Box className="home">
       {reservations.filter((reservations) => {
+                    console.log(reservations)
                     return props.search.toLowerCase() === ""
                       ? reservations
                       : reservations.holidayhomename.toLowerCase().startsWith(
