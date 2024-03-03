@@ -52,6 +52,14 @@ export default function ScrollDialog() {
       Price: Price,
     };
     console.log("aruna", data);
+    axios
+    .post("http://localhost:3002/admin/auth/primaryadmin/reservations", data)
+    .then((res) => {
+      console.log("add reservation successfully");
+    })
+    .catch((error) => {
+      console.log(`error is  nm ${error}`);
+    });
     //     axios
     //       .post("http://localhost:3002/admin/auth/locationadmin/reservations", data)
     //       .then((res) => {
