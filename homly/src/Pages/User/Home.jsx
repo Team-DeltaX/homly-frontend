@@ -65,7 +65,7 @@ export default function Home() {
       });
 
     axios
-      .get("http://localhost:3002/users/auth/test", { withCredentials: true })
+      .get("http://localhost:3002/users/auth/interested", { withCredentials: true })
       .then((res) => {
         console.log(res);
         if(res.data.updated){
