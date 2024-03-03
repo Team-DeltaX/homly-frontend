@@ -24,7 +24,7 @@ const UnitBreakDown = ({ unitCode, unitAc, floorLevel, unitRemarks, unitRental, 
     const [unitAdultCount, setUnitAdultCount] = useState(0);
     const [unitRoomCount, setUnitRoomCount] = useState(0);
 
-    console.log(selectedRooms);
+    console.log("selectedrooms top", selectedRooms);
 
 
 
@@ -62,6 +62,7 @@ const UnitBreakDown = ({ unitCode, unitAc, floorLevel, unitRemarks, unitRental, 
                 } else {
                     return item
                 }
+
             }
             else {
                 setOpenAlert(true);
@@ -69,6 +70,8 @@ const UnitBreakDown = ({ unitCode, unitAc, floorLevel, unitRemarks, unitRental, 
 
             }
         }))
+
+        console.log("selected room ", selectedRooms)
     }
 
     const handleCancelSelectedRoom = (roomCode) => {

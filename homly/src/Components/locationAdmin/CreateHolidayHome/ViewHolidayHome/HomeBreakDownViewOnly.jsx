@@ -84,7 +84,7 @@ const HomeBreakDownViewOnly = ({ setAllValues }) => {
       .then((res) => {
         if (Response) {
           const roomDetails = res.data.room;
-          console.log(roomDetails);
+          console.log("roomdetails", roomDetails);
           setRoomArray(roomDetails);
 
 
