@@ -25,8 +25,6 @@ import { ThemeProvider } from "@emotion/react";
 
 import { Link, NavLink } from "react-router-dom";
 
-import NotificationPanel from "../../NotificationPanel/NotificationPanel";
-
 import theme from "../../../HomlyTheme";
 import "./NavBar.css";
 
@@ -43,11 +41,6 @@ const respSidePages = [
   // { name: "Contact Us", path: "/contactUs" },
   { name: "My Profile", path: "/myProfile" },
 ];
-
-// const notifications = [
-//     { title: "notification 1", description: "this is notification 1.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,", type: 'canceled' },
-//     { title: "notification 2", description: "this is notification 2", type: '' },
-//     { title: "notification 3", description: "this is notification 3", type: '' }];
 
 const NavBar = ({ refContactUS }) => {
   const [anchorElUser, setAnchorElUser] = useState(null);
@@ -131,9 +124,6 @@ const NavBar = ({ refContactUS }) => {
               <MenuIcon />
             </IconButton>
 
-            {/* <Typography variant="h6" noWrap component="div">
-                            Responsive drawer
-                        </Typography> */}
           </Toolbar>
           <Stack
             direction="row"
