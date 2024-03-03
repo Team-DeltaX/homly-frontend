@@ -116,11 +116,20 @@ import SearchNew from "../../Components/PrimaryAdmin/SearchNew";
 import "../../Components/PrimaryAdmin/Css/fontchange.css";
 
 import { CSVLink } from "react-csv";
+import axios from "axios";
 
 const PrimaryManageBlacklistedUsers = () => {
   const [search, setSearch] = useState("");
   const [popup, setpopup] = useState(false);
+  //for each user datacame from blacklist table
   const [selecteduser, setSelecteduser] = useState({});
+   //for each user datacame from user table
+  const [selectuser, setSelectuser] = useState({});
+     //for each user datacame from employee table
+
+  const [selectemp,setselectemp]=useState({});
+ 
+  
 
   const handlepopup = () => {
     setpopup(!popup);
@@ -202,15 +211,15 @@ const PrimaryManageBlacklistedUsers = () => {
   const headers = [
     {
       label: "Service Number",
-      key: "Service_number",
+      key: "ServiceNo",
     },
     {
-      label: "Nic Number",
-      key: "Nic_number",
+      label: "Black List Reason",
+      key: "BlackListReason",
     },
     {
       label: "Blacklisted Date",
-      key: "date",
+      key: "Date",
     },
   ];
  
@@ -224,10 +233,23 @@ const PrimaryManageBlacklistedUsers = () => {
   };
 
   useEffect(() => {
-    setBlacklistedusers(data);
+    fetch_current_blacklist()
   }, []);
 
   const [showNav, setShowNav] = useState("nav_grid_deactive");
+
+  const fetch_current_blacklist=()=>{
+    axios
+    .get("http://localhost:3002/admin/auth/blacklist")
+    .then((res) => {
+      
+      setBlacklistedusers(res.data.reverse());
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -244,6 +266,11 @@ const PrimaryManageBlacklistedUsers = () => {
           <ViewPopupManage
             handlepopup={handlepopup}
             selecteduser={selecteduser}
+            selectuser={selectuser}
+            selectemp={selectemp}
+            fetch_current_blacklist={fetch_current_blacklist}
+            
+           
           />
         )}
         <Container maxWidth="xl" style={{ padding: "0px" }}>
@@ -268,6 +295,7 @@ const PrimaryManageBlacklistedUsers = () => {
             >
               <Pagetop setShowNav={setShowNav} heading={"Manage Blacklist"} />
               <SearchNew setSearch={setSearch} search={search} />
+             
 
               <Box
                 sx={{
@@ -279,15 +307,12 @@ const PrimaryManageBlacklistedUsers = () => {
               >
                 {blacklistedusers
                   .filter((data) => {
-                    const serviceNumberString = String(data.Service_number);
+                    const serviceNumberString = String(data.ServiceNo);
                     return search.toLowerCase() === ""
                       ? data
                       : serviceNumberString
                           .toLowerCase()
-                          .startsWith(search.toLocaleLowerCase()) ||
-                          data.User_name.toLowerCase().startsWith(
-                            search.toLocaleLowerCase()
-                          );
+                          .startsWith(search.toLocaleLowerCase()) 
                   })
                   .map((data) => {
                     return (
@@ -295,6 +320,10 @@ const PrimaryManageBlacklistedUsers = () => {
                         handlepopup={handlepopup}
                         data={data}
                         setSelecteduser={setSelecteduser}
+                        setSelectuser={setSelectuser}
+                        setselectemp={setselectemp}
+                       
+                       
                       />
                     );
                   })}
@@ -304,8 +333,10 @@ const PrimaryManageBlacklistedUsers = () => {
                   {" "}
                   <Button
                     sx={{
-                      marginLeft: "5%",
+                      marginLeft: "2%",
                       marginTop: { xs: "10%", sm: "1.5%" },
+                      position:'absolute',
+                      top:'88%'
                     }}
                     component="label"
                     variant="contained"

@@ -17,11 +17,16 @@ import { CSVLink } from "react-csv";
 
 import SummarizeIcon from "@mui/icons-material/Summarize";
 import SearchNew from "../../Components/PrimaryAdmin/SearchNew";
+import axios from "axios";
 const PrimaryBlacklistHistory = () => {
   const [search, setSearch] = useState("");
 
   const [popup, setpopup] = useState(false);
   const [selecteduser, setSelecteduser] = useState({});
+
+  // const [User,SetUser]=useState({})
+  // const [Employee,SetEmployee]=useState({})
+
 
   const handlepopup = () => {
     setpopup(!popup);
@@ -122,8 +127,22 @@ const PrimaryBlacklistHistory = () => {
     data: blacklistedusers,
   };
 
+  const getblacklisthistory=()=>{
+    axios.get('http://localhost:3002/admin/auth/blacklisthistory')
+    .then((res)=>{
+      setBlacklistedusers(res.data);
+      console.log(res.data)
+      console.log("blacklist history fetched")
+    })
+    .catch(()=>{
+      console.log("error in getting blacklist history")
+    
+    })
+  }
+ 
+
   useEffect(() => {
-    setBlacklistedusers(data);
+    getblacklisthistory();
   }, []);
 
   const [showNav, setShowNav] = useState("nav_grid_deactive");
@@ -178,8 +197,8 @@ const PrimaryBlacklistHistory = () => {
                   padding: "1.5%",
                 }}
               >
-
-                {blacklistedusers.filter((data) => {
+                {blacklistedusers
+                  .filter((data) => {
                     const serviceNumberString = String(data.Service_number);
                     return search.toLowerCase() === ""
                       ? data
@@ -189,15 +208,18 @@ const PrimaryBlacklistHistory = () => {
                           data.User_name.toLowerCase().startsWith(
                             search.toLocaleLowerCase()
                           );
-                  }).map((data) => {
-                  return (
-                    <BlacklistHistoryCard
-                      handlepopup={handlepopup}
-                      data={data}
-                      setSelecteduser={setSelecteduser}
-                    />
-                  );
-                })}
+                  })
+                  .map((data) => {
+                    return (
+                      <BlacklistHistoryCard
+                        handlepopup={handlepopup}
+                        data={data}
+                        setSelecteduser={setSelecteduser}
+                      
+                       
+                      />
+                    );
+                  })}
               </Box>
               <CSVLink {...csvLink}>
                 <Button

@@ -46,7 +46,7 @@ const CurrentAdminslist = () => {
   }, []);
 
   return (
-    <Box sx={{ marginTop: "2%", maxHeight: "450px", overflow: "scroll" }}>
+    <Box sx={{ marginTop: "0.5%", maxHeight: {md:'450px',xs:'550px'}, overflow: "scroll" }}>
       <AutohideSnackbar
         handleClick={handleClick}
         handleClose={handleClose}

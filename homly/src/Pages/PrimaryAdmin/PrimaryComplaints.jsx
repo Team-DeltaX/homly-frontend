@@ -107,15 +107,24 @@ const PrimaryComplaints = () => {
               }}
             >
               <Pagetop setShowNav={setShowNav} heading={"Complaints"} />
-              <Box sx={{display:"flex",flexDirection:'row',alignItems:'center'}}>
-             
-                  <Switch
-                  sx={{marginLeft:'60px'}}
-                    checked={checked}
-                    onChange={handleChangeswitch}
-                    inputProps={{ "aria-label": "controlled" }}
-                  />
-                 {!checked? <Typography sx={{color:'green'}}>Viewd</Typography>: <Typography sx={{color:'grey'}}>Not Viewd</Typography>}
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <Switch
+                  sx={{ marginLeft: "60px" }}
+                  checked={checked}
+                  onChange={handleChangeswitch}
+                  inputProps={{ "aria-label": "controlled" }}
+                />
+                {!checked ? (
+                  <Typography sx={{ color: "green" }}>Viewd</Typography>
+                ) : (
+                  <Typography sx={{ color: "grey" }}>Not Viewd</Typography>
+                )}
               </Box>
 
               <Box

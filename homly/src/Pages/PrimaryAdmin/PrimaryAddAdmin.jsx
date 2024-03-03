@@ -34,7 +34,7 @@ const PrimaryAddAdmin = () => {
   const [adminerror, setadminerror] = useState(false);
   const [usernameerror, setUsernameerror] = useState(false);
   const [worklocationeerror, setWorklocationerror] = useState(false);
-  const [snacktext,setnacktext]=useState('')
+  const [snacktext, setnacktext] = useState("");
   const [showNav, setShowNav] = useState("nav_grid_deactive");
   const [open, setOpen] = React.useState(false);
 
@@ -94,34 +94,30 @@ const PrimaryAddAdmin = () => {
       SetSubstitute("Null");
     }
 
-    const data={
+    const data = {
       AdminNo: adminno,
       UserName: username,
       Password: password,
       ContactNo: contactno,
       Email: email,
       WorkLocation: worklocation,
-      Disabled:false,
+      Disabled: false,
       Sub: substitute,
-    }
-    axios.post('http://localhost:3002/admin/auth/locationadmin/add',data)
-    .then(res=>{
-      setnacktext('Admin Added Sucessfully!')
-      handleClick();
-      
-     
-    })
-    .catch(error=>{
-      setnacktext('Somthing Went Wrong,May be admin no duplicaion,Please Try Again!')
-      handleClick();
-      console.log(`error is  nm ${error}`)
+    };
+    axios
+      .post("http://localhost:3002/admin/auth/locationadmin/add", data)
+      .then((res) => {
+        setnacktext("Admin Added Sucessfully!");
+        handleClick();
+      })
+      .catch((error) => {
+        setnacktext(
+          "Somthing Went Wrong,May be admin no duplicaion,Please Try Again!"
+        );
+        handleClick();
+        console.log(`error is  nm ${error}`);
+      });
 
-    })
-
-
-
-
-    
     setadminno("");
     setUsername("");
     setContactno("");
@@ -147,10 +143,8 @@ const PrimaryAddAdmin = () => {
 
   //SnackBar
 
-
   const handleClick = () => {
     setOpen(true);
-
   };
 
   const handleClose = (event, reason) => {
@@ -236,7 +230,7 @@ const PrimaryAddAdmin = () => {
                       borderRadius: "20px",
                     }}
                   >
-                    <Grid item sm={12}>
+                    {/* <Grid item sm={12}>
                       <Grid
                         container
                         width={"60%"}
@@ -249,7 +243,7 @@ const PrimaryAddAdmin = () => {
                         <Grid item md={6} sm={12} xs={12}>
                           <InputLabel>Admin Number</InputLabel>
                         </Grid>
-                        <Grid item md={6} sm={12} xs={12}>
+                        <Grid item md={6} sm={12} xs={12}> */}
                           {/* <TextField
                     
                                     required={true}
@@ -262,7 +256,7 @@ const PrimaryAddAdmin = () => {
                     
                     
                                    ></TextField> */}
-                          <TextField
+                          {/* <TextField
                             value={adminno}
                             required={true}
                             onChange={(e) => {
@@ -287,7 +281,7 @@ const PrimaryAddAdmin = () => {
                           ></TextField>
                         </Grid>
                       </Grid>
-                    </Grid>
+                    </Grid> */}
                     <Grid item sm={12}>
                       <Grid
                         container
@@ -339,8 +333,8 @@ const PrimaryAddAdmin = () => {
                         }}
                       >
                         <Grid item md={6} sm={12} xs={12}> */}
-                          {/* <InputLabel>Password</InputLabel> */}
-                        {/* </Grid>
+                    {/* <InputLabel>Password</InputLabel> */}
+                    {/* </Grid>
                         <Grid item md={6} sm={12} xs={12}>
                           <TextField
                             value={password}
@@ -371,8 +365,8 @@ const PrimaryAddAdmin = () => {
                               characters
                             </Typography>
                           )} */}
-                        {/* </Grid> */}
-                      {/* </Grid> */}
+                    {/* </Grid> */}
+                    {/* </Grid> */}
                     {/* </Grid> */}
                     <Grid item sm={12}>
                       <Grid
