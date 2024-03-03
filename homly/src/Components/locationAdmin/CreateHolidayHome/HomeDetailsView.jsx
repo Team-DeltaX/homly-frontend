@@ -9,7 +9,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
 
-const HomeDetailsView = ({ setSubmit, allValues, setAllValues, submitClicked }) => {
+const HomeDetailsView = ({ setSubmit, allValues, setAllValues, submitClicked, setHolidayHomeError }) => {
 
   const [value, setValue] = useState({
     name: '', address: '', district: '', description: '', contactNo1: '', contactNo2: '', category: '', status: ''
@@ -31,15 +31,29 @@ const HomeDetailsView = ({ setSubmit, allValues, setAllValues, submitClicked }) 
       value.district !== '' &&
       value.description !== '' &&
       value.contactNo1 !== '' &&
-      value.contactNo2 !== '' &&
       value.category !== '' &&
       value.status !== '';
 
-    setSubmit(prevSubmit => ({
-      ...prevSubmit,
-      holidayhomeDetails: isDetailsComplete
-    }));
-  }, [value]);
+    const areErrorsEmpty =
+      !error.name &&
+      !error.address &&
+      !error.description &&
+      !error.contactNo1 &&
+      !error.contactNo2;
+
+
+
+    if (isDetailsComplete && areErrorsEmpty) {
+      setSubmit(true)
+    } else {
+      setSubmit(false)
+    }
+
+    // setSubmit(prevSubmit => ({
+    //   ...prevSubmit,
+    //   isDetailsComplete
+    // }));
+  }, [value, error, setSubmit]);
 
   useEffect(() => {
 
@@ -75,7 +89,7 @@ const HomeDetailsView = ({ setSubmit, allValues, setAllValues, submitClicked }) 
 
   const handleNameChange = (e) => {
     setValue({ ...value, name: e.target.value });
-    const name_regex = /^[a-zA-Z\s]+$/;
+    const name_regex = /^[a-zA-Z0-9\s]+$/;
     if (e.target.value.length > 0) {
       if (!name_regex.test(e.target.value)) {
         setError({ ...error, name: true });

@@ -5,7 +5,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
 
-const CareTakerDetailsView = ({ setSubmit, setAllValues, submitClicked }) => {
+const CareTakerDetailsView = ({ setSubmit, setAllValues, submitClicked, setcaretakerError }) => {
   const [secondCaretaker, setSecondCaretaker] = useState(false);
 
   const [value, setValue] = useState({
@@ -16,9 +16,7 @@ const CareTakerDetailsView = ({ setSubmit, setAllValues, submitClicked }) => {
     caretakerName: '', caretakerContactNo: '', caretakerStatus: '', caretakerAddress: '', caretakerDescription: '',
   })
 
-  const [error, setError] = useState({
-    ctName: false, ctAddress: false, ctDescription: false, ctContactNo: false
-  });
+  const [error, setError] = useState({});
 
   useEffect(() => {
     const isFirstCaretakerComplete =
@@ -35,21 +33,27 @@ const CareTakerDetailsView = ({ setSubmit, setAllValues, submitClicked }) => {
       valueSecond.caretakerAddress !== '' &&
       valueSecond.caretakerDescription !== '';
 
+    const areErrorsEmpty =
+      !error.ctname &&
+      !error.sctname &&
+      !error.ctContactNo &&
+      !error.sctContactNo
+
+    if (areErrorsEmpty) {
+      // setcaretakerError(true);
+    }
+
+
     if (secondCaretaker) {
-      setSubmit(isFirstCaretakerComplete && isSecondCaretakerComplete);
+      setSubmit(isFirstCaretakerComplete && isSecondCaretakerComplete && areErrorsEmpty);
     } else {
-      setSubmit(isFirstCaretakerComplete);
+      setSubmit(isFirstCaretakerComplete && areErrorsEmpty);
     }
   }, [value, valueSecond, secondCaretaker, setSubmit]);
 
-  // useEffect(() => {
-
-  //   if (submitClicked) {
-  //     setCareTakerDetails({ "caretaker1": value, "caretaker2": valueSecond })
-  //   }
-  // }, [submitClicked])
   useEffect(() => {
     if (submitClicked) {
+
       setAllValues((prev) => ({ ...prev, "caretaker1": value, "caretaker2": valueSecond }));
     }
   }, [submitClicked]);
@@ -58,7 +62,7 @@ const CareTakerDetailsView = ({ setSubmit, setAllValues, submitClicked }) => {
 
   const handleNameChange = (e) => {
     setValue({ ...value, caretakerName: e.target.value });
-    const name_regex = /^[a-zA-Z]+$/;
+    const name_regex = /^[a-zA-Z\s]+$/;
 
     if (e.target.value.length > 0) {
       if (!name_regex.test(e.target.value)) {
@@ -67,17 +71,19 @@ const CareTakerDetailsView = ({ setSubmit, setAllValues, submitClicked }) => {
         setError({ ...error, ctname: false });
       }
     }
+
+
   }
 
   const handleNameChangeSecond = (e) => {
     setValueSecond({ ...valueSecond, caretakerName: e.target.value });
-    const name_regex = /^[a-zA-Z]+$/;
+    const name_regex = /^[a-zA-Z\s]+$/;
 
     if (e.target.value.length > 0) {
       if (!name_regex.test(e.target.value)) {
-        setError({ ...error, ctname: true });
+        setError({ ...error, sctname: true });
       } else {
-        setError({ ...error, ctname: false });
+        setError({ ...error, sctname: false });
       }
     }
   }
@@ -120,9 +126,9 @@ const CareTakerDetailsView = ({ setSubmit, setAllValues, submitClicked }) => {
     const phone_regex = /^\d{10}$/;
     if (e.target.value.length > 0) {
       if (!phone_regex.test(e.target.value)) {
-        setError({ ...error, ctContactNo: true });
+        setError({ ...error, sctContactNo: true });
       } else {
-        setError({ ...error, ctContactNo: false });
+        setError({ ...error, sctContactNo: false });
       }
     }
   }
@@ -168,13 +174,13 @@ const CareTakerDetailsView = ({ setSubmit, setAllValues, submitClicked }) => {
             <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
               <Typography variant='p' sx={{ color: 'black' }}>Name</Typography>
             </Box>
-            <TextField error={error.ctName} required id="outlined-required" label="Enter Name" placeholder='Enter Name' fullWidth size='small' onChange={handleNameChange} helperText={error.ctName ? "Invalid Input" : ''} />
+            <TextField error={error.ctname} required id="outlined-required" label="Enter Name" placeholder='Enter Name' fullWidth size='small' onChange={handleNameChange} helperText={error.ctname ? "Invalid input" : " "} />
           </Box>
           <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
             <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
               <Typography variant='p' sx={{ color: 'black' }}>Contact No</Typography>
             </Box>
-            <TextField required id="outlined-required" label="Enter Contact No" placeholder='Enter Contact No' fullWidth size='small' onChange={handleContactNoChange} />
+            <TextField error={error.ctContactNo} required id="outlined-required" label="Enter Contact No" placeholder='Enter Contact No' fullWidth size='small' onChange={handleContactNoChange} helperText={error.ctContactNo ? "There should be 10 digits" : " "} />
           </Box>
           <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
             <Box sx={{ minWidth: '100px', maxWidth: '100px' }} className="label_container">
@@ -226,13 +232,13 @@ const CareTakerDetailsView = ({ setSubmit, setAllValues, submitClicked }) => {
               <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                 <Typography variant='p' sx={{ color: 'black' }}>Name</Typography>
               </Box>
-              <TextField error={error.ctName} required id="outlined-required" label="Enter Name" placeholder='Enter Name' fullWidth size='small' onChange={handleNameChangeSecond} helperText={error.ctName ? "Invalid Input" : ''} />
+              <TextField error={error.sctname} required id="outlined-required" label="Enter Name" placeholder='Enter Name' fullWidth size='small' onChange={handleNameChangeSecond} helperText={error.sctname ? "Invalid Input" : ''} />
             </Box>
             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
               <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                 <Typography variant='p' sx={{ color: 'black' }}>Contact No</Typography>
               </Box>
-              <TextField required id="outlined-required" label="Enter Contact No" placeholder='Enter Contact No' fullWidth size='small' onChange={handleContactNoChangeSecond} />
+              <TextField error={error.sctContactNo} required id="outlined-required" label="Enter Contact No" placeholder='Enter Contact No' fullWidth size='small' onChange={handleContactNoChangeSecond} helperText={error.sctContactNo ? "There should be 10 digits" : " "} />
             </Box>
             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
               <Box sx={{ minWidth: '100px', maxWidth: '100px' }} className="label_container">

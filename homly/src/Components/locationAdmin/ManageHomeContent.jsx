@@ -64,6 +64,8 @@ const ManageHomeContent = () => {
                     setActive(res.data.active);
                     setInactive(res.data.inactive);
 
+                    console.log("active", active);
+
 
                 } else {
                     console.log("No data found");
