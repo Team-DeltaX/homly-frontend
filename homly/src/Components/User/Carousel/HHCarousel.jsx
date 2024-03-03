@@ -1,5 +1,5 @@
 import React from "react";
-import { ThemeProvider, Paper, Button } from "@mui/material";
+import { ThemeProvider } from "@mui/material";
 
 import HolidayHomeCard from "../HHCard/HolidayHomeCard";
 
@@ -76,33 +76,11 @@ export default function HHCarousel(props) {
                 HHPrice={item.price}
                 HHRating={item.rating}
                 HHImage={item.image}
+                showInterest={false}
               />
           ))}
       </Carousel>
-      {/* <HolidayHomeCard /> */}
-      {/* <Carousel
-                itemsPerScroll={2}
-                autoPlay={false}
-                navButtonsAlwaysVisible={true}
-                animation="slide"
-                timeout={500}
-                cycleNavigation={true}
-                navButtonsProps={{
-                    style: {
-                        backgroundColor: '#ffffff',
-                        color: '#494949',
-                        borderRadius: 0,
-                        margin: 0,
-                        width: 50,
-                        height: 50,
-                        marginTop: -20
-                    }
-                }}
-            >
-                {
-                    items.map((item, i) => <Item key={i} item={item} />)
-                }
-            </Carousel> */}
+      
     </ThemeProvider>
   );
 }

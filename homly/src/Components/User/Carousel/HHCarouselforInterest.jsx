@@ -63,16 +63,23 @@ export default function HHCarouselforInterest({ interestedHH }) {
       >
         {interestedHH &&
           interestedHH.map((hh) => (
-            <div data-aos="fade-right" data-aos-duration="700">
+            <div data-aos="fade-right" data-aos-duration="700" key={hh.holiday_home.HolidayHomeId}>
               <HolidayHomeCard
                 key={hh.holiday_home.HolidayHomeId}
                 HHName={hh.holiday_home.Name}
                 HHLocation={hh.holiday_home.Address}
                 HHPrice={hh.holiday_home.TotalRental}
-                HHRating={hh.holiday_home.wifi_rating}
+                HHRating={Math.round(hh.rating * 10) / 10}
                 HHImage={
                   "https://www.ribbyhall.co.uk/uploads/images/featured/holiday-home-featured-1.jpg"
                 }
+                showInterest={true}
+                interst1_lable={hh.seperated.inter1.name}
+                interst1_value={hh.seperated.inter1.value*10}
+                interst2_lable={hh.seperated.inter2.name}
+                interst2_value={hh.seperated.inter2.value*10}
+                interst3_lable={hh.seperated.inter3.name}
+                interst3_value={hh.seperated.inter3.value*10}
               />
             </div>
           ))}

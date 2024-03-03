@@ -1,21 +1,14 @@
 import React from "react";
 import {
   Box,
-  // Stack,
-  //   Container,
   ThemeProvider,
   Typography,
   Tab,
   Tabs,
   Card,
   CardContent,
-  //   CardActions,
 } from "@mui/material";
 
-// import PersonalDetailsGrid from "../PersonalDetailsGrid/PersonalDetailsGrid";
-// import UpdateButton from "../PersonalDetailsGrid/UpdateButton";
-
-// import { EditPersonalDetailsContext } from "../../Contexts/EditPersonalDetailsContext";
 import OngoingReservation from "./OngoingReservation";
 import PastReservation from "./PastReservation";
 import theme from "../../../HomlyTheme";
@@ -54,20 +47,17 @@ const MyReservation = () => {
                   "& .css-1qqs86a-MuiButtonBase-root-MuiTab-root.Mui-selected ":{
                     bgcolor: "primary.main",
                     color: "white",
-                    fontWeight:'bold'
+                    fontWeight:'bold',
+                    width: "50% !important",
                   },
                   "& .css-1qqs86a-MuiButtonBase-root-MuiTab-root ":{
                     padding: "10px !important",
                     border: "1px solid #872341",
+                    width: "50% !important",
                   },
-                  
+                  minWidth: "295px",
+                  maxWidth: "450px",
                 }}
-                // sx={{
-                //   width: "100%",
-                //   display: "flex",
-                //   alignItems: "center",
-
-                // }}
               >
                 <Tab value={0} label="Ongoing Reservation" />
                 <Tab value={1} label="Past Reservation" />
