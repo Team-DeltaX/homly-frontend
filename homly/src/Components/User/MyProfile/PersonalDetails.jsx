@@ -18,6 +18,7 @@ import PersonalDetailsGrid from "../PersonalDetailsGrid/PersonalDetailsGrid";
 import theme from "../../../HomlyTheme";
 import ProfilePicUploadPopup from "../ProfilePicUploadPopup";
 import ErrorSnackbar from "../ErrorSnackbar";
+import UserInterestedPopup from "../UserInterestedPopup";
 import UserInterestedPopupProfile from "./UserInterestedPopupProfile";
 
 const PersonalDetails = () => {
@@ -35,6 +36,7 @@ const PersonalDetails = () => {
     image: "",
   });
   const [interests, setInterests] = useState([]);
+  const [isHaveInterests, setIsHaveInterests] = useState(false);
 
   const [insterestedPopup, setInsterestedPopup] = useState(false);
 
@@ -133,7 +135,9 @@ const PersonalDetails = () => {
         .then((res) => {
           if (res.data) {
             console.log("intresffedfsdf",res.data.userInterested.interested);
-            setInterests(res.data.userInterested.interested);
+            if(res.data.userInterested.interested[0] !== null){
+              setInterests(res.data.userInterested.interested);
+            }
           } else {
             setErrorStatus({
               ...errorStatus,
@@ -142,8 +146,10 @@ const PersonalDetails = () => {
               message: res.data.message,
             });
           }
+          setIsHaveInterests(true);
         })
         .catch((err) => {
+          setIsHaveInterests(false);
           console.log("error", err);
         });
     } catch (err) {
@@ -296,11 +302,18 @@ const PersonalDetails = () => {
 
                 {/* change interest popup */}
                 <UserInterestedPopupProfile
-                  open={insterestedPopup}
+                  open={ insterestedPopup}
                   setOpen={setInsterestedPopup}
                   interests={interests}
                   setInterests={setInterests}
                 />
+
+                {/* add interest popup */}
+                {/* <UserInterestedPopup
+                  open={!isHaveInterests && insterestedPopup}
+                  setOpen={setInsterestedPopup}
+                  is
+                /> */}
 
                 <Stack
                   direction="column"
@@ -350,7 +363,7 @@ const PersonalDetails = () => {
                     disabled={!isEnable}
                     variant="outlined"
                     size="small"
-                    sx={{ marginTop: "10px" }}
+                    sx={{ marginTop: "10px", display:isHaveInterests?"block":"none" }}
                     onClick={() => setInsterestedPopup(true)}
                   >
                     <Typography sx={{ fontSize: { xs: "0.9rem", md: "1rem" } }}>
