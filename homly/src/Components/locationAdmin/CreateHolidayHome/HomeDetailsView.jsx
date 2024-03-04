@@ -9,11 +9,11 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
 
-const HomeDetailsView = ({ setSubmit, allValues, setAllValues, submitClicked, setHolidayHomeError }) => {
+const HomeDetailsView = ({ setSubmit, allValues, setAllValues, submitClicked, setHolidayHomeError, value, setValue }) => {
 
-  const [value, setValue] = useState({
-    name: '', address: '', district: '', description: '', contactNo1: '', contactNo2: '', category: '', status: ''
-  })
+  // const [value, setValue] = useState({
+  //   name: '', address: '', district: '', description: '', contactNo1: '', contactNo2: '', category: '', status: ''
+  // })
 
   const [error, setError] = useState({
     name: false, address: false, description: false, contactNo1: false, contactNo2: false
@@ -55,17 +55,18 @@ const HomeDetailsView = ({ setSubmit, allValues, setAllValues, submitClicked, se
     // }));
   }, [value, error, setSubmit]);
 
-  useEffect(() => {
 
-    if (submitClicked) {
-      setAllValues(prev => ({
-        ...prev,
-        holidayHomeDetails: value,
-        images: images
-      }))
+  // useEffect(() => {
 
-    }
-  }, [submitClicked])
+  //   if (submitClicked) {
+  //     setAllValues(prev => ({
+  //       ...prev,
+  //       holidayHomeDetails: value,
+  //       images: images
+  //     }))
+
+  //   }
+  // }, [submitClicked])
 
 
 
@@ -89,7 +90,7 @@ const HomeDetailsView = ({ setSubmit, allValues, setAllValues, submitClicked, se
 
   const handleNameChange = (e) => {
     setValue({ ...value, name: e.target.value });
-    const name_regex = /^[a-zA-Z0-9\s]+$/;
+    const name_regex = /^[a-zA-Z0-9\s-]+$/;
     if (e.target.value.length > 0) {
       if (!name_regex.test(e.target.value)) {
         setError({ ...error, name: true });
@@ -110,7 +111,22 @@ const HomeDetailsView = ({ setSubmit, allValues, setAllValues, submitClicked, se
   }
 
   const handleDisriptionChange = (e) => {
-    setValue({ ...value, description: e.target.value });
+
+    let wordCount = e.target.value.split(' ').length;
+    // console.log("word", wordCount);
+
+
+    if (e.target.value.length > 0) {
+      if (wordCount < 50 || wordCount > 150) {
+        setError({ ...error, description: true });
+      } else {
+        setValue({ ...value, description: e.target.value });
+        setError({ ...error, description: false });
+      }
+
+
+    }
+
   }
 
   const handleContactNo1Change = (e) => {
@@ -215,7 +231,7 @@ const HomeDetailsView = ({ setSubmit, allValues, setAllValues, submitClicked, se
           <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
             <Typography variant='p' sx={{ color: 'black' }}>Description</Typography>
           </Box>
-          <TextField required multiline id="outlined-required" label="Enter Description" placeholder='Enter Description' fullWidth size='small' onChange={handleDisriptionChange} />
+          <TextField error={error.description} required multiline id="outlined-required" label="Enter Description" placeholder='Enter Description' fullWidth size='small' onChange={handleDisriptionChange} helperText={error.description ? "50-150 words" : " "} />
         </Box>
         <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
           <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >

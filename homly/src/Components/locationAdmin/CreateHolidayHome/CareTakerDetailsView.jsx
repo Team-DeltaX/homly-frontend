@@ -5,12 +5,12 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
 
-const CareTakerDetailsView = ({ setSubmit, setAllValues, submitClicked, setcaretakerError }) => {
+const CareTakerDetailsView = ({ setSubmit, setAllValues, submitClicked, setcaretakerError, value, setValue }) => {
   const [secondCaretaker, setSecondCaretaker] = useState(false);
 
-  const [value, setValue] = useState({
-    caretakerName: '', caretakerContactNo: '', caretakerStatus: '', caretakerAddress: '', caretakerDescription: '',
-  })
+  // const [value, setValue] = useState({
+  //   caretakerName: '', caretakerContactNo: '', caretakerStatus: '', caretakerAddress: '', caretakerDescription: '',
+  // })
 
   const [valueSecond, setValueSecond] = useState({
     caretakerName: '', caretakerContactNo: '', caretakerStatus: '', caretakerAddress: '', caretakerDescription: '',
@@ -23,15 +23,15 @@ const CareTakerDetailsView = ({ setSubmit, setAllValues, submitClicked, setcaret
       value.caretakerName !== '' &&
       value.caretakerContactNo !== '' &&
       value.caretakerStatus !== '' &&
-      value.caretakerAddress !== '' &&
-      value.caretakerDescription !== '';
+      value.caretakerAddress !== ''
+
 
     const isSecondCaretakerComplete =
       valueSecond.caretakerName !== '' &&
       valueSecond.caretakerContactNo !== '' &&
       valueSecond.caretakerStatus !== '' &&
-      valueSecond.caretakerAddress !== '' &&
-      valueSecond.caretakerDescription !== '';
+      valueSecond.caretakerAddress !== ''
+
 
     const areErrorsEmpty =
       !error.ctname &&
@@ -51,12 +51,12 @@ const CareTakerDetailsView = ({ setSubmit, setAllValues, submitClicked, setcaret
     }
   }, [value, valueSecond, secondCaretaker, setSubmit]);
 
-  useEffect(() => {
-    if (submitClicked) {
+  // useEffect(() => {
+  //   if (submitClicked) {
 
-      setAllValues((prev) => ({ ...prev, "caretaker1": value, "caretaker2": valueSecond }));
-    }
-  }, [submitClicked]);
+  //     setAllValues((prev) => ({ ...prev, "caretaker1": value, "caretaker2": valueSecond }));
+  //   }
+  // }, [submitClicked]);
 
 
 
