@@ -49,7 +49,7 @@ function a11yProps(index) {
     'aria-controls': `simple-tabpanel-${index}`,
   };
 }
-const CreatePageHomeBreakDownView = ({ setSubmit, setAllValues, submitClicked, setHomeBreakDownError, bdValue, setBdValue, roomArray, setRoomArray, unitArray, setUnitArray, hallArray, setHallArray }) => {
+const CreatePageHomeBreakDownView = ({ setSubmit, setAllValues, submitClicked, setHomeBreakDownError, bdValue, setBdValue, roomArray, setRoomArray, unitArray, setUnitArray, hallArray, setHallArray, adultsCount, setAdultsCount, childCount, setChildCount }) => {
 
   const [value, setValue] = useState(0);
 
@@ -194,7 +194,7 @@ const CreatePageHomeBreakDownView = ({ setSubmit, setAllValues, submitClicked, s
   //   }
   // }, [submitClicked]);
 
-
+  const [b, setB] = useState(0);
 
 
   return (
@@ -207,13 +207,13 @@ const CreatePageHomeBreakDownView = ({ setSubmit, setAllValues, submitClicked, s
               <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                 <Typography variant='p' sx={{ color: 'black' }}>Maximum Adults</Typography>
               </Box>
-              <TextField value={bdValue.adultsCount} type='number' id="outlined-required" label="Maximum Adults" placeholder='Maximum Adults' fullWidth size='small' />
+              <TextField value={adultsCount} type='number' id="outlined-required" label="Maximum Adults" placeholder='Maximum Adults' fullWidth size='small' />
             </Box>
             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
               <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                 <Typography variant='p' sx={{ color: 'black' }}>Maximum Childern</Typography>
               </Box>
-              <TextField value={bdValue.childCount} type='number' id="outlined-required" label="Maximum Children" placeholder='Maximum Children' fullWidth size='small' />
+              <TextField value={childCount} type='number' id="outlined-required" label="Maximum Children" placeholder='Maximum Children' fullWidth size='small' />
             </Box>
             <FormGroup sx={{ display: 'flex', width: '100%', gap: "0.5em ", marginTop: "1em" }}>
               <Box sx={{ display: "flex", gap: "1em" }}>
@@ -274,10 +274,11 @@ const CreatePageHomeBreakDownView = ({ setSubmit, setAllValues, submitClicked, s
                 <EditRoom
                   roomArray={roomArray}
                   setRoomArray={setRoomArray}
-                  adultsCount={bdValue.adultsCount}
-                  childCount={bdValue.childCount} // Added parentheses and removed spread operator
-                  setAdultsCount={(val) => setBdValue({ ...bdValue, adultsCount: val })}
-                  setChildCount={(val) => setBdValue({ ...bdValue, childCount: val })} // Removed unnecessary spread operator
+                  adultsCount={adultsCount}
+                  childCount={childCount}
+                  setAdultsCount={setAdultsCount}
+                  setChildCount={setChildCount}
+
                 />
                 <EditUnit roomArray={roomArray} setRoomArray={setRoomArray} unitArray={unitArray} setUnitArray={setUnitArray} />
               </CustomTabPanel>

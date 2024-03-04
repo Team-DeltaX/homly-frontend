@@ -22,8 +22,6 @@ const CreateHolidayHomeContent = () => {
   })
 
   const [bdValue, setBdValue] = useState({
-    adultsCount: 0,
-    childCount: 0,
     otherCharges: "",
     serviceCharges: "",
     totalRental: "",
@@ -36,6 +34,9 @@ const CreateHolidayHomeContent = () => {
     bar: false
 
   })
+
+  const [adutlsCount, setAdultsCount] = useState(0);
+  const [childCount, setChildCount] = useState(0);
 
 
   const [roomArray, setRoomArray] = useState([]);
@@ -62,7 +63,7 @@ const CreateHolidayHomeContent = () => {
       holidayHomeDetails: value,
       images: null,
       caretaker1: valueCareTaker,
-      homebreakdown: bdValue,
+      homebreakdown: { bdValue, adutlsCount, childCount },
       roomArray: roomArray,
       unitArray: unitArray,
       hallArray: hallArray,
@@ -143,7 +144,7 @@ const CreateHolidayHomeContent = () => {
         </Grid>
         <Grid container>
           <Grid item md={12} sm={12} xs={12}>
-            <CreatePageHomeBreakDownView submit={homeBreakdownSubmit} setSubmit={setHomeBreakdownSubmit} submitClicked={submitClicked} setSubmitClicked={setSubmitClicked} bdValue={bdValue} setBdValue={setBdValue} roomArray={roomArray} setRoomArray={setRoomArray} unitArray={unitArray} setUnitArray={setUnitArray} hallArray={hallArray} setHallArray={setHallArray} />
+            <CreatePageHomeBreakDownView submit={homeBreakdownSubmit} setSubmit={setHomeBreakdownSubmit} submitClicked={submitClicked} setSubmitClicked={setSubmitClicked} bdValue={bdValue} setBdValue={setBdValue} roomArray={roomArray} setRoomArray={setRoomArray} unitArray={unitArray} setUnitArray={setUnitArray} hallArray={hallArray} setHallArray={setHallArray} adutlsCount={adutlsCount} childCount={childCount} setAdultsCount={setAdultsCount} setChildCount={setChildCount} />
           </Grid>
         </Grid>
 
