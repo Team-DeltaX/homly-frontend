@@ -161,6 +161,8 @@ const EditRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount }) =>
         setIsEditMode(false);
         setEditIndex(null);
 
+        // setAdultsCount(10);
+
         setAdultsCount(prevCount => prevCount + parseInt(values.NoOfAdults, 10));
         setChildCount(prevCount => prevCount + parseInt(values.NoOfChildren, 10));
 

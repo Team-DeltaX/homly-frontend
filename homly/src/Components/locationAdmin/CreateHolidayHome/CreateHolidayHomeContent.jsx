@@ -6,27 +6,73 @@ import CreatePageHomeBreakDownView from "./HolidayHomeCreate/CreatePageHomeBreak
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import ErrorIcon from '@mui/icons-material/Error';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
 
 const CreateHolidayHomeContent = () => {
   const navigate = useNavigate();
 
+  const [value, setValue] = useState({
+    name: '', address: '', district: '', description: '', contactNo1: '', contactNo2: '', category: '', status: ''
+  })
+
+  const [valueCareTaker, setValueCareTaker] = useState({
+    caretakerName: '', caretakerContactNo: '', caretakerStatus: '', caretakerAddress: '', caretakerDescription: '',
+  })
+
+  const [bdValue, setBdValue] = useState({
+    otherCharges: "",
+    serviceCharges: "",
+    totalRental: "",
+    facilities: "",
+    gym: false,
+    kitchen: false,
+    park: false,
+    wifi: false,
+    pool: false,
+    bar: false
+
+  })
+
+  const [adutlsCount, setAdultsCount] = useState(0);
+  const [childCount, setChildCount] = useState(0);
+
+
+  const [roomArray, setRoomArray] = useState([]);
+  const [unitArray, setUnitArray] = useState([]);
+  const [hallArray, setHallArray] = useState([]);
+
   const [submitDisable, setSubmitDisable] = useState(true);
   const [submitClicked, setSubmitClicked] = useState(false);
+  const [open, setOpen] = React.useState(false);
 
   // all values from three components
-  const [allValues, setAllValues] = useState({});
+  // const [allValues, setAllValues] = useState({});
 
+  const handleClose = () => {
+    setOpen(false);
+  };
 
 
 
 
 
   const handleSubmit = (e) => {
+    let formData = {
+      holidayHomeDetails: value,
+      images: null,
+      caretaker1: valueCareTaker,
+      homebreakdown: { bdValue, adutlsCount, childCount },
+      roomArray: roomArray,
+      unitArray: unitArray,
+      hallArray: hallArray,
+
+    }
     e.preventDefault();
     setSubmitClicked(true);
-    console.log("allvalues", allValues);
-    axios.post("http://localhost:3002/admin/auth/locationadmin/holidayhome/", allValues, { withCredentials: true })
+    console.log("allvalues", formData);
+    axios.post("http://localhost:3002/admin/auth/locationadmin/holidayhome/", formData)
       .then((res) => {
         // window.location.href("/locationadmin/manage");
         console.log(res);
@@ -36,6 +82,7 @@ const CreateHolidayHomeContent = () => {
       .catch((err) => {
         console.log(err);
       });
+    setOpen(true);
   };
 
 
@@ -78,19 +125,26 @@ const CreateHolidayHomeContent = () => {
 
   return (
     <Box className="content_container" sx={{ maxHeight: "90vh" }}>
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={open}
+        onClick={handleClose}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2} sx={{ marginBottom: "16px " }}>
           <Grid item md={6} sm={12} xs={12}>
-            <HomeDetailsView submit={holidayHomeSubmit} setSubmit={setHolidayHomeSubmit} allValues={allValues} setAllValues={setAllValues} submitClicked={submitClicked} setSubmitClicked={setSubmitClicked} />
+            <HomeDetailsView submit={holidayHomeSubmit} setSubmit={setHolidayHomeSubmit} submitClicked={submitClicked} setSubmitClicked={setSubmitClicked} value={value} setValue={setValue} />
             {/* <HomeDetailsView setSubmit={setSubmit} /> */}
           </Grid>
           <Grid item md={6} sm={12} xs={12}>
-            <CareTakerDetailsView submit={caretakerSubmit} allValues={allValues} setAllValues={setAllValues} setSubmit={setCaretakerSubmit} submitClicked={submitClicked} setSubmitClicked={setSubmitClicked} />
+            <CareTakerDetailsView submit={caretakerSubmit} setSubmit={setCaretakerSubmit} submitClicked={submitClicked} setSubmitClicked={setSubmitClicked} value={valueCareTaker} setValue={setValueCareTaker} />
           </Grid>
         </Grid>
         <Grid container>
           <Grid item md={12} sm={12} xs={12}>
-            <CreatePageHomeBreakDownView submit={homeBreakdownSubmit} setSubmit={setHomeBreakdownSubmit} allValues={allValues} setAllValues={setAllValues} submitClicked={submitClicked} setSubmitClicked={setSubmitClicked} />
+            <CreatePageHomeBreakDownView submit={homeBreakdownSubmit} setSubmit={setHomeBreakdownSubmit} submitClicked={submitClicked} setSubmitClicked={setSubmitClicked} bdValue={bdValue} setBdValue={setBdValue} roomArray={roomArray} setRoomArray={setRoomArray} unitArray={unitArray} setUnitArray={setUnitArray} hallArray={hallArray} setHallArray={setHallArray} adutlsCount={adutlsCount} childCount={childCount} setAdultsCount={setAdultsCount} setChildCount={setChildCount} />
           </Grid>
         </Grid>
 
