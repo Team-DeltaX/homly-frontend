@@ -8,7 +8,7 @@ import './Reservation.css';
 import ViewPopUp from './ViewPopup';
 import dayjs, { Dayjs } from 'dayjs';
 
-const OngoingReservationCard = ({reservation}) => {
+const OngoingReservationCard = ({reservation,name}) => {
 
     
     return(     
@@ -18,7 +18,8 @@ const OngoingReservationCard = ({reservation}) => {
                     <img className="reservation-photo" src={reservation.img} alt="" />
                 </Grid>
                 <Grid Item xs={4} md={4} sx={{justifyContent:"center", alignItems:"center"}}>
-                    <h2>{ reservation.ServiceNO }</h2>
+                    <h4>{ name }</h4>
+                    <p>Service number : { reservation.ServiceNO}</p>
                     <p>Reservation Number  { reservation.ReservationId}</p>
                     <p>Amount { reservation.Price }</p>
                 </Grid>

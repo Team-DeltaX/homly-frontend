@@ -1,5 +1,5 @@
 import * as React from "react";
-import Box from '@mui/material/Box';
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -17,19 +17,21 @@ import dayjs, { Dayjs } from "dayjs";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import Typography from '@mui/material/Typography';
+import Typography from "@mui/material/Typography";
+import Alert from "@mui/material/Alert";
 
 export default function ScrollDialog() {
   const [open, setOpen] = React.useState(false);
+  const [showAlert, setShowAlert] = useState(false);
   const [scroll, setScroll] = React.useState("paper");
   const [HolidayHomeName, SetHolidayHomeName] = useState("");
-  const [ServiceNo, setServiceNo] = useState("");
+  const [ServiceNO, setServiceNO] = useState("");
   const [Price, setPrice] = useState(600);
   const [NoOfAdults, setNoOfAdults] = useState("");
   const [NoOfChildren, setNoOfChildren] = useState("");
-  const [NoOfSingleRooms, setNoOfSingleRooms] = useState("");
-  const [NoOfDoubleRooms, setNoOfDoubleRooms] = useState("");
-  const [NoOfTripleRooms, setNoOfTripleRooms] = useState("");
+  const [NoOfSingleRooms, setNoOfSingleRooms] = useState(0);
+  const [NoOfDoubleRooms, setNoOfDoubleRooms] = useState(0);
+  const [NoOfTripleRooms, setNoOfTripleRooms] = useState(0);
   const [NoOfHalls, setNoOfHalls] = useState("");
   const [CheckinDate, setCheckinDate] = useState(dayjs(new Date()));
 
@@ -43,8 +45,9 @@ export default function ScrollDialog() {
     setOpen(false);
   };
   const handlesubmit = (e) => {
+
     const data = {
-      ServiceNo: ServiceNo,
+      ServiceNO: ServiceNO,
       HolidayHome: HolidayHomeName,
       CheckinDate: CheckinDate,
       CheckoutDate: CheckoutDate,
@@ -53,18 +56,19 @@ export default function ScrollDialog() {
       NoOfSingleRooms: NoOfSingleRooms,
       NoOfDoubleRooms: NoOfDoubleRooms,
       NoOfTripleRooms: NoOfTripleRooms,
-      NoOfHalls:NoOfHalls,
+      NoOfHalls: NoOfHalls,
       Price: Price,
     };
     console.log("aruna", data);
+
     axios
-    .post("http://localhost:3002/admin/auth/primaryadmin/reservations", data)
-    .then((res) => {
-      console.log("add reservation successfully");
-    })
-    .catch((error) => {
-      console.log(`error is  nm ${error}`);
-    });
+      .post("http://localhost:3002/users/reservation", data)
+      .then((res) => {
+        console.log("add reservation successfully");
+      })
+      .catch((error) => {
+        console.log(`error is  nm ${error}`);
+      });
     //     axios
     //       .post("http://localhost:3002/admin/auth/locationadmin/reservations", data)
     //       .then((res) => {
@@ -91,7 +95,6 @@ export default function ScrollDialog() {
       }
     }
   }, [open]);
-
   return (
     <React.Fragment>
       <Button
@@ -112,18 +115,17 @@ export default function ScrollDialog() {
         <form onSubmit={() => console.log("sumbited")}>
           <DialogContent dividers={scroll === "paper"}>
             <DialogContentText
-                id="scroll-dialog-description"
-                ref={descriptionElementRef}
-                tabIndex={-1}
+              id="scroll-dialog-description"
+              ref={descriptionElementRef}
+              tabIndex={-1}
             >
-                <TextField
+              <TextField
                 autoFocus
                 required
-                disabled
                 onChange={(e) => {
-                    setServiceNo(e.target.value);
+                  setServiceNO(e.target.value);
                 }}
-                value={ServiceNo}
+                value={ServiceNO}
                 margin="dense"
                 id="serviceno"
                 name="serviceno"
@@ -131,24 +133,21 @@ export default function ScrollDialog() {
                 type="text"
                 fullWidth
                 variant="outlined"
-                />
-                <TextField
+              />
+              <TextField
                 fullWidth
-                disabled
                 id="outlined-select-holidayhome"
                 margin="dense"
                 label="Select the holiday home"
                 required
                 onChange={(e) => {
-                    SetHolidayHomeName(e.target.value);
+                  SetHolidayHomeName(e.target.value);
                 }}
                 value={HolidayHomeName}
-                InputProps={{
-                    readOnly: true,
-                }}
+
                 // defaultValue="EUR"
-                ></TextField>
-                {/* <BasicDatePicker
+              ></TextField>
+              {/* <BasicDatePicker
                 fullWidth
                 onChange={(e) => {
                     setCheckinDate(dayjs('2019-01-25').format('DD/MM/YYYY'));
@@ -156,7 +155,7 @@ export default function ScrollDialog() {
                 value={CheckinDate}
                 title="Check In Date"
                 /> */}
-                <BasicDatePicker
+              <BasicDatePicker
                 required
                 margin="dense"
                 date={CheckinDate}
@@ -166,8 +165,8 @@ export default function ScrollDialog() {
                   setCheckinDate(e.target.value);
                 }}
                 value={CheckinDate}
-                />
-                <BasicDatePicker
+              />
+              <BasicDatePicker
                 required
                 margin="dense"
                 date={CheckoutDate}
@@ -177,102 +176,131 @@ export default function ScrollDialog() {
                   setCheckoutDate(e.target.value);
                 }}
                 value={CheckoutDate}
-                />
-                <TextField
+              />
+              <TextField
                 fullWidth
                 required
                 margin="dense"
                 id="outlined-number"
                 label="No. of Adults"
                 type="number"
-                InputLabelProps={{
-                    shrink: true,
+                onChange={(e) => {
+                  setNoOfAdults(e.target.value);
                 }}
-                />
-                <TextField
+                value={NoOfAdults}
+              />
+              <TextField
                 fullWidth
                 required
                 margin="dense"
                 id="outlined-number"
                 label="No. of children"
                 type="number"
-                InputLabelProps={{
-                    shrink: true,
+                onChange={(e) => {
+                  setNoOfChildren(e.target.value);
                 }}
-                />
-                <div style={{ display: "flex", gap: "10px", marginTop: "5px" }}>
+                value={NoOfChildren}
+              />
+              <div style={{ display: "flex", gap: "10px", marginTop: "5px" }}>
                 <FormControl sx={{ flex: "1" }}>
-                    
-                    <InputLabel htmlFor="grouped-native-select">
+                  <InputLabel htmlFor="grouped-native-select">
                     Single Rooms
-                    </InputLabel>
-                    <Select
+                  </InputLabel>
+                  <Select
                     required
                     native
                     defaultValue="0"
                     id="grouped-native-select"
                     label="Grouping"
-                    >
-                    <option aria-label="None" value="" />
-                    <option value={0}>0</option>
+                    onChange=
+                    {(e) => {
+                      setNoOfSingleRooms(e.target.value);
+                    }}
+                    value={NoOfSingleRooms}
+                  >
+                    <option selected value={0}>0</option>
                     <option value={1}>1</option>
                     <option value={2}>2</option>
                     <option value={3}>3</option>
                     <option value={4}>4</option>
-                    </Select>
+                    
+                  </Select>
                 </FormControl>
                 <FormControl sx={{ flex: "1" }}>
-                    <InputLabel htmlFor="grouped-select">Double Rooms</InputLabel>
-                    <Select
+                  <InputLabel htmlFor="grouped-select">Double Rooms</InputLabel>
+                  <Select
                     required
                     native
                     defaultValue="0"
                     id="grouped-native-select"
                     label="Grouping"
-                    >
-                    <option aria-label="None" value="" />
-                    <option value={0}>0</option>
+                    onChange=
+                    {(e) => {
+                      setNoOfDoubleRooms(e.target.value);
+                    }}
+                    value={NoOfDoubleRooms}
+                  >
+                    <option selected value={0}>0</option>
                     <option value={1}>1</option>
                     <option value={2}>2</option>
                     <option value={3}>3</option>
                     <option value={4}>4</option>
-                    </Select>
+                    
+                  </Select>
                 </FormControl>
                 <FormControl sx={{ flex: "1" }}>
-                    <InputLabel htmlFor="grouped-select">Triple Rooms</InputLabel>
-                    <Select
+                  <InputLabel htmlFor="grouped-select">Triple Rooms</InputLabel>
+                  <Select
                     required
                     native
                     defaultValue="0"
                     id="grouped-native-select"
                     label="Grouping"
-                    >
-                    <option aria-label="None" value="" />
-                    <option value={0}>0</option>
+                    onChange=
+                    {(e) => {
+                      setNoOfTripleRooms(e.target.value);
+                    }}
+                    value={NoOfTripleRooms}
+                  >
+
+                    <option selected value={0}>0</option>
                     <option value={1}>1</option>
                     <option value={2}>2</option>
                     <option value={3}>3</option>
                     <option value={4}>4</option>
-                    </Select>
+                    
+                  </Select>
                 </FormControl>
-                </div>
-                <TextField
+              </div>
+              <TextField
                 fullWidth
                 required
                 margin="dense"
                 id="outlined-number"
                 label="No. of Halls"
                 type="number"
-                InputLabelProps={{
-                    shrink: true,
-                }}
-                />
-                <Box component="section" sx={{ p: 2 }}>
+                onChange=
+                    {(e) => {
+                      setNoOfHalls(e.target.value);
+                    }}
+                    value={NoOfHalls}
+              />
+              <Box component="section" sx={{ p: 2 }}>
                 <Typography variant="h6" gutterBottom>
-                  Total Price :  
-                  <Typography variant="h5" gutterBottom style={{display: 'inline-block', marginLeft: '10px', color: 'green'}}>{Price }</Typography>
+                  Total Price :
+                  <Typography
+                    variant="h5"
+                    gutterBottom
+                    style={{
+                      display: "inline-block",
+                      marginLeft: "10px",
+                      color: "green",
+                    }}
+                  >
+                    {Price}
+                  </Typography>
                 </Typography>
-                </Box>
+              </Box>
             </DialogContentText>
           </DialogContent>
           <DialogActions>
