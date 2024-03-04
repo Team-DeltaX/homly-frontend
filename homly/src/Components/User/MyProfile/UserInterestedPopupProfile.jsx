@@ -51,7 +51,9 @@ export default function UserInterestedPopupProfile({
   const [error, setError] = useState("");
 
   useEffect(() => {
-    setAddInterest(interests);
+    if(interests.length > 0){
+      setAddInterest(interests);
+    }
   },[interests])
 
   const handleClose = () => {
@@ -79,7 +81,7 @@ export default function UserInterestedPopupProfile({
   return (
     <ThemeProvider theme={theme}>
       <Dialog open={open} keepMounted onClose={handleClose}>
-        <DialogTitle>Choose Your Interest</DialogTitle>
+        <DialogTitle>Change Your Interest</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Hello there! Let's customize your experience. Pick your top 3
