@@ -4,8 +4,37 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
-const CareTakerDetailsView = ({ setSubmit, setAllValues, submitClicked, setcaretakerError }) => {
+
+const CareTakerDetailsViewOnly = ({ setAllValues }) => {
+
+  const { homeId } = useParams();
+  useEffect(() => {
+    axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/${homeId}`)
+      .then((res) => {
+        if (Response) {
+          const caretakerDetails = res.data.caretaker;
+
+          setValue({
+            caretakerName: caretakerDetails[0].Name, caretakerContactNo: caretakerDetails[0].ContactNo, caretakerStatus: caretakerDetails[0].Status, caretakerAddress: caretakerDetails[0].Address, caretakerDescription: caretakerDetails[0].Description,
+          })
+
+          if (caretakerDetails[1]) {
+            setValueSecond({
+              caretakerName: caretakerDetails[1].Name || "", caretakerContactNo: caretakerDetails[1].ContactNo || "", caretakerStatus: caretakerDetails[1].Status || "", caretakerAddress: caretakerDetails[1].Address || "", caretakerDescription: caretakerDetails[1].Description || "",
+            })
+
+          }
+
+        } else {
+          console.log("No data found");
+        }
+      })
+    console.log(value.caretakerName);
+  }, [])
+
   const [secondCaretaker, setSecondCaretaker] = useState(false);
 
   const [value, setValue] = useState({
@@ -16,7 +45,9 @@ const CareTakerDetailsView = ({ setSubmit, setAllValues, submitClicked, setcaret
     caretakerName: '', caretakerContactNo: '', caretakerStatus: '', caretakerAddress: '', caretakerDescription: '',
   })
 
-  const [error, setError] = useState({});
+  const [error, setError] = useState({
+    ctName: false, ctAddress: false, ctDescription: false, ctContactNo: false
+  });
 
   useEffect(() => {
     const isFirstCaretakerComplete =
@@ -33,36 +64,14 @@ const CareTakerDetailsView = ({ setSubmit, setAllValues, submitClicked, setcaret
       valueSecond.caretakerAddress !== '' &&
       valueSecond.caretakerDescription !== '';
 
-    const areErrorsEmpty =
-      !error.ctname &&
-      !error.sctname &&
-      !error.ctContactNo &&
-      !error.sctContactNo
+  }, [value, valueSecond, secondCaretaker]);
 
-    if (areErrorsEmpty) {
-      // setcaretakerError(true);
-    }
-
-
-    if (secondCaretaker) {
-      setSubmit(isFirstCaretakerComplete && isSecondCaretakerComplete && areErrorsEmpty);
-    } else {
-      setSubmit(isFirstCaretakerComplete && areErrorsEmpty);
-    }
-  }, [value, valueSecond, secondCaretaker, setSubmit]);
-
-  useEffect(() => {
-    if (submitClicked) {
-
-      setAllValues((prev) => ({ ...prev, "caretaker1": value, "caretaker2": valueSecond }));
-    }
-  }, [submitClicked]);
 
 
 
   const handleNameChange = (e) => {
     setValue({ ...value, caretakerName: e.target.value });
-    const name_regex = /^[a-zA-Z\s]+$/;
+    const name_regex = /^[a-zA-Z]+$/;
 
     if (e.target.value.length > 0) {
       if (!name_regex.test(e.target.value)) {
@@ -71,19 +80,17 @@ const CareTakerDetailsView = ({ setSubmit, setAllValues, submitClicked, setcaret
         setError({ ...error, ctname: false });
       }
     }
-
-
   }
 
   const handleNameChangeSecond = (e) => {
     setValueSecond({ ...valueSecond, caretakerName: e.target.value });
-    const name_regex = /^[a-zA-Z\s]+$/;
+    const name_regex = /^[a-zA-Z]+$/;
 
     if (e.target.value.length > 0) {
       if (!name_regex.test(e.target.value)) {
-        setError({ ...error, sctname: true });
+        setError({ ...error, ctname: true });
       } else {
-        setError({ ...error, sctname: false });
+        setError({ ...error, ctname: false });
       }
     }
   }
@@ -126,9 +133,9 @@ const CareTakerDetailsView = ({ setSubmit, setAllValues, submitClicked, setcaret
     const phone_regex = /^\d{10}$/;
     if (e.target.value.length > 0) {
       if (!phone_regex.test(e.target.value)) {
-        setError({ ...error, sctContactNo: true });
+        setError({ ...error, ctContactNo: true });
       } else {
-        setError({ ...error, sctContactNo: false });
+        setError({ ...error, ctContactNo: false });
       }
     }
   }
@@ -159,11 +166,6 @@ const CareTakerDetailsView = ({ setSubmit, setAllValues, submitClicked, setcaret
   }
 
 
-
-
-
-
-
   return (
     <Box>
 
@@ -174,13 +176,13 @@ const CareTakerDetailsView = ({ setSubmit, setAllValues, submitClicked, setcaret
             <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
               <Typography variant='p' sx={{ color: 'black' }}>Name</Typography>
             </Box>
-            <TextField error={error.ctname} required id="outlined-required" label="Enter Name" placeholder='Enter Name' fullWidth size='small' onChange={handleNameChange} helperText={error.ctname ? "Invalid input" : " "} />
+            <TextField value={value.caretakerName} required id="outlined-required" label="Enter Name" placeholder='Enter Name' fullWidth size='small' />
           </Box>
           <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
             <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
               <Typography variant='p' sx={{ color: 'black' }}>Contact No</Typography>
             </Box>
-            <TextField error={error.ctContactNo} required id="outlined-required" label="Enter Contact No" placeholder='Enter Contact No' fullWidth size='small' onChange={handleContactNoChange} helperText={error.ctContactNo ? "There should be 10 digits" : " "} />
+            <TextField value={value.caretakerContactNo} required id="outlined-required" label="Enter Contact No" placeholder='Enter Contact No' fullWidth size='small' />
           </Box>
           <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
             <Box sx={{ minWidth: '100px', maxWidth: '100px' }} className="label_container">
@@ -190,8 +192,7 @@ const CareTakerDetailsView = ({ setSubmit, setAllValues, submitClicked, setcaret
               <RadioGroup
                 aria-labelledby="demo-controlled-radio-buttons-group"
                 name="controlled-radio-buttons-group"
-                value={value.status}
-                onChange={handlestatusChange}
+                value={value.caretakerStatus}
 
               >
                 <FormControlLabel value="Active" control={<Radio />} label="Active" />
@@ -204,13 +205,13 @@ const CareTakerDetailsView = ({ setSubmit, setAllValues, submitClicked, setcaret
             <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
               <Typography variant='p' sx={{ color: 'black' }}>Address</Typography>
             </Box>
-            <TextField multiline id="outlined-required" label="Enter Address" placeholder='Enter Address' fullWidth size='small' required onChange={handleAddressChange} />
+            <TextField value={value.caretakerAddress} multiline id="outlined-required" label="Enter Address" placeholder='Enter Address' fullWidth size='small' required />
           </Box>
           <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
             <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
               <Typography variant='p' sx={{ color: 'black' }}>Description</Typography>
             </Box>
-            <TextField id="outlined-required" label="Enter Description" placeholder='Enter Description' fullWidth size='small' onChange={handleDescriptionChange} />
+            <TextField value={value.caretakerDescription} id="outlined-required" label="Enter Description" placeholder='Enter Description' fullWidth size='small' />
           </Box>
           <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '1em', marginBottom: '12px' }}>
             <Box sx={{ minWidth: '100px', maxWidth: '100px' }} className="label_container">
@@ -232,13 +233,13 @@ const CareTakerDetailsView = ({ setSubmit, setAllValues, submitClicked, setcaret
               <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                 <Typography variant='p' sx={{ color: 'black' }}>Name</Typography>
               </Box>
-              <TextField error={error.sctname} required id="outlined-required" label="Enter Name" placeholder='Enter Name' fullWidth size='small' onChange={handleNameChangeSecond} helperText={error.sctname ? "Invalid Input" : ''} />
+              <TextField value={valueSecond.caretakerName} required id="outlined-required" label="Enter Name" placeholder='Enter Name' fullWidth size='small' />
             </Box>
             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
               <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                 <Typography variant='p' sx={{ color: 'black' }}>Contact No</Typography>
               </Box>
-              <TextField error={error.sctContactNo} required id="outlined-required" label="Enter Contact No" placeholder='Enter Contact No' fullWidth size='small' onChange={handleContactNoChangeSecond} helperText={error.sctContactNo ? "There should be 10 digits" : " "} />
+              <TextField value={valueSecond.caretakerContactNo} required id="outlined-required" label="Enter Contact No" placeholder='Enter Contact No' fullWidth size='small' />
             </Box>
             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
               <Box sx={{ minWidth: '100px', maxWidth: '100px' }} className="label_container">
@@ -248,8 +249,8 @@ const CareTakerDetailsView = ({ setSubmit, setAllValues, submitClicked, setcaret
                 <RadioGroup
                   aria-labelledby="demo-controlled-radio-buttons-group"
                   name="controlled-radio-buttons-group"
-                  value={value.status}
-                  onChange={handlestatusChangeSecond}
+                  value={valueSecond.caretakerStatus}
+
                 >
                   <FormControlLabel value="Active" control={<Radio />} label="Active" />
                   <FormControlLabel value="Inactive" control={<Radio />} label="Inactive" />
@@ -260,13 +261,13 @@ const CareTakerDetailsView = ({ setSubmit, setAllValues, submitClicked, setcaret
               <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                 <Typography variant='p' sx={{ color: 'black' }}>Address</Typography>
               </Box>
-              <TextField multiline id="outlined-required" label="Enter Address" placeholder='Enter Address' fullWidth size='small' required onChange={handleAddressChangeSecond} />
+              <TextField value={valueSecond.caretakerAddress} multiline id="outlined-required" label="Enter Address" placeholder='Enter Address' fullWidth size='small' required />
             </Box>
             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
               <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                 <Typography variant='p' sx={{ color: 'black' }}>Description</Typography>
               </Box>
-              <TextField id="outlined-required" label="Enter Description" placeholder='Enter Description' fullWidth size='small' onChange={handleDescriptionChangeSecond} />
+              <TextField value={valueSecond.caretakerDescription} id="outlined-required" label="Enter Description" placeholder='Enter Description' fullWidth size='small' />
             </Box>
             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '1em', marginBottom: '12px' }}>
               <Box sx={{ minWidth: '100px', maxWidth: '100px' }} className="label_container">
@@ -287,9 +288,10 @@ const CareTakerDetailsView = ({ setSubmit, setAllValues, submitClicked, setcaret
         )}
 
         <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '2em', marginBottom: '1em' }}>
-          {!showSecondCaretaker && (
-            <Button variant="outlined" size="small" onClick={handleAddMoreClick}>Add More</Button>
-          )}
+          {valueSecond.caretakerName !== '' ?
+            !showSecondCaretaker && (
+              <Button variant="outlined" size="small" onClick={handleAddMoreClick}>View More</Button>
+            ) : ''}
         </Box>
 
 
@@ -300,4 +302,4 @@ const CareTakerDetailsView = ({ setSubmit, setAllValues, submitClicked, setcaret
   )
 }
 
-export default CareTakerDetailsView
+export default CareTakerDetailsViewOnly

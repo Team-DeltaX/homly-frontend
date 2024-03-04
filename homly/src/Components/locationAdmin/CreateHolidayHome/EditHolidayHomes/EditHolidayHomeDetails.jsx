@@ -10,7 +10,11 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
-const EditHolidayHomeDetails = () => {
+
+const EditHolidayHomeDetails = ({ updated, setUpdatedValues }) => {
+
+
+    const [initialValues, setInitialValues] = useState({})
 
     const [value, setValue] = useState({
         name: '', address: '', district: '', description: '', contactNo1: '', contactNo2: '', category: '', status: ''
@@ -24,11 +28,12 @@ const EditHolidayHomeDetails = () => {
     const { homeId } = useParams();
 
     useEffect(() => {
-        axios.get(`http://localhost:3002/locationadmin/holidayhome/${homeId}`)
+        axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/${homeId}`)
             .then((res) => {
                 if (Response) {
-                    const homeDetails = res.data.homeDetails;
+                    const homeDetails = res.data.homeDetails[0];
                     const contactNo = res.data.contactNo;
+
 
                     // Extract relevant data from response and set to 'value' state
                     setValue({
@@ -49,6 +54,20 @@ const EditHolidayHomeDetails = () => {
             })
     }, [])
 
+
+    useEffect(() => {
+        console.log("value", value);
+
+        setUpdatedValues(prev => ({
+            ...prev,
+            holidayHomeDetails: value
+        }));
+        console.log(updated);
+
+
+
+
+    }, [value])
 
 
 
@@ -246,8 +265,8 @@ const EditHolidayHomeDetails = () => {
                                     onChange={handlestatusChange}
 
                                 >
-                                    <FormControlLabel value="active" control={<Radio />} label="Active" sx={{ display: "inline-block", width: "fit-content" }} />
-                                    <FormControlLabel value="inactive" control={<Radio />} label="Inactive" />
+                                    <FormControlLabel value="Active" control={<Radio />} label="Active" sx={{ display: "inline-block", width: "fit-content" }} />
+                                    <FormControlLabel value="Inactive" control={<Radio />} label="Inactive" />
                                 </RadioGroup>
                             </Box>
                         </Box>

@@ -7,11 +7,13 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 
+import axios from 'axios';
+import { useParams } from 'react-router';
 
-import EditRoom from './EditHolidayHomes/EditRoom';
-import EditUnit from './EditHolidayHomes/EditUnit';
-import EditHall from './EditHolidayHomes/EditHall';
 
+import ViewRoom from './ViewRoom';
+import ViewUnit from './ViewUnit';
+import ViewHall from './ViewHall';
 
 
 
@@ -49,13 +51,18 @@ function a11yProps(index) {
     'aria-controls': `simple-tabpanel-${index}`,
   };
 }
-const HomeBreakDownView = ({ setSubmit, setAllValues, submitClicked }) => {
+const HomeBreakDownViewOnly = ({ setAllValues }) => {
+
+  const { homeId } = useParams();
+
 
   const [value, setValue] = useState(0);
 
   const [roomArray, setRoomArray] = useState([]);
   const [unitArray, setUnitArray] = useState([]);
   const [hallArray, setHallArray] = useState([]);
+
+
 
   const [adultsCount, setAdultsCount] = useState(0);
   const [childCount, setChildCount] = useState(0);
@@ -70,70 +77,89 @@ const HomeBreakDownView = ({ setSubmit, setAllValues, submitClicked }) => {
   const [pool, setPool] = useState(false);
   const [bar, setBar] = useState(false);
 
+  useEffect(() => {
+
+    console.log(homeId);
+    axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/${homeId}`)
+      .then((res) => {
+        if (Response) {
+          const roomDetails = res.data.room;
+          console.log("roomdetails", roomDetails);
+          setRoomArray(roomDetails);
+
+
+        } else {
+          console.log("No data found");
+        }
+      })
+
+    axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/${homeId}`)
+      .then((res) => {
+        if (Response) {
+          const unitDetails = res.data.unit;
+          setUnitArray(unitDetails);
+          console.log(unitDetails);
+
+
+
+        } else {
+          console.log("No data found");
+        }
+      })
+
+
+
+    axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/${homeId}`)
+      .then((res) => {
+        if (Response) {
+          const hallDetails = res.data.hall;
+          console.log(hallDetails);
+          setHallArray(hallDetails);
+
+
+        } else {
+          console.log("No data found");
+        }
+      })
+
+
+    axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/${homeId}`)
+      .then((res) => {
+        if (Response) {
+          const homeDetails = res.data.homeDetails[0];
+          console.log(homeDetails);
+          setAdultsCount(homeDetails.MaxNoOfAdults);
+          setChildCount(homeDetails.MaxNoOfChildren);
+          setOtherCharges(homeDetails.OtherCharge);
+          setServiceCharges(homeDetails.ServiceCharge);
+          setTotalRental(homeDetails.TotalRental);
+          setFacilities(homeDetails.Facilities);
+          setGym(homeDetails.Gym);
+          setKitchen(homeDetails.Kitchen);
+          setPark(homeDetails.Park);
+          setWifi(homeDetails.Wifi);
+          setPool(homeDetails.Pool);
+          setBar(homeDetails.Bar);
+        } else {
+          console.log("No data found");
+        }
+      })
+
+
+  }, [homeId])
+
+
+
+
+
+
+
+
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  const handleOtherChargesChange = (e) => {
-    setOtherCharges(e.target.value);
-  }
-
-
-  const handleServiceChargesChange = (e) => {
-    setServiceCharges(e.target.value);
-  }
-
-  const handleTotalRentalChange = (e) => {
-    setTotalRental(e.target.value);
-  }
-
-  const handlefacilityChange = (e) => {
-    setFacilities(e.target.value);
-  }
-
-  const hangleGymChange = (e) => {
-    setGym(e.target.checked);
-  }
-
-  const handleKitchenChange = (e) => {
-    setKitchen(e.target.checked);
-  }
-
-  const handleParkChange = (e) => {
-
-    setPark(e.target.checked);
-  }
-
-  const handleWifiChange = (e) => {
-    setWifi(e.target.checked);
-  }
-
-  const handlePoolChange = (e) => {
-    setPool(e.target.checked);
-  }
-
-  const handleBarChange = (e) => {
-    setBar(e.target.checked);
-
-  }
-
-  useEffect(() => {
-    if (totalRental !== undefined && roomArray.length > 0 && unitArray.length > 0) {
-      setSubmit(true);
-    } else {
-      setSubmit(false);
-    }
-  }, [totalRental, roomArray, unitArray, setSubmit]);
-
-
-  useEffect(() => {
-    if (submitClicked) {
-      const details = { "adultsCount": adultsCount, "childCount": childCount, "otherCharges": otherCharges, "serviceCharges": serviceCharges, "totalRental": totalRental, "facilities": facilities, "gym": gym, "kitchen": kitchen, "park": park, "wifi": wifi, "pool": pool, "bar": bar }
-      setAllValues((prev) => {
-        return { ...prev, "homeBreakDown": details, "roomArray": roomArray, "unitArray": unitArray, "hallArray": hallArray }
-      });
-    }
-  }, [submitClicked]);
 
 
 
@@ -159,14 +185,14 @@ const HomeBreakDownView = ({ setSubmit, setAllValues, submitClicked }) => {
             <FormGroup sx={{ display: 'flex', width: '100%', gap: "0.5em ", marginTop: "1em" }}>
               <Box sx={{ display: "flex", gap: "1em" }}>
 
-                <FormControlLabel control={<Checkbox />} label="Gym" checked={gym} onChange={hangleGymChange} />
-                <FormControlLabel control={<Checkbox />} label="Park" checked={park} onChange={handleParkChange} />
-                <FormControlLabel control={<Checkbox />} label="Kitchen" checked={kitchen} onChange={handleKitchenChange} />
+                <FormControlLabel control={<Checkbox />} label="Gym" checked={gym === "1" ? true : gym === "0" ? false : undefined} />
+                <FormControlLabel control={<Checkbox />} label="Park" checked={park === "1" ? true : park === "0" ? false : undefined} />
+                <FormControlLabel control={<Checkbox />} label="Kitchen" checked={kitchen === 1 ? true : kitchen === 0 ? false : undefined} />
               </Box>
               <Box sx={{ display: "flex", gap: "1em" }}>
-                <FormControlLabel control={<Checkbox />} label="Bar" checked={bar} onChange={handleBarChange} />
-                <FormControlLabel control={<Checkbox />} label="Wifi" checked={wifi} onChange={handleWifiChange} />
-                <FormControlLabel control={<Checkbox />} label="Pool" checked={pool} onChange={handlePoolChange} />
+                <FormControlLabel control={<Checkbox />} label="Bar" checked={bar === "1" ? true : bar === "0" ? false : undefined} />
+                <FormControlLabel control={<Checkbox />} label="Wifi" checked={wifi === "1" ? true : wifi === "0" ? false : undefined} />
+                <FormControlLabel control={<Checkbox />} label="Pool" checked={pool === "1" ? true : pool === "0" ? false : undefined} />
 
               </Box>
 
@@ -177,25 +203,25 @@ const HomeBreakDownView = ({ setSubmit, setAllValues, submitClicked }) => {
               <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                 <Typography variant='p' sx={{ color: 'black' }}>Other Charges</Typography>
               </Box>
-              <TextField value={otherCharges} type='number' id="outlined-required" label="Other Charges" placeholder='Other Charges' fullWidth size='small' onChange={handleOtherChargesChange} />
+              <TextField value={otherCharges} type='number' id="outlined-required" placeholder='Other Charges' fullWidth size='small' />
             </Box>
             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
               <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                 <Typography variant='p' sx={{ color: 'black' }}>Service Charges</Typography>
               </Box>
-              <TextField value={serviceCharges} type='number' id="outlined-required" label="Service Charges" placeholder='Service Charges' fullWidth size='small' onChange={handleServiceChargesChange} />
+              <TextField value={serviceCharges} type='number' id="outlined-required" placeholder='Service Charges' fullWidth size='small' />
             </Box>
             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
               <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                 <Typography variant='p' sx={{ color: 'black' }}>Total Rental</Typography>
               </Box>
-              <TextField value={totalRental} type='number' id="outlined-required" label="Total Rental" placeholder='Total Rental' fullWidth size='small' required onChange={handleTotalRentalChange} />
+              <TextField value={totalRental} type='number' id="outlined-required" placeholder='Total Rental' fullWidth size='small' required />
             </Box>
             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
               <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
-                <Typography value={facilities} variant='p' sx={{ color: 'black' }}>Enter facilities</Typography>
+                <Typography variant='p' sx={{ color: 'black' }}>Enter facilities</Typography>
               </Box>
-              <TextField id="outlined-required" label="Facilities" placeholder='Enter Facilities' fullWidth size='small' onChange={handlefacilityChange} />
+              <TextField value={facilities} id="outlined-required" placeholder='Enter Facilities' fullWidth size='small' />
             </Box>
           </Grid>
 
@@ -213,13 +239,13 @@ const HomeBreakDownView = ({ setSubmit, setAllValues, submitClicked }) => {
               </Box>
               <CustomTabPanel value={value} index={0}>
 
-                <EditRoom roomArray={roomArray} setRoomArray={setRoomArray} adultsCount={adultsCount} childCount={childCount} setAdultsCount={setAdultsCount} setChildCount={setChildCount} />
+                <ViewRoom roomArray={roomArray} setRoomArray={setRoomArray} adultsCount={adultsCount} childCount={childCount} setAdultsCount={setAdultsCount} setChildCount={setChildCount} />
 
 
-                <EditUnit roomArray={roomArray} setRoomArray={setRoomArray} unitArray={unitArray} setUnitArray={setUnitArray} />
+                <ViewUnit roomArray={roomArray} setRoomArray={setRoomArray} unitArray={unitArray} setUnitArray={setUnitArray} />
               </CustomTabPanel>
               <CustomTabPanel value={value} index={1}>
-                <EditHall hallArray={hallArray} setHallArray={setHallArray} />
+                <ViewHall hallArray={hallArray} setHallArray={setHallArray} />
               </CustomTabPanel>
             </Box>
           </Grid>
@@ -234,4 +260,4 @@ const HomeBreakDownView = ({ setSubmit, setAllValues, submitClicked }) => {
   )
 }
 
-export default HomeBreakDownView
+export default HomeBreakDownViewOnly

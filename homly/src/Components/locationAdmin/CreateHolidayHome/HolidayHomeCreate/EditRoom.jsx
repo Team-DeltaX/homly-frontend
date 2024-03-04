@@ -19,10 +19,7 @@ import RoomBreakdown from '../RoomBreakdown';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
-
 const EditRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount }) => {
-
-    const { homeId } = useParams();
     // open pop up for add room
     const [open, setOpen] = useState(false);
     const [fullWidth, setFullWidth] = useState(true);
@@ -31,6 +28,10 @@ const EditRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount }) =>
     const [isEditMode, setIsEditMode] = useState(false);
     const [editIndex, setEditIndex] = useState(null);
 
+
+    const [values, setValues] = useState({
+        roomCode: '', roomAc: '', RoomType: '', NoOfBeds: '', NoOfAdults: '', NoOfChildren: '', roomRemarks: '', roomRental: '', groupByUnit: false,
+    })
 
 
     useEffect(() => {
@@ -110,10 +111,6 @@ const EditRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount }) =>
     };
 
 
-    const [values, setValues] = useState({
-        roomCode: '', roomAc: '', RoomType: '', NoOfBeds: '', NoOfAdults: '', NoOfChildren: '', roomRemarks: '', roomRental: '', groupByUnit: false,
-    })
-
 
 
 
@@ -134,39 +131,27 @@ const EditRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount }) =>
             return;
         }
 
-        // if (roomExist) {
-        //     setOpenRoomExistAlert(true);
-        //     return;
-        // }
+        if (roomExist) {
+            setOpenRoomExistAlert(true);
+            return;
+        }
 
 
 
         if (isEditMode && editIndex !== null) {
             // Editing an existing room
-            let noOfAdults = values.NoOfAdults;
-            let noOfChildren = values.NoOfChildren;
-            console.log(noOfAdults);
-            console.log(noOfChildren);
             const updatedRoomArray = [...roomArray];
             updatedRoomArray[editIndex] = {
                 ...updatedRoomArray[editIndex],
                 ...values,
                 rentalArray: [...rentalArray], // Copy the rentalArray as well
             };
-
-
             setRoomArray(updatedRoomArray);
-            setAdultsCount(prevCount => prevCount + parseInt(values.NoOfAdults, 10));
-            setChildCount(prevCount => prevCount + parseInt(values.NoOfChildren, 10));
-
-
         } else {
             // Adding a new room
             const updatedValues = { ...values, rentalArray };
             setRoomArray([...roomArray, updatedValues]);
             // setRoomArray([...roomArray, values]);
-            setAdultsCount(prevCount => prevCount + parseInt(values.NoOfAdults, 10));
-            setChildCount(prevCount => prevCount + parseInt(values.NoOfChildren, 10));
         }
 
         setRentalArray([]);
@@ -176,6 +161,8 @@ const EditRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount }) =>
         setIsEditMode(false);
         setEditIndex(null);
 
+        setAdultsCount(prevCount => prevCount + parseInt(values.NoOfAdults, 10));
+        setChildCount(prevCount => prevCount + parseInt(values.NoOfChildren, 10));
 
 
     };
@@ -211,41 +198,15 @@ const EditRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount }) =>
 
         });
 
-        axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/rental/${homeId}/${editedRoom.roomCode}`)
-            .then(res => {
-                console.log("get")
-                const rental = res.data.roomRental;
-                console.log(rental)
-                for (let i = 0; i < rental.length; i++) {
-                    console.log("in")
-                    console.log(rental[i].Month);
-                    setRental({
-                        district: rental[i].Month,
-                        weekDays: rental[i].WeekRental,
-                        weekEnds: rental[i].WeekEndRental,
-                    });
-
-                    console.log("rental", rental);
-
-                    setRentalArray(rental); // Use functional update
-                    console.log("rental array", rentalArray);
-                }
+        setRentalArray(editedRoom.rentalArray);
 
 
-                setOpen(true);
-                setEditIndex(index);
-                setIsEditMode(true);
-
-            })
-            .catch(err => {
-                console.log(err);
-            });
-
+        setOpen(true);
+        setEditIndex(index);
+        setIsEditMode(true);
 
 
     }
-
-
 
     const [error, setError] = useState({
         ctName: false, ctAddress: false, ctDescription: false, ctContactNo: false
@@ -349,9 +310,6 @@ const EditRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount }) =>
 
     console.log(roomArray);
 
-
-
-
     return (
         <Box>
             <Box sx={{ display: 'flex', justifyContent: 'flex-start', marginTop: "12px", marginBottom: '12px' }}>
@@ -376,11 +334,6 @@ const EditRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount }) =>
                     })}
 
             </fieldset>
-
-
-
-
-
 
             {/* Add new room popup */}
             <React.Fragment>
@@ -531,15 +484,15 @@ const EditRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount }) =>
                                             <Paper sx={{ display: 'flex', padding: "1.2em 2em", justifyContent: 'space-between', marginBottom: "1em" }}>
                                                 <Box>
                                                     <Typography variant='p' sx={{ color: 'black', marginRight: '0.6em', fontWeight: "bold" }}>Month</Typography>
-                                                    <Typography variant='p' sx={{ color: 'grey', fontWeight: '500' }}>{item.Month}</Typography>
+                                                    <Typography variant='p' sx={{ color: 'grey', fontWeight: '500' }}>{item.district}</Typography>
                                                 </Box>
                                                 <Box>
                                                     <Typography variant='p' sx={{ color: 'black', marginRight: '0.6em', fontWeight: "bold" }}>WeekDays</Typography>
-                                                    <Typography variant='p' sx={{ color: 'grey', fontWeight: '500' }}>{item.WeekRental}</Typography>
+                                                    <Typography variant='p' sx={{ color: 'grey', fontWeight: '500' }}>{item.weekDays}</Typography>
                                                 </Box>
                                                 <Box>
                                                     <Typography variant='p' sx={{ color: 'black', marginRight: '0.6em', fontWeight: 'bold' }}>WeekEnd</Typography>
-                                                    <Typography variant='p' sx={{ color: 'grey', fontWeight: '500' }}>{item.WeekEndRental}</Typography>
+                                                    <Typography variant='p' sx={{ color: 'grey', fontWeight: '500' }}>{item.weekEnds}</Typography>
                                                 </Box>
                                                 <CancelIcon sx={{ cursor: 'pointer' }} onClick={() => handleRemoveRentalItem(index)} />
                                             </Paper>
@@ -559,9 +512,6 @@ const EditRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount }) =>
                     </form>
                 </Dialog>
             </React.Fragment>
-
-
-
 
             {/* alert remove room */}
             <div>

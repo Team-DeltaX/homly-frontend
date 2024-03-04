@@ -18,6 +18,7 @@ import EditHolidayHomeBreakdown from '../../Components/locationAdmin/CreateHolid
 
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
 
@@ -57,12 +58,18 @@ function a11yProps(index) {
 
 const HolidayHomeEdit = () => {
 
+    const navigate = useNavigate();
+
     const [showNav, setShowNav] = useState('nav_grid_deactive');
     const [value, setValue] = useState(0);
 
     const [roomArray, setRoomArray] = useState([]);
     const [unitArray, setUnitArray] = useState([]);
     const [hallArray, setHallArray] = useState([]);
+
+    const [updated, setUpdated] = useState(false);
+    const [updatedValues, setUpdatedValues] = useState([]);
+
 
 
 
@@ -78,13 +85,18 @@ const HolidayHomeEdit = () => {
         setValue(2);
     }
 
+    const handleUpdate = () => {
+        setUpdated(true)
+        console.log(updatedValues);
+    }
+
     const { homeId } = useParams();
 
 
 
     useEffect(() => {
 
-        axios.get(`http://localhost:3002/locationadmin/holidayhome/${homeId}`)
+        axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/${homeId}`)
             .then((res) => {
                 if (Response) {
                     const roomDetails = res.data.room;
@@ -94,7 +106,7 @@ const HolidayHomeEdit = () => {
                     console.log("No data found");
                 }
             })
-        axios.get(`http://localhost:3002/locationadmin/holidayhome/${homeId}`)
+        axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/${homeId}`)
             .then((res) => {
                 if (Response) {
                     const unitDetails = res.data.unit;
@@ -109,7 +121,7 @@ const HolidayHomeEdit = () => {
 
 
 
-        axios.get(`http://localhost:3002/locationadmin/holidayhome/${homeId}`)
+        axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/${homeId}`)
             .then((res) => {
                 if (Response) {
                     const hallDetails = res.data.hall;
@@ -123,6 +135,23 @@ const HolidayHomeEdit = () => {
 
 
     }, [homeId])
+
+    useEffect(() => {
+        console.log("Inside useEffect");
+        console.log("updated:", updated);
+
+        if (updated) {
+            console.log("in the axios");
+            axios.post("http://localhost:3002/admin/auth/locationadmin/holidayhome/update", { updatedValues })
+                .then((res) => {
+                    console.log(res);
+                    navigate("/locationadmin/manage");
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
+    }, [updated]);
 
 
     return (
@@ -145,13 +174,13 @@ const HolidayHomeEdit = () => {
                                         </Tabs>
                                     </Box>
                                     <CustomTabPanel value={value} index={0}>
-                                        <EditHolidayHomeDetails />
+                                        <EditHolidayHomeDetails updated={updated} setUpdatedValues={setUpdatedValues} />
                                         <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginRight: "1.5em" }}>
                                             <Button variant="contained" sx={{ marginTop: '1em' }} onClick={handleNextToUnit}>Next</Button>
                                         </Box>
                                     </CustomTabPanel>
                                     <CustomTabPanel value={value} index={1}>
-                                        <EditHolidayHomeBreakdown roomArray={roomArray} setRoomArray={setRoomArray} unitArray={unitArray} setUnitArray={setUnitArray} hallArray={hallArray} setHallArray={setHallArray} />
+                                        <EditHolidayHomeBreakdown roomArray={roomArray} setRoomArray={setRoomArray} unitArray={unitArray} setUnitArray={setUnitArray} hallArray={hallArray} setHallArray={setHallArray} updated={updated} setUpdatedValues={setUpdatedValues} />
                                         <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginRight: "1.5em" }}>
                                             <Button variant="contained" sx={{ marginTop: '1em' }} onClick={handleNextToHall}>Next</Button>
                                         </Box>
@@ -159,7 +188,7 @@ const HolidayHomeEdit = () => {
                                     <CustomTabPanel value={value} index={2}>
                                         <EditCaretakerDetails />
                                         <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginRight: "1.5em" }}>
-                                            <Button variant="contained" sx={{ marginTop: '1em' }} onClick={handleNextToUnit}>Get Approval</Button>
+                                            <Button variant="contained" sx={{ marginTop: '1em' }} onClick={handleUpdate}>Get Approval</Button>
                                         </Box>
 
                                     </CustomTabPanel>

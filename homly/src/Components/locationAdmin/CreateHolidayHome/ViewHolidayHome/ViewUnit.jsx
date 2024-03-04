@@ -15,11 +15,14 @@ import Select from '@mui/material/Select';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
+
 import UnitBreakDown from '../UnitBreakDown';
-const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
+import ViewUnitBreakDown from './ViewUnitBreakDown';
+const ViewUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
 
     const { homeId } = useParams();
+    const [selectedRoomDetails, setSelectedRoomDetails] = useState([{}]);
 
     const [openUnit, setOpenUnit] = useState(false);
     const [fullWidth, setFullWidth] = useState(true);
@@ -177,37 +180,12 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
 
         })
 
-        axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/rental/${homeId}/${editedUnit.unitCode}`)
-            .then(res => {
-                console.log("get")
-                const rental = res.data.roomRental;
-                console.log(rental)
-                for (let i = 0; i < rental.length; i++) {
-                    console.log("in")
-                    console.log(rental[i].Month);
-                    setUnitRental({
-                        district: rental[i].Month,
-                        weekDays: rental[i].WeekRental,
-                        weekEnds: rental[i].WeekEndRental,
-                    });
-
-                    console.log("rental", rental);
-
-                    setUnitRentalArray(rental); // Use functional update
-                    console.log("rental array", unitRentalArray);
-                }
+        setUnitRentalArray(editedUnit.unitRentalArray);
 
 
-
-
-                setOpenUnit(true)
-                setEditIndex(index);
-                setIsEditMode(true);
-
-            })
-            .catch(err => {
-                console.log(err);
-            });
+        setOpenUnit(true)
+        setEditIndex(index);
+        setIsEditMode(true);
 
 
 
@@ -319,16 +297,12 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
         setOpenHallExistAlert(false);
     };
 
-    console.log(unitArray);
 
 
 
 
     return (
         <Box>
-            <Box sx={{ display: 'flex', justifyContent: 'flex-start', marginTop: "12px", marginBottom: "12px" }}>
-                <Button size='small' variant='contained' sx={{ backgroundColor: 'primary.main' }} onClick={handleClickOpenUnit}>Add Unit</Button>
-            </Box>
 
             <fieldset style={{ borderRadius: '8px' }}>
                 <legend>Units Breakdown</legend>
@@ -367,12 +341,18 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
                                 }
                             })
 
+
+
+
                         return (
-                            <UnitBreakDown key={index} unitCode={item.unitCode} unitAc={item.unitAc} floorLevel={item.floorLevel} unitNoOfAdults={item.unitNoOfAdults} unitNoOfChildren={item.unitNoOfChildren} unitRemarks={item.unitRemarks} unitRental={item.unitRental} roomArray={roomArray} setRoomArray={setRoomArray} selectedRooms={item.selectedRooms} handleUnitDelete={handleUnitDelete} handleUnitEdit={handleUnitEdit} index={index} />
+                            // <UnitBreakDown key={index} unitCode={item.unitCode} unitAc={item.unitAc} floorLevel={item.floorLevel} unitNoOfAdults={item.unitNoOfAdults} unitNoOfChildren={item.unitNoOfChildren} unitRemarks={item.unitRemarks} unitRental={item.unitRental} roomArray={roomArray} setRoomArray={setRoomArray} selectedRooms={item.selectedRooms} handleUnitDelete={handleUnitDelete} handleUnitEdit={handleUnitEdit} index={index} />
+                            <ViewUnitBreakDown key={index} unitCode={item.unitCode} unitAc={item.unitAc} floorLevel={item.floorLevel} unitRemarks={item.unitRemarks} unitRental={item.unitRental} roomArray={roomArray} setRoomArray={setRoomArray} selectedRooms={item.selectedRooms} handleUnitDelete={handleUnitDelete} handleUnitEdit={handleUnitEdit} index={index} />
                         )
                     })}
 
             </fieldset>
+
+
 
 
 
@@ -562,4 +542,4 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
     )
 }
 
-export default EditUnit
+export default ViewUnit

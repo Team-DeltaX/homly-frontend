@@ -20,11 +20,10 @@ const EditCaretakerDetails = () => {
 
     const { homeId } = useParams();
     useEffect(() => {
-        axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/${homeId}`)
+        axios.get(`http://localhost:3002/locationadmin/holidayhome/${homeId}`)
             .then((res) => {
                 if (Response) {
                     const caretakerDetails = res.data.caretaker;
-
 
                     setValue({
                         caretakerName: caretakerDetails[0].Name, caretakerContactNo: caretakerDetails[0].ContactNo, caretakerStatus: caretakerDetails[0].Status, caretakerAddress: caretakerDetails[0].Address, caretakerDescription: caretakerDetails[0].Description,
@@ -162,8 +161,8 @@ const EditCaretakerDetails = () => {
                                     onChange={handlestatusChange}
 
                                 >
-                                    <FormControlLabel value="Active" control={<Radio />} label="Active" />
-                                    <FormControlLabel value="Inactive" control={<Radio />} label="Inactive" />
+                                    <FormControlLabel value="active" control={<Radio />} label="Active" />
+                                    <FormControlLabel value="inactive" control={<Radio />} label="Inactive" />
                                 </RadioGroup>
                             </Box>
                         </Box>
@@ -215,8 +214,8 @@ const EditCaretakerDetails = () => {
                                     onChange={handlestatusChangeSecond}
 
                                 >
-                                    <FormControlLabel value="Active" control={<Radio />} label="Active" />
-                                    <FormControlLabel value="Inactive" control={<Radio />} label="Inactive" />
+                                    <FormControlLabel value="active" control={<Radio />} label="Active" />
+                                    <FormControlLabel value="inactive" control={<Radio />} label="Inactive" />
                                 </RadioGroup>
                             </Box>
                         </Box>

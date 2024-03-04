@@ -48,7 +48,7 @@ function a11yProps(index) {
 }
 
 
-const EditHolidayHomeBreakdown = ({ roomArray, setRoomArray, unitArray, setUnitArray, hallArray, setHallArray, updated, setUpdatedValues }) => {
+const EditHolidayHomeBreakdown = ({ roomArray, setRoomArray, unitArray, setUnitArray, hallArray, setHallArray }) => {
 
     const [value, setValue] = useState(0);
 
@@ -62,18 +62,17 @@ const EditHolidayHomeBreakdown = ({ roomArray, setRoomArray, unitArray, setUnitA
     const [kitchen, setKitchen] = useState(false);
     const [park, setPark] = useState(false);
     const [wifi, setWifi] = useState(false);
-    const [pool, setPool] = useState(false);
-    const [bar, setBar] = useState(false);
 
 
 
     const { homeId } = useParams();
 
     useEffect(() => {
-        axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/${homeId}`)
+        axios.get(`http://localhost:3002/locationadmin/holidayhome/${homeId}`)
             .then((res) => {
                 if (Response) {
-                    const homeDetails = res.data.homeDetails[0];
+                    const homeDetails = res.data.homeDetails;
+
                     setAdultsCount(homeDetails.MaxNoOfAdults);
                     setChildCount(homeDetails.MaxNoOfChildren);
                     setOtherCharges(homeDetails.OtherCharge);
@@ -84,23 +83,14 @@ const EditHolidayHomeBreakdown = ({ roomArray, setRoomArray, unitArray, setUnitA
                     setKitchen(homeDetails.Kitchen);
                     setPark(homeDetails.Park);
                     setWifi(homeDetails.Wifi);
-                    setPool(homeDetails.Pool);
-                    setBar(homeDetails.Bar);
+
+
+
                 } else {
                     console.log("No data found");
                 }
             })
     }, [])
-
-
-    useEffect(() => {
-
-        const details = { "adultsCount": adultsCount, "childCount": childCount, "otherCharges": otherCharges, "serviceCharges": serviceCharges, "totalRental": totalRental, "facilities": facilities, "gym": gym, "kitchen": kitchen, "park": park, "wifi": wifi, "pool": pool, "bar": bar }
-        setUpdatedValues((prev) => {
-            return { ...prev, "homeBreakDown": details }
-        });
-
-    }, [updated]);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -139,16 +129,6 @@ const EditHolidayHomeBreakdown = ({ roomArray, setRoomArray, unitArray, setUnitA
     const handleWifiChange = (e) => {
         setWifi(e.target.checked);
     }
-
-    const handlePoolChange = (e) => {
-        setPool(e.target.checked);
-    }
-
-    const handleBarChange = (e) => {
-        setBar(e.target.checked);
-
-    }
-
 
 
 
@@ -203,16 +183,10 @@ const EditHolidayHomeBreakdown = ({ roomArray, setRoomArray, unitArray, setUnitA
                     </Grid>
                     <Grid item md={6} sm={12} xs={12}>
                         <FormGroup sx={{ display: 'flex', width: '100%' }}>
-                            <Box sx={{ display: "flex", gap: "1em" }}>
-                                <FormControlLabel control={<Checkbox />} label="Gym" checked={gym} onChange={hangleGymChange} />
-                                <FormControlLabel control={<Checkbox />} label="Park" checked={park} onChange={handleParkChange} />
-                                <FormControlLabel control={<Checkbox />} label="Kitchen" checked={kitchen} onChange={handleKitchenChange} />
-                            </Box>
-                            <Box sx={{ display: "flex", gap: "1em" }}>
-                                <FormControlLabel control={<Checkbox />} label="Bar" checked={bar} onChange={handleBarChange} />
-                                <FormControlLabel control={<Checkbox />} label="Wifi" checked={wifi} onChange={handleWifiChange} />
-                                <FormControlLabel control={<Checkbox />} label="Pool" checked={pool} onChange={handlePoolChange} />
-                            </Box>
+                            <FormControlLabel control={<Checkbox />} label="Gym" checked={gym} onChange={hangleGymChange} />
+                            <FormControlLabel control={<Checkbox />} label="Kitchen" checked={kitchen} onChange={handleKitchenChange} />
+                            <FormControlLabel control={<Checkbox />} label="Park" checked={park} onChange={handleParkChange} />
+                            <FormControlLabel control={<Checkbox />} label="Wifi" checked={wifi} onChange={handleWifiChange} />
 
                         </FormGroup>
                     </Grid>
@@ -244,6 +218,8 @@ const EditHolidayHomeBreakdown = ({ roomArray, setRoomArray, unitArray, setUnitA
                             <EditHall hallArray={hallArray} setHallArray={setHallArray} />
                         </CustomTabPanel>
                     </Box>
+
+
                 </Grid>
             </fieldset>
 

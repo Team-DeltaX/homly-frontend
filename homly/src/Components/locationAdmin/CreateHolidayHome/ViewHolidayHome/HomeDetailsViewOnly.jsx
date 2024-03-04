@@ -7,143 +7,48 @@ import Select from '@mui/material/Select';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 
-const HomeDetailsView = ({ setSubmit, allValues, setAllValues, submitClicked, setHolidayHomeError }) => {
+const HomeDetailsViewOnly = () => {
+
+  const { homeId } = useParams();
+
+  useEffect(() => {
+    axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/${homeId}`)
+      .then((res) => {
+        if (Response) {
+          const homeDetails = res.data.homeDetails[0];
+          const contactNo = res.data.contactNo;
+
+          // Extract relevant data from response and set to 'value' state
+          setValue({
+            name: homeDetails.Name || '',
+            address: homeDetails.Address || '',
+            district: 'Kegalle', // Add the logic to get district if available
+            description: homeDetails.Description || '',
+            contactNo1: (contactNo && contactNo.length > 0) ? contactNo[0].ContactNo : '',
+            contactNo2: (contactNo && contactNo.length > 1) ? contactNo[1].ContactNo : '',
+            category: homeDetails.Category || '',
+            status: homeDetails.Status || ''
+          });
+
+
+        } else {
+          console.log("No data found");
+        }
+      })
+  }, [])
 
   const [value, setValue] = useState({
     name: '', address: '', district: '', description: '', contactNo1: '', contactNo2: '', category: '', status: ''
   })
 
-  const [error, setError] = useState({
-    name: false, address: false, description: false, contactNo1: false, contactNo2: false
-  });
 
 
   // const [mainImage, setMainImage] = useState('');
   const [images, setImages] = useState({ mainImage: '', image1: '', image2: '', image3: '' });
-
-
-  useEffect(() => {
-    const isDetailsComplete =
-      value.name !== '' &&
-      value.address !== '' &&
-      value.district !== '' &&
-      value.description !== '' &&
-      value.contactNo1 !== '' &&
-      value.category !== '' &&
-      value.status !== '';
-
-    const areErrorsEmpty =
-      !error.name &&
-      !error.address &&
-      !error.description &&
-      !error.contactNo1 &&
-      !error.contactNo2;
-
-
-
-    if (isDetailsComplete && areErrorsEmpty) {
-      setSubmit(true)
-    } else {
-      setSubmit(false)
-    }
-
-    // setSubmit(prevSubmit => ({
-    //   ...prevSubmit,
-    //   isDetailsComplete
-    // }));
-  }, [value, error, setSubmit]);
-
-  useEffect(() => {
-
-    if (submitClicked) {
-      setAllValues(prev => ({
-        ...prev,
-        holidayHomeDetails: value,
-        images: images
-      }))
-
-    }
-  }, [submitClicked])
-
-
-
-
-
-  const handleImageUpload = (name) => (e) => {
-    const fileReader = new FileReader();
-    fileReader.addEventListener('load', () => {
-      const imageData = fileReader.result;
-      setImages((prevImages) => ({
-        ...prevImages,
-        [name]: imageData,
-      }));
-      // setMainImage(imageData);
-      // console.log(imageData); // Log the result inside the event listener
-
-    });
-    fileReader.readAsDataURL(e.target.files[0]);
-  };
-
-
-  const handleNameChange = (e) => {
-    setValue({ ...value, name: e.target.value });
-    const name_regex = /^[a-zA-Z0-9\s]+$/;
-    if (e.target.value.length > 0) {
-      if (!name_regex.test(e.target.value)) {
-        setError({ ...error, name: true });
-      } else {
-        setError({ ...error, name: false });
-      }
-    }
-  }
-
-
-  const handleAddressChange = (e) => {
-    setValue({ ...value, address: e.target.value });
-  }
-
-
-  const handleDistrictChange = (e) => {
-    setValue({ ...value, district: e.target.value });
-  }
-
-  const handleDisriptionChange = (e) => {
-    setValue({ ...value, description: e.target.value });
-  }
-
-  const handleContactNo1Change = (e) => {
-    setValue({ ...value, contactNo1: e.target.value });
-    const phone_regex = /^\d{10}$/;
-    if (e.target.value.length > 0) {
-      if (!phone_regex.test(e.target.value)) {
-        setError({ ...error, contactNo1: true });
-      } else {
-        setError({ ...error, contactNo1: false });
-      }
-    }
-  }
-
-  const handleContactNo2Change = (e) => {
-    setValue({ ...value, contactNo2: e.target.value });
-    const phone_regex = /^\d{10}$/;
-    if (e.target.value.length > 0) {
-      if (!phone_regex.test(e.target.value)) {
-        setError({ ...error, contactNo2: true });
-      } else {
-        setError({ ...error, contactNo2: false });
-      }
-    }
-  }
-
-  const handlestatusChange = (e) => {
-    setValue({ ...value, status: e.target.value });
-  }
-
-  const handleCategoryChange = (e) => {
-    setValue({ ...value, category: e.target.value });
-  }
 
 
 
@@ -156,13 +61,13 @@ const HomeDetailsView = ({ setSubmit, allValues, setAllValues, submitClicked, se
           <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
             <Typography variant='p' sx={{ color: 'black' }}>Name</Typography>
           </Box>
-          <TextField error={error.name} className='input_field' required id="outlined-required" label="Enter Name" placeholder='Enter Name' fullWidth size='small' onChange={handleNameChange} helperText={error.name ? "Invalid Input" : ''} />
+          <TextField value={value.name} className='input_field' required id="outlined-required" label="Enter Name" placeholder='Enter Name' fullWidth size='small' />
         </Box>
         <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
           <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
             <Typography variant='p' sx={{ color: 'black' }}>Address</Typography>
           </Box>
-          <TextField required id="outlined-required" label="Enter Address" placeholder='Enter Address' fullWidth size='small' onChange={handleAddressChange} />
+          <TextField value={value.address} required id="outlined-required" label="Enter Address" placeholder='Enter Address' fullWidth size='small' />
         </Box>
         <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
           <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
@@ -179,7 +84,7 @@ const HomeDetailsView = ({ setSubmit, allValues, setAllValues, submitClicked, se
                 id="demo-simple-select"
                 value={value.district}
                 label="Age"
-                onChange={handleDistrictChange}
+
               >
                 <MenuItem value={"Colombo"}>Colombo</MenuItem>
                 <MenuItem value={"Gampaha"}>Gampaha</MenuItem>
@@ -215,19 +120,19 @@ const HomeDetailsView = ({ setSubmit, allValues, setAllValues, submitClicked, se
           <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
             <Typography variant='p' sx={{ color: 'black' }}>Description</Typography>
           </Box>
-          <TextField required multiline id="outlined-required" label="Enter Description" placeholder='Enter Description' fullWidth size='small' onChange={handleDisriptionChange} />
+          <TextField value={value.description} required multiline id="outlined-required" label="Enter Description" placeholder='Enter Description' fullWidth size='small' />
         </Box>
         <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
           <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
             <Typography variant='p' sx={{ color: 'black' }}>Contact No 1</Typography>
           </Box>
-          <TextField error={error.contactNo1} required id="outlined-required" label="Enter Contact No" placeholder='Enter Contact No' fullWidth size='small' onChange={handleContactNo1Change} helperText={error.contactNo1 ? "There should be 10 digits" : ''} />
+          <TextField value={value.contactNo1} required id="outlined-required" label="Enter Contact No" placeholder='Enter Contact No' fullWidth size='small' />
         </Box>
         <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
           <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
             <Typography variant='p' sx={{ color: 'black' }}>Contact No 2</Typography>
           </Box>
-          <TextField error={error.contactNo2} id="outlined-required" label="Enter Contact No2" placeholder='Enter Contact No2' fullWidth size='small' onChange={handleContactNo2Change} helperText={error.contactNo2 ? "There should be 10 digits" : ''} />
+          <TextField value={value.contactNo2} id="outlined-required" label="Enter Contact No2" placeholder='Enter Contact No2' fullWidth size='small' />
         </Box>
 
         <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
@@ -243,9 +148,9 @@ const HomeDetailsView = ({ setSubmit, allValues, setAllValues, submitClicked, se
                 size='small'
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={value.catogery}
+                value={value.category}
                 label="Age"
-                onChange={handleCategoryChange}
+
               >
                 <MenuItem value={"exclusive"}>Exclusive</MenuItem>
                 <MenuItem value={"nonExclusive"}>Non-Exclusive</MenuItem>
@@ -266,7 +171,7 @@ const HomeDetailsView = ({ setSubmit, allValues, setAllValues, submitClicked, se
               aria-labelledby="demo-controlled-radio-buttons-group"
               name="controlled-radio-buttons-group"
               value={value.status}
-              onChange={handlestatusChange}
+
 
             >
               <FormControlLabel value="Active" control={<Radio />} label="Active" />
@@ -279,7 +184,7 @@ const HomeDetailsView = ({ setSubmit, allValues, setAllValues, submitClicked, se
             <Typography variant='p' sx={{ color: 'black' }}>Main Image</Typography>
           </Box>
           <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
-            <input type="file" onChange={handleImageUpload('mainImage')} accept="image/*" />
+            <input type="file" accept="image/*" />
           </Box>
         </Box>
         <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '1em', marginBottom: '12px' }}>
@@ -287,7 +192,7 @@ const HomeDetailsView = ({ setSubmit, allValues, setAllValues, submitClicked, se
             <Typography variant='p' sx={{ color: 'black' }}>Image 1</Typography>
           </Box>
           <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
-            <input type="file" onChange={handleImageUpload('image1')} accept="image/*" />
+            <input type="file" accept="image/*" />
           </Box>
         </Box>
         <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '1em', marginBottom: '12px' }}>
@@ -295,7 +200,7 @@ const HomeDetailsView = ({ setSubmit, allValues, setAllValues, submitClicked, se
             <Typography variant='p' sx={{ color: 'black' }}>Image 2</Typography>
           </Box>
           <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
-            <input type="file" onChange={handleImageUpload('image2')} accept="image/*" />
+            <input type="file" accept="image/*" />
           </Box>
         </Box>
         <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '1em', marginBottom: '12px' }}>
@@ -303,7 +208,7 @@ const HomeDetailsView = ({ setSubmit, allValues, setAllValues, submitClicked, se
             <Typography variant='p' sx={{ color: 'black' }}>Image 3</Typography>
           </Box>
           <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
-            <input type="file" onChange={handleImageUpload('image3')} accept="image/*" />
+            <input type="file" accept="image/*" />
           </Box>
         </Box>
 
@@ -314,4 +219,4 @@ const HomeDetailsView = ({ setSubmit, allValues, setAllValues, submitClicked, se
   )
 }
 
-export default HomeDetailsView
+export default HomeDetailsViewOnly

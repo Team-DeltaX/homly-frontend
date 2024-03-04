@@ -8,9 +8,9 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 
 
-import EditRoom from './EditHolidayHomes/EditRoom';
-import EditUnit from './EditHolidayHomes/EditUnit';
-import EditHall from './EditHolidayHomes/EditHall';
+import EditRoom from './EditRoom';
+import EditUnit from './EditUnit';
+import EditHall from './EditHall';
 
 
 
@@ -49,7 +49,7 @@ function a11yProps(index) {
     'aria-controls': `simple-tabpanel-${index}`,
   };
 }
-const HomeBreakDownView = ({ setSubmit, setAllValues, submitClicked }) => {
+const CreatePageHomeBreakDownView = ({ setSubmit, setAllValues, submitClicked, setHomeBreakDownError }) => {
 
   const [value, setValue] = useState(0);
 
@@ -70,21 +70,54 @@ const HomeBreakDownView = ({ setSubmit, setAllValues, submitClicked }) => {
   const [pool, setPool] = useState(false);
   const [bar, setBar] = useState(false);
 
+  const [error, setError] = useState({
+    tRental: false, oCharges: false, sCharges: false
+  });
+
+  console.log("break", error)
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
   const handleOtherChargesChange = (e) => {
     setOtherCharges(e.target.value);
+    const positive_regex = /^\d*\.?\d+$/;
+
+    if (e.target.value.length > 0) {
+      if (!positive_regex.test(e.target.value)) {
+        setError({ ...error, oCharges: true });
+      } else {
+        setError({ ...error, oCharges: false });
+      }
+    }
   }
 
 
   const handleServiceChargesChange = (e) => {
     setServiceCharges(e.target.value);
+    const positive_regex = /^\d*\.?\d+$/;
+
+    if (e.target.value.length > 0) {
+      if (!positive_regex.test(e.target.value)) {
+        setError({ ...error, sCharges: true });
+      } else {
+        setError({ ...error, sCharges: false });
+      }
+    }
   }
 
   const handleTotalRentalChange = (e) => {
     setTotalRental(e.target.value);
+    const positive_regex = /^\d*\.?\d+$/;
+
+    if (e.target.value.length > 0) {
+      if (!positive_regex.test(e.target.value)) {
+        setError({ ...error, tRental: true });
+      } else {
+        setError({ ...error, tRental: false });
+      }
+    }
   }
 
   const handlefacilityChange = (e) => {
@@ -118,12 +151,21 @@ const HomeBreakDownView = ({ setSubmit, setAllValues, submitClicked }) => {
   }
 
   useEffect(() => {
-    if (totalRental !== undefined && roomArray.length > 0 && unitArray.length > 0) {
+    const areErrorsEmpty =
+      !error.oCharges &&
+      !error.sCharges &&
+      !error.tRental
+
+    if (areErrorsEmpty) {
+      // setHomeBreakDownError(true)
+    }
+
+    if (totalRental !== undefined && roomArray.length > 0 && unitArray.length > 0 && areErrorsEmpty) {
       setSubmit(true);
     } else {
       setSubmit(false);
     }
-  }, [totalRental, roomArray, unitArray, setSubmit]);
+  }, [totalRental, roomArray, unitArray, setSubmit, error]);
 
 
   useEffect(() => {
@@ -177,19 +219,19 @@ const HomeBreakDownView = ({ setSubmit, setAllValues, submitClicked }) => {
               <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                 <Typography variant='p' sx={{ color: 'black' }}>Other Charges</Typography>
               </Box>
-              <TextField value={otherCharges} type='number' id="outlined-required" label="Other Charges" placeholder='Other Charges' fullWidth size='small' onChange={handleOtherChargesChange} />
+              <TextField error={error.oCharges} value={otherCharges} type='number' id="outlined-required" label="Other Charges" placeholder='Other Charges' fullWidth size='small' onChange={handleOtherChargesChange} helperText={error.oCharges ? "Invalid Input" : " "} />
             </Box>
             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
               <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                 <Typography variant='p' sx={{ color: 'black' }}>Service Charges</Typography>
               </Box>
-              <TextField value={serviceCharges} type='number' id="outlined-required" label="Service Charges" placeholder='Service Charges' fullWidth size='small' onChange={handleServiceChargesChange} />
+              <TextField error={error.sCharges} value={serviceCharges} type='number' id="outlined-required" label="Service Charges" placeholder='Service Charges' fullWidth size='small' onChange={handleServiceChargesChange} helperText={error.sCharges ? "Invalid Input" : " "} />
             </Box>
             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
               <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                 <Typography variant='p' sx={{ color: 'black' }}>Total Rental</Typography>
               </Box>
-              <TextField value={totalRental} type='number' id="outlined-required" label="Total Rental" placeholder='Total Rental' fullWidth size='small' required onChange={handleTotalRentalChange} />
+              <TextField error={error.tRental} value={totalRental} type='number' id="outlined-required" label="Total Rental" placeholder='Total Rental' fullWidth size='small' required onChange={handleTotalRentalChange} helperText={error.tRental ? "Invalid Input" : " "} />
             </Box>
             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
               <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
@@ -234,4 +276,4 @@ const HomeBreakDownView = ({ setSubmit, setAllValues, submitClicked }) => {
   )
 }
 
-export default HomeBreakDownView
+export default CreatePageHomeBreakDownView

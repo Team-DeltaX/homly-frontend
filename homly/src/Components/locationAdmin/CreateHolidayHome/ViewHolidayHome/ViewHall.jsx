@@ -11,15 +11,12 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 
-import Snackbar from '@mui/material/Snackbar';
-import Alert from '@mui/material/Alert';
-
-import HallBreakDown from '../HallBreakDown';
-
-import axios from 'axios'
+import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
-const EditHall = ({ hallArray, setHallArray }) => {
+import ViewHallBreakDown from './ViewHallBreakDown';
+
+const ViewHall = ({ hallArray, setHallArray }) => {
 
     const { homeId } = useParams();
 
@@ -220,7 +217,6 @@ const EditHall = ({ hallArray, setHallArray }) => {
 
         });
 
-
         axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/rental/${homeId}/${editedHall.hallCode}`)
             .then(res => {
                 console.log("get")
@@ -250,6 +246,11 @@ const EditHall = ({ hallArray, setHallArray }) => {
             .catch(err => {
                 console.log(err);
             });
+
+
+
+
+
 
 
     }
@@ -298,9 +299,7 @@ const EditHall = ({ hallArray, setHallArray }) => {
 
     return (
         <Box>
-            <Box sx={{ display: 'flex', justifyContent: 'flex-start', marginTop: "12px", marginBottom: "12px" }}>
-                <Button size='small' variant='contained' sx={{ backgroundColor: 'primary.main' }} onClick={handleClickOpenHall}>Add Hall</Button>
-            </Box>
+
 
             <fieldset style={{ borderRadius: '8px' }}>
                 <legend>Rooms Breakdown</legend>
@@ -315,7 +314,7 @@ const EditHall = ({ hallArray, setHallArray }) => {
                     hallArray.map((item, index) => {
                         return (
 
-                            <HallBreakDown key={index} hallCode={item.hallCode} hallAc={item.hallAc} floorLevel={item.floorLevel} hallNoOfAdults={item.hallNoOfAdults} hallNoOfChildren={item.hallNoOfChildren} hallRemarks={item.hallRemarks} hallRental={item.hallRental} handleHallDelete={handleHallDelete} handleHallEdit={handleHallEdit} index={index} />
+                            <ViewHallBreakDown key={index} hallCode={item.hallCode} hallAc={item.hallAc} floorLevel={item.floorLevel} hallNoOfAdults={item.hallNoOfAdults} hallNoOfChildren={item.hallNoOfChildren} hallRemarks={item.hallRemarks} hallRental={item.hallRental} handleHallDelete={handleHallDelete} handleHallEdit={handleHallEdit} index={index} />
                         )
                     })}
 
@@ -395,50 +394,9 @@ const EditHall = ({ hallArray, setHallArray }) => {
                                 </Box>
                                 <TextField type='number' error={error.ctName} required id="outlined-required" label="Rental" placeholder='Rental' fullWidth size='small' onChange={handleHallRentalChange} helperText={error.ctName ? "Invalid Input" : ''} value={hallValues.hallRental} />
                             </Box>
-                            <Box className="rental_container">
-                                <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
-                                    <Typography variant='p' sx={{ color: 'black' }}>Add Rental</Typography>
-                                </Box>
-
-                                <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
-                                    <Box sx={{ width: "100%", display: 'flex', justifyContent: 'space-around', marginTop: '20px' }} >
-                                        <FormControl sx={{}}>
-                                            <InputLabel id="demo-simple-select-label">Month</InputLabel>
-                                            <Select
-                                                required
-
-                                                size='small'
-                                                labelId="demo-simple-select-label"
-                                                id="demo-simple-select"
-                                                value={value.district}
-                                                label="Age"
-                                                sx={{ width: "150px" }}
-                                                onChange={handleHallDistrict}
+                            <Box className="rental_container" sx={{ marginBottom: "20px" }}>
 
 
-                                            >
-                                                <MenuItem value={"January"}>January</MenuItem>
-                                                <MenuItem value={"February"}>February</MenuItem>
-                                                <MenuItem value={"March"}>March</MenuItem>
-                                                <MenuItem value={"April"}>April</MenuItem>
-                                                <MenuItem value={"May"}>May</MenuItem>
-                                                <MenuItem value={"June"}>June</MenuItem>
-                                                <MenuItem value={"July"}>July</MenuItem>
-                                                <MenuItem value={"August"}>August</MenuItem>
-                                                <MenuItem value={"September"}>September</MenuItem>
-                                                <MenuItem value={"October"}>October</MenuItem>
-                                                <MenuItem value={"November"}>November</MenuItem>
-                                                <MenuItem value={"December"}>December</MenuItem>
-
-                                            </Select>
-                                        </FormControl>
-                                        <TextField type='number' id="outlined-required" label="WeekDays" placeholder='WeekDays' size='small' onChange={handleHallWeekdays} helperText={error.ctName ? "Invalid Input" : ''} sx={{ width: "150px" }} />
-                                        <TextField type='number' id="outlined-required" label="Weekend" placeholder='Weekend' size='small' onChange={handleHallWeekends} helperText={error.ctName ? "Invalid Input" : ''} sx={{ width: "150px" }} />
-                                        <Button variant='contained' size='small' onClick={handleHallAdd} >Add</Button>
-
-
-                                    </Box>
-                                </Box>
 
 
                                 {hallRentalArray.map((item, index) => {
@@ -447,17 +405,16 @@ const EditHall = ({ hallArray, setHallArray }) => {
                                             <Paper sx={{ display: 'flex', padding: "1.2em 2em", justifyContent: 'space-between', marginBottom: "1em" }}>
                                                 <Box>
                                                     <Typography variant='p' sx={{ color: 'black', marginRight: '0.6em', fontWeight: "bold" }}>Month</Typography>
-                                                    <Typography variant='p' sx={{ color: 'grey', fontWeight: '500' }}>{item.district}</Typography>
+                                                    <Typography variant='p' sx={{ color: 'grey', fontWeight: '500' }}>{item.Month}</Typography>
                                                 </Box>
                                                 <Box>
                                                     <Typography variant='p' sx={{ color: 'black', marginRight: '0.6em', fontWeight: "bold" }}>WeekDays</Typography>
-                                                    <Typography variant='p' sx={{ color: 'grey', fontWeight: '500' }}>{item.weekDays}</Typography>
+                                                    <Typography variant='p' sx={{ color: 'grey', fontWeight: '500' }}>{item.WeekRental}</Typography>
                                                 </Box>
                                                 <Box>
                                                     <Typography variant='p' sx={{ color: 'black', marginRight: '0.6em', fontWeight: 'bold' }}>WeekEnd</Typography>
-                                                    <Typography variant='p' sx={{ color: 'grey', fontWeight: '500' }}>{item.weekEnds}</Typography>
+                                                    <Typography variant='p' sx={{ color: 'grey', fontWeight: '500' }}>{item.WeekEndRental}</Typography>
                                                 </Box>
-                                                <CancelIcon sx={{ cursor: 'pointer' }} onClick={() => handleRemoveRentalItem(index)} />
 
                                             </Paper>
                                         </Box>
@@ -469,7 +426,7 @@ const EditHall = ({ hallArray, setHallArray }) => {
 
                         </DialogContent>
                         <DialogActions>
-                            <Button variant='contained' onClick={handleSaveHall}>Save</Button>
+
                             <Button variant='outlined' onClick={handleCloseHall}>Close</Button>
                         </DialogActions>
 
@@ -478,40 +435,13 @@ const EditHall = ({ hallArray, setHallArray }) => {
             </React.Fragment>
 
 
-            {/* alert add hall all should fill*/}
-            <div>
-
-                <Snackbar open={openHallFillAlert} autoHideDuration={4000} onClose={handleCloseHallFillAlert}>
-                    <Alert
-                        onClose={handleCloseHallFillAlert}
-                        severity="error"
-                        variant="filled"
-                        sx={{ width: '100%' }}
-                    >
-                        Can't Save | You must fill all the fields
-                    </Alert>
-                </Snackbar>
-            </div>
 
 
-            {/* alert same hall exist add hall popup*/}
-            <div>
 
-                <Snackbar open={openHallExistAlert} autoHideDuration={4000} onClose={handleCloseHallExistAlert}>
-                    <Alert
-                        onClose={handleCloseHallExistAlert}
-                        severity="error"
-                        variant="filled"
-                        sx={{ width: '100%' }}
-                    >
-                        Can't Save | Hall No already exist
-                    </Alert>
-                </Snackbar>
-            </div>
 
         </Box>
 
     )
 }
 
-export default EditHall
+export default ViewHall
