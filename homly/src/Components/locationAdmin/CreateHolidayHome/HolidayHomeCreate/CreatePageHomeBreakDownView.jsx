@@ -122,7 +122,7 @@ const CreatePageHomeBreakDownView = ({ setSubmit, setAllValues, submitClicked, s
 
   const handlefacilityChange = (e) => {
     setFacilities(e.target.value);
-  }
+  };
 
   const hangleGymChange = (e) => {
     setGym(e.target.checked);
