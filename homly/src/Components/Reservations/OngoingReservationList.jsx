@@ -10,7 +10,7 @@ import axios from "axios";
 
 const OngoingReservationList = (props) => {
   const [reservations, setReservations] = useState([])
-  const fetchadmins = () => {
+  const fetchreservations = () => {
     axios
       .get("http://localhost:3002/users/reservation/")
       .then((res) => {
@@ -24,7 +24,7 @@ const OngoingReservationList = (props) => {
   };
 
   useEffect(() => {
-    fetchadmins();
+    fetchreservations();
   }, []);
   return (
     <>
