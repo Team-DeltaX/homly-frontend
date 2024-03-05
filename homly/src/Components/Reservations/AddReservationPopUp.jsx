@@ -21,10 +21,13 @@ import Typography from "@mui/material/Typography";
 import ErrorSnackbar from "../User/ErrorSnackbar";
 import PayNowPopup from "../Common/PayNowPopup";
 import AvailableRoomsPopUp from "../Common/AvailableRoomsPopUp";
+import AvailableHallsPopUp from "../Common/AvailableHallsPopUp";
+import Autocomplete from "@mui/material/Autocomplete";
+import Stack from '@mui/material/Stack';
 
 export default function ScrollDialog() {
   const [open, setOpen] = React.useState(false);
-  const [scroll, setScroll] = React.useState('paper');
+  const [scroll, setScroll] = React.useState("paper");
   const [HolidayHomeName, SetHolidayHomeName] = useState("");
   const [holidayHomes, setHolidayHomes] = React.useState([]);
   const [ServiceNO, setServiceNO] = useState("");
@@ -37,7 +40,7 @@ export default function ScrollDialog() {
   const [NoOfHalls, setNoOfHalls] = useState("");
   const [CheckinDate, setCheckinDate] = useState(dayjs(new Date()));
   const [CheckoutDate, setCheckoutDate] = useState(dayjs(new Date()));
-
+  
   const handleClickOpen = (scrollType) => () => {
     setOpen(true);
     setScroll(scrollType);
@@ -104,7 +107,6 @@ export default function ScrollDialog() {
         });
         setPayNow(false);
       });
-
   };
   const descriptionElementRef = React.useRef(null);
   React.useEffect(() => {
@@ -120,7 +122,7 @@ export default function ScrollDialog() {
       <Button
         variant="contained"
         style={{ float: "right" }}
-        onClick={handleClickOpen('paper')}
+        onClick={handleClickOpen("paper")}
       >
         Reserve Now
       </Button>
@@ -167,6 +169,7 @@ export default function ScrollDialog() {
                   <MenuItem value={home}>{home}</MenuItem>
                 ))}
               </Select>
+              
               <BasicDatePicker
                 required
                 margin="dense"
@@ -180,7 +183,7 @@ export default function ScrollDialog() {
               />
               <BasicDatePicker
                 required
-                margin="dense"
+                margin="normal"
                 date={CheckoutDate}
                 setDate={setCheckoutDate}
                 title="Check Out Date"
@@ -189,7 +192,7 @@ export default function ScrollDialog() {
                 }}
                 value={CheckoutDate}
               />
-              <TextField
+              {/* <TextField
                 fullWidth
                 required
                 margin="dense"
@@ -212,8 +215,8 @@ export default function ScrollDialog() {
                   setNoOfChildren(e.target.value);
                 }}
                 value={NoOfChildren}
-              />
-              <div style={{ display: "flex", gap: "10px", marginTop: "5px" }}>
+              /> */}
+              {/* <div style={{ display: "flex", gap: "10px", marginTop: "5px" }}>
                 <FormControl sx={{ flex: "1" }}>
                   <InputLabel htmlFor="grouped-native-select">
                     Single Rooms
@@ -294,7 +297,12 @@ export default function ScrollDialog() {
                   setNoOfHalls(e.target.value);
                 }}
                 value={NoOfHalls}
-              />
+              /> */}
+              <Stack direction="row" spacing={2} marginTop={"10px"}>
+              <AvailableRoomsPopUp margin="dense"/>
+              <AvailableHallsPopUp />
+              </Stack>
+              
               <Box component="section" sx={{ p: 2 }}>
                 <Typography variant="h6" gutterBottom>
                   Total Price :
@@ -311,7 +319,8 @@ export default function ScrollDialog() {
                   </Typography>
                 </Typography>
               </Box>
-              <AvailableRoomsPopUp />
+              
+              
             </DialogContentText>
           </DialogContent>
           <DialogActions>

@@ -2,7 +2,6 @@ import * as React from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import ListItemText from '@mui/material/ListItemText';
-import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
@@ -18,9 +17,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function AvailableRoomsPopUp() {
+export default function AvailableHallsPopUp() {
   const [open, setOpen] = React.useState(false);
-  const [rooms, setRooms] = React.useState([]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -29,15 +27,11 @@ export default function AvailableRoomsPopUp() {
   const handleClose = () => {
     setOpen(false);
   };
-  React.useEffect(() => {
-    fetch('http://localhost:3002/api/rooms')
-      .then(response => response.json())
-      .then(data => setRooms(data));
-  }, []);
+
   return (
     <React.Fragment>
       <Button variant="outlined" onClick={handleClickOpen} margin="normal">
-        Available Rooms
+        Available Halls
       </Button>
       <Dialog
         fullScreen
@@ -45,12 +39,8 @@ export default function AvailableRoomsPopUp() {
         onClose={handleClose}
         TransitionComponent={Transition}
       >
-        {/* Top App Bar */}
         <AppBar sx={{ position: 'relative' }}>
           <Toolbar>
-            <Typography sx={{ ml: 2, flex: 1 }} variant="h5" component="div">
-              Available Rooms
-            </Typography>
             <IconButton
               edge="start"
               color="inherit"
@@ -58,29 +48,28 @@ export default function AvailableRoomsPopUp() {
               aria-label="close"
             >
               <CloseIcon />
-              </IconButton>
-          </Toolbar>
-        </AppBar>
-        {/* middle List */}
-        <List>
-  {rooms.map((room) => (
-    <ListItem key={room.id}>
-      <ListItemText
-        primary={room.name}
-        secondary={`Max Adults: ${room.maxAdults}, Max Children: ${room.maxChildren}, Rental: ${room.rental}`}
-      />
-    </ListItem>
-  ))}
-</List>
-        {/* botom app bar */}
-        <AppBar position="fixed" color="primary" sx={{ top: 'auto', bottom: 0 }}>
-          <Toolbar>
-            
-            <Button autoFocus color="inherit" onClick={handleClose} sx={{ marginLeft: 'auto' }}>
-              Confirm
+            </IconButton>
+            <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+              Available Rooms
+            </Typography>
+            <Button autoFocus color="inherit" onClick={handleClose}>
+              save
             </Button>
           </Toolbar>
         </AppBar>
+        <List>
+          <ListItemButton>
+            <ListItemText primary="Phone ringtone" secondary="Titania" />
+          </ListItemButton>
+          <Divider />
+          <ListItemButton>
+            <ListItemText
+              primary="Default notification ringtone"
+              secondary="Tethys"
+            />
+            <Checkbox defaultUnChecked color="success" />
+          </ListItemButton>
+        </List>
       </Dialog>
     </React.Fragment>
   );
