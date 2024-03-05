@@ -18,13 +18,14 @@ import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Typography from "@mui/material/Typography";
-import Alert from "@mui/material/Alert";
+import ErrorSnackbar from "../User/ErrorSnackbar";
+import PayNowPopup from "../Common/PayNowPopup";
 
 export default function ScrollDialog() {
   const [open, setOpen] = React.useState(false);
-  const [showAlert, setShowAlert] = useState(false);
   const [scroll, setScroll] = React.useState("paper");
   const [HolidayHomeName, SetHolidayHomeName] = useState("");
+  const [holidayHomes, setHolidayHomes] = React.useState([]);
   const [ServiceNO, setServiceNO] = useState("");
   const [Price, setPrice] = useState(600);
   const [NoOfAdults, setNoOfAdults] = useState("");
@@ -44,8 +45,20 @@ export default function ScrollDialog() {
   const handleClose = () => {
     setOpen(false);
   };
-  const handlesubmit = (e) => {
 
+  const [errorStatus, setErrorStatus] = useState({
+    isOpen: false,
+    type: "",
+    message: "",
+  });
+  const [PayNow, setPayNow] = useState(false);
+
+  React.useEffect(() => {
+    fetch('')
+      .then(response => response.json())
+      .then(data => setHolidayHomes(data));
+  }, []);
+  const handlesubmit = (e) => {
     const data = {
       ServiceNO: ServiceNO,
       HolidayHome: HolidayHomeName,
@@ -65,9 +78,23 @@ export default function ScrollDialog() {
       .post("http://localhost:3002/users/reservation", data)
       .then((res) => {
         console.log("add reservation successfully");
+        setErrorStatus({
+          ...errorStatus,
+          isOpen: true,
+          type: "success",
+          message: "reservation added successfully",
+        });
+        setPayNow(true);
       })
       .catch((error) => {
         console.log(`error is  nm ${error}`);
+        setErrorStatus({
+          ...errorStatus,
+          isOpen: true,
+          type: "error",
+          message: "reservation failed",
+        });
+        setPayNow(false);
       });
     //     axios
     //       .post("http://localhost:3002/admin/auth/locationadmin/reservations", data)
@@ -112,7 +139,7 @@ export default function ScrollDialog() {
         aria-describedby="scroll-dialog-description"
       >
         <DialogTitle id="scroll-dialog-title">Reservation Form</DialogTitle>
-        <form onSubmit={() => console.log("sumbited")}>
+        <form onSubmit={(e) => e.preventDefault()}>
           <DialogContent dividers={scroll === "paper"}>
             <DialogContentText
               id="scroll-dialog-description"
@@ -134,7 +161,7 @@ export default function ScrollDialog() {
                 fullWidth
                 variant="outlined"
               />
-              <TextField
+              {/* <TextField
                 fullWidth
                 id="outlined-select-holidayhome"
                 margin="dense"
@@ -146,7 +173,21 @@ export default function ScrollDialog() {
                 value={HolidayHomeName}
 
                 // defaultValue="EUR"
-              ></TextField>
+              ></TextField> */}
+  <Select
+  fullWidth
+    labelId="holiday-home-label"
+    label="Select the holiday home"
+    id="outlined-select-holidayhome"
+    value={HolidayHomeName}
+    onChange={(e) => {
+      SetHolidayHomeName(e.target.value);
+    }}
+  >
+    {holidayHomes.map((home) => (
+      <MenuItem value={home.name}>{home.name}</MenuItem>
+    ))}
+  </Select>
               {/* <BasicDatePicker
                 fullWidth
                 onChange={(e) => {
@@ -212,18 +253,18 @@ export default function ScrollDialog() {
                     defaultValue="0"
                     id="grouped-native-select"
                     label="Grouping"
-                    onChange=
-                    {(e) => {
+                    onChange={(e) => {
                       setNoOfSingleRooms(e.target.value);
                     }}
                     value={NoOfSingleRooms}
                   >
-                    <option selected value={0}>0</option>
+                    <option selected value={0}>
+                      0
+                    </option>
                     <option value={1}>1</option>
                     <option value={2}>2</option>
                     <option value={3}>3</option>
                     <option value={4}>4</option>
-                    
                   </Select>
                 </FormControl>
                 <FormControl sx={{ flex: "1" }}>
@@ -234,18 +275,18 @@ export default function ScrollDialog() {
                     defaultValue="0"
                     id="grouped-native-select"
                     label="Grouping"
-                    onChange=
-                    {(e) => {
+                    onChange={(e) => {
                       setNoOfDoubleRooms(e.target.value);
                     }}
                     value={NoOfDoubleRooms}
                   >
-                    <option selected value={0}>0</option>
+                    <option selected value={0}>
+                      0
+                    </option>
                     <option value={1}>1</option>
                     <option value={2}>2</option>
                     <option value={3}>3</option>
                     <option value={4}>4</option>
-                    
                   </Select>
                 </FormControl>
                 <FormControl sx={{ flex: "1" }}>
@@ -256,19 +297,18 @@ export default function ScrollDialog() {
                     defaultValue="0"
                     id="grouped-native-select"
                     label="Grouping"
-                    onChange=
-                    {(e) => {
+                    onChange={(e) => {
                       setNoOfTripleRooms(e.target.value);
                     }}
                     value={NoOfTripleRooms}
                   >
-
-                    <option selected value={0}>0</option>
+                    <option selected value={0}>
+                      0
+                    </option>
                     <option value={1}>1</option>
                     <option value={2}>2</option>
                     <option value={3}>3</option>
                     <option value={4}>4</option>
-                    
                   </Select>
                 </FormControl>
               </div>
@@ -279,11 +319,10 @@ export default function ScrollDialog() {
                 id="outlined-number"
                 label="No. of Halls"
                 type="number"
-                onChange=
-                    {(e) => {
-                      setNoOfHalls(e.target.value);
-                    }}
-                    value={NoOfHalls}
+                onChange={(e) => {
+                  setNoOfHalls(e.target.value);
+                }}
+                value={NoOfHalls}
               />
               <Box component="section" sx={{ p: 2 }}>
                 <Typography variant="h6" gutterBottom>
@@ -311,13 +350,27 @@ export default function ScrollDialog() {
               variant="contained"
               type="submit"
               autoFocus
-              onClick={handlesubmit}
+              onClick={() => {
+                handlesubmit();
+                handleClose();
+              }}
             >
               Reserve
             </Button>
           </DialogActions>
         </form>
       </Dialog>
+      <ErrorSnackbar
+        isOpen={errorStatus.isOpen}
+        type={errorStatus.type}
+        message={errorStatus.message}
+        setIsOpen={(val) => setErrorStatus({ ...errorStatus, isOpen: val })}
+      />
+      <PayNowPopup
+      isOpen={PayNow}
+      setIsOpen={setPayNow}
+      />
+
     </React.Fragment>
   );
 }
