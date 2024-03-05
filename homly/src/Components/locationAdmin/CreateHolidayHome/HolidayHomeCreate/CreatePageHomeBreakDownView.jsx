@@ -194,7 +194,7 @@ const CreatePageHomeBreakDownView = ({ setSubmit, setAllValues, submitClicked, s
   //   }
   // }, [submitClicked]);
 
-  const [b, setB] = useState(0);
+
 
 
   return (

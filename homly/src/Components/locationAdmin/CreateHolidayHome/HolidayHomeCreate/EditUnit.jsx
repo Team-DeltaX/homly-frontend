@@ -119,7 +119,7 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
 
 
     const handleSaveUnit = () => {
-        if (unitValues.unitCode === '' || unitValues.unitAc === '' || unitValues.floorLevel === '' || unitValues.unitRemark === '' || unitValues.unitRental === '') {
+        if (unitValues.unitCode === '' || unitValues.unitAc === '' || unitValues.floorLevel === '' || unitValues.unitRemark === '') {
             setOpenUnitFillAlert(true);
             return;
 
@@ -217,45 +217,45 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
         district: '', weekDays: '', weekEnds: ''
     });
 
-    const handleUnitDistrict = (e) => {
-        setUnitRental({ ...unitRental, district: e.target.value });
-    }
+    // const handleUnitDistrict = (e) => {
+    //     setUnitRental({ ...unitRental, district: e.target.value });
+    // }
 
-    const handleUnitWeedays = (e) => {
-        setUnitRental({ ...unitRental, weekDays: e.target.value });
-        setNewUnitWeekDayValue(e.target.value);
-    }
+    // const handleUnitWeedays = (e) => {
+    //     setUnitRental({ ...unitRental, weekDays: e.target.value });
+    //     setNewUnitWeekDayValue(e.target.value);
+    // }
 
-    const handleUnitWeekends = (e) => {
-        setUnitRental({ ...unitRental, weekEnds: e.target.value });
-        setNewUnitWeekendValue(e.target.value);
-    }
+    // const handleUnitWeekends = (e) => {
+    //     setUnitRental({ ...unitRental, weekEnds: e.target.value });
+    //     setNewUnitWeekendValue(e.target.value);
+    // }
 
 
-    const [newUnitWeekDayValue, setNewUnitWeekDayValue] = useState('')
-    const [newUnitWeekendValue, setNewUnitWeekendValue] = useState('')
+    // const [newUnitWeekDayValue, setNewUnitWeekDayValue] = useState('')
+    // const [newUnitWeekendValue, setNewUnitWeekendValue] = useState('')
 
 
 
     const [unitRentalArray, setUnitRentalArray] = useState([]);
-    const handleUnitAdd = () => {
-        if (unitRental.district === '' || unitRental.weekDays === '' || unitRental.weekEnds === '') return;
-        setUnitRentalArray([...unitRentalArray, unitRental]);
-        setUnitRental({
-            district: '',
-            weekDays: '',
-            weekEnds: '',
-        });
+    // const handleUnitAdd = () => {
+    //     if (unitRental.district === '' || unitRental.weekDays === '' || unitRental.weekEnds === '') return;
+    //     setUnitRentalArray([...unitRentalArray, unitRental]);
+    //     setUnitRental({
+    //         district: '',
+    //         weekDays: '',
+    //         weekEnds: '',
+    //     });
 
-        setNewUnitWeekDayValue('');
-        setNewUnitWeekendValue('');
-    };
+    //     setNewUnitWeekDayValue('');
+    //     setNewUnitWeekendValue('');
+    // };
 
 
-    const handleRemoveUnitRentalItem = (no) => {
-        const newUnitRentalArray = unitRentalArray.filter((item, index) => index !== no);
-        setUnitRentalArray(newUnitRentalArray);
-    }
+    // const handleRemoveUnitRentalItem = (no) => {
+    //     const newUnitRentalArray = unitRentalArray.filter((item, index) => index !== no);
+    //     setUnitRentalArray(newUnitRentalArray);
+    // }
 
     //unit - all fields should filled warning
     const [openUnitFillAlert, setOpenUnitFillAlert] = useState(false);
@@ -381,14 +381,14 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
                                 </Box>
                                 <TextField error={error.ctName} value={unitValues.unitRemark} required id="outlined-required" label="Remark" placeholder='Enter Remark' fullWidth size='small' onChange={handleUnitRemarkChange} helperText={error.ctName ? "Invalid Input" : ''} />
                             </Box>
-                            <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
+                            {/* <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                     <Typography variant='p' sx={{ color: 'black' }}>Rental</Typography>
                                 </Box>
                                 <TextField type='number' value={unitValues.unitRental} error={error.ctName} required id="outlined-required" label="Rental" placeholder='Rental' fullWidth size='small' onChange={handleUnitRentalChange} helperText={error.ctName ? "Invalid Input" : ''} />
-                            </Box>
+                            </Box> */}
 
-                            <Box className="rental_container">
+                            {/* <Box className="rental_container">
                                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                     <Typography variant='p' sx={{ color: 'black' }}>Add Rental</Typography>
                                 </Box>
@@ -458,7 +458,7 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
 
                                 })}
 
-                            </Box>
+                            </Box> */}
 
                         </DialogContent>
                         <DialogActions>
