@@ -11,7 +11,7 @@ import { useTheme } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import BasicDatePicker from "../Common/BasicDatePicker";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import dayjs, { Dayjs } from "dayjs";
 import InputLabel from "@mui/material/InputLabel";
@@ -20,10 +20,11 @@ import Select from "@mui/material/Select";
 import Typography from "@mui/material/Typography";
 import ErrorSnackbar from "../User/ErrorSnackbar";
 import PayNowPopup from "../Common/PayNowPopup";
+import AvailableRoomsPopUp from "../Common/AvailableRoomsPopUp";
 
 export default function ScrollDialog() {
   const [open, setOpen] = React.useState(false);
-  const [scroll, setScroll] = React.useState("paper");
+  const [scroll, setScroll] = React.useState('paper');
   const [HolidayHomeName, SetHolidayHomeName] = useState("");
   const [holidayHomes, setHolidayHomes] = React.useState([]);
   const [ServiceNO, setServiceNO] = useState("");
@@ -35,8 +36,8 @@ export default function ScrollDialog() {
   const [NoOfTripleRooms, setNoOfTripleRooms] = useState(0);
   const [NoOfHalls, setNoOfHalls] = useState("");
   const [CheckinDate, setCheckinDate] = useState(dayjs(new Date()));
-
   const [CheckoutDate, setCheckoutDate] = useState(dayjs(new Date()));
+
   const handleClickOpen = (scrollType) => () => {
     setOpen(true);
     setScroll(scrollType);
@@ -53,11 +54,18 @@ export default function ScrollDialog() {
   });
   const [PayNow, setPayNow] = useState(false);
 
-  React.useEffect(() => {
-    fetch('')
-      .then(response => response.json())
-      .then(data => setHolidayHomes(data));
+  useEffect(() => {
+    axios
+      .get("http://localhost:3002/users/reservation/holidayhomes")
+      .then((res) => {
+        if (Response) {
+          setHolidayHomes(res.data);
+        } else {
+          console.log("No data found");
+        }
+      });
   }, []);
+
   const handlesubmit = (e) => {
     const data = {
       ServiceNO: ServiceNO,
@@ -96,22 +104,7 @@ export default function ScrollDialog() {
         });
         setPayNow(false);
       });
-    //     axios
-    //       .post("http://localhost:3002/admin/auth/locationadmin/reservations", data)
-    //       .then((res) => {
-    //         console.log("add special reservation successfully");
-    //       })
-    //       .catch((error) => {
-    //         console.log(`error is  nm ${error}`);
-    //       });
 
-    //     // setadminno("");
-    //     // setUsername("");
-    //     // setContactno("");
-    //     // SetEmail("");
-    //     // SetWorklocation("");
-    //     // setPassword("");
-    //     // SetSubstitute("");
   };
   const descriptionElementRef = React.useRef(null);
   React.useEffect(() => {
@@ -127,7 +120,7 @@ export default function ScrollDialog() {
       <Button
         variant="contained"
         style={{ float: "right" }}
-        onClick={handleClickOpen("paper")}
+        onClick={handleClickOpen('paper')}
       >
         Reserve Now
       </Button>
@@ -161,41 +154,19 @@ export default function ScrollDialog() {
                 fullWidth
                 variant="outlined"
               />
-              {/* <TextField
+              <Select
                 fullWidth
+                labelId="holiday-home-label"
                 id="outlined-select-holidayhome"
-                margin="dense"
-                label="Select the holiday home"
-                required
+                value={HolidayHomeName}
                 onChange={(e) => {
                   SetHolidayHomeName(e.target.value);
                 }}
-                value={HolidayHomeName}
-
-                // defaultValue="EUR"
-              ></TextField> */}
-  <Select
-  fullWidth
-    labelId="holiday-home-label"
-    label="Select the holiday home"
-    id="outlined-select-holidayhome"
-    value={HolidayHomeName}
-    onChange={(e) => {
-      SetHolidayHomeName(e.target.value);
-    }}
-  >
-    {holidayHomes.map((home) => (
-      <MenuItem value={home.name}>{home.name}</MenuItem>
-    ))}
-  </Select>
-              {/* <BasicDatePicker
-                fullWidth
-                onChange={(e) => {
-                    setCheckinDate(dayjs('2019-01-25').format('DD/MM/YYYY'));
-                }}
-                value={CheckinDate}
-                title="Check In Date"
-                /> */}
+              >
+                {holidayHomes.map((home) => (
+                  <MenuItem value={home}>{home}</MenuItem>
+                ))}
+              </Select>
               <BasicDatePicker
                 required
                 margin="dense"
@@ -340,6 +311,7 @@ export default function ScrollDialog() {
                   </Typography>
                 </Typography>
               </Box>
+              <AvailableRoomsPopUp />
             </DialogContentText>
           </DialogContent>
           <DialogActions>
@@ -366,11 +338,7 @@ export default function ScrollDialog() {
         message={errorStatus.message}
         setIsOpen={(val) => setErrorStatus({ ...errorStatus, isOpen: val })}
       />
-      <PayNowPopup
-      isOpen={PayNow}
-      setIsOpen={setPayNow}
-      />
-
+      <PayNowPopup isOpen={PayNow} setIsOpen={setPayNow} />
     </React.Fragment>
   );
 }
