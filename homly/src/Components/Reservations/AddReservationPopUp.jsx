@@ -23,7 +23,7 @@ import PayNowPopup from "../Common/PayNowPopup";
 import AvailableRoomsPopUp from "../Common/AvailableRoomsPopUp";
 import AvailableHallsPopUp from "../Common/AvailableHallsPopUp";
 import Autocomplete from "@mui/material/Autocomplete";
-import Stack from '@mui/material/Stack';
+import Stack from "@mui/material/Stack";
 
 export default function ScrollDialog() {
   const [open, setOpen] = React.useState(false);
@@ -32,15 +32,15 @@ export default function ScrollDialog() {
   const [holidayHomes, setHolidayHomes] = React.useState([]);
   const [ServiceNO, setServiceNO] = useState("");
   const [Price, setPrice] = useState(600);
-  const [NoOfAdults, setNoOfAdults] = useState("");
-  const [NoOfChildren, setNoOfChildren] = useState("");
-  const [NoOfSingleRooms, setNoOfSingleRooms] = useState(0);
+  const [NoOfAdults, setNoOfAdults] = useState(0);
+  const [NoOfChildren, setNoOfChildren] = useState(0);
+  const [NoOfRooms, setNoOfRooms] = useState(0);
   const [NoOfDoubleRooms, setNoOfDoubleRooms] = useState(0);
   const [NoOfTripleRooms, setNoOfTripleRooms] = useState(0);
-  const [NoOfHalls, setNoOfHalls] = useState("");
+  const [NoOfHalls, setNoOfHalls] = useState(0);
   const [CheckinDate, setCheckinDate] = useState(dayjs(new Date()));
   const [CheckoutDate, setCheckoutDate] = useState(dayjs(new Date()));
-  
+
   const handleClickOpen = (scrollType) => () => {
     setOpen(true);
     setScroll(scrollType);
@@ -77,7 +77,7 @@ export default function ScrollDialog() {
       CheckoutDate: CheckoutDate,
       NoOfAdults: NoOfAdults,
       NoOfChildren: NoOfChildren,
-      NoOfSingleRooms: NoOfSingleRooms,
+      NoOfRooms: NoOfRooms,
       NoOfDoubleRooms: NoOfDoubleRooms,
       NoOfTripleRooms: NoOfTripleRooms,
       NoOfHalls: NoOfHalls,
@@ -156,19 +156,26 @@ export default function ScrollDialog() {
                 fullWidth
                 variant="outlined"
               />
-              <Select
-                fullWidth
-                labelId="holiday-home-label"
-                id="outlined-select-holidayhome"
-                value={HolidayHomeName}
-                onChange={(e) => {
-                  SetHolidayHomeName(e.target.value);
-                }}
-              >
-                {holidayHomes.map((home) => (
-                  <MenuItem value={home}>{home}</MenuItem>
-                ))}
-              </Select>
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">
+                  Select Holiday Home*
+                </InputLabel>
+                <Select
+                  fullWidth
+                  labelId="holiday-home-label"
+                  label="Holiday Home"
+                  isSearchable={true}
+                  id="outlined-select-holidayhome"
+                  value={HolidayHomeName}
+                  onChange={(e) => {
+                    SetHolidayHomeName(e.target.value);
+                  }}
+                >
+                  {holidayHomes.map((home) => (
+                    <MenuItem value={home}>{home}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
               
               <BasicDatePicker
                 required
@@ -299,13 +306,12 @@ export default function ScrollDialog() {
                 value={NoOfHalls}
               /> */}
               <Stack direction="row" spacing={2} marginTop={"10px"}>
-              <AvailableRoomsPopUp margin="dense"/>
-              <AvailableHallsPopUp />
+                <AvailableRoomsPopUp margin="dense" />
+                <AvailableHallsPopUp />
               </Stack>
-              
-              <Box component="section" sx={{ p: 2 }}>
+              <Box component="section" sx={{ mt: 1 }}>
                 <Typography variant="h6" gutterBottom>
-                  Total Price :
+                  Number of Rooms :
                   <Typography
                     variant="h5"
                     gutterBottom
@@ -315,12 +321,165 @@ export default function ScrollDialog() {
                       color: "green",
                     }}
                   >
-                    {Price}
+                    <TextField
+                      required
+                      disabled
+                      type="number"
+                      onChange={(e) => {
+                        setNoOfRooms(e.target.value);
+                      }}
+                      value={NoOfRooms}
+                      sx={{
+                        "& .MuiOutlinedInput-root": {
+                          "& fieldset": {
+                            border: "none", // Change this line
+                          },
+                          "&:hover fieldset": {
+                            border: "none", // Change this line
+                          },
+                          "&.Mui-focused fieldset": {
+                            border: "none", // Change this line
+                          },
+                        },
+                        mt: -1.5,
+                      }}
+                    />
                   </Typography>
                 </Typography>
               </Box>
-              
-              
+              <Box component="section">
+                <Typography variant="h6" gutterBottom>
+                  Number of Halls :
+                  <TextField
+                    required
+                    disabled
+                    type="number"
+                    onChange={(e) => {
+                      setNoOfHalls(e.target.value);
+                    }}
+                    value={NoOfHalls}
+                    sx={{
+                      "& .MuiOutlinedInput-root": {
+                        "& fieldset": {
+                          border: "none", // Change this line
+                        },
+                        "&:hover fieldset": {
+                          border: "none", // Change this line
+                        },
+                        "&.Mui-focused fieldset": {
+                          border: "none", // Change this line
+                        },
+                      },
+                      mt: -1.5,
+                    }}
+                  />
+                </Typography>
+              </Box>
+              <Box component="section" sx={{ mt: 1 }}>
+                <Typography variant="h6" gutterBottom>
+                  Maximum Number of Adults :
+                  <Typography
+                    variant="h5"
+                    gutterBottom
+                    style={{
+                      display: "inline-block",
+                      marginLeft: "10px",
+                      color: "green",
+                    }}
+                  >
+                    <TextField
+                      required
+                      disabled
+                      type="number"
+                      onChange={(e) => {
+                        setNoOfAdults(e.target.value);
+                      }}
+                      value={NoOfAdults}
+                      sx={{
+                        "& .MuiOutlinedInput-root": {
+                          "& fieldset": {
+                            border: "none", // Change this line
+                          },
+                          "&:hover fieldset": {
+                            border: "none", // Change this line
+                          },
+                          "&.Mui-focused fieldset": {
+                            border: "none", // Change this line
+                          },
+                        },
+                        mt: -1.5,
+                      }}
+                    />
+                  </Typography>
+                </Typography>
+              </Box>
+              <Box component="section">
+                <Typography variant="h6" gutterBottom>
+                  Maximum Number of Children :
+                  <Typography
+                    variant="h5"
+                    gutterBottom
+                    style={{
+                      display: "inline-block",
+                      marginLeft: "10px",
+                      color: "green",
+                    }}
+                  >
+                    <TextField
+                      required
+                      disabled
+                      type="number"
+                      onChange={(e) => {
+                        setNoOfChildren(e.target.value);
+                      }}
+                      value={NoOfChildren}
+                      sx={{
+                        "& .MuiOutlinedInput-root": {
+                          "& fieldset": {
+                            border: "none", // Change this line
+                          },
+                          "&:hover fieldset": {
+                            border: "none", // Change this line
+                          },
+                          "&.Mui-focused fieldset": {
+                            border: "none", // Change this line
+                          },
+                        },
+                        mt: -1.5,
+                      }}
+                    />
+                  </Typography>
+                </Typography>
+              </Box>
+
+              <Box component="section">
+                <Typography variant="h6" gutterBottom>
+                  Total Price :
+                  <TextField
+                    required
+                    disabled
+                    type="number"
+                    onChange={(e) => {
+                      setPrice(e.target.value);
+                    }}
+                    value={Price}
+                    sx={{
+                      "& .MuiOutlinedInput-root": {
+                        "& fieldset": {
+                          border: "none", // Change this line
+                        },
+                        "&:hover fieldset": {
+                          border: "none", // Change this line
+                        },
+                        "&.Mui-focused fieldset": {
+                          border: "none", // Change this line
+                        },
+                      },
+                      mt: -1.5,
+                    }}
+                  />
+                </Typography>
+              </Box>
             </DialogContentText>
           </DialogContent>
           <DialogActions>
