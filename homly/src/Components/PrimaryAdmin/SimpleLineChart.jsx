@@ -6,46 +6,42 @@ import FormHelperText from "@mui/material/FormHelperText";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { Box, Typography } from "@mui/material";
-
-
+import CloseIcon from "@mui/icons-material/Close";
+import { CancelOutlined } from "@mui/icons-material";
 
 export default function SimpleLineChart() {
+  const [h1data, setH1data] = React.useState([]);
+  const [h2data, setH2data] = React.useState([]);
+  const [h3data, setH3data] = React.useState([]);
 
-    const [h1data,setH1data]=React.useState([])
-    const [h2data,setH2data]=React.useState([])
-    const [h3data,setH3data]=React.useState([])
+  const Home1 = h1data;
+  // [4000, 3000, 2000, 2780, 1890, 2390, 3490];
+  const Home2 = h2data;
+  // [2400, 1398, 9800, 3908, 4800, 3800, 4300];
+  const Home3 = h3data;
+  // [2434, 2398, 6345, 9533, 4999, 7600, 1000];
+  const [xaxisd, setXasisd] = React.useState([]);
 
-    const Home1 = h1data
-    // [4000, 3000, 2000, 2780, 1890, 2390, 3490];
-    const Home2 = h2data
-    // [2400, 1398, 9800, 3908, 4800, 3800, 4300];
-    const Home3 =h3data
-    // [2434, 2398, 6345, 9533, 4999, 7600, 1000];
-    const [xaxisd,setXasisd]=React.useState([])
-
-    
-    const xLabels =  [
-        xaxisd[0],
-        xaxisd[1],
-        xaxisd[2],
-        xaxisd[3],
-        xaxisd[4],
-        xaxisd[5],
-        xaxisd[6],
-      ];
-    const HolidayHomes = [
-      { id: "1", name: "hh1" },
-      { id: "2", name: "hh2" },
-      { id: "3", name: "hh3" },
-      { id: "4", name: "hh4" },
-      { id: "5", name: "hh5" },
-      { id: "6", name: "hh6" },
-      { id: "7", name: "hh7" },
-      { id: "8", name: "hh8" },
-    ];  
-
-
-
+  const xLabels = [
+    xaxisd[0],
+    xaxisd[1],
+    xaxisd[2],
+    xaxisd[3],
+    xaxisd[4],
+    xaxisd[5],
+    xaxisd[6],
+  ];
+  const HolidayHomes = [
+    // { id: "0", name: "None" },
+    { id: "1", name: "hh1" },
+    { id: "2", name: "hh2" },
+    { id: "3", name: "hh3" },
+    { id: "4", name: "hh4" },
+    { id: "5", name: "hh5" },
+    { id: "6", name: "hh6" },
+    { id: "7", name: "hh7" },
+    { id: "8", name: "hh8" },
+  ];
 
   const [HolidayHome1, SetHolidayHome1] = React.useState("");
   const [HolidayHome2, SetHolidayHome2] = React.useState("");
@@ -53,38 +49,37 @@ export default function SimpleLineChart() {
 
   const handleChangehh1 = (event) => {
     SetHolidayHome1(event.target.value);
-    setH1data([4000, 3000, 2000, 2780, 1890, 2390, 3490])
-    
+    setH1data([4000, 3000, 2000, 2780, 1890, 2390, 3490]);
   };
 
   const handleChangehh2 = (event) => {
     SetHolidayHome2(event.target.value);
-    setH2data([2400, 1398, 9800, 3908, 4800, 3800, 4300])
+    setH2data([2400, 1398, 9800, 3908, 4800, 3800, 4300]);
   };
 
   const handleChangehh3 = (event) => {
     SetHolidayHome3(event.target.value);
-    setH3data([2434, 2398, 6345, 9533, 4999, 7600, 1000])
+    setH3data([2434, 2398, 6345, 9533, 4999, 7600, 1000]);
   };
   const getLastSevenDays = () => {
     const dates = [];
     const today = new Date();
-  
+
     for (let i = 6; i >= 0; i--) {
       const date = new Date();
       date.setDate(today.getDate() - i);
-      dates.push(date.toISOString().split('T')[0]); 
+      dates.push(date.toISOString().split("T")[0]);
     }
-  
+
     return dates;
   };
   React.useEffect(() => {
-    setXasisd(getLastSevenDays()); 
+    setXasisd(getLastSevenDays());
   }, []);
-  
+
   return (
     <Box sx={{ marginTop: "40px" }}>
-        {/* {xaxisd} */}
+      {/* {xaxisd} */}
       <Box
         sx={{
           display: "flex",
@@ -93,7 +88,13 @@ export default function SimpleLineChart() {
           justifyContent: "center",
         }}
       >
-        <Box>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           <FormControl sx={{ m: 1, minWidth: 120 }}>
             <InputLabel id="demo-simple-select-helper-label">
               HolidayHome 1
@@ -107,23 +108,47 @@ export default function SimpleLineChart() {
             >
               {/* <MenuItem value="">
             <em>None</em>
-          </MenuItem>
+          </MenuItem> 
           <MenuItem value={10}>Ten</MenuItem>
           <MenuItem value={20}>Twenty</MenuItem>
           <MenuItem value={30}>Thirty</MenuItem> */}
+
               {HolidayHomes.filter((hh) => {
-                return HolidayHome2 !== hh.id && HolidayHome3 !== hh.id;
+                return (
+                  (HolidayHome2 !== hh.id && HolidayHome3 !== hh.id) 
+                );
               }).map((hh) => {
                 return <MenuItem value={hh.id}>{hh.name}</MenuItem>;
               })}
             </Select>
             <FormHelperText>
-            {HolidayHome1===""?"select Home two to analyse":<Typography sx={{color:'green'}}>6.87 Total Ratings</Typography>}
+              {HolidayHome1 === "" ? (
+                "select Home two to analyse"
+              ) : (
+                <Typography sx={{ color: "green" }}>
+                  6.87 Total Ratings
+                </Typography>
+              )}
             </FormHelperText>
           </FormControl>
+          <Box
+            sx={{ marginBottom: "10px", cursor: "pointer" }}
+            onClick={() => {
+              SetHolidayHome1("");
+              setH1data([]);
+            }}
+          >
+            <CancelOutlined />
+          </Box>
         </Box>
 
-        <Box>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           <FormControl sx={{ m: 1, minWidth: 120 }}>
             <InputLabel id="demo-simple-select-helper-label">
               HolidayHome 2
@@ -142,16 +167,42 @@ export default function SimpleLineChart() {
           <MenuItem value={20}>Twenty</MenuItem>
           <MenuItem value={30}>Thirty</MenuItem> */}
               {HolidayHomes.filter((hh) => {
-                return HolidayHome1 !== hh.id && HolidayHome3 !== hh.id;
+                return (
+                  (HolidayHome1 !== hh.id && HolidayHome3 !== hh.id)
+                );
               }).map((hh) => {
                 return <MenuItem value={hh.id}>{hh.name}</MenuItem>;
               })}
             </Select>
-            <FormHelperText>{HolidayHome2===""?"select Home two to analyse":<Typography sx={{color:'red'}}>3.87 Total Ratings</Typography>}</FormHelperText>
+            <FormHelperText>
+              {HolidayHome2 === "" ? (
+                "select Home two to analyse"
+              ) : (
+                <Typography sx={{ color: "red" }}>
+                  3.87 Total Ratings
+                </Typography>
+              )}
+            </FormHelperText>
           </FormControl>
+          <Box
+            sx={{ marginBottom: "10px", cursor: "pointer" }}
+            onClick={() => {
+              SetHolidayHome2("");
+              setH2data([]);
+            }}
+          >
+            {" "}
+            <CancelOutlined />
+          </Box>
         </Box>
 
-        <Box>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           <FormControl sx={{ m: 1, minWidth: 120 }}>
             <InputLabel id="demo-simple-select-helper-label">
               HolidayHome 3
@@ -171,18 +222,38 @@ export default function SimpleLineChart() {
           <MenuItem value={30}>Thirty</MenuItem> */}
 
               {HolidayHomes.filter((hh) => {
-                return  HolidayHome1 !== hh.id && HolidayHome2 !== hh.id;
+                return (
+                  (HolidayHome1 !== hh.id && HolidayHome2 !== hh.id)
+                );
               }).map((hh) => {
                 return <MenuItem value={hh.id}>{hh.name}</MenuItem>;
               })}
             </Select>
 
-            <FormHelperText>{HolidayHome3===""?"select Home two to analyse":<Typography sx={{color:'green'}}>6.87 Total Ratings</Typography>} </FormHelperText>
+            <FormHelperText>
+              {HolidayHome3 === "" ? (
+                "select Home two to analyse"
+              ) : (
+                <Typography sx={{ color: "green" }}>
+                  6.87 Total Ratings
+                </Typography>
+              )}{" "}
+            </FormHelperText>
           </FormControl>
+          <Box
+            sx={{ marginBottom: "10px", cursor: "pointer" }}
+            onClick={() => {
+              SetHolidayHome3("");
+              setH3data([]);
+            }}
+          >
+            {" "}
+            <CancelOutlined />
+          </Box>
         </Box>
       </Box>
       <LineChart
-      sx={{marginTop:'40px'}}
+        sx={{ marginTop: "40px" }}
         width={window.innerHeight < 100 ? "100" : "720"}
         height={300}
         series={[
@@ -192,7 +263,6 @@ export default function SimpleLineChart() {
         ]}
         xAxis={[{ scaleType: "point", data: xLabels }]}
       />
-      
     </Box>
   );
 }
