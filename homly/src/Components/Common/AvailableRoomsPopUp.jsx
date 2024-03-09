@@ -94,17 +94,20 @@ export default function AvailableRoomsPopUp(props) {
   ))} */}
           
             {rooms.map((room) => (
-              <AccordionUsage
-                room={room}
-                NoOfRooms={props.NoOfRooms}
-                setNoOfRooms={props.setNoOfRooms}
-                NoOfAdults={props.NoOfAdults}
-                setNoOfAdults={props.setNoOfAdults}
-                NoOfChildren={props.NoOfChildren}
-                setNoOfChildren={props.setNoOfChildren}
-                roomPrice={props.roomPrice}
-                setRoomPrice={props.setRoomPrice}
-              />
+              room.roomCode !== "r002" && ( // TODO: remove this hard-coded room code
+                <AccordionUsage
+                  key={room.id}
+                  room={room}
+                  NoOfRooms={props.NoOfRooms}
+                  setNoOfRooms={props.setNoOfRooms}
+                  NoOfAdults={props.NoOfAdults}
+                  setNoOfAdults={props.setNoOfAdults}
+                  NoOfChildren={props.NoOfChildren}
+                  setNoOfChildren={props.setNoOfChildren}
+                  roomPrice={props.roomPrice}
+                  setRoomPrice={props.setRoomPrice}
+                />
+              )
             ))}
           
         </List>
