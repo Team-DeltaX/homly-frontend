@@ -11,7 +11,7 @@ import { useTheme } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import BasicDatePicker from "../Common/BasicDatePicker";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import dayjs, { Dayjs } from "dayjs";
 import InputLabel from "@mui/material/InputLabel";
@@ -20,6 +20,10 @@ import Select from "@mui/material/Select";
 import Typography from "@mui/material/Typography";
 import ErrorSnackbar from "../User/ErrorSnackbar";
 import PayNowPopup from "../Common/PayNowPopup";
+import AvailableRoomsPopUp from "../Common/AvailableRoomsPopUp";
+import AvailableHallsPopUp from "../Common/AvailableHallsPopUp";
+import Autocomplete from "@mui/material/Autocomplete";
+import Stack from "@mui/material/Stack";
 
 export default function ScrollDialog() {
   const [open, setOpen] = React.useState(false);
@@ -27,16 +31,16 @@ export default function ScrollDialog() {
   const [HolidayHomeName, SetHolidayHomeName] = useState("");
   const [holidayHomes, setHolidayHomes] = React.useState([]);
   const [ServiceNO, setServiceNO] = useState("");
-  const [Price, setPrice] = useState(600);
-  const [NoOfAdults, setNoOfAdults] = useState("");
-  const [NoOfChildren, setNoOfChildren] = useState("");
-  const [NoOfSingleRooms, setNoOfSingleRooms] = useState(0);
-  const [NoOfDoubleRooms, setNoOfDoubleRooms] = useState(0);
-  const [NoOfTripleRooms, setNoOfTripleRooms] = useState(0);
-  const [NoOfHalls, setNoOfHalls] = useState("");
+  const [roomPrice, setRoomPrice] = useState(0);
+  const [hallPrice, setHallPrice] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [NoOfAdults, setNoOfAdults] = useState(0);
+  const [NoOfChildren, setNoOfChildren] = useState(0);
+  const [NoOfRooms, setNoOfRooms] = useState(0);
+  const [NoOfHalls, setNoOfHalls] = useState(0);
   const [CheckinDate, setCheckinDate] = useState(dayjs(new Date()));
-
   const [CheckoutDate, setCheckoutDate] = useState(dayjs(new Date()));
+
   const handleClickOpen = (scrollType) => () => {
     setOpen(true);
     setScroll(scrollType);
@@ -53,11 +57,18 @@ export default function ScrollDialog() {
   });
   const [PayNow, setPayNow] = useState(false);
 
-  React.useEffect(() => {
-    fetch('')
-      .then(response => response.json())
-      .then(data => setHolidayHomes(data));
+  useEffect(() => {
+    axios
+      .get("http://localhost:3002/users/reservation/holidayhomes")
+      .then((res) => {
+        if (Response) {
+          setHolidayHomes(res.data);
+        } else {
+          console.log("No data found");
+        }
+      });
   }, []);
+
   const handlesubmit = (e) => {
     const data = {
       ServiceNO: ServiceNO,
@@ -66,11 +77,9 @@ export default function ScrollDialog() {
       CheckoutDate: CheckoutDate,
       NoOfAdults: NoOfAdults,
       NoOfChildren: NoOfChildren,
-      NoOfSingleRooms: NoOfSingleRooms,
-      NoOfDoubleRooms: NoOfDoubleRooms,
-      NoOfTripleRooms: NoOfTripleRooms,
+      NoOfRooms: NoOfRooms,
       NoOfHalls: NoOfHalls,
-      Price: Price,
+      Price: totalPrice,
     };
     console.log("aruna", data);
 
@@ -96,22 +105,6 @@ export default function ScrollDialog() {
         });
         setPayNow(false);
       });
-    //     axios
-    //       .post("http://localhost:3002/admin/auth/locationadmin/reservations", data)
-    //       .then((res) => {
-    //         console.log("add special reservation successfully");
-    //       })
-    //       .catch((error) => {
-    //         console.log(`error is  nm ${error}`);
-    //       });
-
-    //     // setadminno("");
-    //     // setUsername("");
-    //     // setContactno("");
-    //     // SetEmail("");
-    //     // SetWorklocation("");
-    //     // setPassword("");
-    //     // SetSubstitute("");
   };
   const descriptionElementRef = React.useRef(null);
   React.useEffect(() => {
@@ -121,7 +114,7 @@ export default function ScrollDialog() {
         descriptionElement.focus();
       }
     }
-  }, [open]);
+  }, []);
   return (
     <React.Fragment>
       <Button
@@ -161,41 +154,27 @@ export default function ScrollDialog() {
                 fullWidth
                 variant="outlined"
               />
-              {/* <TextField
-                fullWidth
-                id="outlined-select-holidayhome"
-                margin="dense"
-                label="Select the holiday home"
-                required
-                onChange={(e) => {
-                  SetHolidayHomeName(e.target.value);
-                }}
-                value={HolidayHomeName}
-
-                // defaultValue="EUR"
-              ></TextField> */}
-  <Select
-  fullWidth
-    labelId="holiday-home-label"
-    label="Select the holiday home"
-    id="outlined-select-holidayhome"
-    value={HolidayHomeName}
-    onChange={(e) => {
-      SetHolidayHomeName(e.target.value);
-    }}
-  >
-    {holidayHomes.map((home) => (
-      <MenuItem value={home.name}>{home.name}</MenuItem>
-    ))}
-  </Select>
-              {/* <BasicDatePicker
-                fullWidth
-                onChange={(e) => {
-                    setCheckinDate(dayjs('2019-01-25').format('DD/MM/YYYY'));
-                }}
-                value={CheckinDate}
-                title="Check In Date"
-                /> */}
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">
+                  Select Holiday Home*
+                </InputLabel>
+                <Select
+                  fullWidth
+                  labelId="holiday-home-label"
+                  label="Holiday Home"
+                  isSearchable={true}
+                  id="outlined-select-holidayhome"
+                  value={HolidayHomeName}
+                  onChange={(e) => {
+                    SetHolidayHomeName(e.target.value);
+                  }}
+                >
+                  {holidayHomes.map((home) => (
+                    <MenuItem value={home}>{home}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              
               <BasicDatePicker
                 required
                 margin="dense"
@@ -209,7 +188,7 @@ export default function ScrollDialog() {
               />
               <BasicDatePicker
                 required
-                margin="dense"
+                margin="normal"
                 date={CheckoutDate}
                 setDate={setCheckoutDate}
                 title="Check Out Date"
@@ -218,115 +197,20 @@ export default function ScrollDialog() {
                 }}
                 value={CheckoutDate}
               />
-              <TextField
-                fullWidth
-                required
-                margin="dense"
-                id="outlined-number"
-                label="No. of Adults"
-                type="number"
-                onChange={(e) => {
-                  setNoOfAdults(e.target.value);
-                }}
-                value={NoOfAdults}
-              />
-              <TextField
-                fullWidth
-                required
-                margin="dense"
-                id="outlined-number"
-                label="No. of children"
-                type="number"
-                onChange={(e) => {
-                  setNoOfChildren(e.target.value);
-                }}
-                value={NoOfChildren}
-              />
-              <div style={{ display: "flex", gap: "10px", marginTop: "5px" }}>
-                <FormControl sx={{ flex: "1" }}>
-                  <InputLabel htmlFor="grouped-native-select">
-                    Single Rooms
-                  </InputLabel>
-                  <Select
-                    required
-                    native
-                    defaultValue="0"
-                    id="grouped-native-select"
-                    label="Grouping"
-                    onChange={(e) => {
-                      setNoOfSingleRooms(e.target.value);
-                    }}
-                    value={NoOfSingleRooms}
-                  >
-                    <option selected value={0}>
-                      0
-                    </option>
-                    <option value={1}>1</option>
-                    <option value={2}>2</option>
-                    <option value={3}>3</option>
-                    <option value={4}>4</option>
-                  </Select>
-                </FormControl>
-                <FormControl sx={{ flex: "1" }}>
-                  <InputLabel htmlFor="grouped-select">Double Rooms</InputLabel>
-                  <Select
-                    required
-                    native
-                    defaultValue="0"
-                    id="grouped-native-select"
-                    label="Grouping"
-                    onChange={(e) => {
-                      setNoOfDoubleRooms(e.target.value);
-                    }}
-                    value={NoOfDoubleRooms}
-                  >
-                    <option selected value={0}>
-                      0
-                    </option>
-                    <option value={1}>1</option>
-                    <option value={2}>2</option>
-                    <option value={3}>3</option>
-                    <option value={4}>4</option>
-                  </Select>
-                </FormControl>
-                <FormControl sx={{ flex: "1" }}>
-                  <InputLabel htmlFor="grouped-select">Triple Rooms</InputLabel>
-                  <Select
-                    required
-                    native
-                    defaultValue="0"
-                    id="grouped-native-select"
-                    label="Grouping"
-                    onChange={(e) => {
-                      setNoOfTripleRooms(e.target.value);
-                    }}
-                    value={NoOfTripleRooms}
-                  >
-                    <option selected value={0}>
-                      0
-                    </option>
-                    <option value={1}>1</option>
-                    <option value={2}>2</option>
-                    <option value={3}>3</option>
-                    <option value={4}>4</option>
-                  </Select>
-                </FormControl>
-              </div>
-              <TextField
-                fullWidth
-                required
-                margin="dense"
-                id="outlined-number"
-                label="No. of Halls"
-                type="number"
-                onChange={(e) => {
-                  setNoOfHalls(e.target.value);
-                }}
-                value={NoOfHalls}
-              />
-              <Box component="section" sx={{ p: 2 }}>
+
+              <Stack direction="row" spacing={2} marginTop={"10px"}>
+                <AvailableRoomsPopUp margin="dense" 
+                  NoOfRooms={NoOfRooms} setNoOfRooms={setNoOfRooms}
+                  NoOfAdults={NoOfAdults} setNoOfAdults={setNoOfAdults}
+                  NoOfChildren={NoOfChildren} setNoOfChildren={setNoOfChildren}
+                  roomPrice={roomPrice} setRoomPrice={setRoomPrice}
+                  hallPrice={hallPrice} setHallPrice={setHallPrice}
+                />
+                <AvailableHallsPopUp />
+              </Stack>
+              <Box component="section" sx={{ mt: 1 }}>
                 <Typography variant="h6" gutterBottom>
-                  Total Price :
+                  Number of Rooms :
                   <Typography
                     variant="h5"
                     gutterBottom
@@ -336,8 +220,220 @@ export default function ScrollDialog() {
                       color: "green",
                     }}
                   >
-                    {Price}
+                    <TextField
+                      required
+                      disabled
+                      type="number"
+                      onChange={(e) => {
+                        setNoOfRooms(e.target.value);
+                      }}
+                      value={NoOfRooms}
+                      sx={{
+                        "& .MuiOutlinedInput-root": {
+                          "& fieldset": {
+                            border: "none", // Change this line
+                          },
+                          "&:hover fieldset": {
+                            border: "none", // Change this line
+                          },
+                          "&.Mui-focused fieldset": {
+                            border: "none", // Change this line
+                          },
+                        },
+                        mt: -1.5,
+                      }}
+                    />
                   </Typography>
+                </Typography>
+              </Box>
+              <Box component="section">
+                <Typography variant="h6" gutterBottom>
+                  Number of Halls :
+                  <TextField
+                    required
+                    disabled
+                    type="number"
+                    onChange={(e) => {
+                      setNoOfHalls(e.target.value);
+                    }}
+                    value={NoOfHalls}
+                    sx={{
+                      "& .MuiOutlinedInput-root": {
+                        "& fieldset": {
+                          border: "none", // Change this line
+                        },
+                        "&:hover fieldset": {
+                          border: "none", // Change this line
+                        },
+                        "&.Mui-focused fieldset": {
+                          border: "none", // Change this line
+                        },
+                      },
+                      mt: -1.5,
+                    }}
+                  />
+                </Typography>
+              </Box>
+              <Box component="section" sx={{ mt: 1 }}>
+                <Typography variant="h6" gutterBottom>
+                  Adults count for Rooms (Maximum) :
+                  <Typography
+                    variant="h5"
+                    gutterBottom
+                    style={{
+                      display: "inline-block",
+                      marginLeft: "10px",
+                      color: "green",
+                    }}
+                  >
+                    <TextField
+                      required
+                      disabled
+                      type="number"
+                      onChange={(e) => {
+                        setNoOfAdults(e.target.value);
+                      }}
+                      value={NoOfAdults}
+                      sx={{
+                        "& .MuiOutlinedInput-root": {
+                          "& fieldset": {
+                            border: "none", // Change this line
+                          },
+                          "&:hover fieldset": {
+                            border: "none", // Change this line
+                          },
+                          "&.Mui-focused fieldset": {
+                            border: "none", // Change this line
+                          },
+                        },
+                        mt: -1.5,
+                      }}
+                    />
+                  </Typography>
+                </Typography>
+              </Box>
+              <Box component="section">
+                <Typography variant="h6" gutterBottom>
+                  Children count for Rooms (Maximum) :
+                  <Typography
+                    variant="h5"
+                    gutterBottom
+                    style={{
+                      display: "inline-block",
+                      marginLeft: "10px",
+                      color: "green",
+                    }}
+                  >
+                    <TextField
+                      required
+                      disabled
+                      type="number"
+                      onChange={(e) => {
+                        setNoOfChildren(e.target.value);
+                      }}
+                      value={NoOfChildren}
+                      sx={{
+                        "& .MuiOutlinedInput-root": {
+                          "& fieldset": {
+                            border: "none", // Change this line
+                          },
+                          "&:hover fieldset": {
+                            border: "none", // Change this line
+                          },
+                          "&.Mui-focused fieldset": {
+                            border: "none", // Change this line
+                          },
+                        },
+                        mt: -1,
+                      }}
+                    />
+                  </Typography>
+                </Typography>
+              </Box>
+              <Box component="section">
+                <Typography variant="h6" gutterBottom>
+                  Total Price for Rooms :
+                  <TextField
+                    required
+                    disabled
+                    type="number"
+                    onChange={(e) => {
+                      setRoomPrice(e.target.value);
+                    }}
+                    
+                    value={roomPrice}
+                    sx={{
+                      "& .MuiOutlinedInput-root": {
+                        "& fieldset": {
+                          border: "none", // Change this line
+                        },
+                        "&:hover fieldset": {
+                          border: "none", // Change this line
+                        },
+                        "&.Mui-focused fieldset": {
+                          border: "none", // Change this line
+                        },
+                      },
+                      mt: -1.5,
+                    }}
+                  />
+                </Typography>
+              </Box>
+              <Box component="section">
+                <Typography variant="h6" gutterBottom>
+                  Total Price for Halls:
+                  <TextField
+                    required
+                    disabled
+                    type="number"
+                    onChange={(e) => {
+                      setHallPrice(e.target.value);
+                    }}
+                    value={hallPrice}
+                    sx={{
+                      "& .MuiOutlinedInput-root": {
+                        "& fieldset": {
+                          border: "none", // Change this line
+                        },
+                        "&:hover fieldset": {
+                          border: "none", // Change this line
+                        },
+                        "&.Mui-focused fieldset": {
+                          border: "none", // Change this line
+                        },
+                      },
+                      mt: -1.5,
+                    }}
+                  />
+                </Typography>
+              </Box>
+              <Box component="section">
+                <Typography variant="h6" gutterBottom>
+                  Total Price :
+                  <TextField
+                    required
+                    disabled
+                    type="number"
+                    onChange={(e) => {
+                      setTotalPrice(e.target.value);
+                    }}
+                    // totalPrice={roomPrice+hallPrice}
+                    value={roomPrice+hallPrice}
+                    sx={{
+                      "& .MuiOutlinedInput-root": {
+                        "& fieldset": {
+                          border: "none", // Change this line
+                        },
+                        "&:hover fieldset": {
+                          border: "none", // Change this line
+                        },
+                        "&.Mui-focused fieldset": {
+                          border: "none", // Change this line
+                        },
+                      },
+                      mt: -1.5,
+                    }}
+                  />
                 </Typography>
               </Box>
             </DialogContentText>
@@ -366,11 +462,7 @@ export default function ScrollDialog() {
         message={errorStatus.message}
         setIsOpen={(val) => setErrorStatus({ ...errorStatus, isOpen: val })}
       />
-      <PayNowPopup
-      isOpen={PayNow}
-      setIsOpen={setPayNow}
-      />
-
+      <PayNowPopup isOpen={PayNow} setIsOpen={setPayNow} />
     </React.Fragment>
   );
 }
