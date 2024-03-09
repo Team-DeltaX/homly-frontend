@@ -31,12 +31,12 @@ export default function ScrollDialog() {
   const [HolidayHomeName, SetHolidayHomeName] = useState("");
   const [holidayHomes, setHolidayHomes] = React.useState([]);
   const [ServiceNO, setServiceNO] = useState("");
-  const [Price, setPrice] = useState(600);
+  const [roomPrice, setRoomPrice] = useState(0);
+  const [hallPrice, setHallPrice] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
   const [NoOfAdults, setNoOfAdults] = useState(0);
   const [NoOfChildren, setNoOfChildren] = useState(0);
   const [NoOfRooms, setNoOfRooms] = useState(0);
-  const [NoOfDoubleRooms, setNoOfDoubleRooms] = useState(0);
-  const [NoOfTripleRooms, setNoOfTripleRooms] = useState(0);
   const [NoOfHalls, setNoOfHalls] = useState(0);
   const [CheckinDate, setCheckinDate] = useState(dayjs(new Date()));
   const [CheckoutDate, setCheckoutDate] = useState(dayjs(new Date()));
@@ -78,10 +78,8 @@ export default function ScrollDialog() {
       NoOfAdults: NoOfAdults,
       NoOfChildren: NoOfChildren,
       NoOfRooms: NoOfRooms,
-      NoOfDoubleRooms: NoOfDoubleRooms,
-      NoOfTripleRooms: NoOfTripleRooms,
       NoOfHalls: NoOfHalls,
-      Price: Price,
+      Price: totalPrice,
     };
     console.log("aruna", data);
 
@@ -116,7 +114,7 @@ export default function ScrollDialog() {
         descriptionElement.focus();
       }
     }
-  }, [open]);
+  }, []);
   return (
     <React.Fragment>
       <Button
@@ -199,114 +197,15 @@ export default function ScrollDialog() {
                 }}
                 value={CheckoutDate}
               />
-              {/* <TextField
-                fullWidth
-                required
-                margin="dense"
-                id="outlined-number"
-                label="No. of Adults"
-                type="number"
-                onChange={(e) => {
-                  setNoOfAdults(e.target.value);
-                }}
-                value={NoOfAdults}
-              />
-              <TextField
-                fullWidth
-                required
-                margin="dense"
-                id="outlined-number"
-                label="No. of children"
-                type="number"
-                onChange={(e) => {
-                  setNoOfChildren(e.target.value);
-                }}
-                value={NoOfChildren}
-              /> */}
-              {/* <div style={{ display: "flex", gap: "10px", marginTop: "5px" }}>
-                <FormControl sx={{ flex: "1" }}>
-                  <InputLabel htmlFor="grouped-native-select">
-                    Single Rooms
-                  </InputLabel>
-                  <Select
-                    required
-                    native
-                    defaultValue="0"
-                    id="grouped-native-select"
-                    label="Grouping"
-                    onChange={(e) => {
-                      setNoOfSingleRooms(e.target.value);
-                    }}
-                    value={NoOfSingleRooms}
-                  >
-                    <option selected value={0}>
-                      0
-                    </option>
-                    <option value={1}>1</option>
-                    <option value={2}>2</option>
-                    <option value={3}>3</option>
-                    <option value={4}>4</option>
-                  </Select>
-                </FormControl>
-                <FormControl sx={{ flex: "1" }}>
-                  <InputLabel htmlFor="grouped-select">Double Rooms</InputLabel>
-                  <Select
-                    required
-                    native
-                    defaultValue="0"
-                    id="grouped-native-select"
-                    label="Grouping"
-                    onChange={(e) => {
-                      setNoOfDoubleRooms(e.target.value);
-                    }}
-                    value={NoOfDoubleRooms}
-                  >
-                    <option selected value={0}>
-                      0
-                    </option>
-                    <option value={1}>1</option>
-                    <option value={2}>2</option>
-                    <option value={3}>3</option>
-                    <option value={4}>4</option>
-                  </Select>
-                </FormControl>
-                <FormControl sx={{ flex: "1" }}>
-                  <InputLabel htmlFor="grouped-select">Triple Rooms</InputLabel>
-                  <Select
-                    required
-                    native
-                    defaultValue="0"
-                    id="grouped-native-select"
-                    label="Grouping"
-                    onChange={(e) => {
-                      setNoOfTripleRooms(e.target.value);
-                    }}
-                    value={NoOfTripleRooms}
-                  >
-                    <option selected value={0}>
-                      0
-                    </option>
-                    <option value={1}>1</option>
-                    <option value={2}>2</option>
-                    <option value={3}>3</option>
-                    <option value={4}>4</option>
-                  </Select>
-                </FormControl>
-              </div>
-              <TextField
-                fullWidth
-                required
-                margin="dense"
-                id="outlined-number"
-                label="No. of Halls"
-                type="number"
-                onChange={(e) => {
-                  setNoOfHalls(e.target.value);
-                }}
-                value={NoOfHalls}
-              /> */}
+
               <Stack direction="row" spacing={2} marginTop={"10px"}>
-                <AvailableRoomsPopUp margin="dense" />
+                <AvailableRoomsPopUp margin="dense" 
+                  NoOfRooms={NoOfRooms} setNoOfRooms={setNoOfRooms}
+                  NoOfAdults={NoOfAdults} setNoOfAdults={setNoOfAdults}
+                  NoOfChildren={NoOfChildren} setNoOfChildren={setNoOfChildren}
+                  roomPrice={roomPrice} setRoomPrice={setRoomPrice}
+                  hallPrice={hallPrice} setHallPrice={setHallPrice}
+                />
                 <AvailableHallsPopUp />
               </Stack>
               <Box component="section" sx={{ mt: 1 }}>
@@ -377,7 +276,7 @@ export default function ScrollDialog() {
               </Box>
               <Box component="section" sx={{ mt: 1 }}>
                 <Typography variant="h6" gutterBottom>
-                  Maximum Number of Adults :
+                  Adults count for Rooms (Maximum) :
                   <Typography
                     variant="h5"
                     gutterBottom
@@ -415,7 +314,7 @@ export default function ScrollDialog() {
               </Box>
               <Box component="section">
                 <Typography variant="h6" gutterBottom>
-                  Maximum Number of Children :
+                  Children count for Rooms (Maximum) :
                   <Typography
                     variant="h5"
                     gutterBottom
@@ -445,13 +344,69 @@ export default function ScrollDialog() {
                             border: "none", // Change this line
                           },
                         },
-                        mt: -1.5,
+                        mt: -1,
                       }}
                     />
                   </Typography>
                 </Typography>
               </Box>
-
+              <Box component="section">
+                <Typography variant="h6" gutterBottom>
+                  Total Price for Rooms :
+                  <TextField
+                    required
+                    disabled
+                    type="number"
+                    onChange={(e) => {
+                      setRoomPrice(e.target.value);
+                    }}
+                    
+                    value={roomPrice}
+                    sx={{
+                      "& .MuiOutlinedInput-root": {
+                        "& fieldset": {
+                          border: "none", // Change this line
+                        },
+                        "&:hover fieldset": {
+                          border: "none", // Change this line
+                        },
+                        "&.Mui-focused fieldset": {
+                          border: "none", // Change this line
+                        },
+                      },
+                      mt: -1.5,
+                    }}
+                  />
+                </Typography>
+              </Box>
+              <Box component="section">
+                <Typography variant="h6" gutterBottom>
+                  Total Price for Halls:
+                  <TextField
+                    required
+                    disabled
+                    type="number"
+                    onChange={(e) => {
+                      setHallPrice(e.target.value);
+                    }}
+                    value={hallPrice}
+                    sx={{
+                      "& .MuiOutlinedInput-root": {
+                        "& fieldset": {
+                          border: "none", // Change this line
+                        },
+                        "&:hover fieldset": {
+                          border: "none", // Change this line
+                        },
+                        "&.Mui-focused fieldset": {
+                          border: "none", // Change this line
+                        },
+                      },
+                      mt: -1.5,
+                    }}
+                  />
+                </Typography>
+              </Box>
               <Box component="section">
                 <Typography variant="h6" gutterBottom>
                   Total Price :
@@ -460,9 +415,10 @@ export default function ScrollDialog() {
                     disabled
                     type="number"
                     onChange={(e) => {
-                      setPrice(e.target.value);
+                      setTotalPrice(e.target.value);
                     }}
-                    value={Price}
+                    // totalPrice={roomPrice+hallPrice}
+                    value={roomPrice+hallPrice}
                     sx={{
                       "& .MuiOutlinedInput-root": {
                         "& fieldset": {
