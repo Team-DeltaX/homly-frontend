@@ -71,7 +71,6 @@ export default function ScrollDialog() {
 
   const handlesubmit = (e) => {
     const data = {
-      ServiceNO: ServiceNO,
       HolidayHome: HolidayHomeName,
       CheckinDate: CheckinDate,
       CheckoutDate: CheckoutDate,
@@ -79,12 +78,12 @@ export default function ScrollDialog() {
       NoOfChildren: NoOfChildren,
       NoOfRooms: NoOfRooms,
       NoOfHalls: NoOfHalls,
-      Price: totalPrice,
+      Price: roomPrice+hallPrice,
     };
     console.log("aruna", data);
 
     axios
-      .post("http://localhost:3002/users/reservation", data)
+      .post("http://localhost:3002/users/auth/reservation", data,{withCredentials:true})
       .then((res) => {
         console.log("add reservation successfully");
         setErrorStatus({
@@ -127,19 +126,20 @@ export default function ScrollDialog() {
       <Dialog
         open={open}
         onClose={handleClose}
-        scroll={scroll}
+
         aria-labelledby="scroll-dialog-title"
         aria-describedby="scroll-dialog-description"
       >
         <DialogTitle id="scroll-dialog-title">Reservation Form</DialogTitle>
         <form onSubmit={(e) => e.preventDefault()}>
-          <DialogContent dividers={scroll === "paper"}>
+          <DialogContent dividers={scroll === "paper"}
+          sx={{maxHeight:{xs:'600px',md:'400px'}, overflow:'scroll'}}>
             <DialogContentText
               id="scroll-dialog-description"
               ref={descriptionElementRef}
               tabIndex={-1}
             >
-              <TextField
+              {/* <TextField
                 autoFocus
                 required
                 onChange={(e) => {
@@ -153,7 +153,7 @@ export default function ScrollDialog() {
                 type="text"
                 fullWidth
                 variant="outlined"
-              />
+              /> */}
               <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">
                   Select Holiday Home*
@@ -446,6 +446,7 @@ export default function ScrollDialog() {
               variant="contained"
               type="submit"
               autoFocus
+              disabled={roomPrice+hallPrice === 0?true:false}
               onClick={() => {
                 handlesubmit();
                 handleClose();

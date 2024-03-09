@@ -1,31 +1,3 @@
-// import React from 'react';
-// import { useHistory } from 'react-router-dom';
-
-// const PayNowPopup = ({ onClose }) => {
-//   const history = useHistory();
-
-//   const handlePayNow = () => {
-//     // Redirect to payment gateway
-//     history.push('/payment');
-//   };
-
-//   const handlePayLater = () => {
-//     // Close the popup
-//     onClose();
-//   };
-
-//   return (
-//     <div className="pay-now-popup">
-//       <h2>Pay Now</h2>
-//       <p>Please choose your payment method:</p>
-//       <button onClick={handlePayNow}>Pay Now</button>
-//       <button onClick={handlePayLater}>Pay Later</button>
-//     </div>
-//   );
-// };
-
-// export default PayNowPopup;
-
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -33,6 +5,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import md5 from "crypto-js/md5";
 
 export default function AlertDialog(
     {
@@ -40,6 +13,88 @@ export default function AlertDialog(
         setIsOpen
     }) 
 {
+  
+  const orderId = 45896588;
+  const name = "Cake";
+  const amount = 4500;
+  const merchantId = "1226126";
+  const merchantSecret =
+    "MzQxNTg0NDg5Mzk5NzMxOTMxNTE0NDI3NDI0MTIxNTA5ODc0NTM3";
+
+  const hashedSecret = md5(merchantSecret).toString().toUpperCase();
+  const amountFormated = parseFloat(amount)
+    .toLocaleString("en-us", { minimumFractionDigits: 2 })
+    .replaceAll(",", "");
+  const currency = "LKR";
+
+  const hash = md5(
+    merchantId + orderId + amountFormated + currency + hashedSecret
+  )
+    .toString()
+    .toUpperCase();
+
+  const payment = {
+    sandbox: true, // if the account is sandbox or real
+    merchant_id: "1226126", // Replace your Merchant ID
+    return_url: "http://sample.com/return",
+    cancel_url: "http://sample.com/cancel",
+    notify_url: "http://sample.com/notify",
+    order_id: orderId,
+    items: name,
+    amount: amount,
+    currency: currency,
+    first_name: "Saman",
+    last_name: "Perera",
+    email: "samanp@gmail.com",
+    phone: "0771234567",
+    address: "No.1, Galle Road",
+    city: "Colombo",
+    country: "Sri Lanka",
+    hash: hash,
+  };
+
+// Listen to the load event of the script element
+// Create a new script element
+const script = document.createElement('script');
+// Set the src attribute to the URL of the PayHere script
+script.src = 'https://www.payhere.lk/lib/payhere.js';
+
+// // Listen to the load event of the script element
+// script.onload = () => {
+//   // The script is fully loaded, you can now call window.payhere.startPayment
+//   if (window.payhere) {
+//     // Call startPayment here
+//     window.payhere.startPayment(payment);
+//   } else {
+//     // Handle the case where the PayHere library couldn't be loaded
+//     console.error('PayHere library not loaded');
+//   }
+// };
+document.body.appendChild(script);
+  if (!window.payhere) {
+    window.payhere = {};
+  }
+  function pay() {
+    window.payhere.startPayment(payment);
+  }
+  
+  // Called when user completed the payment. It can be a successful payment or failure
+  window.payhere.onCompleted = function onCompleted(orderId) {
+    console.log("Payment completed. OrderID:" + orderId);
+    //Note: validate the payment and show success or failure page to the customer
+  };
+
+  // Called when user closes the payment without completing
+  window.payhere.onDismissed = function onDismissed() {
+    //Note: Prompt user to pay again or show an error page
+    console.log("Payment dismissed");
+  };
+
+  // Called when error happens when initializing payment such as invalid parameters
+  window.payhere.onError = function onError(error) {
+    // Note: show an error page
+    console.log("Error:" + error);
+  };
     const handleAlertClose = (event, reason) => {
         if (reason === "clickaway") {
           return;
@@ -67,12 +122,13 @@ export default function AlertDialog(
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleAlertClose}>Pay Later</Button>
-          <Button onClick={handleAlertClose} autoFocus>
+          <Button onClick={handleAlertClose} >Pay Later</Button>
+          <Button onClick={pay} autoFocus>
             Pay Now
           </Button>
         </DialogActions>
       </Dialog>
     </React.Fragment>
   );
+  
 }

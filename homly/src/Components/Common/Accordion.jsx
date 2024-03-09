@@ -11,7 +11,6 @@ import { Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
-import Checkbox from "@mui/material/Checkbox";
 import { useState } from "react";
 
 
@@ -49,7 +48,8 @@ export default function AccordionUsage({room,NoOfRooms,setNoOfRooms,NoOfAdults,s
           {/* <Typography variant="h6" sx={{ ml:20, flexShrink: 0 }}>
           <Checkbox />
           </Typography> */}
-          {reserve?"Reserved":" "}
+          {reserve?<Typography variant="button"
+          sx={{color:'green',ml: "20%", flexShrink: 0 }}>Reserved</Typography>:" "}
           
         </AccordionSummary>
         <AccordionDetails>

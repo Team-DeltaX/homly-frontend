@@ -11,6 +11,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Input } from '@mui/base/Input';
 import TextArea from '../Common/TextArea';
+import axios from "axios";
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -24,7 +25,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 
 export default function AddComplainPopUp({reservation}) {
   const [open, setOpen] = React.useState(false);
-
+  const [reason, setReason] = React.useState("sample");
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -32,7 +33,30 @@ export default function AddComplainPopUp({reservation}) {
   const handleClose = () => {
     setOpen(false);
   };
+  const handlesubmit = (e) => {
+    const data = {
+      ServiceNo: reservation.receiptName,
+      ReservationNo: reservation.recervationNO,
+      Reason: reason
+    };
+    console.log("aruna", data);
+    axios
+      .post("http://localhost:3002/users/reservation/AddComplaint", data)
+      .then((res) => {
+        console.log("add complaint successfully");
+      })
+      .catch((error) => {
+        console.log(`error is  nm ${error}`);
+      });
 
+    // setadminno("");
+    // setUsername("");
+    // setContactno("");
+    // SetEmail("");
+    // SetWorklocation("");
+    // setPassword("");
+    // SetSubstitute("");
+  };
   return (
     <React.Fragment>
       <Button variant="outlined" onClick={handleClickOpen}>
@@ -104,16 +128,23 @@ export default function AddComplainPopUp({reservation}) {
             fullWidth
             variant="outlined"
           />
-          <TextArea 
+          <TextField
             margin="dense"
-            label="Date"
-            inputProps = {"Reason"}
+            label="Reason"
+            multiline
+            fullWidth
+            value={reason}
+            onChange={(e) => {
+              setReason(e.target.value);
+            }}
+            
             maxLength="parent.maxLength"
           />
+          <p>{reason}</p>
         </DialogContent>
         <DialogActions>
           
-          <Button autoFocus onClick={handleClose} type="submit">Add Complain</Button>
+          <Button autoFocus onClick={handlesubmit} type="submit">Add Complain</Button>
         </DialogActions>
       </Dialog>
     </React.Fragment>
