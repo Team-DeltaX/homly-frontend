@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import { Box, TextField, Typography, Grid } from '@mui/material'
+import { Box, TextField, Typography, Grid, Button } from '@mui/material'
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 
 import EditRoom from './EditRoom';
@@ -52,6 +57,13 @@ function a11yProps(index) {
 const CreatePageHomeBreakDownView = ({ setSubmit, setAllValues, submitClicked, setHomeBreakDownError, bdValue, setBdValue, roomArray, setRoomArray, unitArray, setUnitArray, hallArray, setHallArray, adultsCount, setAdultsCount, childCount, setChildCount }) => {
 
   const [value, setValue] = useState(0);
+  // const [settingsType, setSettingsType] = useState('');
+  // const [settingsAdults, setSettingsAdults] = useState('');
+  // const [settingsChildren, setSettingsChildren] = useState('');
+  const [settingsRoomType, setSettingsRoomType] = useState({ type: '', adults: '', children: '' });
+  const [roomTypeArray, setRoomTypeArray] = useState([]);
+  const [roomTypeAddButton, setRoomTypeAddButton] = useState(true);
+
 
   // const [roomArray, setRoomArray] = useState([]);
   // const [unitArray, setUnitArray] = useState([]);
@@ -167,6 +179,49 @@ const CreatePageHomeBreakDownView = ({ setSubmit, setAllValues, submitClicked, s
 
   }
 
+  const handleSettingsTypeChange = (e) => {
+    setSettingsRoomType({ ...settingsRoomType, type: e.target.value });
+
+  }
+
+  const handleSettingsAdultsChange = (e) => {
+    setSettingsRoomType({ ...settingsRoomType, adults: e.target.value })
+
+  }
+
+  const handleSettingsChildrenChange = (e) => {
+    setSettingsRoomType({ ...settingsRoomType, children: e.target.value })
+  }
+
+
+
+  const handleAddRoomTypes = () => {
+    console.log(settingsRoomType);
+    if (settingsRoomType.type === '' || settingsRoomType.adults === '' || settingsRoomType.children === '') {
+      console.log("empty")
+    }
+    else {
+      console.log("not empty", settingsRoomType)
+      //  add setting riiom type to array using usesate
+      roomTypeArray.push(settingsRoomType);
+      console.log("array", roomTypeArray);
+      setSettingsRoomType({ type: '', adults: '', children: '' });
+
+    }
+  }
+
+
+
+  useEffect(() => {
+    if (settingsRoomType.type === '' || settingsRoomType.adults === '' || settingsRoomType.children === '') {
+      setRoomTypeAddButton(true);
+    } else {
+      setRoomTypeAddButton(false);
+    }
+  }, [settingsRoomType])
+
+
+
   useEffect(() => {
     const areErrorsEmpty =
       !error.oCharges &&
@@ -232,7 +287,7 @@ const CreatePageHomeBreakDownView = ({ setSubmit, setAllValues, submitClicked, s
             </FormGroup>
           </Grid>
           <Grid item md={6} sm={12} xs={12}>
-            <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
+            <Box className="input_container" sx={{ display: 'flex', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
               <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                 <Typography variant='p' sx={{ color: 'black' }}>Other Charges</Typography>
               </Box>
@@ -260,6 +315,65 @@ const CreatePageHomeBreakDownView = ({ setSubmit, setAllValues, submitClicked, s
 
 
         </Grid>
+
+        <Grid container spacing={3} sx={{ marginTop: "15px", marginBottom: "15px" }}>
+          <Grid item md={12} sm={12} xs={12}>
+            <Box>
+              <Typography variant='h6' sx={{ color: 'grey' }}>Room Settings</Typography>
+            </Box>
+          </Grid>
+          <Grid item md={6} sm={12} xs={12}>
+            <Box sx={{ display: "flex", gap: '1em', alignItems: 'center' }}>
+              <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.8em', marginBottom: '12px' }}>
+                <Box sx={{ maxWidth: '200px' }} className="label_container" >
+                  <Typography variant='p' sx={{ color: 'black' }}>Type</Typography>
+                </Box>
+                <FormControl sx={{ width: '100px', }}>
+                  <InputLabel id="demo-simple-select-label">Select</InputLabel>
+                  <Select
+                    required
+                    xs={{ width: "5%" }}
+                    size='small'
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={settingsRoomType.type}
+                    label="Age"
+                    onChange={handleSettingsTypeChange}
+                  >
+                    <MenuItem value={"SingleRoom"}>Single Room</MenuItem>
+                    <MenuItem value={"DoubleRoom"}>Double Room</MenuItem>
+                    <MenuItem value={"TripleRoom"}>Triple Room</MenuItem>
+
+                  </Select>
+                </FormControl>
+              </Box>
+              <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1em', marginBottom: '12px' }}>
+                <Box sx={{}} className="label_container" >
+                  <Typography variant='p' sx={{ color: 'black' }}>Adults</Typography>
+                </Box>
+                <TextField type='number' error={error.ctName} required id="outlined-required" label="" sx={{ width: "75px", }} size="small" onChange={handleSettingsAdultsChange} value={settingsRoomType.adults} />
+              </Box>
+              <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1em', marginBottom: '12px' }}>
+                <Box sx={{ width: "50px" }} className="label_container" >
+                  <Typography variant='p' sx={{ color: 'black' }}>Children</Typography>
+                </Box>
+                <TextField type='number' error={error.ctName} required id="outlined-required" label="" size='small' sx={{ width: "75px" }} onChange={handleSettingsChildrenChange} value={settingsRoomType.children} />
+              </Box>
+              <Box sx={{ display: "flex" }}>
+                <Button variant='contained' size={"small"} onClick={handleAddRoomTypes} disabled={roomTypeAddButton}>
+                  add
+                </Button>
+
+              </Box>
+
+
+            </Box>
+          </Grid>
+          <Grid item md={6} sm={12} xs={12}>
+          </Grid>
+
+        </Grid>
+
         <Grid container spacing={3}>
 
           <Grid item md={12} sm={12} xs={12} sx={{ marginTop: '2em' }}>

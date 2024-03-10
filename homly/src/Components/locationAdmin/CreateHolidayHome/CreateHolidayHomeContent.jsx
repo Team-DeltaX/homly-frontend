@@ -31,7 +31,8 @@ const CreateHolidayHomeContent = () => {
     park: false,
     wifi: false,
     pool: false,
-    bar: false
+    bar: false,
+
 
   })
 
