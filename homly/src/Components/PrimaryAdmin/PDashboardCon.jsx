@@ -1,5 +1,5 @@
 import { Grid,Box } from '@mui/material'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import PStatisticsDetails from '../../Components/PrimaryAdmin/PStatisticsDetails';
 
@@ -8,8 +8,20 @@ import DirectionsWalkIcon from '@mui/icons-material/DirectionsWalk';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import PaidIcon from '@mui/icons-material/Paid';
 import PSummary from '../../Components/PrimaryAdmin/Psummery';
+import axios from 'axios';
+import { set } from 'date-fns';
 
 const PDashboardCon = () => {
+  const [hhcount,Sethhcount]=useState(0)
+  const gethhcount=()=>{
+    axios.get('http://localhost:3002/admin/auth/hhcount')
+    .then((res)=>{
+      Sethhcount(res.data.count)
+    })
+    .catch((error)=>{
+      console.log(error)
+    })
+  }
     const summaries = [
         {
           color:'#8CB7A3',
@@ -32,11 +44,15 @@ const PDashboardCon = () => {
           {
             color:'#FF5F51',
             summaryTitle: 'Homes',
-            count: 879,
+            count: hhcount,
             iconComponent: <PaidIcon sx={{fontSize:'2.8rem'}}/>,
           }
         // Add more objects as needed for additional summaries
       ];
+      useEffect(()=>{
+        gethhcount()
+
+      },[])
   return (
     <Grid container sx={{padding:'10px 30px',display:'flex',justifyContent:'center',width:'100%'}}>
         {/* <Grid md={8} xs={12}>
