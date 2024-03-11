@@ -90,19 +90,20 @@ export default function ViewPopUp(props) {
             <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 2 }} elevation={0}>
               <Grid xs={4}>
                 <Item sx={{boxShadow: "none"}}>
-                  <img className="reservation-photo" src={props.reservation.img} alt="" />
+                  <img className="reservation-photo" src={"https://images.unsplash.com/photo-1605352081508-2e09927ecfe3?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8aG9saWRheSUyMGhvbWV8ZW58MHx8MHx8fDA%3D"} alt="" />
+                  {/* <img className="reservation-photo" src={props.reservation.img} alt="" /> */}
                 </Item>
               </Grid>
               <Grid xs={4}>
                 <Item sx={{boxShadow: "none"}}>
-                  <Typography variant="h6" align="left" display="block" gutterBottom>{ props.reservation.empName }</Typography>
+                  <Typography variant="button" align="left" display="block" gutterBottom sx={{fontWeight:'bold'}}>{ props.name }</Typography>
                   <Typography variant="body2" align="left" display="block" gutterBottom>Reservation Number  { props.reservation.ReservationId }</Typography>
                   <Typography variant="body2" align="left" display="block" gutterBottom>Amount { props.reservation.Price }</Typography>
                 </Item>
               </Grid>
               <Grid xs={4}>
                 <Item sx={{boxShadow: "none"}}>
-                  <Typography variant="h6" align="right" display="block" gutterBottom>{ props.reservation.holidayhomename }</Typography>
+                  <Typography variant="button" align="right" display="block" gutterBottom sx={{fontWeight:'bold'}}>{ props.reservation.HolidayHome }</Typography>
                   <Typography variant="body2" align="right" display="block" gutterBottom>Check In : { dayjs(props.reservation.CheckinDate).format('DD/MM/YYYY') }</Typography>
                   <Typography variant="body4" align="right" display="block" gutterBottom>Check Out : { dayjs(props.reservation.CheckoutDate).format('DD/MM/YYYY') }</Typography>
                 </Item>
@@ -111,7 +112,7 @@ export default function ViewPopUp(props) {
                 <Item sx={{boxShadow: "none"}}>
                 <Stack direction="column" spacing={1} sx={{ width: '100%', maxWidth: 500 }}>
                   <item>
-                   <Typography variant="body2" align="left" display="block" gutterBottom>No. of Rooms : { props.reservation.NoOfSingleRooms }</Typography>
+                   <Typography variant="body2" align="left" display="block" gutterBottom>No. of Rooms : { props.reservation.NoOfRooms }</Typography>
                    <Typography variant="body3" align="left" display="block" gutterBottom>No. of Halls : { props.reservation.NoOfHalls }</Typography>
                   </item>
                   <item>

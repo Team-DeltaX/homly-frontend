@@ -15,16 +15,17 @@ const SpecialReservationCard = ({reservation}) => {
         <Grid container spacing={2} className="reservation-preview" key={reservation.id} >
             <Grid container className="columnData" sx={{width:'100%'}}> 
                 <Grid Item xs={3} md={3} sx={{display:'flex',justifyContent:"center", alignItems:"center"}}>
-                    <img className="reservation-photo" src={reservation.img} alt="" />
+                    <img className="reservation-photo" src={"https://images.unsplash.com/photo-1605352081508-2e09927ecfe3?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8aG9saWRheSUyMGhvbWV8ZW58MHx8MHx8fDA%3D"} alt="" />
+                    {/* <img className="reservation-photo" src={reservation.img} alt="" /> */}
                 </Grid>
                 <Grid Item xs={4} md={4} sx={{justifyContent:"center", alignItems:"center"}}>
-                    <h2>{ reservation.receiptName }</h2>
+                    <h2>{ reservation.ServiceNo }</h2>
                     <p>Reservation Number  { reservation.SpecailReservationID }</p>
-                    <p>Amount { reservation.amount }</p>
+                    <p>Amount { reservation.Price }</p>
                 </Grid>
                 <Grid xs={5} md={5} className="section2" sx={{display:'flex',justifyContent:"flex-end", alignItems:"center"}}>
                     <Stack direction="column" justifyContent="flex-end" alignItems="flex-end" spacing={0.5}>
-                        <h2>{ reservation.holidayhomename }</h2>
+                        <h2>{ reservation.HolidayHome }</h2>
                         <p>Check In : { dayjs(reservation.CheckinDate).format('DD/MM/YYYY')}</p>
                         <p>Check Out : { dayjs(reservation.CheckoutDate).format('DD/MM/YYYY')}</p>
                         {/* <SpecailReservationViewPopup reservation={reservation}/> */}

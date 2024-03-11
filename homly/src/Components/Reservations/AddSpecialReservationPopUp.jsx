@@ -10,9 +10,12 @@ import { useTheme } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import BasicDatePicker from "../Common/BasicDatePicker";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import dayjs, { Dayjs } from "dayjs";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
 const HH = [
   {
@@ -43,11 +46,15 @@ export default function AddSpecialReservationPopUp() {
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
 
   const [HolidayHomeName, SetHolidayHomeName] = useState("");
+  const [holidayHomes, setHolidayHomes] = React.useState([]);
   const [ServiceNo, setServiceNo] = useState("");
+  const [employeeName, setEmployeeName] = useState("");
 
   const [CheckinDate, setCheckinDate] = useState(dayjs(new Date()));
 
   const [CheckoutDate, setCheckoutDate] = useState(dayjs(new Date()));
+
+  const [Employee,SetEmployee]=useState({})
 
   const handlesubmit = (e) => {
     const data = {
@@ -74,6 +81,35 @@ export default function AddSpecialReservationPopUp() {
     // setPassword("");
     // SetSubstitute("");
   };
+//   const fetchfromemployee=()=>{
+//     axios.get(`http://localhost:3002/admin/auth/locationadmin/employee/${ServiceNo}`)
+//     .then((res)=>{
+//         SetEmployee(res.data[0])
+//         console.log('----------emp emp-------')
+        
+//         console.log(Employee)
+//     })
+//     .catch(error=>{
+//         console.log(error)
+//     })
+// }
+// useEffect(()=>{
+//     fetchfromemployee();
+
+// },[])
+useEffect(() => {
+  if (ServiceNo) {
+    axios
+      .get(`http://localhost:3002/admin/auth/locationadmin/employee/${ServiceNo}`)
+      .then((res) => {
+        const employeeData = res.data[0];
+        setEmployeeName(employeeData.name);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+}, [ServiceNo]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -82,6 +118,17 @@ export default function AddSpecialReservationPopUp() {
   const handleClose = () => {
     setOpen(false);
   };
+  useEffect(() => {
+    axios
+      .get("http://localhost:3002/users/reservation/holidayhomes")
+      .then((res) => {
+        if (Response) {
+          setHolidayHomes(res.data);
+        } else {
+          console.log("No data found");
+        }
+      });
+  }, []);
 
   return (
     <React.Fragment>
@@ -105,6 +152,7 @@ export default function AddSpecialReservationPopUp() {
               required
               onChange={(e) => {
                 setServiceNo(e.target.value);
+                setEmployeeName(Employee.name);
               }}
               value={ServiceNo}
               margin="dense"
@@ -116,6 +164,22 @@ export default function AddSpecialReservationPopUp() {
               variant="outlined"
             />
             <TextField
+              autoFocus
+              required
+              disabled
+              // onChange={(e) => {
+              //   setEmployeeName(e.target.value);
+              // }}
+              value={employeeName}
+              margin="dense"
+              id="empname"
+              name="empname"
+              label=""
+              type="text"
+              fullWidth
+              variant="outlined"
+            />
+            {/* <TextField
               fullWidth
               id="outlined-select-holidayhome"
               margin="dense"
@@ -133,7 +197,27 @@ export default function AddSpecialReservationPopUp() {
                   {option.label}
                 </MenuItem>
               ))}
-            </TextField>
+            </TextField> */}
+            <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">
+                  Select Holiday Home*
+                </InputLabel>
+                <Select
+                  fullWidth
+                  labelId="holiday-home-label"
+                  label="Holiday Home"
+                  isSearchable={true}
+                  id="outlined-select-holidayhome"
+                  value={HolidayHomeName}
+                  onChange={(e) => {
+                    SetHolidayHomeName(e.target.value);
+                  }}
+                >
+                  {holidayHomes.map((home) => (
+                    <MenuItem value={home}>{home}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             {/* <BasicDatePicker
               fullWidth
               onChange={(e) => {
