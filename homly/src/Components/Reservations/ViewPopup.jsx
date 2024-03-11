@@ -95,7 +95,7 @@ export default function ViewPopUp(props) {
               </Grid>
               <Grid xs={4}>
                 <Item sx={{boxShadow: "none"}}>
-                  <Typography variant="h6" align="left" display="block" gutterBottom>{ props.reservation.receiptName }</Typography>
+                  <Typography variant="h6" align="left" display="block" gutterBottom>{ props.reservation.empName }</Typography>
                   <Typography variant="body2" align="left" display="block" gutterBottom>Reservation Number  { props.reservation.ReservationId }</Typography>
                   <Typography variant="body2" align="left" display="block" gutterBottom>Amount { props.reservation.Price }</Typography>
                 </Item>
