@@ -27,7 +27,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-export default function AddComplainPopUp({reservation}) {
+export default function AddComplainPopUp(props) {
   const [open, setOpen] = React.useState(false);
   const [opened, setOpened] = React.useState(false);
   const [reason, setReason] = React.useState("enter the reason here");
@@ -45,8 +45,8 @@ export default function AddComplainPopUp({reservation}) {
   };
   const handlesubmit = (e) => {
     const data = {
-      ServiceNo: reservation.receiptName,
-      ReservationNo: reservation.recervationNO,
+      ServiceNo: props.reservation.ServiceNO,
+      ReservationNo: props.reservation.ReservationId,
       Reason: reason
     };
     console.log("aruna", data);
@@ -117,12 +117,12 @@ export default function AddComplainPopUp({reservation}) {
           <TextField
             autoFocus
             disabled={true}
-            value={reservation.ServiceNo}
+            value={props.reservation.ServiceNO}
             required
             margin="dense"
             id="serviceno"
             name="serviceno"
-            label="Employee Name"
+            label="Employees Service No"
             type="text"
             fullWidth
             variant="outlined"
@@ -130,7 +130,7 @@ export default function AddComplainPopUp({reservation}) {
           <TextField
             autoFocus
             disabled={true}
-            value={reservation.ReservationId}
+            value={props.reservation.ReservationId}
             required
             margin="dense"
             id="reservationno"

@@ -42,7 +42,8 @@ const OngoingReservationList = (props) => {
     </Box> */}
     <Box className="home">
       {reservations.map(reservation => (
-         <OngoingReservationCard  reservation={reservation.Reservations[0]} name={reservation.empName}/>
+         <OngoingReservationCard  reservation={reservation}/>
+        // console.log("sadasd",reservation)
       ))}
     </Box>
     </>

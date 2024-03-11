@@ -27,7 +27,8 @@ const PastReservationList = (props) => {
     fetchreservations();
   }, []);
   return (
-    <Box className="home">
+    <>
+        {/* <Box className="home">
       {reservations.filter((reservations) => {
                     return props.search.toLowerCase() === ""
                       ? reservations
@@ -36,9 +37,16 @@ const PastReservationList = (props) => {
                         );
                   })
                   .map(reservation => (
-         (<PastReservationCard  reservation={reservation.Reservations[0]} name={reservation.empName}/>)    
+         (<OngoingReservationCard  reservation={reservation.Reservations[0]} name={reservation.empName}/>)    
+      ))}
+    </Box> */}
+    <Box className="home">
+      {reservations.map(reservation => (
+         <PastReservationCard  reservation={reservation}/>
+        // console.log("sadasd",reservation)
       ))}
     </Box>
+    </>
   );
 }
  
