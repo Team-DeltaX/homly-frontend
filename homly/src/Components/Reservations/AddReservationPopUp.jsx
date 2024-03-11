@@ -24,9 +24,11 @@ import AvailableRoomsPopUp from "../Common/AvailableRoomsPopUp";
 import AvailableHallsPopUp from "../Common/AvailableHallsPopUp";
 import Autocomplete from "@mui/material/Autocomplete";
 import Stack from "@mui/material/Stack";
-
+import ConfirmPopup from "../PrimaryAdmin/ConfirmPopup";
+ 
 export default function ScrollDialog() {
   const [open, setOpen] = React.useState(false);
+  const [opened, setOpened] = React.useState(false);
   const [scroll, setScroll] = React.useState("paper");
   const [HolidayHomeName, SetHolidayHomeName] = useState("");
   const [holidayHomes, setHolidayHomes] = React.useState([]);
@@ -92,6 +94,8 @@ export default function ScrollDialog() {
           type: "success",
           message: "reservation added successfully",
         });
+        setOpen(false);
+        setOpened(false);
         setPayNow(true);
       })
       .catch((error) => {
@@ -439,17 +443,30 @@ export default function ScrollDialog() {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
+          <ConfirmPopup
+            open={opened}
+            setOpen={setOpened}
+            title={"Reservation Confirmation"}
+            text={"Are you sure you want to confirm this Reservation?"}
+            controlfunction={handlesubmit}
+          />
             <Button variant="outlined" onClick={handleClose} autoFocus>
               Close
             </Button>
+            <ConfirmPopup
+            open={opened}
+            setOpen={setOpened}
+            title={"Reservation Confirmation"}
+            text={"Are you sure you want to confirm this Reservation?"}
+            controlfunction={handlesubmit}
+          />
             <Button
               variant="contained"
               type="submit"
               autoFocus
               disabled={roomPrice+hallPrice === 0?true:false}
               onClick={() => {
-                handlesubmit();
-                handleClose();
+                setOpened(true);
               }}
             >
               Reserve

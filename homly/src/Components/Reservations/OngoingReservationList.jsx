@@ -12,7 +12,7 @@ const OngoingReservationList = (props) => {
   const [reservations, setReservations] = useState([])
   const fetchreservations = () => {
     axios
-      .get("http://localhost:3002/users/reservation/")
+      .get("http://localhost:3002/users/reservation/ongoing")
       .then((res) => {
         console.log(res.data);
          //reverse array to keep new ones first 
@@ -28,17 +28,16 @@ const OngoingReservationList = (props) => {
   }, []);
   return (
     <>
-    {/* <Box className="home">
+        {/* <Box className="home">
       {reservations.filter((reservations) => {
-                    console.log(reservations)
                     return props.search.toLowerCase() === ""
                       ? reservations
-                      : reservations.holidayhomename.toLowerCase().startsWith(
+                      : reservations.empName.toLowerCase().startsWith(
                             props.search.toLocaleLowerCase()
                         );
                   })
                   .map(reservation => (
-         (<OngoingReservationCard  reservation={reservation}/>)    
+         (<OngoingReservationCard  reservation={reservation.Reservations[0]} name={reservation.empName}/>)    
       ))}
     </Box> */}
     <Box className="home">

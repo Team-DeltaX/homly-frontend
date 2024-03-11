@@ -44,12 +44,12 @@ export default function ConfirmPopup({open, setOpen,title,text,controlfunction})
     
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}><Typography>Cancel</Typography></Button>
+          <Button onClick={handleClose}><Typography>No</Typography></Button>
           <Button onClick={()=>{
              controlfunction()
 
            
-          }}><Typography>Ok</Typography></Button>
+          }}><Typography>Yes</Typography></Button>
         </DialogActions>
       </Dialog>
   );

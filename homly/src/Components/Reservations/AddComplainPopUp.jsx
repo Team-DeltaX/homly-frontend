@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
+import Alert from '@mui/material/Alert';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import TextField from '@mui/material/TextField';
@@ -12,6 +13,9 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { Input } from '@mui/base/Input';
 import TextArea from '../Common/TextArea';
 import axios from "axios";
+import { useState, useEffect } from "react";
+import ErrorSnackbar from '../User/ErrorSnackbar';
+import ConfirmPopup from "../PrimaryAdmin/ConfirmPopup";
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -25,11 +29,17 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 
 export default function AddComplainPopUp({reservation}) {
   const [open, setOpen] = React.useState(false);
-  const [reason, setReason] = React.useState("sample");
+  const [opened, setOpened] = React.useState(false);
+  const [reason, setReason] = React.useState("enter the reason here");
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const handleClickOpen = () => {
     setOpen(true);
   };
-
+  const [errorStatus, setErrorStatus] = useState({
+    isOpen: false,
+    type: "",
+    message: "",
+  });
   const handleClose = () => {
     setOpen(false);
   };
@@ -44,9 +54,23 @@ export default function AddComplainPopUp({reservation}) {
       .post("http://localhost:3002/users/reservation/AddComplaint", data)
       .then((res) => {
         console.log("add complaint successfully");
+        setOpen(false);
+        setOpened(false);
+        setErrorStatus({
+          ...errorStatus,
+          isOpen: true,
+          type: "success",
+          message: "complaint added successfully",
+        });
       })
       .catch((error) => {
         console.log(`error is  nm ${error}`);
+        setErrorStatus({
+          ...errorStatus,
+          isOpen: true,
+          type: "error",
+          message: "complaint add failed",
+        });
       });
 
     // setadminno("");
@@ -73,7 +97,6 @@ export default function AddComplainPopUp({reservation}) {
             const formJson = Object.fromEntries(formData.entries());
             const email = formJson.email;
             console.log(email);
-            handleClose();
           },
         }}
       >
@@ -94,12 +117,12 @@ export default function AddComplainPopUp({reservation}) {
           <TextField
             autoFocus
             disabled={true}
-            value={reservation.receiptName}
+            value={reservation.ServiceNo}
             required
             margin="dense"
             id="serviceno"
             name="serviceno"
-            label="Service No"
+            label="Employee Name"
             type="text"
             fullWidth
             variant="outlined"
@@ -107,7 +130,7 @@ export default function AddComplainPopUp({reservation}) {
           <TextField
             autoFocus
             disabled={true}
-            value={reservation.recervationNO}
+            value={reservation.ReservationId}
             required
             margin="dense"
             id="reservationno"
@@ -124,9 +147,12 @@ export default function AddComplainPopUp({reservation}) {
             id="date"
             name="date"
             label=""
+            disabled
             type="date"
             fullWidth
             variant="outlined"
+            value={selectedDate.toISOString().split("T")[0]}
+            onChange={(e) => setSelectedDate(new Date(e.target.value))}
           />
           <TextField
             margin="dense"
@@ -140,13 +166,29 @@ export default function AddComplainPopUp({reservation}) {
             
             maxLength="parent.maxLength"
           />
-          <p>{reason}</p>
         </DialogContent>
         <DialogActions>
-          
-          <Button autoFocus onClick={handlesubmit} type="submit">Add Complain</Button>
+        <ConfirmPopup
+            open={opened}
+            setOpen={setOpened}
+            title={"Reservation Confirmation"}
+            text={"Are you sure you want to confirm this Reservation?"}
+            controlfunction={handlesubmit}
+          />
+          <Button autoFocus onClick={() => {
+                setOpened(true);
+              }} type="submit"
+          >
+            Add Complain
+          </Button>
         </DialogActions>
       </Dialog>
+      <ErrorSnackbar
+        isOpen={errorStatus.isOpen}
+        type={errorStatus.type}
+        message={errorStatus.message}
+        setIsOpen={(val) => setErrorStatus({ ...errorStatus, isOpen: val })}
+      />
     </React.Fragment>
   );
 }
