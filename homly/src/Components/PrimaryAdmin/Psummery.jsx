@@ -12,7 +12,7 @@ const PSummary = ({summaryTitle,count,iconUse,color}) => {
            <Typography variant="p" sx={{fontSize:'0.9rem',fontWeight:'medium'}}> {summaryTitle}</Typography>
       
       
-            <Typography variant="h6">{count}</Typography>
+            <Typography variant="h6" sx={{marginLeft:'10px'}}>{count}</Typography>
         </Box>
     </Box>
   )
