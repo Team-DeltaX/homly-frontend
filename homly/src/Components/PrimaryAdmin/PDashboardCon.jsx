@@ -6,6 +6,7 @@ import PStatisticsDetails from "../../Components/PrimaryAdmin/PStatisticsDetails
 import DirectionsWalkIcon from "@mui/icons-material/DirectionsWalk";
 import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
 import PaidIcon from "@mui/icons-material/Paid";
+import HomeIcon from '@mui/icons-material/Home';
 import PSummary from "../../Components/PrimaryAdmin/Psummery";
 import axios from "axios";
 import { set } from "date-fns";
@@ -210,7 +211,7 @@ const PDashboardCon = () => {
                   alignItems: "center",
                 }}
               >
-                <Box><PaidIcon sx={{ fontSize: "2.8rem" }} /></Box>
+                <Box><HomeIcon sx={{ fontSize: "2.8rem" }} /></Box>
                 <Box>
                   <Typography
                     variant="p"
