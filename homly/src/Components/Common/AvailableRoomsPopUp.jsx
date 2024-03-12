@@ -25,20 +25,15 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 export default function AvailableRoomsPopUp(props) {
   const [open, setOpen] = React.useState(false);
   const [rooms, setRooms] = React.useState([]);
-  
-
+  //const [holidayId, setHolidayId] = React.useState(props.holidayHomeId);
+  console.log("holidayhomeId",props.holidayHomeId)
   const handleClickOpen = () => {
     setOpen(true);
   };
-
+  const holidayId = props.holidayHomeId;
   const handleClose = () => {
     setOpen(false);
   };
-  // React.useEffect(() => {
-  //   fetch('http://localhost:3002/api/rooms')
-  //     .then(response => response.json())
-  //     .then(data => setRooms(data));
-  // }, []);
   const fetchRooms = () => {
     axios
       .get("http://localhost:3002/users/reservation/rooms")
@@ -46,19 +41,20 @@ export default function AvailableRoomsPopUp(props) {
         console.log(res.data);
          //reverse array to keep new ones first 
         setRooms(res.data);
+        console.log(props.holidayHomeName);
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
+  console.log(props.holidayHomeName);
   useEffect(() => {
     fetchRooms();
   }, []);
   return (
     <React.Fragment>
       <Button variant="outlined" onClick={handleClickOpen} margin="normal">
-        Available Rooms
+        Available Rooms for {props.holidayHomeName}
       </Button>
       <Dialog
         fullScreen
@@ -94,7 +90,7 @@ export default function AvailableRoomsPopUp(props) {
   ))} */}
           
             {rooms.map((room) => (
-              room.roomCode !== "r002" && ( // TODO: remove this hard-coded room code
+              room.HolidayHomeId === holidayId && (// TODO: remove this hard-coded room code
                 <AccordionUsage
                   key={room.id}
                   room={room}
