@@ -13,11 +13,23 @@ import { set } from "date-fns";
 
 const PDashboardCon = () => {
   const [hhcount, Sethhcount] = useState(0);
+  const [earning, SetEarning] = useState(0);
   const gethhcount = () => {
     axios
       .get("http://localhost:3002/admin/auth/hhcount")
       .then((res) => {
         Sethhcount(res.data.count);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const getearning = () => {
+    axios
+      .get("http://localhost:3002/admin/auth/earning")
+      .then((res) => {
+        SetEarning(res.data.sum);
       })
       .catch((error) => {
         console.log(error);
@@ -52,6 +64,7 @@ const PDashboardCon = () => {
   ];
   useEffect(() => {
     gethhcount();
+    getearning();
   }, []);
   return (
     <Grid
@@ -184,6 +197,7 @@ const PDashboardCon = () => {
                   color: "white",
                   borderRadius: "20px",
                   alignItems: "center",
+                  textAlign: "center",
                 }}
               >
                 <Box><PaidIcon sx={{ fontSize: "2.8rem" }} /></Box>
@@ -196,7 +210,7 @@ const PDashboardCon = () => {
                   </Typography>
 
                   <Typography variant="h6" sx={{ marginLeft: "10px" }}>
-                    count
+                    {earning}
                   </Typography>
                 </Box>
               </Box>
