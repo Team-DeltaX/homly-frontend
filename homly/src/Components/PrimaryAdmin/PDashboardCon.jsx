@@ -114,7 +114,7 @@ const PDashboardCon = () => {
                   width: "80%",
                   padding: "0 1rem",
                   display: "flex",
-                  flexDirection: "column",
+                  flexDirection: "row",
                   justifyContent: "center",
                   gap: "0.2em",
                   backgroundColor:"#FF5F51",
@@ -124,17 +124,36 @@ const PDashboardCon = () => {
                 }}
               >
                 <Box><LibraryBooksIcon sx={{ fontSize: "2.8rem" }} /></Box>
-                <Box>
-                  <Typography
+                <Box sx={{display:'flex',flexDirection:'row',justifyContent:'space-between',columnGap:'50px'}}>
+                 <Box sx={{display:'flex',justifyContent:'center',alignItems:'center',flexDirection:'column',textAlign:'center'}}>
+                 <Typography
                     variant="p"
-                    sx={{ fontSize: "0.9rem", fontWeight: "medium" }}
+                    sx={{ fontSize: "0.85rem", fontWeight: "medium" }}
                   >
-                    Bookings
+                    Pending Bookings
                   </Typography>
 
-                  <Typography variant="h6" sx={{ marginLeft: "10px" }}>
-                    count
+                  <Typography variant="h6" sx={{ marginLeft: "4px" }}>
+                    234
                   </Typography>
+                 </Box>
+
+                 <Box>
+                 <Typography
+                    variant="p"
+                    sx={{ fontSize: "0.85rem", fontWeight: "medium" }}
+                  >
+                  paid Bookings
+                    
+                  </Typography>
+
+                  <Typography variant="h6" sx={{ marginLeft: "4px" }}>
+                    123
+                  </Typography>
+                 </Box>
+
+
+                  
                 </Box>
               </Box>
             </Box>
