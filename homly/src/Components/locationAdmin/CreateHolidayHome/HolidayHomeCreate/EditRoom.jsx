@@ -19,7 +19,7 @@ import RoomBreakdown from '../RoomBreakdown';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
-const EditRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount }) => {
+const EditRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount, roomTypeArray, settingRoomRentalArray }) => {
     // open pop up for add room
     const [open, setOpen] = useState(false);
     const [fullWidth, setFullWidth] = useState(true);
@@ -126,6 +126,7 @@ const EditRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount }) =>
 
         // setValues({ roomCode: '', roomAc: '', RoomType: '', NoOfBeds: '', NoOfAdults: '', NoOfChildren: '', roomRemarks: '', roomRental: '', groupByUnit: false })
         // setOpen(false);
+        console.log("values array", values)
         if (values.roomCode === '' || values.roomAc === '' || values.RoomType === '' || values.NoOfBeds === '' || values.NoOfAdults === '' || values.NoOfChildren === '' || values.roomRemarks === '' || values.roomRental === '') {
             setOpenRoomFillAlert(true);
             return;
@@ -231,21 +232,67 @@ const EditRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount }) =>
         setValues({ ...values, roomAc: e.target.value });
     }
 
+    // const handleRoomTypeChange = (e) => {
+    //     setValues({ ...values, RoomType: e.target.value });
+    //     let type = e.target.value;
+    //     // console.log(type)
+    //     for (let i = 0; i < roomTypeArray.length; i++) {
+    //         if (roomTypeArray[i].type === type) {
+    //             console.log("in", roomTypeArray[i])
+    //             setValues({ ...values, NoOfAdults: roomTypeArray[i].adults });
+    //             setValues({ ...values, NoOfChildren: roomTypeArray[i].children });
+    //         }
+    //     }
+    //     // setValues({ ...values, RoomType: e.target.value });
+
+    // }
+
     const handleRoomTypeChange = (e) => {
-        setValues({ ...values, RoomType: e.target.value });
-    }
+        const type = e.target.value;
+        setValues(prevValues => {
+            // Find the room type object based on the selected type
+            const roomType = roomTypeArray.find(room => room.type === type);
+            // If room type is found, update the state
+            if (roomType) {
+                return {
+                    ...prevValues,
+                    RoomType: type,
+                    NoOfAdults: roomType.adults,
+                    NoOfChildren: roomType.children
+                };
+            }
+            // If room type is not found, just update RoomType
+            return {
+                ...prevValues,
+                RoomType: type,
+                NoOfAdults: '',
+                NoOfChildren: ''
+            };
+        });
+    };
+
+
+    useEffect(() => {
+        let valid = false;
+        for (let i = 0; i < settingRoomRentalArray.length; i++) {
+            if (settingRoomRentalArray[i].type === values.RoomType && settingRoomRentalArray[i].acNonAc === values.roomAc) {
+                setValues(prevValues => ({ ...prevValues, roomRental: settingRoomRentalArray[i].rental }));
+                valid = true;
+                break;
+            }
+        }
+        if (!valid) {
+            setValues(prevValues => ({ ...prevValues, roomRental: '' }));
+        }
+    }, [values.roomAc, values.RoomType, settingRoomRentalArray]);
+
+
+
 
     const handleFloorLevelChange = (e) => {
         setValues({ ...values, floorLevel: e.target.value });
     }
 
-    const handleNoOfAdults = (e) => {
-        setValues({ ...values, NoOfAdults: e.target.value });
-    }
-
-    const handleNoOfChildren = (e) => {
-        setValues({ ...values, NoOfChildren: e.target.value });
-    }
 
 
     const handleRemarksChange = (e) => {
@@ -414,13 +461,13 @@ const EditRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount }) =>
                                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                     <Typography variant='p' sx={{ color: 'black' }}>Number Of Adults</Typography>
                                 </Box>
-                                <TextField disabled type='number' error={error.ctName} required id="outlined-required" label="" placeholder='No of Adults' fullWidth size='small' onChange={handleNoOfAdults} value={values.NoOfAdults} />
+                                <TextField disabled type='number' error={error.ctName} required id="outlined-required" label="" placeholder='No of Adults' fullWidth size='small' value={values.NoOfAdults} />
                             </Box>
                             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                     <Typography variant='p' sx={{ color: 'black' }}>Number Of Children</Typography>
                                 </Box>
-                                <TextField disabled type='number' error={error.ctName} required id="outlined-required" label="" placeholder='No of Children' fullWidth size='small' onChange={handleNoOfChildren} value={values.NoOfChildren} />
+                                <TextField disabled type='number' error={error.ctName} required id="outlined-required" label="" placeholder='No of Children' fullWidth size='small' value={values.NoOfChildren} />
                             </Box>
                             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >

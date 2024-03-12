@@ -11,6 +11,9 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import CancelIcon from '@mui/icons-material/Cancel';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 
 import EditRoom from './EditRoom';
@@ -61,42 +64,14 @@ const CreatePageHomeBreakDownView = ({ setSubmit, setAllValues, submitClicked, s
   // const [settingsAdults, setSettingsAdults] = useState('');
   // const [settingsChildren, setSettingsChildren] = useState('');
   const [settingsRoomType, setSettingsRoomType] = useState({ type: '', adults: '', children: '' });
+  const [settingsRoomRental, setSettingsRoomRental] = useState({ type: '', acNonAc: '', rental: '' })
   const [roomTypeArray, setRoomTypeArray] = useState([]);
+  const [settingRoomRentalArray, setSettingRoomRentalArray] = useState([]);
   const [roomTypeAddButton, setRoomTypeAddButton] = useState(true);
+  const [roomSettingsRentalAddButton, setRoomSettingsRentalAddButton] = useState(true);
 
 
-  // const [roomArray, setRoomArray] = useState([]);
-  // const [unitArray, setUnitArray] = useState([]);
-  // const [hallArray, setHallArray] = useState([]);
 
-  // const [adultsCount, setAdultsCount] = useState(0);
-  // const [childCount, setChildCount] = useState(0);
-  // const [otherCharges, setOtherCharges] = useState();
-  // const [serviceCharges, setServiceCharges] = useState();
-  // const [totalRental, setTotalRental] = useState();
-  // const [facilities, setFacilities] = useState('');
-  // const [gym, setGym] = useState(false);
-  // const [kitchen, setKitchen] = useState(false);
-  // const [park, setPark] = useState(false);
-  // const [wifi, setWifi] = useState(false);
-  // const [pool, setPool] = useState(false);
-  // const [bar, setBar] = useState(false);
-
-  // const [bdValue, setBdValue] = useState({
-  //   adultsCount: 0,
-  //   childCount: 0,
-  //   otherCharges: "",
-  //   serviceCharges: "",
-  //   totalRental: "",
-  //   facilities: "",
-  //   gym: false,
-  //   kitchen: false,
-  //   park: false,
-  //   wifi: false,
-  //   pool: false,
-  //   bar: false
-
-  // })
 
   const [error, setError] = useState({
     tRental: false, oCharges: false, sCharges: false
@@ -185,31 +160,54 @@ const CreatePageHomeBreakDownView = ({ setSubmit, setAllValues, submitClicked, s
   }
 
   const handleSettingsAdultsChange = (e) => {
-    setSettingsRoomType({ ...settingsRoomType, adults: e.target.value })
+    const inputValue = e.target.value;
+
+    // Check if the input value is a positive integer
+    if (inputValue === '' || /^\d+$/.test(inputValue)) {
+      setSettingsRoomType({ ...settingsRoomType, adults: inputValue })
+
+    }
 
   }
 
   const handleSettingsChildrenChange = (e) => {
-    setSettingsRoomType({ ...settingsRoomType, children: e.target.value })
+    const inputValue = e.target.value;
+
+    // Check if the input value is a positive integer
+    if (inputValue === '' || /^\d+$/.test(inputValue)) {
+      setSettingsRoomType({ ...settingsRoomType, children: inputValue })
+
+    }
   }
 
 
 
   const handleAddRoomTypes = () => {
-    console.log(settingsRoomType);
-    if (settingsRoomType.type === '' || settingsRoomType.adults === '' || settingsRoomType.children === '') {
-      console.log("empty")
-    }
-    else {
-      console.log("not empty", settingsRoomType)
-      //  add setting riiom type to array using usesate
+    let flag = true;
+    if (roomTypeArray.length === 0) {
       roomTypeArray.push(settingsRoomType);
       console.log("array", roomTypeArray);
       setSettingsRoomType({ type: '', adults: '', children: '' });
-
     }
-  }
+    else {
+      for (let i = 0; i < roomTypeArray.length; i++) {
+        if (roomTypeArray[i].type === settingsRoomType.type) {
+          flag = false;
+        }
+      }
+      if (flag) {
+        roomTypeArray.push(settingsRoomType);
+        console.log("array", roomTypeArray);
+        setSettingsRoomType({ type: '', adults: '', children: '' });
 
+      } else {
+        setTypeExistAlert(true)
+        setSettingsRoomType({ type: '', adults: '', children: '' });
+      }
+    }
+
+
+  }
 
 
   useEffect(() => {
@@ -220,6 +218,80 @@ const CreatePageHomeBreakDownView = ({ setSubmit, setAllValues, submitClicked, s
     }
   }, [settingsRoomType])
 
+
+  const handleDeleteRoomTypes = (ind) => {
+
+    const tempArray = roomTypeArray.filter((item, index) => index !== ind)
+    setRoomTypeArray(tempArray)
+
+  }
+
+  const handleSettingsRentalTypeChange = (e) => {
+    setSettingsRoomRental({ ...settingsRoomRental, type: e.target.value })
+
+  }
+  const handleSettingsRentalAcNonAcChange = (e) => {
+    setSettingsRoomRental({ ...settingsRoomRental, acNonAc: e.target.value })
+  }
+  const handleSettingsRentalRentalChange = (e) => {
+    const inputValue = e.target.value;
+
+    // Check if the input value is a positive integer
+    if (inputValue === '' || /^\d+$/.test(inputValue)) {
+
+      setSettingsRoomRental({ ...settingsRoomRental, rental: inputValue })
+
+    }
+  }
+
+
+  const handleAddRoomRentalSettings = () => {
+    let flag = true;
+    if (settingRoomRentalArray.length === 0) {
+      settingRoomRentalArray.push(settingsRoomRental);
+      console.log("array", settingRoomRentalArray);
+      setSettingsRoomRental({ type: '', acNonAc: '', rental: '' });
+    }
+    else {
+      for (let i = 0; i < settingRoomRentalArray.length; i++) {
+        if (settingRoomRentalArray[i].type === settingsRoomRental.type && settingRoomRentalArray[i].acNonAc === settingsRoomRental.acNonAc) {
+          flag = false;
+        }
+      }
+      if (flag) {
+        settingRoomRentalArray.push(settingsRoomRental);
+        console.log("array", settingRoomRentalArray);
+        setSettingsRoomRental({ type: '', acNonAc: '', rental: '' });
+
+      } else {
+        setTypeExistAlert(true)
+        setSettingsRoomRental({ type: '', acNonAc: '', rental: '' });
+      }
+
+    }
+
+
+
+
+
+  }
+
+  useEffect(() => {
+    if (settingsRoomRental.type === '' || settingsRoomRental.acNonAc === '' || settingsRoomRental.rental === '') {
+      setRoomSettingsRentalAddButton(true);
+    }
+    else {
+      setRoomSettingsRentalAddButton(false);
+    }
+  }, [settingsRoomRental])
+
+
+  const handleDeleteRoomRentalSettings = (ind) => {
+
+    const tempArray = settingRoomRentalArray.filter((item, index) => index !== ind)
+    setSettingRoomRentalArray(tempArray)
+
+  }
 
 
   useEffect(() => {
@@ -249,6 +321,16 @@ const CreatePageHomeBreakDownView = ({ setSubmit, setAllValues, submitClicked, s
   //   }
   // }, [submitClicked]);
 
+
+  const [typeExistAlert, setTypeExistAlert] = useState(false);
+
+  const handleTypeExistAlert = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setTypeExistAlert(false);
+  };
 
 
 
@@ -319,10 +401,10 @@ const CreatePageHomeBreakDownView = ({ setSubmit, setAllValues, submitClicked, s
         <Grid container spacing={3} sx={{ marginTop: "15px", marginBottom: "15px" }}>
           <Grid item md={12} sm={12} xs={12}>
             <Box>
-              <Typography variant='h6' sx={{ color: 'grey' }}>Room Settings</Typography>
+              <Typography variant='h6' sx={{ color: 'grey' }}>Room Type Settings</Typography>
             </Box>
           </Grid>
-          <Grid item md={6} sm={12} xs={12}>
+          <Grid item md={12} sm={12} xs={12}>
             <Box sx={{ display: "flex", gap: '1em', alignItems: 'center' }}>
               <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.8em', marginBottom: '12px' }}>
                 <Box sx={{ maxWidth: '200px' }} className="label_container" >
@@ -351,15 +433,15 @@ const CreatePageHomeBreakDownView = ({ setSubmit, setAllValues, submitClicked, s
                 <Box sx={{}} className="label_container" >
                   <Typography variant='p' sx={{ color: 'black' }}>Adults</Typography>
                 </Box>
-                <TextField type='number' error={error.ctName} required id="outlined-required" label="" sx={{ width: "75px", }} size="small" onChange={handleSettingsAdultsChange} value={settingsRoomType.adults} />
+                <TextField type='text' error={error.ctName} required id="outlined-required" label="" sx={{ width: "75px", }} size="small" onChange={handleSettingsAdultsChange} value={settingsRoomType.adults} inputProps={{ pattern: "\\d*", inputMode: "numeric" }} />
               </Box>
               <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1em', marginBottom: '12px' }}>
                 <Box sx={{ width: "50px" }} className="label_container" >
                   <Typography variant='p' sx={{ color: 'black' }}>Children</Typography>
                 </Box>
-                <TextField type='number' error={error.ctName} required id="outlined-required" label="" size='small' sx={{ width: "75px" }} onChange={handleSettingsChildrenChange} value={settingsRoomType.children} />
+                <TextField type='text' error={error.ctName} required id="outlined-required" label="" size='small' sx={{ width: "75px" }} onChange={handleSettingsChildrenChange} value={settingsRoomType.children} inputProps={{ pattern: "\\d*", inputMode: "numeric" }} />
               </Box>
-              <Box sx={{ display: "flex" }}>
+              <Box sx={{ display: "flex", marginBottom: "12px" }}>
                 <Button variant='contained' size={"small"} onClick={handleAddRoomTypes} disabled={roomTypeAddButton}>
                   add
                 </Button>
@@ -369,10 +451,147 @@ const CreatePageHomeBreakDownView = ({ setSubmit, setAllValues, submitClicked, s
 
             </Box>
           </Grid>
-          <Grid item md={6} sm={12} xs={12}>
+          <Grid item md={12} sm={12} xs={12} display={'flex'} flexWrap={'wrap'}>
+
+            {roomTypeArray.length === 0
+              ?
+              ""
+              :
+              roomTypeArray.map((item, index) => {
+                return (
+                  <Box sx={{ display: "flex", justifyContent: 'space-between', alignItems: "center", backgroundColor: "#e3e3e3", width: "300px", padding: "0.3em", borderRadius: "10px", boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px", marginBottom: "12px", marginLeft: "25px" }} >
+                    <Box sx={{ display: 'flex', gap: '1.5em' }}>
+
+                      <Box sx={{ width: "100px" }}>
+                        <Typography variant='p' >{item.type}</Typography>
+                      </Box>
+                      <Box sx={{ width: "60px" }}>
+                        <Typography variant='p'>A : {item.adults}</Typography>
+                      </Box>
+                      <Box>
+                        <Typography variant='p'>C : {item.children}</Typography>
+                      </Box>
+                    </Box>
+                    <Box sx={{ justifySelf: "flex-end" }}>
+                      <CancelIcon sx={{ cursor: 'pointer', color: 'black' }} onClick={() => handleDeleteRoomTypes(index)} />
+
+                    </Box>
+                  </Box>
+
+                )
+              })
+            }
+
           </Grid>
 
         </Grid>
+
+        <Grid container spacing={3} sx={{ marginTop: "15px", marginBottom: "15px" }}>
+          <Grid item md={12} sm={12} xs={12}>
+            <Box>
+              <Typography variant='h6' sx={{ color: 'grey' }}>Room Rental Settings</Typography>
+            </Box>
+          </Grid>
+          <Grid item md={12} sm={12} xs={12}>
+            <Box sx={{ display: "flex", gap: '1em', alignItems: 'center' }}>
+              <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.8em', marginBottom: '12px' }}>
+                <Box sx={{ maxWidth: '200px' }} className="label_container" >
+                  <Typography variant='p' sx={{ color: 'black' }}>Type</Typography>
+                </Box>
+                <FormControl sx={{ width: '100px', }}>
+                  <InputLabel id="demo-simple-select-label">Select</InputLabel>
+                  <Select
+                    required
+                    xs={{ width: "5%" }}
+                    size='small'
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={settingsRoomRental.type}
+                    label="Age"
+                    onChange={handleSettingsRentalTypeChange}
+                  >
+                    <MenuItem value={"SingleRoom"}>Single Room</MenuItem>
+                    <MenuItem value={"DoubleRoom"}>Double Room</MenuItem>
+                    <MenuItem value={"TripleRoom"}>Triple Room</MenuItem>
+
+                  </Select>
+                </FormControl>
+              </Box>
+
+              <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
+                <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
+                  <Typography variant='p' sx={{ color: 'black' }}>AC/Non-AC</Typography>
+                </Box>
+
+                <FormControl sx={{ width: '100px' }}>
+                  <InputLabel id="demo-simple-select-label">select</InputLabel>
+                  <Select
+                    required
+                    xs={{ width: "75px  " }}
+                    size='small'
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={settingsRoomRental.acNonAc}
+                    label="Age"
+                    onChange={handleSettingsRentalAcNonAcChange}
+                  >
+                    <MenuItem value={"AC"}>AC</MenuItem>
+                    <MenuItem value={"Non-AC"}>Non-AC</MenuItem>
+
+                  </Select>
+                </FormControl>
+              </Box>
+
+              <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1em', marginBottom: '12px' }}>
+                <Box sx={{ width: "50px" }} className="label_container" >
+                  <Typography variant='p' sx={{ color: 'black' }}>Rental</Typography>
+                </Box>
+                <TextField type='text' error={error.ctName} required id="outlined-required" label="" size='small' sx={{ width: "75px" }} onChange={handleSettingsRentalRentalChange} value={settingsRoomRental.rental} inputProps={{ pattern: "\\d*", inputMode: "numeric" }} />
+              </Box>
+              <Box sx={{ display: "flex", marginBottom: "12px" }}>
+                <Button variant='contained' size={"small"} onClick={handleAddRoomRentalSettings} disabled={roomSettingsRentalAddButton}>
+                  add
+                </Button>
+
+              </Box>
+
+
+            </Box>
+          </Grid>
+          <Grid item md={12} sm={12} xs={12} display={'flex'} flexWrap={'wrap'}>
+
+            {settingRoomRentalArray.length === 0
+              ?
+              ""
+              :
+              settingRoomRentalArray.map((item, index) => {
+                return (
+                  <Box sx={{ display: "flex", justifyContent: 'space-between', alignItems: "center", backgroundColor: "#e3e3e3", width: "300px", padding: "0.3em", borderRadius: "10px", boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px", marginBottom: "12px", marginLeft: "25px" }} >
+                    <Box sx={{ display: 'flex', gap: '1.5em' }}>
+                      <Box sx={{ width: "100px" }}>
+                        <Typography variant='p' >{item.type}</Typography>
+                      </Box>
+                      <Box sx={{ width: "60px" }}>
+                        <Typography variant='p'>{item.acNonAc}</Typography>
+                      </Box>
+                      <Box>
+                        <Typography variant='p'>{item.rental}</Typography>
+                      </Box>
+                    </Box>
+                    <Box>
+                      <CancelIcon sx={{ cursor: 'pointer', color: 'black' }} onClick={() => handleDeleteRoomRentalSettings(index)} />
+
+                    </Box>
+                  </Box>
+
+                )
+              })
+            }
+
+          </Grid>
+
+        </Grid>
+
 
         <Grid container spacing={3}>
 
@@ -392,6 +611,8 @@ const CreatePageHomeBreakDownView = ({ setSubmit, setAllValues, submitClicked, s
                   childCount={childCount}
                   setAdultsCount={setAdultsCount}
                   setChildCount={setChildCount}
+                  roomTypeArray={roomTypeArray}
+                  settingRoomRentalArray={settingRoomRentalArray}
 
                 />
                 <EditUnit roomArray={roomArray} setRoomArray={setRoomArray} unitArray={unitArray} setUnitArray={setUnitArray} />
@@ -405,10 +626,26 @@ const CreatePageHomeBreakDownView = ({ setSubmit, setAllValues, submitClicked, s
       </fieldset>
 
 
+      {/* alert type already exist*/}
+      <div>
+
+        <Snackbar open={typeExistAlert} autoHideDuration={4000} onClose={handleTypeExistAlert}>
+          <Alert
+            onClose={handleTypeExistAlert}
+            severity="error"
+            variant="filled"
+            sx={{ width: '100%' }}
+          >
+            Can't Add | Type Already Exist
+          </Alert>
+        </Snackbar>
+      </div>
 
 
 
-    </Box>
+
+
+    </Box >
   )
 }
 
