@@ -30,7 +30,8 @@ export default function ScrollDialog() {
   const [open, setOpen] = React.useState(false);
   const [opened, setOpened] = React.useState(false);
   const [scroll, setScroll] = React.useState("paper");
-  const [HolidayHomeName, SetHolidayHomeName] = useState("");
+  const [HolidayHomeName, setHolidayHomeName] = useState("");
+  const [HolidayHomeId, setHolidayHomeId] = useState("");
   const [holidayHomes, setHolidayHomes] = React.useState([]);
   const [ServiceNO, setServiceNO] = useState("");
   const [roomPrice, setRoomPrice] = useState(0);
@@ -63,13 +64,27 @@ export default function ScrollDialog() {
     axios
       .get("http://localhost:3002/users/reservation/holidayhomes")
       .then((res) => {
-        if (Response) {
+        if (res.data) {
           setHolidayHomes(res.data);
+          if (res.data.length > 0) {
+            // Set default values to the first holiday home
+            setHolidayHomeName(res.data[0].name);
+            setHolidayHomeId(res.data[0].id);
+          }
         } else {
           console.log("No data found");
         }
+      })
+      .catch(error => {
+        console.error('Error fetching holiday homes:', error);
       });
   }, []);
+
+  const handleChange = (e) => {
+    const selectedHome = holidayHomes.find(home => home.name === e.target.value);
+    setHolidayHomeName(e.target.value);
+    setHolidayHomeId(selectedHome.id);
+  };
 
   const handlesubmit = (e) => {
     const data = {
@@ -80,7 +95,10 @@ export default function ScrollDialog() {
       NoOfChildren: NoOfChildren,
       NoOfRooms: NoOfRooms,
       NoOfHalls: NoOfHalls,
+      RoomPrice: roomPrice,
+      HallPrice: hallPrice,
       Price: roomPrice+hallPrice,
+      IsPaid: false,
     };
     console.log("aruna", data);
 
@@ -162,7 +180,7 @@ export default function ScrollDialog() {
                 <InputLabel id="demo-simple-select-label">
                   Select Holiday Home*
                 </InputLabel>
-                <Select
+                {/* <Select
                   fullWidth
                   labelId="holiday-home-label"
                   label="Holiday Home"
@@ -171,12 +189,26 @@ export default function ScrollDialog() {
                   value={HolidayHomeName}
                   onChange={(e) => {
                     SetHolidayHomeName(e.target.value);
+                    // SetHolidayHomeId()
                   }}
                 >
                   {holidayHomes.map((home) => (
-                    <MenuItem value={home}>{home}</MenuItem>
+                    <MenuItem value={home.name}>{home.name}</MenuItem>
                   ))}
-                </Select>
+                </Select> */}
+                <Select
+  fullWidth
+  labelId="holiday-home-label"
+  label="Holiday Home"
+  isSearchable={true}
+  id="outlined-select-holidayhome"
+        value={HolidayHomeName}
+      onChange={handleChange}
+>
+  {holidayHomes.map((home) => (
+    <MenuItem key={home.id} value={home.name}>{home.name}</MenuItem>
+  ))}
+</Select>
               </FormControl>
               
               <BasicDatePicker
@@ -209,6 +241,8 @@ export default function ScrollDialog() {
                   NoOfChildren={NoOfChildren} setNoOfChildren={setNoOfChildren}
                   roomPrice={roomPrice} setRoomPrice={setRoomPrice}
                   hallPrice={hallPrice} setHallPrice={setHallPrice}
+                  holidayHomeName = {HolidayHomeName}
+                  holidayHomeId = {HolidayHomeId}
                 />
                 <AvailableHallsPopUp />
               </Stack>
