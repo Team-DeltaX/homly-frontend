@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   ThemeProvider,
@@ -8,6 +8,8 @@ import {
   Card,
   CardContent,
 } from "@mui/material";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 import OngoingReservation from "./OngoingReservation";
 import PastReservation from "./PastReservation";
@@ -20,7 +22,42 @@ const MyReservation = () => {
     setValue(newValue);
   };
 
-  const tabComponent = [<OngoingReservation/>, <PastReservation/>];
+  const Navigate = useNavigate();
+
+  const [ongoingReservation, setOngoingReservation] = useState([]);
+  const [pastReservation, setPastReservation] = useState([]);
+
+  useEffect(() => {
+    axios.get('http://localhost:3002/users/auth/userOngoingReservation',{withCredentials:true})
+    .then((response) => {
+      console.log("reservation ongoing",response.data);
+      setOngoingReservation(response.data);
+    }).catch((error) => {
+      console.log("error",error);
+      // Navigate("/");
+    });
+
+    axios.get('http://localhost:3002/users/auth/userPastReservation',{withCredentials:true})
+      .then((response) => {
+        console.log("reservation past",response.data);
+        setPastReservation(response.data);
+      }).catch((error) => {
+        console.log("error",error);
+        // Navigate("/");
+      });
+  }, []);
+  // useEffect(() => {
+  //   axios.get('http://localhost:3002/users/auth/userPastReservation',{withCredentials:true})
+  //   .then((response) => {
+  //     console.log("reservation ongoing",response.data);
+  //     setPastReservation(response.data);
+  //   }).catch((error) => {
+  //     console.log("error",error);
+  //     // Navigate("/");
+  //   });
+  // }, []);
+
+  const tabComponent = [<OngoingReservation reservation={ongoingReservation}/>, <PastReservation reservation={pastReservation}/>];
 
   return (
     <ThemeProvider theme={theme}>

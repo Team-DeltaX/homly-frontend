@@ -1,12 +1,14 @@
-import React from 'react'
+import React from "react";
 
 import ReservationCard from '../ReservationCard/ReservationCard'
 import { Box , Stack} from '@mui/material'
 
-export default function ongoingReservation() {
+export default function OngoingReservation({reservation}) {
+  
+
   return (
     <Stack direction='column' sx={{height:{md:'380px'}}}>
-      <Box sx={{marginTop:'10px'}}>
+      {/* <Box sx={{marginTop:'10px'}}>
         <ReservationCard
         HHreservation="Ongoing"
         HHpayment={false}
@@ -35,7 +37,29 @@ export default function ongoingReservation() {
         HHChildren={2}
         HHRooms={2}
         />
-      </Box>
+      </Box> */}
+      {
+        reservation.map((reserv,index) => {
+          return (
+            <Box sx={{marginTop:'10px'}} key={index}>
+              <ReservationCard
+              HHreservation="Ongoing"
+              HHpayment={reserv.payment}
+              HHName={reserv.HolidayHome}
+              HHAddress={reserv.address}
+              HHReservedDate={reserv.reservedDate}
+              HHCheckIn={reserv.CheckinDate}
+              HHCheckOut={reserv.CheckoutDate}
+              HHPrice={reserv.Price}
+              HHAdults={reserv.NoOfAdults}
+              HHChildren={reserv.NoOfChildren}
+              HHRooms={reserv.NoOfRooms}
+              HHHalls={reserv.NoOfHalls}
+              />
+            </Box>
+          )
+        } )
+      }
     </Stack>
   )
 }
