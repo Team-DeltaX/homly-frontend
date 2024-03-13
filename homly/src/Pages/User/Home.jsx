@@ -57,17 +57,17 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    // axios
-    //   .get(`https://65ac00f8fcd1c9dcffc76f52.mockapi.io/homly/api/HolidayHomes`)
-    //   .then((response) => {
-    //     setSortedByRating(response.data);
-    //   });
 
     axios
-      .get("http://localhost:3002/users/holidayhomes/sort/topRated", { withCredentials: true })
+      .get("http://localhost:3002/users/auth/holidayhomes/sort/topRated", { withCredentials: true })
       .then((res) => {
         console.log("topRated",res.data);
         setSortedByRating(res.data);
+      }).catch((err) => {
+        console.log(err);
+        if (err.response.data.autherized === false) {
+          Navigate("/");
+        }
       });
 
     axios
