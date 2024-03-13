@@ -5,16 +5,16 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
 
-const CareTakerDetailsView = ({ setSubmit, setAllValues, submitClicked, setcaretakerError, value, setValue }) => {
+const CareTakerDetailsView = ({ setSubmit, setAllValues, submitClicked, setcaretakerError, value, setValue, valueSecond, setValueSecond }) => {
   const [secondCaretaker, setSecondCaretaker] = useState(false);
 
   // const [value, setValue] = useState({
   //   caretakerName: '', caretakerContactNo: '', caretakerStatus: '', caretakerAddress: '', caretakerDescription: '',
   // })
 
-  const [valueSecond, setValueSecond] = useState({
-    caretakerName: '', caretakerContactNo: '', caretakerStatus: '', caretakerAddress: '', caretakerDescription: '',
-  })
+  // const [valueSecond, setValueSecond] = useState({
+  //   caretakerName: '', caretakerContactNo: '', caretakerStatus: '', caretakerAddress: '', caretakerDescription: '',
+  // })
 
   const [error, setError] = useState({});
 

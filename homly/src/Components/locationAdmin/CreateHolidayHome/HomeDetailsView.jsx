@@ -9,7 +9,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
 
-const HomeDetailsView = ({ setSubmit, allValues, setAllValues, submitClicked, setHolidayHomeError, value, setValue }) => {
+const HomeDetailsView = ({ setSubmit, value, setValue }) => {
 
   // const [value, setValue] = useState({
   //   name: '', address: '', district: '', description: '', contactNo1: '', contactNo2: '', category: '', status: ''

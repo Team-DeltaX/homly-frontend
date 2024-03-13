@@ -57,7 +57,7 @@ function a11yProps(index) {
     'aria-controls': `simple-tabpanel-${index}`,
   };
 }
-const CreatePageHomeBreakDownView = ({ setSubmit, setAllValues, submitClicked, setHomeBreakDownError, bdValue, setBdValue, roomArray, setRoomArray, unitArray, setUnitArray, hallArray, setHallArray, adultsCount, setAdultsCount, childCount, setChildCount }) => {
+const CreatePageHomeBreakDownView = ({ setSubmit, setAllValues, submitClicked, setHomeBreakDownError, bdValue, setBdValue, roomArray, setRoomArray, unitArray, setUnitArray, hallArray, setHallArray, adultsCount, setAdultsCount, childCount, setChildCount, settingRoomRentalArray, setSettingRoomRentalArray, roomTypeArray, setRoomTypeArray }) => {
 
   const [value, setValue] = useState(0);
   // const [settingsType, setSettingsType] = useState('');
@@ -65,8 +65,7 @@ const CreatePageHomeBreakDownView = ({ setSubmit, setAllValues, submitClicked, s
   // const [settingsChildren, setSettingsChildren] = useState('');
   const [settingsRoomType, setSettingsRoomType] = useState({ type: '', adults: '', children: '' });
   const [settingsRoomRental, setSettingsRoomRental] = useState({ type: '', acNonAc: '', rental: '' })
-  const [roomTypeArray, setRoomTypeArray] = useState([]);
-  const [settingRoomRentalArray, setSettingRoomRentalArray] = useState([]);
+
   const [roomTypeAddButton, setRoomTypeAddButton] = useState(true);
   const [roomSettingsRentalAddButton, setRoomSettingsRentalAddButton] = useState(true);
 
@@ -83,32 +82,32 @@ const CreatePageHomeBreakDownView = ({ setSubmit, setAllValues, submitClicked, s
     setValue(newValue);
   };
 
-  const handleOtherChargesChange = (e) => {
-    const positive_regex = /^\d*\.?\d+/;
-    if (e.target.value.length > 0) {
-      if (!positive_regex.test(e.target.value)) {
-        setError({ ...error, oCharges: true });
-      } else {
-        setBdValue({ ...bdValue, otherCharges: e.target.value });
-        setError({ ...error, oCharges: false });
-      }
-    }
-  }
+  // const handleOtherChargesChange = (e) => {
+  //   const positive_regex = /^\d*\.?\d+/;
+  //   if (e.target.value.length > 0) {
+  //     if (!positive_regex.test(e.target.value)) {
+  //       setError({ ...error, oCharges: true });
+  //     } else {
+  //       setBdValue({ ...bdValue, otherCharges: e.target.value });
+  //       setError({ ...error, oCharges: false });
+  //     }
+  //   }
+  // }
 
 
-  const handleServiceChargesChange = (e) => {
+  // const handleServiceChargesChange = (e) => {
 
-    const positive_regex = /^\d*\.?\d+$/;
+  //   const positive_regex = /^\d*\.?\d+$/;
 
-    if (e.target.value.length > 0) {
-      if (!positive_regex.test(e.target.value)) {
-        setError({ ...error, sCharges: true });
-      } else {
-        setBdValue({ ...bdValue, serviceCharges: e.target.value });
-        setError({ ...error, sCharges: false });
-      }
-    }
-  }
+  //   if (e.target.value.length > 0) {
+  //     if (!positive_regex.test(e.target.value)) {
+  //       setError({ ...error, sCharges: true });
+  //     } else {
+  //       setBdValue({ ...bdValue, serviceCharges: e.target.value });
+  //       setError({ ...error, sCharges: false });
+  //     }
+  //   }
+  // }
 
   const handleTotalRentalChange = (e) => {
 
@@ -369,18 +368,18 @@ const CreatePageHomeBreakDownView = ({ setSubmit, setAllValues, submitClicked, s
             </FormGroup>
           </Grid>
           <Grid item md={6} sm={12} xs={12}>
-            <Box className="input_container" sx={{ display: 'flex', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
+            {/* <Box className="input_container" sx={{ display: 'flex', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
               <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                 <Typography variant='p' sx={{ color: 'black' }}>Other Charges</Typography>
               </Box>
               <TextField error={error.oCharges} value={bdValue.otherCharges} type='number' id="outlined-required" label="Other Charges" placeholder='Other Charges' fullWidth size='small' onChange={handleOtherChargesChange} helperText={error.oCharges ? "Invalid Input" : " "} />
-            </Box>
-            <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
+            </Box> */}
+            {/* <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
               <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                 <Typography variant='p' sx={{ color: 'black' }}>Service Charges</Typography>
               </Box>
               <TextField error={error.sCharges} value={bdValue.serviceCharges} type='number' id="outlined-required" label="Service Charges" placeholder='Service Charges' fullWidth size='small' onChange={handleServiceChargesChange} helperText={error.sCharges ? "Invalid Input" : " "} />
-            </Box>
+            </Box> */}
             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
               <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                 <Typography variant='p' sx={{ color: 'black' }}>Total Rental</Typography>

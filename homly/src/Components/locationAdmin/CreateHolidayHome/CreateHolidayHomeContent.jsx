@@ -21,6 +21,10 @@ const CreateHolidayHomeContent = () => {
     caretakerName: '', caretakerContactNo: '', caretakerStatus: '', caretakerAddress: '', caretakerDescription: '',
   })
 
+  const [valueSecond, setValueSecond] = useState({
+    caretakerName: '', caretakerContactNo: '', caretakerStatus: '', caretakerAddress: '', caretakerDescription: '',
+  })
+
   const [bdValue, setBdValue] = useState({
     otherCharges: "",
     serviceCharges: "",
@@ -43,6 +47,8 @@ const CreateHolidayHomeContent = () => {
   const [roomArray, setRoomArray] = useState([]);
   const [unitArray, setUnitArray] = useState([]);
   const [hallArray, setHallArray] = useState([]);
+  const [roomTypeArray, setRoomTypeArray] = useState([]);
+  const [settingRoomRentalArray, setSettingRoomRentalArray] = useState([]);
 
   const [submitDisable, setSubmitDisable] = useState(true);
   const [submitClicked, setSubmitClicked] = useState(false);
@@ -64,10 +70,13 @@ const CreateHolidayHomeContent = () => {
       holidayHomeDetails: value,
       images: null,
       caretaker1: valueCareTaker,
+      caretaker2: valueSecond,
       homeBreakDown: { bdValue, adultsCount, childCount },
       roomArray: roomArray,
       unitArray: unitArray,
       hallArray: hallArray,
+      roomTypeArray: roomTypeArray,
+      settingRoomRentalArray: settingRoomRentalArray
 
     }
     e.preventDefault();
@@ -140,12 +149,12 @@ const CreateHolidayHomeContent = () => {
             {/* <HomeDetailsView setSubmit={setSubmit} /> */}
           </Grid>
           <Grid item md={6} sm={12} xs={12}>
-            <CareTakerDetailsView submit={caretakerSubmit} setSubmit={setCaretakerSubmit} submitClicked={submitClicked} setSubmitClicked={setSubmitClicked} value={valueCareTaker} setValue={setValueCareTaker} />
+            <CareTakerDetailsView submit={caretakerSubmit} setSubmit={setCaretakerSubmit} submitClicked={submitClicked} setSubmitClicked={setSubmitClicked} value={valueCareTaker} setValue={setValueCareTaker} valueSecond={valueSecond} setValueSecond={setValueSecond} />
           </Grid>
         </Grid>
         <Grid container>
           <Grid item md={12} sm={12} xs={12}>
-            <CreatePageHomeBreakDownView submit={homeBreakdownSubmit} setSubmit={setHomeBreakdownSubmit} submitClicked={submitClicked} setSubmitClicked={setSubmitClicked} bdValue={bdValue} setBdValue={setBdValue} roomArray={roomArray} setRoomArray={setRoomArray} unitArray={unitArray} setUnitArray={setUnitArray} hallArray={hallArray} setHallArray={setHallArray} adultsCount={adultsCount} childCount={childCount} setAdultsCount={setAdultsCount} setChildCount={setChildCount} />
+            <CreatePageHomeBreakDownView submit={homeBreakdownSubmit} setSubmit={setHomeBreakdownSubmit} submitClicked={submitClicked} setSubmitClicked={setSubmitClicked} bdValue={bdValue} setBdValue={setBdValue} roomArray={roomArray} setRoomArray={setRoomArray} unitArray={unitArray} setUnitArray={setUnitArray} hallArray={hallArray} setHallArray={setHallArray} adultsCount={adultsCount} childCount={childCount} setAdultsCount={setAdultsCount} setChildCount={setChildCount} roomTypeArray={roomTypeArray} setRoomTypeArray={setRoomTypeArray} settingRoomRentalArray={settingRoomRentalArray} setSettingRoomRentalArray={setSettingRoomRentalArray} />
           </Grid>
         </Grid>
 

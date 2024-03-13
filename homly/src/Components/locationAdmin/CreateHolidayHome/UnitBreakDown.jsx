@@ -224,7 +224,6 @@ const UnitBreakDown = ({ unitCode, unitAc, floorLevel, unitRemarks, unitRental, 
                                     <Box sx={{ display: 'flex', gap: '1em', marginBottom: '1em', alignItems: 'center' }}>
                                         <Typography variant='p' className='card_item_title'>Selected Room Count</Typography>
                                         <Typography variant='p' className='card_item_value attach_room_value'>{unitRoomCount}</Typography>
-                                        <Typography variant='p' className='card_item_value attach_room_value'>{unitRoomCount}</Typography>
                                     </Box>
                                 </Box>
                             </Box>
