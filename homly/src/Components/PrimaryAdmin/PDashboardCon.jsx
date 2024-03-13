@@ -15,6 +15,8 @@ import axios from "axios";
 const PDashboardCon = () => {
   const [hhcount, Sethhcount] = useState("0");
   const [earning, SetEarning] = useState("0");
+  const [paidcount,SetPaidcount] = useState("0");
+  const [unpaidcount,SetUnpaindcount]=useState("0");
   const gethhcount = () => {
     axios
       .get("http://localhost:3002/admin/auth/hhcount")
@@ -36,6 +38,18 @@ const PDashboardCon = () => {
         console.log(error);
       });
   };
+
+  const bookingcount=()=>{
+    axios.get('http://localhost:3002/admin/auth/bookingcount')
+    .then((res)=>{
+     SetPaidcount(res.data.Paid);
+      SetUnpaindcount(res.data.Unpaid);
+    })
+    .catch((error)=>{
+      console.log(error);
+    
+    })
+  }
   // const summaries = [
   //   {
   //     color: "#8CB7A3",
@@ -66,6 +80,7 @@ const PDashboardCon = () => {
   useEffect(() => {
     gethhcount();
     getearning();
+    bookingcount();
   }, []);
   return (
     <Box>
@@ -148,7 +163,7 @@ const PDashboardCon = () => {
                       Pending Bookings
                     </Typography>
                     <Typography variant="h6" sx={{ marginLeft: "4px" }}>
-                      234
+                      {unpaidcount}
                     </Typography>
                    </Box>
                    <Box>
@@ -160,7 +175,7 @@ const PDashboardCon = () => {
       
                     </Typography>
                     <Typography variant="h6" sx={{ marginLeft: "4px" }}>
-                      123
+                    {paidcount}
                     </Typography>
                    </Box>
       
