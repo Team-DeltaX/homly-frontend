@@ -155,6 +155,9 @@ export default function ReservationCard(props) {
                 </Grid>
               </Grid>
             </Stack>
+            <Box sx={{display:props.HHreservation === "Ongoing" && !props.HHpayment?"flex":"none"}}>
+              <Typography sx={{color:"red"}}>Expire in <span style={{fontWeight:"600"}}>{props.ExpireIn} days</span> </Typography>
+            </Box>
           </Stack>
         </Grid>
         <Grid item xs={12} sm={3} sx={{ justifyContent: "right" }}>
