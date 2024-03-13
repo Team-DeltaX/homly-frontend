@@ -11,6 +11,10 @@ import CircularProgress from '@mui/material/CircularProgress';
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
 
+  const [unitcount,setUnitcount]=React.useState("0")
+  const [unitrevenue,setUnitrevenue]=React.useState("0")
+  
+
   return (
     <div
       role="tabpanel"
@@ -53,7 +57,7 @@ export default function StatisticsDetails() {
     <Box sx={{ width: '100%',paddingRight:'32px' }}>
       <Box sx={{ border: 1,borderTopLeftRadius:20,borderTopRightRadius:20, borderColor: 'divider',width:"100%"}}>
         <Tabs value={value} onChange={handleChange} variant='fullWidth' aria-label="basic tabs example" sx={{}}>
-          <Tab sx={{fontWeight:"bold"}} label="Units" {...a11yProps(0)} />
+          <Tab sx={{fontWeight:"bold"}} label="Rooms" {...a11yProps(0)} />
           <Tab sx={{fontWeight:"bold"}} label="Halls" {...a11yProps(1)} />
         </Tabs>
       </Box>
@@ -64,7 +68,7 @@ export default function StatisticsDetails() {
                     <Box sx={{backgroundColor:'white',borderRadius:'20px',display:'flex',flexWrap:'wrap',alignItems:'center',justifyContent:'space-between',padding:"30px 20px"}}>
                         <Box>
                             <Typography variant='h5' fontWeight={'bold'}>72</Typography>
-                            <Typography variant='p' sx={{color:"grey6",fontSize:'0.8rem'}}>Total number of Units</Typography>
+                            <Typography variant='p' sx={{color:"grey6",fontSize:'0.8rem'}}>Total number of Rooms</Typography>
                         </Box>
                         <Box>
                             <CircularProgress  variant="determinate" value={25} />
@@ -75,7 +79,7 @@ export default function StatisticsDetails() {
                     <Box sx={{backgroundColor:'white',borderRadius:'20px',display:'flex',flexWrap:'wrap',alignItems:'center',justifyContent:'space-between',padding:"30px 20px"}}>
                         <Box>
                             <Typography variant='h5' fontWeight={'bold'}>120,000LKR</Typography>
-                            <Typography variant='p' sx={{color:"grey6",fontSize:'0.8rem'}}>Total Revenue from Units</Typography>
+                            <Typography variant='p' sx={{color:"grey6",fontSize:'0.8rem'}}>Total Revenue from Rooms</Typography>
                         </Box>
                         <Box>
                             <CircularProgress sx={{color:"#11BA40"}} variant="determinate" value={75} />
