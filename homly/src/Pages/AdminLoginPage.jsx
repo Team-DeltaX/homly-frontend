@@ -44,7 +44,7 @@ export default function AdminLoginPage() {
     e.preventDefault();
     const formData = { adminId, password };
     axios
-      .post("http://localhost:3002/admin/", formData)
+      .post("http://localhost:3002/admin/", formData, {withCredentials:true})
       .then((res) => {
         console.log(res);
         if (res.data.success) {
@@ -63,6 +63,7 @@ export default function AdminLoginPage() {
               Navigate("/Primaryadmin/Dashboard");
             }
           }
+          setPassword("")
         } else {
           setErrorStatus({
             ...errorStatus,
@@ -77,7 +78,7 @@ export default function AdminLoginPage() {
           ...errorStatus,
           isOpen: true,
           type: "error",
-          message: "Server Error",
+          message: err.message,
         });
       });
   };
