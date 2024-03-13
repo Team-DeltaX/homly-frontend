@@ -130,8 +130,8 @@ const HomeBreakDownViewOnly = ({ setAllValues }) => {
           console.log(homeDetails);
           setAdultsCount(homeDetails.MaxNoOfAdults);
           setChildCount(homeDetails.MaxNoOfChildren);
-          setOtherCharges(homeDetails.OtherCharge);
-          setServiceCharges(homeDetails.ServiceCharge);
+          // setOtherCharges(homeDetails.OtherCharge);
+          // setServiceCharges(homeDetails.ServiceCharge);
           setTotalRental(homeDetails.TotalRental);
           setFacilities(homeDetails.Facilities);
           setGym(homeDetails.Gym);
@@ -199,7 +199,7 @@ const HomeBreakDownViewOnly = ({ setAllValues }) => {
             </FormGroup>
           </Grid>
           <Grid item md={6} sm={12} xs={12}>
-            <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
+            {/* <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
               <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                 <Typography variant='p' sx={{ color: 'black' }}>Other Charges</Typography>
               </Box>
@@ -210,7 +210,7 @@ const HomeBreakDownViewOnly = ({ setAllValues }) => {
                 <Typography variant='p' sx={{ color: 'black' }}>Service Charges</Typography>
               </Box>
               <TextField value={serviceCharges} type='number' id="outlined-required" placeholder='Service Charges' fullWidth size='small' />
-            </Box>
+            </Box> */}
             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
               <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                 <Typography variant='p' sx={{ color: 'black' }}>Total Rental</Typography>

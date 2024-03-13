@@ -5,7 +5,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 
 
 
-const ViewRoomBreakdown = ({ roomCode, roomAc, roomType, noOfBeds, noOfAdults, noOfChildren, roomRemarks, roomRental, groupByUnit, handleRoomDelete, handleRoomEdit, index }) => {
+const ViewRoomBreakdown = ({ roomCode, roomAc, roomType, FloorLevel, noOfAdults, noOfChildren, roomRemarks, roomRental, groupByUnit, handleRoomDelete, handleRoomEdit, index }) => {
 
     const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 

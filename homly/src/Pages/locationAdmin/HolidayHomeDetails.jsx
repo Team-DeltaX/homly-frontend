@@ -1,7 +1,7 @@
 
 import './style.css';
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 
 import Box from '@mui/material/Box';
 import { Grid, ThemeProvider, Container, Typography, TextField, Button } from '@mui/material';
@@ -17,6 +17,7 @@ import moment from 'moment'
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import Select from 'react-select'
+import axios from 'axios';
 
 
 
@@ -27,9 +28,8 @@ const HolidayHomeDetails = () => {
     const calendarRef = useRef();
 
     const [showNav, setShowNav] = useState('nav_grid_deactive')
+    const [holidayHomes, setHolidayHomes] = useState([]);
 
-    const [selectedYear, setSelectedYear] = useState('');
-    const [selectedMonth, setSelectedMonth] = useState('');
     const [selectedHolidayHome, setSelectedHolidayHome] = useState('');
 
     const [displayedRange, setDisplayedRange] = useState({
@@ -72,49 +72,23 @@ const HolidayHomeDetails = () => {
     };
 
     //Holidayhomes list
-    const holidayHomes = [
-        "holidayhome1",
-        "holidayhome2",
-        "holidayhome3",
-        "holidayhome4",
-        "nipunResort",
-        "holidayhome6",
-    ];
+    useEffect(() => {
+        axios.get('http://localhost:3002/admin/auth/locationadmin/holidayhome/names')
+            .then((res) => {
+                const data = res.data.names;
+                setHolidayHomes(data);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }, [])
 
-    //Month list
-    const monthList = [
-        "January",
-        "Febraury",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "Auguest",
-        "September",
-        "October",
-        "November",
-        "December",
-    ];
 
 
 
 
     const handleSearch = () => {
 
-        console.log(selectedYear);
-        console.log(selectedMonth);
-
-        if (selectedYear && selectedMonth) {
-            const newDate = moment(`${selectedYear}-${selectedMonth}-01T00:00:00`, 'YYYY-MM').toDate();
-            const startOfMonth = moment(newDate).startOf('month');
-            const endOfMonth = moment(newDate).endOf('month');
-            setDisplayedRange({
-                start: startOfMonth,
-                end: endOfMonth,
-            });
-            console.log("displayedRange updated:", displayedRange);
-        }
 
     };
 
@@ -122,8 +96,6 @@ const HolidayHomeDetails = () => {
 
 
     const handleClear = () => {
-        setSelectedYear('');
-        setSelectedMonth('');
         setSelectedHolidayHome('');
     }
 
@@ -167,7 +139,7 @@ const HolidayHomeDetails = () => {
                                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '2em', marginBottom: "2em" }}>
                                     <Box>
                                         <Select
-                                            sx={{ backgroundColor: "white", opacity: "1", zIndex: "1000" }}
+                                            sx={{ backgroundColor: "white", opacity: "1", zIndex: "1000", width: "200px" }}
                                             className="basic-single"
                                             classNames="select_editholidayhome"
                                             classNamePrefix={"Holiday Home"}
@@ -181,27 +153,8 @@ const HolidayHomeDetails = () => {
                                         />
 
                                     </Box>
-                                    <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em' }}>
-                                        <TextField id="outlined-required" label="Year" placeholder='Year' size='small' value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)} />
-                                    </Box>
-                                    {/* <Button variant="contained" onClick={() => changeCalendarManually(moment("2022-03-01"))}>
-                                        Change Calendar
-                                    </Button> */}
-                                    <Box>
-                                        <Select
-                                            sx={{ backgroundColor: "white", opacity: "1", zIndex: "1000" }}
-                                            className="basic-single"
-                                            classNamePrefix={"Month"}
-                                            isSearchable={true}
-                                            name="color"
-                                            options={monthList.map((item) => {
-                                                return { value: item, label: item }
-                                            })}
-                                            value={selectedMonth}
-                                            onChange={(value) => setSelectedMonth(value)}
-                                        />
 
-                                    </Box>
+
                                     <Box sx={{ display: 'flex', gap: "1em" }}>
                                         <Button variant="contained" sx={{ backgroundColor: "primary.main", textTransform: "capitalize", fontWeight: "bold", color: "white" }}><Typography sx={{ fontFamily: "sans-serif" }} variant='p' onClick={handleSearch}>Search</Typography> </Button>
                                         <Button variant="outlined" sx={{ textTransform: "capitalize", fontWeight: "bold", color: "primary.main" }}><Typography sx={{ fontFamily: "sans-serif" }} variant='p' onClick={handleClear}>Cancel</Typography> </Button>

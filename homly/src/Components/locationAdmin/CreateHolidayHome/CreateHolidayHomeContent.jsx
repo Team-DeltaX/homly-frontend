@@ -112,7 +112,7 @@ const CreateHolidayHomeContent = () => {
 
 
   useEffect(() => {
-    if (holidayHomeSubmit && caretakerSubmit && homeBreakdownSubmit) {
+    if (holidayHomeSubmit || caretakerSubmit || homeBreakdownSubmit) {
       setSubmitDisable(false);
     } else {
       setSubmitDisable(true); // Make sure to set to false or true explicitly

@@ -318,13 +318,15 @@ const ViewUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
 
                         axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/${homeId}/${item.unitCode}`)
                             .then((res) => {
-                                if (Response) {
+                                if (res.data) {
                                     const srDetails = res.data.selectedRoom;
-                                    console.log(srDetails);
-                                    for (let i = 0; i < srDetails.length; i++) {
-                                        axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/room/${homeId}/${srDetails[i].roomCode}`)
+                                    console.log("sr", srDetails);
+                                    const promises = srDetails.map((sr) => {
+                                        return axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/room/${homeId}/${sr.roomCode}`)
                                             .then((res) => {
                                                 const room = res.data;
+                                                console.log("room", room);
+
                                                 // Check if 'room' already exists in 'selectedRooms' array
                                                 const existingRoomIndex = item.selectedRooms.findIndex(existingRoom => existingRoom.roomCode === room.roomCode);
                                                 if (existingRoomIndex === -1) {
@@ -334,12 +336,19 @@ const ViewUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
                                                     // If found, update the existing item with the new data
                                                     item.selectedRooms[existingRoomIndex] = room;
                                                 }
-                                            })
-                                    }
+                                            });
+                                    });
+                                    Promise.all(promises)
+                                        .then(() => {
+                                            // All requests completed
+                                        })
+                                        .catch((error) => {
+                                            console.log("Error:", error);
+                                        });
                                 } else {
                                     console.log("No data found");
                                 }
-                            })
+                            });
 
 
 

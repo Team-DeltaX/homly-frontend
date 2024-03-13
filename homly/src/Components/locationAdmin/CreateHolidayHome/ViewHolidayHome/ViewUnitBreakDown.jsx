@@ -24,7 +24,7 @@ const ViewUnitBreakDown = ({ unitCode, unitAc, floorLevel, unitRemarks, unitRent
     const [unitAdultCount, setUnitAdultCount] = useState(0);
     const [unitRoomCount, setUnitRoomCount] = useState(0);
 
-    console.log(selectedRooms);
+    console.log("selectedrooms", selectedRooms);
 
 
 
@@ -281,7 +281,7 @@ const ViewUnitBreakDown = ({ unitCode, unitAc, floorLevel, unitRemarks, unitRent
                                             </Box>
                                             :
                                             selectedRooms.map((item, index) => {
-
+                                                console.log("item", item)
                                                 return (
                                                     <Paper elevation={8} sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', padding: "10px", marginBottom: "10px" }}>
                                                         <Box sx={{ display: 'flex', gap: '1em' }}>
