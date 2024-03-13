@@ -6,17 +6,11 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import { useTheme } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
-import MenuItem from "@mui/material/MenuItem";
 import BasicDatePicker from "../Common/BasicDatePicker";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import dayjs, { Dayjs } from "dayjs";
-import InputLabel from "@mui/material/InputLabel";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
 import Typography from "@mui/material/Typography";
 import ErrorSnackbar from "../User/ErrorSnackbar";
 import PayNowPopup from "../Common/PayNowPopup";
@@ -25,8 +19,8 @@ import AvailableHallsPopUp from "../Common/AvailableHallsPopUp";
 import Autocomplete from "@mui/material/Autocomplete";
 import Stack from "@mui/material/Stack";
 import ConfirmPopup from "../PrimaryAdmin/ConfirmPopup";
- 
-export default function ScrollDialog() {
+
+export default function ScrollDialog({ name, id, room }) {
   const [open, setOpen] = React.useState(false);
   const [opened, setOpened] = React.useState(false);
   const [scroll, setScroll] = React.useState("paper");
@@ -41,8 +35,16 @@ export default function ScrollDialog() {
   const [NoOfChildren, setNoOfChildren] = useState(0);
   const [NoOfRooms, setNoOfRooms] = useState(0);
   const [NoOfHalls, setNoOfHalls] = useState(0);
-  const [CheckinDate, setCheckinDate] = useState(dayjs(new Date()));
-  const [CheckoutDate, setCheckoutDate] = useState(dayjs(new Date()));
+  const [CheckinDate, setCheckinDate] = useState(dayjs().add(6, "day"));
+  const [CheckoutDate, setCheckoutDate] = useState(dayjs().add(6, "day"));
+  const [reserveDisabled, setReserveDisabled] = useState(false); // State to manage disable state of reserve button
+  const [roomCodes, setRoomCodes] = useState([]);
+  const [errorStatus, setErrorStatus] = useState({
+    isOpen: false,
+    type: "",
+    message: "",
+  });
+  const [PayNow, setPayNow] = useState(false);
 
   const handleClickOpen = (scrollType) => () => {
     setOpen(true);
@@ -53,42 +55,27 @@ export default function ScrollDialog() {
     setOpen(false);
   };
 
-  const [errorStatus, setErrorStatus] = useState({
-    isOpen: false,
-    type: "",
-    message: "",
-  });
-  const [PayNow, setPayNow] = useState(false);
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:3002/users/reservation/holidayhomes")
-      .then((res) => {
-        if (res.data) {
-          setHolidayHomes(res.data);
-          if (res.data.length > 0) {
-            // Set default values to the first holiday home
-            setHolidayHomeName(res.data[0].name);
-            setHolidayHomeId(res.data[0].id);
-          }
-        } else {
-          console.log("No data found");
-        }
-      })
-      .catch(error => {
-        console.error('Error fetching holiday homes:', error);
-      });
-  }, []);
-
   const handleChange = (e) => {
-    const selectedHome = holidayHomes.find(home => home.name === e.target.value);
+    const selectedHome = holidayHomes.find(
+      (home) => home.name === e.target.value
+    );
     setHolidayHomeName(e.target.value);
     setHolidayHomeId(selectedHome.id);
   };
 
   const handlesubmit = (e) => {
+    // Check if CheckinDate is after CheckoutDate
+    if (CheckinDate.isAfter(CheckoutDate)) {
+      setErrorStatus({
+        isOpen: true,
+        type: "error",
+        message: "Check-in date cannot be after Check-out date",
+      });
+      return;
+    }
+
     const data = {
-      HolidayHome: HolidayHomeName,
+      HolidayHome: id,
       CheckinDate: CheckinDate,
       CheckoutDate: CheckoutDate,
       NoOfAdults: NoOfAdults,
@@ -97,45 +84,76 @@ export default function ScrollDialog() {
       NoOfHalls: NoOfHalls,
       RoomPrice: roomPrice,
       HallPrice: hallPrice,
-      Price: roomPrice+hallPrice,
+      Price: roomPrice + hallPrice,
       IsPaid: false,
     };
-    console.log("aruna", data);
 
     axios
-      .post("http://localhost:3002/users/auth/reservation", data,{withCredentials:true})
+      .post("http://localhost:3002/users/auth/reservation", data, {
+        withCredentials: true,
+      })
       .then((res) => {
-        console.log("add reservation successfully");
         setErrorStatus({
           ...errorStatus,
           isOpen: true,
           type: "success",
-          message: "reservation added successfully",
+          message: "Reservation added successfully",
         });
         setOpen(false);
         setOpened(false);
         setPayNow(true);
       })
       .catch((error) => {
-        console.log(`error is  nm ${error}`);
         setErrorStatus({
           ...errorStatus,
           isOpen: true,
           type: "error",
-          message: "reservation failed",
+          message: "Reservation failed",
         });
         setPayNow(false);
       });
   };
-  const descriptionElementRef = React.useRef(null);
-  React.useEffect(() => {
-    if (open) {
-      const { current: descriptionElement } = descriptionElementRef;
-      if (descriptionElement !== null) {
-        descriptionElement.focus();
-      }
+
+  const handleCheckinDateChange = (newDate) => {
+    setCheckinDate(newDate);
+    // Check if CheckinDate is after CheckoutDate
+    if (newDate.isAfter(CheckoutDate)) {
+      setReserveDisabled(true); // Disable reserve button
+      setErrorStatus({
+        isOpen: true,
+        type: "warning",
+        message: "Check-in date cannot be after Check-out date",
+      });
+    } else {
+      setReserveDisabled(false); // Enable reserve button
+      setErrorStatus({
+        isOpen: false,
+        type: "",
+        message: "",
+      });
     }
-  }, []);
+  };
+
+  const handleCheckoutDateChange = (newDate) => {
+    setCheckoutDate(newDate);
+    // Check if CheckinDate is after CheckoutDate
+    if (CheckinDate.isAfter(newDate)) {
+      setReserveDisabled(true); // Disable reserve button
+      setErrorStatus({
+        isOpen: true,
+        type: "warning",
+        message: "Check-in date cannot be after Check-out date",
+      });
+    } else {
+      setReserveDisabled(false); // Enable reserve button
+      setErrorStatus({
+        isOpen: false,
+        type: "",
+        message: "",
+      });
+    }
+  };
+
   return (
     <React.Fragment>
       <Button
@@ -148,101 +166,56 @@ export default function ScrollDialog() {
       <Dialog
         open={open}
         onClose={handleClose}
-
         aria-labelledby="scroll-dialog-title"
         aria-describedby="scroll-dialog-description"
       >
         <DialogTitle id="scroll-dialog-title">Reservation Form</DialogTitle>
         <form onSubmit={(e) => e.preventDefault()}>
-          <DialogContent dividers={scroll === "paper"}
-          sx={{maxHeight:{xs:'600px',md:'400px'}, overflow:'scroll'}}>
-            <DialogContentText
-              id="scroll-dialog-description"
-              ref={descriptionElementRef}
-              tabIndex={-1}
-            >
-              {/* <TextField
-                autoFocus
-                required
-                onChange={(e) => {
-                  setServiceNO(e.target.value);
-                }}
-                value={ServiceNO}
-                margin="dense"
-                id="serviceno"
-                name="serviceno"
-                label="Service Number"
-                type="text"
+          <DialogContent
+            dividers={scroll === "paper"}
+            sx={{ maxHeight: { xs: "600px", md: "400px" }, overflow: "scroll" }}
+          >
+            <DialogContentText id="scroll-dialog-description" tabIndex={-1}>
+              <TextField
+                value={name}
                 fullWidth
-                variant="outlined"
-              /> */}
-              <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">
-                  Select Holiday Home*
-                </InputLabel>
-                {/* <Select
-                  fullWidth
-                  labelId="holiday-home-label"
-                  label="Holiday Home"
-                  isSearchable={true}
-                  id="outlined-select-holidayhome"
-                  value={HolidayHomeName}
-                  onChange={(e) => {
-                    SetHolidayHomeName(e.target.value);
-                    // SetHolidayHomeId()
-                  }}
-                >
-                  {holidayHomes.map((home) => (
-                    <MenuItem value={home.name}>{home.name}</MenuItem>
-                  ))}
-                </Select> */}
-                <Select
-  fullWidth
-  labelId="holiday-home-label"
-  label="Holiday Home"
-  isSearchable={true}
-  id="outlined-select-holidayhome"
-        value={HolidayHomeName}
-      onChange={handleChange}
->
-  {holidayHomes.map((home) => (
-    <MenuItem key={home.id} value={home.name}>{home.name}</MenuItem>
-  ))}
-</Select>
-              </FormControl>
-              
+                disabled
+                title="Holiday Home"
+                label="Holiday Home"
+                sx={{ textTransform: "uppercase" }}
+              />
               <BasicDatePicker
                 required
                 margin="dense"
                 date={CheckinDate}
-                setDate={setCheckinDate}
+                setDate={handleCheckinDateChange}
                 title="Check in Date"
-                onChange={(e) => {
-                  setCheckinDate(e.target.value);
-                }}
                 value={CheckinDate}
               />
               <BasicDatePicker
                 required
                 margin="normal"
                 date={CheckoutDate}
-                setDate={setCheckoutDate}
+                setDate={handleCheckoutDateChange}
                 title="Check Out Date"
-                onChange={(e) => {
-                  setCheckoutDate(e.target.value);
-                }}
                 value={CheckoutDate}
               />
-
               <Stack direction="row" spacing={2} marginTop={"10px"}>
-                <AvailableRoomsPopUp margin="dense" 
-                  NoOfRooms={NoOfRooms} setNoOfRooms={setNoOfRooms}
-                  NoOfAdults={NoOfAdults} setNoOfAdults={setNoOfAdults}
-                  NoOfChildren={NoOfChildren} setNoOfChildren={setNoOfChildren}
-                  roomPrice={roomPrice} setRoomPrice={setRoomPrice}
-                  hallPrice={hallPrice} setHallPrice={setHallPrice}
-                  holidayHomeName = {HolidayHomeName}
-                  holidayHomeId = {HolidayHomeId}
+                <AvailableRoomsPopUp
+                  margin="dense"
+                  NoOfRooms={NoOfRooms}
+                  setNoOfRooms={setNoOfRooms}
+                  NoOfAdults={NoOfAdults}
+                  setNoOfAdults={setNoOfAdults}
+                  NoOfChildren={NoOfChildren}
+                  setNoOfChildren={setNoOfChildren}
+                  roomPrice={roomPrice}
+                  setRoomPrice={setRoomPrice}
+                  hallPrice={hallPrice}
+                  setHallPrice={setHallPrice}
+                  holidayHomeName={name}
+                  holidayHomeId={id}
+                  room={room}
                 />
                 <AvailableHallsPopUp />
               </Stack>
@@ -398,7 +371,6 @@ export default function ScrollDialog() {
                     onChange={(e) => {
                       setRoomPrice(e.target.value);
                     }}
-                    
                     value={roomPrice}
                     sx={{
                       "& .MuiOutlinedInput-root": {
@@ -456,7 +428,7 @@ export default function ScrollDialog() {
                       setTotalPrice(e.target.value);
                     }}
                     // totalPrice={roomPrice+hallPrice}
-                    value={roomPrice+hallPrice}
+                    value={roomPrice + hallPrice}
                     sx={{
                       "& .MuiOutlinedInput-root": {
                         "& fieldset": {
@@ -477,28 +449,21 @@ export default function ScrollDialog() {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-          <ConfirmPopup
-            open={opened}
-            setOpen={setOpened}
-            title={"Reservation Confirmation"}
-            text={"Are you sure you want to confirm this Reservation?"}
-            controlfunction={handlesubmit}
-          />
             <Button variant="outlined" onClick={handleClose} autoFocus>
               Close
             </Button>
             <ConfirmPopup
-            open={opened}
-            setOpen={setOpened}
-            title={"Reservation Confirmation"}
-            text={"Are you sure you want to confirm this Reservation?"}
-            controlfunction={handlesubmit}
-          />
+              open={opened}
+              setOpen={setOpened}
+              title={"Reservation Confirmation"}
+              text={"Are you sure you want to confirm this Reservation?"}
+              controlfunction={handlesubmit}
+            />
             <Button
               variant="contained"
               type="submit"
               autoFocus
-              disabled={roomPrice+hallPrice === 0?true:false}
+              disabled={reserveDisabled || roomPrice + hallPrice === 0} // Disable reserve button if reserveDisabled is true or roomPrice + hallPrice is 0
               onClick={() => {
                 setOpened(true);
               }}

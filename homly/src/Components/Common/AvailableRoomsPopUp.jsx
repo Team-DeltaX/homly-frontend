@@ -34,23 +34,7 @@ export default function AvailableRoomsPopUp(props) {
   const handleClose = () => {
     setOpen(false);
   };
-  const fetchRooms = () => {
-    axios
-      .get("http://localhost:3002/users/reservation/rooms")
-      .then((res) => {
-        console.log(res.data);
-         //reverse array to keep new ones first 
-        setRooms(res.data);
-        console.log(props.holidayHomeName);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-  console.log(props.holidayHomeName);
-  useEffect(() => {
-    fetchRooms();
-  }, []);
+
   return (
     <React.Fragment>
       <Button variant="outlined" onClick={handleClickOpen} margin="normal">
@@ -80,16 +64,9 @@ export default function AvailableRoomsPopUp(props) {
         </AppBar>
         {/* middle List */}
         <List>
-          {/* {rooms.map((room) => (
-    <ListItem key={room.id}>
-      <ListItemText
-        primary={room.name}
-        secondary={`Max Adults: ${room.maxAdults}, Max Children: ${room.maxChildren}, Rental: ${room.rental}`}
-      />
-    </ListItem>
-  ))} */}
-          
-            {rooms.map((room) => (
+          {console.log("room",props.room)}
+            {props.room.map((room) => (
+              console.log("room",room),
               room.HolidayHomeId === holidayId && (// TODO: remove this hard-coded room code
                 <AccordionUsage
                   key={room.id}

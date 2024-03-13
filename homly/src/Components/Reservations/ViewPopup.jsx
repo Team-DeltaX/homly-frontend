@@ -102,7 +102,7 @@ export default function ViewPopUp(props) {
                           </Grid>
                           <Grid xs={4}>
                           <Item sx={{boxShadow: "none"}}>
-                            <Typography variant="button" align="right" display="block" gutterBottom sx={{fontWeight:'bold'}}>{ props.reservation.HolidayHome }</Typography>
+                            <Typography variant="button" align="right" display="block" gutterBottom sx={{fontWeight:'bold'}}>{ props.holidayName}</Typography>
                             <Typography variant="body2" align="right" display="block" gutterBottom>Check In : { dayjs(props.reservation.CheckinDate).format('DD/MM/YYYY') }</Typography>
                             <Typography variant="body2" align="right" display="block" gutterBottom>Check Out : { dayjs(props.reservation.CheckoutDate).format('DD/MM/YYYY') }</Typography>
                           </Item>
