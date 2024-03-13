@@ -21,7 +21,7 @@ export default function ErrorSnackbar({
         autoHideDuration={6000}
         onClose={handleAlertClose}
       >
-        <Alert severity={type} onClose={handleAlertClose}>
+        <Alert severity={type} variant="filled" onClose={handleAlertClose}>
           {message}
         </Alert>
       </Snackbar>

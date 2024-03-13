@@ -16,6 +16,7 @@ import dayjs, { Dayjs } from "dayjs";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import ErrorSnackbar from "../User/ErrorSnackbar";
 
 const HH = [
   {
@@ -44,15 +45,19 @@ export default function AddSpecialReservationPopUp() {
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
-
+  const [reserveDisabled, setReserveDisabled] = useState(false);
   const [HolidayHomeName, SetHolidayHomeName] = useState("");
   const [holidayHomes, setHolidayHomes] = React.useState([]);
   const [ServiceNo, setServiceNo] = useState("");
   const [employeeName, setEmployeeName] = useState("");
+  const [errorStatus, setErrorStatus] = useState({
+    isOpen: false,
+    type: "",
+    message: "",
+  });
+  const [CheckinDate, setCheckinDate] = useState(dayjs().add(6, "day"));
 
-  const [CheckinDate, setCheckinDate] = useState(dayjs(new Date()));
-
-  const [CheckoutDate, setCheckoutDate] = useState(dayjs(new Date()));
+  const [CheckoutDate, setCheckoutDate] = useState(dayjs().add(6, "day"));
 
   const [Employee,SetEmployee]=useState({})
 
@@ -81,22 +86,46 @@ export default function AddSpecialReservationPopUp() {
     // setPassword("");
     // SetSubstitute("");
   };
-//   const fetchfromemployee=()=>{
-//     axios.get(`http://localhost:3002/admin/auth/locationadmin/employee/${ServiceNo}`)
-//     .then((res)=>{
-//         SetEmployee(res.data[0])
-//         console.log('----------emp emp-------')
-        
-//         console.log(Employee)
-//     })
-//     .catch(error=>{
-//         console.log(error)
-//     })
-// }
-// useEffect(()=>{
-//     fetchfromemployee();
 
-// },[])
+const handleCheckinDateChange = (newDate) => {
+  setCheckinDate(newDate);
+  // Check if CheckinDate is after CheckoutDate
+  if (newDate.isAfter(CheckoutDate)) {
+    setReserveDisabled(true); // Disable reserve button
+    setErrorStatus({
+      isOpen: true,
+      type: "warning",
+      message: "Check-in date cannot be after Check-out date",
+    });
+  } else {
+    setReserveDisabled(false); // Enable reserve button
+    setErrorStatus({
+      isOpen: false,
+      type: "",
+      message: "no",
+    });
+  }
+};
+
+const handleCheckoutDateChange = (newDate) => {
+  setCheckoutDate(newDate);
+  // Check if CheckinDate is after CheckoutDate
+  if (CheckinDate.isAfter(newDate)) {
+    setReserveDisabled(true); // Disable reserve button
+    setErrorStatus({
+      isOpen: true,
+      type: "warning",
+      message: "Check-in date cannot be after Check-out date",
+    });
+  } else {
+    setReserveDisabled(false); // Enable reserve button
+    setErrorStatus({
+      isOpen: false,
+      type: "",
+      message: "no",
+    });
+  }
+};
 useEffect(() => {
   if (ServiceNo) {
     axios
@@ -174,7 +203,8 @@ useEffect(() => {
               margin="dense"
               id="empname"
               name="empname"
-              label=""
+              label="Employee Name"
+              title="Employee Name"
               type="text"
               fullWidth
               variant="outlined"
@@ -213,9 +243,14 @@ useEffect(() => {
                     SetHolidayHomeName(e.target.value);
                   }}
                 >
-                  {holidayHomes.map((home) => (
+                  {/* {holidayHomes.map((home) => (
                     <MenuItem value={home}>{home}</MenuItem>
-                  ))}
+                  ))} */}
+                  {holidayHomes.map((home) => (
+  <MenuItem key={home.id} value={home.id}>
+    {home.name}
+  </MenuItem>
+))}
                 </Select>
               </FormControl>
             {/* <BasicDatePicker
@@ -227,15 +262,21 @@ useEffect(() => {
               title="Check In Date"
             /> */}
             <BasicDatePicker
-              date={CheckinDate}
-              setDate={setCheckinDate}
-              title="Check in Date"
-            />
-            <BasicDatePicker
-              date={CheckoutDate}
-              setDate={setCheckoutDate}
-              title="Check Out Date"
-            />
+                required
+                margin="dense"
+                date={CheckinDate}
+                setDate={handleCheckinDateChange}
+                title="Check in Date"
+                value={CheckinDate}
+              />
+              <BasicDatePicker
+                required
+                margin="normal"
+                date={CheckoutDate}
+                setDate={handleCheckoutDateChange}
+                title="Check Out Date"
+                value={CheckoutDate}
+              />
           </DialogContent>
           <DialogActions>
             <Button variant="outlined" onClick={handleClose} autoFocus>
@@ -245,6 +286,7 @@ useEffect(() => {
               variant="contained"
               type="submit"
               autoFocus
+              disabled={reserveDisabled === true}
               onClick={handlesubmit}
             >
               Submit
@@ -252,6 +294,12 @@ useEffect(() => {
           </DialogActions>
         </form>
       </Dialog>
+      <ErrorSnackbar
+        isOpen={errorStatus.isOpen}
+        type={errorStatus.type}
+        message={errorStatus.message}
+        setIsOpen={(val) => setErrorStatus({ ...errorStatus, isOpen: val })}
+      />
     </React.Fragment>
   );
 }
