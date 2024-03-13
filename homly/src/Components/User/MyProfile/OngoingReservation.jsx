@@ -3,6 +3,8 @@ import React from "react";
 import ReservationCard from "../ReservationCard/ReservationCard";
 import { Box, Stack } from "@mui/material";
 
+import dayjs from "dayjs";
+
 export default function OngoingReservation({ reservation }) {
   return (
     <Stack direction="column" sx={{ height: { md: "380px" } }}>
@@ -42,17 +44,18 @@ export default function OngoingReservation({ reservation }) {
               <Box sx={{ marginTop: "10px" }} key={index}>
                 <ReservationCard
                   HHreservation="Ongoing"
-                  HHpayment={reserv.IsPaid}
-                  HHName={reserv.HolidayHome}
-                  HHAddress={reserv.address}
-                  HHReservedDate={reserv.createdAt}
-                  HHCheckIn={reserv.CheckinDate}
-                  HHCheckOut={reserv.CheckoutDate}
-                  HHPrice={reserv.Price}
-                  HHAdults={reserv.NoOfAdults}
-                  HHChildren={reserv.NoOfChildren}
-                  HHRooms={reserv.NoOfRooms}
-                  HHHalls={reserv.NoOfHalls}
+                  HHpayment={reserv.reservation.IsPaid}
+                  HHName={reserv.holidayHome[0].Name}
+                  HHAddress={reserv.holidayHome[0].Address}
+                  HHReservedDate={reserv.reservation.updatedAt}
+                  HHCheckIn={reserv.reservation.CheckinDate}
+                  HHCheckOut={reserv.reservation.CheckoutDate}
+                  HHPrice={reserv.reservation.HallPrice+reserv.reservation.RoomPrice}
+                  HHAdults={reserv.reservation.NoOfAdults}
+                  HHChildren={reserv.reservation.NoOfChildren}
+                  HHRooms={reserv.reservation.NoOfRooms}
+                  HHHalls={reserv.reservation.NoOfHalls}
+                  ExpireIn={dayjs(reserv.expireDate).diff(dayjs(), "day")+1}
                 />
               </Box>
             );

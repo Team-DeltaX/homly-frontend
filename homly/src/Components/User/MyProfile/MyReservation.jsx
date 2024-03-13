@@ -32,30 +32,27 @@ const MyReservation = () => {
     .then((response) => {
       console.log("reservation ongoing",response.data);
       setOngoingReservation(response.data);
-    }).catch((error) => {
-      console.log("error",error);
-      // Navigate("/");
+    }).catch((err) => {
+      console.log("error",err);
+      if (!err.response.data.autherized) {
+        Navigate("/");
+      } 
     });
 
     axios.get('http://localhost:3002/users/auth/userPastReservation',{withCredentials:true})
       .then((response) => {
         console.log("reservation past",response.data);
         setPastReservation(response.data);
-      }).catch((error) => {
-        console.log("error",error);
-        // Navigate("/");
+      })
+      .catch((err) => {
+        console.log("error", err);
+        if (!err.response.data.autherized) {
+          Navigate("/");
+        } 
       });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  // useEffect(() => {
-  //   axios.get('http://localhost:3002/users/auth/userPastReservation',{withCredentials:true})
-  //   .then((response) => {
-  //     console.log("reservation ongoing",response.data);
-  //     setPastReservation(response.data);
-  //   }).catch((error) => {
-  //     console.log("error",error);
-  //     // Navigate("/");
-  //   });
-  // }, []);
+  
 
   const tabComponent = [<OngoingReservation reservation={ongoingReservation}/>, <PastReservation reservation={pastReservation}/>];
 

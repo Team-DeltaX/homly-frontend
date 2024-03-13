@@ -14,16 +14,16 @@ export default function pastReservation({ reservation }) {
               <Box sx={{ marginTop: "10px" }} key={index}>
                 <ReservationCard
                   HHreservation="Past"
-                  HHName={reserv.HolidayHome}
-                  HHAddress={reserv.address}
-                  HHReservedDate={reserv.createdAt}
-                  HHCheckIn={reserv.CheckinDate}
-                  HHCheckOut={reserv.CheckoutDate}
-                  HHPrice={reserv.Price}
-                  HHAdults={reserv.NoOfAdults}
-                  HHChildren={reserv.NoOfChildren}
-                  HHRooms={reserv.NoOfRooms}
-                  HHHalls={reserv.NoOfHalls}
+                  HHName={reserv.holidayHome[0].Name}
+                  HHAddress={reserv.holidayHome[0].Address}
+                  HHReservedDate={reserv.reservation.createdAt}
+                  HHCheckIn={reserv.reservation.CheckinDate}
+                  HHCheckOut={reserv.reservation.CheckoutDate}
+                  HHPrice={reserv.reservation.HallPrice+reserv.reservation.RoomPrice}
+                  HHAdults={reserv.reservation.NoOfAdults}
+                  HHChildren={reserv.reservation.NoOfChildren}
+                  HHRooms={reserv.reservation.NoOfRooms}
+                  HHHalls={reserv.reservation.NoOfHalls}
                 />
               </Box>
             );
