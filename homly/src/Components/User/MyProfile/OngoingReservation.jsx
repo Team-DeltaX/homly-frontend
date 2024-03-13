@@ -1,13 +1,11 @@
 import React from "react";
 
-import ReservationCard from '../ReservationCard/ReservationCard'
-import { Box , Stack} from '@mui/material'
+import ReservationCard from "../ReservationCard/ReservationCard";
+import { Box, Stack } from "@mui/material";
 
-export default function OngoingReservation({reservation}) {
-  
-
+export default function OngoingReservation({ reservation }) {
   return (
-    <Stack direction='column' sx={{height:{md:'380px'}}}>
+    <Stack direction="column" sx={{ height: { md: "380px" } }}>
       {/* <Box sx={{marginTop:'10px'}}>
         <ReservationCard
         HHreservation="Ongoing"
@@ -38,28 +36,28 @@ export default function OngoingReservation({reservation}) {
         HHRooms={2}
         />
       </Box> */}
-      {
-        reservation.map((reserv,index) => {
-          return (
-            <Box sx={{marginTop:'10px'}} key={index}>
-              <ReservationCard
-              HHreservation="Ongoing"
-              HHpayment={reserv.payment}
-              HHName={reserv.HolidayHome}
-              HHAddress={reserv.address}
-              HHReservedDate={reserv.reservedDate}
-              HHCheckIn={reserv.CheckinDate}
-              HHCheckOut={reserv.CheckoutDate}
-              HHPrice={reserv.Price}
-              HHAdults={reserv.NoOfAdults}
-              HHChildren={reserv.NoOfChildren}
-              HHRooms={reserv.NoOfRooms}
-              HHHalls={reserv.NoOfHalls}
-              />
-            </Box>
-          )
-        } )
-      }
+      {reservation.length > 0
+        ? reservation.map((reserv, index) => {
+            return (
+              <Box sx={{ marginTop: "10px" }} key={index}>
+                <ReservationCard
+                  HHreservation="Ongoing"
+                  HHpayment={reserv.IsPaid}
+                  HHName={reserv.HolidayHome}
+                  HHAddress={reserv.address}
+                  HHReservedDate={reserv.createdAt}
+                  HHCheckIn={reserv.CheckinDate}
+                  HHCheckOut={reserv.CheckoutDate}
+                  HHPrice={reserv.Price}
+                  HHAdults={reserv.NoOfAdults}
+                  HHChildren={reserv.NoOfChildren}
+                  HHRooms={reserv.NoOfRooms}
+                  HHHalls={reserv.NoOfHalls}
+                />
+              </Box>
+            );
+          })
+        : "No Reservations Found!"}
     </Stack>
-  )
+  );
 }
