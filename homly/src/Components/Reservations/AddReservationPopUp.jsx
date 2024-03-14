@@ -39,8 +39,7 @@ export default function ScrollDialog({ name, id, room }) {
   const [CheckoutDate, setCheckoutDate] = useState(dayjs().add(6, "day"));
   const [reserveDisabled, setReserveDisabled] = useState(false); // State to manage disable state of reserve button
   const [roomCodes, setRoomCodes] = useState([]);
-  // const roomCodes = [];
-  // const setRoomCodes = [];
+
   const [errorStatus, setErrorStatus] = useState({
     isOpen: false,
     type: "",
