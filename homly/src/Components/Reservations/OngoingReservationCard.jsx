@@ -11,7 +11,6 @@ import axios from "axios";
 
 const OngoingReservationCard = (props) => {
     const [Employee,SetEmployee]=useState({})
-    const [holidayHomeName, setHolidayHomeName]=useState({})
     const fetchfromemployee=()=>{
         axios.get(`http://localhost:3002/admin/auth/locationadmin/employee/${props.reservation.ServiceNO}`)
         .then((res)=>{
@@ -29,7 +28,6 @@ const OngoingReservationCard = (props) => {
         id: "",
         name: "",
     });
-    // const homeId = "1710317323947";
 
     useEffect(() => {
         axios
