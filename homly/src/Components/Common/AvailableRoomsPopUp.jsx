@@ -22,15 +22,30 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function AvailableRoomsPopUp(props) {
+export default function AvailableRoomsPopUp({
+  holidayHomeId,
+  holidayHomeName,
+  room,
+  roomCodes,
+  setRoomCodes,
+  NoOfRooms,
+  setNoOfRooms,
+  NoOfAdults,
+  setNoOfAdults,
+  NoOfChildren,
+  setNoOfChildren,
+  roomPrice,
+  setRoomPrice,
+
+}) {
   const [open, setOpen] = React.useState(false);
   const [rooms, setRooms] = React.useState([]);
-  //const [holidayId, setHolidayId] = React.useState(props.holidayHomeId);
-  console.log("holidayhomeId",props.holidayHomeId)
+  //const [holidayId, setHolidayId] = React.useState( holidayHomeId);
+  console.log("holidayhomeId",holidayHomeId)
   const handleClickOpen = () => {
     setOpen(true);
   };
-  const holidayId = props.holidayHomeId;
+  const holidayId = holidayHomeId;
   const handleClose = () => {
     setOpen(false);
   };
@@ -38,7 +53,7 @@ export default function AvailableRoomsPopUp(props) {
   return (
     <React.Fragment>
       <Button variant="outlined" onClick={handleClickOpen} margin="normal">
-        Available Rooms for {props.holidayHomeName}
+        Available Rooms for {holidayHomeName}
       </Button>
       <Dialog
         fullScreen
@@ -64,21 +79,23 @@ export default function AvailableRoomsPopUp(props) {
         </AppBar>
         {/* middle List */}
         <List>
-          {console.log("room",props.room)}
-            {props.room.map((room) => (
+          {console.log("room",room)}
+            { room.map((room) => (
               console.log("room",room),
               room.HolidayHomeId === holidayId && (// TODO: remove this hard-coded room code
                 <AccordionUsage
                   key={room.id}
                   room={room}
-                  NoOfRooms={props.NoOfRooms}
-                  setNoOfRooms={props.setNoOfRooms}
-                  NoOfAdults={props.NoOfAdults}
-                  setNoOfAdults={props.setNoOfAdults}
-                  NoOfChildren={props.NoOfChildren}
-                  setNoOfChildren={props.setNoOfChildren}
-                  roomPrice={props.roomPrice}
-                  setRoomPrice={props.setRoomPrice}
+                  NoOfRooms={ NoOfRooms}
+                  setNoOfRooms={ setNoOfRooms}
+                  roomCodes={ roomCodes}
+                  setRoomCodes={ setRoomCodes}
+                  NoOfAdults={ NoOfAdults}
+                  setNoOfAdults={ setNoOfAdults}
+                  NoOfChildren={ NoOfChildren}
+                  setNoOfChildren={ setNoOfChildren}
+                  roomPrice={ roomPrice}
+                  setRoomPrice={ setRoomPrice}
                 />
               )
             ))}
@@ -92,7 +109,7 @@ export default function AvailableRoomsPopUp(props) {
         >
           <Toolbar>
             <Typography sx={{ width: "20%", flexShrink: 0 }}>
-              NO of Rooms : {props.NoOfRooms}
+              NO of Rooms : { NoOfRooms}
             </Typography>
             <Typography
               variant="h6"
@@ -107,7 +124,7 @@ export default function AvailableRoomsPopUp(props) {
               variant="h6"
               sx={{ marginLeft: "2%", width: "5%", flexShrink: 0 }}
             >
-              {props.NoOfAdults}
+              { NoOfAdults}
             </Typography>
             <Typography
               variant="h6"
@@ -122,13 +139,19 @@ export default function AvailableRoomsPopUp(props) {
               variant="h6"
               sx={{ marginLeft: "2%", width: "5%", flexShrink: 0 }}
             >
-              {props.NoOfChildren}
+              { NoOfChildren}
+            </Typography>
+            <Typography
+              variant="h6"
+              sx={{ marginLeft: "2%", width: "5%", flexShrink: 0 }}
+            >
+              reserved rooms : { roomCodes}
             </Typography>
             <Typography
               variant="h6"
               sx={{ marginLeft: "10%", width: "20%", flexShrink: 0 }}
             >
-              Total Rental : {props.roomPrice}
+              Total Rental : { roomPrice}
             </Typography>
             <Button
               autoFocus

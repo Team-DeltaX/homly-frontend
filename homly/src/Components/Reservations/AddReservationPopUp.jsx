@@ -39,6 +39,8 @@ export default function ScrollDialog({ name, id, room }) {
   const [CheckoutDate, setCheckoutDate] = useState(dayjs().add(6, "day"));
   const [reserveDisabled, setReserveDisabled] = useState(false); // State to manage disable state of reserve button
   const [roomCodes, setRoomCodes] = useState([]);
+  // const roomCodes = [];
+  // const setRoomCodes = [];
   const [errorStatus, setErrorStatus] = useState({
     isOpen: false,
     type: "",
@@ -205,6 +207,8 @@ export default function ScrollDialog({ name, id, room }) {
                   margin="dense"
                   NoOfRooms={NoOfRooms}
                   setNoOfRooms={setNoOfRooms}
+                  roomCodes={roomCodes}
+                  setRoomCodes={setRoomCodes}
                   NoOfAdults={NoOfAdults}
                   setNoOfAdults={setNoOfAdults}
                   NoOfChildren={NoOfChildren}
@@ -255,6 +259,37 @@ export default function ScrollDialog({ name, id, room }) {
                       }}
                     />
                   </Typography>
+                </Typography>
+              </Box>
+              <Box component="section" sx={{ mt: 1 }}>
+                <Typography variant="h6" gutterBottom>
+                  Rooms :
+                  <Typography
+                    variant="h5"
+                    gutterBottom
+                    style={{
+                      display: "inline-block",
+                      marginLeft: "10px",
+                      color: "green",
+                    }}
+                  >
+                    
+                    
+                  </Typography>
+                  {/* show array value */}
+                  {roomCodes.map((roomCode) => (
+                    <Typography
+                      variant="h5"
+                      gutterBottom
+                      style={{
+                        display: "inline-block",
+                        marginLeft: "10px",
+                        color: "green",
+                      }}
+                    >
+                      {roomCode}
+                    </Typography>
+                  ))}
                 </Typography>
               </Box>
               <Box component="section">

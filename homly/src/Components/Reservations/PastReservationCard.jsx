@@ -28,7 +28,37 @@ const PastReservationCard = (props) => {
       fetchfromemployee();
 
   },[])
-  
+  const [value, setValue] = useState({
+    id: "",
+    name: "",
+});
+
+useEffect(() => {
+    axios
+      .get(
+        `http://localhost:3002/admin/auth/locationadmin/holidayhome/${props.reservation.HolidayHome}`,
+        { withCredentials: true }
+      )
+      .then((res) => {
+        console.log("response", res.data.room);
+        if (Response) {
+          const homeDetails = res.data.homeDetails[0];
+          const contactNo = res.data.contactNo;
+
+          // Extract relevant data from response and set to 'value' state
+          setValue({
+            id: homeDetails.HolidayHomeId || "",
+            name: homeDetails.Name || "",
+
+          });
+        } else {
+          console.log("No data found");
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching holiday homes:", error);
+      });
+  }, []);
   return(     
       <Grid container spacing={2} className="reservation-preview" key={props.reservation.id} >
           <Grid container className="columnData" sx={{width:'100%'}}> 
@@ -44,7 +74,7 @@ const PastReservationCard = (props) => {
               </Grid>
               <Grid xs={5} md={5} className="section2" sx={{display:'flex',justifyContent:"flex-end", alignItems:"center"}}>
                   <Stack direction="column" justifyContent="flex-end" alignItems="flex-end" spacing={0.5}>
-                      <h2>{ props.reservation.HolidayHome }</h2>
+                      <h2>{ value.name }</h2>
                       <p>Check In : { dayjs(props.reservation.CheckinDate).format('DD/MM/YYYY')}</p>
                       <p>Check Out : { dayjs(props.reservation.CheckoutDate).format('DD/MM/YYYY')}</p>
                       <Stack
