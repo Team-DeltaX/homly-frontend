@@ -15,11 +15,14 @@ export default function HHCarouselforInterest({ interestedHH }) {
         additionalTransfrom={0}
         arrows
         autoPlaySpeed={3000}
-        centerMode={true}
+        centerMode={false}
+        className=""
         containerClass="container"
         dotListClass=""
         draggable
         focusOnSelect={false}
+        infinite={false}
+        itemClass=""
         keyBoardControl
         minimumTouchDrag={80}
         pauseOnHover
@@ -30,27 +33,27 @@ export default function HHCarouselforInterest({ interestedHH }) {
           desktop: {
             breakpoint: {
               max: 3000,
-              min: 821,
+              min: 1024
             },
-            items: 2,
-            partialVisibilityGutter: 40,
+            items: 3,
+            partialVisibilityGutter: 40
           },
           mobile: {
             breakpoint: {
               max: 464,
-              min: 0,
+              min: 0
             },
-            items: 0.1,
-            partialVisibilityGutter: 0,
+            items: 1,
+            partialVisibilityGutter: 30
           },
           tablet: {
             breakpoint: {
-              max: 820,
-              min: 464,
+              max: 1024,
+              min: 464
             },
-            items: 1,
-            partialVisibilityGutter: 20,
-          },
+            items: 2,
+            partialVisibilityGutter: 30
+          }
         }}
         rewind={false}
         rewindWithAnimation={false}

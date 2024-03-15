@@ -17,12 +17,14 @@ export default function HHCarousel({ sortedByRatingHH }) {
         additionalTransfrom={0}
         arrows
         autoPlaySpeed={3000}
-        centerMode={true}
+        centerMode={false}
+        className=""
         containerClass="container"
         dotListClass=""
         draggable
         focusOnSelect={false}
         infinite={false}
+        itemClass=""
         keyBoardControl
         minimumTouchDrag={80}
         pauseOnHover
@@ -33,27 +35,27 @@ export default function HHCarousel({ sortedByRatingHH }) {
           desktop: {
             breakpoint: {
               max: 3000,
-              min: 821,
+              min: 1024
             },
-            items: 2,
-            partialVisibilityGutter: 40,
+            items: 3,
+            partialVisibilityGutter: 40
           },
           mobile: {
             breakpoint: {
               max: 464,
-              min: 0,
+              min: 0
             },
-            items: 0.1,
-            partialVisibilityGutter: 0,
+            items: 1,
+            partialVisibilityGutter: 30
           },
           tablet: {
             breakpoint: {
-              max: 820,
-              min: 464,
+              max: 1024,
+              min: 464
             },
-            items: 1,
-            partialVisibilityGutter: 20,
-          },
+            items: 2,
+            partialVisibilityGutter: 30
+          }
         }}
         rewind={false}
         rewindWithAnimation={false}
@@ -64,23 +66,20 @@ export default function HHCarousel({ sortedByRatingHH }) {
         slidesToSlide={1}
         swipeable
       >
-      
-          {
-            sortedByRatingHH.slice(0, 5).map((item) => (
-              <HolidayHomeCard
-                key={item.HolidayHomeId}
-                HHName={item.Name}
-                HHLocation={item.Address}
-                HHPrice={item.TotalRental}
-                HHRating={item.overall_rating}
-                HHImage={"https://www.cnaccountants.com.au/wp-content/uploads/2023/03/hOLIDAY-HOMES-TAX.jpg"}
-                showInterest={false}
-              />
-            ))
-          }
-          
+        {sortedByRatingHH.map((item, index) => (
+          <HolidayHomeCard
+            key={item.HolidayHomeId}
+            HHName={item.Name}
+            HHLocation={item.Address}
+            HHPrice={item.TotalRental}
+            HHRating={item.overall_rating}
+            HHImage={
+              "https://www.cnaccountants.com.au/wp-content/uploads/2023/03/hOLIDAY-HOMES-TAX.jpg"
+            }
+            showInterest={false}
+          />
+        ))}
       </Carousel>
-      
     </ThemeProvider>
   );
 }
