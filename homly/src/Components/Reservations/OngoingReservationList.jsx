@@ -16,7 +16,7 @@ const OngoingReservationList = (props) => {
       .then((res) => {
         console.log(res.data);
          //reverse array to keep new ones first 
-        setReservations(res.data);
+        setReservations(res.data.reverse());
       })
       .catch((err) => {
         console.log(err);

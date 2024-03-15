@@ -11,18 +11,25 @@ import { Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 
 
-export default function AccordionUsage({room,NoOfRooms,setNoOfRooms,NoOfAdults,setNoOfAdults,NoOfChildren,setNoOfChildren,roomPrice,setRoomPrice}) {
+export default function AccordionUsage({room,NoOfRooms,setNoOfRooms,roomCodes,setRoomCodes,NoOfAdults,setNoOfAdults,NoOfChildren,setNoOfChildren,roomPrice,setRoomPrice}) {
   const [reserve,setReserve] = useState(false);
+
+  // check room id is in room codes
+  useEffect(() => {
+    if(roomCodes.includes(room.roomCode)){
+      setReserve(true)
+    }
+  },[])
+
   
   return (
     <div>
       <Accordion key={room.id}>
         <AccordionSummary
-          //disabled={this.state.disabled}
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel3-content"
           id="panel3-header"
@@ -74,14 +81,22 @@ export default function AccordionUsage({room,NoOfRooms,setNoOfRooms,NoOfAdults,s
           setNoOfRooms(NoOfRooms-1)
           setNoOfAdults(NoOfAdults-room.NoOfAdults)
           setNoOfChildren(NoOfChildren-room.NoOfChildren)
-          setRoomPrice(roomPrice-room.roomRental)}}>Cancel</Button>
+          setRoomPrice(roomPrice-room.roomRental)
+          // remove room code from room code array
+          setRoomCodes(roomCodes.filter(code => code !== room.roomCode))
+          }}>Cancel</Button>
           <Button disabled={reserve} onClick={() => {setReserve(true)
           setNoOfRooms(NoOfRooms+1)
           setNoOfAdults(NoOfAdults+room.NoOfAdults)
           setNoOfChildren(NoOfChildren+room.NoOfChildren)
-          setRoomPrice(roomPrice+room.roomRental)}}>Reserve</Button>
+          setRoomPrice(roomPrice+room.roomRental)
+          // add room code to set roomcode array
+          setRoomCodes([...roomCodes,room.roomCode])
+          console.log("roooooms",roomCodes)
+          }}>Reserve</Button>
         </AccordionActions>
-      </Accordion>
+
+        </Accordion>
     </div>
   );
 }

@@ -22,43 +22,39 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function AvailableRoomsPopUp(props) {
+export default function AvailableRoomsPopUp({
+  holidayHomeId,
+  holidayHomeName,
+  room,
+  roomCodes,
+  setRoomCodes,
+  NoOfRooms,
+  setNoOfRooms,
+  NoOfAdults,
+  setNoOfAdults,
+  NoOfChildren,
+  setNoOfChildren,
+  roomPrice,
+  setRoomPrice,
+
+}) {
   const [open, setOpen] = React.useState(false);
   const [rooms, setRooms] = React.useState([]);
-  
-
+  //const [holidayId, setHolidayId] = React.useState( holidayHomeId);
+  console.log("holidayhomeId",holidayHomeId)
+  console.log("roomCodessss",roomCodes);
   const handleClickOpen = () => {
     setOpen(true);
   };
-
+  const holidayId = holidayHomeId;
   const handleClose = () => {
     setOpen(false);
   };
-  // React.useEffect(() => {
-  //   fetch('http://localhost:3002/api/rooms')
-  //     .then(response => response.json())
-  //     .then(data => setRooms(data));
-  // }, []);
-  const fetchRooms = () => {
-    axios
-      .get("http://localhost:3002/users/reservation/rooms")
-      .then((res) => {
-        console.log(res.data);
-         //reverse array to keep new ones first 
-        setRooms(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
 
-  useEffect(() => {
-    fetchRooms();
-  }, []);
   return (
     <React.Fragment>
       <Button variant="outlined" onClick={handleClickOpen} margin="normal">
-        Available Rooms
+        Available Rooms for {holidayHomeName}
       </Button>
       <Dialog
         fullScreen
@@ -84,28 +80,23 @@ export default function AvailableRoomsPopUp(props) {
         </AppBar>
         {/* middle List */}
         <List>
-          {/* {rooms.map((room) => (
-    <ListItem key={room.id}>
-      <ListItemText
-        primary={room.name}
-        secondary={`Max Adults: ${room.maxAdults}, Max Children: ${room.maxChildren}, Rental: ${room.rental}`}
-      />
-    </ListItem>
-  ))} */}
-          
-            {rooms.map((room) => (
-              room.roomCode !== "r002" && ( // TODO: remove this hard-coded room code
+          {console.log("room",room)}
+            { room.map((room) => (
+              console.log("room",room),
+              room.HolidayHomeId === holidayId && (// TODO: remove this hard-coded room code
                 <AccordionUsage
                   key={room.id}
                   room={room}
-                  NoOfRooms={props.NoOfRooms}
-                  setNoOfRooms={props.setNoOfRooms}
-                  NoOfAdults={props.NoOfAdults}
-                  setNoOfAdults={props.setNoOfAdults}
-                  NoOfChildren={props.NoOfChildren}
-                  setNoOfChildren={props.setNoOfChildren}
-                  roomPrice={props.roomPrice}
-                  setRoomPrice={props.setRoomPrice}
+                  NoOfRooms={ NoOfRooms}
+                  setNoOfRooms={ setNoOfRooms}
+                  roomCodes={ roomCodes}
+                  setRoomCodes={ setRoomCodes}
+                  NoOfAdults={ NoOfAdults}
+                  setNoOfAdults={ setNoOfAdults}
+                  NoOfChildren={ NoOfChildren}
+                  setNoOfChildren={ setNoOfChildren}
+                  roomPrice={ roomPrice}
+                  setRoomPrice={ setRoomPrice}
                 />
               )
             ))}
@@ -119,7 +110,7 @@ export default function AvailableRoomsPopUp(props) {
         >
           <Toolbar>
             <Typography sx={{ width: "20%", flexShrink: 0 }}>
-              NO of Rooms : {props.NoOfRooms}
+              NO of Rooms : { NoOfRooms}
             </Typography>
             <Typography
               variant="h6"
@@ -134,7 +125,7 @@ export default function AvailableRoomsPopUp(props) {
               variant="h6"
               sx={{ marginLeft: "2%", width: "5%", flexShrink: 0 }}
             >
-              {props.NoOfAdults}
+              { NoOfAdults}
             </Typography>
             <Typography
               variant="h6"
@@ -149,13 +140,19 @@ export default function AvailableRoomsPopUp(props) {
               variant="h6"
               sx={{ marginLeft: "2%", width: "5%", flexShrink: 0 }}
             >
-              {props.NoOfChildren}
+              { NoOfChildren}
+            </Typography>
+            <Typography
+              variant="h6"
+              sx={{ marginLeft: "2%", width: "5%", flexShrink: 0 }}
+            >
+              reserved rooms : { roomCodes}
             </Typography>
             <Typography
               variant="h6"
               sx={{ marginLeft: "10%", width: "20%", flexShrink: 0 }}
             >
-              Total Rental : {props.roomPrice}
+              Total Rental : { roomPrice}
             </Typography>
             <Button
               autoFocus
