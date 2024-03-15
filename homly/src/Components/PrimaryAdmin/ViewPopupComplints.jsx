@@ -295,7 +295,7 @@ const ViewPopupComplaints = (props) => {
                     multiline
                     maxRows={2}
                     disabled
-                    value={props.selecteduser.Reson}
+                    value={props.selecteduser.Reason}
                     size="small"
                     sx={{ width: "85%", margin: "5px" }}
                   ></TextField>
@@ -340,7 +340,7 @@ const ViewPopupComplaints = (props) => {
                 {/* {props.complaints.filter(data=>((data.Marked===true)&&(data.ServiceNo===props.selecteduser.ServiceNo))).map(data =>  setPrevcomplaints(prevArray => [...prevArray, data.Reson]))} */}
 
                 <div>
-                  {props.prevcomplaints.length >0 ? (
+                  {(props.prevcomplaints.length >0 )&&( props.selecteduser.ComplaintID!==props.prevcomplaints[props.prevcomplaints.length-1].ComplaintID)? (
                     <Accordion
                       expanded={!expand}
                       onClick={() => {
@@ -372,13 +372,13 @@ const ViewPopupComplaints = (props) => {
                       </Typography>
                       </AccordionSummary>
                       <AccordionDetails>
-                        <Typography>{props.prevcomplaints[props.prevcomplaints.length-1].Reson}</Typography>
+                        <Typography>{props.prevcomplaints[props.prevcomplaints.length-1].Reason}</Typography>
                       </AccordionDetails>
                     </Accordion>
                   ) : (
                     ""
                   )}
-                  {props.prevcomplaints.length >=2 ? (
+                  {(props.prevcomplaints.length >=2)&&( props.selecteduser.ComplaintID!==props.prevcomplaints[props.prevcomplaints.length-2].ComplaintID) ? (
                     <Accordion
                       expanded={expand}
                       onClick={() => {
@@ -399,7 +399,7 @@ const ViewPopupComplaints = (props) => {
                         </Typography>
                       </AccordionSummary>
                       <AccordionDetails>
-                        <Typography>{props.prevcomplaints[props.prevcomplaints.length-2].Reson}</Typography>
+                        <Typography>{props.prevcomplaints[props.prevcomplaints.length-2].Reason}</Typography>
                       </AccordionDetails>
                     </Accordion>
                   ) : (

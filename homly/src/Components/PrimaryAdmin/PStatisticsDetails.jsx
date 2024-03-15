@@ -146,7 +146,7 @@ export default function StatisticsDetails() {
                   </Typography>
                 </Box>
                 <Box>
-                  <CircularProgress variant="determinate" value={25} />
+                  <CircularProgress variant="determinate" value={roomcount} />
                 </Box>
               </Box>
             </Grid>
