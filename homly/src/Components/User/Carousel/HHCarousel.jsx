@@ -8,9 +8,8 @@ import theme from "../../../HomlyTheme";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
-export default function HHCarousel(props) {
+export default function HHCarousel({ sortedByRatingHH }) {
   
-
 
   return (
     <ThemeProvider theme={theme}>
@@ -65,20 +64,21 @@ export default function HHCarousel(props) {
         slidesToSlide={1}
         swipeable
       >
-        {props.sortedByRating
-          .sort((a, b) => b.rating - a.rating)
-          .slice(0, 6)
-          .map((item) => (
+      
+          {
+            sortedByRatingHH.slice(0, 5).map((item) => (
               <HolidayHomeCard
-                key={item.HHId}
-                HHName={item.name}
-                HHLocation={item.address}
-                HHPrice={item.price}
-                HHRating={item.rating}
-                HHImage={item.image}
+                key={item.HolidayHomeId}
+                HHName={item.Name}
+                HHLocation={item.Address}
+                HHPrice={item.TotalRental}
+                HHRating={item.overall_rating}
+                HHImage={"https://www.cnaccountants.com.au/wp-content/uploads/2023/03/hOLIDAY-HOMES-TAX.jpg"}
                 showInterest={false}
               />
-          ))}
+            ))
+          }
+          
       </Carousel>
       
     </ThemeProvider>

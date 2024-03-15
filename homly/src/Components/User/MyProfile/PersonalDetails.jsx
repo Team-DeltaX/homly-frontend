@@ -18,7 +18,7 @@ import PersonalDetailsGrid from "../PersonalDetailsGrid/PersonalDetailsGrid";
 import theme from "../../../HomlyTheme";
 import ProfilePicUploadPopup from "../ProfilePicUploadPopup";
 import ErrorSnackbar from "../ErrorSnackbar";
-import UserInterestedPopup from "../UserInterestedPopup";
+// import UserInterestedPopup from "../UserInterestedPopup";
 import UserInterestedPopupProfile from "./UserInterestedPopupProfile";
 
 const PersonalDetails = () => {
