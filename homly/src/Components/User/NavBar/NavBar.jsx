@@ -37,7 +37,7 @@ const pages = [
 
 const respSidePages = [
   { name: "Home", path: "/Home" },
-  { name: "Holiday Homes", path: "/holidayHomes" },
+  { name: "Holiday Homes", path: "/holidayHomes/" },
   // { name: "Contact Us", path: "/contactUs" },
   { name: "My Profile", path: "/myProfile" },
 ];
