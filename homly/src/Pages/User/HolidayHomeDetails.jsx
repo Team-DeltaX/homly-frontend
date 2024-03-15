@@ -22,7 +22,7 @@ import SimpleMap from "../../Components/Common/MapContainer";
 import LinearProgress, {
   linearProgressClasses,
 } from "@mui/material/LinearProgress";
-
+import { useParams } from "react-router-dom";
 import MainHolidayHomePhoto from "../../Components/User/HolidayHomeDetailsGrid/MainHolidayHomePhoto";
 
 // import MainHolidayHomePhoto from '../../Components/User/HolidayHomeDetailsGrid/MainHolidayHomePhoto';
@@ -74,7 +74,7 @@ export default function HolidayHomeDetails() {
   useEffect(() => {
     AOS.init();
   }, []);
-  const [room,setRoom] = useState([]);
+  // const [room,setRoom] = useState([]);
   const [value, setValue] = useState({
     id: "",
     name: "",
@@ -100,8 +100,8 @@ export default function HolidayHomeDetails() {
     wifi_rating: 0,
     overall_rating: 0,
   });
-  const homeId = "1710317323947";
-  // const { homeId } = useParams();
+  // const homeId = "1710334919911";
+  const { homeId } = useParams();
   useEffect(() => {
     axios
       .get(
@@ -113,7 +113,7 @@ export default function HolidayHomeDetails() {
         if (Response) {
           const homeDetails = res.data.homeDetails[0];
           const contactNo = res.data.contactNo;
-          setRoom(res.data.room);
+          //setRoom(res.data.room);
 
           // Extract relevant data from response and set to 'value' state
           setValue({
@@ -172,7 +172,8 @@ export default function HolidayHomeDetails() {
                 </Typography> 
               </Grid>
               <Grid md={4}>
-                <AddReservationPopUp name={value.name} id={value.id} room={room}/>
+                <AddReservationPopUp name={value.name} id={value.id}/>
+                {/* <AddReservationPopUp name={value.name} id={value.id} room={room}/> */}
               </Grid>
               <Grid md={12}>
                 <HolidayHomeGrid />

@@ -21,7 +21,7 @@ const UserRouter = () =>{
         <Route path="/Registration" element={<UserRegistration />} />
         <Route path="/Home" element={<Home />} />
         <Route path="/HolidayHomes" element={<HolidayHome />} />
-        <Route path="/HolidayHomeDetails" element={ <HolidayHomeDetails />} />
+        <Route path="/HolidayHomeDetails/:homeId" element={ <HolidayHomeDetails />} />
         <Route path="/MyProfile" element={<Profile />} />
         <Route path="/Registration/Success" element={<EmailVerified />} />
       </Routes>

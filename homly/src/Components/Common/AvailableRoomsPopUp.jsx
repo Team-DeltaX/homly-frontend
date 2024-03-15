@@ -42,6 +42,7 @@ export default function AvailableRoomsPopUp({
   const [rooms, setRooms] = React.useState([]);
   //const [holidayId, setHolidayId] = React.useState( holidayHomeId);
   console.log("holidayhomeId",holidayHomeId)
+  console.log("roomCodessss",roomCodes);
   const handleClickOpen = () => {
     setOpen(true);
   };
