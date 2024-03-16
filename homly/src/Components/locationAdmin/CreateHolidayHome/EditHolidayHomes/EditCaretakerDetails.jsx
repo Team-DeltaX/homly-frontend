@@ -7,45 +7,20 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
-const EditCaretakerDetails = () => {
+const EditCaretakerDetails = ({ value, setValue, valueSecond, setValueSecond }) => {
 
-    const [value, setValue] = useState({
-        caretakerName: '', caretakerContactNo: '', caretakerStatus: '', caretakerAddress: '', caretakerDescription: '',
-    })
+    // const [value, setValue] = useState({
+    //     caretakerName: '', caretakerContactNo: '', caretakerStatus: '', caretakerAddress: '', caretakerDescription: '',
+    // })
 
-    const [valueSecond, setValueSecond] = useState({
-        caretakerName: '', caretakerContactNo: '', caretakerStatus: '', caretakerAddress: '', caretakerDescription: '',
-    })
-
-
-    const { homeId } = useParams();
-    useEffect(() => {
-        axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/${homeId}`)
-            .then((res) => {
-                if (Response) {
-                    const caretakerDetails = res.data.caretaker;
+    // const [valueSecond, setValueSecond] = useState({
+    //     caretakerName: '', caretakerContactNo: '', caretakerStatus: '', caretakerAddress: '', caretakerDescription: '',
+    // })
 
 
-                    setValue({
-                        caretakerName: caretakerDetails[0].Name, caretakerContactNo: caretakerDetails[0].ContactNo, caretakerStatus: caretakerDetails[0].Status, caretakerAddress: caretakerDetails[0].Address, caretakerDescription: caretakerDetails[0].Description,
-                    })
-
-                    if (caretakerDetails[1]) {
-                        setValueSecond({
-                            caretakerName: caretakerDetails[1].Name || "", caretakerContactNo: caretakerDetails[1].ContactNo || "", caretakerStatus: caretakerDetails[1].Status || "", caretakerAddress: caretakerDetails[1].Address || "", caretakerDescription: caretakerDetails[1].Description || "",
-                        })
-
-                    }
-
-                } else {
-                    console.log("No data found");
-                }
-            })
-        console.log(value.caretakerName);
-    }, [])
+    console.log("in the comp", value);
 
 
-    console.log(value.caretakerName);
 
 
     const [error, setError] = useState({

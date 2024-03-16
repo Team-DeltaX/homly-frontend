@@ -60,15 +60,55 @@ const HolidayHomeEdit = () => {
 
     const navigate = useNavigate();
 
+    const [approvedClicked, setApprovedClicked] = useState(false);
+
     const [showNav, setShowNav] = useState('nav_grid_deactive');
     const [value, setValue] = useState(0);
+
+    const [caretaker1Id, setCaretaker1Id] = useState('');
+    const [caretaker2Id, setCaretaker2Id] = useState('');
+
+
+
+
+    const [detailsValue, setDetailsValue] = useState({
+        name: '', address: '', district: '', description: '', contactNo1: '', contactNo2: '', category: '', status: ''
+    })
 
     const [roomArray, setRoomArray] = useState([]);
     const [unitArray, setUnitArray] = useState([]);
     const [hallArray, setHallArray] = useState([]);
+    const [roomTypeArray, setRoomTypeArray] = useState([]);
+    const [settingRoomRentalArray, setSettingRoomRentalArray] = useState([]);
 
-    const [updated, setUpdated] = useState(false);
-    const [updatedValues, setUpdatedValues] = useState([]);
+
+
+    const [valueCaretaker, setValueCareTaker] = useState({
+        caretakerName: '', caretakerContactNo: '', caretakerStatus: '', caretakerAddress: '', caretakerDescription: '',
+    })
+
+    const [valueSecond, setValueSecond] = useState({
+        caretakerName: '', caretakerContactNo: '', caretakerStatus: '', caretakerAddress: '', caretakerDescription: '',
+    })
+
+    const [bdValue, setBdValue] = useState({
+        otherCharges: "",
+        serviceCharges: "",
+        totalRental: "",
+        facilities: "",
+        gym: false,
+        kitchen: false,
+        park: false,
+        wifi: false,
+        pool: false,
+        bar: false,
+
+
+    })
+
+    const [adultsCount, setAdultsCount] = useState(0);
+    const [childCount, setChildCount] = useState(0);
+
 
 
 
@@ -85,10 +125,6 @@ const HolidayHomeEdit = () => {
         setValue(2);
     }
 
-    const handleUpdate = () => {
-        setUpdated(true)
-        console.log(updatedValues);
-    }
 
     const { homeId } = useParams();
 
@@ -100,32 +136,49 @@ const HolidayHomeEdit = () => {
             .then((res) => {
                 if (Response) {
                     const roomDetails = res.data.room;
-                    setRoomArray(roomDetails);
-
-                } else {
-                    console.log("No data found");
-                }
-            })
-        axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/${homeId}`)
-            .then((res) => {
-                if (Response) {
                     const unitDetails = res.data.unit;
-                    setUnitArray(unitDetails);
-
-
-
-                } else {
-                    console.log("No data found");
-                }
-            })
-
-
-
-        axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/${homeId}`)
-            .then((res) => {
-                if (Response) {
                     const hallDetails = res.data.hall;
+                    const caretakerDetails = res.data.caretaker;
+                    const homeDetails = res.data.homeDetails[0];
+                    const contactNo = res.data.contactNo;
+                    const roomTypeSettings = res.data.roomTypeSettings;
+                    const settingRoomRental = res.data.roomRentalSettings;
+
+
+                    setRoomArray(roomDetails);
+                    setUnitArray(unitDetails);
                     setHallArray(hallDetails);
+                    setCaretaker1Id(caretakerDetails[0].CareTakerId);
+                    setValueCareTaker({
+                        caretakerName: caretakerDetails[0].Name, caretakerContactNo: caretakerDetails[0].ContactNo, caretakerStatus: caretakerDetails[0].Status, caretakerAddress: caretakerDetails[0].Address, caretakerDescription: caretakerDetails[0].Description,
+                    })
+
+                    if (caretakerDetails[1]) {
+                        setCaretaker2Id(caretakerDetails[1].CareTakerId);
+                        setValueSecond({
+                            caretakerName: caretakerDetails[1].Name || "", caretakerContactNo: caretakerDetails[1].ContactNo || "", caretakerStatus: caretakerDetails[1].Status || "", caretakerAddress: caretakerDetails[1].Address || "", caretakerDescription: caretakerDetails[1].Description || "",
+                        })
+
+                    }
+                    setAdultsCount(homeDetails.MaxNoOfAdults);
+                    setChildCount(homeDetails.MaxNoOfChildren);
+                    setBdValue({ ...bdValue, otherCharges: homeDetails.OtherCharge, serviceCharges: homeDetails.ServiceCharge, totalRental: homeDetails.TotalRental, facilities: homeDetails.Facilities, gym: homeDetails.Gym, kitchen: homeDetails.Kitchen, park: homeDetails.Park, wifi: homeDetails.Wifi, pool: homeDetails.Pool, bar: homeDetails.Bar })
+
+                    setDetailsValue({
+                        name: homeDetails.Name || '',
+                        address: homeDetails.Address || '',
+                        district: 'Kegalle', // Add the logic to get district if available
+                        description: homeDetails.Description || '',
+                        contactNo1: (contactNo && contactNo.length > 0) ? contactNo[0].ContactNo : '',
+                        contactNo2: (contactNo && contactNo.length > 1) ? contactNo[1].ContactNo : '',
+                        category: homeDetails.Category || '',
+                        status: homeDetails.Status || ''
+                    });
+
+                    setRoomTypeArray(roomTypeSettings);
+                    setSettingRoomRentalArray(settingRoomRental);
+
+
 
 
                 } else {
@@ -136,22 +189,46 @@ const HolidayHomeEdit = () => {
 
     }, [homeId])
 
-    useEffect(() => {
-        console.log("Inside useEffect");
-        console.log("updated:", updated);
+    console.log("caretaker", valueCaretaker)
 
-        if (updated) {
-            console.log("in the axios");
-            axios.post("http://localhost:3002/admin/auth/locationadmin/holidayhome/update", { updatedValues })
-                .then((res) => {
-                    console.log(res);
-                    navigate("/locationadmin/manage");
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
+
+
+
+    const handleApproval = (e) => {
+        let updatedData = {
+
+            holidayHomeId: homeId,
+            caretaker1Id: caretaker1Id,
+            caretaker2Id: caretaker2Id,
+            holidayHomeDetails: detailsValue,
+            images: null,
+            caretaker1: valueCaretaker,
+            caretaker2: valueSecond,
+            homeBreakDown: { bdValue, adultsCount, childCount },
+            roomArray: roomArray,
+            unitArray: unitArray,
+            hallArray: hallArray,
+            roomTypeArray: roomTypeArray,
+            settingRoomRentalArray: settingRoomRentalArray
+
         }
-    }, [updated]);
+        e.preventDefault();
+        setApprovedClicked(true);
+        console.log("allvalues", updatedData);
+        axios.post("http://localhost:3002/admin/auth/locationadmin/holidayhome/update", updatedData)
+            .then((res) => {
+                console.log(res);
+                // navigate("/locationadmin/manage");
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+
+    };
+
+
+
+
 
 
     return (
@@ -174,21 +251,21 @@ const HolidayHomeEdit = () => {
                                         </Tabs>
                                     </Box>
                                     <CustomTabPanel value={value} index={0}>
-                                        <EditHolidayHomeDetails updated={updated} setUpdatedValues={setUpdatedValues} />
+                                        <EditHolidayHomeDetails value={detailsValue} setValue={setDetailsValue} />
                                         <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginRight: "1.5em" }}>
                                             <Button variant="contained" sx={{ marginTop: '1em' }} onClick={handleNextToUnit}>Next</Button>
                                         </Box>
                                     </CustomTabPanel>
                                     <CustomTabPanel value={value} index={1}>
-                                        <EditHolidayHomeBreakdown roomArray={roomArray} setRoomArray={setRoomArray} unitArray={unitArray} setUnitArray={setUnitArray} hallArray={hallArray} setHallArray={setHallArray} updated={updated} setUpdatedValues={setUpdatedValues} />
+                                        <EditHolidayHomeBreakdown roomArray={roomArray} setRoomArray={setRoomArray} unitArray={unitArray} setUnitArray={setUnitArray} hallArray={hallArray} setHallArray={setHallArray} bdValue={bdValue} setBdValue={setBdValue} adultsCount={adultsCount} setAdultsCount={setAdultsCount} childCount={childCount} setChildCount={setChildCount} roomTypeArray={roomTypeArray} setRoomTypeArray={setRoomTypeArray} settingRoomRentalArray={settingRoomRentalArray} setSettingRoomRentalArray={setSettingRoomRentalArray} />
                                         <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginRight: "1.5em" }}>
                                             <Button variant="contained" sx={{ marginTop: '1em' }} onClick={handleNextToHall}>Next</Button>
                                         </Box>
                                     </CustomTabPanel>
                                     <CustomTabPanel value={value} index={2}>
-                                        <EditCaretakerDetails />
+                                        <EditCaretakerDetails value={valueCaretaker} setValue={setValueCareTaker} valueSecond={valueSecond} setValueSecond={setValueSecond} />
                                         <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginRight: "1.5em" }}>
-                                            <Button variant="contained" sx={{ marginTop: '1em' }} onClick={handleUpdate}>Get Approval</Button>
+                                            <Button variant="contained" sx={{ marginTop: '1em' }} onClick={handleApproval}>Get Approval</Button>
                                         </Box>
 
                                     </CustomTabPanel>

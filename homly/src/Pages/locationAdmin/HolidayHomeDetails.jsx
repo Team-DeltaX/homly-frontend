@@ -31,6 +31,7 @@ const HolidayHomeDetails = () => {
     const [holidayHomes, setHolidayHomes] = useState([]);
 
     const [selectedHolidayHome, setSelectedHolidayHome] = useState('');
+    const [names, setNames] = useState([]);
 
     const [displayedRange, setDisplayedRange] = useState({
         start: moment().startOf('month'),
@@ -38,14 +39,18 @@ const HolidayHomeDetails = () => {
     });
 
 
-    const myEventsList = [
-        { start: new Date(), end: new Date(), title: "special event" },
-        { start: new Date(), end: new Date(), title: "special event" },
-        { start: new Date(), end: new Date(), title: "special event" },
-        { start: new Date(), end: new Date(), title: "special event" },
-        { start: moment("2024-02-01T14:00:00").toDate(), end: moment("2024-02-01T14:00:00").toDate(), title: "special event" },
+    const [myEventsList, setMyEventsList] = useState([]);
 
-    ];
+    useEffect(() => {
+        setMyEventsList([
+            { start: new Date(), end: new Date(), title: "special event" },
+            { start: new Date(), end: new Date(), title: "special event" },
+            { start: new Date(), end: new Date(), title: "special event" },
+            { start: new Date(), end: new Date(), title: "special event" },
+            { start: moment("2024-03-02").toDate(), end: moment("2024-03-05").toDate(), title: "special event" },
+
+        ])
+    }, [])
     const CustomToolbar = (toolbar) => {
         const goToBack = () => {
             toolbar.onNavigate('PREV');
@@ -77,6 +82,9 @@ const HolidayHomeDetails = () => {
             .then((res) => {
                 const data = res.data.names;
                 setHolidayHomes(data);
+                data.forEach((item) => {
+                    names.push(item.name);
+                })
             })
             .catch((err) => {
                 console.log(err);
@@ -88,6 +96,27 @@ const HolidayHomeDetails = () => {
 
 
     const handleSearch = () => {
+        const homeName = selectedHolidayHome.value;
+        let id;
+
+        holidayHomes.forEach((item) => {
+            if (item.name === homeName) {
+                id = item.id;
+            }
+        }
+        )
+
+        axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/reservation/${id}`)
+            .then((res) => {
+                console.log(res.data)
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+
+
+
+
 
 
     };
@@ -145,7 +174,7 @@ const HolidayHomeDetails = () => {
                                             classNamePrefix={"Holiday Home"}
                                             isSearchable={true}
                                             name="color"
-                                            options={holidayHomes.map((item) => {
+                                            options={names.map((item) => {
                                                 return { value: item, label: item }
                                             })}
                                             value={selectedHolidayHome}
