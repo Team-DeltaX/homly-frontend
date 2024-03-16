@@ -69,6 +69,7 @@ export default function HHCarouselforInterest({ interestedHH }) {
             <div data-aos="fade-right" data-aos-duration="700" key={hh.holiday_home.HolidayHomeId}>
               <HolidayHomeCard
                 key={hh.holiday_home.HolidayHomeId}
+                HHID={hh.holiday_home.HolidayHomeId}
                 HHName={hh.holiday_home.Name}
                 HHLocation={hh.holiday_home.Address}
                 HHPrice={hh.holiday_home.TotalRental}

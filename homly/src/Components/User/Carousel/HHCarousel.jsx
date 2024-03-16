@@ -69,6 +69,7 @@ export default function HHCarousel({ sortedByRatingHH }) {
         {sortedByRatingHH.map((item, index) => (
           <HolidayHomeCard
             key={item.HolidayHomeId}
+            HHID={item.HolidayHomeId}
             HHName={item.Name}
             HHLocation={item.Address}
             HHPrice={item.TotalRental}
