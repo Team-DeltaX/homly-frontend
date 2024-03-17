@@ -125,7 +125,20 @@ export default function ViewPopUp(props) {
                   <Stack direction="row" spacing={3} divider={<Divider orientation="vertical" flexItem />}>
                     <Item sx={{boxShadow: "none"}}>
                       <Typography variant="body3" align="center" display="block" gutterBottom>Reserved Room ID</Typography>
-                      <Typography variant="body3" align="center" display="block" gutterBottom>{ props.reservation.roomId }</Typography>
+                      {/* <Typography variant="body3" align="center" display="block" gutterBottom>{ props.reservedRoom }</Typography> */}
+                      {
+                        // props.reservedRoom.map((room) => {
+                        //   return (
+                        //     <Typography variant="body3" align="center" display="block" gutterBottom>{ room }</Typography>
+                        //   )
+                        // })
+                        // console.log("roomsss",props.reservedRoom)
+                        props.reservedRoom.map((room) => {
+                          return(
+                            <Typography variant="body3" align="center" display="block" gutterBottom>{ room.roomCode }</Typography>
+                          )
+                        })
+                      }
                     </Item>
                     <Item sx={{boxShadow: "none"}}>
                       <Typography variant="body3" align="center" display="block" gutterBottom>Reserved Hall ID</Typography>

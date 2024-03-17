@@ -74,7 +74,7 @@ const OngoingReservationCard = (props) => {
                         {/* <h2>{ props.reservation.HolidayHome }</h2> */}
                         <p>Check In : { dayjs(props.reservation.CheckinDate).format('DD/MM/YYYY')}</p>
                         <p>Check Out : { dayjs(props.reservation.CheckoutDate).format('DD/MM/YYYY')}</p>
-                        <ViewPopUp reservation={props.reservation} name = {Employee.name} holidayName={value.name}/>
+                        <ViewPopUp reservation={props.reservation} reservedRoom={props.reservedRoom} name = {Employee.name} holidayName={value.name}/>
                     </Stack>
                     {/* <h2>{ reservation.holidayhomename }</h2>
                     <p>Check In : { reservation.checkindate }</p>
