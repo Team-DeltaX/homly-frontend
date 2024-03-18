@@ -14,7 +14,7 @@ export default function SimpleLineChart() {
   const [h1data, setH1data] = React.useState([]);
   const [h2data, setH2data] = React.useState([]);
   const [h3data, setH3data] = React.useState([]);
-  const [HolidayHomes1, setHolidayHomes1] = React.useState([]);
+  const [HolidayHomes, setHolidayHomes] = React.useState([]);
 
   const Home1 = h1data;
   // [4000, 3000, 2000, 2780, 1890, 2390, 3490];
@@ -33,17 +33,17 @@ export default function SimpleLineChart() {
     xaxisd[5],
     xaxisd[6],
   ];
-  const HolidayHomes = [
-    // { id: "0", name: "None" },
-    { id: "1", name: "hh1" },
-    { id: "2", name: "hh2" },
-    { id: "3", name: "hh3" },
-    { id: "4", name: "hh4" },
-    { id: "5", name: "hh5" },
-    { id: "6", name: "hh6" },
-    { id: "7", name: "hh7" },
-    { id: "8", name: "hh8" },
-  ];
+  // const HolidayHomes = [
+  //   // { id: "0", name: "None" },
+  //   { id: "1", name: "hh1" },
+  //   { id: "2", name: "hh2" },
+  //   { id: "3", name: "hh3" },
+  //   { id: "4", name: "hh4" },
+  //   { id: "5", name: "hh5" },
+  //   { id: "6", name: "hh6" },
+  //   { id: "7", name: "hh7" },
+  //   { id: "8", name: "hh8" },
+  // ];
 
   const [HolidayHome1, SetHolidayHome1] = React.useState("");
   const [HolidayHome2, SetHolidayHome2] = React.useState("");
@@ -78,9 +78,10 @@ export default function SimpleLineChart() {
   const getHHnames=()=>{
     axios.get('http://localhost:3002/admin/auth/hhnames')
     .then((res)=>{
-      setHolidayHomes1(res.data.HH)
-      console.log('---------holiday homes-------')
-      console.log(res.data.HH)
+      // setHolidayHomes1(res.data.HH)
+      // console.log('---------holiday homes-------')
+      // console.log(res.data.HH)
+      setHolidayHomes(res.data.HH)
     
     })
     .catch((err)=>{
@@ -131,10 +132,10 @@ export default function SimpleLineChart() {
 
               {HolidayHomes.filter((hh) => {
                 return (
-                  (HolidayHome2 !== hh.id && HolidayHome3 !== hh.id) 
+                  (HolidayHome2 !== hh.HolidayHomeId && HolidayHome3 !== hh.HolidayHomeId) 
                 );
               }).map((hh) => {
-                return <MenuItem value={hh.id}>{hh.name}</MenuItem>;
+                return <MenuItem value={hh.HolidayHomeId}>{hh.Name}</MenuItem>;
               })}
             </Select>
             <FormHelperText>
@@ -184,10 +185,10 @@ export default function SimpleLineChart() {
           <MenuItem value={30}>Thirty</MenuItem> */}
               {HolidayHomes.filter((hh) => {
                 return (
-                  (HolidayHome1 !== hh.id && HolidayHome3 !== hh.id)
+                  (HolidayHome1 !== hh.HolidayHomeId && HolidayHome3 !== hh.HolidayHomeId)
                 );
               }).map((hh) => {
-                return <MenuItem value={hh.id}>{hh.name}</MenuItem>;
+                return <MenuItem value={hh.HolidayHomeId}>{hh.Name}</MenuItem>;
               })}
             </Select>
             <FormHelperText>
@@ -239,10 +240,10 @@ export default function SimpleLineChart() {
 
               {HolidayHomes.filter((hh) => {
                 return (
-                  (HolidayHome1 !== hh.id && HolidayHome2 !== hh.id)
+                  (HolidayHome1 !== hh.HolidayHomeId && HolidayHome2 !== hh.HolidayHomeId)
                 );
               }).map((hh) => {
-                return <MenuItem value={hh.id}>{hh.name}</MenuItem>;
+                return <MenuItem value={hh.HolidayHomeId}>{hh.Name}</MenuItem>;
               })}
             </Select>
 
