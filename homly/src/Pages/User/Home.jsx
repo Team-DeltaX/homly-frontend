@@ -9,8 +9,8 @@ import {
   Divider,
 } from "@mui/material";
 import axios from "axios";
-// import Select from "react-select";
 import SearchIcon from "@mui/icons-material/Search";
+import { useNavigate } from "react-router-dom";
 
 import NavBar from "../../Components/User/NavBar/NavBar";
 import theme from "../../HomlyTheme";
@@ -26,19 +26,11 @@ import OurPlaces from "../../Components/User/OurPlaces/OurPlaces";
 import BrowseMoreCom from "../../Components/User/BrowseMore/BrowseMoreCom";
 import Footer from "../../Components/User/Footer/Footer";
 import HHCarousel from "../../Components/User/Carousel/HHCarousel";
+import UserInterestedPopup from "../../Components/User/UserInterestedPopup";
+import UserInterestedHolidayHomes from "../../Components/User/UserInterestedHolidayHomes/UserInterestedHolidayHomes";
 
 import AOS from "aos";
 import "aos/dist/aos.css";
-
-const reservedDates = [
-  "2024/01/27",
-  "2024/01/28",
-  "2024/02/04",
-  "2024/02/05",
-  "2024/01/30",
-  "2024/02/07",
-];
-
 
 export default function Home() {
   const refContactUS = useRef(null);
@@ -49,23 +41,78 @@ export default function Home() {
     key: "selection",
   });
 
+  const [interestedHH, setInterestedHH] = useState();
+
+  const [isDisplayInterest, setIsDisplayInterest] = useState(false);
+
+  const [insterestedPopup, setInsterestedPopup] = useState(false);
+
+  const [interestsIsSubmited, setInterestsIsSubmited] = useState(false);
+
+  const Navigate = useNavigate();
+
   const [district, setDistrict] = useState("");
   useEffect(() => {
     AOS.init();
   }, []);
 
   useEffect(() => {
+
     axios
-      .get(`https://65ac00f8fcd1c9dcffc76f52.mockapi.io/homly/api/HolidayHomes`)
-      .then((response) => {
-        setSortedByRating(response.data);
+      .get("http://localhost:3002/users/auth/holidayhomes/sort/topRated", { withCredentials: true })
+      .then((res) => {
+        console.log("topRated",res.data);
+        setSortedByRating(res.data);
+      }).catch((err) => {
+        console.log(err);
+        if (err.response.data.autherized === false) {
+          Navigate("/");
+        }
       });
-    // APIData.sort((a, b) => b.rating - a.rating);
+
+    axios
+      .get("http://localhost:3002/users/auth/interested", {
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log(res);
+        if (res.data.updated) {
+          setInsterestedPopup(false);
+        } else {
+          setInsterestedPopup(true);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err.response.data.autherized === false) {
+          Navigate("/");
+        }
+      });
+
+    //
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    sortedByRating.sort((a, b) => b.rating - a.rating);
-  }, [sortedByRating]);
+    axios
+      .get("http://localhost:3002/users/auth/holidayhomes/sort", {
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.interested) {
+          console.log(res.data.interested_hh);
+          setInterestedHH(res.data.interested_hh);
+          setIsDisplayInterest(true);
+        } else {
+          setIsDisplayInterest(false);
+        }
+      })
+      .catch((err) => {
+        setIsDisplayInterest(false);
+        console.log(err);
+      });
+  }, [interestsIsSubmited]);
 
   // console.log(sortedByRating);
 
@@ -77,9 +124,23 @@ export default function Home() {
           overflow: "hidden",
         }}
       >
-        <Container maxWidth="xl" style={{ padding: 0}}>
-          <NavBar refContactUS={refContactUS}/>
-          <Container maxWidth="lg" sx={{ bgcolor: "white",marginTop:{xs:'20px',sm:'10px',ms:'0'} }}>
+        <Container maxWidth="xl" style={{ padding: 0 }}>
+          {/* navbar */}
+          <NavBar refContactUS={refContactUS} />
+          {/* user interested popup */}
+          <UserInterestedPopup
+            open={insterestedPopup}
+            setOpen={setInsterestedPopup}
+            setInterestsIsSubmited={setInterestsIsSubmited}
+          />
+
+          <Container
+            maxWidth="lg"
+            sx={{
+              bgcolor: "white",
+              marginTop: { xs: "20px", sm: "10px", ms: "0" },
+            }}
+          >
             <Container
               sx={{
                 bgcolor: "white",
@@ -158,39 +219,6 @@ export default function Home() {
                             setDistrict={setDistrict}
                             district={district}
                           />
-                          {/* <Typography
-                              sx={{
-                                display: isVisible ? "flex" : "none",
-                                fontSize: "0.7rem",
-                                fontWeight: "regular",
-                                position: "absolute",
-                                bottom: "5px",
-                              }}
-                            >
-                              Which district do you prefer
-                            </Typography> */}
-
-                          {/* <Select
-                              size="small"
-                              sx={{ width: "100%", position: "relative" }}
-                              id="select-district"
-                              value={district}
-                              onChange={(e) => {
-                                setDistrict(e.target.value);
-                                setIsVisible(false);
-                              }}
-                            >
-                              {districts.map((name) => (
-                                <MenuItem
-                                  key={name}
-                                  value={name}
-                                  // style={getStyles(name, personName, theme)}
-                                >
-                                  {name}
-                                </MenuItem>
-                              ))}
-                            </Select> */}
-                          {/* </FormControl> */}
                         </Stack>
                       </Grid>
 
@@ -201,28 +229,9 @@ export default function Home() {
                         sm={6}
                         sx={{ padding: { xs: "3%", sm: "0 3%" } }}
                       >
-                        {/* <Stack direction='column'>
-                            <Typography>Location</Typography>
-                            <Typography>Location</Typography>
-                          </Stack>
-                          <Stack direction='column'>
-                            <Typography>Location</Typography>
-                            <Typography>Location</Typography>
-                          </Stack> */}
-                        {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DemoContainer components={["DateRangePicker"]}>
-                              <DateRangePicker
-                                localeText={{
-                                  start: "Check-in",
-                                  end: "Check-out",
-                                }}
-                              />
-                            </DemoContainer>
-                          </LocalizationProvider> */}
                         <DatePickerCom
                           selectionRange={selectionRange}
                           setSelectRange={setSelectRange}
-                          reservedDates={reservedDates}
                         />
                       </Grid>
 
@@ -295,7 +304,7 @@ export default function Home() {
                     />
                   </Stack>
                   <Box>
-                    <HHCarousel sortedByRating={sortedByRating} />
+                    <HHCarousel sortedByRatingHH={sortedByRating} />
                   </Box>
                 </Stack>
               </Box>
@@ -321,7 +330,22 @@ export default function Home() {
                 </Stack>
                 <OurPlaces />
               </Stack>
-              <Stack data-aos="fade-left" data-aos-duration="900" sx={{ margin: "5% 0 0 0" }}>
+              {/* intersed */}
+              <Box>
+                {isDisplayInterest ? (
+                  <UserInterestedHolidayHomes
+                    setIsDisplayInterest={setIsDisplayInterest}
+                    interestedHH={interestedHH}
+                  />
+                ) : (
+                  ""
+                )}
+              </Box>
+              <Stack
+                data-aos="fade-left"
+                data-aos-duration="900"
+                sx={{ margin: "5% 0 0 0" }}
+              >
                 {/* browse more holiday homes */}
                 <BrowseMoreCom />
               </Stack>
@@ -339,8 +363,8 @@ export default function Home() {
               }}
             ></Container>
           </Container>
-          <Box >
-            <Footer refContactUS={refContactUS}/>
+          <Box>
+            <Footer refContactUS={refContactUS} />
           </Box>
         </Container>
       </Box>

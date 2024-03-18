@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {
   ThemeProvider,
@@ -7,6 +7,8 @@ import {
   DialogContentText,
   Button,
   Box,
+  Stack,
+  Typography,
 } from "@mui/material";
 import theme from "../../../HomlyTheme";
 import "./forgetPassword.css";
@@ -20,13 +22,40 @@ export default function EnterDetailCom({
   value,
 }) {
   const [otp, setOtp] = useState("");
+  const [btnDisabled, setBtnDisabled] = useState(true);
+  const [time, setTime] = useState(29);
+
+  useEffect(() => {
+    if (btnDisabled) {
+      setTimeout(() => {
+        setBtnDisabled(false);
+      }, 30000);
+
+    }
+  }, [btnDisabled]);
+
+  useEffect(()=>{
+    if (btnDisabled) {
+      // exit early when we reach 0
+      if (!time) return;
+
+      // save intervalId to clear the interval when the
+      // component re-renders
+      const intervalId = setInterval(() => {
+        setTime(time - 1);
+      }, 1000);
+
+      // clear interval on re-render to avoid memory leaks
+      return () => clearInterval(intervalId);
+    }
+  },[time,btnDisabled])
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (otp.length === 6) {
       const formData = { serviceNo: value.serviceNo, otp: otp };
       axios
-        .post("http://localhost:3002/users/forgetPassword/otp", formData)
+        .post("http://localhost:3002/users/forgetPassword/otp", formData, {withCredentials:true})
         .then((res) => {
           if (res.data.success) {
             setErrorStatus({
@@ -44,7 +73,14 @@ export default function EnterDetailCom({
               message: res.data.message,
             });
           }
-        });
+        }).catch((err)=>{
+          setErrorStatus({
+            ...errorStatus,
+            isOpen: true,
+            type: "error",
+            message: "Somthing went wrong",
+          });
+        })
     } else {
       setErrorStatus({
         ...errorStatus,
@@ -58,7 +94,7 @@ export default function EnterDetailCom({
   const handleNewOTP = () => {
     const formData = { serviceNo: value.serviceNo, email: value.email };
     axios
-      .post("http://localhost:3002/users/forgetPassword/details", formData)
+      .post("http://localhost:3002/users/forgetPassword", formData, {withCredentials:true})
       .then((res) => {
         if (res.data.success) {
           setErrorStatus({
@@ -76,13 +112,15 @@ export default function EnterDetailCom({
           });
         }
       });
+    setBtnDisabled(true);
+    setTime(29);
   };
 
   return (
     <ThemeProvider theme={theme}>
       <form onSubmit={handleSubmit}>
         <DialogContent
-          sx={{ height: { xs: "130px", sm: "160px" }, overflowY: "unset" }}
+          sx={{ height: "160px" , overflowY: "unset" }}
         >
           <DialogContentText sx={{ marginBottom: "10px" }}>
             Check your email for the OTP
@@ -102,9 +140,24 @@ export default function EnterDetailCom({
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
+              ml:"27px"
             }}
           >
-            <Button onClick={handleNewOTP}>Try Again</Button>
+            <Stack
+              direction="row"
+              sx={{
+                justifyContent: "center",
+                alignItems: "center",
+                width:"100%"
+              }}
+            >
+              <Button onClick={handleNewOTP} disabled={btnDisabled}>
+                Try Again
+              </Button>
+              <Typography sx={{ marginLeft: 2,fontWeight:'bold',opacity:time===0?0:1,color:time<6?"red":"black" }}>
+                {time < 10 ? "0" + time : time}s
+              </Typography>
+            </Stack>
           </Box>
         </DialogContent>
         <DialogActions>

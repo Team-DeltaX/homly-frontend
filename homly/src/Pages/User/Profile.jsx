@@ -48,18 +48,15 @@ import MyReservation from "../../Components/User/MyProfile/MyReservation";
 // let vh = window.innerHeight * 0.01;
 
 const drawerWidth = 240;
-const settings = [
-  { name: "My Profile", path: "/myProfile" },
-  { name: "Logout" },
-];
+
 const pages = [
   { name: "Home", path: "/Home" },
-  { name: "Holiday Homes", path: "/holidayHomes" },
+  { name: "Holiday Homes", path: "/holidayHomes/all" },
 ];
 
 const respSidePages = [
   { name: "Home", path: "/Home" },
-  { name: "Holiday Homes", path: "/holidayHomes" },
+  { name: "Holiday Homes", path: "/holidayHomes/all" },
   { name: "My Profile", path: "/myProfile" },
 ];
 const sidePages = [
@@ -195,7 +192,7 @@ const MyProfile = () => {
   const drawer = (
     <div>
       <Toolbar />
-      <Box sx={{ width: "100%",marginTop:'64px' }}>
+      <Box sx={{ width: "100%", marginTop: "64px" }}>
         <Tabs
           orientation="vertical"
           value={value}
@@ -309,24 +306,16 @@ const MyProfile = () => {
                     open={Boolean(anchorElUser)}
                     onClose={handleCloseUserMenu}
                   >
-                    {settings.map((setting) => (
-                      <MenuItem
-                        key={setting.name}
-                        onClick={handleCloseUserMenu}
-                        component={setting.name === "My Profile" ? Link : ""}
-                        // sx={{
-                        //   display:
-                        //     setting.name === "My Profile"
-                        //       ? { xs: "none", md: "block" }
-                        //       : "block",
-                        // }}
-                        to={setting.path}
-                      >
-                        <Typography textAlign="center">
-                          {setting.name}
-                        </Typography>
-                      </MenuItem>
-                    ))}
+                    <MenuItem
+                      onClick={handleCloseUserMenu}
+                      component={Link}
+                      to="/myProfile"
+                    >
+                      <Typography textAlign="center">My Profile</Typography>
+                    </MenuItem>
+                    <MenuItem onClick={handleCloseUserMenu}>
+                      <Typography textAlign="center">Logout</Typography>
+                    </MenuItem>
                   </Menu>
                 </Box>
               </Stack>
@@ -369,7 +358,8 @@ const MyProfile = () => {
                     width: drawerWidth,
                     bgcolor: "primary.main",
                   },
-                  height: "100vh",
+                  height: "100%",
+                  position: "fixed	"
                 }}
                 open
               >
@@ -401,15 +391,6 @@ const MyProfile = () => {
               value={value}
               onChange={handleTabChange}
               textColor="secondary"
-              // indicatorColor="secondary"
-              // TabIndicatorProps={{
-              //   style:{
-              //     backgroundColor: "green",
-              //     "& .Mui-selected":{
-              //       backgroundColor: "green",
-              //     }
-              //   }
-              // }}
               aria-label="secondary tabs example"
               sx={{
                 width: "100%",
@@ -424,10 +405,7 @@ const MyProfile = () => {
                 },
               }}
             >
-              {/* <Tab value={0} label={bottomTabLable(sidePages.name,sidePages.icon)} />
-          <Tab value={1} label="Item Two" />
-          <Tab value={2} label="Item Three" />
-          <Tab value={3} label="Item Three" /> */}
+              
               {sidePages.map((item) => (
                 <Tab
                   key={item.name}

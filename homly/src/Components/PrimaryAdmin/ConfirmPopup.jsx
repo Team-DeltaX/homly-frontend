@@ -6,6 +6,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { Typography } from '@mui/material';
 
 export default function ConfirmPopup({open, setOpen,title,text,controlfunction}) {
 
@@ -43,12 +44,12 @@ export default function ConfirmPopup({open, setOpen,title,text,controlfunction})
     
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleClose}><Typography>No</Typography></Button>
           <Button onClick={()=>{
              controlfunction()
 
            
-          }}>Ok</Button>
+          }}><Typography>Yes</Typography></Button>
         </DialogActions>
       </Dialog>
   );

@@ -1,74 +1,83 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { useTheme } from '@mui/material/styles';
-import TextField from '@mui/material/TextField';
-import MenuItem from '@mui/material/MenuItem';
-import BasicDatePicker from '../Common/BasicDatePicker';
-import { useState } from "react";
-import axios from 'axios';
+import * as React from "react";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import TextField from "@mui/material/TextField";
+import MenuItem from "@mui/material/MenuItem";
+import BasicDatePicker from "../Common/BasicDatePicker";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import dayjs, { Dayjs } from "dayjs";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import ErrorSnackbar from "../User/ErrorSnackbar";
 
-const currencies = [
+const HH = [
   {
-    value: 'ANU1',
-    label: 'Anuradhapura-1',
-    code: 'HH001',
+    value: "ANU1",
+    label: "Anuradhapura-1",
+    code: "HH001",
   },
   {
-    value: 'ANU2',
-    label: 'Anuradhapura-2',
-    code: 'HH002',
+    value: "ANU2",
+    label: "Anuradhapura-2",
+    code: "HH002",
   },
   {
-    value: 'KRNG',
-    label: 'Kurunagala-1',
-    code: 'HH004',
+    value: "KRNG",
+    label: "Kurunagala-1",
+    code: "HH004",
   },
   {
-    value: 'KGL',
-    label: 'Kegalle-1',
-    code: 'HH005',
+    value: "KGL",
+    label: "Kegalle-1",
+    code: "HH005",
   },
 ];
 
 export default function AddSpecialReservationPopUp() {
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
-
-  const [SpecailReservationID, setSpecailReservationID] = useState("");
+  const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
+  const [reserveDisabled, setReserveDisabled] = useState(false);
+  const [HolidayHomeName, SetHolidayHomeName] = useState("");
+  const [holidayHomes, setHolidayHomes] = React.useState([]);
   const [ServiceNo, setServiceNo] = useState("");
-  const [CheckinDate, setCheckinDate] = useState("");
-  const [CheckoutDate, setCheckoutDate] = useState("");
+  const [employeeName, setEmployeeName] = useState("");
+  const [errorStatus, setErrorStatus] = useState({
+    isOpen: false,
+    type: "",
+    message: "",
+  });
+  const [CheckinDate, setCheckinDate] = useState(dayjs().add(6, "day"));
 
-  const handlesubmit = () => {
+  const [CheckoutDate, setCheckoutDate] = useState(dayjs().add(6, "day"));
 
-    const data={
-      SpecailReservationID:SpecailReservationID,
-      ServiceNo:ServiceNo,
-      HolidayHome:"HolidayHome1",
-      CheckinDate:CheckinDate,
-      CheckoutDate:CheckoutDate,
-    }
-    axios.post('http://localhost:3002/locationadmin/reservations',data)
-    .then(res=>{
-      console.log("add special reservation successfully")
-     
-    })
-    .catch(error=>{
-      console.log(`error is  nm ${error}`)
+  const [Employee,SetEmployee]=useState({})
 
-    })
+  const handlesubmit = (e) => {
+    const data = {
+      ServiceNo: ServiceNo,
+      HolidayHome: HolidayHomeName,
+      CheckinDate: CheckinDate,
+      CheckoutDate: CheckoutDate,
+    };
+    console.log("aruna", data);
+    axios
+      .post("http://localhost:3002/admin/auth/locationadmin/reservations", data)
+      .then((res) => {
+        console.log("add special reservation successfully");
+      })
+      .catch((error) => {
+        console.log(`error is  nm ${error}`);
+      });
 
-
-
-
-    
     // setadminno("");
     // setUsername("");
     // setContactno("");
@@ -78,6 +87,59 @@ export default function AddSpecialReservationPopUp() {
     // SetSubstitute("");
   };
 
+const handleCheckinDateChange = (newDate) => {
+  setCheckinDate(newDate);
+  // Check if CheckinDate is after CheckoutDate
+  if (newDate.isAfter(CheckoutDate)) {
+    setReserveDisabled(true); // Disable reserve button
+    setErrorStatus({
+      isOpen: true,
+      type: "warning",
+      message: "Check-in date cannot be after Check-out date",
+    });
+  } else {
+    setReserveDisabled(false); // Enable reserve button
+    setErrorStatus({
+      isOpen: false,
+      type: "",
+      message: "no",
+    });
+  }
+};
+
+const handleCheckoutDateChange = (newDate) => {
+  setCheckoutDate(newDate);
+  // Check if CheckinDate is after CheckoutDate
+  if (CheckinDate.isAfter(newDate)) {
+    setReserveDisabled(true); // Disable reserve button
+    setErrorStatus({
+      isOpen: true,
+      type: "warning",
+      message: "Check-in date cannot be after Check-out date",
+    });
+  } else {
+    setReserveDisabled(false); // Enable reserve button
+    setErrorStatus({
+      isOpen: false,
+      type: "",
+      message: "no",
+    });
+  }
+};
+useEffect(() => {
+  if (ServiceNo) {
+    axios
+      .get(`http://localhost:3002/admin/auth/locationadmin/employee/${ServiceNo}`)
+      .then((res) => {
+        const employeeData = res.data[0];
+        setEmployeeName(employeeData.name);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+}, [ServiceNo]);
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -85,6 +147,17 @@ export default function AddSpecialReservationPopUp() {
   const handleClose = () => {
     setOpen(false);
   };
+  useEffect(() => {
+    axios
+      .get("http://localhost:3002/users/reservation/holidayhomes")
+      .then((res) => {
+        if (Response) {
+          setHolidayHomes(res.data);
+        } else {
+          console.log("No data found");
+        }
+      });
+  }, []);
 
   return (
     <React.Fragment>
@@ -100,76 +173,133 @@ export default function AddSpecialReservationPopUp() {
         <DialogTitle id="responsive-dialog-title">
           {"Add Special Reservation"}
         </DialogTitle>
-        <DialogContent>
+
+        <form onSubmit={() => console.log("sumbited")}>
+          <DialogContent sx={{ width: { sm: "auto", md: "411px" } }}>
             <TextField
-                autoFocus
-                required
-                onChange={(e) => {
-                  setSpecailReservationID(e.target.value);
-                }}
-                value={SpecailReservationID}
-                margin="dense"
-                id="specialreservationno"
-                name="specialreservationno"
-                label="Special Reservation Number"
-                type="text"
-                fullWidth
-                variant="outlined"
+              autoFocus
+              required
+              onChange={(e) => {
+                setServiceNo(e.target.value);
+                setEmployeeName(Employee.name);
+              }}
+              value={ServiceNo}
+              margin="dense"
+              id="serviceno"
+              name="serviceno"
+              label="Service Number"
+              type="text"
+              fullWidth
+              variant="outlined"
             />
             <TextField
-                autoFocus
-                required
-                onChange={(e) => {
-                  setServiceNo(e.target.value);
-                }}
-                value={ServiceNo}
-                margin="dense"
-                id="serviceno"
-                name="serviceno"
-                label="Service Number"
-                type="text"
-                fullWidth
-                variant="outlined"
+              autoFocus
+              required
+              disabled
+              // onChange={(e) => {
+              //   setEmployeeName(e.target.value);
+              // }}
+              value={employeeName}
+              margin="dense"
+              id="empname"
+              name="empname"
+              label="Employee Name"
+              title="Employee Name"
+              type="text"
+              fullWidth
+              variant="outlined"
             />
-            <TextField fullWidth
+            {/* <TextField
+              fullWidth
               id="outlined-select-holidayhome"
               margin="dense"
               select
               label="Select the holiday home"
+              required
+              onChange={(e) => {
+                SetHolidayHomeName(e.target.value);
+              }}
+              value={HolidayHomeName}
               // defaultValue="EUR"
             >
-              {currencies.map((option) => (
+              {HH.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
                   {option.label}
                 </MenuItem>
               ))}
-            </TextField>
-            <BasicDatePicker
+            </TextField> */}
+            <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">
+                  Select Holiday Home*
+                </InputLabel>
+                <Select
+                  fullWidth
+                  labelId="holiday-home-label"
+                  label="Holiday Home"
+                  isSearchable={true}
+                  id="outlined-select-holidayhome"
+                  value={HolidayHomeName}
+                  onChange={(e) => {
+                    SetHolidayHomeName(e.target.value);
+                  }}
+                >
+                  {/* {holidayHomes.map((home) => (
+                    <MenuItem value={home}>{home}</MenuItem>
+                  ))} */}
+                  {holidayHomes.map((home) => (
+  <MenuItem key={home.id} value={home.id}>
+    {home.name}
+  </MenuItem>
+))}
+                </Select>
+              </FormControl>
+            {/* <BasicDatePicker
               fullWidth
               onChange={(e) => {
-                setCheckinDate(e.target.value);
+                setCheckinDate(dayjs('2019-01-25').format('DD/MM/YYYY'));
               }}
               value={CheckinDate}
               title="Check In Date"
-            />
+            /> */}
             <BasicDatePicker
-              fullWidth
-              onChange={(e) => {
-                setCheckoutDate(e.target.value);
-              }}
-              value={CheckoutDate}
-              title="Check Out Date"
-            />
-        </DialogContent>
-        <DialogActions>
-          <Button autoFocus onClick={handlesubmit}>
-            Submit
-          </Button>
-          <Button onClick={handleClose} autoFocus>
-            Close
-          </Button>
-        </DialogActions>
+                required
+                margin="dense"
+                date={CheckinDate}
+                setDate={handleCheckinDateChange}
+                title="Check in Date"
+                value={CheckinDate}
+              />
+              <BasicDatePicker
+                required
+                margin="normal"
+                date={CheckoutDate}
+                setDate={handleCheckoutDateChange}
+                title="Check Out Date"
+                value={CheckoutDate}
+              />
+          </DialogContent>
+          <DialogActions>
+            <Button variant="outlined" onClick={handleClose} autoFocus>
+              Close
+            </Button>
+            <Button
+              variant="contained"
+              type="submit"
+              autoFocus
+              disabled={reserveDisabled === true}
+              onClick={handlesubmit}
+            >
+              Submit
+            </Button>
+          </DialogActions>
+        </form>
       </Dialog>
+      <ErrorSnackbar
+        isOpen={errorStatus.isOpen}
+        type={errorStatus.type}
+        message={errorStatus.message}
+        setIsOpen={(val) => setErrorStatus({ ...errorStatus, isOpen: val })}
+      />
     </React.Fragment>
   );
 }

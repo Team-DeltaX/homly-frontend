@@ -2,7 +2,7 @@ import { Box, Button, TextField, ThemeProvider, Typography } from "@mui/material
 import CloseIcon from '@mui/icons-material/Close';
 import { useState } from "react";
 import { grey } from "@mui/material/colors";
-import theme from '../../Homlytheme'
+import theme from '../../HomlyTheme'
 
 
 

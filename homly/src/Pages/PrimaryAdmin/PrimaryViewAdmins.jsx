@@ -1,6 +1,6 @@
 // // import '../App.css';
 // import PageTopnb from '../../Components/PrimaryAdmin/PageTopnb'
-import React, {  useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import SideNavbar from "../../Components/PrimaryAdmin/SideNavbar";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import Box from "@mui/material/Box";
@@ -15,7 +15,9 @@ import {
 import theme from "../../HomlyTheme";
 import { Link } from "react-router-dom";
 import PageTop from "../../Components/PrimaryAdmin/PageTop";
-import CustomTabPanel from '../../Components/PrimaryAdmin/CustomTabPanel'
+import CustomTabPanel from "../../Components/PrimaryAdmin/CustomTabPanel";
+import { SearchContext } from "../../Contexts/primryadmin/Searchcontext";
+import SearchNew from "../../Components/PrimaryAdmin/SearchNew";
 const PrimaryViewAdmins = () => {
   // const data = [
   //   {
@@ -96,8 +98,10 @@ const PrimaryViewAdmins = () => {
   // }, []);
 
   const [showNav, setShowNav] = useState("nav_grid_deactive");
-  
-  const{ load,SetLoad}=useContext(CustomTabContext)
+  // const [search, setSearch] = useState("");
+
+  const { load, SetLoad } = useContext(CustomTabContext);
+  const { Search, SetSearch } = useContext(SearchContext);
 
   return (
     <ThemeProvider theme={theme}>
@@ -108,12 +112,13 @@ const PrimaryViewAdmins = () => {
           backgroundColor: "primary.main",
           height: "100vh",
           overflow: "hidden",
+          position: "relative",
         }}
       >
         <Container maxWidth="xl" style={{ padding: "0px" }}>
-          <Grid container sx={{ position: "relative" }}>
+          <Grid container >
             <Grid
-            item
+              item
               className={showNav}
               xs={3}
               sx={{ backgroundColor: "primary.main", height: "100vh" }}
@@ -126,13 +131,15 @@ const PrimaryViewAdmins = () => {
               sx={{
                 backgroundColor: "white",
                 borderTopLeftRadius: "20px",
-                padding: "0 20px",
+                padding: "0 10px",
+                
               }}
             >
               <Box>
                 <PageTop setShowNav={setShowNav} heading={"View Admins"} />
+                <SearchNew setSearch={SetSearch} search={Search}></SearchNew>
               </Box>
-             
+
               {/* <Box
                 sx={{ marginTop: "2%", maxHeight: "530px", overflow: "scroll" }}
               >
@@ -142,31 +149,44 @@ const PrimaryViewAdmins = () => {
                   );
                 })}
               </Box> */}
-              
-              
-            
-              <Box >
-              <CustomTabPanel />
 
+              <Box>
+                <CustomTabPanel />
               </Box>
 
-             
-              
               <Box>
-               {!load && <Box><Link to="/primaryadmin/addadmin">
-                <Button
-                    sx={{
-                      marginLeft: { md: "75%", xs: "10%" },
-                      width: "170px",
-                      marginTop: { xs: "8%", md: "1%" },
-                    }}
-                    component="label"
-                    variant="contained"
-                    startIcon={<AddCircleIcon />}
-                  >
-                    <Typography>Add Admin</Typography>
-                  </Button>
-                </Link></Box>}
+                {!load && (
+                  <Box>
+                    <Link to="/primaryadmin/addadmin">
+                      <Button
+                        sx={{
+                          // marginLeft: { md: "75%", xs: "10%" },
+                          // width: "150px",
+                          // marginTop: { xs: "8%", md: "0.01%" },
+                        //  top:'1%'
+                        // position:'fixed',
+                        // top:'10%'
+                        // marginLeft: "2%",
+                        // marginTop: { xs: "10%", sm: "1.5%" },
+                        position:'absolute',
+                        top:'92%',
+                        right:'6%',
+                       
+                    
+                        
+
+                        }}
+                        component="label"
+                        variant="contained"
+                        startIcon={<AddCircleIcon />}
+                      >
+                        <Typography sx={{ fontSize: "13px" }}>
+                          Add Admin
+                        </Typography>
+                      </Button>
+                    </Link>
+                  </Box>
+                )}
               </Box>
             </Grid>
           </Grid>

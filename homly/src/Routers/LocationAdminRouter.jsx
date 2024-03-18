@@ -1,6 +1,9 @@
 import React, { lazy } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import ViewHolidayHome from "../Pages/locationAdmin/ViewHolidayHome";
+
+const ViewHolidayHome = lazy(() =>
+  import("../Pages/locationAdmin/ViewHolidayHome")
+);
 
 const LocationDashboard = lazy(() =>
   import("../Pages/locationAdmin/Dashboard")

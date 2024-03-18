@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
+import Alert from '@mui/material/Alert';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import TextField from '@mui/material/TextField';
@@ -11,6 +12,10 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Input } from '@mui/base/Input';
 import TextArea from '../Common/TextArea';
+import axios from "axios";
+import { useState, useEffect } from "react";
+import ErrorSnackbar from '../User/ErrorSnackbar';
+import ConfirmPopup from "../PrimaryAdmin/ConfirmPopup";
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -22,17 +27,60 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-export default function AddComplainPopUp({reservation}) {
+export default function AddComplainPopUp(props) {
   const [open, setOpen] = React.useState(false);
-
+  const [opened, setOpened] = React.useState(false);
+  const [reason, setReason] = React.useState("enter the reason here");
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const handleClickOpen = () => {
     setOpen(true);
   };
-
+  const [errorStatus, setErrorStatus] = useState({
+    isOpen: false,
+    type: "",
+    message: "",
+  });
   const handleClose = () => {
     setOpen(false);
   };
+  const handlesubmit = (e) => {
+    const data = {
+      ServiceNo: props.reservation.ServiceNO,
+      ReservationNo: props.reservation.ReservationId,
+      Reason: reason
+    };
+    console.log("aruna", data);
+    axios
+      .post("http://localhost:3002/users/reservation/AddComplaint", data)
+      .then((res) => {
+        console.log("add complaint successfully");
+        setOpen(false);
+        setOpened(false);
+        setErrorStatus({
+          ...errorStatus,
+          isOpen: true,
+          type: "success",
+          message: "complaint added successfully",
+        });
+      })
+      .catch((error) => {
+        console.log(`error is  nm ${error}`);
+        setErrorStatus({
+          ...errorStatus,
+          isOpen: true,
+          type: "error",
+          message: "complaint add failed",
+        });
+      });
 
+    // setadminno("");
+    // setUsername("");
+    // setContactno("");
+    // SetEmail("");
+    // SetWorklocation("");
+    // setPassword("");
+    // SetSubstitute("");
+  };
   return (
     <React.Fragment>
       <Button variant="outlined" onClick={handleClickOpen}>
@@ -49,7 +97,6 @@ export default function AddComplainPopUp({reservation}) {
             const formJson = Object.fromEntries(formData.entries());
             const email = formJson.email;
             console.log(email);
-            handleClose();
           },
         }}
       >
@@ -70,12 +117,12 @@ export default function AddComplainPopUp({reservation}) {
           <TextField
             autoFocus
             disabled={true}
-            value={reservation.receiptName}
+            value={props.reservation.ServiceNO}
             required
             margin="dense"
             id="serviceno"
             name="serviceno"
-            label="Service No"
+            label="Employees Service No"
             type="text"
             fullWidth
             variant="outlined"
@@ -83,7 +130,7 @@ export default function AddComplainPopUp({reservation}) {
           <TextField
             autoFocus
             disabled={true}
-            value={reservation.recervationNO}
+            value={props.reservation.ReservationId}
             required
             margin="dense"
             id="reservationno"
@@ -100,22 +147,48 @@ export default function AddComplainPopUp({reservation}) {
             id="date"
             name="date"
             label=""
+            disabled
             type="date"
             fullWidth
             variant="outlined"
+            value={selectedDate.toISOString().split("T")[0]}
+            onChange={(e) => setSelectedDate(new Date(e.target.value))}
           />
-          <TextArea 
+          <TextField
             margin="dense"
-            label="Date"
-            inputProps = {"Reason"}
+            label="Reason"
+            multiline
+            fullWidth
+            value={reason}
+            onChange={(e) => {
+              setReason(e.target.value);
+            }}
+            
             maxLength="parent.maxLength"
           />
         </DialogContent>
         <DialogActions>
-          
-          <Button autoFocus onClick={handleClose} type="submit">Add Complain</Button>
+        <ConfirmPopup
+            open={opened}
+            setOpen={setOpened}
+            title={"Reservation Confirmation"}
+            text={"Are you sure you want to confirm this Reservation?"}
+            controlfunction={handlesubmit}
+          />
+          <Button autoFocus onClick={() => {
+                setOpened(true);
+              }} type="submit"
+          >
+            Add Complain
+          </Button>
         </DialogActions>
       </Dialog>
+      <ErrorSnackbar
+        isOpen={errorStatus.isOpen}
+        type={errorStatus.type}
+        message={errorStatus.message}
+        setIsOpen={(val) => setErrorStatus({ ...errorStatus, isOpen: val })}
+      />
     </React.Fragment>
   );
 }

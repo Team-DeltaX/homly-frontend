@@ -17,13 +17,11 @@ import Pagetop from "../../Components/PrimaryAdmin/PageTop";
 import DashViewAdminBox from "../../Components/PrimaryAdmin/DashViewAdminBox";
 import { Link } from "react-router-dom";
 import SimpleCharts from "../../Components/PrimaryAdmin/Simplecharts";
-import { PieChart } from '@mui/x-charts/PieChart';
+import { PieChart } from "@mui/x-charts/PieChart";
 
 import Income from "../../Components/PrimaryAdmin/Income";
 import PDashboardCon from "../../Components/PrimaryAdmin/PDashboardCon";
 import SimpleLineChart from "../../Components/PrimaryAdmin/SimpleLineChart";
-
-
 
 const PrimaryDashboard = () => {
   const [showNav, setShowNav] = useState("nav_grid_deactive");
@@ -68,10 +66,10 @@ const PrimaryDashboard = () => {
                     sx={{
                       backgroundColor: "white",
                       overflow: "auto",
-                      maxHeight: {md:'645px',xs:'auto'},
+                      maxHeight: { md: "645px", xs: "auto" },
                     }}
                   >
-                    <PDashboardCon/>
+                    <PDashboardCon />
                     <Box
                       sx={{
                         display: "flex",
@@ -80,18 +78,31 @@ const PrimaryDashboard = () => {
                         alignItems: "center",
                       }}
                     >
-                      <Box sx={{display:'flex',flexDirection:{sm:'row',xs:'column'}}}>
-                      <Income/>
-                      
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexDirection: { sm: "row", xs: "column" },
+                        }}
+                      >
+                        <Income />
 
-                        <Box  sx={{paddingTop:{xs:'5px',sm:'130px'}}}>
+                        <Box sx={{ paddingTop: { xs: "5px", sm: "130px" } }}>
                           <PieChart
-                          
                             series={[
                               {
                                 data: [
-                                  { id: 0, value: 10, label: 'Active' ,color:'#FF5003'},
-                                  { id: 1, value: 2, label: 'Inactive' ,color:'#002347'},
+                                  {
+                                    id: 0,
+                                    value: 10,
+                                    label: "Active",
+                                    color: "#FF5003",
+                                  },
+                                  {
+                                    id: 1,
+                                    value: 2,
+                                    label: "Inactive",
+                                    color: "#002347",
+                                  },
                                 ],
                                 innerRadius: 30,
                                 outerRadius: 100,
@@ -106,18 +117,12 @@ const PrimaryDashboard = () => {
                             width={370}
                             height={200}
                           />
-                      
-
                         </Box>
-                        
-
-                        
                       </Box>
-                      
+
                       {/* <SimpleCharts /> */}
 
-                      <SimpleLineChart/>
-                     
+                      <SimpleLineChart />
                     </Box>
                   </Grid>
                   <Grid item md={4} sx={{ height: "100vh" }}>

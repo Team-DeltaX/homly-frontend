@@ -8,6 +8,8 @@ import {
   Button,
 } from "@mui/material/";
 
+import axios from "axios";
+
 import { Link, useNavigate } from "react-router-dom";
 
 import BadgeIcon from "@mui/icons-material/Badge";
@@ -28,15 +30,57 @@ export default function AdminLoginPage() {
   const [password, setPassword] = useState("");
 
   const [errorStatus, setErrorStatus] = useState({
+    isOpen: false,
     type: "",
     message: "",
   });
+
+  // navigate
+  const Navigate = useNavigate();
 
   const [open, setOpen] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setOpen(true);
+    const formData = { adminId, password };
+    axios
+      .post("http://localhost:3002/admin/", formData, {withCredentials:true})
+      .then((res) => {
+        console.log(res);
+        if (res.data.success) {
+          setErrorStatus({
+            ...errorStatus,
+            isOpen: true,
+            type: "success",
+            message: res.data.message,
+          });
+          if (!res.data.verified) {
+            setOpen(true);
+          }else{
+            if(res.data.role === "LocationAdmin"){
+              Navigate("/Locationadmin/Dashboard");
+            }else{
+              Navigate("/Primaryadmin/Dashboard");
+            }
+          }
+          setPassword("")
+        } else {
+          setErrorStatus({
+            ...errorStatus,
+            isOpen: true,
+            type: "error",
+            message: res.data.message,
+          });
+        }
+      })
+      .catch((err) => {
+        setErrorStatus({
+          ...errorStatus,
+          isOpen: true,
+          type: "error",
+          message: err.message,
+        });
+      });
   };
 
   return (
@@ -146,7 +190,7 @@ export default function AdminLoginPage() {
                     }}
                   >
                     <Button
-                      variant="contained"
+                      variant="outlined"
                       color="primary"
                       sx={{
                         width: { xs: "100%", sm: "auto" },
@@ -202,6 +246,7 @@ export default function AdminLoginPage() {
             isOpen={errorStatus.isOpen}
             type={errorStatus.type}
             message={errorStatus.message}
+            setIsOpen={(val) => setErrorStatus({ ...errorStatus, isOpen: val })}
           />
         </Container>
       </Box>
