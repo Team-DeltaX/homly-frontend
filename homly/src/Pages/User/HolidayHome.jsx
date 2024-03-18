@@ -70,6 +70,7 @@ export default function HolidayHomes() {
                 <Box sx={{padding:"7px"}}>
                   <HolidayHomeCard
                     key={item.HolidayHomeId}
+                    HHID={item.HolidayHomeId}
                     HHName={item.Name}
                     HHLocation={item.Address}
                     HHPrice={item.TotalRental}
