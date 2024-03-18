@@ -8,11 +8,13 @@ import Select from "@mui/material/Select";
 import { Box, Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { CancelOutlined } from "@mui/icons-material";
+import axios from "axios";
 
 export default function SimpleLineChart() {
   const [h1data, setH1data] = React.useState([]);
   const [h2data, setH2data] = React.useState([]);
   const [h3data, setH3data] = React.useState([]);
+  const [HolidayHomes1, setHolidayHomes1] = React.useState([]);
 
   const Home1 = h1data;
   // [4000, 3000, 2000, 2780, 1890, 2390, 3490];
@@ -73,8 +75,22 @@ export default function SimpleLineChart() {
 
     return dates;
   };
+  const getHHnames=()=>{
+    axios.get('http://localhost:3002/admin/auth/hhnames')
+    .then((res)=>{
+      setHolidayHomes1(res.data.HH)
+      console.log('---------holiday homes-------')
+      console.log(res.data.HH)
+    
+    })
+    .catch((err)=>{
+      console.log(err)
+    }
+    )
+  }
   React.useEffect(() => {
     setXasisd(getLastSevenDays());
+    getHHnames()
   }, []);
 
   return (
