@@ -18,6 +18,13 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import Select from 'react-select'
 import axios from 'axios';
+import dayjs from 'dayjs';
+// dayjs.extend(require('dayjs/plugin/add'));
+// var add = require('dayjs/plugin/add')
+var isBetween = require('dayjs/plugin/isBetween')
+dayjs.extend(isBetween)
+// dayjs.extend(add)
+
 
 
 
@@ -40,17 +47,11 @@ const HolidayHomeDetails = () => {
 
 
     const [myEventsList, setMyEventsList] = useState([]);
+    const [event, setEvent] = useState({
+        start: "", end: "", title: ""
+    })
 
-    useEffect(() => {
-        setMyEventsList([
-            { start: new Date(), end: new Date(), title: "special event" },
-            { start: new Date(), end: new Date(), title: "special event" },
-            { start: new Date(), end: new Date(), title: "special event" },
-            { start: new Date(), end: new Date(), title: "special event" },
-            { start: moment("2024-03-02").toDate(), end: moment("2024-03-05").toDate(), title: "special event" },
 
-        ])
-    }, [])
     const CustomToolbar = (toolbar) => {
         const goToBack = () => {
             toolbar.onNavigate('PREV');
@@ -81,14 +82,23 @@ const HolidayHomeDetails = () => {
         axios.get('http://localhost:3002/admin/auth/locationadmin/holidayhome/names')
             .then((res) => {
                 const data = res.data.names;
-                setHolidayHomes(data);
+
+                console.log(data);
+                setHolidayHomes(data)
                 data.forEach((item) => {
                     names.push(item.name);
                 })
+                // remove duplicates in name array
+                const uniqueNames = [...new Set(names)];
+                setNames(uniqueNames);
+
+
             })
             .catch((err) => {
                 console.log(err);
             })
+
+
     }, [])
 
 
@@ -97,22 +107,41 @@ const HolidayHomeDetails = () => {
 
     const handleSearch = () => {
         const homeName = selectedHolidayHome.value;
+        console.log("homeName", homeName)
         let id;
 
         holidayHomes.forEach((item) => {
+
             if (item.name === homeName) {
+
                 id = item.id;
             }
         }
         )
 
+        console.log("idhol", id)
+
         axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/reservation/${id}`)
             .then((res) => {
-                console.log(res.data)
+
+                const data = res.data.reservations;
+                console.log("get", data);
+                const events = data.map((item) => {
+                    return {
+                        start: dayjs(item.reservation.CheckinDate).format('YYYY-MM-DD'),
+                        end: dayjs(item.reservation.CheckoutDate).add(1, 'day').format('YYYY-MM-DD'),
+                        title: item.reservation.ReservationId
+                    }
+                })
+                setMyEventsList(events);
+                console.log(events);
             })
             .catch((err) => {
                 console.log(err);
             })
+
+
+        console.log("myEventlist", myEventsList)
 
 
 
@@ -131,12 +160,25 @@ const HolidayHomeDetails = () => {
     // popup
     const [open, setOpen] = useState(false);
     const [date, setDate] = useState('');
+    const [reservationIds, setReservationIds] = useState([])
 
     const handleClickOpen = (event) => {
 
         const selectedDate = moment(event.start);
         console.log(selectedDate);
-        const newDate = selectedDate.format('MMMM D, YYYY');
+        const newDate = selectedDate.format('YYYY-MM-DD');
+        console.log(newDate)
+        setReservationIds([])
+        myEventsList.map((item) => {
+            console.log("item", item.start)
+            if (dayjs(newDate).isBetween(item.start, dayjs(item.end), 'day', '[)') || dayjs(newDate).isSame(item.start, 'day') || dayjs(newDate).isSame(item.end, 'day')) {
+                // setOpen(true);
+                // setDate(newDate);
+                console.log(newDate, item.title)
+                setReservationIds(prev => [...prev, item.title])
+            }
+
+        })
         setDate(newDate);
         setOpen(true);
     };
@@ -174,8 +216,9 @@ const HolidayHomeDetails = () => {
                                             classNamePrefix={"Holiday Home"}
                                             isSearchable={true}
                                             name="color"
+
                                             options={names.map((item) => {
-                                                return { value: item, label: item }
+                                                return { value: item, label: item.toUpperCase() }
                                             })}
                                             value={selectedHolidayHome}
                                             onChange={(value) => setSelectedHolidayHome(value)}
@@ -196,7 +239,6 @@ const HolidayHomeDetails = () => {
                                         localizer={localizer}
                                         events={myEventsList}
                                         views={{ month: true }}
-
                                         components={{
                                             toolbar: CustomToolbar,
                                         }}
@@ -211,7 +253,7 @@ const HolidayHomeDetails = () => {
                                     />
                                 </Box>
 
-                                <CalendarDetails open={open} handleClose={handleClose} date={date} />
+                                <CalendarDetails open={open} handleClose={handleClose} date={date} reservationIds={reservationIds} />
 
 
 

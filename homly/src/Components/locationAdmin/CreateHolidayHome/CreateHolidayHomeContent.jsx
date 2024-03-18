@@ -28,7 +28,6 @@ const CreateHolidayHomeContent = () => {
   const [bdValue, setBdValue] = useState({
     otherCharges: "",
     serviceCharges: "",
-    totalRental: "",
     facilities: "",
     gym: false,
     kitchen: false,
@@ -86,7 +85,7 @@ const CreateHolidayHomeContent = () => {
       .then((res) => {
         // window.location.href("/locationadmin/manage");
         console.log(res);
-        navigate("/locationadmin/manage");
+        // navigate("/locationadmin/manage");
       }
       )
       .catch((err) => {

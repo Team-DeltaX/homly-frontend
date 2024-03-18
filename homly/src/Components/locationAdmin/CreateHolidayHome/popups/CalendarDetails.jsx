@@ -15,7 +15,7 @@ import Typography from '@mui/material/Typography';
 import { Box } from '@mui/material';
 
 
-export default function CalendarDetails({ date, open, handleClose }) {
+export default function CalendarDetails({ date, open, handleClose, reservationIds }) {
 
     let dateString = date.toString();
 
@@ -29,9 +29,10 @@ export default function CalendarDetails({ date, open, handleClose }) {
 
                         <Typography sx={{ width: '60px', fontWeight: 'bold' }}>Reserved</Typography>
                         <Box>
-                            <Typography sx={{ color: 'grey' }}>R001</Typography>
-                            <Typography sx={{ color: 'grey' }}>R002</Typography>
-                            <Typography sx={{ color: 'grey' }}>R003</Typography>
+
+                            {reservationIds.map((reservationId) => (
+                                <Typography key={reservationId} sx={{ color: 'grey' }}>{reservationId}</Typography>
+                            ))}
 
                         </Box>
                     </Box>
@@ -47,7 +48,7 @@ export default function CalendarDetails({ date, open, handleClose }) {
                     </Box>
                     <Box>
 
-                        <Typography sx={{ backgroundColor: 'rgb(255,0,0,0.5)', padding: "5px", textAlign: 'center', borderRadius: '5px' }}>Holiday Home Inactive</Typography>
+                        {/* <Typography sx={{ backgroundColor: 'rgb(255,0,0,0.5)', padding: "5px", textAlign: 'center', borderRadius: '5px' }}>Holiday Home Inactive</Typography> */}
                         {/* <Typography sx={{ backgroundColor: 'rgb(0,255,0,0.5)', padding: "5px", textAlign: 'center', borderRadius: '5px' }}>Holiday Home Active</Typography> */}
                     </Box>
 

@@ -109,19 +109,19 @@ const CreatePageHomeBreakDownView = ({ setSubmit, setAllValues, submitClicked, s
   //   }
   // }
 
-  const handleTotalRentalChange = (e) => {
+  // const handleTotalRentalChange = (e) => {
 
-    const positive_regex = /^\d*\.?\d+$/;
+  //   const positive_regex = /^\d*\.?\d+$/;
 
-    if (e.target.value.length > 0) {
-      if (!positive_regex.test(e.target.value)) {
-        setError({ ...error, tRental: true });
-      } else {
-        setBdValue({ ...bdValue, totalRental: e.target.value });
-        setError({ ...error, tRental: false });
-      }
-    }
-  }
+  //   if (e.target.value.length > 0) {
+  //     if (!positive_regex.test(e.target.value)) {
+  //       setError({ ...error, tRental: true });
+  //     } else {
+  //       setBdValue({ ...bdValue, totalRental: e.target.value });
+  //       setError({ ...error, tRental: false });
+  //     }
+  //   }
+  // }
 
   const handlefacilityChange = (e) => {
     setBdValue({ ...bdValue, facilities: e.target.value });
@@ -380,12 +380,12 @@ const CreatePageHomeBreakDownView = ({ setSubmit, setAllValues, submitClicked, s
               </Box>
               <TextField error={error.sCharges} value={bdValue.serviceCharges} type='number' id="outlined-required" label="Service Charges" placeholder='Service Charges' fullWidth size='small' onChange={handleServiceChargesChange} helperText={error.sCharges ? "Invalid Input" : " "} />
             </Box> */}
-            <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
+            {/* <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
               <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                 <Typography variant='p' sx={{ color: 'black' }}>Total Rental</Typography>
               </Box>
               <TextField error={error.tRental} value={bdValue.totalRental} type='number' id="outlined-required" label="Total Rental" placeholder='Total Rental' fullWidth size='small' required onChange={handleTotalRentalChange} helperText={error.tRental ? "Invalid Input" : " "} />
-            </Box>
+            </Box> */}
             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
               <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                 <Typography value={bdValue.facilities} variant='p' sx={{ color: 'black' }}>Enter facilities</Typography>
