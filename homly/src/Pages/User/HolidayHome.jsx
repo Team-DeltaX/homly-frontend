@@ -75,9 +75,10 @@ export default function HolidayHomes() {
                     HHLocation={item.Address}
                     HHPrice={item.TotalRental}
                     HHRating={item.overall_rating}
-                    HHImage={
-                      "https://www.cnaccountants.com.au/wp-content/uploads/2023/03/hOLIDAY-HOMES-TAX.jpg"
-                    }
+                    // HHImage={
+                    //   "https://www.cnaccountants.com.au/wp-content/uploads/2023/03/hOLIDAY-HOMES-TAX.jpg"
+                    // }
+                    HHImage={item.HHImage}
                     showInterest={false}
                   />
                 </Box>
