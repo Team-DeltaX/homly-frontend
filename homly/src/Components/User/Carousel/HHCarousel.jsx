@@ -8,9 +8,8 @@ import theme from "../../../HomlyTheme";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
-export default function HHCarousel(props) {
+export default function HHCarousel({ sortedByRatingHH }) {
   
-
 
   return (
     <ThemeProvider theme={theme}>
@@ -18,12 +17,14 @@ export default function HHCarousel(props) {
         additionalTransfrom={0}
         arrows
         autoPlaySpeed={3000}
-        centerMode={true}
+        centerMode={false}
+        className=""
         containerClass="container"
         dotListClass=""
         draggable
         focusOnSelect={false}
         infinite={false}
+        itemClass=""
         keyBoardControl
         minimumTouchDrag={80}
         pauseOnHover
@@ -34,27 +35,27 @@ export default function HHCarousel(props) {
           desktop: {
             breakpoint: {
               max: 3000,
-              min: 821,
+              min: 1024
             },
-            items: 2,
-            partialVisibilityGutter: 40,
+            items: 3,
+            partialVisibilityGutter: 40
           },
           mobile: {
             breakpoint: {
               max: 464,
-              min: 0,
+              min: 0
             },
-            items: 0.1,
-            partialVisibilityGutter: 0,
+            items: 1,
+            partialVisibilityGutter: 30
           },
           tablet: {
             breakpoint: {
-              max: 820,
-              min: 464,
+              max: 1024,
+              min: 464
             },
-            items: 1,
-            partialVisibilityGutter: 20,
-          },
+            items: 2,
+            partialVisibilityGutter: 30
+          }
         }}
         rewind={false}
         rewindWithAnimation={false}
@@ -65,22 +66,21 @@ export default function HHCarousel(props) {
         slidesToSlide={1}
         swipeable
       >
-        {props.sortedByRating
-          .sort((a, b) => b.rating - a.rating)
-          .slice(0, 6)
-          .map((item) => (
-              <HolidayHomeCard
-                key={item.HHId}
-                HHName={item.name}
-                HHLocation={item.address}
-                HHPrice={item.price}
-                HHRating={item.rating}
-                HHImage={item.image}
-                showInterest={false}
-              />
-          ))}
+        {sortedByRatingHH.map((item, index) => (
+          <HolidayHomeCard
+            key={item.HolidayHomeId}
+            HHID={item.HolidayHomeId}
+            HHName={item.Name}
+            HHLocation={item.Address}
+            HHPrice={item.TotalRental}
+            HHRating={item.overall_rating}
+            HHImage={
+              "https://www.cnaccountants.com.au/wp-content/uploads/2023/03/hOLIDAY-HOMES-TAX.jpg"
+            }
+            showInterest={false}
+          />
+        ))}
       </Carousel>
-      
     </ThemeProvider>
   );
 }

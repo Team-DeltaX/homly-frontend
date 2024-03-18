@@ -11,6 +11,8 @@ import {
   CardActions,
 } from "@mui/material";
 
+import { useNavigate } from "react-router-dom";
+
 // import auth context
 import { AuthContext } from "../../../Contexts/AuthContext";
 
@@ -34,7 +36,7 @@ const Security = () => {
   
   const [isEnable, setIsEnable] = useState(false);
 
-  
+  const Navigate = useNavigate();
 
   const handleCancel = () => {
     setPassword({ currentPass: "", newPass: "", confirmPass: "" });
@@ -53,7 +55,7 @@ const Security = () => {
 
       const formData = {serviceNo:authServiceNumber, oldPassword:password.currentPass, newPassword:password.newPass}
       axios
-      .put("http://localhost:3002/users/auth/password",formData )
+      .put("http://localhost:3002/users/auth/password",formData, {withCredentials:true} )
       .then((res) => {
         if (res.data.success) {
           setErrorStatus({
@@ -72,12 +74,18 @@ const Security = () => {
         }
       })
       .catch((err) => {
-        setErrorStatus({
-          ...errorStatus,
-          isOpen: true,
-          type: "error",
-          message: err.message,
-        });
+        console.log(err);
+        if (err.response.data.autherized === false) {
+          Navigate("/");
+        }else{
+
+          setErrorStatus({
+            ...errorStatus,
+            isOpen: true,
+            type: "error",
+            message: err.message,
+          });
+        }
       });
       setPassword({ currentPass: "", newPass: "", confirmPass: "" });     
       console.log("update");

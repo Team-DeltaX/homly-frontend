@@ -55,7 +55,7 @@ export default function EnterDetailCom({
     if (otp.length === 6) {
       const formData = { serviceNo: value.serviceNo, otp: otp };
       axios
-        .post("http://localhost:3002/users/forgetPassword/otp", formData)
+        .post("http://localhost:3002/users/forgetPassword/otp", formData, {withCredentials:true})
         .then((res) => {
           if (res.data.success) {
             setErrorStatus({
@@ -94,7 +94,7 @@ export default function EnterDetailCom({
   const handleNewOTP = () => {
     const formData = { serviceNo: value.serviceNo, email: value.email };
     axios
-      .post("http://localhost:3002/users/forgetPassword/details", formData)
+      .post("http://localhost:3002/users/forgetPassword", formData, {withCredentials:true})
       .then((res) => {
         if (res.data.success) {
           setErrorStatus({

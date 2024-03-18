@@ -2,10 +2,12 @@ import React from "react";
 import { ThemeProvider, Card, Stack, Box, Typography } from "@mui/material";
 import CircularProgressWithLabel from "./CircularProgressWithLabel";
 import StarIcon from "@mui/icons-material/Star";
+import { Link } from "react-router-dom";
 import theme from "../../../HomlyTheme";
 import "./HolidayHomeCard.css";
 
 export default function HolidayHomeCard({
+  HHID,
   HHImage,
   HHName,
   HHLocation,
@@ -21,6 +23,7 @@ export default function HolidayHomeCard({
 }) {
   return (
     <ThemeProvider theme={theme}>
+      <Box component={Link} to={`/HolidayHomeDetails/${HHID}`}>
       <Card
         sx={{
           width: "257px",
@@ -92,6 +95,7 @@ export default function HolidayHomeCard({
           </Stack>
         </Box>
       </Card>
+      </Box>
     </ThemeProvider>
   );
 }

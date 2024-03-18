@@ -28,7 +28,7 @@ export default function BrowseMoreCom() {
                 <Typography sx={{fontWeight:'bold',fontSize:'1.7rem'}}>Browse For</Typography>
                 <Typography sx={{fontWeight:'bold',fontSize:'1.7rem'}}>More Holiday Homes</Typography>
               </Stack>
-              <Button variant="outlined" component={Link} to="/HolidayHomes" sx={{width:'80%'}}>Find a Holiday Home</Button>
+              <Button variant="outlined" component={Link} to={`/holidayHomes/all`} sx={{width:'80%'}}>Find a Holiday Home</Button>
           </Stack>
         </Stack>
         <Box sx={{ position: "relative", width: "60%" }}>

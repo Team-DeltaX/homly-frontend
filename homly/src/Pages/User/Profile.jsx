@@ -51,12 +51,12 @@ const drawerWidth = 240;
 
 const pages = [
   { name: "Home", path: "/Home" },
-  { name: "Holiday Homes", path: "/holidayHomes" },
+  { name: "Holiday Homes", path: "/holidayHomes/all" },
 ];
 
 const respSidePages = [
   { name: "Home", path: "/Home" },
-  { name: "Holiday Homes", path: "/holidayHomes" },
+  { name: "Holiday Homes", path: "/holidayHomes/all" },
   { name: "My Profile", path: "/myProfile" },
 ];
 const sidePages = [

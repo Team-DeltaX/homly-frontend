@@ -32,7 +32,6 @@ import UserInterestedHolidayHomes from "../../Components/User/UserInterestedHoli
 import AOS from "aos";
 import "aos/dist/aos.css";
 
-
 export default function Home() {
   const refContactUS = useRef(null);
   const [sortedByRating, setSortedByRating] = useState([]);
@@ -58,31 +57,40 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+
     axios
-      .get(`https://65ac00f8fcd1c9dcffc76f52.mockapi.io/homly/api/HolidayHomes`)
-      .then((response) => {
-        setSortedByRating(response.data);
+      .get("http://localhost:3002/users/auth/holidayhomes/sort/topRated", { withCredentials: true })
+      .then((res) => {
+        console.log("topRated",res.data);
+        setSortedByRating(res.data);
+      }).catch((err) => {
+        console.log(err);
+        if (err.response.data.autherized === false) {
+          Navigate("/");
+        }
       });
 
     axios
-      .get("http://localhost:3002/users/auth/interested", { withCredentials: true })
+      .get("http://localhost:3002/users/auth/interested", {
+        withCredentials: true,
+      })
       .then((res) => {
         console.log(res);
-        if(res.data.updated){
+        if (res.data.updated) {
           setInsterestedPopup(false);
-        }else{
+        } else {
           setInsterestedPopup(true);
         }
       })
       .catch((err) => {
         console.log(err);
-        if(err.response.data.autherized === false){
+        if (err.response.data.autherized === false) {
           Navigate("/");
         }
       });
 
     //
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -105,10 +113,6 @@ export default function Home() {
         console.log(err);
       });
   }, [interestsIsSubmited]);
-
-  useEffect(() => {
-    sortedByRating.sort((a, b) => b.rating - a.rating);
-  }, [sortedByRating]);
 
   // console.log(sortedByRating);
 
@@ -215,7 +219,6 @@ export default function Home() {
                             setDistrict={setDistrict}
                             district={district}
                           />
-                        
                         </Stack>
                       </Grid>
 
@@ -226,7 +229,6 @@ export default function Home() {
                         sm={6}
                         sx={{ padding: { xs: "3%", sm: "0 3%" } }}
                       >
-                        
                         <DatePickerCom
                           selectionRange={selectionRange}
                           setSelectRange={setSelectRange}
@@ -302,7 +304,7 @@ export default function Home() {
                     />
                   </Stack>
                   <Box>
-                    <HHCarousel sortedByRating={sortedByRating} />
+                    <HHCarousel sortedByRatingHH={sortedByRating} />
                   </Box>
                 </Stack>
               </Box>
@@ -328,10 +330,17 @@ export default function Home() {
                 </Stack>
                 <OurPlaces />
               </Stack>
-                {/* intersed */}
-                <Box>
-                  {isDisplayInterest?<UserInterestedHolidayHomes setIsDisplayInterest={setIsDisplayInterest} interestedHH={interestedHH}/>:""}
-                </Box>
+              {/* intersed */}
+              <Box>
+                {isDisplayInterest ? (
+                  <UserInterestedHolidayHomes
+                    setIsDisplayInterest={setIsDisplayInterest}
+                    interestedHH={interestedHH}
+                  />
+                ) : (
+                  ""
+                )}
+              </Box>
               <Stack
                 data-aos="fade-left"
                 data-aos-duration="900"
