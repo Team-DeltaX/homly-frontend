@@ -20,7 +20,7 @@ import DatePickerCom from "../../Components/User/DatePickerCom/DatePickerCom";
 // import HolidayHomeCard from "../../Components/User/HHCard/HolidayHomeCard";
 
 import "./UserStyle.css";
-import Topbg from "../../Assets/images/LandingPageTop.png";
+
 import DistrictSelectCom from "../../Components/User/DistrictSelectCom";
 import OurPlaces from "../../Components/User/OurPlaces/OurPlaces";
 import BrowseMoreCom from "../../Components/User/BrowseMore/BrowseMoreCom";
@@ -151,7 +151,7 @@ export default function Home() {
               <Box sx={{ position: "relative" }}>
                 <Box
                   component="img"
-                  src={Topbg}
+                  src={"https://res.cloudinary.com/dwgeetnoj/image/upload/v1710836477/homly-main-images/LandingPageTop_ekbjsh.jpg"}
                   alt="top-image"
                   sx={{ width: "100%", height: "50vh", objectFit: "cover" }}
                 />
