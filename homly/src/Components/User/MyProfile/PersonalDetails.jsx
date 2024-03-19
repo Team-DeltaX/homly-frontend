@@ -16,7 +16,8 @@ import {
 import PersonalDetailsGrid from "../PersonalDetailsGrid/PersonalDetailsGrid";
 
 import theme from "../../../HomlyTheme";
-import ProfilePicUploadPopup from "../ProfilePicUploadPopup";
+// import ProfilePicUploadPopup from "../ProfilePicUploadPopup";
+import UploadImageCloudinary from "../../Common/UploadImageCloudinary";
 import ErrorSnackbar from "../ErrorSnackbar";
 // import UserInterestedPopup from "../UserInterestedPopup";
 import UserInterestedPopupProfile from "./UserInterestedPopupProfile";
@@ -49,11 +50,6 @@ const PersonalDetails = () => {
   });
 
   const [isEnable, setIsEnable] = useState(false);
-
-  const [open, setOpen] = useState(false);
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
 
   const checkEmail = (email) => {
     if (email) {
@@ -134,8 +130,8 @@ const PersonalDetails = () => {
         })
         .then((res) => {
           if (res.data) {
-            console.log("intresffedfsdf",res.data.userInterested.interested);
-            if(res.data.userInterested.interested[0] !== null){
+            console.log("intresffedfsdf", res.data.userInterested.interested);
+            if (res.data.userInterested.interested[0] !== null) {
               setInterests(res.data.userInterested.interested);
             }
           } else {
@@ -294,15 +290,15 @@ const PersonalDetails = () => {
                   />
                 </Box>
                 {/* <AvatarImage /> */}
-                <ProfilePicUploadPopup
+                {/* <ProfilePicUploadPopup
                   open={open}
                   setOpen={setOpen}
-                  setImage={(image) => setData({ ...data, image: image })}
-                />
+                  setImage={}
+                /> */}
 
                 {/* change interest popup */}
                 <UserInterestedPopupProfile
-                  open={ insterestedPopup}
+                  open={insterestedPopup}
                   setOpen={setInsterestedPopup}
                   interests={interests}
                   setInterests={setInterests}
@@ -334,6 +330,7 @@ const PersonalDetails = () => {
                       sx={{
                         width: 150,
                         height: 150,
+                        border: "2px solid #3f51b5",
                       }}
                     />
                     <Box
@@ -345,25 +342,26 @@ const PersonalDetails = () => {
                         marginLeft: "8px",
                       }}
                     >
-                      <Button
-                        variant="outlined"
-                        onClick={handleClickOpen}
-                        disabled={!isEnable}
-                        size="small"
-                      >
-                        <Typography
-                          sx={{ fontSize: { xs: "0.9rem", md: "1rem" } }}
-                        >
-                          Edit Profile Picture
-                        </Typography>
-                      </Button>
+                      <UploadImageCloudinary
+                        folderName="profile-pic"
+                        setImage={(image) => setData({ ...data, image: image })}
+                        isMultiple={false}
+                        limit={1}
+                        buttonName="Upload Profile Picture"
+                        buttonVariant="outlined"
+                        isDisplayImageName={false}
+                        isDisabled={!isEnable}
+                      />
                     </Box>
                   </Stack>
                   <Button
                     disabled={!isEnable}
                     variant="outlined"
                     size="small"
-                    sx={{ marginTop: "10px", display:isHaveInterests?"block":"none" }}
+                    sx={{
+                      marginTop: "10px",
+                      display: isHaveInterests ? "block" : "none",
+                    }}
                     onClick={() => setInsterestedPopup(true)}
                   >
                     <Typography sx={{ fontSize: { xs: "0.9rem", md: "1rem" } }}>

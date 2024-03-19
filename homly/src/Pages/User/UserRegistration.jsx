@@ -17,7 +17,6 @@ import EmailIcon from "@mui/icons-material/Email";
 import CallIcon from "@mui/icons-material/Call";
 import PasswordIcon from "@mui/icons-material/Password";
 
-import ProfilePicUploadPopup from "../../Components/User/ProfilePicUploadPopup";
 import ErrorSnackbar from "../../Components/User/ErrorSnackbar";
 
 import theme from "../../HomlyTheme";
@@ -29,6 +28,7 @@ import { Link } from "react-router-dom";
 import InputPasswordWithIcon from "../../Components/User/TextField/InputPasswordWithIcon";
 import InputTextWithIcon from "../../Components/User/TextField/InputTextWithIcon";
 import PasswordStrength from "../../Components/User/PasswordStrength";
+import UploadImageCloudinary from "../../Components/Common/UploadImageCloudinary";
 
 const Img = styled("img")({
   display: "block",
@@ -78,12 +78,11 @@ const UserRegistration = () => {
       !errorConfirmPassword &&
       passwordStrength > 0
     ) {
-      setIsDisabled(false);}
-    else {
+      setIsDisabled(false);
+    } else {
       setIsDisabled(true);
     }
-
-  }, [Email,ContactNo,errorConfirmPassword,passwordStrength]);
+  }, [Email, ContactNo, errorConfirmPassword, passwordStrength]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -148,12 +147,6 @@ const UserRegistration = () => {
     setPassword("");
     setConfirmPassword("");
     setImage(null);
-  };
-
-  const [open, setOpen] = useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
   };
 
   return (
@@ -259,11 +252,7 @@ const UserRegistration = () => {
                     onReset={handleReset}
                   >
                     {/* <AvatarImage /> */}
-                    <ProfilePicUploadPopup
-                      open={open}
-                      setOpen={setOpen}
-                      setImage={setImage}
-                    />
+
                     <Stack
                       direction="row"
                       sx={{
@@ -288,16 +277,16 @@ const UserRegistration = () => {
                           marginLeft: { xs: "8px" },
                         }}
                       >
-                        <Button variant="outlined" onClick={handleClickOpen}>
-                          <Typography
-                            sx={{
-                              fontSize: { xs: "0.7rem" },
-                              fontWeight: "bold",
-                            }}
-                          >
-                            Upload Profile Picture
-                          </Typography>
-                        </Button>
+                        <UploadImageCloudinary
+                          folderName="profile-pic"
+                          setImage={setImage}
+                          isMultiple={false}
+                          limit={1}
+                          buttonName="Upload Profile Picture"
+                          buttonVariant="outlined"
+                          isDisplayImageName={false}
+                          isDisabled={false}
+                        />
                       </Box>
                     </Stack>
 
@@ -388,7 +377,12 @@ const UserRegistration = () => {
                       >
                         Reset
                       </Button>
-                      <Button type="submit" variant="contained" color="primary" disabled={isDiabled}>
+                      <Button
+                        type="submit"
+                        variant="contained"
+                        color="primary"
+                        disabled={isDiabled}
+                      >
                         Register
                       </Button>
                     </Box>
