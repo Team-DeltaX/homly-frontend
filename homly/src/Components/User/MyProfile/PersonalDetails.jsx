@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
@@ -13,6 +13,8 @@ import {
   Avatar,
 } from "@mui/material";
 
+import { AuthContext } from "../../../Contexts/AuthContext";
+
 import PersonalDetailsGrid from "../PersonalDetailsGrid/PersonalDetailsGrid";
 
 import theme from "../../../HomlyTheme";
@@ -23,6 +25,9 @@ import ErrorSnackbar from "../ErrorSnackbar";
 import UserInterestedPopupProfile from "./UserInterestedPopupProfile";
 
 const PersonalDetails = () => {
+
+  const {setIsUpdated} = useContext(AuthContext);
+
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
   const phoneRegex = /^[0-9]{10}$/;
 
@@ -34,8 +39,10 @@ const PersonalDetails = () => {
     address: "",
     contactNo: "",
     email: "",
-    image: "",
   });
+
+  const [image, setImage] = useState("");
+
   const [interests, setInterests] = useState([]);
   const [isHaveInterests, setIsHaveInterests] = useState(false);
 
@@ -93,8 +100,8 @@ const PersonalDetails = () => {
               address: res.data.address,
               email: res.data.email,
               contactNo: res.data.contactNo,
-              image: res.data.image,
             });
+            setImage(res.data.image);
           } else {
             setErrorStatus({
               ...errorStatus,
@@ -160,7 +167,7 @@ const PersonalDetails = () => {
         serviceNo: data.serviceNo,
         email: data.email,
         contactNo: data.contactNo,
-        image: data.image,
+        image:image,
       };
       axios
         .put("http://localhost:3002/users/auth", formData)
@@ -172,6 +179,7 @@ const PersonalDetails = () => {
               type: "success",
               message: res.data.message,
             });
+            setIsUpdated(true);
           } else {
             setErrorStatus({
               ...errorStatus,
@@ -326,7 +334,7 @@ const PersonalDetails = () => {
                   >
                     <Avatar
                       alt="Remy Sharp"
-                      src={data.image}
+                      src={image}
                       sx={{
                         width: 150,
                         height: 150,
@@ -344,7 +352,7 @@ const PersonalDetails = () => {
                     >
                       <UploadImageCloudinary
                         folderName="profile-pic"
-                        setImage={(image) => setData({ ...data, image: image })}
+                        setImage={setImage}
                         isMultiple={false}
                         limit={1}
                         buttonName="Upload Profile Picture"

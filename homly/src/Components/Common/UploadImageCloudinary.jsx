@@ -25,6 +25,8 @@ const UploadImageCloudinary = ({
       {
         cloudName: "dwgeetnoj",
         uploadPreset: "auzerdek",
+        // select file and url
+        sources: ["local", "url"],
         // add one image limit
         multiple: isMultiple,
         // maxFiles: limit,

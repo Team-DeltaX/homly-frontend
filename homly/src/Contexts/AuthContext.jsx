@@ -8,6 +8,8 @@ const AuthContextProvider = ({ children }) => {
   const [isLogged, setIsLogged] = useState(false);
   const [authServiceNumber, setAuthServiceNumber] = useState(null);
 
+  const [isUpdated, setIsUpdated] = useState(false);
+
 
   const [user, setUser] = useState({
     serviceNo: "",
@@ -71,11 +73,11 @@ const AuthContextProvider = ({ children }) => {
       setAuthServiceNumber(null);
     }, 2 * 60 * 60000);
     return () => clearInterval(interval);
-  }, []);
+  }, [isUpdated]);
 
   return (
     <AuthContext.Provider
-      value={{ isLogged, setIsLogged, user, authServiceNumber, setAuthServiceNumber }}
+      value={{ isLogged, setIsLogged, user, authServiceNumber, setAuthServiceNumber, setIsUpdated }}
     >
       {children}
     </AuthContext.Provider>
