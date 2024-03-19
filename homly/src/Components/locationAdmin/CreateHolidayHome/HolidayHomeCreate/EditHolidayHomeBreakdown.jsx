@@ -56,7 +56,7 @@ const EditHolidayHomeBreakdown = ({ roomArray, setRoomArray, unitArray, setUnitA
     const [childCount, setChildCount] = useState(0);
     const [otherCharges, setOtherCharges] = useState(0);
     const [serviceCharges, setServiceCharges] = useState(0);
-    const [totalRental, setTotalRental] = useState(0);
+    // const [totalRental, setTotalRental] = useState(0);
     const [facilities, setFacilities] = useState('');
     const [gym, setGym] = useState(false);
     const [kitchen, setKitchen] = useState(false);
@@ -77,7 +77,7 @@ const EditHolidayHomeBreakdown = ({ roomArray, setRoomArray, unitArray, setUnitA
                     setChildCount(homeDetails.MaxNoOfChildren);
                     setOtherCharges(homeDetails.OtherCharge);
                     setServiceCharges(homeDetails.ServiceCharge);
-                    setTotalRental(homeDetails.TotalRental);
+                    // setTotalRental(homeDetails.TotalRental);
                     setFacilities(homeDetails.Facilities);
                     setGym(homeDetails.Gym);
                     setKitchen(homeDetails.Kitchen);
@@ -105,9 +105,9 @@ const EditHolidayHomeBreakdown = ({ roomArray, setRoomArray, unitArray, setUnitA
         setServiceCharges(e.target.value);
     }
 
-    const handleTotalRentalChange = (e) => {
-        setTotalRental(e.target.value);
-    }
+    // const handleTotalRentalChange = (e) => {
+    //     setTotalRental(e.target.value);
+    // }
 
     const handlefacilityChange = (e) => {
         setFacilities(e.target.value);
@@ -167,12 +167,12 @@ const EditHolidayHomeBreakdown = ({ roomArray, setRoomArray, unitArray, setUnitA
                             </Box>
                             <TextField onChange={handleServiceChargesChange} type='number' id="outlined-required" label="Service Charges" placeholder='Service Charges' fullWidth size='small' value={serviceCharges} />
                         </Box>
-                        <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
+                        {/* <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                             <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                 <Typography variant='p' sx={{ color: 'black' }}>Total Rental</Typography>
                             </Box>
                             <TextField onchange={handleTotalRentalChange} type='number' id="outlined-required" label="Total Rental" placeholder='Total Rental' fullWidth size='small' required value={totalRental} />
-                        </Box>
+                        </Box> */}
                     </Grid>
                 </Grid>
                 <Grid container spacing={2}>

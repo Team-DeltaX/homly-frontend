@@ -70,12 +70,12 @@ const HomeBreakDownViewOnly = ({ setAllValues }) => {
   const [serviceCharges, setServiceCharges] = useState();
   const [totalRental, setTotalRental] = useState();
   const [facilities, setFacilities] = useState('');
-  const [gym, setGym] = useState(false);
-  const [kitchen, setKitchen] = useState(false);
-  const [park, setPark] = useState(false);
-  const [wifi, setWifi] = useState(false);
-  const [pool, setPool] = useState(false);
-  const [bar, setBar] = useState(false);
+  const [gym, setGym] = useState('');
+  const [kitchen, setKitchen] = useState('');
+  const [park, setPark] = useState('');
+  const [wifi, setWifi] = useState('');
+  const [pool, setPool] = useState('');
+  const [bar, setBar] = useState('');
 
   useEffect(() => {
 
@@ -130,8 +130,8 @@ const HomeBreakDownViewOnly = ({ setAllValues }) => {
           console.log(homeDetails);
           setAdultsCount(homeDetails.MaxNoOfAdults);
           setChildCount(homeDetails.MaxNoOfChildren);
-          setOtherCharges(homeDetails.OtherCharge);
-          setServiceCharges(homeDetails.ServiceCharge);
+          // setOtherCharges(homeDetails.OtherCharge);
+          // setServiceCharges(homeDetails.ServiceCharge);
           setTotalRental(homeDetails.TotalRental);
           setFacilities(homeDetails.Facilities);
           setGym(homeDetails.Gym);
@@ -185,21 +185,21 @@ const HomeBreakDownViewOnly = ({ setAllValues }) => {
             <FormGroup sx={{ display: 'flex', width: '100%', gap: "0.5em ", marginTop: "1em" }}>
               <Box sx={{ display: "flex", gap: "1em" }}>
 
-                <FormControlLabel control={<Checkbox />} label="Gym" checked={gym === "1" ? true : gym === "0" ? false : undefined} />
-                <FormControlLabel control={<Checkbox />} label="Park" checked={park === "1" ? true : park === "0" ? false : undefined} />
-                <FormControlLabel control={<Checkbox />} label="Kitchen" checked={kitchen === 1 ? true : kitchen === 0 ? false : undefined} />
+                <FormControlLabel control={<Checkbox />} label="Gym" checked={gym == "on" ? true : false} />
+                <FormControlLabel control={<Checkbox />} label="Park" checked={park == "on" ? true : false} />
+                <FormControlLabel control={<Checkbox />} label="Kitchen" checked={kitchen == "on" ? true : false} />
               </Box>
               <Box sx={{ display: "flex", gap: "1em" }}>
-                <FormControlLabel control={<Checkbox />} label="Bar" checked={bar === "1" ? true : bar === "0" ? false : undefined} />
-                <FormControlLabel control={<Checkbox />} label="Wifi" checked={wifi === "1" ? true : wifi === "0" ? false : undefined} />
-                <FormControlLabel control={<Checkbox />} label="Pool" checked={pool === "1" ? true : pool === "0" ? false : undefined} />
+                <FormControlLabel control={<Checkbox />} label="Bar" checked={bar == "on" ? true : false} />
+                <FormControlLabel control={<Checkbox />} label="Wifi" checked={wifi == "on" ? true : false} />
+                <FormControlLabel control={<Checkbox />} label="Pool" checked={pool == "on" ? true : false} />
 
               </Box>
 
             </FormGroup>
           </Grid>
           <Grid item md={6} sm={12} xs={12}>
-            <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
+            {/* <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
               <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                 <Typography variant='p' sx={{ color: 'black' }}>Other Charges</Typography>
               </Box>
@@ -210,7 +210,7 @@ const HomeBreakDownViewOnly = ({ setAllValues }) => {
                 <Typography variant='p' sx={{ color: 'black' }}>Service Charges</Typography>
               </Box>
               <TextField value={serviceCharges} type='number' id="outlined-required" placeholder='Service Charges' fullWidth size='small' />
-            </Box>
+            </Box> */}
             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
               <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                 <Typography variant='p' sx={{ color: 'black' }}>Total Rental</Typography>

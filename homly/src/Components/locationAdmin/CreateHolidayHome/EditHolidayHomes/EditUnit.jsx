@@ -375,9 +375,6 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
             </fieldset>
 
 
-
-
-
             {/* Add new Unit popup */}
             <React.Fragment>
                 <Dialog
@@ -433,14 +430,14 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
                                 </Box>
                                 <TextField error={error.ctName} value={unitValues.unitRemark} required id="outlined-required" label="Remark" placeholder='Enter Remark' fullWidth size='small' onChange={handleUnitRemarkChange} helperText={error.ctName ? "Invalid Input" : ''} />
                             </Box>
-                            <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
+                            {/* <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                     <Typography variant='p' sx={{ color: 'black' }}>Rental</Typography>
                                 </Box>
                                 <TextField type='number' value={unitValues.unitRental} error={error.ctName} required id="outlined-required" label="Rental" placeholder='Rental' fullWidth size='small' onChange={handleUnitRentalChange} helperText={error.ctName ? "Invalid Input" : ''} />
-                            </Box>
+                            </Box> */}
 
-                            <Box className="rental_container">
+                            {/* <Box className="rental_container">
                                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                     <Typography variant='p' sx={{ color: 'black' }}>Add Rental</Typography>
                                 </Box>
@@ -510,7 +507,7 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
 
                                 })}
 
-                            </Box>
+                            </Box> */}
 
                         </DialogContent>
                         <DialogActions>

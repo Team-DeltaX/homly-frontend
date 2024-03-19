@@ -7,41 +7,41 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
-const EditCaretakerDetails = () => {
+const EditCaretakerDetails = ({ value, setValue, valueSecond, setValueSecond }) => {
 
-    const [value, setValue] = useState({
-        caretakerName: '', caretakerContactNo: '', caretakerStatus: '', caretakerAddress: '', caretakerDescription: '',
-    })
+    // const [value, setValue] = useState({
+    //     caretakerName: '', caretakerContactNo: '', caretakerStatus: '', caretakerAddress: '', caretakerDescription: '',
+    // })
 
-    const [valueSecond, setValueSecond] = useState({
-        caretakerName: '', caretakerContactNo: '', caretakerStatus: '', caretakerAddress: '', caretakerDescription: '',
-    })
+    // const [valueSecond, setValueSecond] = useState({
+    //     caretakerName: '', caretakerContactNo: '', caretakerStatus: '', caretakerAddress: '', caretakerDescription: '',
+    // })
 
 
-    const { homeId } = useParams();
-    useEffect(() => {
-        axios.get(`http://localhost:3002/locationadmin/holidayhome/${homeId}`)
-            .then((res) => {
-                if (Response) {
-                    const caretakerDetails = res.data.caretaker;
+    // const { homeId } = useParams();
+    // useEffect(() => {
+    //     axios.get(`http://localhost:3002/locationadmin/holidayhome/${homeId}`)
+    //         .then((res) => {
+    //             if (Response) {
+    //                 const caretakerDetails = res.data.caretaker;
 
-                    setValue({
-                        caretakerName: caretakerDetails[0].Name, caretakerContactNo: caretakerDetails[0].ContactNo, caretakerStatus: caretakerDetails[0].Status, caretakerAddress: caretakerDetails[0].Address, caretakerDescription: caretakerDetails[0].Description,
-                    })
+    //                 setValue({
+    //                     caretakerName: caretakerDetails[0].Name, caretakerContactNo: caretakerDetails[0].ContactNo, caretakerStatus: caretakerDetails[0].Status, caretakerAddress: caretakerDetails[0].Address, caretakerDescription: caretakerDetails[0].Description,
+    //                 })
 
-                    if (caretakerDetails[1]) {
-                        setValueSecond({
-                            caretakerName: caretakerDetails[1].Name || "", caretakerContactNo: caretakerDetails[1].ContactNo || "", caretakerStatus: caretakerDetails[1].Status || "", caretakerAddress: caretakerDetails[1].Address || "", caretakerDescription: caretakerDetails[1].Description || "",
-                        })
+    //                 if (caretakerDetails[1]) {
+    //                     setValueSecond({
+    //                         caretakerName: caretakerDetails[1].Name || "", caretakerContactNo: caretakerDetails[1].ContactNo || "", caretakerStatus: caretakerDetails[1].Status || "", caretakerAddress: caretakerDetails[1].Address || "", caretakerDescription: caretakerDetails[1].Description || "",
+    //                     })
 
-                    }
+    //                 }
 
-                } else {
-                    console.log("No data found");
-                }
-            })
-        console.log(value.caretakerName);
-    }, [])
+    //             } else {
+    //                 console.log("No data found");
+    //             }
+    //         })
+    //     console.log(value.caretakerName);
+    // }, [])
 
 
     console.log(value.caretakerName);
@@ -75,7 +75,14 @@ const EditCaretakerDetails = () => {
     }
 
     const handleContactNoChange = (e) => {
-        setValue({ ...value, caretakerContactNo: e.target.value });
+        const inputValue = e.target.value;
+
+        // Check if the input value is a positive integer
+        if (inputValue === '' || /^\d+$/.test(inputValue)) {
+
+            setValue({ ...value, caretakerContactNo: inputValue });
+
+        }
         const phone_regex = /^\d{10}$/;
         if (e.target.value.length > 0) {
             if (!phone_regex.test(e.target.value)) {
@@ -84,6 +91,7 @@ const EditCaretakerDetails = () => {
                 setError({ ...error, ctContactNo: false });
             }
         }
+
     }
 
 
@@ -147,7 +155,7 @@ const EditCaretakerDetails = () => {
                             <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                 <Typography variant='p' sx={{ color: 'black' }}>Contact No</Typography>
                             </Box>
-                            <TextField required id="outlined-required" label="Enter Contact No" placeholder='Enter Contact No' fullWidth size='small' onChange={handleContactNoChange} value={value.caretakerContactNo} />
+                            <TextField required id="outlined-required" label="Enter Contact No" placeholder='Enter Contact No' fullWidth size='small' onChange={handleContactNoChange} value={value.caretakerContactNo} inputProps={{ pattern: "\\d*", inputMode: "numeric" }} />
                         </Box>
                         <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                             <Box sx={{ minWidth: '100px', maxWidth: '100px' }} className="label_container">
@@ -200,7 +208,7 @@ const EditCaretakerDetails = () => {
                             <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                 <Typography variant='p' sx={{ color: 'black' }}>Contact No</Typography>
                             </Box>
-                            <TextField required id="outlined-required" label="Enter Contact No" placeholder='Enter Contact No' fullWidth size='small' onChange={handleContactNoChangeSecond} value={valueSecond.caretakerContactNo} />
+                            <TextField required id="outlined-required" label="Enter Contact No" placeholder='Enter Contact No' fullWidth size='small' onChange={handleContactNoChangeSecond} value={valueSecond.caretakerContactNo} inputProps={{ pattern: "\\d*", inputMode: "numeric" }} />
                         </Box>
                         <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                             <Box sx={{ minWidth: '100px', maxWidth: '100px' }} className="label_container">

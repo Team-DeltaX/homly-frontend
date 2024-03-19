@@ -340,7 +340,7 @@ const EditHall = ({ hallArray, setHallArray }) => {
                                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                     <Typography variant='p' sx={{ color: 'black' }}>Floor Level</Typography>
                                 </Box>
-                                <TextField type='number' error={error.ctName} required id="outlined-required" label="" placeholder='No of beds' fullWidth size='small' onChange={handleHallFloorChange} helperText={error.ctName ? "Invalid Input" : ''} value={hallValues.floorLevel} />
+                                <TextField type='number' error={error.ctName} required id="outlined-required" label="" placeholder='Floor Level' fullWidth size='small' onChange={handleHallFloorChange} helperText={error.ctName ? "Invalid Input" : ''} value={hallValues.floorLevel} />
                             </Box>
                             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >

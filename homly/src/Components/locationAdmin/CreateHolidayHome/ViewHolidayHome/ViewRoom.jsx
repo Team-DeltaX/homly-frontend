@@ -35,7 +35,7 @@ const ViewRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount }) =>
                 roomCode: editedRoom.roomCode,
                 roomAc: editedRoom.roomAc,
                 RoomType: editedRoom.RoomType,
-                NoOfBeds: editedRoom.NoOfBeds,
+                FloorLevel: editedRoom.FloorLevel,
                 NoOfAdults: editedRoom.NoOfAdults,
                 NoOfChildren: editedRoom.NoOfChildren,
                 roomRemarks: editedRoom.roomRemarks,
@@ -48,7 +48,7 @@ const ViewRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount }) =>
                 roomCode: '',
                 roomAc: '',
                 RoomType: '',
-                NoOfBeds: '',
+                FloorLevel: '',
                 NoOfAdults: '',
                 NoOfChildren: '',
                 roomRemarks: '',
@@ -60,7 +60,7 @@ const ViewRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount }) =>
 
 
     const handleClickOpen = () => {
-        setValues({ roomCode: '', roomAc: '', RoomType: '', NoOfBeds: '', NoOfAdults: '', NoOfChildren: '', roomRemarks: '', roomRental: '', groupByUnit: false });
+        setValues({ roomCode: '', roomAc: '', RoomType: '', FloorLevel: '', NoOfAdults: '', NoOfChildren: '', roomRemarks: '', roomRental: '', groupByUnit: false });
         setOpen(true);
     };
 
@@ -105,7 +105,7 @@ const ViewRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount }) =>
 
 
     const [values, setValues] = useState({
-        roomCode: '', roomAc: '', RoomType: '', NoOfBeds: '', NoOfAdults: '', NoOfChildren: '', roomRemarks: '', roomRental: '', groupByUnit: false,
+        roomCode: '', roomAc: '', RoomType: '', FloorLevel: '', NoOfAdults: '', NoOfChildren: '', roomRemarks: '', roomRental: '', groupByUnit: false,
     })
 
 
@@ -123,7 +123,7 @@ const ViewRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount }) =>
 
         // setValues({ roomCode: '', roomAc: '', RoomType: '', NoOfBeds: '', NoOfAdults: '', NoOfChildren: '', roomRemarks: '', roomRental: '', groupByUnit: false })
         // setOpen(false);
-        if (values.roomCode === '' || values.roomAc === '' || values.RoomType === '' || values.NoOfBeds === '' || values.NoOfAdults === '' || values.NoOfChildren === '' || values.roomRemarks === '' || values.roomRental === '') {
+        if (values.roomCode === '' || values.roomAc === '' || values.RoomType === '' || values.FloorLevel === '' || values.NoOfAdults === '' || values.NoOfChildren === '' || values.roomRemarks === '' || values.roomRental === '') {
             setOpenRoomFillAlert(true);
             return;
         }
@@ -196,7 +196,7 @@ const ViewRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount }) =>
             roomCode: editedRoom.roomCode,
             roomAc: editedRoom.roomAc,
             RoomType: editedRoom.RoomType,
-            NoOfBeds: editedRoom.NoOfBeds,
+            FloorLevel: editedRoom.FloorLevel,
             NoOfAdults: editedRoom.NoOfAdults,
             NoOfChildren: editedRoom.NoOfChildren,
             roomRemarks: editedRoom.roomRemarks,
@@ -318,7 +318,7 @@ const ViewRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount }) =>
                     roomArray.map((item, index) => {
 
                         return (
-                            <ViewRoomBreakdown key={index} roomCode={item.roomCode} roomAc={item.roomAc} roomType={item.RoomType} noOfBeds={item.NoOfBeds} noOfAdults={item.NoOfAdults} noOfChildren={item.NoOfChildren} roomRemarks={item.roomRemarks} roomRental={item.roomRental} groupByUnit={item.groupByUnit} handleRoomEdit={handleRoomEdit} handleRoomDelete={handleRoomDelete} index={index} />
+                            <ViewRoomBreakdown key={index} roomCode={item.roomCode} roomAc={item.roomAc} roomType={item.RoomType} FloorLevel={item.FloorLevel} noOfAdults={item.NoOfAdults} noOfChildren={item.NoOfChildren} roomRemarks={item.roomRemarks} roomRental={item.roomRental} groupByUnit={item.groupByUnit} handleRoomEdit={handleRoomEdit} handleRoomDelete={handleRoomDelete} index={index} />
                         )
                     })}
 
@@ -396,9 +396,9 @@ const ViewRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount }) =>
                             </Box>
                             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
-                                    <Typography variant='p' sx={{ color: 'black' }}>Number Of Beds</Typography>
+                                    <Typography variant='p' sx={{ color: 'black' }}>Floor Level</Typography>
                                 </Box>
-                                <TextField type='number' error={error.ctName} required id="outlined-required" label="" placeholder='No of beds' fullWidth size='small' value={values.NoOfBeds} />
+                                <TextField type='number' error={error.ctName} required id="outlined-required" label="" placeholder='No of beds' fullWidth size='small' value={values.FloorLevel} />
                             </Box>
                             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >

@@ -81,7 +81,13 @@ const EditHolidayHomeDetails = () => {
     }
 
     const handleContactNo1Change = (e) => {
-        setValue({ ...value, contactNo1: e.target.value });
+        const newValue = e.target.value.replace(/\D/g, '');
+
+        // Limit to 10 characters
+        if (newValue.length <= 10) {
+
+            setValue({ ...value, contactNo1: newValue });
+        }
         const phone_regex = /^\d{10}$/;
         if (e.target.value.length > 0) {
             if (!phone_regex.test(e.target.value)) {
@@ -179,7 +185,7 @@ const EditHolidayHomeDetails = () => {
                             <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                 <Typography variant='p' sx={{ color: 'black' }}>Contact No 1</Typography>
                             </Box>
-                            <TextField error={error.contactNo1} required id="outlined-required" label="Enter Contact No" placeholder='Enter Contact No' fullWidth size='small' onChange={handleContactNo1Change} helperText={error.contactNo1 ? "There should be 10 digits" : ''} value={value.contactNo1} />
+                            <TextField error={error.contactNo1} required id="outlined-required" label="Enter Contact No" placeholder='Enter Contact No' fullWidth size='small' onChange={handleContactNo1Change} helperText={error.contactNo1 ? "There should be 10 digits" : ''} value={value.contactNo1} inputProps={{ maxLength: 10 }} />
                         </Box>
                         <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                             <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
