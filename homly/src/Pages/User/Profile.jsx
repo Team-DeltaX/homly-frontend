@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState,useContext } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -45,7 +45,7 @@ import PaymentDetailsCom from "../../Components/User/MyProfile/PaymentDetailsCom
 import Security from "../../Components/User/MyProfile/Security";
 import MyReservation from "../../Components/User/MyProfile/MyReservation";
 
-// let vh = window.innerHeight * 0.01;
+import { AuthContext } from "../../Contexts/AuthContext";
 
 const drawerWidth = 240;
 
@@ -74,6 +74,7 @@ const tabComponent = [
 ];
 
 const MyProfile = () => {
+  const { user } = useContext(AuthContext);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
@@ -286,7 +287,7 @@ const MyProfile = () => {
                       <Avatar
                         alt="Remy Sharp"
                         sx={{ height: "48px", width: "48px" }}
-                        src="https://img.freepik.com/premium-psd/3d-cartoon-man-smiling-portrait-isolated-transparent-background-png-psd_888962-1570.jpg"
+                        src={user.image}
                       />
                     </IconButton>
                   </Tooltip>
