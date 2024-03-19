@@ -128,9 +128,10 @@ const HolidayHomeDetails = () => {
                 console.log("get", data);
                 const events = data.map((item) => {
                     return {
-                        start: dayjs(item.reservation.CheckinDate).format('YYYY-MM-DD'),
-                        end: dayjs(item.reservation.CheckoutDate).add(1, 'day').format('YYYY-MM-DD'),
-                        title: item.reservation.ReservationId
+                        start: dayjs(item.CheckinDate).format('YYYY-MM-DD'),
+                        // end: dayjs(item.reservation.CheckoutDate).format('YYYY-MM-DD'),
+                        end: dayjs(item.CheckoutDate).add(1, 'day').format('YYYY-MM-DD'),
+                        title: item.ReservationId
                     }
                 })
                 setMyEventsList(events);
@@ -161,6 +162,8 @@ const HolidayHomeDetails = () => {
     const [open, setOpen] = useState(false);
     const [date, setDate] = useState('');
     const [reservationIds, setReservationIds] = useState([])
+    const [rooms, setRooms] = useState([])
+
 
     const handleClickOpen = (event) => {
 
@@ -171,7 +174,7 @@ const HolidayHomeDetails = () => {
         setReservationIds([])
         myEventsList.map((item) => {
             console.log("item", item.start)
-            if (dayjs(newDate).isBetween(item.start, dayjs(item.end), 'day', '[)') || dayjs(newDate).isSame(item.start, 'day') || dayjs(newDate).isSame(item.end, 'day')) {
+            if (dayjs(newDate).isBetween(item.start, item.end, 'day', '[)')) {
                 // setOpen(true);
                 // setDate(newDate);
                 console.log(newDate, item.title)
@@ -179,9 +182,24 @@ const HolidayHomeDetails = () => {
             }
 
         })
+
         setDate(newDate);
         setOpen(true);
     };
+
+
+    useEffect(() => {
+        if (reservationIds.length > 0) {
+            axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/reserved/`, { params: reservationIds })
+                .then((response) => {
+                    const data = response.data;
+                    setRooms(data)
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
+        }
+    }, [reservationIds]);
 
     const handleClose = (value) => {
         setOpen(false);
@@ -253,7 +271,7 @@ const HolidayHomeDetails = () => {
                                     />
                                 </Box>
 
-                                <CalendarDetails open={open} handleClose={handleClose} date={date} reservationIds={reservationIds} />
+                                <CalendarDetails open={open} handleClose={handleClose} date={date} rooms={rooms} />
 
 
 

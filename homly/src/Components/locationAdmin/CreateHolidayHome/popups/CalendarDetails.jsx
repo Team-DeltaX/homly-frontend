@@ -13,11 +13,16 @@ import PersonIcon from '@mui/icons-material/Person';
 import AddIcon from '@mui/icons-material/Add';
 import Typography from '@mui/material/Typography';
 import { Box } from '@mui/material';
+import axios from 'axios';
 
 
-export default function CalendarDetails({ date, open, handleClose, reservationIds }) {
+export default function CalendarDetails({ date, open, handleClose, rooms }) {
 
     let dateString = date.toString();
+
+
+
+
 
 
     return (
@@ -30,8 +35,8 @@ export default function CalendarDetails({ date, open, handleClose, reservationId
                         <Typography sx={{ width: '60px', fontWeight: 'bold' }}>Reserved</Typography>
                         <Box>
 
-                            {reservationIds.map((reservationId) => (
-                                <Typography key={reservationId} sx={{ color: 'grey' }}>{reservationId}</Typography>
+                            {rooms.map((room) => (
+                                <Typography key={room} sx={{ color: 'grey' }}>{room.toUpperCase()}</Typography>
                             ))}
 
                         </Box>
