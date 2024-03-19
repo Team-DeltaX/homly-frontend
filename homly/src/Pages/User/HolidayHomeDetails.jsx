@@ -91,7 +91,7 @@ export default function HolidayHomeDetails() {
     Wifi: false,
     Pool: false,
     Bar: false,
-    Facilities: null,
+    Facilities: "",
     food_rating: 0,
     value_for_money_rating: 0,
     staff_rating: 0,

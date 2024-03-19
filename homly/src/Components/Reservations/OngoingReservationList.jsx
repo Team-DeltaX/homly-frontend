@@ -42,7 +42,7 @@ const OngoingReservationList = (props) => {
     </Box> */}
     <Box className="home">
       {reservations.map(reservation => (
-         <OngoingReservationCard  reservation={reservation}/>
+         <OngoingReservationCard  reservation={reservation.reservation} reservedRoom={reservation.reservedrooms}/>
         // console.log("sadasd",reservation)
       ))}
     </Box>
