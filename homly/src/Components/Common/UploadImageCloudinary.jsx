@@ -25,7 +25,7 @@ const UploadImageCloudinary = ({
         uploadPreset: "auzerdek",
         // add one image limit
         multiple: isMultiple,
-        maxFiles: limit,
+        // maxFiles: limit,
         // upload folder
         folder: folderName,
         // crop image
