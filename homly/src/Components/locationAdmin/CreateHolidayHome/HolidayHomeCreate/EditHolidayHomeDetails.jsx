@@ -34,7 +34,7 @@ const EditHolidayHomeDetails = () => {
                     setValue({
                         name: homeDetails.Name || '',
                         address: homeDetails.Address || '',
-                        district: 'Kegalle', // Add the logic to get district if available
+                        district: homeDetails.district, // Add the logic to get district if available
                         description: homeDetails.Description || '',
                         contactNo1: (contactNo && contactNo.length > 0) ? contactNo[0].ContactNo : '',
                         contactNo2: (contactNo && contactNo.length > 1) ? contactNo[1].ContactNo : '',

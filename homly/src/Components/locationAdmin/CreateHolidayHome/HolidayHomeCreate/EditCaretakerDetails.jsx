@@ -3,6 +3,7 @@ import { Box, Typography, TextField, Grid } from '@mui/material'
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import UploadImageCloudinary from '../../../Common/UploadImageCloudinary';
 
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
@@ -45,6 +46,8 @@ const EditCaretakerDetails = ({ value, setValue, valueSecond, setValueSecond }) 
 
 
     console.log(value.caretakerName);
+
+    const [image, SetImage] = useState("")
 
 
     const [error, setError] = useState({
@@ -192,8 +195,8 @@ const EditCaretakerDetails = ({ value, setValue, valueSecond, setValueSecond }) 
                                 <Typography variant='p' sx={{ color: 'black' }}>Image</Typography>
                             </Box>
                             <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
+                                <UploadImageCloudinary folderName="caretaker" setImage={SetImage} isMultiple={false} limit={1} buttonName="Upload Image" buttonVariant="contained" isDisplayImageName={true} />
 
-                                <input type="file" />
                             </Box>
                         </Box>
                     </Grid>

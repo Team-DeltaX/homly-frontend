@@ -3,9 +3,10 @@ import { Box, Typography, TextField, Button } from '@mui/material'
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import UploadImageCloudinary from '../../Common/UploadImageCloudinary';
 
 
-const CareTakerDetailsView = ({ setSubmit, setAllValues, submitClicked, setcaretakerError, value, setValue, valueSecond, setValueSecond }) => {
+const CareTakerDetailsView = ({ setSubmit, value, setValue, valueSecond, setValueSecond, setImage1, setImage2 }) => {
   const [secondCaretaker, setSecondCaretaker] = useState(false);
 
   // const [value, setValue] = useState({
@@ -16,6 +17,7 @@ const CareTakerDetailsView = ({ setSubmit, setAllValues, submitClicked, setcaret
   //   caretakerName: '', caretakerContactNo: '', caretakerStatus: '', caretakerAddress: '', caretakerDescription: '',
   // })
 
+  // const [] = useState("").
   const [error, setError] = useState({});
 
   useEffect(() => {
@@ -217,8 +219,17 @@ const CareTakerDetailsView = ({ setSubmit, setAllValues, submitClicked, setcaret
               <Typography variant='p' sx={{ color: 'black' }}>Image</Typography>
             </Box>
             <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
+              <UploadImageCloudinary
+                folderName="caretaker"
+                setImage={setImage1}
+                isMultiple={false}
+                limit={1}
+                buttonName="Upload Image"
+                buttonVariant="outlined"
+                isDisplayImageName={true}
+              />
 
-              <input type="file" />
+
             </Box>
           </Box>
         </Box>
@@ -273,8 +284,17 @@ const CareTakerDetailsView = ({ setSubmit, setAllValues, submitClicked, setcaret
                 <Typography variant='p' sx={{ color: 'black' }}>Image</Typography>
               </Box>
               <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
+                <UploadImageCloudinary
+                  folderName="caretaker"
+                  setImage={setImage2}
+                  isMultiple={false}
+                  limit={1}
+                  buttonName="Upload Image"
+                  buttonVariant="outlined"
+                  isDisplayImageName={true}
+                />
 
-                <input type="file" />
+
               </Box>
             </Box>
             <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '1em' }}>
