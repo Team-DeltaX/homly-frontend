@@ -3,7 +3,6 @@ import { ThemeProvider,Button, Stack, Typography, Box } from "@mui/material";
 import { Link } from "react-router-dom";
 
 import theme from "../../../HomlyTheme";
-import browsMoreImg from '../../../Assets/images/browsMore.jpg'
 
 export default function BrowseMoreCom() {
   return (
@@ -34,7 +33,7 @@ export default function BrowseMoreCom() {
         <Box sx={{ position: "relative", width: "60%" }}>
           <Box
             component="img"
-            src={browsMoreImg}
+            src={"https://res.cloudinary.com/dwgeetnoj/image/upload/v1710836484/homly-main-images/browsMore_owuzl2.jpg"}
             alt=""
             sx={{ width: "100%", height: "100%" }}
           />
