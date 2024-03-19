@@ -26,8 +26,8 @@ import axios from "axios";
 
 const PrimaryDashboard = () => {
   const [showNav, setShowNav] = useState("nav_grid_deactive");
-  const [activecount,SetActivecount]=useState("")
-  const [inactivecount,setInactivecount]=useState("")
+  const [activecount,SetActivecount]=useState(0)
+  const [inactivecount,setInactivecount]=useState(0)
 
 
 const getstatus=()=>{

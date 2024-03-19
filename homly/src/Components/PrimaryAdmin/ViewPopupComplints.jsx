@@ -80,8 +80,11 @@ const ViewPopupComplaints = (props) => {
       ServiceNo: props.selecteduser.ServiceNo
     }).then(res=>{
       console.log(res)
+      props.SetOpensn(true)
     }).catch(err=>{
       console.log(err)
+      props.SetOpensnE(true)
+
     })
 
     
@@ -455,7 +458,7 @@ const ViewPopupComplaints = (props) => {
                     
                   }}
                 >
-                 <Typography sx={{fontSize:'11px'}} > Mark</Typography>
+                 <Typography sx={{fontSize:'11px'}} > Close</Typography>
                 </Button>
                 
               </Box>

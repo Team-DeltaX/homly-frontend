@@ -11,12 +11,16 @@ import Pagetop from "../../Components/PrimaryAdmin/PageTop";
 import ViewPopupComplaints from "../../Components/PrimaryAdmin/ViewPopupComplints";
 import axios from "axios";
 import Switch from "@mui/material/Switch";
+import ErrorSnackbar from "../../Components/User/ErrorSnackbar";
+import Snackbarp from "../../Components/PrimaryAdmin/snackbar/Snackbarp";
 
 const PrimaryComplaints = () => {
   const [popup, setpopup] = useState(false);
   const [selecteduser, setSelecteduser] = useState({});
   const [complaints, setcomplaints] = useState([]);
   const [prevcomplaints, setPrevcomplaints] = useState([]);
+  const [opensn,SetOpensn]=useState(false)
+  const [opensnE,SetOpensnE]=useState(false)
 
   const handlepopup = () => {
     setpopup(!popup);
@@ -86,6 +90,8 @@ const PrimaryComplaints = () => {
             fetchprevcomplaints={fetchprevcomplaints}
             prevcomplaints={prevcomplaints}
             popup={popup}
+            SetOpensn={SetOpensn}
+            SetOpensnE={SetOpensnE}
           />
         )}
 
@@ -97,6 +103,7 @@ const PrimaryComplaints = () => {
               sx={{ backgroundColor: "primary.main", height: "100vh" }}
             >
               <SideNavbar setShowNav={setShowNav}></SideNavbar>
+
             </Grid>
             <Grid
               className="container_grid"
@@ -108,6 +115,10 @@ const PrimaryComplaints = () => {
               }}
             >
               <Pagetop setShowNav={setShowNav} heading={"Complaints"} />
+              <Snackbarp isOpen={opensn} setIsOpen={SetOpensn} type="success" message={"User Blacklisted sucessFully!"}/>
+              <Snackbarp isOpen={opensnE} setIsOpen={SetOpensnE} type="error" message={"errr in user blacklisting!"}/>
+
+
               <Box
                 sx={{
                   display: "flex",

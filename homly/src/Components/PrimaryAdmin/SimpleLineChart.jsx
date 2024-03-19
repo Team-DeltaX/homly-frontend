@@ -50,7 +50,10 @@ export default function SimpleLineChart() {
   const [HolidayHome3, SetHolidayHome3] = React.useState("");
 
   const handleChangehh1 = (event) => {
+
     SetHolidayHome1(event.target.value);
+    // console.log('--------handlechange1----------')
+    // console.log(event.target.value)
     setH1data([4000, 3000, 2000, 2780, 1890, 2390, 3490]);
   };
 
