@@ -74,9 +74,10 @@ export default function HHCarouselforInterest({ interestedHH }) {
                 HHLocation={hh.holiday_home.Address}
                 HHPrice={hh.holiday_home.TotalRental}
                 HHRating={Math.round(hh.rating * 10) / 10}
-                HHImage={
-                  "https://www.ribbyhall.co.uk/uploads/images/featured/holiday-home-featured-1.jpg"
-                }
+                // HHImage={
+                //   "https://www.ribbyhall.co.uk/uploads/images/featured/holiday-home-featured-1.jpg"
+                // }
+                HHImage={hh.holiday_home.MainImage}
                 showInterest={true}
                 interst1_lable={hh.seperated.inter1.name}
                 interst1_value={hh.seperated.inter1.value*10}

@@ -23,7 +23,7 @@ export default function HolidayHomeCard({
 }) {
   return (
     <ThemeProvider theme={theme}>
-      <Box component={Link} to={`/HolidayHomeDetails/${HHID}`}>
+      <Box component={Link} to={`/HolidayHomeDetails/${HHID}`} sx={{textDecoration:'none'}}>
       <Card
         sx={{
           width: "257px",
@@ -32,6 +32,7 @@ export default function HolidayHomeCard({
           margin: "0 20px",
           borderRadius: "20px",
           boxShadow: "12px 1px 30px -18px rgba(0,0,0,0.75)",
+          textDecoration:'none !important'
         }}
       >
         <Box
@@ -52,7 +53,7 @@ export default function HolidayHomeCard({
               <Typography
                 sx={{ fontSize: { sm: "1.2rem" }, fontWeight: "medium" }}
               >
-                {HHName}
+                {HHName.toUpperCase()}
               </Typography>
               <Stack direction="row" sx={{ alignItems: "center" }}>
                 <StarIcon sx={{ color: "primary.main" }} />

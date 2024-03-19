@@ -9,8 +9,6 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
 export default function HHCarousel({ sortedByRatingHH }) {
-  
-
   return (
     <ThemeProvider theme={theme}>
       <Carousel
@@ -35,27 +33,27 @@ export default function HHCarousel({ sortedByRatingHH }) {
           desktop: {
             breakpoint: {
               max: 3000,
-              min: 1024
+              min: 1024,
             },
             items: 3,
-            partialVisibilityGutter: 40
+            partialVisibilityGutter: 40,
           },
           mobile: {
             breakpoint: {
               max: 464,
-              min: 0
+              min: 0,
             },
             items: 1,
-            partialVisibilityGutter: 30
+            partialVisibilityGutter: 30,
           },
           tablet: {
             breakpoint: {
               max: 1024,
-              min: 464
+              min: 464,
             },
             items: 2,
-            partialVisibilityGutter: 30
-          }
+            partialVisibilityGutter: 30,
+          },
         }}
         rewind={false}
         rewindWithAnimation={false}
@@ -74,9 +72,7 @@ export default function HHCarousel({ sortedByRatingHH }) {
             HHLocation={item.Address}
             HHPrice={item.TotalRental}
             HHRating={item.overall_rating}
-            HHImage={
-              "https://www.cnaccountants.com.au/wp-content/uploads/2023/03/hOLIDAY-HOMES-TAX.jpg"
-            }
+            HHImage={item.HHImage}
             showInterest={false}
           />
         ))}
