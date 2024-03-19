@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 
-const CloudinaryTest = () => {
+const UploadImageCloudinary = ({folderName,image,setImage,isMultiple,limit}) => {
   const cloudinaryRef = useRef();
   const widgetRef = useRef();
 
@@ -14,7 +14,8 @@ const CloudinaryTest = () => {
         cloudName: "dwgeetnoj",
         uploadPreset: "auzerdek",
         // add one image limit
-        multiple: false,
+        multiple: isMultiple,
+        maxFiles: limit,
         // upload folder
         folder: 'profile-pic',
         // crop image
@@ -52,4 +53,4 @@ const CloudinaryTest = () => {
   );
 };
 
-export default CloudinaryTest;
+export default UploadImageCloudinary;
