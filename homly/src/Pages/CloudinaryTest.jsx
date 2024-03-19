@@ -1,32 +1,53 @@
-import React, { useRef, useEffect,useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 
 const CloudinaryTest = () => {
   const cloudinaryRef = useRef();
   const widgetRef = useRef();
 
-  const [image, setImage] = useState("");
+  const [croppedImage, setCroppedImage] = useState(""); // Change 'image' to 'croppedImage'
 
   useEffect(() => {
     cloudinaryRef.current = window.cloudinary;
+    
     widgetRef.current = cloudinaryRef.current.createUploadWidget(
       {
         cloudName: "dwgeetnoj",
-        uploadPreset: "uih1dn9u",
+        uploadPreset: "auzerdek",
+        // add one image limit
+        multiple: false,
+        // upload folder
+        folder: 'profile-pic',
+        // crop image
+        cropping: true,
+        croppingAspectRatio: 1,
+        croppingCoordinatesMode: 'custom',
+        croppingShowDimensions: true,
+        croppingDefaultSelectionRatio: 0.75
       },
       function (error, result) {
         if (!error && result && result.event === "success") {
-          console.log("Done! Here is the image info: ", result.info);
-          setImage(result.info.url);
+          console.log("Done! Here is the image info: ", result);
+          setCroppedImage(result.info.secure_url); // Use result.info.secure_url
         }
       }
     );
   }, []);
 
   return (
-    <div>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "100%",
+      }}
+    >
       <div>cloudanaryTest</div>
       <button onClick={() => widgetRef.current.open()}>Upload Image</button>
-      <img src={image} alt="uploaded" />
+      <div>
+        {croppedImage && <img src={croppedImage} alt="cropped" style={{ width: "200px" }} />} {/* Use 'croppedImage' */}
+      </div>
     </div>
   );
 };
