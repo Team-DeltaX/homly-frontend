@@ -3,6 +3,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import { AuthContext } from "../Contexts/AuthContext";
 
+
+const CloudinaryTest = lazy(() => import("../Pages/CloudinaryTest"));
+
 const UserRegistration = lazy(() => import("../Pages/User/UserRegistration"));
 const UserLogin = lazy(() => import("../Pages/User/UserLogin"));
 const Home = lazy(() => import("../Pages/User/Home"));
@@ -18,6 +21,7 @@ const UserRouter = () =>{
   return(
       <Routes>
         <Route path="/" element={<UserLogin />} />
+        <Route path="/image" element={<CloudinaryTest />} />
         <Route path="/Registration" element={<UserRegistration />} />
         <Route path="/Home" element={<Home />} />
         <Route path="/HolidayHomes/:searchData" element={<HolidayHome />} />
