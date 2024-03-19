@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -28,6 +28,9 @@ import { Link, NavLink } from "react-router-dom";
 import theme from "../../../HomlyTheme";
 import "./NavBar.css";
 
+// import auth context
+import { AuthContext } from "../../../Contexts/AuthContext";
+
 const drawerWidth = 240;
 const pages = [
   { name: "Home", path: "/Home" },
@@ -43,6 +46,8 @@ const respSidePages = [
 ];
 
 const NavBar = ({ refContactUS }) => {
+  const { user } = useContext(AuthContext);
+
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
@@ -181,7 +186,7 @@ const NavBar = ({ refContactUS }) => {
                   <Avatar
                     alt="Remy Sharp"
                     sx={{ height: "48px", width: "48px" }}
-                    src="https://img.freepik.com/premium-psd/3d-cartoon-man-smiling-portrait-isolated-transparent-background-png-psd_888962-1570.jpg"
+                    src={user.image}
                   />
                 </IconButton>
               </Tooltip>
