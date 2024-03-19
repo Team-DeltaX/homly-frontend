@@ -23,8 +23,10 @@ const ViewPopupManage = (props) => {
           }
       )
       .then((res) => {
-        console.log("remove from blacklist sucess");
+        console.log("----------fetch after remove from blacklist--------");
         props.fetch_current_blacklist();
+        console.log("remove from blacklist sucess");
+        
       })
       .catch((error) => {
 
@@ -398,6 +400,7 @@ const ViewPopupManage = (props) => {
                     onClick={() => {
                         console.log("remove clicked");
                         handleremovefromblacklist();
+                      
                         props.handlepopup();
                     }}
                   >

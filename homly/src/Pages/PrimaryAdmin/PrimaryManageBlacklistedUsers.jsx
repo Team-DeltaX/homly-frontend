@@ -135,78 +135,78 @@ const PrimaryManageBlacklistedUsers = () => {
     setpopup(!popup);
   };
 
-  const data = [
-    {
-      Service_number: 1,
-      Nic_number: 27,
-      User_name: "Lonnie Antonioni",
-      date: "1/1/2023",
-      image: "http://dummyimage.com/130x100.png/cc0000/ffffff",
-    },
-    {
-      Service_number: 2,
-      Nic_number: 1014,
-      User_name: "Carlita Cominello",
-      date: "9/3/2023",
-      image: "http://dummyimage.com/100x100.png/5fa2dd/ffffff",
-    },
-    {
-      Service_number: 3,
-      Nic_number: 929,
-      User_name: "Rosene Loweth",
-      date: "7/8/2023",
-      image: "http://dummyimage.com/187x100.png/dddddd/000000",
-    },
-    {
-      Service_number: 4,
-      Nic_number: 32,
-      User_name: "Brittan Furby",
-      date: "8/5/2023",
-      image: "http://dummyimage.com/122x100.png/5fa2dd/ffffff",
-    },
-    {
-      Service_number: 5,
-      Nic_number: 9910,
-      User_name: "Zebulon Pinson",
-      date: "9/5/2023",
-      image: "http://dummyimage.com/130x100.png/5fa2dd/ffffff",
-    },
-    {
-      Service_number: 6,
-      Nic_number: 56905,
-      User_name: "Ara Tembey",
-      date: "11/06/2023",
-      image: "http://dummyimage.com/157x100.png/5fa2dd/ffffff",
-    },
-    {
-      Service_number: 7,
-      Nic_number: 9742,
-      User_name: "Alleyn Melliard",
-      date: "8/8/2023",
-      image: "http://dummyimage.com/156x100.png/dddddd/000000",
-    },
-    {
-      Service_number: 8,
-      Nic_number: 6,
-      User_name: "Wilfrid Grinyer",
-      date: "25/9/2023",
-      image: "http://dummyimage.com/100x100.png/5fa2dd/ffffff",
-    },
-    {
-      Service_number: 9,
-      Nic_number: 948,
-      User_name: "Yvon Inchbald",
-      date: "7/7/2023",
-      image: "http://dummyimage.com/172x100.png/5fa2dd/ffffff",
-    },
-    {
-      Service_number: 10,
-      Nic_number: 4,
-      User_name: "Torrie White",
-      date: "6/10/2023",
-      image: "http://dummyimage.com/162x100.png/5fa2dd/ffffff",
-    },
-  ];
+  // const data = [
+  //   {
+  //     Service_number: 1,
+  //     Nic_number: 27,
+  //     User_name: "Lonnie Antonioni",
+  //     date: "1/1/2023",
+  //     image: "http://dummyimage.com/130x100.png/cc0000/ffffff",
+  //   },
+  //   {
+  //     Service_number: 2,
+  //     Nic_number: 1014,
+  //     User_name: "Carlita Cominello",
+  //     date: "9/3/2023",
+  //     image: "http://dummyimage.com/100x100.png/5fa2dd/ffffff",
+  //   },
+  //   {
+  //     Service_number: 3,
+  //     Nic_number: 929,
+  //     User_name: "Rosene Loweth",
+  //     date: "7/8/2023",
+  //     image: "http://dummyimage.com/187x100.png/dddddd/000000",
+  //   },
+  //   {
+  //     Service_number: 4,
+  //     Nic_number: 32,
+  //     User_name: "Brittan Furby",
+  //     date: "8/5/2023",
+  //     image: "http://dummyimage.com/122x100.png/5fa2dd/ffffff",
+  //   },
+  //   {
+  //     Service_number: 5,
+  //     Nic_number: 9910,
+  //     User_name: "Zebulon Pinson",
+  //     date: "9/5/2023",
+  //     image: "http://dummyimage.com/130x100.png/5fa2dd/ffffff",
+  //   },
+  //   {
+  //     Service_number: 6,
+  //     Nic_number: 56905,
+  //     User_name: "Ara Tembey",
+  //     date: "11/06/2023",
+  //     image: "http://dummyimage.com/157x100.png/5fa2dd/ffffff",
+  //   },
+  //   {
+  //     Service_number: 7,
+  //     Nic_number: 9742,
+  //     User_name: "Alleyn Melliard",
+  //     date: "8/8/2023",
+  //     image: "http://dummyimage.com/156x100.png/dddddd/000000",
+  //   },
+  //   {
+  //     Service_number: 8,
+  //     Nic_number: 6,
+  //     User_name: "Wilfrid Grinyer",
+  //     date: "25/9/2023",
+  //     image: "http://dummyimage.com/100x100.png/5fa2dd/ffffff",
+  //   },
+  //   {
+  //     Service_number: 9,
+  //     Nic_number: 948,
+  //     User_name: "Yvon Inchbald",
+  //     date: "7/7/2023",
+  //     image: "http://dummyimage.com/172x100.png/5fa2dd/ffffff",
+  //   },
+  //   {
+  //     Service_number: 10,
+  //     Nic_number: 4,
+  //     User_name: "Torrie White",
+  //     date: "6/10/2023",
+  //     image: "http://dummyimage.com/162x100.png/5fa2dd/ffffff",
+  //   },
+  // ];
   //csv headers
   const headers = [
     {
@@ -232,9 +232,7 @@ const PrimaryManageBlacklistedUsers = () => {
     data: blacklistedusers,
   };
 
-  useEffect(() => {
-    fetch_current_blacklist()
-  }, []);
+ 
 
   const [showNav, setShowNav] = useState("nav_grid_deactive");
 
@@ -242,14 +240,18 @@ const PrimaryManageBlacklistedUsers = () => {
     axios
     .get("http://localhost:3002/admin/auth/blacklist")
     .then((res) => {
-      
-      setBlacklistedusers(res.data.reverse());
+      console.log('----fetch current blacklist---');
+      setBlacklistedusers(res.data);
     })
     .catch((err) => {
       console.log(err);
     });
 
   }
+  useEffect(() => {
+    console.log('---useeffect---')
+    fetch_current_blacklist()
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
@@ -300,7 +302,7 @@ const PrimaryManageBlacklistedUsers = () => {
               <Box
                 sx={{
                   marginTop: "1%",
-                  maxHeight: "470px",
+                  maxHeight: {md:"470px",xs:'630px'},
                   overflow: "scroll",
                   padding: "2%",
                 }}
@@ -315,6 +317,7 @@ const PrimaryManageBlacklistedUsers = () => {
                           .startsWith(search.toLocaleLowerCase()) 
                   })
                   .map((data) => {
+                    console.log('---mapping start---')
                     return (
                       <BlacklistedUsersCardNew
                         handlepopup={handlepopup}
@@ -325,6 +328,9 @@ const PrimaryManageBlacklistedUsers = () => {
                        
                        
                       />
+
+                     
+                     
                     );
                   })}
               </Box>

@@ -46,6 +46,7 @@ export default function ConfirmPopup({open, setOpen,title,text,controlfunction})
         <DialogActions>
           <Button onClick={handleClose}><Typography>No</Typography></Button>
           <Button onClick={()=>{
+            console.log('ok clicked')
              controlfunction()
 
            

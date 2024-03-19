@@ -1,6 +1,6 @@
 // import '../App.css';
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SideNavbar from "../../Components/PrimaryAdmin/SideNavbar";
 
 import Box from "@mui/material/Box";
@@ -22,10 +22,32 @@ import { PieChart } from "@mui/x-charts/PieChart";
 import Income from "../../Components/PrimaryAdmin/Income";
 import PDashboardCon from "../../Components/PrimaryAdmin/PDashboardCon";
 import SimpleLineChart from "../../Components/PrimaryAdmin/SimpleLineChart";
+import axios from "axios";
 
 const PrimaryDashboard = () => {
   const [showNav, setShowNav] = useState("nav_grid_deactive");
+  const [activecount,SetActivecount]=useState("")
+  const [inactivecount,setInactivecount]=useState("")
 
+
+const getstatus=()=>{
+  axios.get('http://localhost:3002/admin/auth/hhstatus')
+  .then((res)=>{
+    SetActivecount(res.data.Active)
+    setInactivecount(res.data.Inactive)
+    console.log(`--------------------`)
+    console.log(res)
+    // console.log(activecount)
+  
+
+  }).catch((err)=>{
+    console.log(err)
+  })
+}
+useEffect(()=>{
+  getstatus()
+
+},[])
   return (
     <ThemeProvider theme={theme}>
       <Box
@@ -69,7 +91,7 @@ const PrimaryDashboard = () => {
                       maxHeight: { md: "645px", xs: "auto" },
                     }}
                   >
-                    <PDashboardCon />
+                    <Box><PDashboardCon /></Box>
                     <Box
                       sx={{
                         display: "flex",
@@ -93,13 +115,13 @@ const PrimaryDashboard = () => {
                                 data: [
                                   {
                                     id: 0,
-                                    value: 10,
+                                    value: activecount,
                                     label: "Active",
                                     color: "#FF5003",
                                   },
                                   {
                                     id: 1,
-                                    value: 2,
+                                    value:inactivecount,
                                     label: "Inactive",
                                     color: "#002347",
                                   },

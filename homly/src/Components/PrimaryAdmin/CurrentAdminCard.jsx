@@ -344,7 +344,6 @@ const CurrentAdminCard = (props) => {
             <Typography sx={{fontSize:'12px'}}>{buttonname}</Typography>
           </Button>
 
-          {/* reset password */}
           <ConfirmPopup
             open={open}
             setOpen={setOpen}
