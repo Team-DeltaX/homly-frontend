@@ -33,7 +33,8 @@ const Report = () => {
                                 <PageTitle setShowNav={setShowNav} title={'Report'} bell={true}/>
                                { /*comment*/ }
                                dinali
-
+                            </Box>
+                        </Grid>
                         <Grid className='container_grid' xs={9} sx={{ backgroundColor: 'white', borderTopLeftRadius: '20px', padding: '10px 30px', height: '100vh', position: 'relative' }}>
                             <Box sx={{ height: "100%" }}>
                                 <PageTitle setShowNav={setShowNav} title={'Report'} bell={true} />
