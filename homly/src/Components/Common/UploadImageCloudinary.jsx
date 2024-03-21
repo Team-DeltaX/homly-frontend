@@ -9,6 +9,8 @@ const UploadImageCloudinary = ({
   limit,
   buttonName,
   buttonVariant,
+  buttonSize,
+  isDisabled,
   isDisplayImageName,
 }) => {
   const cloudinaryRef = useRef();
@@ -23,6 +25,8 @@ const UploadImageCloudinary = ({
       {
         cloudName: "dwgeetnoj",
         uploadPreset: "auzerdek",
+        // select file and url
+        sources: ["local", "url"],
         // add one image limit
         multiple: isMultiple,
         // maxFiles: limit,
@@ -43,14 +47,28 @@ const UploadImageCloudinary = ({
         }
       }
     );
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <ThemeProvider theme={theme}>
-      <Stack direction="row" sx={{justifyContent:"center"}}>
-        <Button variant={buttonVariant} onClick={() => widgetRef.current.open()}>{buttonName}</Button>
-        <Typography sx={{ display: isDisplayImageName?"flex":"none", marginLeft:"5px" }}>{imageName}</Typography>
+      <Stack direction="row" sx={{ justifyContent: "center" }}>
+        <Button
+          variant={buttonVariant ? buttonVariant : 'outlined'}
+          size={buttonSize ? buttonSize : "small"}
+          disabled={isDisabled ? isDisabled : false}
+          onClick={() => widgetRef.current.open()}
+        >
+          {buttonName?buttonName:"upload"}
+        </Button>
+        <Typography
+          sx={{
+            display: isDisplayImageName ? "flex" : "none",
+            marginLeft: "5px",
+          }}
+        >
+          {imageName}
+        </Typography>
       </Stack>
     </ThemeProvider>
   );
