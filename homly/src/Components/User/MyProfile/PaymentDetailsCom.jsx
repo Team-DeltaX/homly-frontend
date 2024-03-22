@@ -1,5 +1,5 @@
 // import React, { useContext } from "react";
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Stack,
@@ -17,8 +17,13 @@ import {
 
 import theme from "../../../HomlyTheme";
 import AddedCardCom from "../PaymentCard/AddedCardCom";
+import AddCardPopup from "../PaymentCard/AddCardPopup";
 
 const PaymentDetailsCom = () => {
+  const [cardOpen, setCardOpen] = useState(false);
+
+  const [cardDetails, setCardDetails] = useState([]);
+
   return (
     <ThemeProvider theme={theme}>
       <Box>
@@ -45,19 +50,21 @@ const PaymentDetailsCom = () => {
                     justifyContent: "end",
                   }}
                 >
-                  <Button variant="contained">Add Card</Button>
+                  <Button variant="contained" onClick={() => setCardOpen(true)}>
+                    Add Card
+                  </Button>
                 </Stack>
                 <Stack
                   direction="column"
                   sx={{ width: "100%", margin: "10px 5px" }}
                 >
-                  <Box sx={{marginTop:'10px'}}>
+                  <Box sx={{ marginTop: "10px" }}>
                     <AddedCardCom
                       cardName="Card Holder Name"
                       cardNumber="1234 5678 9101 1121"
                     />
                   </Box>
-                  <Box sx={{marginTop:'10px'}}>
+                  <Box sx={{ marginTop: "10px" }}>
                     <AddedCardCom
                       cardName="Card Holder Name"
                       cardNumber="1234 5678 9101 1121"
@@ -68,6 +75,14 @@ const PaymentDetailsCom = () => {
             </CardContent>
           </Card>
         </Box>
+        {/* add card popup */}
+        <AddCardPopup
+          open={cardOpen}
+          setOpen={setCardOpen}
+          cardDetails={cardDetails}
+          setCardDetails={setCardDetails}
+          cardCount={cardDetails?cardDetails.length:0}
+        />
       </Box>
     </ThemeProvider>
   );
