@@ -7,6 +7,7 @@ import { Container, Grid, ThemeProvider } from "@mui/material";
 import theme from "../../HomlyTheme";
 import Pagetop from "../../Components/PrimaryAdmin/PageTop";
 import { useState } from "react";
+import ReportIncome from "../../Components/Common/Report/Report";
 
 const PrimaryReport = () => {
   const [showNav, setShowNav] = useState("nav_grid_deactive");
@@ -14,7 +15,7 @@ const PrimaryReport = () => {
   return (
     <ThemeProvider theme={theme}>
       <Box
-      className="main_continer"
+        className="main_continer"
         sx={{
           width: "100%",
           backgroundColor: "primary.main",
@@ -22,27 +23,28 @@ const PrimaryReport = () => {
           overflow: "hidden",
         }}
       >
-        <Container  maxWidth="xl" style={{ padding: "0px" }}>
-            <Grid container sx={{ position: "relative" }}>
-              <Grid
-               className={showNav}
-                xs={3}
-                sx={{ backgroundColor: "primary.main", height: "100vh" }}
-              >
-                <SideNavbar setShowNav={setShowNav}></SideNavbar>
-              </Grid>
-              <Grid
-               className="container_grid"
-                xs={9}
-                sx={{
-                  backgroundColor: "white",
-                  borderTopLeftRadius: "20px",
-                  padding: "0 20px",
-                }}
-              >
-                <Pagetop setShowNav={setShowNav} heading={"Report"} />
-              </Grid>
+        <Container maxWidth="xl" style={{ padding: "0px" }}>
+          <Grid container sx={{ position: "relative" }}>
+            <Grid
+              className={showNav}
+              xs={3}
+              sx={{ backgroundColor: "primary.main", height: "100vh" }}
+            >
+              <SideNavbar setShowNav={setShowNav}></SideNavbar>
             </Grid>
+            <Grid
+              className="container_grid"
+              xs={9}
+              sx={{
+                backgroundColor: "white",
+                borderTopLeftRadius: "20px",
+                padding: "0 20px",
+              }}
+            >
+              <Pagetop setShowNav={setShowNav} heading={"Report"} />
+              <ReportIncome />
+            </Grid>
+          </Grid>
         </Container>
       </Box>
     </ThemeProvider>
