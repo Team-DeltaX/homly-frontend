@@ -7,7 +7,7 @@ import { Container, Grid, ThemeProvider } from "@mui/material";
 import theme from "../../HomlyTheme";
 import Pagetop from "../../Components/PrimaryAdmin/PageTop";
 import { useState } from "react";
-import ReportIncome from "../../Components/Common/Report/Report";
+import IncomeReport from "../../Components/Common/Report/IncomeReport";
 
 const PrimaryReport = () => {
   const [showNav, setShowNav] = useState("nav_grid_deactive");
@@ -41,8 +41,8 @@ const PrimaryReport = () => {
                 padding: "0 20px",
               }}
             >
-              <Pagetop setShowNav={setShowNav} heading={"Report"} />
-              <ReportIncome />
+              <Pagetop setShowNav={setShowNav} heading={"Generate Reports"} />
+              <IncomeReport/>
             </Grid>
           </Grid>
         </Container>
