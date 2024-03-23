@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import {
   Box,
   Container,
@@ -11,24 +12,19 @@ import {
   Stack,
   Avatar,
 } from "@mui/material";
-
 import BadgeIcon from "@mui/icons-material/Badge";
 import EmailIcon from "@mui/icons-material/Email";
 import CallIcon from "@mui/icons-material/Call";
 import PasswordIcon from "@mui/icons-material/Password";
-
 import ErrorSnackbar from "../../Components/User/ErrorSnackbar";
-
-import theme from "../../HomlyTheme";
-import "./UserStyle.css";
 import logo from "../../Assets/images/logo.png";
 import wave from "../../Assets/images/wave.png";
-
-import { Link } from "react-router-dom";
 import InputPasswordWithIcon from "../../Components/User/TextField/InputPasswordWithIcon";
 import InputTextWithIcon from "../../Components/User/TextField/InputTextWithIcon";
 import PasswordStrength from "../../Components/User/PasswordStrength";
 import UploadImageCloudinary from "../../Components/Common/UploadImageCloudinary";
+import theme from "../../HomlyTheme";
+import "./UserStyle.css";
 
 const Img = styled("img")({
   display: "block",
@@ -37,9 +33,6 @@ const Img = styled("img")({
   padding: "5%",
   filter: "drop-shadow(17px 18px 90px  #872341)",
 });
-
-// let vh = window.innerHeight * 0.01;
-// document.documentElement.style.setProperty("--vh", `${vh}px`);
 
 const UserRegistration = () => {
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -82,6 +75,7 @@ const UserRegistration = () => {
     } else {
       setIsDisabled(true);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [Email, ContactNo, errorConfirmPassword, passwordStrength]);
 
   const handleSubmit = (e) => {
@@ -251,8 +245,6 @@ const UserRegistration = () => {
                     onSubmit={handleSubmit}
                     onReset={handleReset}
                   >
-                    {/* <AvatarImage /> */}
-
                     <Stack
                       direction="row"
                       sx={{
