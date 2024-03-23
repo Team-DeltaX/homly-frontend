@@ -4,7 +4,7 @@ import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 
 export default function Snackbarp({ isOpen, type, message, setIsOpen }) {
-  //   const [open, setOpen] = React.useState(false);
+
 
   const handleClick = () => {
     setIsOpen(true);

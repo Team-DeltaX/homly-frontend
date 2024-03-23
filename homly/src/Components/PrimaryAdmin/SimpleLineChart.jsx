@@ -17,11 +17,11 @@ export default function SimpleLineChart() {
   const [HolidayHomes, setHolidayHomes] = React.useState([]);
 
   const Home1 = h1data;
-  // [4000, 3000, 2000, 2780, 1890, 2390, 3490];
+
   const Home2 = h2data;
-  // [2400, 1398, 9800, 3908, 4800, 3800, 4300];
+
   const Home3 = h3data;
-  // [2434, 2398, 6345, 9533, 4999, 7600, 1000];
+
   const [xaxisd, setXasisd] = React.useState([]);
 
   const xLabels = [
@@ -33,24 +33,12 @@ export default function SimpleLineChart() {
     xaxisd[5],
     xaxisd[6],
   ];
-  // const HolidayHomes = [
-  //   // { id: "0", name: "None" },
-  //   { id: "1", name: "hh1" },
-  //   { id: "2", name: "hh2" },
-  //   { id: "3", name: "hh3" },
-  //   { id: "4", name: "hh4" },
-  //   { id: "5", name: "hh5" },
-  //   { id: "6", name: "hh6" },
-  //   { id: "7", name: "hh7" },
-  //   { id: "8", name: "hh8" },
-  // ];
 
   const [HolidayHome1, SetHolidayHome1] = React.useState("");
   const [HolidayHome2, SetHolidayHome2] = React.useState("");
   const [HolidayHome3, SetHolidayHome3] = React.useState("");
 
   const handleChangehh1 = (event) => {
-
     SetHolidayHome1(event.target.value);
     // console.log('--------handlechange1----------')
     // console.log(event.target.value)
@@ -78,23 +66,22 @@ export default function SimpleLineChart() {
 
     return dates;
   };
-  const getHHnames=()=>{
-    axios.get('http://localhost:3002/admin/auth/hhnames')
-    .then((res)=>{
-      // setHolidayHomes1(res.data.HH)
-      // console.log('---------holiday homes-------')
-      // console.log(res.data.HH)
-      setHolidayHomes(res.data.HH)
-    
-    })
-    .catch((err)=>{
-      console.log(err)
-    }
-    )
-  }
+  const getHHnames = () => {
+    axios
+      .get("http://localhost:3002/admin/auth/hhnames")
+      .then((res) => {
+        // setHolidayHomes1(res.data.HH)
+        // console.log('---------holiday homes-------')
+        // console.log(res.data.HH)
+        setHolidayHomes(res.data.HH);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   React.useEffect(() => {
     setXasisd(getLastSevenDays());
-    getHHnames()
+    getHHnames();
   }, []);
 
   return (
@@ -126,16 +113,10 @@ export default function SimpleLineChart() {
               label="Holidayhome1"
               onChange={handleChangehh1}
             >
-              {/* <MenuItem value="">
-            <em>None</em>
-          </MenuItem> 
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem> */}
-
               {HolidayHomes.filter((hh) => {
                 return (
-                  (HolidayHome2 !== hh.HolidayHomeId && HolidayHome3 !== hh.HolidayHomeId) 
+                  HolidayHome2 !== hh.HolidayHomeId &&
+                  HolidayHome3 !== hh.HolidayHomeId
                 );
               }).map((hh) => {
                 return <MenuItem value={hh.HolidayHomeId}>{hh.Name}</MenuItem>;
@@ -180,15 +161,10 @@ export default function SimpleLineChart() {
               label="Holidayhome2"
               onChange={handleChangehh2}
             >
-              {/* <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem> */}
               {HolidayHomes.filter((hh) => {
                 return (
-                  (HolidayHome1 !== hh.HolidayHomeId && HolidayHome3 !== hh.HolidayHomeId)
+                  HolidayHome1 !== hh.HolidayHomeId &&
+                  HolidayHome3 !== hh.HolidayHomeId
                 );
               }).map((hh) => {
                 return <MenuItem value={hh.HolidayHomeId}>{hh.Name}</MenuItem>;
@@ -234,16 +210,10 @@ export default function SimpleLineChart() {
               label="Holidayhome3"
               onChange={handleChangehh3}
             >
-              {/* <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem> */}
-
               {HolidayHomes.filter((hh) => {
                 return (
-                  (HolidayHome1 !== hh.HolidayHomeId && HolidayHome2 !== hh.HolidayHomeId)
+                  HolidayHome1 !== hh.HolidayHomeId &&
+                  HolidayHome2 !== hh.HolidayHomeId
                 );
               }).map((hh) => {
                 return <MenuItem value={hh.HolidayHomeId}>{hh.Name}</MenuItem>;

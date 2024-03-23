@@ -20,110 +20,73 @@ import axios from "axios";
 const ViewPopupComplaints = (props) => {
   const [reson, setReson] = useState("");
   const [expand, setExpand] = useState(false);
-  // const [opend, setOpend] = useState(false);
+
   const [Open, setOpen] = useState(false);
-  const [disable,Setdisable]=useState(false)
+  const [disable, Setdisable] = useState(false);
 
+  const check_already_exists = () => {
+    axios
+      .get(
+        `http://localhost:3002/admin/auth/isexist/${props.selecteduser.ServiceNo}`
+      )
+      .then((res) => {
+        Setdisable(res.data.exist);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const mark_on_open = () => {
+    axios
+      .put("http://localhost:3002/admin/auth/markcomplaint", {
+        ServiceNo: props.selecteduser.ServiceNo,
+      })
+      .then(() => {
+        console.log("marked as blacklisted");
+        props.fetchcomplaints();
+      });
+  };
 
-  
+  const handleaddtoblacklist = () => {
+    axios
+      .post("http://localhost:3002/admin/auth/blacklist", {
+        Reason: reson,
+        ServiceNo: props.selecteduser.ServiceNo,
+      })
+      .then((res) => {
+        console.log(res);
+        props.SetOpensn(true);
+      })
+      .catch((err) => {
+        console.log(err);
+        props.SetOpensnE(true);
+      });
 
-  // const data = [
-  //   {
-  //     Service_number: 1,
-  //     Nic_number: 27,
-  //     User_name: "Lonnie Antonioni",
-  //     date: "1/31/2023",
-  //     description:
-  //       "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available",
-  //   },
-  //   {
-  //     Service_number: 2,
-  //     Nic_number: 1014,
-  //     User_name: "Carlita Cominello",
-  //     date: "9/13/2023",
-  //     description:
-  //       "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is available",
-  //   },
-  // ];
-
-  //   const fetchcomplaints=()=>{
-  //     axios.get('http://localhost:3002/locationadmin/complaints')
-  //     .then(res=>{
-  //         setPrevcomplaints(res.data)
-
-  //     }).catch(err=>{
-  //         console.log(err)
-  //     })
-  // }
-  const check_already_exists=()=>{
-    axios.get(`http://localhost:3002/admin/auth/isexist/${props.selecteduser.ServiceNo}`)
-    .then((res)=>{
-      Setdisable(res.data.exist)
-      
-    }).catch(err=>{
-      console.log(err)
-    })
-
-  }
-  const mark_on_open=()=>{
-    axios.put("http://localhost:3002/admin/auth/markcomplaint",{
-      ServiceNo:props.selecteduser.ServiceNo
-    }).then(()=>{
-      console.log('marked as blacklisted')
-      props.fetchcomplaints();
-    })
-  }
-  
-  const handleaddtoblacklist=()=>{
-    axios.post('http://localhost:3002/admin/auth/blacklist',{
-      Reason: reson,
-      ServiceNo: props.selecteduser.ServiceNo
-    }).then(res=>{
-      console.log(res)
-      props.SetOpensn(true)
-    }).catch(err=>{
-      console.log(err)
-      props.SetOpensnE(true)
-
-    })
-
-    
-    setOpen(false)
+    setOpen(false);
     props.handlepopup();
-    
-  }
-
+  };
 
   useEffect(() => {
     props.fetchprevcomplaints();
     check_already_exists();
     mark_on_open();
-    }, [props.popup]);
+  }, [props.popup]);
 
-  const handleclick=()=>{
-    console.log('handle')
+  const handleclick = () => {
+    console.log("handle");
     setOpen(false);
-    
+  };
 
-  }
-
- 
-
-  const getonlydate=(date)=>{
+  const getonlydate = (date) => {
     const dateTimeString = props.prevcomplaints[date].created_at;
     const dateObject = new Date(dateTimeString);
     const year = dateObject.getFullYear();
     const month = String(dateObject.getMonth() + 1).padStart(2, "0");
     const day = String(dateObject.getDate()).padStart(2, "0");
-  
+
     const dateOnlyString = `${year}-${month}-${day}`;
-    return dateOnlyString
-
-
-
-  }
- 
-
+    return dateOnlyString;
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -186,34 +149,8 @@ const ViewPopupComplaints = (props) => {
                 // width:'100%',
               }}
             >
-              {/* <Box
-                sx={{
-                  // width:"100%",
-                  display: "flex",
-                  flexDirection: { md: "row", xs: "column" },
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  marginTop: { md: "5px", xs: "199px" },
-                }}
-              >
-                <Box>
-                  <Typography h6 sx={{ flex: 1 }} >
-                    Service Number
-                  </Typography>
-                </Box>
-                <Box sx={{ flex: 1 }} >
-                  <TextField
-                    disabled
-                    value={props.selecteduser.ServiceNo}
-                    size="small"
-                    sx={{ width: "85%", margin: "5px" }}
-                  ></TextField>
-                </Box>
-              </Box> */}
-
               <Box
                 sx={{
-                  // width:"100%",
                   display: "flex",
                   flexDirection: { md: "row", xs: "column" },
                   justifyContent: "space-between",
@@ -237,7 +174,6 @@ const ViewPopupComplaints = (props) => {
 
               <Box
                 sx={{
-                  // width:"100%",
                   display: "flex",
                   flexDirection: { md: "row", xs: "column" },
                   justifyContent: "space-between",
@@ -260,7 +196,6 @@ const ViewPopupComplaints = (props) => {
 
               <Box
                 sx={{
-                  // width:"100%",
                   display: "flex",
                   flexDirection: { md: "row", xs: "column" },
                   justifyContent: "space-between",
@@ -282,7 +217,6 @@ const ViewPopupComplaints = (props) => {
               </Box>
               <Box
                 sx={{
-                  // width:"100%",
                   display: "flex",
                   flexDirection: { md: "row", xs: "column" },
                   justifyContent: "space-between",
@@ -307,7 +241,6 @@ const ViewPopupComplaints = (props) => {
 
               <Box
                 sx={{
-                  // width:"100%",
                   display: "flex",
                   flexDirection: { md: "row", xs: "column" },
                   justifyContent: "space-between",
@@ -332,7 +265,6 @@ const ViewPopupComplaints = (props) => {
 
               <Box
                 sx={{
-                  // width:"100%",
                   display: "flex",
                   flexDirection: { md: "row", xs: "column" },
                   justifyContent: "space-between",
@@ -340,10 +272,11 @@ const ViewPopupComplaints = (props) => {
                   margin: "10px",
                 }}
               >
-                {/* {props.complaints.filter(data=>((data.Marked===true)&&(data.ServiceNo===props.selecteduser.ServiceNo))).map(data =>  setPrevcomplaints(prevArray => [...prevArray, data.Reson]))} */}
-
                 <div>
-                  {(props.prevcomplaints.length >0 )&&( props.selecteduser.ComplaintID!==props.prevcomplaints[props.prevcomplaints.length-1].ComplaintID)? (
+                  {props.prevcomplaints.length > 0 &&
+                  props.selecteduser.ComplaintID !==
+                    props.prevcomplaints[props.prevcomplaints.length - 1]
+                      .ComplaintID ? (
                     <Accordion
                       expanded={!expand}
                       onClick={() => {
@@ -359,29 +292,33 @@ const ViewPopupComplaints = (props) => {
                         aria-controls="panel2-content"
                         id="panel2-header"
                       >
-                        <Typography >
-                          
-                            <Box>Complaint on</Box>
-                            
-                          
-                          
+                        <Typography>
+                          <Box>Complaint on</Box>
                         </Typography>
-                        <Typography >
-                          
-                          
-                          <Box > {getonlydate(props.prevcomplaints.length-1)}</Box>
-                        
-                        
-                      </Typography>
+                        <Typography>
+                          <Box>
+                            {" "}
+                            {getonlydate(props.prevcomplaints.length - 1)}
+                          </Box>
+                        </Typography>
                       </AccordionSummary>
                       <AccordionDetails>
-                        <Typography>{props.prevcomplaints[props.prevcomplaints.length-1].Reason}</Typography>
+                        <Typography>
+                          {
+                            props.prevcomplaints[
+                              props.prevcomplaints.length - 1
+                            ].Reason
+                          }
+                        </Typography>
                       </AccordionDetails>
                     </Accordion>
                   ) : (
                     ""
                   )}
-                  {(props.prevcomplaints.length >=2)&&( props.selecteduser.ComplaintID!==props.prevcomplaints[props.prevcomplaints.length-2].ComplaintID) ? (
+                  {props.prevcomplaints.length >= 2 &&
+                  props.selecteduser.ComplaintID !==
+                    props.prevcomplaints[props.prevcomplaints.length - 2]
+                      .ComplaintID ? (
                     <Accordion
                       expanded={expand}
                       onClick={() => {
@@ -398,11 +335,18 @@ const ViewPopupComplaints = (props) => {
                         id="panel2-header"
                       >
                         <Typography>
-                          Complaint on {getonlydate(props.prevcomplaints.length-2)}
+                          Complaint on{" "}
+                          {getonlydate(props.prevcomplaints.length - 2)}
                         </Typography>
                       </AccordionSummary>
                       <AccordionDetails>
-                        <Typography>{props.prevcomplaints[props.prevcomplaints.length-2].Reason}</Typography>
+                        <Typography>
+                          {
+                            props.prevcomplaints[
+                              props.prevcomplaints.length - 2
+                            ].Reason
+                          }
+                        </Typography>
                       </AccordionDetails>
                     </Accordion>
                   ) : (
@@ -413,7 +357,6 @@ const ViewPopupComplaints = (props) => {
 
               <Box
                 sx={{
-                  // width:"100%",
                   display: "flex",
                   flexDirection: { md: "row", sx: "column" },
                   justifyContent: "flex-end",
@@ -421,48 +364,50 @@ const ViewPopupComplaints = (props) => {
                   margin: "10px",
                 }}
               >
-                {/* <Box><Typography sx={{fontFamily:'roboto',}} h6>Service Number</Typography></Box>
-                            <Box ></Box> */}
-                <Button variant="contained" sx={{ marginRight: "3%", }}>
-                  <Typography sx={{fontSize:'10px'}}>Send Warning</Typography>
+                <Button variant="contained" sx={{ marginRight: "3%" }}>
+                  <Typography sx={{ fontSize: "10px" }}>
+                    Send Warning
+                  </Typography>
                 </Button>
                 <ConfirmPopup
-            open={Open}
-            setOpen={setOpen}
-            title={"Black List User Confirmation"}
-            text={"Are you sure you want to Blacklist This User?"}
-            
-            controlfunction={handleaddtoblacklist}
-          />
+                  open={Open}
+                  setOpen={setOpen}
+                  title={"Black List User Confirmation"}
+                  text={"Are you sure you want to Blacklist This User?"}
+                  controlfunction={handleaddtoblacklist}
+                />
 
-                <Button variant="contained" sx={{ marginRight: "3%" }}
-                onClick={()=>{
-                 if(reson!==""){
-                  setOpen(true)
-                 }  
-                
-                }}
-                disabled={disable}
+                <Button
+                  variant="contained"
+                  sx={{ marginRight: "3%" }}
+                  onClick={() => {
+                    if (reson !== "") {
+                      setOpen(true);
+                    }
+                  }}
+                  disabled={disable}
                 >
-               
-                  <Typography sx={{fontSize:'10px'}}>Add To Blacklist</Typography>
+                  <Typography sx={{ fontSize: "10px" }}>
+                    Add To Blacklist
+                  </Typography>
                 </Button>
                 <Button
-                
                   variant="outlined"
                   sx={{ marginRight: "5%" }}
                   onClick={() => {
-                    setOpen(true)
-                    
+                    setOpen(true);
+
                     props.handlepopup();
-                    
                   }}
                 >
-                 <Typography sx={{fontSize:'11px'}} > Close</Typography>
+                  <Typography sx={{ fontSize: "11px" }}> Close</Typography>
                 </Button>
-                
               </Box>
-              {disable &&<Typography sx={{color:'red',fontSize:'10px'}}>Note:This User Alread Blacklisted!</Typography>}
+              {disable && (
+                <Typography sx={{ color: "red", fontSize: "10px" }}>
+                  Note:This User Alread Blacklisted!
+                </Typography>
+              )}
             </Box>
           </Box>
         </Box>

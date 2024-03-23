@@ -7,7 +7,7 @@ export default function AutohideSnackbar({handleClick,handleClose,open,setopen,s
 
   return (
     <div>
-      {/* <Button onClick={handleClick}>Open Snackbar</Button> */}
+     
       <Snackbar
       
         open={open}

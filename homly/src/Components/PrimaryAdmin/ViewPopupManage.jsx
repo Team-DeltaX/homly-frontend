@@ -26,11 +26,14 @@ const ViewPopupManage = (props) => {
         console.log("----------fetch after remove from blacklist--------");
         props.fetch_current_blacklist();
         console.log("remove from blacklist sucess");
+        props.SetOpensn(true)
+      
         
       })
       .catch((error) => {
 
         console.log(`delete from error is : ${error}`);
+        props.SetOpensnE(true)
       });
 
     axios

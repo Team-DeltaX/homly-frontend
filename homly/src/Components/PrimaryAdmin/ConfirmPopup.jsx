@@ -9,7 +9,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { Typography } from '@mui/material';
 
 export default function ConfirmPopup({open, setOpen,title,text,controlfunction}) {
-
+  
   
 
   const handleClose = () => {
