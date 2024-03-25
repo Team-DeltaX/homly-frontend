@@ -28,6 +28,7 @@ import MainHolidayHomePhoto from "../../Components/User/HolidayHomeDetailsGrid/M
 // import MainHolidayHomePhoto from '../../Components/User/HolidayHomeDetailsGrid/MainHolidayHomePhoto';
 import HolidayHomeGrid from "../../Components/User/HolidayHomeDetailsGrid/HolidayHomeGrid";
 import AddReservationPopUp from "../../Components/Reservations/AddReservationPopUp";
+import Review from "../../Components/User/Review/Review";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -275,7 +276,10 @@ export default function HolidayHomeDetails() {
                   </Grid>
                 </Box>
 
-                <Item>Review</Item>
+                {/* user review */}
+                <Box>
+                  <Review/>
+                </Box>
               </Stack>
             </Grid>
           </Container>
