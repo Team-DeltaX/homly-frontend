@@ -1,8 +1,4 @@
-// import '../App.css';
-
-// import React,{useEffect, useState} from 'react'
 import SideNavbar from "../../Components/PrimaryAdmin/SideNavbar";
-
 import Box from "@mui/material/Box";
 import { Container, Grid, ThemeProvider } from "@mui/material";
 import theme from "../../HomlyTheme";
@@ -15,9 +11,7 @@ const PrimaryHolidayHomes = () => {
   return (
     <ThemeProvider theme={theme}>
       <Box
-       className="main_continer"
-
-
+        className="main_continer"
         sx={{
           width: "100%",
           backgroundColor: "primary.main",
@@ -25,28 +19,27 @@ const PrimaryHolidayHomes = () => {
           overflow: "hidden",
         }}
       >
-        <Container  maxWidth="xl" style={{ padding: "0px" }}>
-            <Grid container>
-                
-              <Grid
+        <Container maxWidth="xl" style={{ padding: "0px" }}>
+          <Grid container>
+            <Grid
               className={showNav}
-                xs={3}
-                sx={{ backgroundColor: "primary.main", height: "100vh" }}
-              >
-                <SideNavbar setShowNav={setShowNav}></SideNavbar>
-              </Grid>
-              <Grid
-              className="container_grid"
-                xs={9}
-                sx={{
-                  backgroundColor: "white",
-                  borderTopLeftRadius: "20px",
-                  padding: "0 20px",
-                }}
-              >
-                <Pagetop setShowNav={setShowNav} heading={"HolidayHomes"} />
-              </Grid>
+              xs={3}
+              sx={{ backgroundColor: "primary.main", height: "100vh" }}
+            >
+              <SideNavbar setShowNav={setShowNav}></SideNavbar>
             </Grid>
+            <Grid
+              className="container_grid"
+              xs={9}
+              sx={{
+                backgroundColor: "white",
+                borderTopLeftRadius: "20px",
+                padding: "0 20px",
+              }}
+            >
+              <Pagetop setShowNav={setShowNav} heading={"HolidayHomes"} />
+            </Grid>
+          </Grid>
         </Container>
       </Box>
     </ThemeProvider>

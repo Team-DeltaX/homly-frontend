@@ -1,8 +1,5 @@
-// import '../App.css';
-
 import React, { useEffect, useState } from "react";
 import SideNavbar from "../../Components/PrimaryAdmin/SideNavbar";
-
 import Box from "@mui/material/Box";
 import {
   Avatar,
@@ -18,36 +15,31 @@ import DashViewAdminBox from "../../Components/PrimaryAdmin/DashViewAdminBox";
 import { Link } from "react-router-dom";
 import SimpleCharts from "../../Components/PrimaryAdmin/Simplecharts";
 import { PieChart } from "@mui/x-charts/PieChart";
-
 import Income from "../../Components/PrimaryAdmin/Income";
-import PDashboardCon from "../../Components/PrimaryAdmin/PDashboardCon";
+import PDashboardboxes from "../../Components/PrimaryAdmin/PDashboardboxes";
 import SimpleLineChart from "../../Components/PrimaryAdmin/SimpleLineChart";
 import axios from "axios";
 
 const PrimaryDashboard = () => {
   const [showNav, setShowNav] = useState("nav_grid_deactive");
-  const [activecount,SetActivecount]=useState("")
-  const [inactivecount,setInactivecount]=useState("")
+  const [activecount, SetActivecount] = useState(0);
+  const [inactivecount, setInactivecount] = useState(0);
 
-
-const getstatus=()=>{
-  axios.get('http://localhost:3002/admin/auth/hhstatus')
-  .then((res)=>{
-    SetActivecount(res.data.Active)
-    setInactivecount(res.data.Inactive)
-    console.log(`--------------------`)
-    console.log(res)
-    // console.log(activecount)
-  
-
-  }).catch((err)=>{
-    console.log(err)
-  })
-}
-useEffect(()=>{
-  getstatus()
-
-},[])
+  const getstatus = () => {
+    axios
+      .get("http://localhost:3002/admin/auth/hhstatus")
+      .then((res) => {
+        SetActivecount(res.data.Active);
+        setInactivecount(res.data.Inactive);
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  useEffect(() => {
+    getstatus();
+  }, []);
   return (
     <ThemeProvider theme={theme}>
       <Box
@@ -91,7 +83,9 @@ useEffect(()=>{
                       maxHeight: { md: "645px", xs: "auto" },
                     }}
                   >
-                    <Box><PDashboardCon /></Box>
+                    <Box>
+                      <PDashboardboxes />
+                    </Box>
                     <Box
                       sx={{
                         display: "flex",
@@ -121,7 +115,7 @@ useEffect(()=>{
                                   },
                                   {
                                     id: 1,
-                                    value:inactivecount,
+                                    value: inactivecount,
                                     label: "Inactive",
                                     color: "#002347",
                                   },
@@ -141,8 +135,6 @@ useEffect(()=>{
                           />
                         </Box>
                       </Box>
-
-                      {/* <SimpleCharts /> */}
 
                       <SimpleLineChart />
                     </Box>
@@ -179,7 +171,6 @@ useEffect(()=>{
                           <DashViewAdminBox color={"#f5c77e"} />
                         </Box>
 
-                        {/* <Box><DashViewAdminBox color={"#bebdb8"}/></Box> */}
                         <Box>
                           <Link to="/primaryadmin/viewadmin">
                             <Button sx={{ color: "#19BDFF" }}>
@@ -239,12 +230,7 @@ useEffect(()=>{
                             </Box>
                           </Box>
                         </Box>
-                        <Box>
-                          {/* <Button sx={{  marginLeft: "5%", marginTop: { xs: '10%', sm: '2px' }}} component="label" variant="contained" startIcon={<AddCircleIcon/>}>
-                                    Add Admin
-
-                                </Button> */}
-                        </Box>
+                        <Box></Box>
                       </Box>
                     </Box>
                   </Grid>

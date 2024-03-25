@@ -9,7 +9,6 @@ import DisabledAdminslist from "../../Components/PrimaryAdmin/DisabledAdminslist
 import theme from "../../HomlyTheme";
 import { ThemeProvider } from "@emotion/react";
 
-
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -51,25 +50,25 @@ export default function BasicTabs() {
   };
 
   return (
-  <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
       <Box sx={{ width: "100%" }}>
-      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          aria-label="basic tabs example"
-        >
-          <Tab label="Ongoing Admins" {...a11yProps(0)} />
-          <Tab label="Disabled Admins" {...a11yProps(1)}  />
-        </Tabs>
+        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            aria-label="basic tabs example"
+          >
+            <Tab label="Ongoing Admins" {...a11yProps(0)} />
+            <Tab label="Disabled Admins" {...a11yProps(1)} />
+          </Tabs>
+        </Box>
+        <CustomTabPanel value={value} index={0}>
+          <CurrentAdminslist />
+        </CustomTabPanel>
+        <CustomTabPanel value={value} index={1}>
+          <DisabledAdminslist />
+        </CustomTabPanel>
       </Box>
-      <CustomTabPanel value={value} index={0}>
-        <CurrentAdminslist />
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={1}>
-        <DisabledAdminslist />
-      </CustomTabPanel>
-    </Box>
-  </ThemeProvider>
+    </ThemeProvider>
   );
 }

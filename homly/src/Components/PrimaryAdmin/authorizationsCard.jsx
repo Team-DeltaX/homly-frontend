@@ -8,8 +8,7 @@ import {
 } from "@mui/material";
 import PreviewIcon from "@mui/icons-material/Preview";
 import theme from "../../HomlyTheme";
-// import { Group } from "@mui/icons-material";
-// import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+
 import CheckIcon from "@mui/icons-material/Check";
 import CancelPresentationIcon from "@mui/icons-material/CancelPresentation";
 import CloseIcon from "@mui/icons-material/Close";
@@ -18,48 +17,58 @@ import { useState } from "react";
 import ConfirmPopup from "./ConfirmPopup";
 
 const AuthorizationsCard = (props) => {
-  const [open,Setopen]=useState(false)
+  const [open, Setopen] = useState(false);
 
-  const approve=()=>{
-    axios.put('http://localhost:3002/admin/auth/locationadmin/holidayhome/accept',{
-      id:props.data.HolidayHomeId
-    },{withCredentials:true})
-    .then((res)=>{
-      props.get_pending();
-    })
-    .catch((error)=>{
-      console.log('error in updating as approved')
-    })
-  }
-  
-  const rejectHH=()=>{
-    console.log('reject called ')
-    console.log(props.data.HolidayHomeId)
-    axios.delete('http://localhost:3002/admin/auth/locationadmin/holidayhome/reject',{
-      data: {
-        id: props.data.HolidayHomeId
-      },
-    },{withCredentials:true})
-    .then((res)=>{
-      console.log('rejection done')
-      props.get_pending();
-      Setopen(false)
+  const approve = () => {
+    axios
+      .put(
+        "http://localhost:3002/admin/auth/locationadmin/holidayhome/accept",
+        {
+          id: props.data.HolidayHomeId,
+        },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        props.get_pending();
+        props.Setopensn(true);
+      })
+      .catch((error) => {
+        console.log("error in updating as approved");
+        props.opensnE(true);
+      });
+  };
 
-    })
-    .catch((error)=>{
-      console.log('error in reject')
-    })
-  }
+  const rejectHH = () => {
+    console.log("reject called ");
+    console.log(props.data.HolidayHomeId);
+    axios
+      .delete(
+        "http://localhost:3002/admin/auth/locationadmin/holidayhome/reject",
+        {
+          data: {
+            id: props.data.HolidayHomeId,
+          },
+        },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        console.log("rejection done");
+        props.get_pending();
+        Setopen(false);
+      })
+      .catch((error) => {
+        console.log("error in reject");
+      });
+  };
   return (
     <ThemeProvider theme={theme}>
-          <ConfirmPopup
-            open={open}
-            setOpen={Setopen}
-            title={"Holiday Home Rejection"}
-            text={"Are you sure you want to Decline this HolidayHome"}
-            // data={props.data}
-            controlfunction={rejectHH}
-          />
+      <ConfirmPopup
+        open={open}
+        setOpen={Setopen}
+        title={"Holiday Home Rejection"}
+        text={"Are you sure you want to Decline this HolidayHome"}
+        controlfunction={rejectHH}
+      />
       <Stack
         sx={{
           width: "350px",
@@ -69,9 +78,7 @@ const AuthorizationsCard = (props) => {
           margin: "30px",
         }}
       >
-        <Box>
-          {/* <AccountCircleIcon sx={{fontSize:"50px",marginLeft:"40%"}}/> */}
-        </Box>
+        <Box></Box>
         <Box>
           {" "}
           <Grid container>
@@ -137,8 +144,8 @@ const AuthorizationsCard = (props) => {
               color: "black",
             }}
             startIcon={<CheckIcon />}
-            onClick={()=>{
-              approve()
+            onClick={() => {
+              approve();
             }}
           >
             <Typography>Accept</Typography>
@@ -155,8 +162,7 @@ const AuthorizationsCard = (props) => {
               borderBlockColor: "red",
             }}
             onClick={() => {
-              // props.setpopup(!props.popup);
-              Setopen(true)
+              Setopen(true);
             }}
             startIcon={<CloseIcon />}
           >
@@ -173,9 +179,7 @@ const AuthorizationsCard = (props) => {
               display: { xs: "flex", md: "none" },
             }}
             startIcon={<PreviewIcon />}
-            onClick={()=>{
-              
-            }}
+            onClick={() => {}}
           >
             <Typography>View</Typography>
           </Button>
