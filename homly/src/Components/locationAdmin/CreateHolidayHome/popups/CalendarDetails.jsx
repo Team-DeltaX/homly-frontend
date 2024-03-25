@@ -13,11 +13,16 @@ import PersonIcon from '@mui/icons-material/Person';
 import AddIcon from '@mui/icons-material/Add';
 import Typography from '@mui/material/Typography';
 import { Box } from '@mui/material';
+import axios from 'axios';
 
 
-export default function CalendarDetails({ date, open, handleClose }) {
+export default function CalendarDetails({ date, open, handleClose, rooms }) {
 
     let dateString = date.toString();
+
+
+
+
 
 
     return (
@@ -29,9 +34,10 @@ export default function CalendarDetails({ date, open, handleClose }) {
 
                         <Typography sx={{ width: '60px', fontWeight: 'bold' }}>Reserved</Typography>
                         <Box>
-                            <Typography sx={{ color: 'grey' }}>R001</Typography>
-                            <Typography sx={{ color: 'grey' }}>R002</Typography>
-                            <Typography sx={{ color: 'grey' }}>R003</Typography>
+
+                            {rooms.map((room) => (
+                                <Typography key={room} sx={{ color: 'grey' }}>{room.toUpperCase()}</Typography>
+                            ))}
 
                         </Box>
                     </Box>
@@ -47,7 +53,7 @@ export default function CalendarDetails({ date, open, handleClose }) {
                     </Box>
                     <Box>
 
-                        <Typography sx={{ backgroundColor: 'rgb(255,0,0,0.5)', padding: "5px", textAlign: 'center', borderRadius: '5px' }}>Holiday Home Inactive</Typography>
+                        {/* <Typography sx={{ backgroundColor: 'rgb(255,0,0,0.5)', padding: "5px", textAlign: 'center', borderRadius: '5px' }}>Holiday Home Inactive</Typography> */}
                         {/* <Typography sx={{ backgroundColor: 'rgb(0,255,0,0.5)', padding: "5px", textAlign: 'center', borderRadius: '5px' }}>Holiday Home Active</Typography> */}
                     </Box>
 

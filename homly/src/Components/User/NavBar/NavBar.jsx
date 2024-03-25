@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -25,16 +25,13 @@ import { ThemeProvider } from "@emotion/react";
 
 import { Link, NavLink } from "react-router-dom";
 
-import NotificationPanel from "../../NotificationPanel/NotificationPanel";
-
 import theme from "../../../HomlyTheme";
 import "./NavBar.css";
 
+// import auth context
+import { AuthContext } from "../../../Contexts/AuthContext";
+
 const drawerWidth = 240;
-const settings = [
-  { name: "My Profile", path: "/myProfile" },
-  { name: "Logout" },
-];
 const pages = [
   { name: "Home", path: "/Home" },
   { name: "Holiday Homes", path: "/holidayHomes" },
@@ -43,17 +40,14 @@ const pages = [
 
 const respSidePages = [
   { name: "Home", path: "/Home" },
-  { name: "Holiday Homes", path: "/holidayHomes" },
+  { name: "Holiday Homes", path: "/holidayHomes/" },
   // { name: "Contact Us", path: "/contactUs" },
   { name: "My Profile", path: "/myProfile" },
 ];
 
-// const notifications = [
-//     { title: "notification 1", description: "this is notification 1.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,", type: 'canceled' },
-//     { title: "notification 2", description: "this is notification 2", type: '' },
-//     { title: "notification 3", description: "this is notification 3", type: '' }];
-
 const NavBar = ({ refContactUS }) => {
+  const { user } = useContext(AuthContext);
+
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
@@ -135,9 +129,6 @@ const NavBar = ({ refContactUS }) => {
               <MenuIcon />
             </IconButton>
 
-            {/* <Typography variant="h6" noWrap component="div">
-                            Responsive drawer
-                        </Typography> */}
           </Toolbar>
           <Stack
             direction="row"
@@ -152,7 +143,7 @@ const NavBar = ({ refContactUS }) => {
               display={{ xs: "none", sm: "none", md: "flex" }}
             >
               {pages.map((page) => (
-                <Box sx={{ position: "relative" }}>
+                <Box sx={{ position: "relative" }} key={page.name}>
                   <NavLink
                     key={page.name}
                     to={page.path}
@@ -195,7 +186,7 @@ const NavBar = ({ refContactUS }) => {
                   <Avatar
                     alt="Remy Sharp"
                     sx={{ height: "48px", width: "48px" }}
-                    src="https://img.freepik.com/premium-psd/3d-cartoon-man-smiling-portrait-isolated-transparent-background-png-psd_888962-1570.jpg"
+                    src={user.image}
                   />
                 </IconButton>
               </Tooltip>
@@ -215,16 +206,16 @@ const NavBar = ({ refContactUS }) => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {settings.map((setting) => (
-                  <MenuItem
-                    key={setting.name}
-                    onClick={handleCloseUserMenu}
-                    component={setting.name === "My Profile" ? Link : ""}
-                    to={setting.path}
-                  >
-                    <Typography textAlign="center">{setting.name}</Typography>
-                  </MenuItem>
-                ))}
+                <MenuItem
+                  onClick={handleCloseUserMenu}
+                  component={Link}
+                  to="/myProfile"
+                >
+                  <Typography textAlign="center">My Profile</Typography>
+                </MenuItem>
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">Logout</Typography>
+                </MenuItem>
               </Menu>
             </Box>
           </Stack>
@@ -257,22 +248,6 @@ const NavBar = ({ refContactUS }) => {
           >
             {mainDrawer}
           </Drawer>
-          {/* <Drawer
-                        variant="permanent"
-                        sx={{
-                            display: { xs: "none", sm: "none", md: "block" },
-                            "& .MuiDrawer-paper": {
-                                boxSizing: "border-box",
-                                width: drawerWidth,
-                                color: "white",
-                                
-                            },
-                            bgcolor: "primary.main",
-                        }}
-                        open
-                    >
-                        {drawer}
-                    </Drawer> */}
         </Box>
       </Box>
     </ThemeProvider>

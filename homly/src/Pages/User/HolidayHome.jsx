@@ -1,15 +1,79 @@
-import React, { useRef, useEffect } from "react";
-import { Container, Box, ThemeProvider, Pagination } from "@mui/material";
+import React, { useRef, useEffect, useState } from "react";
+import {
+  Container,
+  Box,
+  ThemeProvider,
+  Pagination,
+  Typography,
+  TextField,
+  Stack,
+  Button,
+} from "@mui/material";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import NavBar from "../../Components/User/NavBar/NavBar";
 import Footer from "../../Components/User/Footer/Footer";
+import HolidayHomeCard from "../../Components/User/HHCard/HolidayHomeCard";
+import HHCardSkeleton from "../../Components/User/Skeleton/HHCardSkeleton";
 import theme from "../../HomlyTheme";
 import AOS from "aos";
 import "aos/dist/aos.css";
 export default function HolidayHomes() {
   const refContactUS = useRef(null);
+  const refPageTop = useRef(null);
+  const [holidayHomes, setHolidayHomes] = useState([]);
+  const [displayedHH, setDisplayedHH] = useState([]);
+  const [pagination, setPagination] = useState(1);
+  const [searchValue, setSearchValue] = useState("");
+  const [showSkeleton, setShowSkeleton] = useState(true);
+
   useEffect(() => {
+    window.scrollTo(0, 0);
     AOS.init();
   }, []);
+
+  const params = useParams();
+  const district = params ? params.district : " ";
+
+  const Navigate = useNavigate();
+
+  const fetchData = () => {
+    console.log("searchData", district);
+    axios
+      .get(
+        "http://localhost:3002/users/auth/holidayhomes",{withCredentials: true, params: { district: district, search: searchValue } }
+      )
+      .then((res) => {
+        console.log("hhdetails", res.data);
+        if (res.data.length > 0) {
+          setPagination(Math.ceil(res.data.length / 9));
+          setHolidayHomes(res.data);
+          setDisplayedHH(res.data.slice(0, 9));
+          setShowSkeleton(false);
+        }else{
+          setHolidayHomes([]);
+          setDisplayedHH([]);
+          setShowSkeleton(false);
+        }
+      })
+      .catch((err) => {
+        if (err.response.data.autherized === false) {
+          Navigate("/");
+        }
+      });
+  };
+
+  useEffect(() => {
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleSearch = () => {
+    setShowSkeleton(true);
+    fetchData();
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <Box
@@ -18,22 +82,96 @@ export default function HolidayHomes() {
           overflow: "hidden",
         }}
       >
-        <Container maxWidth="xl" style={{ padding: 0 }}>
+        <Container maxWidth="xl" style={{ padding: 0 }} ref={refPageTop}>
           <NavBar refContactUS={refContactUS} />
           <Container
             maxWidth="lg"
             sx={{
               bgcolor: "white",
-              marginTop: { xs: "20px", sm: "10px", ms: "0" },
+              marginTop: { xs: "60px", sm: "40px", ms: "0" },
             }}
           >
             <Container
               sx={{
-                bgcolor: "blue",
+                marginTop: { xs: "20px", sm: "10px", ms: "0" },
                 width: { xs: "100%", sm: "95%", padding: 0 },
-                height: "100dvh",
+                justifyContent: "center",
               }}
-            ></Container>
+            >
+              <Stack direction="column">
+                <Stack direction="row">
+                  <Box>
+                    <TextField
+                      id="search"
+                      label="search"
+                      value={searchValue}
+                      onChange={(e) => setSearchValue(e.target.value)}
+                    />
+                  </Box>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleSearch}
+                  >
+                    Search
+                  </Button>
+                </Stack>
+
+                <Box
+                  sx={{
+                    flexWrap: "wrap",
+                    display: !showSkeleton ? "flex" : "none",
+                  }}
+                >
+                  {displayedHH.length > 0 ? (
+                    displayedHH.map((item) => (
+                      <Box sx={{ padding: "7px" }} key={item.HolidayHomeId}>
+                        <HolidayHomeCard
+                          key={item.HolidayHomeId}
+                          HHID={item.HolidayHomeId}
+                          HHName={item.Name}
+                          HHLocation={item.Address}
+                          HHPrice={item.TotalRental}
+                          HHRating={item.overall_rating}
+                          HHImage={item.HHImage}
+                          showInterest={false}
+                        />
+                      </Box>
+                    ))
+                  ) : (
+                    <Box
+                      sx={{
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        padding: "20px",
+                      }}
+                    >
+                      <Typography variant="h6">
+                        No Holiday Homes Found!
+                      </Typography>
+                    </Box>
+                  )}
+                </Box>
+                <Box
+                  sx={{
+                    flexWrap: "wrap",
+                    display: showSkeleton ? "flex" : "none",
+                  }}
+                >
+                  <Box sx={{ padding: "20px" }}>
+                    <HHCardSkeleton showInterest={false}/>
+                  </Box>
+                  <Box sx={{ padding: "20px" }}>
+                    <HHCardSkeleton showInterest={false}/>
+                  </Box>
+                  <Box sx={{ padding: "20px" }}>
+                    <HHCardSkeleton showInterest={false}/>
+                  </Box>
+                </Box>
+              </Stack>
+            </Container>
             <Box
               sx={{
                 width: "100%",
@@ -43,7 +181,20 @@ export default function HolidayHomes() {
                 padding: "20px",
               }}
             >
-              <Pagination count={10} variant="outlined" shape="rounded" color="primary"/>
+              <Pagination
+                count={pagination}
+                variant="outlined"
+                shape="rounded"
+                color="primary"
+                onChange={(event, value) => {
+                  console.log("page", value);
+                  setDisplayedHH(
+                    holidayHomes.slice((value - 1) * 9, value * 9)
+                  );
+                  // go to pagetop
+                  refPageTop.current.scrollIntoView({ behavior: "smooth" });
+                }}
+              />
             </Box>
           </Container>
           <Box>

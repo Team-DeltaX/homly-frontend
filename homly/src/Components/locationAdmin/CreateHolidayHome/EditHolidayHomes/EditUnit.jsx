@@ -14,9 +14,12 @@ import Select from '@mui/material/Select';
 
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
 import UnitBreakDown from '../UnitBreakDown';
 const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
+
+    const { homeId } = useParams();
 
     const [openUnit, setOpenUnit] = useState(false);
     const [fullWidth, setFullWidth] = useState(true);
@@ -174,12 +177,37 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
 
         })
 
-        setUnitRentalArray(editedUnit.unitRentalArray);
+        axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/rental/${homeId}/${editedUnit.unitCode}`)
+            .then(res => {
+                console.log("get")
+                const rental = res.data.roomRental;
+                console.log(rental)
+                for (let i = 0; i < rental.length; i++) {
+                    console.log("in")
+                    console.log(rental[i].Month);
+                    setUnitRental({
+                        district: rental[i].Month,
+                        weekDays: rental[i].WeekRental,
+                        weekEnds: rental[i].WeekEndRental,
+                    });
+
+                    console.log("rental", rental);
+
+                    setUnitRentalArray(rental); // Use functional update
+                    console.log("rental array", unitRentalArray);
+                }
 
 
-        setOpenUnit(true)
-        setEditIndex(index);
-        setIsEditMode(true);
+
+
+                setOpenUnit(true)
+                setEditIndex(index);
+                setIsEditMode(true);
+
+            })
+            .catch(err => {
+                console.log(err);
+            });
 
 
 
@@ -312,15 +340,39 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
                     </Box>
                     :
                     unitArray.map((item, index) => {
+                        item.selectedRooms = [];
+
+                        axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/${homeId}/${item.unitCode}`)
+                            .then((res) => {
+                                if (Response) {
+                                    const srDetails = res.data.selectedRoom;
+                                    console.log(srDetails);
+                                    for (let i = 0; i < srDetails.length; i++) {
+                                        axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/room/${homeId}/${srDetails[i].roomCode}`)
+                                            .then((res) => {
+                                                const room = res.data;
+                                                // Check if 'room' already exists in 'selectedRooms' array
+                                                const existingRoomIndex = item.selectedRooms.findIndex(existingRoom => existingRoom.roomCode === room.roomCode);
+                                                if (existingRoomIndex === -1) {
+                                                    // If not found, push 'room' into 'selectedRooms'
+                                                    item.selectedRooms.push(room);
+                                                } else {
+                                                    // If found, update the existing item with the new data
+                                                    item.selectedRooms[existingRoomIndex] = room;
+                                                }
+                                            })
+                                    }
+                                } else {
+                                    console.log("No data found");
+                                }
+                            })
+
                         return (
                             <UnitBreakDown key={index} unitCode={item.unitCode} unitAc={item.unitAc} floorLevel={item.floorLevel} unitNoOfAdults={item.unitNoOfAdults} unitNoOfChildren={item.unitNoOfChildren} unitRemarks={item.unitRemarks} unitRental={item.unitRental} roomArray={roomArray} setRoomArray={setRoomArray} selectedRooms={item.selectedRooms} handleUnitDelete={handleUnitDelete} handleUnitEdit={handleUnitEdit} index={index} />
                         )
                     })}
 
             </fieldset>
-
-
-
 
 
             {/* Add new Unit popup */}
@@ -378,14 +430,14 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
                                 </Box>
                                 <TextField error={error.ctName} value={unitValues.unitRemark} required id="outlined-required" label="Remark" placeholder='Enter Remark' fullWidth size='small' onChange={handleUnitRemarkChange} helperText={error.ctName ? "Invalid Input" : ''} />
                             </Box>
-                            <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
+                            {/* <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                     <Typography variant='p' sx={{ color: 'black' }}>Rental</Typography>
                                 </Box>
                                 <TextField type='number' value={unitValues.unitRental} error={error.ctName} required id="outlined-required" label="Rental" placeholder='Rental' fullWidth size='small' onChange={handleUnitRentalChange} helperText={error.ctName ? "Invalid Input" : ''} />
-                            </Box>
+                            </Box> */}
 
-                            <Box className="rental_container">
+                            {/* <Box className="rental_container">
                                 <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                     <Typography variant='p' sx={{ color: 'black' }}>Add Rental</Typography>
                                 </Box>
@@ -455,7 +507,7 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
 
                                 })}
 
-                            </Box>
+                            </Box> */}
 
                         </DialogContent>
                         <DialogActions>

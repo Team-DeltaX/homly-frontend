@@ -3,7 +3,6 @@ import { ThemeProvider,Button, Stack, Typography, Box } from "@mui/material";
 import { Link } from "react-router-dom";
 
 import theme from "../../../HomlyTheme";
-import browsMoreImg from '../../../Assets/images/browsMore.jpg'
 
 export default function BrowseMoreCom() {
   return (
@@ -28,13 +27,13 @@ export default function BrowseMoreCom() {
                 <Typography sx={{fontWeight:'bold',fontSize:'1.7rem'}}>Browse For</Typography>
                 <Typography sx={{fontWeight:'bold',fontSize:'1.7rem'}}>More Holiday Homes</Typography>
               </Stack>
-              <Button variant="outlined" component={Link} to="/HolidayHomes" sx={{width:'80%'}}>Find a Holiday Home</Button>
+              <Button variant="outlined" component={Link} to={`/holidayHomes/all`} sx={{width:'80%'}}>Find a Holiday Home</Button>
           </Stack>
         </Stack>
         <Box sx={{ position: "relative", width: "60%" }}>
           <Box
             component="img"
-            src={browsMoreImg}
+            src={"https://res.cloudinary.com/dwgeetnoj/image/upload/v1710836484/homly-main-images/browsMore_owuzl2.jpg"}
             alt=""
             sx={{ width: "100%", height: "100%" }}
           />

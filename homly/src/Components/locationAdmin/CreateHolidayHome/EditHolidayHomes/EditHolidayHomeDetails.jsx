@@ -10,44 +10,17 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
-const EditHolidayHomeDetails = () => {
 
-    const [value, setValue] = useState({
-        name: '', address: '', district: '', description: '', contactNo1: '', contactNo2: '', category: '', status: ''
-    })
+const EditHolidayHomeDetails = ({ value, setValue }) => {
+
+    console.log("values", value)
+
+
 
     const [error, setError] = useState({
         name: false, address: false, description: false, contactNo1: false, contactNo2: false
     });
 
-
-    const { homeId } = useParams();
-
-    useEffect(() => {
-        axios.get(`http://localhost:3002/locationadmin/holidayhome/${homeId}`)
-            .then((res) => {
-                if (Response) {
-                    const homeDetails = res.data.homeDetails;
-                    const contactNo = res.data.contactNo;
-
-                    // Extract relevant data from response and set to 'value' state
-                    setValue({
-                        name: homeDetails.Name || '',
-                        address: homeDetails.Address || '',
-                        district: 'Kegalle', // Add the logic to get district if available
-                        description: homeDetails.Description || '',
-                        contactNo1: (contactNo && contactNo.length > 0) ? contactNo[0].ContactNo : '',
-                        contactNo2: (contactNo && contactNo.length > 1) ? contactNo[1].ContactNo : '',
-                        category: homeDetails.Category || '',
-                        status: homeDetails.Status || ''
-                    });
-
-
-                } else {
-                    console.log("No data found");
-                }
-            })
-    }, [])
 
 
 
@@ -117,7 +90,7 @@ const EditHolidayHomeDetails = () => {
     return (
         <Box>
 
-            <fieldset className='edit_container' style={{ borderRadius: '16px', color: 'grey', overflow: 'hidden', paddingBottom: '20px' }}>
+            <fieldset className='edit_container' style={{ borderRadius: '16px', color: 'grey', overflow: 'scroll', paddingBottom: '20px' }}>
                 <legend>Holiday Home Details</legend>
                 <Grid container spacing={4} >
                     <Grid item md={6} sm={12} xs={12}>
@@ -246,8 +219,8 @@ const EditHolidayHomeDetails = () => {
                                     onChange={handlestatusChange}
 
                                 >
-                                    <FormControlLabel value="active" control={<Radio />} label="Active" sx={{ display: "inline-block", width: "fit-content" }} />
-                                    <FormControlLabel value="inactive" control={<Radio />} label="Inactive" />
+                                    <FormControlLabel value="Active" control={<Radio />} label="Active" sx={{ display: "inline-block", width: "fit-content" }} />
+                                    <FormControlLabel value="Inactive" control={<Radio />} label="Inactive" />
                                 </RadioGroup>
                             </Box>
                         </Box>

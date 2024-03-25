@@ -57,12 +57,14 @@ const ManageHomeContent = () => {
     const [active, setActive] = React.useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:3002/locationadmin/holidayhome/')
+        axios.get('http://localhost:3002/admin/auth/locationadmin/holidayhome/')
             .then((res) => {
                 if (Response) {
                     setPending(res.data.pending);
                     setActive(res.data.active);
                     setInactive(res.data.inactive);
+
+                    console.log("active", active);
 
 
                 } else {
@@ -78,7 +80,7 @@ const ManageHomeContent = () => {
         <Box >
             <Box className="search_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: "flex-end", gap: "1em" }}>
                 <Link to="/locationadmin/holidayhomes/createholidayhome"><Button variant="contained" sx={{ backgroundColor: "primary.main", textTransform: "capitalize", fontWeight: "bold", color: "white" }} startIcon={<ControlPointIcon />} ><Typography sx={{ fontFamily: "sans-serif" }} variant='p'>Create New</Typography> </Button></Link>
-                <Input label={"Search"} icon={<SearchIcon />} />
+                {/* <Input label={"Search"} icon={<SearchIcon />} /> */}
             </Box>
             <Container maxWidth={'md'}>
                 <Box className="holidayhomes_card_container" sx={{ marginTop: "20px", padding: "0 40px" }}>
@@ -108,7 +110,7 @@ const ManageHomeContent = () => {
                             <Box className="homes_container_header"><Typography variant='p' className='header_title'>Pending Holiday Homes</Typography><hr /></Box>
                             <Box className="homes_container" sx={{ overflowY: "scroll", maxHeight: "60vh" }}>
                                 <Box className="homes_container_body">
-                                    {pending.map((item) => {
+                                    {inactive.map((item) => {
                                         return (
                                             <HolidayHomeCard key={item.HolidayHomeId} HolidayHomeName={item.Name} Category={item.Category} HolidayHomeId={item.HolidayHomeId} />
                                         )
@@ -120,8 +122,9 @@ const ManageHomeContent = () => {
                         <CustomTabPanel value={value} index={1}>
                             <Box className="homes_container_header"><Typography variant='p' className='header_title'>InActive Holiday Homes</Typography><hr /></Box>
                             <Box className="homes_container" sx={{ overflowY: "scroll", maxHeight: "60vh" }}>
+
                                 <Box className="homes_container_body">
-                                    {inactive.map((item) => {
+                                    {pending.map((item) => {
                                         return (
                                             <HolidayHomeCard key={item.HolidayHomeId} HolidayHomeName={item.Name} Category={item.Category} HolidayHomeId={item.HolidayHomeId} />
                                         )

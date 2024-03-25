@@ -9,8 +9,7 @@ import SpecialReservationCard from './SpecialReservationCard';
 import axios from "axios";
 
 const SpecialReservationList = (props) => {
-  const [reservations, setReservations] = useState([
-  ])
+  const [reservations, setReservations] = useState([])
   const fetchadmins = () => {
     axios
       .get("http://localhost:3002/admin/auth/locationadmin/reservations")

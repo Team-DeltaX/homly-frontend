@@ -9,31 +9,20 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
 
-const HomeDetailsView = ({ setSubmit }) => {
+const HomeDetailsView = ({ setSubmit, value, setValue }) => {
 
-  const [value, setValue] = useState({
-    name: '', address: '', district: '', description: '', contactNo1: '', contactNo2: '', category: '', status: ''
-  })
+  // const [value, setValue] = useState({
+  //   name: '', address: '', district: '', description: '', contactNo1: '', contactNo2: '', category: '', status: ''
+  // })
 
   const [error, setError] = useState({
     name: false, address: false, description: false, contactNo1: false, contactNo2: false
   });
 
 
+  // const [mainImage, setMainImage] = useState('');
+  const [images, setImages] = useState({ mainImage: '', image1: '', image2: '', image3: '' });
 
-  // if (value.name !== '' && value.address !== '' && value.district !== '' && value.description !== '' && value.contactNo1 !== '' && value.category !== '' && value.status !== '') {
-  //   setSubmit({ ...setSubmit, holidayhomeDetails: true });
-  // } else {
-  //   setSubmit({ ...setSubmit, holidayhomeDetails: false });
-  // }
-
-  // useEffect(() => {
-  //   if (value.name !== '' && value.address !== '' && value.district !== '' && value.description !== '' && value.contactNo1 !== '' && value.category !== '' && value.status !== '') {
-  //     setSubmit(true);
-  //   } else {
-  //     setSubmit(false);
-  //   }
-  // }, [value, setSubmit]);
 
   useEffect(() => {
     const isDetailsComplete =
@@ -45,17 +34,63 @@ const HomeDetailsView = ({ setSubmit }) => {
       value.category !== '' &&
       value.status !== '';
 
-    setSubmit(prevSubmit => ({
-      ...prevSubmit,
-      holidayhomeDetails: isDetailsComplete
-    }));
-  }, [value]);
+    const areErrorsEmpty =
+      !error.name &&
+      !error.address &&
+      !error.description &&
+      !error.contactNo1 &&
+      !error.contactNo2;
 
+
+
+    if (isDetailsComplete && areErrorsEmpty) {
+      setSubmit(true)
+    } else {
+      setSubmit(false)
+    }
+
+    // setSubmit(prevSubmit => ({
+    //   ...prevSubmit,
+    //   isDetailsComplete
+    // }));
+  }, [value, error, setSubmit]);
+
+
+  // useEffect(() => {
+
+  //   if (submitClicked) {
+  //     setAllValues(prev => ({
+  //       ...prev,
+  //       holidayHomeDetails: value,
+  //       images: images
+  //     }))
+
+  //   }
+  // }, [submitClicked])
+
+
+
+
+
+  const handleImageUpload = (name) => (e) => {
+    const fileReader = new FileReader();
+    fileReader.addEventListener('load', () => {
+      const imageData = fileReader.result;
+      setImages((prevImages) => ({
+        ...prevImages,
+        [name]: imageData,
+      }));
+      // setMainImage(imageData);
+      // console.log(imageData); // Log the result inside the event listener
+
+    });
+    fileReader.readAsDataURL(e.target.files[0]);
+  };
 
 
   const handleNameChange = (e) => {
     setValue({ ...value, name: e.target.value });
-    const name_regex = /^[a-zA-Z\s]+$/;
+    const name_regex = /^[a-zA-Z0-9\s-]+$/;
     if (e.target.value.length > 0) {
       if (!name_regex.test(e.target.value)) {
         setError({ ...error, name: true });
@@ -76,7 +111,22 @@ const HomeDetailsView = ({ setSubmit }) => {
   }
 
   const handleDisriptionChange = (e) => {
-    setValue({ ...value, description: e.target.value });
+
+    let wordCount = e.target.value.split(' ').length;
+    // console.log("word", wordCount);
+
+
+    if (e.target.value.length > 0) {
+      if (wordCount < 50 || wordCount > 150) {
+        setError({ ...error, description: true });
+      } else {
+        setValue({ ...value, description: e.target.value });
+        setError({ ...error, description: false });
+      }
+
+
+    }
+
   }
 
   const handleContactNo1Change = (e) => {
@@ -181,7 +231,7 @@ const HomeDetailsView = ({ setSubmit }) => {
           <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
             <Typography variant='p' sx={{ color: 'black' }}>Description</Typography>
           </Box>
-          <TextField required multiline id="outlined-required" label="Enter Description" placeholder='Enter Description' fullWidth size='small' onChange={handleDisriptionChange} />
+          <TextField error={error.description} required multiline id="outlined-required" label="Enter Description" placeholder='Enter Description' fullWidth size='small' onChange={handleDisriptionChange} helperText={error.description ? "50-150 words" : " "} />
         </Box>
         <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
           <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
@@ -245,7 +295,7 @@ const HomeDetailsView = ({ setSubmit }) => {
             <Typography variant='p' sx={{ color: 'black' }}>Main Image</Typography>
           </Box>
           <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
-            <input type="file" />
+            <input type="file" onChange={handleImageUpload('mainImage')} accept="image/*" />
           </Box>
         </Box>
         <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '1em', marginBottom: '12px' }}>
@@ -253,7 +303,7 @@ const HomeDetailsView = ({ setSubmit }) => {
             <Typography variant='p' sx={{ color: 'black' }}>Image 1</Typography>
           </Box>
           <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
-            <input type="file" />
+            <input type="file" onChange={handleImageUpload('image1')} accept="image/*" />
           </Box>
         </Box>
         <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '1em', marginBottom: '12px' }}>
@@ -261,7 +311,7 @@ const HomeDetailsView = ({ setSubmit }) => {
             <Typography variant='p' sx={{ color: 'black' }}>Image 2</Typography>
           </Box>
           <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
-            <input type="file" />
+            <input type="file" onChange={handleImageUpload('image2')} accept="image/*" />
           </Box>
         </Box>
         <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '1em', marginBottom: '12px' }}>
@@ -269,7 +319,7 @@ const HomeDetailsView = ({ setSubmit }) => {
             <Typography variant='p' sx={{ color: 'black' }}>Image 3</Typography>
           </Box>
           <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
-            <input type="file" />
+            <input type="file" onChange={handleImageUpload('image3')} accept="image/*" />
           </Box>
         </Box>
 

@@ -1,7 +1,7 @@
 
 .home{
     /*height: 500px;*/
-    height: 75vh;
+    height: 60vh;
     overflow:hidden; 
     overflow-y:scroll;
 }
@@ -48,9 +48,9 @@
     margin-bottom: 8px;
   }
 .reservation-photo {
-    width: 60px;
-    height: 60px;
-    border-radius: 30px;
+    width: 9vw;
+    height: 20vh;
+    border-radius: 60px;
 }
 .viewbtn:hover {
     background-color: #f1356d;

@@ -21,7 +21,8 @@ const EditHolidayHomeDetails = () => {
 
     const handleNameChange = (e) => {
         setValue({ ...value, name: e.target.value });
-        const name_regex = /^[a-zA-Z\s]+$/;
+        const name_regex = /^[a-zA-Z0-9\s]+$/;
+
         if (e.target.value.length > 0) {
             if (!name_regex.test(e.target.value)) {
                 setError({ ...error, name: true });

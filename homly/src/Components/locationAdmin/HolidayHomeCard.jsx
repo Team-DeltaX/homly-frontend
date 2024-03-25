@@ -19,7 +19,7 @@ const HolidayHomeCard = ({ HolidayHomeId, HolidayHomeName, Category }) => {
             </Box>
             <Box className="button_container" >
                 <Link to={`/locationadmin/holidayhomes/editholidayhome/${HolidayHomeId}`}><Button variant="contained" sx={{ backgroundColor: "primary.main", textTransform: "capitalize", fontWeight: "bold", color: "white" }}><Typography sx={{ fontFamily: "sans-serif" }} variant='p'>Edit</Typography> </Button></Link>
-                <Button variant="contained" sx={{ backgroundColor: "primary.main", textTransform: "capitalize", fontWeight: "bold", color: "white" }}><Typography sx={{ fontFamily: "sans-serif" }} variant='p'>View</Typography> </Button>
+                <Link to={`/locationadmin/holidayhomes/viewholidayhome/${HolidayHomeId}`}><Button variant="contained" sx={{ backgroundColor: "primary.main", textTransform: "capitalize", fontWeight: "bold", color: "white" }}><Typography sx={{ fontFamily: "sans-serif" }} variant='p'>View</Typography> </Button></Link>
             </Box>
 
         </Paper>
