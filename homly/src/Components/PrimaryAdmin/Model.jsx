@@ -1,6 +1,4 @@
 import { Box, Button, Typography, ThemeProvider } from "@mui/material";
-// import CloseIcon from '@mui/icons-material/Close';
-// import { useState } from "react";
 import theme from "../../HomlyTheme";
 import CancelIcon from "@mui/icons-material/Cancel";
 

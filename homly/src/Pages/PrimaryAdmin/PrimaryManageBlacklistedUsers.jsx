@@ -1,10 +1,6 @@
-
 import Pagetop from "../../Components/PrimaryAdmin/PageTop";
-
-
 import React, { useEffect, useState } from "react";
 import SideNavbar from "../../Components/PrimaryAdmin/SideNavbar";
-
 import Box from "@mui/material/Box";
 import {
   Button,
@@ -14,13 +10,11 @@ import {
   Typography,
 } from "@mui/material";
 import theme from "../../HomlyTheme";
-
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import BlacklistedUsersCardNew from "../../Components/PrimaryAdmin/BlacklistedUsersCardNew";
 import ViewPopupManage from "../../Components/PrimaryAdmin/ViewPopupManage";
 import SearchNew from "../../Components/PrimaryAdmin/SearchNew";
 import "../../Components/PrimaryAdmin/Css/fontchange.css";
-
 import { CSVLink } from "react-csv";
 import axios from "axios";
 import Snackbarp from "../../Components/PrimaryAdmin/snackbar/Snackbarp";
@@ -30,21 +24,17 @@ const PrimaryManageBlacklistedUsers = () => {
   const [popup, setpopup] = useState(false);
   //for each user datacame from blacklist table
   const [selecteduser, setSelecteduser] = useState({});
-   //for each user datacame from user table
+  //for each user datacame from user table
   const [selectuser, setSelectuser] = useState({});
-     //for each user datacame from employee table
-
-  const [selectemp,setselectemp]=useState({});
-  const [opensn,SetOpensn]=useState(false)
-  const [opensnE,SetOpensnE]=useState(false)
- 
-  
+  //for each user datacame from employee table
+  const [selectemp, setselectemp] = useState({});
+  const [opensn, SetOpensn] = useState(false);
+  const [opensnE, SetOpensnE] = useState(false);
 
   const handlepopup = () => {
     setpopup(!popup);
   };
 
-  
   //csv headers
   const headers = [
     {
@@ -60,7 +50,7 @@ const PrimaryManageBlacklistedUsers = () => {
       key: "Date",
     },
   ];
- 
+
   const [blacklistedusers, setBlacklistedusers] = useState([]);
 
   //csv
@@ -70,25 +60,22 @@ const PrimaryManageBlacklistedUsers = () => {
     data: blacklistedusers,
   };
 
- 
-
   const [showNav, setShowNav] = useState("nav_grid_deactive");
 
-  const fetch_current_blacklist=()=>{
+  const fetch_current_blacklist = () => {
     axios
-    .get("http://localhost:3002/admin/auth/blacklist")
-    .then((res) => {
-      console.log('----fetch current blacklist---');
-      setBlacklistedusers(res.data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-
-  }
+      .get("http://localhost:3002/admin/auth/blacklist")
+      .then((res) => {
+        console.log("----fetch current blacklist---");
+        setBlacklistedusers(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   useEffect(() => {
-    console.log('---useeffect---')
-    fetch_current_blacklist()
+    console.log("---useeffect---");
+    fetch_current_blacklist();
   }, []);
 
   return (
@@ -111,8 +98,6 @@ const PrimaryManageBlacklistedUsers = () => {
             fetch_current_blacklist={fetch_current_blacklist}
             SetOpensn={SetOpensn}
             SetOpensnE={SetOpensnE}
-            
-           
           />
         )}
         <Container maxWidth="xl" style={{ padding: "0px" }}>
@@ -123,8 +108,18 @@ const PrimaryManageBlacklistedUsers = () => {
               sx={{ backgroundColor: "primary.main", height: "100vh" }}
             >
               <SideNavbar setShowNav={setShowNav}></SideNavbar>
-              <Snackbarp isOpen={opensn} setIsOpen={SetOpensn} type="success" message={"User Whitelisted Sucessfully!"}/>
-              <Snackbarp isOpen={opensnE} setIsOpen={SetOpensnE} type="error" message={"errr in user Whitelisting!"}/>
+              <Snackbarp
+                isOpen={opensn}
+                setIsOpen={SetOpensn}
+                type="success"
+                message={"User Whitelisted Sucessfully!"}
+              />
+              <Snackbarp
+                isOpen={opensnE}
+                setIsOpen={SetOpensnE}
+                type="error"
+                message={"errr in user Whitelisting!"}
+              />
             </Grid>
 
             <Grid
@@ -139,12 +134,11 @@ const PrimaryManageBlacklistedUsers = () => {
             >
               <Pagetop setShowNav={setShowNav} heading={"Manage Blacklist"} />
               <SearchNew setSearch={setSearch} search={search} />
-             
 
               <Box
                 sx={{
                   marginTop: "1%",
-                  maxHeight: {md:"470px",xs:'630px'},
+                  maxHeight: { md: "470px", xs: "630px" },
                   overflow: "scroll",
                   padding: "2%",
                 }}
@@ -156,10 +150,10 @@ const PrimaryManageBlacklistedUsers = () => {
                       ? data
                       : serviceNumberString
                           .toLowerCase()
-                          .startsWith(search.toLocaleLowerCase()) 
+                          .startsWith(search.toLocaleLowerCase());
                   })
                   .map((data) => {
-                    console.log('---mapping start---')
+                    console.log("---mapping start---");
                     return (
                       <BlacklistedUsersCardNew
                         handlepopup={handlepopup}
@@ -167,12 +161,7 @@ const PrimaryManageBlacklistedUsers = () => {
                         setSelecteduser={setSelecteduser}
                         setSelectuser={setSelectuser}
                         setselectemp={setselectemp}
-                       
-                       
                       />
-
-                     
-                     
                     );
                   })}
               </Box>
@@ -183,8 +172,8 @@ const PrimaryManageBlacklistedUsers = () => {
                     sx={{
                       marginLeft: "2%",
                       marginTop: { xs: "10%", sm: "1.5%" },
-                      position:'absolute',
-                      top:'88%'
+                      position: "absolute",
+                      top: "88%",
                     }}
                     component="label"
                     variant="contained"

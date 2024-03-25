@@ -1,24 +1,21 @@
 import React, { useEffect, useState } from "react";
 import SideNavbar from "../../Components/PrimaryAdmin/SideNavbar";
-// import ComplaintCard from '../../Components/PrimaryAdmin/ComplaintCard';
 import Box from "@mui/material/Box";
 import { Container, Grid, ThemeProvider } from "@mui/material";
 import theme from "../../HomlyTheme";
 import Pagetop from "../../Components/PrimaryAdmin/PageTop";
-// import Search from '../../Components/PrimaryAdmin/Search';
+
 import AuthorizationsCard from "../../Components/PrimaryAdmin/authorizationsCard";
 import Model from "../../Components/PrimaryAdmin/Model";
 import axios from "axios";
 import Snackbarp from "../../Components/PrimaryAdmin/snackbar/Snackbarp";
-// import { Mode } from '@mui/icons-material';
 
 const PrimaryAuthorizations = () => {
   const [popup, setpopup] = useState(false);
   const [Pending, SetPending] = useState([]);
-  const [opensn,SetOpensn]=React.useState(false)
-  const [opensnE,SetOpensnE]=React.useState(false)
+  const [opensn, SetOpensn] = React.useState(false);
+  const [opensnE, SetOpensnE] = React.useState(false);
   const get_pending = () => {
-    
     axios
       .get("http://localhost:3002/admin/auth/locationadmin/holidayhome/pending")
       .then((res) => {
@@ -28,7 +25,6 @@ const PrimaryAuthorizations = () => {
         console.log(error);
       });
   };
-  
 
   const [showNav, setShowNav] = useState("nav_grid_deactive");
   useEffect(() => {
@@ -46,7 +42,6 @@ const PrimaryAuthorizations = () => {
           overflow: "hidden",
         }}
       >
-        {/* {popup && <Model setpopup={setpopup} popup={popup} />} */}
         <Container maxWidth="xl" style={{ padding: "0px" }}>
           <Grid container sx={{ position: "relative" }}>
             <Grid
@@ -55,9 +50,18 @@ const PrimaryAuthorizations = () => {
               sx={{ backgroundColor: "primary.main", height: "100vh" }}
             >
               <SideNavbar setShowNav={setShowNav}></SideNavbar>
-              <Snackbarp isOpen={opensn} setIsOpen={SetOpensn} type="success" message={"Sucessfully Approved HolidayHome!"}/>
-              <Snackbarp isOpen={opensnE} setIsOpen={SetOpensnE} type="error" message={"Erro in Approving Holiday Home!"}/>
-
+              <Snackbarp
+                isOpen={opensn}
+                setIsOpen={SetOpensn}
+                type="success"
+                message={"Sucessfully Approved HolidayHome!"}
+              />
+              <Snackbarp
+                isOpen={opensnE}
+                setIsOpen={SetOpensnE}
+                type="error"
+                message={"Erro in Approving Holiday Home!"}
+              />
             </Grid>
             <Grid
               className="container_grid"
@@ -69,7 +73,6 @@ const PrimaryAuthorizations = () => {
               }}
             >
               <Pagetop setShowNav={setShowNav} heading={"Authorizations"} />
-          
 
               <Box
                 sx={{
@@ -80,7 +83,6 @@ const PrimaryAuthorizations = () => {
                 }}
               >
                 <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-                  {/* {createPortal(<Model/>,document.body)} */}
                   {Pending.map((item) => {
                     return (
                       <AuthorizationsCard

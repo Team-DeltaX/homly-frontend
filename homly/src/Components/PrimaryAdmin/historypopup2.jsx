@@ -8,7 +8,7 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
 import { grey } from "@mui/material/colors";
-import theme from "../../Homlytheme";
+
 
 const historypopup2 = (props) => {
   return (
@@ -69,13 +69,11 @@ const historypopup2 = (props) => {
             sx={{
               display: "felx",
               flexDirection: "column",
-              // width:'100%',
             }}
           >
             <Box sx={{ display: "flex", flexDirection: "" }}>
               <Box
                 sx={{
-                  // width:"100%",
                   display: "flex",
                   flexDirection: { md: "row", xs: "column" },
                   justifyContent: "space-between",
@@ -126,7 +124,6 @@ const historypopup2 = (props) => {
 
             <Box
               sx={{
-                // width:"100%",
                 display: "flex",
                 flexDirection: { md: "row", xs: "column" },
                 justifyContent: "space-between",
@@ -150,7 +147,6 @@ const historypopup2 = (props) => {
 
             <Box
               sx={{
-                // width:"100%",
                 display: "flex",
                 flexDirection: { md: "row", xs: "column" },
                 justifyContent: "space-between",
@@ -198,7 +194,6 @@ const historypopup2 = (props) => {
 
             <Box
               sx={{
-                // width:"100%",
                 display: "flex",
                 flexDirection: { md: "row", xs: "column" },
                 justifyContent: "space-between",
@@ -222,7 +217,6 @@ const historypopup2 = (props) => {
 
             <Box
               sx={{
-                // width:"100%",
                 display: "flex",
                 flexDirection: { md: "row", xs: "column" },
                 justifyContent: "space-between",
@@ -317,7 +311,6 @@ const historypopup2 = (props) => {
             </Box>
             <Box
               sx={{
-                // width:"100%",
                 display: "flex",
                 flexDirection: { md: "row", xs: "column" },
                 justifyContent: "space-between",
@@ -363,7 +356,6 @@ const historypopup2 = (props) => {
         </Box>
       </Box>
     </Box>
-    // </Themeprovider>
   );
 };
 export default historypopup2;

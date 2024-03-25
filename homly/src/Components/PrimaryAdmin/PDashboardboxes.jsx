@@ -2,17 +2,14 @@ import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import PStatisticsDetails from "../../Components/PrimaryAdmin/PStatisticsDetails";
-
+import PStatisticsDetails from "./PStatisticsDetails";
 import DirectionsWalkIcon from "@mui/icons-material/DirectionsWalk";
 import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
 import PaidIcon from "@mui/icons-material/Paid";
 import HomeIcon from "@mui/icons-material/Home";
-// import PSummary from "../../Components/PrimaryAdmin/Psummery";
 import axios from "axios";
-// import { set } from "date-fns";
 
-const PDashboardCon = () => {
+const PDashboardboxes = () => {
   const [hhcount, Sethhcount] = useState("0");
   const [earning, SetEarning] = useState("0");
   const [paidcount, SetPaidcount] = useState("0");
@@ -245,4 +242,4 @@ const PDashboardCon = () => {
   );
 };
 
-export default PDashboardCon;
+export default PDashboardboxes;

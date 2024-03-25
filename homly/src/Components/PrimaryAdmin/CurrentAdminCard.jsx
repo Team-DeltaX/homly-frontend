@@ -82,15 +82,11 @@ const CurrentAdminCard = (props) => {
         }
       )
       .then((res) => {
-        // setnacktext('Admin Added Sucessfully!')
-        // handleClick();
         props.fetchadmins();
         props.setsnacktext("Admin Disabled Successfully!");
         props.handlesnack();
       })
       .catch((error) => {
-        // setnacktext('Somthing Went Wrong,May be admin no duplicaion,Please Try Again!')
-        // handleClick();
         console.log(`error is  nm ${error}`);
       });
   };

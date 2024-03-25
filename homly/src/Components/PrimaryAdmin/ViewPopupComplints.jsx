@@ -13,7 +13,6 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import CancelIcon from "@mui/icons-material/Cancel";
-// import axios from "axios";
 import ConfirmPopup from "./ConfirmPopup";
 import axios from "axios";
 
@@ -146,7 +145,6 @@ const ViewPopupComplaints = (props) => {
               sx={{
                 display: "felx",
                 flexDirection: "column",
-                // width:'100%',
               }}
             >
               <Box

@@ -15,10 +15,6 @@ import {
 import theme from "../../HomlyTheme";
 import Pagetop from "../../Components/PrimaryAdmin/PageTop";
 import AutohideSnackbar from "../../Components/PrimaryAdmin/AutohideSnackbar";
-// import BlacklistHistoryCard from '../../Components/PrimaryAdmin/BlacklistHistoryCard';
-// import Search from '../../Components/PrimaryAdmin/Search';
-// import { Label } from '@mui/icons-material';
-// import { Form } from 'react-router-dom';
 
 const PrimaryAddAdmin = () => {
   const [adminno, setadminno] = useState("");
@@ -37,22 +33,6 @@ const PrimaryAddAdmin = () => {
   const [snacktext, setnacktext] = useState("");
   const [showNav, setShowNav] = useState("nav_grid_deactive");
   const [open, setOpen] = React.useState(false);
-
-  //sncak bar
-  //     const [open, setOpen] = React.useState(false);
-
-  //   const handleClick = () => {
-  //     setOpen(true);
-  //   };
-
-  //   const handleClose = (event, reason) => {
-  //     if (reason === 'clickaway') {
-  //       return;
-  //     }
-
-  //     setOpen(false);
-  //   };
-  //snack bar
 
   const validatemobile = (number) => {
     const pattern = /^(?:\+94|0)?(?:7\d{8}|[1-9]\d{8})$/;
@@ -126,13 +106,7 @@ const PrimaryAddAdmin = () => {
     setPassword("");
     SetSubstitute("");
   };
-  // const ValidatePassword = (password) => {
-  //   if (password.length <= 8) {
-  //     setPassworderror(true);
-  //   } else {
-  //     setPassworderror(false);
-  //   }
-  // };
+
   const ValidateContact = (contactno) => {
     if (!validatemobile(contactno)) {
       setMobileerror(true);
@@ -140,8 +114,6 @@ const PrimaryAddAdmin = () => {
       setMobileerror(false);
     }
   };
-
-  //SnackBar
 
   const handleClick = () => {
     setOpen(true);
@@ -154,7 +126,6 @@ const PrimaryAddAdmin = () => {
 
     setOpen(false);
   };
-  //SnackBar
 
   return (
     <ThemeProvider theme={theme}>
@@ -230,58 +201,6 @@ const PrimaryAddAdmin = () => {
                       borderRadius: "20px",
                     }}
                   >
-                    {/* <Grid item sm={12}>
-                      <Grid
-                        container
-                        width={"60%"}
-                        sx={{
-                          marginLeft: "15%",
-                          alignItems: "center",
-                          padding: "10px",
-                        }}
-                      >
-                        <Grid item md={6} sm={12} xs={12}>
-                          <InputLabel>Admin Number</InputLabel>
-                        </Grid>
-                        <Grid item md={6} sm={12} xs={12}> */}
-                          {/* <TextField
-                    
-                                    required={true}
-                                    value={serviceno}
-                                    onChange={e=>{setServiceno(e.target.value)}}
-                                     autocomplete="off"
-                                     type='text'
-                                    size='small'
-                                   sx={{marginLeft:'3%',borderRadius:"50px",'& fieldset': { width: "100%",  borderRadius: '20px', borderWidth: '2px', fontFamily: 'roboto' ,}}}
-                    
-                    
-                                   ></TextField> */}
-                          {/* <TextField
-                            value={adminno}
-                            required={true}
-                            onChange={(e) => {
-                              setadminno(e.target.value);
-                              validateadmin(e.target.value);
-                            }}
-                            alignItems="center"
-                            fullWidth
-                            error={adminerror}
-                            type="text"
-                            size="small"
-                            sx={{
-                              background: "white",
-                              marginLeft: "3%",
-                              borderRadius: "15px",
-                              "& fieldset": {
-                                borderRadius: "10px",
-                                borderWidth: "2px",
-                                fontFamily: "roboto",
-                              },
-                            }}
-                          ></TextField>
-                        </Grid>
-                      </Grid>
-                    </Grid> */}
                     <Grid item sm={12}>
                       <Grid
                         container
@@ -322,52 +241,6 @@ const PrimaryAddAdmin = () => {
                         </Grid>
                       </Grid>
                     </Grid>
-                    {/* <Grid item sm={12}>
-                      <Grid
-                        container
-                        width={"60%"}
-                        sx={{
-                          marginLeft: "15%",
-                          alignItems: "center",
-                          padding: "10px",
-                        }}
-                      >
-                        <Grid item md={6} sm={12} xs={12}> */}
-                    {/* <InputLabel>Password</InputLabel> */}
-                    {/* </Grid>
-                        <Grid item md={6} sm={12} xs={12}>
-                          <TextField
-                            value={password}
-                            required={true}
-                            onChange={(e) => {
-                              setPassword(e.target.value);
-                              ValidatePassword(e.target.value);
-                            }}
-                            error={passworderror}
-                            type="password"
-                            alignItems="center"
-                            size="small"
-                            sx={{
-                              background: "white",
-                              marginLeft: "3%",
-                              borderRadius: "15px",
-                              "& fieldset": {
-                                borderRadius: "10px",
-                                borderWidth: "2px",
-                                fontFamily: "roboto",
-                              },
-                              width: "100%",
-                            }}
-                          ></TextField>
-                          {passworderror && (
-                            <Typography sx={{ fontSize: "10px", color: "red" }}>
-                              password length should be greater than 8
-                              characters
-                            </Typography>
-                          )} */}
-                    {/* </Grid> */}
-                    {/* </Grid> */}
-                    {/* </Grid> */}
                     <Grid item sm={12}>
                       <Grid
                         container
@@ -519,13 +392,10 @@ const PrimaryAddAdmin = () => {
                             <TextField
                               value={substitute}
                               type="text"
-                              //    required={true}
                               onChange={(e) => {
                                 SetSubstitute(e.target.value);
-                                // validlocation(e.target.value)
                               }}
                               alignItems="center"
-                              // error={worklocationeerror}
                               size="small"
                               sx={{
                                 background: "white",

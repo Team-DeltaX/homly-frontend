@@ -73,7 +73,7 @@ const ViewPopupComplaints = (props) => {
           >
             <Box
               sx={{
-                // width:"100%",
+              
                 display: "flex",
                 flexDirection: { md: "row", xs: "column" },
                 justifyContent: "space-between",
@@ -199,7 +199,7 @@ const ViewPopupComplaints = (props) => {
         </Box>
       </Box>
     </Box>
-    // </Themeprovider>
+   
   );
 };
 export default ViewPopupComplaints;

@@ -9,8 +9,6 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-// import theme from '../../HomlyTheme'
-
 const Search = () => {
   return (
     <Grid
@@ -30,7 +28,6 @@ const Search = () => {
             justifyContent: "center",
           }}
         >
-          {/* <FormControl sx={{ m: 1, width: 150,height:10, mt: 3 }}> */}
           <Typography sx={{ marginLeft: { xs: 0, md: "3%" } }}>
             Filter
           </Typography>
@@ -90,9 +87,6 @@ const Search = () => {
           >
             Search
           </Button>
-
-          {/* </Grid>
-<Grid item md={4} sm={12} xs={12}> */}
           <Button
             sx={{
               fontFamily: "Roboto",
