@@ -44,10 +44,7 @@ export default function SimpleLineChart() {
       return axios
         .get(`http://localhost:3002/admin/auth/dayincome/${date}/${HolidayHome1}`)
         .then((res) => {
-          
-          console.log(`-----------${date}--${HolidayHome1}`);
-          console.log(res.data.sumForDate);
-          return res.data.sumForDate;
+        return res.data.sumForDate;
         })
         .catch((err) => {
           console.log(err);
@@ -58,7 +55,6 @@ export default function SimpleLineChart() {
     Promise.all(promises)
       .then((results) => {
         const filteredResults = results.filter((result) => result !== null);
-        // setIncomes(filteredResults);
        
         setH1data(filteredResults)
       })
@@ -66,6 +62,32 @@ export default function SimpleLineChart() {
         console.log(err);
       });
   };
+
+
+  const setearning_HH2 = (HolidayHome2) => {
+    const promises = getLastSevenDays().map((date) => {
+      return axios
+        .get(`http://localhost:3002/admin/auth/dayincome/${date}/${HolidayHome2}`)
+        .then((res) => {
+        return res.data.sumForDate;
+        })
+        .catch((err) => {
+          console.log(err);
+          return null;
+        });
+    });
+
+    Promise.all(promises)
+      .then((results) => {
+        const filteredResults = results.filter((result) => result !== null);
+       
+        setH2data(filteredResults)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
 
   const handleChangehh1 = (event) => {
     SetHolidayHome1(event.target.value);
@@ -75,12 +97,11 @@ export default function SimpleLineChart() {
 
     
 
-    // setH1data([4000, 3000, 2000, 2780, 1890, 2390, 3490]);
   };
 
   const handleChangehh2 = (event) => {
     SetHolidayHome2(event.target.value);
-    setH2data([2400, 1398, 9800, 3908, 4800, 3800, 4300]);
+    setearning_HH2(event.target.value);
   };
 
   const handleChangehh3 = (event) => {
