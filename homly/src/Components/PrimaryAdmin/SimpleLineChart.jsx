@@ -38,11 +38,44 @@ export default function SimpleLineChart() {
   const [HolidayHome2, SetHolidayHome2] = React.useState("");
   const [HolidayHome3, SetHolidayHome3] = React.useState("");
 
+
+  const setearning_HH1 = (HolidayHome1) => {
+    const promises = getLastSevenDays().map((date) => {
+      return axios
+        .get(`http://localhost:3002/admin/auth/dayincome/${date}/${HolidayHome1}`)
+        .then((res) => {
+          
+          console.log(`-----------${date}--${HolidayHome1}`);
+          console.log(res.data.sumForDate);
+          return res.data.sumForDate;
+        })
+        .catch((err) => {
+          console.log(err);
+          return null;
+        });
+    });
+
+    Promise.all(promises)
+      .then((results) => {
+        const filteredResults = results.filter((result) => result !== null);
+        // setIncomes(filteredResults);
+       
+        setH1data(filteredResults)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const handleChangehh1 = (event) => {
     SetHolidayHome1(event.target.value);
-    // console.log('--------handlechange1----------')
-    // console.log(event.target.value)
-    setH1data([4000, 3000, 2000, 2780, 1890, 2390, 3490]);
+    setearning_HH1(event.target.value);
+    
+   
+
+    
+
+    // setH1data([4000, 3000, 2000, 2780, 1890, 2390, 3490]);
   };
 
   const handleChangehh2 = (event) => {
@@ -70,9 +103,6 @@ export default function SimpleLineChart() {
     axios
       .get("http://localhost:3002/admin/auth/hhnames")
       .then((res) => {
-        // setHolidayHomes1(res.data.HH)
-        // console.log('---------holiday homes-------')
-        // console.log(res.data.HH)
         setHolidayHomes(res.data.HH);
       })
       .catch((err) => {
@@ -86,7 +116,6 @@ export default function SimpleLineChart() {
 
   return (
     <Box sx={{ marginTop: "40px" }}>
-      {/* {xaxisd} */}
       <Box
         sx={{
           display: "flex",
@@ -111,7 +140,10 @@ export default function SimpleLineChart() {
               id="demo-simple-select-helper"
               value={HolidayHome1}
               label="Holidayhome1"
-              onChange={handleChangehh1}
+              onChange={(e)=>{
+                handleChangehh1(e)
+
+              }}
             >
               {HolidayHomes.filter((hh) => {
                 return (

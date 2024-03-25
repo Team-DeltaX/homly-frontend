@@ -31,7 +31,6 @@ const PrimaryDashboard = () => {
       .then((res) => {
         SetActivecount(res.data.Active);
         setInactivecount(res.data.Inactive);
-        console.log(`--------------------`);
         console.log(res);
       })
       .catch((err) => {
