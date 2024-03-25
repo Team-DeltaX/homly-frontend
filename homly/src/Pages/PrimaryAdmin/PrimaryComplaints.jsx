@@ -8,7 +8,6 @@ import Pagetop from "../../Components/PrimaryAdmin/PageTop";
 import ViewPopupComplaints from "../../Components/PrimaryAdmin/ViewPopupComplints";
 import axios from "axios";
 import Switch from "@mui/material/Switch";
-import ErrorSnackbar from "../../Components/User/ErrorSnackbar";
 import Snackbarp from "../../Components/PrimaryAdmin/snackbar/Snackbarp";
 
 const PrimaryComplaints = () => {

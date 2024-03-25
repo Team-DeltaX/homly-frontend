@@ -38,7 +38,7 @@ const ViewPopupComplaints = (props) => {
   const mark_on_open = () => {
     axios
       .put("http://localhost:3002/admin/auth/markcomplaint", {
-        ServiceNo: props.selecteduser.ServiceNo,
+        CompID: props.selecteduser.ComplaintID
       })
       .then(() => {
         console.log("marked as blacklisted");
@@ -145,6 +145,7 @@ const ViewPopupComplaints = (props) => {
               sx={{
                 display: "felx",
                 flexDirection: "column",
+               
               }}
             >
               <Box
