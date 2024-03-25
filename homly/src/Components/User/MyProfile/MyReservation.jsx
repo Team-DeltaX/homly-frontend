@@ -16,46 +16,52 @@ import PastReservation from "./PastReservation";
 import theme from "../../../HomlyTheme";
 
 const MyReservation = () => {
-  const [value, setValue] = React.useState(0);
-
-  const handleTabChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  const [value, setValue] = useState(0);
+  const [ongoingReservation, setOngoingReservation] = useState([]);
+  const [pastReservation, setPastReservation] = useState([]);
+  const tabComponent = [
+    <OngoingReservation reservation={ongoingReservation} />,
+    <PastReservation reservation={pastReservation} />,
+  ];
 
   const Navigate = useNavigate();
 
-  const [ongoingReservation, setOngoingReservation] = useState([]);
-  const [pastReservation, setPastReservation] = useState([]);
-
   useEffect(() => {
-    axios.get('http://localhost:3002/users/auth/userOngoingReservation',{withCredentials:true})
-    .then((response) => {
-      console.log("reservation ongoing",response.data);
-      setOngoingReservation(response.data);
-    }).catch((err) => {
-      console.log("error",err);
-      if (!err.response.data.autherized) {
-        Navigate("/");
-      } 
-    });
-
-    axios.get('http://localhost:3002/users/auth/userPastReservation',{withCredentials:true})
+    axios
+      .get("http://localhost:3002/users/auth/userOngoingReservation", {
+        withCredentials: true,
+      })
       .then((response) => {
-        console.log("reservation past",response.data);
+        console.log("reservation ongoing", response.data);
+        setOngoingReservation(response.data);
+      })
+      .catch((err) => {
+        console.log("error", err);
+        if (!err.response.data.autherized) {
+          Navigate("/");
+        }
+      });
+
+    axios
+      .get("http://localhost:3002/users/auth/userPastReservation", {
+        withCredentials: true,
+      })
+      .then((response) => {
+        console.log("reservation past", response.data);
         setPastReservation(response.data);
       })
       .catch((err) => {
         console.log("error", err);
         if (!err.response.data.autherized) {
           Navigate("/");
-        } 
+        }
       });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  
 
-  const tabComponent = [<OngoingReservation reservation={ongoingReservation}/>, <PastReservation reservation={pastReservation}/>];
-
+  const handleTabChange = (event, newValue) => {
+    setValue(newValue);
+  };
   return (
     <ThemeProvider theme={theme}>
       <Box>
@@ -78,13 +84,14 @@ const MyReservation = () => {
                 textColor="secondary"
                 aria-label="secondary tabs example"
                 sx={{
-                  "& .css-1qqs86a-MuiButtonBase-root-MuiTab-root.Mui-selected ":{
-                    bgcolor: "primary.main",
-                    color: "white",
-                    fontWeight:'bold',
-                    width: "50% !important",
-                  },
-                  "& .css-1qqs86a-MuiButtonBase-root-MuiTab-root ":{
+                  "& .css-1qqs86a-MuiButtonBase-root-MuiTab-root.Mui-selected ":
+                    {
+                      bgcolor: "primary.main",
+                      color: "white",
+                      fontWeight: "bold",
+                      width: "50% !important",
+                    },
+                  "& .css-1qqs86a-MuiButtonBase-root-MuiTab-root ": {
                     padding: "10px !important",
                     border: "1px solid #872341",
                     width: "50% !important",

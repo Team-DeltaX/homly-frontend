@@ -40,18 +40,13 @@ export default function Home() {
     endDate: new Date(),
     key: "selection",
   });
-
   const [interestedHH, setInterestedHH] = useState();
-
   const [isDisplayInterest, setIsDisplayInterest] = useState(false);
-
   const [insterestedPopup, setInsterestedPopup] = useState(false);
-
   const [interestsIsSubmited, setInterestsIsSubmited] = useState(false);
-
   const Navigate = useNavigate();
-
   const [district, setDistrict] = useState("");
+
   useEffect(() => {
     AOS.init();
   }, []);
@@ -71,7 +66,7 @@ export default function Home() {
       });
 
     axios
-      .get("http://localhost:3002/users/auth/interested", {
+      .get(`http://localhost:3002/users/auth/interested`, {
         withCredentials: true,
       })
       .then((res) => {
@@ -88,8 +83,6 @@ export default function Home() {
           Navigate("/");
         }
       });
-
-    //
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -113,8 +106,6 @@ export default function Home() {
         console.log(err);
       });
   }, [interestsIsSubmited]);
-
-  // console.log(sortedByRating);
 
   return (
     <ThemeProvider theme={theme}>
