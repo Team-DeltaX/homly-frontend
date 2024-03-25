@@ -89,15 +89,35 @@ export default function SimpleLineChart() {
   };
 
 
+  const setearning_HH3 = (HolidayHome3) => {
+    const promises = getLastSevenDays().map((date) => {
+      return axios
+        .get(`http://localhost:3002/admin/auth/dayincome/${date}/${HolidayHome3}`)
+        .then((res) => {
+        return res.data.sumForDate;
+        })
+        .catch((err) => {
+          console.log(err);
+          return null;
+        });
+    });
+
+    Promise.all(promises)
+      .then((results) => {
+        const filteredResults = results.filter((result) => result !== null);
+       
+        setH3data(filteredResults)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+
   const handleChangehh1 = (event) => {
     SetHolidayHome1(event.target.value);
     setearning_HH1(event.target.value);
-    
-   
-
-    
-
-  };
+    };
 
   const handleChangehh2 = (event) => {
     SetHolidayHome2(event.target.value);
@@ -106,7 +126,7 @@ export default function SimpleLineChart() {
 
   const handleChangehh3 = (event) => {
     SetHolidayHome3(event.target.value);
-    setH3data([2434, 2398, 6345, 9533, 4999, 7600, 1000]);
+    setearning_HH3(event.target.value);
   };
   const getLastSevenDays = () => {
     const dates = [];
