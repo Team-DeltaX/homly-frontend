@@ -1,10 +1,21 @@
 import React, { useRef, useEffect, useState } from "react";
-import { Container, Box, ThemeProvider, Pagination , Typography} from "@mui/material";
+import {
+  Container,
+  Box,
+  ThemeProvider,
+  Pagination,
+  Typography,
+  TextField,
+  Stack,
+  Button,
+} from "@mui/material";
 import axios from "axios";
-import { useParams} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import NavBar from "../../Components/User/NavBar/NavBar";
 import Footer from "../../Components/User/Footer/Footer";
 import HolidayHomeCard from "../../Components/User/HHCard/HolidayHomeCard";
+import HHCardSkeleton from "../../Components/User/Skeleton/HHCardSkeleton";
 import theme from "../../HomlyTheme";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -14,32 +25,55 @@ export default function HolidayHomes() {
   const [holidayHomes, setHolidayHomes] = useState([]);
   const [displayedHH, setDisplayedHH] = useState([]);
   const [pagination, setPagination] = useState(1);
+  const [searchValue, setSearchValue] = useState("");
+  const [showSkeleton, setShowSkeleton] = useState(true);
+
   useEffect(() => {
     window.scrollTo(0, 0);
     AOS.init();
   }, []);
 
   const params = useParams();
-  const searchData = params ? params.searchData : " ";
+  const district = params ? params.district : " ";
 
-  useEffect(() => {
-    console.log("searchData", searchData);
+  const Navigate = useNavigate();
+
+  const fetchData = () => {
+    console.log("searchData", district);
     axios
       .get(
-        "http://localhost:3002/users/holidayhomes",
-        { params : { search:searchData} },
-        { withCredentials: true }
+        "http://localhost:3002/users/auth/holidayhomes",{withCredentials: true, params: { district: district, search: searchValue } }
       )
       .then((res) => {
         console.log("hhdetails", res.data);
-        setPagination( Math.ceil(res.data.length / 9));
-        setHolidayHomes(res.data);
-        setDisplayedHH(res.data.slice(0, 9));
+        if (res.data.length > 0) {
+          setPagination(Math.ceil(res.data.length / 9));
+          setHolidayHomes(res.data);
+          setDisplayedHH(res.data.slice(0, 9));
+          setShowSkeleton(false);
+        }else{
+          setHolidayHomes([]);
+          setDisplayedHH([]);
+          setShowSkeleton(false);
+        }
       })
       .catch((err) => {
-        console.log(err);
+        if (err.response.data.autherized === false) {
+          Navigate("/");
+        }
       });
-  }, [searchData]);
+  };
+
+  useEffect(() => {
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleSearch = () => {
+    setShowSkeleton(true);
+    fetchData();
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <Box
@@ -48,7 +82,7 @@ export default function HolidayHomes() {
           overflow: "hidden",
         }}
       >
-        <Container maxWidth="xl" style={{ padding: 0 }}  ref={refPageTop}>
+        <Container maxWidth="xl" style={{ padding: 0 }} ref={refPageTop}>
           <NavBar refContactUS={refContactUS} />
           <Container
             maxWidth="lg"
@@ -59,40 +93,84 @@ export default function HolidayHomes() {
           >
             <Container
               sx={{
-                marginTop:{xs:"20px", sm:"10px", ms:"0"},
+                marginTop: { xs: "20px", sm: "10px", ms: "0" },
                 width: { xs: "100%", sm: "95%", padding: 0 },
-                display: "flex",
-                flexWrap: "wrap",
                 justifyContent: "center",
               }}
             >
-              {displayedHH ? displayedHH.map((item) => (
-                <Box sx={{padding:"7px"}}>
-                  <HolidayHomeCard
-                    key={item.HolidayHomeId}
-                    HHID={item.HolidayHomeId}
-                    HHName={item.Name}
-                    HHLocation={item.Address}
-                    HHPrice={item.TotalRental}
-                    HHRating={item.overall_rating}
-                    // HHImage={
-                    //   "https://www.cnaccountants.com.au/wp-content/uploads/2023/03/hOLIDAY-HOMES-TAX.jpg"
-                    // }
-                    HHImage={item.HHImage}
-                    showInterest={false}
-                  />
+              <Stack direction="column">
+                <Stack direction="row">
+                  <Box>
+                    <TextField
+                      id="search"
+                      label="search"
+                      value={searchValue}
+                      onChange={(e) => setSearchValue(e.target.value)}
+                    />
+                  </Box>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleSearch}
+                  >
+                    Search
+                  </Button>
+                </Stack>
+
+                <Box
+                  sx={{
+                    flexWrap: "wrap",
+                    display: !showSkeleton ? "flex" : "none",
+                  }}
+                >
+                  {displayedHH.length > 0 ? (
+                    displayedHH.map((item) => (
+                      <Box sx={{ padding: "7px" }} key={item.HolidayHomeId}>
+                        <HolidayHomeCard
+                          key={item.HolidayHomeId}
+                          HHID={item.HolidayHomeId}
+                          HHName={item.Name}
+                          HHLocation={item.Address}
+                          HHPrice={item.TotalRental}
+                          HHRating={item.overall_rating}
+                          HHImage={item.HHImage}
+                          showInterest={false}
+                        />
+                      </Box>
+                    ))
+                  ) : (
+                    <Box
+                      sx={{
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        padding: "20px",
+                      }}
+                    >
+                      <Typography variant="h6">
+                        No Holiday Homes Found!
+                      </Typography>
+                    </Box>
+                  )}
                 </Box>
-              )):
-              <Box
-                sx={{
-                  width: "100%",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  padding: "20px",
-                }}
-              ><Typography variant="h6">No Holiday Homes Found</Typography></Box>
-              }
+                <Box
+                  sx={{
+                    flexWrap: "wrap",
+                    display: showSkeleton ? "flex" : "none",
+                  }}
+                >
+                  <Box sx={{ padding: "20px" }}>
+                    <HHCardSkeleton showInterest={false}/>
+                  </Box>
+                  <Box sx={{ padding: "20px" }}>
+                    <HHCardSkeleton showInterest={false}/>
+                  </Box>
+                  <Box sx={{ padding: "20px" }}>
+                    <HHCardSkeleton showInterest={false}/>
+                  </Box>
+                </Box>
+              </Stack>
             </Container>
             <Box
               sx={{
@@ -108,9 +186,11 @@ export default function HolidayHomes() {
                 variant="outlined"
                 shape="rounded"
                 color="primary"
-                onChange={(event, value) => { 
+                onChange={(event, value) => {
                   console.log("page", value);
-                  setDisplayedHH(holidayHomes.slice((value-1)*9, value*9));
+                  setDisplayedHH(
+                    holidayHomes.slice((value - 1) * 9, value * 9)
+                  );
                   // go to pagetop
                   refPageTop.current.scrollIntoView({ behavior: "smooth" });
                 }}
