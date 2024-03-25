@@ -19,7 +19,7 @@ const UserRouter = () =>{
         <Route path="/" element={<UserLogin />} />
         <Route path="/Registration" element={<UserRegistration />} />
         <Route path="/Home" element={<Home />} />
-        <Route path="/HolidayHomes/:searchData" element={<HolidayHome />} />
+        <Route path="/HolidayHomes/:district" element={<HolidayHome />} />
         <Route path="/HolidayHomes" element={<HolidayHome />} />
         <Route path="/HolidayHomeDetails/:homeId" element={ <HolidayHomeDetails />} />
         <Route path="/MyProfile" element={<Profile />} />
