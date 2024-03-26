@@ -32,11 +32,9 @@ const MyReservation = () => {
         withCredentials: true,
       })
       .then((response) => {
-        console.log("reservation ongoing", response.data);
         setOngoingReservation(response.data);
       })
       .catch((err) => {
-        console.log("error", err);
         if (!err.response.data.autherized) {
           Navigate("/");
         }
@@ -47,7 +45,6 @@ const MyReservation = () => {
         withCredentials: true,
       })
       .then((response) => {
-        console.log("reservation past", response.data);
         setPastReservation(response.data);
       })
       .catch((err) => {

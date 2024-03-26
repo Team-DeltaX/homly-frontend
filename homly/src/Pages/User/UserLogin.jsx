@@ -65,6 +65,8 @@ const UserLogin = () => {
           });
           setIsLogged(true);
           setAuthServiceNumber(serviceNo);
+          // delete local storage
+          localStorage.removeItem("selectedTab");
           Navigate("/Home");
         } else {
           setServiceNo("");

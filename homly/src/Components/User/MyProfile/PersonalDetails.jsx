@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
@@ -20,7 +20,6 @@ import ErrorSnackbar from "../ErrorSnackbar";
 import UserInterestedPopupProfile from "./UserInterestedPopupProfile";
 
 const PersonalDetails = () => {
-
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
   const phoneRegex = /^[0-9]{10}$/;
 
@@ -121,7 +120,6 @@ const PersonalDetails = () => {
         })
         .then((res) => {
           if (res.data) {
-            console.log("intresffedfsdf", res.data.userInterested.interested);
             if (res.data.userInterested.interested[0] !== null) {
               setInterests(res.data.userInterested.interested);
             }
@@ -137,7 +135,6 @@ const PersonalDetails = () => {
         })
         .catch((err) => {
           setIsHaveInterests(false);
-          console.log("error", err);
         });
     } catch (err) {
       Navigate("/");
