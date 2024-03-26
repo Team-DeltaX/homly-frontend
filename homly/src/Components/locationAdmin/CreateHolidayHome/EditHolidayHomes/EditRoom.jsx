@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Box, Button, TextField, Typography, Paper } from '@mui/material'
 import CancelIcon from '@mui/icons-material/Cancel';
-
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -10,28 +9,19 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
-
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-
 import RoomBreakdown from '../RoomBreakdown';
-
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
-
 const EditRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount, roomTypeArray, settingRoomRentalArray }) => {
-
     const { homeId } = useParams();
-    // open pop up for add room
     const [open, setOpen] = useState(false);
     const [fullWidth, setFullWidth] = useState(true);
     const [maxWidth, setMaxWidth] = useState('sm');
-
     const [isEditMode, setIsEditMode] = useState(false);
     const [editIndex, setEditIndex] = useState(null);
-
-
 
     useEffect(() => {
         if (isEditMode && editIndex !== null) {
@@ -70,25 +60,20 @@ const EditRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount, room
         setOpen(true);
     };
 
-
-
     const handleClose = () => {
         setOpen(false);
     };
     //remove room alert
     const [openAlert, setOpenAlert] = useState(false);
-
     const handleCloseAlert = (event, reason) => {
         if (reason === 'clickaway') {
             return;
         }
-
         setOpenAlert(false);
     };
 
     //room - all fields should filled warning
     const [openRoomFillAlert, setOpenRoomFillAlert] = useState(false);
-
     const handleCloseRoomFillAlert = (event, reason) => {
         if (reason === 'clickaway') {
             return;
@@ -98,9 +83,7 @@ const EditRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount, room
     };
 
     //room - same room no exist warning
-
     const [openRoomExistAlert, setOpenRoomExistAlert] = useState(false);
-
     const handleCloseRoomExistAlert = (event, reason) => {
         if (reason === 'clickaway') {
             return;
@@ -109,38 +92,15 @@ const EditRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount, room
         setOpenRoomExistAlert(false);
     };
 
-
     const [values, setValues] = useState({
         roomCode: '', roomAc: '', RoomType: '', floorLevel: '', NoOfAdults: '', NoOfChildren: '', roomRemarks: '', roomRental: '', groupByUnit: false,
     })
 
-
-
-
     const handleSaveRoom = () => {
-        // if (values.roomCode === '' || values.roomAc === '' || values.RoomType === '' || values.floorLevel === '' || values.NoOfAdults === '' || values.NoOfChildren === '' || values.roomRemarks === '' || values.roomRental === '') {
-        //     setOpenRoomFillAlert(true);
-        //     return;
-        // }
-
-        // const updatedValues = { ...values, rentalArray };
-        // setRoomArray([...roomArray, updatedValues]);
-        // setRentalArray([]);
-
-        // setValues({ roomCode: '', roomAc: '', RoomType: '', floorLevel: '', NoOfAdults: '', NoOfChildren: '', roomRemarks: '', roomRental: '', groupByUnit: false })
-        // setOpen(false);
         if (values.roomCode === '' || values.roomAc === '' || values.RoomType === '' || values.floorLevel === '' || values.NoOfAdults === '' || values.NoOfChildren === '' || values.roomRemarks === '' || values.roomRental === '') {
             setOpenRoomFillAlert(true);
             return;
         }
-
-        // if (roomExist) {
-        //     setOpenRoomExistAlert(true);
-        //     return;
-        // }
-
-
-
         if (isEditMode && editIndex !== null) {
             // Editing an existing room
             let noOfAdults = values.NoOfAdults;
@@ -153,8 +113,6 @@ const EditRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount, room
                 ...values,
                 rentalArray: [...rentalArray], // Copy the rentalArray as well
             };
-
-
             setRoomArray(updatedRoomArray);
             setAdultsCount(prevCount => prevCount + parseInt(values.NoOfAdults, 10));
             setChildCount(prevCount => prevCount + parseInt(values.NoOfChildren, 10));
@@ -164,23 +122,17 @@ const EditRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount, room
             // Adding a new room
             const updatedValues = { ...values, rentalArray };
             setRoomArray([...roomArray, updatedValues]);
-            // setRoomArray([...roomArray, values]);
             setAdultsCount(prevCount => prevCount + parseInt(values.NoOfAdults, 10));
             setChildCount(prevCount => prevCount + parseInt(values.NoOfChildren, 10));
         }
-
         setRentalArray([]);
-
         // Close the dialog and reset state
         setOpen(false);
         setIsEditMode(false);
         setEditIndex(null);
-
-
-
     };
 
-    const handleRoomDelete = (roomCode, groupByUnit, noOfAdults, noOfChildren) => { //for room breakdown component
+    const handleRoomDelete = (roomCode, groupByUnit, noOfAdults, noOfChildren) => {
         if (groupByUnit) {
             setOpenAlert(true);
         }
@@ -189,15 +141,11 @@ const EditRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount, room
             setRoomArray(newRoomArray);
             setAdultsCount(prevCount => prevCount - parseInt(noOfAdults, 10));
             setChildCount(prevCount => prevCount - parseInt(noOfChildren, 10));
-
-
         }
     }
 
     const handleRoomEdit = (index) => {
-
         const editedRoom = roomArray[index];
-
         setValues({
             roomCode: editedRoom.roomCode,
             roomAc: editedRoom.roomAc,
@@ -210,42 +158,25 @@ const EditRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount, room
             groupByUnit: editedRoom.groupByUnit,
 
         });
-
         axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/rental/${homeId}/${editedRoom.roomCode}`)
             .then(res => {
-                console.log("get")
                 const rental = res.data.roomRental;
-                console.log(rental)
                 for (let i = 0; i < rental.length; i++) {
-                    console.log("in")
-                    console.log(rental[i].Month);
                     setRental({
                         district: rental[i].Month,
                         weekDays: rental[i].WeekRental,
                         weekEnds: rental[i].WeekEndRental,
                     });
-
-                    console.log("rental", rental);
-
-                    setRentalArray(rental); // Use functional update
-                    console.log("rental array", rentalArray);
+                    setRentalArray(rental); // Use functional updat
                 }
-
-
                 setOpen(true);
                 setEditIndex(index);
                 setIsEditMode(true);
-
             })
             .catch(err => {
                 console.log(err);
             });
-
-
-
     }
-
-
 
     const [error, setError] = useState({
         ctName: false, ctAddress: false, ctDescription: false, ctContactNo: false
@@ -320,7 +251,6 @@ const EditRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount, room
         setValues({ ...values, NoOfChildren: e.target.value });
     }
 
-
     const handleRemarksChange = (e) => {
         setValues({ ...values, roomRemarks: e.target.value });
     }
@@ -349,11 +279,8 @@ const EditRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount, room
 
     const [newRoomWeekDayValue, setNewRoomWeekDayValue] = useState('')
     const [newRoomWeekendValue, setNewRoomWeekendValue] = useState('')
-
-
-
-
     const [rentalArray, setRentalArray] = useState([]);
+
     const handleAdd = () => {
         if (rental.district === '' || rental.weekDays === '' || rental.weekEnds === '') return;
         setRentalArray([...rentalArray, rental]);
@@ -362,10 +289,8 @@ const EditRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount, room
             weekDays: '',
             weekEnds: '',
         });
-
         setNewRoomWeekDayValue('');
         setNewRoomWeekendValue('');
-
     };
 
 
@@ -382,18 +307,11 @@ const EditRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount, room
         setValue(newValue);
     };
 
-
-    console.log(roomArray);
-
-
-
-
     return (
         <Box>
             <Box sx={{ display: 'flex', justifyContent: 'flex-start', marginTop: "12px", marginBottom: '12px' }}>
                 <Button size='small' variant='contained' sx={{ backgroundColor: 'primary.main' }} onClick={handleClickOpen}>Add Room</Button>
             </Box>
-
             <fieldset style={{ borderRadius: '8px' }}>
                 <legend>Rooms Breakdown</legend>
 
@@ -412,189 +330,6 @@ const EditRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount, room
                     })}
 
             </fieldset>
-
-
-
-
-
-
-            {/* Add new room popup
-            <React.Fragment>
-                <Dialog
-                    fullWidth={fullWidth}
-                    maxWidth={maxWidth}
-                    open={open}
-                    onClose={handleClose}
-
-                >
-                    <DialogTitle>Add New Room</DialogTitle>
-                    <form>
-                        <DialogContent sx={{ maxHeight: "350px" }}>
-                            <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '20px' }}>
-                                <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
-                                    <Typography variant='p' sx={{ color: 'black' }}>Room No</Typography>
-                                </Box>
-                                <TextField className='input_field' required id="outlined-required" label="Enter Room No" placeholder='Enter No' fullWidth size='small' onChange={handleRoomCodeChange} helperText={roomExist ? "Already exist" : ''} value={values.roomCode} />
-                            </Box>
-                            <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
-                                <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
-                                    <Typography variant='p' sx={{ color: 'black' }}>AC/Non-AC</Typography>
-                                </Box>
-
-                                <FormControl sx={{ width: '100%', }}>
-                                    <InputLabel id="demo-simple-select-label">select</InputLabel>
-                                    <Select
-                                        required
-                                        xs={{ width: "5%" }}
-                                        size='small'
-                                        labelId="demo-simple-select-label"
-                                        id="demo-simple-select"
-                                        value={values.roomAc}
-                                        label="Age"
-                                        onChange={handleRoomAcChange}
-                                    >
-                                        <MenuItem value={"AC"}>AC</MenuItem>
-                                        <MenuItem value={"Non-AC"}>Non-AC</MenuItem>
-
-                                    </Select>
-                                </FormControl>
-                            </Box>
-                            <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
-                                <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
-                                    <Typography variant='p' sx={{ color: 'black' }}>Room Type</Typography>
-                                </Box>
-
-                                <FormControl sx={{ width: '100%', }}>
-                                    <InputLabel id="demo-simple-select-label">Select</InputLabel>
-                                    <Select
-                                        required
-                                        xs={{ width: "5%" }}
-                                        size='small'
-                                        labelId="demo-simple-select-label"
-                                        id="demo-simple-select"
-                                        value={values.RoomType}
-                                        label="Age"
-                                        onChange={handleRoomTypeChange}
-                                    >
-                                        <MenuItem value={"SingleRoom"}>Single Room</MenuItem>
-                                        <MenuItem value={"DoubleRoom"}>Double Room</MenuItem>
-                                        <MenuItem value={"TripleRoom"}>Triple Room</MenuItem>
-
-                                    </Select>
-                                </FormControl>
-                            </Box>
-                            <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
-                                <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
-                                    <Typography variant='p' sx={{ color: 'black' }}>Floor Level</Typography>
-                                </Box>
-                                <TextField type='number' error={error.ctName} required id="outlined-required" label="" placeholder='No of beds' fullWidth size='small' onChange={handleNoOfBedsChange} helperText={error.ctName ? "Invalid Input" : ''} value={values.NoOfBeds} />
-                            </Box>
-                            <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
-                                <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
-                                    <Typography variant='p' sx={{ color: 'black' }}>Number Of Adults</Typography>
-                                </Box>
-                                <TextField type='number' error={error.ctName} required id="outlined-required" label="" placeholder='No of Adults' fullWidth size='small' onChange={handleNoOfAdults} helperText={error.ctName ? "Invalid Input" : ''} value={values.NoOfAdults} />
-                            </Box>
-                            <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
-                                <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
-                                    <Typography variant='p' sx={{ color: 'black' }}>Number Of Children</Typography>
-                                </Box>
-                                <TextField type='number' error={error.ctName} required id="outlined-required" label="" placeholder='No of Children' fullWidth size='small' onChange={handleNoOfChildren} helperText={error.ctName ? "Invalid Input" : ''} value={values.NoOfChildren} />
-                            </Box>
-
-                            <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
-                                <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
-                                    <Typography variant='p' sx={{ color: 'black' }}>Remark</Typography>
-                                </Box>
-                                <TextField error={error.ctName} required id="outlined-required" label="Remark" placeholder='Enter Remark' fullWidth size='small' onChange={handleRemarksChange} helperText={error.ctName ? "Invalid Input" : ''} value={values.roomRemarks} />
-                            </Box>
-                            <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
-                                <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
-                                    <Typography variant='p' sx={{ color: 'black' }}>Rental</Typography>
-                                </Box>
-                                <TextField type='number' error={error.ctName} required id="outlined-required" label="Rental" placeholder='Rental' fullWidth size='small' onChange={handleRentalChange} helperText={error.ctName ? "Invalid Input" : ''} value={values.roomRental} />
-                            </Box>
-                            <Box className="rental_container">
-                                <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
-                                    <Typography variant='p' sx={{ color: 'black' }}>Add Rental</Typography>
-                                </Box>
-
-                                <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
-                                    <Box sx={{ width: "100%", display: 'flex', gap: "1em", justifyContent: 'space-around', marginTop: '20px' }} >
-                                        <FormControl sx={{}}>
-                                            <InputLabel id="demo-simple-select-label">District</InputLabel>
-                                            <Select
-                                                required
-
-                                                size='small'
-                                                labelId="demo-simple-select-label"
-                                                id="demo-simple-select"
-                                                value={value.district}
-                                                label="Age"
-                                                sx={{ width: "150px" }}
-                                                onChange={handleDistrict}
-
-
-                                            >
-                                                <MenuItem value={"January"}>January</MenuItem>
-                                                <MenuItem value={"February"}>February</MenuItem>
-                                                <MenuItem value={"March"}>March</MenuItem>
-                                                <MenuItem value={"April"}>April</MenuItem>
-                                                <MenuItem value={"May"}>May</MenuItem>
-                                                <MenuItem value={"June"}>June</MenuItem>
-                                                <MenuItem value={"July"}>July</MenuItem>
-                                                <MenuItem value={"August"}>August</MenuItem>
-                                                <MenuItem value={"September"}>September</MenuItem>
-                                                <MenuItem value={"October"}>October</MenuItem>
-                                                <MenuItem value={"November"}>November</MenuItem>
-                                                <MenuItem value={"December"}>December</MenuItem>
-
-                                            </Select>
-                                        </FormControl>
-
-                                        <TextField type='number' id="outlined-required" label="WeekDays" placeholder='WeekDays' value={newRoomWeekDayValue} size='small' onChange={handleWeekdays} helperText={error.ctName ? "Invalid Input" : ''} sx={{ width: "200px" }} />
-                                        <TextField type='number' id="outlined-required" label="Weekend" placeholder='Weekend' value={newRoomWeekendValue} size='small' onChange={handleWeekends} helperText={error.ctName ? "Invalid Input" : ''} sx={{ width: "200px" }} />
-                                        <Button variant='contained' size='small' onClick={handleAdd} >Add</Button>
-
-
-                                    </Box>
-                                </Box>
-
-
-                                {rentalArray.map((item, index) => {
-                                    return (
-                                        <Box>
-                                            <Paper sx={{ display: 'flex', padding: "1.2em 2em", justifyContent: 'space-between', marginBottom: "1em" }}>
-                                                <Box>
-                                                    <Typography variant='p' sx={{ color: 'black', marginRight: '0.6em', fontWeight: "bold" }}>Month</Typography>
-                                                    <Typography variant='p' sx={{ color: 'grey', fontWeight: '500' }}>{item.Month}</Typography>
-                                                </Box>
-                                                <Box>
-                                                    <Typography variant='p' sx={{ color: 'black', marginRight: '0.6em', fontWeight: "bold" }}>WeekDays</Typography>
-                                                    <Typography variant='p' sx={{ color: 'grey', fontWeight: '500' }}>{item.WeekRental}</Typography>
-                                                </Box>
-                                                <Box>
-                                                    <Typography variant='p' sx={{ color: 'black', marginRight: '0.6em', fontWeight: 'bold' }}>WeekEnd</Typography>
-                                                    <Typography variant='p' sx={{ color: 'grey', fontWeight: '500' }}>{item.WeekEndRental}</Typography>
-                                                </Box>
-                                                <CancelIcon sx={{ cursor: 'pointer' }} onClick={() => handleRemoveRentalItem(index)} />
-                                            </Paper>
-                                        </Box>
-                                    )
-
-                                })}
-
-                            </Box>
-
-                        </DialogContent>
-                        <DialogActions>
-                            <Button variant='contained' onClick={handleSaveRoom}>Save</Button>
-                            <Button variant='outlined' onClick={handleClose}>Close</Button>
-                        </DialogActions>
-
-                    </form>
-                </Dialog>
-            </React.Fragment> */}
             {/* Add new room popup */}
             <React.Fragment>
                 <Dialog
@@ -727,19 +462,13 @@ const EditRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount, room
                                                 <MenuItem value={"October"}>October</MenuItem>
                                                 <MenuItem value={"November"}>November</MenuItem>
                                                 <MenuItem value={"December"}>December</MenuItem>
-
                                             </Select>
                                         </FormControl>
-
                                         <TextField type='number' id="outlined-required" label="WeekDays" placeholder='WeekDays' value={newRoomWeekDayValue} size='small' onChange={handleWeekdays} helperText={error.ctName ? "Invalid Input" : ''} sx={{ width: "200px" }} />
                                         <TextField type='number' id="outlined-required" label="Weekend" placeholder='Weekend' value={newRoomWeekendValue} size='small' onChange={handleWeekends} helperText={error.ctName ? "Invalid Input" : ''} sx={{ width: "200px" }} />
                                         <Button variant='contained' size='small' onClick={handleAdd} >Add</Button>
-
-
                                     </Box>
                                 </Box>
-
-
                                 {rentalArray.map((item, index) => {
                                     return (
                                         <Box>
@@ -760,11 +489,9 @@ const EditRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount, room
                                             </Paper>
                                         </Box>
                                     )
-
                                 })}
 
                             </Box>
-
                         </DialogContent>
                         <DialogActions>
                             <Button variant='contained' onClick={handleSaveRoom}>Save</Button>
@@ -774,10 +501,6 @@ const EditRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount, room
                     </form>
                 </Dialog>
             </React.Fragment>
-
-
-
-
             {/* alert remove room */}
             <div>
 

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Box, Button, TextField, Typography, Paper } from '@mui/material'
 import CancelIcon from '@mui/icons-material/Cancel';
-
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -10,31 +9,25 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
-
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-
 import HallBreakDown from '../HallBreakDown';
-
 import axios from 'axios'
 import { useParams } from 'react-router-dom';
 
 const EditHall = ({ hallArray, setHallArray }) => {
 
     const { homeId } = useParams();
-
     const [open, setOpen] = useState(false);
     const [openHall, setOpenHall] = useState(false);
     const [fullWidth, setFullWidth] = useState(true);
     const [maxWidth, setMaxWidth] = useState('sm');
-
     const [isEditMode, setIsEditMode] = useState(false);
     const [editIndex, setEditIndex] = useState(null);
 
 
     useEffect(() => {
         if (isEditMode && editIndex !== null) {
-
             const editedHall = hallArray[editIndex];
             setHallValues({
                 hallCode: editedHall.hallCode,
@@ -46,7 +39,6 @@ const EditHall = ({ hallArray, setHallArray }) => {
                 hallRental: editedHall.hallRental,
             });
         } else {
-
             setHallValues({
                 hallCode: '', hallAc: '', floorLevel: '', hallRemark: '', hallRental: '', hallNoOfAdults: '', hallNoOfChildren: '',
             });
@@ -58,12 +50,9 @@ const EditHall = ({ hallArray, setHallArray }) => {
         setOpen(true);
     };
 
-
-
     const handleClose = () => {
         setOpen(false);
     };
-
 
     const handleClickOpenHall = () => {
         setHallValues({
@@ -72,16 +61,10 @@ const EditHall = ({ hallArray, setHallArray }) => {
         setOpenHall(true);
     };
 
-
     const handleCloseHall = () => {
         setOpenHall(false);
     };
 
-
-
-
-
-    //hall -all fields should filled warning
     const [openHallFillAlert, setOpenHallFillAlert] = useState(false);
 
     const handleCloseHallFillAlert = (event, reason) => {
@@ -91,9 +74,6 @@ const EditHall = ({ hallArray, setHallArray }) => {
 
         setOpenHallFillAlert(false);
     };
-
-
-    //hall - same hall no exist warning
 
     const [openHallExistAlert, setOpenHallExistAlert] = useState(false);
 
@@ -109,13 +89,10 @@ const EditHall = ({ hallArray, setHallArray }) => {
         ctName: false, ctAddress: false, ctDescription: false, ctContactNo: false
     });
 
-
-
     const [hallValues, setHallValues] = useState({
         hallCode: '', hallAc: '', floorLevel: '', hallRemark: '', hallRental: '', hallNoOfAdults: '', hallNoOfChildren: '',
     })
     const [hallExist, setHallExist] = useState(false);
-
 
     const handleHallCodeChange = (e) => {
         const hallCodeExists = hallArray.some(hall => hall.hallCode === e.target.value);
@@ -126,7 +103,6 @@ const EditHall = ({ hallArray, setHallArray }) => {
             setHallExist(false);
         }
         setHallValues({ ...hallValues, hallCode: e.target.value });
-
     }
 
     const handleHallAcChange = (e) => {
@@ -154,18 +130,11 @@ const EditHall = ({ hallArray, setHallArray }) => {
     }
 
 
-
-
-
     const handleSaveHall = () => {
         if (hallValues.hallCode === '' || hallValues.hallAc === '' || hallValues.floorLevel === '' || hallValues.hallRemark === '' || hallValues.hallRental === '') {
             setOpenHallFillAlert(true);
             return;
         }
-        // if (hallExist) {
-        //     setOpenHallExistAlert(true);
-        //     return;
-        // }
 
         if (isEditMode && editIndex !== null) {
             // Editing an existing room
@@ -180,35 +149,20 @@ const EditHall = ({ hallArray, setHallArray }) => {
             // Adding a new room
             const updatedValues = { ...hallValues, hallRentalArray };
             setHallArray([...hallArray, updatedValues]);
-            // setRoomArray([...roomArray, values]);
         }
-
-
-
-
         setHallRentalArray([]);
-
-        // Close the dialog and reset state
-
         setOpenHall(false);
         setIsEditMode(false);
         setEditIndex(null);
     };
 
     const handleHallDelete = (hallCode) => { //for room hallbreakdown component
-
-
         const newHallArray = hallArray.filter((item) => item.hallCode !== hallCode);
         setHallArray(newHallArray);
 
     }
-
-
     const handleHallEdit = (index) => {
-
         const editedHall = hallArray[index];
-        console.log(editedHall);
-
         setHallValues({
             hallCode: editedHall.hallCode,
             hallAc: editedHall.hallAc,
@@ -217,46 +171,27 @@ const EditHall = ({ hallArray, setHallArray }) => {
             hallNoOfChildren: editedHall.hallNoOfChildren,
             hallRemark: editedHall.hallRemark,
             hallRental: editedHall.hallRental,
-
         });
-
 
         axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/rental/${homeId}/${editedHall.hallCode}`)
             .then(res => {
-                console.log("get")
                 const rental = res.data.roomRental;
-                console.log(rental)
                 for (let i = 0; i < rental.length; i++) {
-                    console.log("in")
-                    console.log(rental[i].Month);
                     setHallRental({
                         district: rental[i].Month,
                         weekDays: rental[i].WeekRental,
                         weekEnds: rental[i].WeekEndRental,
                     });
-
-                    console.log("rental", rental);
-
                     setHallRentalArray(rental); // Use functional update
-                    console.log("rental array", hallRentalArray);
                 }
-
-
                 setOpenHall(true);
                 setEditIndex(index);
                 setIsEditMode(true);
-
             })
             .catch(err => {
                 console.log(err);
             });
-
-
     }
-
-
-
-
     const [hallRental, setHallRental] = useState({
         district: '', weekDays: '', weekEnds: ''
     });
@@ -301,10 +236,8 @@ const EditHall = ({ hallArray, setHallArray }) => {
             <Box sx={{ display: 'flex', justifyContent: 'flex-start', marginTop: "12px", marginBottom: "12px" }}>
                 <Button size='small' variant='contained' sx={{ backgroundColor: 'primary.main' }} onClick={handleClickOpenHall}>Add Hall</Button>
             </Box>
-
             <fieldset style={{ borderRadius: '8px' }}>
                 <legend>Rooms Breakdown</legend>
-
                 {hallArray.length === 0
                     ?
                     <Box sx={{ display: 'flex', padding: "2em", justifyContent: 'center' }}>
@@ -314,7 +247,6 @@ const EditHall = ({ hallArray, setHallArray }) => {
                     :
                     hallArray.map((item, index) => {
                         return (
-
                             <HallBreakDown key={index} hallCode={item.hallCode} hallAc={item.hallAc} floorLevel={item.floorLevel} hallNoOfAdults={item.hallNoOfAdults} hallNoOfChildren={item.hallNoOfChildren} hallRemarks={item.hallRemarks} hallRental={item.hallRental} handleHallDelete={handleHallDelete} handleHallEdit={handleHallEdit} index={index} />
                         )
                     })}
@@ -414,8 +346,6 @@ const EditHall = ({ hallArray, setHallArray }) => {
                                                 label="Age"
                                                 sx={{ width: "150px" }}
                                                 onChange={handleHallDistrict}
-
-
                                             >
                                                 <MenuItem value={"January"}>January</MenuItem>
                                                 <MenuItem value={"February"}>February</MenuItem>
@@ -439,8 +369,6 @@ const EditHall = ({ hallArray, setHallArray }) => {
 
                                     </Box>
                                 </Box>
-
-
                                 {hallRentalArray.map((item, index) => {
                                     return (
                                         <Box>
@@ -464,20 +392,15 @@ const EditHall = ({ hallArray, setHallArray }) => {
                                     )
 
                                 })}
-
                             </Box>
-
                         </DialogContent>
                         <DialogActions>
                             <Button variant='contained' onClick={handleSaveHall}>Save</Button>
                             <Button variant='outlined' onClick={handleCloseHall}>Close</Button>
                         </DialogActions>
-
                     </form>
                 </Dialog>
             </React.Fragment>
-
-
             {/* alert add hall all should fill*/}
             <div>
 

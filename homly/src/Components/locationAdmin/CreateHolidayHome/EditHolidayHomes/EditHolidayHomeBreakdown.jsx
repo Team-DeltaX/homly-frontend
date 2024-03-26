@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Grid, Typography, TextField, FormGroup, FormControlLabel, Checkbox, Button } from '@mui/material';
-
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -11,15 +10,11 @@ import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
-
 import EditRoom from './EditRoom';
 import EditUnit from './EditUnit';
 import EditHall from './EditHall';
-
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-
-
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
 
@@ -58,10 +53,8 @@ function a11yProps(index) {
 const EditHolidayHomeBreakdown = ({ roomArray, setRoomArray, unitArray, setUnitArray, hallArray, setHallArray, bdValue, setBdValue, adultsCount, setAdultsCount, childCount, setChildCount, settingRoomRentalArray, setSettingRoomRentalArray, roomTypeArray, setRoomTypeArray }) => {
 
     const [value, setValue] = useState(0);
-
     const [settingsRoomType, setSettingsRoomType] = useState({ roomType: '', adults: '', children: '' });
     const [settingsRoomRental, setSettingsRoomRental] = useState({ roomType: '', acNonAc: '', rental: '' })
-
     const [roomTypeAddButton, setRoomTypeAddButton] = useState(true);
     const [roomSettingsRentalAddButton, setRoomSettingsRentalAddButton] = useState(true);
     const handleChange = (event, newValue) => {
@@ -72,20 +65,9 @@ const EditHolidayHomeBreakdown = ({ roomArray, setRoomArray, unitArray, setUnitA
         tRental: false, oCharges: false, sCharges: false
     });
 
-
-
     const handleTotalRentalChange = (e) => {
-
         const positive_regex = /^\d*\.?\d+$/;
         setBdValue({ ...bdValue, totalRental: e.target.value });
-
-        // if (e.target.value.length > 0) {
-        //   if (!positive_regex.test(e.target.value)) {
-        //     setError({ ...error, tRental: true });
-        //   } else {
-        //     setError({ ...error, tRental: false });
-        //   }
-        // }
     }
 
     const handlefacilityChange = (e) => {
@@ -125,18 +107,14 @@ const EditHolidayHomeBreakdown = ({ roomArray, setRoomArray, unitArray, setUnitA
 
     const handleSettingsAdultsChange = (e) => {
         const inputValue = e.target.value;
-
         // Check if the input value is a positive integer
         if (inputValue === '' || /^\d+$/.test(inputValue)) {
             setSettingsRoomType({ ...settingsRoomType, adults: inputValue })
-
         }
-
     }
 
     const handleSettingsChildrenChange = (e) => {
         const inputValue = e.target.value;
-
         // Check if the input value is a positive integer
         if (inputValue === '' || /^\d+$/.test(inputValue)) {
             setSettingsRoomType({ ...settingsRoomType, children: inputValue })
@@ -150,7 +128,6 @@ const EditHolidayHomeBreakdown = ({ roomArray, setRoomArray, unitArray, setUnitA
         let flag = true;
         if (roomTypeArray.length === 0) {
             roomTypeArray.push(settingsRoomType);
-            console.log("array", roomTypeArray);
             setSettingsRoomType({ roomType: '', adults: '', children: '' });
         }
         else {
@@ -161,7 +138,6 @@ const EditHolidayHomeBreakdown = ({ roomArray, setRoomArray, unitArray, setUnitA
             }
             if (flag) {
                 roomTypeArray.push(settingsRoomType);
-                console.log("array", roomTypeArray);
                 setSettingsRoomType({ roomType: '', adults: '', children: '' });
 
             } else {
@@ -184,10 +160,8 @@ const EditHolidayHomeBreakdown = ({ roomArray, setRoomArray, unitArray, setUnitA
 
 
     const handleDeleteRoomTypes = (ind) => {
-
         const tempArray = roomTypeArray.filter((item, index) => index !== ind)
         setRoomTypeArray(tempArray)
-
     }
 
     const handleSettingsRentalTypeChange = (e) => {
@@ -202,7 +176,6 @@ const EditHolidayHomeBreakdown = ({ roomArray, setRoomArray, unitArray, setUnitA
 
         // Check if the input value is a positive integer
         if (inputValue === '' || /^\d+$/.test(inputValue)) {
-
             setSettingsRoomRental({ ...settingsRoomRental, rental: inputValue })
 
         }
@@ -213,7 +186,6 @@ const EditHolidayHomeBreakdown = ({ roomArray, setRoomArray, unitArray, setUnitA
         let flag = true;
         if (settingRoomRentalArray.length === 0) {
             settingRoomRentalArray.push(settingsRoomRental);
-            console.log("array", settingRoomRentalArray);
             setSettingsRoomRental({ roomType: '', acNonAc: '', rental: '' });
         }
         else {
@@ -224,7 +196,6 @@ const EditHolidayHomeBreakdown = ({ roomArray, setRoomArray, unitArray, setUnitA
             }
             if (flag) {
                 settingRoomRentalArray.push(settingsRoomRental);
-                console.log("array", settingRoomRentalArray);
                 setSettingsRoomRental({ roomType: '', acNonAc: '', rental: '' });
 
             } else {
@@ -256,43 +227,13 @@ const EditHolidayHomeBreakdown = ({ roomArray, setRoomArray, unitArray, setUnitA
         setSettingRoomRentalArray(tempArray)
 
     }
-
-
-    //   useEffect(() => {
-    //     const areErrorsEmpty =
-    //       !error.oCharges &&
-    //       !error.sCharges &&
-    //       !error.tRental
-
-    //     if (areErrorsEmpty) {
-    //       // setHomeBreakDownError(true)
-    //     }
-
-    //     if (bdValue.totalRental !== undefined && roomArray.length > 0 && unitArray.length > 0 && areErrorsEmpty) {
-    //       setSubmit(true);
-    //     } else {
-    //       setSubmit(false);
-    //     }
-    //   }, [bdValue.totalRental, roomArray, unitArray, setSubmit, error]);
-
-
-
-
     const [typeExistAlert, setTypeExistAlert] = useState(false);
-
     const handleTypeExistAlert = (event, reason) => {
         if (reason === 'clickaway') {
             return;
         }
-
         setTypeExistAlert(false);
     };
-
-
-
-
-
-
 
     return (
         <Box>

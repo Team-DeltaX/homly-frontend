@@ -8,16 +8,6 @@ import UploadImageCloudinary from '../../Common/UploadImageCloudinary';
 
 const CareTakerDetailsView = ({ setSubmit, value, setValue, valueSecond, setValueSecond, setImage1, setImage2 }) => {
   const [secondCaretaker, setSecondCaretaker] = useState(false);
-
-  // const [value, setValue] = useState({
-  //   caretakerName: '', caretakerContactNo: '', caretakerStatus: '', caretakerAddress: '', caretakerDescription: '',
-  // })
-
-  // const [valueSecond, setValueSecond] = useState({
-  //   caretakerName: '', caretakerContactNo: '', caretakerStatus: '', caretakerAddress: '', caretakerDescription: '',
-  // })
-
-  // const [] = useState("").
   const [error, setError] = useState({});
 
   useEffect(() => {
@@ -52,14 +42,6 @@ const CareTakerDetailsView = ({ setSubmit, value, setValue, valueSecond, setValu
       setSubmit(isFirstCaretakerComplete && areErrorsEmpty);
     }
   }, [value, valueSecond, secondCaretaker, setSubmit]);
-
-  // useEffect(() => {
-  //   if (submitClicked) {
-
-  //     setAllValues((prev) => ({ ...prev, "caretaker1": value, "caretaker2": valueSecond }));
-  //   }
-  // }, [submitClicked]);
-
 
 
   const handleNameChange = (e) => {
@@ -100,8 +82,6 @@ const CareTakerDetailsView = ({ setSubmit, value, setValue, valueSecond, setValu
     setValueSecond({ ...valueSecond, caretakerAddress: e.target.value });
   }
 
-
-
   const handleDescriptionChange = (e) => {
     setValue({ ...value, caretakerDescription: e.target.value });
   }
@@ -109,7 +89,6 @@ const CareTakerDetailsView = ({ setSubmit, value, setValue, valueSecond, setValu
   const handleDescriptionChangeSecond = (e) => {
     setValueSecond({ ...valueSecond, caretakerDescription: e.target.value });
   }
-
 
   const handleContactNoChange = (e) => {
     setValue({ ...value, caretakerContactNo: e.target.value });
@@ -135,9 +114,6 @@ const CareTakerDetailsView = ({ setSubmit, value, setValue, valueSecond, setValu
     }
   }
 
-
-
-
   const handlestatusChange = (e) => {
     setValue({ ...value, caretakerStatus: e.target.value });
   }
@@ -145,8 +121,6 @@ const CareTakerDetailsView = ({ setSubmit, value, setValue, valueSecond, setValu
   const handlestatusChangeSecond = (e) => {
     setValueSecond({ ...valueSecond, caretakerStatus: e.target.value });
   }
-
-
 
   const [showSecondCaretaker, setShowSecondCaretaker] = useState(false);
 
@@ -159,12 +133,6 @@ const CareTakerDetailsView = ({ setSubmit, value, setValue, valueSecond, setValu
     setShowSecondCaretaker(false);
     setSecondCaretaker(false);
   }
-
-
-
-
-
-
 
   return (
     <Box>

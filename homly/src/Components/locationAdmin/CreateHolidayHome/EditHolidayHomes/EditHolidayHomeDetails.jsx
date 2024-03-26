@@ -12,21 +12,9 @@ import axios from 'axios';
 
 
 const EditHolidayHomeDetails = ({ value, setValue }) => {
-
-    console.log("values", value)
-
-
-
     const [error, setError] = useState({
         name: false, address: false, description: false, contactNo1: false, contactNo2: false
     });
-
-
-
-
-
-
-
     const handleNameChange = (e) => {
         setValue({ ...value, name: e.target.value });
         const name_regex = /^[a-zA-Z\s]+$/;
@@ -39,11 +27,9 @@ const EditHolidayHomeDetails = ({ value, setValue }) => {
         }
     }
 
-
     const handleAddressChange = (e) => {
         setValue({ ...value, address: e.target.value });
     }
-
 
     const handleDistrictChange = (e) => {
         setValue({ ...value, district: e.target.value });
@@ -85,8 +71,6 @@ const EditHolidayHomeDetails = ({ value, setValue }) => {
         setValue({ ...value, category: e.target.value });
     }
 
-
-
     return (
         <Box>
 
@@ -94,7 +78,6 @@ const EditHolidayHomeDetails = ({ value, setValue }) => {
                 <legend>Holiday Home Details</legend>
                 <Grid container spacing={4} >
                     <Grid item md={6} sm={12} xs={12}>
-
                         <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
                             <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                                 <Typography variant='p' sx={{ color: 'black' }}>Name</Typography>
@@ -217,23 +200,16 @@ const EditHolidayHomeDetails = ({ value, setValue }) => {
                                     name="controlled-radio-buttons-group"
                                     value={value.status}
                                     onChange={handlestatusChange}
-
                                 >
                                     <FormControlLabel value="Active" control={<Radio />} label="Active" sx={{ display: "inline-block", width: "fit-content" }} />
                                     <FormControlLabel value="Inactive" control={<Radio />} label="Inactive" />
                                 </RadioGroup>
                             </Box>
                         </Box>
-
-
                     </Grid>
                 </Grid>
-
-
             </fieldset>
-
         </Box>
-
     )
 }
 
