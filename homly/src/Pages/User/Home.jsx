@@ -8,19 +8,12 @@ import {
   Grid,
   Divider,
 } from "@mui/material";
-import axios from "axios";
 import SearchIcon from "@mui/icons-material/Search";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
 import NavBar from "../../Components/User/NavBar/NavBar";
 import theme from "../../HomlyTheme";
-// import MyReservationCard from "../../Components/MyReservationCard/MyReservationCard";
-
 import DatePickerCom from "../../Components/User/DatePickerCom/DatePickerCom";
-// import HolidayHomeCard from "../../Components/User/HHCard/HolidayHomeCard";
-
-import "./UserStyle.css";
-
 import DistrictSelectCom from "../../Components/User/DistrictSelectCom";
 import OurPlaces from "../../Components/User/OurPlaces/OurPlaces";
 import BrowseMoreCom from "../../Components/User/BrowseMore/BrowseMoreCom";
@@ -29,6 +22,7 @@ import HHCarousel from "../../Components/User/Carousel/HHCarousel";
 import UserInterestedPopup from "../../Components/User/UserInterestedPopup";
 import UserInterestedHolidayHomes from "../../Components/User/UserInterestedHolidayHomes/UserInterestedHolidayHomes";
 
+import "./UserStyle.css";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -52,13 +46,15 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-
     axios
-      .get("http://localhost:3002/users/auth/holidayhomes/sort/topRated", { withCredentials: true })
+      .get("http://localhost:3002/users/auth/holidayhomes/sort/topRated", {
+        withCredentials: true,
+      })
       .then((res) => {
-        console.log("topRated",res.data);
+        console.log("topRated", res.data);
         setSortedByRating(res.data);
-      }).catch((err) => {
+      })
+      .catch((err) => {
         console.log(err);
         if (err.response.data.autherized === false) {
           Navigate("/");
@@ -142,7 +138,9 @@ export default function Home() {
               <Box sx={{ position: "relative" }}>
                 <Box
                   component="img"
-                  src={"https://res.cloudinary.com/dwgeetnoj/image/upload/v1710836477/homly-main-images/LandingPageTop_ekbjsh.jpg"}
+                  src={
+                    "https://res.cloudinary.com/dwgeetnoj/image/upload/v1710836477/homly-main-images/LandingPageTop_ekbjsh.jpg"
+                  }
                   alt="top-image"
                   sx={{ width: "100%", height: "50vh", objectFit: "cover" }}
                 />
@@ -274,32 +272,15 @@ export default function Home() {
               </Box>
               {/* top rated holiday homes */}
               <Box>
-                <Stack sx={{ margin: "3% 0" }}>
-                  <Stack direction="column" sx={{ margin: "3% 0" }}>
-                    <Typography
-                      sx={{
-                        fontSize: { xs: "1.2rem", sm: "1.8rem" },
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Top Rated Holiday Homes
-                    </Typography>
-
-                    <Divider
-                      sx={{
-                        width: "80%",
-                        borderBottomWidth: "2px",
-                        bgcolor: "#2c2c2c6e",
-                        ml: "10px",
-                      }}
-                    />
-                  </Stack>
-                  <Box>
-                    <HHCarousel sortedByRatingHH={sortedByRating} />
-                  </Box>
-                </Stack>
+                {isDisplayInterest ? (
+                  <UserInterestedHolidayHomes
+                    setIsDisplayInterest={setIsDisplayInterest}
+                    interestedHH={interestedHH}
+                  />
+                ) : (
+                  ""
+                )}
               </Box>
-
               <Stack sx={{ margin: "3% 0" }}>
                 <Stack direction="column" sx={{ margin: "3% 0" }}>
                   <Typography
@@ -321,17 +302,31 @@ export default function Home() {
                 </Stack>
                 <OurPlaces />
               </Stack>
-              {/* intersed */}
-              <Box>
-                {isDisplayInterest ? (
-                  <UserInterestedHolidayHomes
-                    setIsDisplayInterest={setIsDisplayInterest}
-                    interestedHH={interestedHH}
+              {/* top rated 5 */}
+              <Stack sx={{ margin: "3% 0" }}>
+                <Stack direction="column" sx={{ margin: "3% 0" }}>
+                  <Typography
+                    sx={{
+                      fontSize: { xs: "1.2rem", sm: "1.8rem" },
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Top Rated Holiday Homes
+                  </Typography>
+
+                  <Divider
+                    sx={{
+                      width: "80%",
+                      borderBottomWidth: "2px",
+                      bgcolor: "#2c2c2c6e",
+                      ml: "10px",
+                    }}
                   />
-                ) : (
-                  ""
-                )}
-              </Box>
+                </Stack>
+                <Box>
+                  <HHCarousel sortedByRatingHH={sortedByRating} />
+                </Box>
+              </Stack>
               <Stack
                 data-aos="fade-left"
                 data-aos-duration="900"

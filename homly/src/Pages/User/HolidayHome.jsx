@@ -41,9 +41,10 @@ export default function HolidayHomes() {
   const fetchData = () => {
     console.log("searchData", district);
     axios
-      .get(
-        "http://localhost:3002/users/auth/holidayhomes",{withCredentials: true, params: { district: district, search: searchValue } }
-      )
+      .get("http://localhost:3002/users/auth/holidayhomes", {
+        withCredentials: true,
+        params: { district: district, search: searchValue },
+      })
       .then((res) => {
         console.log("hhdetails", res.data);
         if (res.data.length > 0) {
@@ -51,7 +52,7 @@ export default function HolidayHomes() {
           setHolidayHomes(res.data);
           setDisplayedHH(res.data.slice(0, 9));
           setShowSkeleton(false);
-        }else{
+        } else {
           setHolidayHomes([]);
           setDisplayedHH([]);
           setShowSkeleton(false);
@@ -99,19 +100,30 @@ export default function HolidayHomes() {
               }}
             >
               <Stack direction="column">
-                <Stack direction="row">
-                  <Box>
-                    <TextField
-                      id="search"
-                      label="search"
-                      value={searchValue}
-                      onChange={(e) => setSearchValue(e.target.value)}
-                    />
-                  </Box>
+                <Stack
+                  direction="row"
+                  sx={{
+                    width: "95%",
+                    justifyContent: "flex-end",
+                    alignItems: "center",
+                    marginBottom: "10px",
+                  }}
+                >
+                  <TextField
+                    id="search"
+                    placeholder="Search"
+                    size="small"
+                    value={searchValue}
+                    onChange={(e) => setSearchValue(e.target.value)}
+                    sx={{
+                      marginRight: "10px",
+                    }}
+                  />
                   <Button
                     variant="contained"
                     color="primary"
                     onClick={handleSearch}
+                    size="small"
                   >
                     Search
                   </Button>
@@ -161,13 +173,13 @@ export default function HolidayHomes() {
                   }}
                 >
                   <Box sx={{ padding: "20px" }}>
-                    <HHCardSkeleton showInterest={false}/>
+                    <HHCardSkeleton showInterest={false} />
                   </Box>
                   <Box sx={{ padding: "20px" }}>
-                    <HHCardSkeleton showInterest={false}/>
+                    <HHCardSkeleton showInterest={false} />
                   </Box>
                   <Box sx={{ padding: "20px" }}>
-                    <HHCardSkeleton showInterest={false}/>
+                    <HHCardSkeleton showInterest={false} />
                   </Box>
                 </Box>
               </Stack>
