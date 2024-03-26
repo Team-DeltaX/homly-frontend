@@ -12,10 +12,26 @@ import dayjs from "dayjs";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import theme from "../../../HomlyTheme";
 
-export default function ReservationCard(props) {
+export default function ReservationCard({
+  HHreservation,
+  HHpayment,
+  HHName,
+  HHAddress,
+  HHImage,
+  HHReservedDate,
+  HHCheckIn,
+  HHCheckOut,
+  HHPrice,
+  HHAdults,
+  HHChildren,
+  HHRooms,
+  HHHalls,
+  ExpireIn,
+
+}) {
   const buttons = () => {
-    if (props.HHreservation === "Ongoing") {
-      if (props.HHpayment) {
+    if ( HHreservation === "Ongoing") {
+      if ( HHpayment) {
         return (
           <Stack direction="row" sx={{ marginTop: { xs: "10px", sm: "0" } }}>
             <Stack
@@ -75,7 +91,7 @@ export default function ReservationCard(props) {
         <Grid item xs={12} sm={3} sx={{ alignItems: "center" }}>
           <Box
             component="img"
-            src={props.HHImage}
+            src={ HHImage}
             alt=""
             sx={{ height: "100%", width: "100%", borderRadius: "10px" }}
           />
@@ -91,10 +107,10 @@ export default function ReservationCard(props) {
           >
             <Stack direction="column">
               <Typography sx={{ fontWeight: "bold", fontSize: "1.3rem" }}>
-                {props.HHName}
+                { HHName}
               </Typography>
               <Typography sx={{ fontWeight: "light", fontSize: "0.8rem" }}>
-                {props.HHAddress}
+                { HHAddress}
               </Typography>
             </Stack>
             <Stack direction="column">
@@ -112,7 +128,7 @@ export default function ReservationCard(props) {
                 </Grid>
                 <Grid item>
                   <Typography>
-                    {dayjs(props.HHReservedDate).format("DD-MM-YYYY")}
+                    {dayjs( HHReservedDate).format("DD-MM-YYYY")}
                   </Typography>
                 </Grid>
               </Grid>
@@ -122,7 +138,7 @@ export default function ReservationCard(props) {
                 </Grid>
                 <Grid item>
                   <Typography>
-                    {dayjs(props.HHCheckIn).format("DD-MM-YYYY")}
+                    {dayjs( HHCheckIn).format("DD-MM-YYYY")}
                   </Typography>
                 </Grid>
               </Grid>
@@ -132,7 +148,7 @@ export default function ReservationCard(props) {
                 </Grid>
                 <Grid item>
                   <Typography>
-                    {dayjs(props.HHCheckOut).format("DD-MM-YYYY")}
+                    {dayjs( HHCheckOut).format("DD-MM-YYYY")}
                   </Typography>
                 </Grid>
               </Grid>
@@ -155,7 +171,7 @@ export default function ReservationCard(props) {
                       LKR
                     </Typography>
                     <Typography sx={{ fontSize: "1.1rem", fontWeight: "bold" }}>
-                      {props.HHPrice}
+                      { HHPrice}
                     </Typography>
                   </Stack>
                 </Grid>
@@ -164,14 +180,14 @@ export default function ReservationCard(props) {
             <Box
               sx={{
                 display:
-                  props.HHreservation === "Ongoing" && !props.HHpayment
+                   HHreservation === "Ongoing" && ! HHpayment
                     ? "flex"
                     : "none",
               }}
             >
               <Typography sx={{ color: "red" }}>
                 Expire in{" "}
-                <span style={{ fontWeight: "600" }}>{props.ExpireIn} days</span>{" "}
+                <span style={{ fontWeight: "600" }}>{ ExpireIn} days</span>{" "}
               </Typography>
             </Box>
           </Stack>
@@ -206,7 +222,7 @@ export default function ReservationCard(props) {
                       color: "white",
                     }}
                   >
-                    <Typography>{props.HHAdults}</Typography>
+                    <Typography>{ HHAdults}</Typography>
                   </Box>
                 </Grid>
               </Grid>
@@ -234,7 +250,7 @@ export default function ReservationCard(props) {
                       color: "white",
                     }}
                   >
-                    <Typography>{props.HHChildren}</Typography>
+                    <Typography>{ HHChildren}</Typography>
                   </Box>
                 </Grid>
               </Grid>
@@ -262,7 +278,7 @@ export default function ReservationCard(props) {
                       color: "white",
                     }}
                   >
-                    <Typography>{props.HHRooms}</Typography>
+                    <Typography>{ HHRooms}</Typography>
                   </Box>
                 </Grid>
               </Grid>
@@ -290,7 +306,7 @@ export default function ReservationCard(props) {
                       color: "white",
                     }}
                   >
-                    <Typography>{props.HHHalls}</Typography>
+                    <Typography>{ HHHalls}</Typography>
                   </Box>
                 </Grid>
               </Grid>
@@ -298,7 +314,7 @@ export default function ReservationCard(props) {
             <Box
               sx={{ display: "flex", justifyContent: "end", marginTop: "5px" }}
             >
-              {buttons(props)}
+              {buttons()}
             </Box>
           </Stack>
         </Grid>
