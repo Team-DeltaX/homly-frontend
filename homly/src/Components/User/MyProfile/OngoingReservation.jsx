@@ -26,7 +26,7 @@ export default function OngoingReservation({ reservation }) {
                   HHRooms={reserv.reservation.NoOfRooms}
                   HHHalls={reserv.reservation.NoOfHalls}
                   ExpireIn={dayjs(reserv.expireDate).diff(dayjs(), "day") + 1}
-                  HHImage={reserv.holidayHome.MainImage}
+                  HHImage={reserv.holidayHome[0].MainImage}
                 />
               </Box>
             );
