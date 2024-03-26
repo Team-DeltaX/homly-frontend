@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import ReservationCard from "../ReservationCard/ReservationCard";
 import { Box, Stack } from "@mui/material";
+import AddReviewPopup from "../Review/AddReviewPopup";
 
-export default function pastReservation({ reservation }) {
+export default function PastReservation({ reservation }) {
+  const [openReview, setOpenReview] = useState(false);
   return (
     <Stack
       direction="column"
@@ -20,16 +22,21 @@ export default function pastReservation({ reservation }) {
                   HHReservedDate={reserv.reservation.createdAt}
                   HHCheckIn={reserv.reservation.CheckinDate}
                   HHCheckOut={reserv.reservation.CheckoutDate}
-                  HHPrice={reserv.reservation.HallPrice+reserv.reservation.RoomPrice}
+                  HHPrice={
+                    reserv.reservation.HallPrice + reserv.reservation.RoomPrice
+                  }
                   HHAdults={reserv.reservation.NoOfAdults}
                   HHChildren={reserv.reservation.NoOfChildren}
                   HHRooms={reserv.reservation.NoOfRooms}
                   HHHalls={reserv.reservation.NoOfHalls}
+                  setOpen={setOpenReview}
                 />
               </Box>
             );
           })
         : "No Reservations Found!"}
+
+      <AddReviewPopup open={openReview} setOpen={setOpenReview} />
     </Stack>
   );
 }
