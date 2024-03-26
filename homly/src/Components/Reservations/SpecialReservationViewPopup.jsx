@@ -94,9 +94,9 @@ export default function SpecialReservationViewPopup(props) {
               </Grid>
               <Grid xs={4}>
                 <Item sx={{boxShadow: "none"}}>
-                  <Typography variant="h6" align="left" display="block" gutterBottom>{ props.reservation.receiptName }</Typography>
+                  <Typography variant="h6" align="left" display="block" gutterBottom>{ props.reservation.serviceNo }</Typography>
                   <Typography variant="body2" align="left" display="block" gutterBottom>Reservation Number  { props.reservation.recervationNO }</Typography>
-                  <Typography variant="body2" align="left" display="block" gutterBottom>Amount { props.reservation.amount }</Typography>
+                  <Typography variant="body2" align="left" display="block" gutterBottom>Amount { props.reservation.price }</Typography>
                 </Item>
               </Grid>
               <Grid xs={4}>

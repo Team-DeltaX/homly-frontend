@@ -7,6 +7,8 @@ import {
   Typography,
   Button,
 } from "@mui/material";
+
+import dayjs from "dayjs";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import theme from "../../../HomlyTheme";
 
@@ -80,57 +82,82 @@ export default function ReservationCard(props) {
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <Stack direction="column" sx={{ marginLeft: { sm: "10px" } }}>
-            <Typography sx={{ fontWeight: "bold", fontSize: "1.3rem" }}>
-              {props.HHName}
-            </Typography>
-            <Typography sx={{ fontWeight: "light", fontSize: "0.8rem" }}>
-              {props.HHAddress}
-            </Typography>
-            <Grid container sx={{ alignItems: "flex-end",marginTop:{xs:'5px',sm:'0'} }}>
-              <Grid item xs={7} sm={5}>
-                <Typography sx={{ fontSize: "0.9rem" }}>
-                  Reserved Date
-                </Typography>
-              </Grid>
-              <Grid item>
-                <Typography>{props.HHReservedDate}</Typography>
-              </Grid>
-            </Grid>
-            <Grid container sx={{ alignItems: "flex-end" }}>
-              <Grid item xs={7} sm={5}>
-                <Typography sx={{ fontSize: "0.9rem" }}>Check in</Typography>
-              </Grid>
-              <Grid item>
-                <Typography>{props.HHCheckIn}</Typography>
-              </Grid>
-            </Grid>
-            <Grid container sx={{ alignItems: "flex-end" }}>
-              <Grid item xs={7} sm={5}>
-                <Typography sx={{ fontSize: "0.9rem" }}>Check out</Typography>
-              </Grid>
-              <Grid item>
-                <Typography>{props.HHCheckOut}</Typography>
-              </Grid>
-            </Grid>
-            <Grid container sx={{ alignItems: "flex-end" }}>
-              <Grid item xs={7} sm={5}>
-                <Typography sx={{ fontSize: "0.9rem" }}>Total Cost</Typography>
-              </Grid>
-              <Grid item>
-                <Stack
-                  direction="row"
-                  sx={{ alignItems: "baseline", color: "primary.main" }}
-                >
-                  <Typography sx={{ fontSize: "0.8rem", fomtWeight: "medium" }}>
-                    LKR
+          <Stack direction="column" sx={{ marginLeft: { sm: "10px" }, justifyContent:"space-between", height:"100%" }}>
+            <Stack direction="column">
+              <Typography sx={{ fontWeight: "bold", fontSize: "1.3rem" }}>
+                {props.HHName}
+              </Typography>
+              <Typography sx={{ fontWeight: "light", fontSize: "0.8rem" }}>
+                {props.HHAddress}
+              </Typography>
+            </Stack>
+            <Stack direction="column">
+              <Grid
+                container
+                sx={{
+                  alignItems: "flex-end",
+                  marginTop: { xs: "5px", sm: "0" },
+                }}
+              >
+                <Grid item xs={7} sm={5}>
+                  <Typography sx={{ fontSize: "0.9rem" }}>
+                    Reserved Date
                   </Typography>
-                  <Typography sx={{ fontSize: "1.1rem", fontWeight: "bold" }}>
-                    {props.HHPrice}
+                </Grid>
+                <Grid item>
+                  <Typography>
+                    {dayjs(props.HHReservedDate).format("DD-MM-YYYY")}
                   </Typography>
-                </Stack>
+                </Grid>
               </Grid>
-            </Grid>
+              <Grid container sx={{ alignItems: "flex-end" }}>
+                <Grid item xs={7} sm={5}>
+                  <Typography sx={{ fontSize: "0.9rem" }}>Check in</Typography>
+                </Grid>
+                <Grid item>
+                  <Typography>
+                    {dayjs(props.HHCheckIn).format("DD-MM-YYYY")}
+                  </Typography>
+                </Grid>
+              </Grid>
+              <Grid container sx={{ alignItems: "flex-end" }}>
+                <Grid item xs={7} sm={5}>
+                  <Typography sx={{ fontSize: "0.9rem" }}>Check out</Typography>
+                </Grid>
+                <Grid item>
+                  <Typography>
+                    {dayjs(props.HHCheckOut).format("DD-MM-YYYY")}
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Stack>
+            <Stack direction="column">
+              <Grid container sx={{ alignItems: "flex-end" }}>
+                <Grid item xs={7} sm={5}>
+                  <Typography sx={{ fontSize: "0.9rem" }}>
+                    Total Cost
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Stack
+                    direction="row"
+                    sx={{ alignItems: "baseline", color: "primary.main" }}
+                  >
+                    <Typography
+                      sx={{ fontSize: "0.8rem", fomtWeight: "medium" }}
+                    >
+                      LKR
+                    </Typography>
+                    <Typography sx={{ fontSize: "1.1rem", fontWeight: "bold" }}>
+                      {props.HHPrice}
+                    </Typography>
+                  </Stack>
+                </Grid>
+              </Grid>
+            </Stack>
+            <Box sx={{display:props.HHreservation === "Ongoing" && !props.HHpayment?"flex":"none"}}>
+              <Typography sx={{color:"red"}}>Expire in <span style={{fontWeight:"600"}}>{props.ExpireIn} days</span> </Typography>
+            </Box>
           </Stack>
         </Grid>
         <Grid item xs={12} sm={3} sx={{ justifyContent: "right" }}>
@@ -142,7 +169,10 @@ export default function ReservationCard(props) {
               <Grid
                 item
                 container
-                sx={{ justifyContent: { sm: "space-between" },marginTop:'5px' }}
+                sx={{
+                  justifyContent: { sm: "space-between" },
+                  marginTop: "5px",
+                }}
               >
                 <Grid item xs={6} sm={8}>
                   <Typography>No of Adults</Typography>
@@ -167,7 +197,10 @@ export default function ReservationCard(props) {
               <Grid
                 item
                 container
-                sx={{ justifyContent: { sm: "space-between" },marginTop:'5px' }}
+                sx={{
+                  justifyContent: { sm: "space-between" },
+                  marginTop: "5px",
+                }}
               >
                 <Grid item xs={6} sm={8}>
                   <Typography>No of Childlen</Typography>
@@ -185,14 +218,17 @@ export default function ReservationCard(props) {
                       color: "white",
                     }}
                   >
-                    <Typography>{props.HHRooms}</Typography>
+                    <Typography>{props.HHChildren}</Typography>
                   </Box>
                 </Grid>
               </Grid>
               <Grid
                 item
                 container
-                sx={{ justifyContent: { sm: "space-between" },marginTop:'5px' }}
+                sx={{
+                  justifyContent: { sm: "space-between" },
+                  marginTop: "5px",
+                }}
               >
                 <Grid item xs={6} sm={8}>
                   <Typography>No of Rooms</Typography>
@@ -214,8 +250,38 @@ export default function ReservationCard(props) {
                   </Box>
                 </Grid>
               </Grid>
+              <Grid
+                item
+                container
+                sx={{
+                  justifyContent: { sm: "space-between" },
+                  marginTop: "5px",
+                }}
+              >
+                <Grid item xs={6} sm={8}>
+                  <Typography>No of Halls</Typography>
+                </Grid>
+                <Grid item>
+                  <Box
+                    sx={{
+                      bgcolor: "text.primary",
+                      width: "25px",
+                      height: "25px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      borderRadius: "5px",
+                      color: "white",
+                    }}
+                  >
+                    <Typography>{props.HHHalls}</Typography>
+                  </Box>
+                </Grid>
+              </Grid>
             </Stack>
-            <Box sx={{ display: "flex", justifyContent: "end" }}>
+            <Box
+              sx={{ display: "flex", justifyContent: "end", marginTop: "5px" }}
+            >
               {buttons(props)}
             </Box>
           </Stack>

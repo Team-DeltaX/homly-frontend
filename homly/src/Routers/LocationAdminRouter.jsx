@@ -1,6 +1,10 @@
 import React, { lazy } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
+const ViewHolidayHome = lazy(() =>
+  import("../Pages/locationAdmin/ViewHolidayHome")
+);
+
 const LocationDashboard = lazy(() =>
   import("../Pages/locationAdmin/Dashboard")
 );
@@ -35,6 +39,10 @@ const LocationAdminRouter = () => (
     <Route
       path="/holidayhomes/editholidayhome/:homeId"
       element={<HolidayHomeEdit />}
+    />
+    <Route
+      path="/holidayhomes/viewholidayhome/:homeId"
+      element={<ViewHolidayHome />}
     />
   </Routes>
 );

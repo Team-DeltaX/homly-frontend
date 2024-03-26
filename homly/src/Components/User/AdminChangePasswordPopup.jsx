@@ -28,7 +28,8 @@ export default function AdminChangePasswordPopup({
     e.preventDefault();
     if (!errorConfirmPassword) {
       const formData = { adminId: adminId, password: password };
-      axios.put("http://localhost:3002/admin/", formData).then((res) => {
+      axios.put("http://localhost:3002/admin/", formData, {withCredentials:true})
+      .then((res) => {
         if (res.data.success) {
           setErrorStatus({
             ...errorStatus,

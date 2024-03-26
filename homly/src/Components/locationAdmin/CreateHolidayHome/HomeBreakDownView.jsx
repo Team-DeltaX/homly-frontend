@@ -49,7 +49,7 @@ function a11yProps(index) {
     'aria-controls': `simple-tabpanel-${index}`,
   };
 }
-const HomeBreakDownView = ({ submit, setSubmit }) => {
+const HomeBreakDownView = ({ setSubmit, setAllValues, submitClicked }) => {
 
   const [value, setValue] = useState(0);
 
@@ -67,6 +67,8 @@ const HomeBreakDownView = ({ submit, setSubmit }) => {
   const [kitchen, setKitchen] = useState(false);
   const [park, setPark] = useState(false);
   const [wifi, setWifi] = useState(false);
+  const [pool, setPool] = useState(false);
+  const [bar, setBar] = useState(false);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -105,6 +107,16 @@ const HomeBreakDownView = ({ submit, setSubmit }) => {
   const handleWifiChange = (e) => {
     setWifi(e.target.checked);
   }
+
+  const handlePoolChange = (e) => {
+    setPool(e.target.checked);
+  }
+
+  const handleBarChange = (e) => {
+    setBar(e.target.checked);
+
+  }
+
   useEffect(() => {
     if (totalRental !== undefined && roomArray.length > 0 && unitArray.length > 0) {
       setSubmit(true);
@@ -112,6 +124,16 @@ const HomeBreakDownView = ({ submit, setSubmit }) => {
       setSubmit(false);
     }
   }, [totalRental, roomArray, unitArray, setSubmit]);
+
+
+  useEffect(() => {
+    if (submitClicked) {
+      const details = { "adultsCount": adultsCount, "childCount": childCount, "otherCharges": otherCharges, "serviceCharges": serviceCharges, "totalRental": totalRental, "facilities": facilities, "gym": gym, "kitchen": kitchen, "park": park, "wifi": wifi, "pool": pool, "bar": bar }
+      setAllValues((prev) => {
+        return { ...prev, "homeBreakDown": details, "roomArray": roomArray, "unitArray": unitArray, "hallArray": hallArray }
+      });
+    }
+  }, [submitClicked]);
 
 
 
@@ -134,11 +156,19 @@ const HomeBreakDownView = ({ submit, setSubmit }) => {
               </Box>
               <TextField value={childCount} type='number' id="outlined-required" label="Maximum Children" placeholder='Maximum Children' fullWidth size='small' />
             </Box>
-            <FormGroup sx={{ display: 'flex', width: '100%' }}>
-              <FormControlLabel control={<Checkbox />} label="Gym" checked={gym} onChange={hangleGymChange} />
-              <FormControlLabel control={<Checkbox />} label="Kitchen" checked={kitchen} onChange={handleKitchenChange} />
-              <FormControlLabel control={<Checkbox />} label="Park" checked={park} onChange={handleParkChange} />
-              <FormControlLabel control={<Checkbox />} label="Wifi" checked={wifi} onChange={handleWifiChange} />
+            <FormGroup sx={{ display: 'flex', width: '100%', gap: "0.5em ", marginTop: "1em" }}>
+              <Box sx={{ display: "flex", gap: "1em" }}>
+
+                <FormControlLabel control={<Checkbox />} label="Gym" checked={gym} onChange={hangleGymChange} />
+                <FormControlLabel control={<Checkbox />} label="Park" checked={park} onChange={handleParkChange} />
+                <FormControlLabel control={<Checkbox />} label="Kitchen" checked={kitchen} onChange={handleKitchenChange} />
+              </Box>
+              <Box sx={{ display: "flex", gap: "1em" }}>
+                <FormControlLabel control={<Checkbox />} label="Bar" checked={bar} onChange={handleBarChange} />
+                <FormControlLabel control={<Checkbox />} label="Wifi" checked={wifi} onChange={handleWifiChange} />
+                <FormControlLabel control={<Checkbox />} label="Pool" checked={pool} onChange={handlePoolChange} />
+
+              </Box>
 
             </FormGroup>
           </Grid>

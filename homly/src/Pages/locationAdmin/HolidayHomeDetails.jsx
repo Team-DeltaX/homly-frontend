@@ -1,7 +1,7 @@
 
 import './style.css';
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 
 import Box from '@mui/material/Box';
 import { Grid, ThemeProvider, Container, Typography, TextField, Button } from '@mui/material';
@@ -17,6 +17,14 @@ import moment from 'moment'
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import Select from 'react-select'
+import axios from 'axios';
+import dayjs from 'dayjs';
+// dayjs.extend(require('dayjs/plugin/add'));
+// var add = require('dayjs/plugin/add')
+var isBetween = require('dayjs/plugin/isBetween')
+dayjs.extend(isBetween)
+// dayjs.extend(add)
+
 
 
 
@@ -27,10 +35,10 @@ const HolidayHomeDetails = () => {
     const calendarRef = useRef();
 
     const [showNav, setShowNav] = useState('nav_grid_deactive')
+    const [holidayHomes, setHolidayHomes] = useState([]);
 
-    const [selectedYear, setSelectedYear] = useState('');
-    const [selectedMonth, setSelectedMonth] = useState('');
     const [selectedHolidayHome, setSelectedHolidayHome] = useState('');
+    const [names, setNames] = useState([]);
 
     const [displayedRange, setDisplayedRange] = useState({
         start: moment().startOf('month'),
@@ -38,14 +46,12 @@ const HolidayHomeDetails = () => {
     });
 
 
-    const myEventsList = [
-        { start: new Date(), end: new Date(), title: "special event" },
-        { start: new Date(), end: new Date(), title: "special event" },
-        { start: new Date(), end: new Date(), title: "special event" },
-        { start: new Date(), end: new Date(), title: "special event" },
-        { start: moment("2024-02-01T14:00:00").toDate(), end: moment("2024-02-01T14:00:00").toDate(), title: "special event" },
+    const [myEventsList, setMyEventsList] = useState([]);
+    const [event, setEvent] = useState({
+        start: "", end: "", title: ""
+    })
 
-    ];
+
     const CustomToolbar = (toolbar) => {
         const goToBack = () => {
             toolbar.onNavigate('PREV');
@@ -72,49 +78,76 @@ const HolidayHomeDetails = () => {
     };
 
     //Holidayhomes list
-    const holidayHomes = [
-        "holidayhome1",
-        "holidayhome2",
-        "holidayhome3",
-        "holidayhome4",
-        "nipunResort",
-        "holidayhome6",
-    ];
+    useEffect(() => {
+        axios.get('http://localhost:3002/admin/auth/locationadmin/holidayhome/names')
+            .then((res) => {
+                const data = res.data.names;
 
-    //Month list
-    const monthList = [
-        "January",
-        "Febraury",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "Auguest",
-        "September",
-        "October",
-        "November",
-        "December",
-    ];
+                console.log(data);
+                setHolidayHomes(data)
+                data.forEach((item) => {
+                    names.push(item.name);
+                })
+                // remove duplicates in name array
+                const uniqueNames = [...new Set(names)];
+                setNames(uniqueNames);
+
+
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+
+
+    }, [])
+
 
 
 
 
     const handleSearch = () => {
+        const homeName = selectedHolidayHome.value;
+        console.log("homeName", homeName)
+        let id;
 
-        console.log(selectedYear);
-        console.log(selectedMonth);
+        holidayHomes.forEach((item) => {
 
-        if (selectedYear && selectedMonth) {
-            const newDate = moment(`${selectedYear}-${selectedMonth}-01T00:00:00`, 'YYYY-MM').toDate();
-            const startOfMonth = moment(newDate).startOf('month');
-            const endOfMonth = moment(newDate).endOf('month');
-            setDisplayedRange({
-                start: startOfMonth,
-                end: endOfMonth,
-            });
-            console.log("displayedRange updated:", displayedRange);
+            if (item.name === homeName) {
+
+                id = item.id;
+            }
         }
+        )
+
+        console.log("idhol", id)
+
+        axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/reservation/${id}`)
+            .then((res) => {
+
+                const data = res.data.reservations;
+                console.log("get", data);
+                const events = data.map((item) => {
+                    return {
+                        start: dayjs(item.CheckinDate).format('YYYY-MM-DD'),
+                        // end: dayjs(item.reservation.CheckoutDate).format('YYYY-MM-DD'),
+                        end: dayjs(item.CheckoutDate).add(1, 'day').format('YYYY-MM-DD'),
+                        title: item.ReservationId
+                    }
+                })
+                setMyEventsList(events);
+                console.log(events);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+
+
+        console.log("myEventlist", myEventsList)
+
+
+
+
+
 
     };
 
@@ -122,23 +155,51 @@ const HolidayHomeDetails = () => {
 
 
     const handleClear = () => {
-        setSelectedYear('');
-        setSelectedMonth('');
         setSelectedHolidayHome('');
     }
 
     // popup
     const [open, setOpen] = useState(false);
     const [date, setDate] = useState('');
+    const [reservationIds, setReservationIds] = useState([])
+    const [rooms, setRooms] = useState([])
+
 
     const handleClickOpen = (event) => {
 
         const selectedDate = moment(event.start);
         console.log(selectedDate);
-        const newDate = selectedDate.format('MMMM D, YYYY');
+        const newDate = selectedDate.format('YYYY-MM-DD');
+        console.log(newDate)
+        setReservationIds([])
+        myEventsList.map((item) => {
+            console.log("item", item.start)
+            if (dayjs(newDate).isBetween(item.start, item.end, 'day', '[)')) {
+                // setOpen(true);
+                // setDate(newDate);
+                console.log(newDate, item.title)
+                setReservationIds(prev => [...prev, item.title])
+            }
+
+        })
+
         setDate(newDate);
         setOpen(true);
     };
+
+
+    useEffect(() => {
+        if (reservationIds.length > 0) {
+            axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/reserved/`, { params: reservationIds })
+                .then((response) => {
+                    const data = response.data;
+                    setRooms(data)
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
+        }
+    }, [reservationIds]);
 
     const handleClose = (value) => {
         setOpen(false);
@@ -167,41 +228,23 @@ const HolidayHomeDetails = () => {
                                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '2em', marginBottom: "2em" }}>
                                     <Box>
                                         <Select
-                                            sx={{ backgroundColor: "white", opacity: "1", zIndex: "1000" }}
+                                            sx={{ backgroundColor: "white", opacity: "1", zIndex: "1000", width: "200px" }}
                                             className="basic-single"
                                             classNames="select_editholidayhome"
                                             classNamePrefix={"Holiday Home"}
                                             isSearchable={true}
                                             name="color"
-                                            options={holidayHomes.map((item) => {
-                                                return { value: item, label: item }
+
+                                            options={names.map((item) => {
+                                                return { value: item, label: item.toUpperCase() }
                                             })}
                                             value={selectedHolidayHome}
                                             onChange={(value) => setSelectedHolidayHome(value)}
                                         />
 
                                     </Box>
-                                    <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em' }}>
-                                        <TextField id="outlined-required" label="Year" placeholder='Year' size='small' value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)} />
-                                    </Box>
-                                    {/* <Button variant="contained" onClick={() => changeCalendarManually(moment("2022-03-01"))}>
-                                        Change Calendar
-                                    </Button> */}
-                                    <Box>
-                                        <Select
-                                            sx={{ backgroundColor: "white", opacity: "1", zIndex: "1000" }}
-                                            className="basic-single"
-                                            classNamePrefix={"Month"}
-                                            isSearchable={true}
-                                            name="color"
-                                            options={monthList.map((item) => {
-                                                return { value: item, label: item }
-                                            })}
-                                            value={selectedMonth}
-                                            onChange={(value) => setSelectedMonth(value)}
-                                        />
 
-                                    </Box>
+
                                     <Box sx={{ display: 'flex', gap: "1em" }}>
                                         <Button variant="contained" sx={{ backgroundColor: "primary.main", textTransform: "capitalize", fontWeight: "bold", color: "white" }}><Typography sx={{ fontFamily: "sans-serif" }} variant='p' onClick={handleSearch}>Search</Typography> </Button>
                                         <Button variant="outlined" sx={{ textTransform: "capitalize", fontWeight: "bold", color: "primary.main" }}><Typography sx={{ fontFamily: "sans-serif" }} variant='p' onClick={handleClear}>Cancel</Typography> </Button>
@@ -214,7 +257,6 @@ const HolidayHomeDetails = () => {
                                         localizer={localizer}
                                         events={myEventsList}
                                         views={{ month: true }}
-
                                         components={{
                                             toolbar: CustomToolbar,
                                         }}
@@ -229,7 +271,7 @@ const HolidayHomeDetails = () => {
                                     />
                                 </Box>
 
-                                <CalendarDetails open={open} handleClose={handleClose} date={date} />
+                                <CalendarDetails open={open} handleClose={handleClose} date={date} rooms={rooms} />
 
 
 
