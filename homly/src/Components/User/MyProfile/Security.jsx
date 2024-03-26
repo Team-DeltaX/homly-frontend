@@ -12,8 +12,6 @@ import {
 } from "@mui/material";
 
 import { useNavigate } from "react-router-dom";
-
-// import auth context
 import { AuthContext } from "../../../Contexts/AuthContext";
 
 import ErrorSnackbar from "../ErrorSnackbar";
@@ -22,7 +20,7 @@ import PasswordComGrid from "./PasswordComGrid";
 import theme from "../../../HomlyTheme";
 
 const Security = () => {
-  const {authServiceNumber} = useContext(AuthContext);
+  const { authServiceNumber } = useContext(AuthContext);
   const [password, setPassword] = useState({
     currentPass: "",
     newPass: "",
@@ -33,7 +31,7 @@ const Security = () => {
     newPass: false,
     confirmPass: false,
   });
-  
+
   const [isEnable, setIsEnable] = useState(false);
 
   const Navigate = useNavigate();
@@ -51,44 +49,49 @@ const Security = () => {
   const [passwordStrength, setPasswordStrength] = useState(0);
 
   const handleUpdateData = () => {
-    if(passwordStrength > 1){
-
-      const formData = {serviceNo:authServiceNumber, oldPassword:password.currentPass, newPassword:password.newPass}
+    if (passwordStrength > 1) {
+      const formData = {
+        serviceNo: authServiceNumber,
+        oldPassword: password.currentPass,
+        newPassword: password.newPass,
+      };
       axios
-      .put("http://localhost:3002/users/auth/password",formData, {withCredentials:true} )
-      .then((res) => {
-        if (res.data.success) {
-          setErrorStatus({
-            ...errorStatus,
-            isOpen: true,
-            type: "success",
-            message: res.data.message,
-          });
-        }else{
-          setErrorStatus({
-            ...errorStatus,
-            isOpen: true,
-            type: "error",
-            message: res.data.message,
-          });
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        if (err.response.data.autherized === false) {
-          Navigate("/");
-        }else{
-
-          setErrorStatus({
-            ...errorStatus,
-            isOpen: true,
-            type: "error",
-            message: err.message,
-          });
-        }
-      });
-      setPassword({ currentPass: "", newPass: "", confirmPass: "" });     
-      console.log("update");
+        .put(`${global.API_BASE_URL}/users/auth/password`, formData, {
+          withCredentials: true,
+        })
+        .then((res) => {
+          if (res.data.success) {
+            setErrorStatus({
+              ...errorStatus,
+              isOpen: true,
+              type: "success",
+              message: res.data.message,
+            });
+          } else {
+            setErrorStatus({
+              ...errorStatus,
+              isOpen: true,
+              type: "error",
+              message: res.data.message,
+            });
+          }
+        })
+        .catch((err) => {
+          if (
+            err.response.data.autherized &&
+            err.response.data.autherized === false
+          ) {
+            Navigate("/");
+          } else {
+            setErrorStatus({
+              ...errorStatus,
+              isOpen: true,
+              type: "error",
+              message: err.message,
+            });
+          }
+        });
+      setPassword({ currentPass: "", newPass: "", confirmPass: "" });
     }
   };
 
@@ -204,11 +207,13 @@ const Security = () => {
           </Card>
         </Box>
         <ErrorSnackbar
-            isOpen={errorStatus.isOpen}
-            type={errorStatus.type}
-            message={errorStatus.message}
-            setIsOpen={(value) => setErrorStatus({ ...errorStatus, isOpen: value })}
-          />
+          isOpen={errorStatus.isOpen}
+          type={errorStatus.type}
+          message={errorStatus.message}
+          setIsOpen={(value) =>
+            setErrorStatus({ ...errorStatus, isOpen: value })
+          }
+        />
       </Box>
     </ThemeProvider>
   );

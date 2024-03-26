@@ -1,10 +1,7 @@
 import React from "react";
 import { ThemeProvider } from "@mui/material";
-
 import HolidayHomeCard from "../HHCard/HolidayHomeCard";
-
 import theme from "../../../HomlyTheme";
-
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
@@ -66,7 +63,6 @@ export default function HHCarouselforInterest({ interestedHH }) {
       >
         {interestedHH &&
           interestedHH.map((hh) => (
-            <div data-aos="fade-right" data-aos-duration="700" key={hh.holiday_home.HolidayHomeId}>
               <HolidayHomeCard
                 key={hh.holiday_home.HolidayHomeId}
                 HHID={hh.holiday_home.HolidayHomeId}
@@ -74,9 +70,6 @@ export default function HHCarouselforInterest({ interestedHH }) {
                 HHLocation={hh.holiday_home.Address}
                 HHPrice={hh.holiday_home.TotalRental}
                 HHRating={Math.round(hh.rating * 10) / 10}
-                // HHImage={
-                //   "https://www.ribbyhall.co.uk/uploads/images/featured/holiday-home-featured-1.jpg"
-                // }
                 HHImage={hh.holiday_home.MainImage}
                 showInterest={true}
                 interst1_lable={hh.seperated.inter1.name}
@@ -86,7 +79,6 @@ export default function HHCarouselforInterest({ interestedHH }) {
                 interst3_lable={hh.seperated.inter3.name}
                 interst3_value={hh.seperated.inter3.value*10}
               />
-            </div>
           ))}
       </Carousel>
     </ThemeProvider>

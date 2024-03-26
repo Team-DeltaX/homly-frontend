@@ -67,9 +67,7 @@ export default function SideNavbar({ setShowNav }) {
               >
                 <img src={logo1} alt="logoOfHomely" />
               </Box>
-              {/* <Box>
-                    <Typography variant='h5' sx={{color:'white',fontFamily:theme.fontFamily} }>Admin</Typography>
-                    </Box> */}
+            
             </Grid>
           </Box>
           <Box

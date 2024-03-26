@@ -1,4 +1,3 @@
-// import '../App.css';
 import PageTop from "../../Components/PrimaryAdmin/PageTop";
 import React, { useEffect, useState } from "react";
 import SideNavbar from "../../Components/PrimaryAdmin/SideNavbar";
@@ -23,89 +22,13 @@ const PrimaryBlacklistHistory = () => {
 
   const [popup, setpopup] = useState(false);
   const [selecteduser, setSelecteduser] = useState({});
-  const [SelectEmp,SetSelectEmp]=useState({});
-  const [SelectUser,SetSelectUser]=useState({});
-
-  // const [User,SetUser]=useState({})
-  // const [Employee,SetEmployee]=useState({})
-
+  const [SelectEmp, SetSelectEmp] = useState({});
+  const [SelectUser, SetSelectUser] = useState({});
 
   const handlepopup = () => {
     setpopup(!popup);
   };
 
-  const data = [
-    {
-      Service_number: 1,
-      Nic_number: 27,
-      User_name: "Lonnie Antonioni",
-      date: "1/31/2023",
-      image: "http://dummyimage.com/130x100.png/cc0000/ffffff",
-    },
-    {
-      Service_number: 2,
-      Nic_number: 1014,
-      User_name: "Carlita Cominello",
-      date: "9/13/2023",
-      image: "http://dummyimage.com/100x100.png/5fa2dd/ffffff",
-    },
-    {
-      Service_number: 3,
-      Nic_number: 929,
-      User_name: "Rosene Loweth",
-      date: "7/18/2023",
-      image: "http://dummyimage.com/187x100.png/dddddd/000000",
-    },
-    {
-      Service_number: 4,
-      Nic_number: 32,
-      User_name: "Brittan Furby",
-      date: "8/25/2023",
-      image: "http://dummyimage.com/122x100.png/5fa2dd/ffffff",
-    },
-    {
-      Service_number: 5,
-      Nic_number: 9910,
-      User_name: "Zebulon Pinson",
-      date: "9/25/2023",
-      image: "http://dummyimage.com/130x100.png/5fa2dd/ffffff",
-    },
-    {
-      Service_number: 6,
-      Nic_number: 56905,
-      User_name: "Ara Tembey",
-      date: "11/26/2023",
-      image: "http://dummyimage.com/157x100.png/5fa2dd/ffffff",
-    },
-    {
-      Service_number: 7,
-      Nic_number: 9742,
-      User_name: "Alleyn Melliard",
-      date: "8/8/2023",
-      image: "http://dummyimage.com/156x100.png/dddddd/000000",
-    },
-    {
-      Service_number: 8,
-      Nic_number: 6,
-      User_name: "Wilfrid Grinyer",
-      date: "5/9/2023",
-      image: "http://dummyimage.com/100x100.png/5fa2dd/ffffff",
-    },
-    {
-      Service_number: 9,
-      Nic_number: 948,
-      User_name: "Yvon Inchbald",
-      date: "7/17/2023",
-      image: "http://dummyimage.com/172x100.png/5fa2dd/ffffff",
-    },
-    {
-      Service_number: 10,
-      Nic_number: 4,
-      User_name: "Torrie White",
-      date: "6/10/2023",
-      image: "http://dummyimage.com/162x100.png/5fa2dd/ffffff",
-    },
-  ];
   //csv headers
   const headers = [
     {
@@ -137,22 +60,22 @@ const PrimaryBlacklistHistory = () => {
     data: blacklisthistory,
   };
 
-  const getblacklisthistory=()=>{
-    axios.get('http://localhost:3002/admin/auth/blacklisthistory')
-    .then((res)=>{
-      const sortedData = res.data.sort((a, b) => -(a.BlackListHistoryId - b.BlackListHistoryId) );
+  const getblacklisthistory = () => {
+    axios
+      .get("http://localhost:3002/admin/auth/blacklisthistory")
+      .then((res) => {
+        const sortedData = res.data.sort(
+          (a, b) => -(a.BlackListHistoryId - b.BlackListHistoryId)
+        );
 
-      setBlacklisthistory(sortedData);
-      
-      console.log("blacklist history fetched")
-      
-    })
-    .catch(()=>{
-      console.log("error in getting blacklist history")
-    
-    })
-  }
- 
+        setBlacklisthistory(sortedData);
+
+        console.log("blacklist history fetched");
+      })
+      .catch(() => {
+        console.log("error in getting blacklist history");
+      });
+  };
 
   useEffect(() => {
     getblacklisthistory();
@@ -201,25 +124,23 @@ const PrimaryBlacklistHistory = () => {
                 setShowNav={setShowNav}
                 heading={"Blacklist User History"}
               />
-              {/* <Box>  <Search/></Box> */}
               <SearchNew setSearch={setSearch} search={search} />
 
               <Box
                 sx={{
                   marginTop: "2%",
-                  maxHeight: {md:"470px",xs:'630px'},
+                  maxHeight: { md: "470px", xs: "630px" },
                   overflow: "scroll",
                   padding: "1.5%",
                 }}
               >
                 {blacklisthistory
                   .filter((data) => {
-                    // const serviceNumberString = String(data.Service_number);
                     return search.toLowerCase() === ""
                       ? data
-                      : (data.ServiceNo)
-                      .toLowerCase()
-                      .startsWith(search.toLocaleLowerCase())
+                      : data.ServiceNo.toLowerCase().startsWith(
+                          search.toLocaleLowerCase()
+                        );
                   })
                   .map((data) => {
                     return (
@@ -229,8 +150,6 @@ const PrimaryBlacklistHistory = () => {
                         setSelecteduser={setSelecteduser}
                         SetSelectEmp={SetSelectEmp}
                         SetSelectUser={SetSelectUser}
-                      
-                       
                       />
                     );
                   })}
@@ -238,13 +157,10 @@ const PrimaryBlacklistHistory = () => {
               <CSVLink {...csvLink}>
                 <Button
                   sx={{
-                    // marginLeft: "5%",
-                    // marginTop: { xs: "4%", sm: "15px", md: "15px" },
-
                     marginLeft: "2%",
                     marginTop: { xs: "10%", sm: "1.5%" },
-                    position:'absolute',
-                    top:'88%'
+                    position: "absolute",
+                    top: "88%",
                   }}
                   component="label"
                   variant="contained"

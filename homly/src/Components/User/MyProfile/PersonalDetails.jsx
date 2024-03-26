@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
@@ -13,21 +13,13 @@ import {
   Avatar,
 } from "@mui/material";
 
-import { AuthContext } from "../../../Contexts/AuthContext";
-
 import PersonalDetailsGrid from "../PersonalDetailsGrid/PersonalDetailsGrid";
-
 import theme from "../../../HomlyTheme";
-// import ProfilePicUploadPopup from "../ProfilePicUploadPopup";
 import UploadImageCloudinary from "../../Common/UploadImageCloudinary";
 import ErrorSnackbar from "../ErrorSnackbar";
-// import UserInterestedPopup from "../UserInterestedPopup";
 import UserInterestedPopupProfile from "./UserInterestedPopupProfile";
 
 const PersonalDetails = () => {
-
-  const {setIsUpdated} = useContext(AuthContext);
-
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
   const phoneRegex = /^[0-9]{10}$/;
 
@@ -40,22 +32,15 @@ const PersonalDetails = () => {
     contactNo: "",
     email: "",
   });
-
   const [image, setImage] = useState("");
-
   const [interests, setInterests] = useState([]);
   const [isHaveInterests, setIsHaveInterests] = useState(false);
-
   const [insterestedPopup, setInsterestedPopup] = useState(false);
-
-  // const [interestsIsSubmited, setInterestsIsSubmited] = useState(false);
-
   const [errorStatus, setErrorStatus] = useState({
     isOpen: false,
     type: "",
     message: "",
   });
-
   const [isEnable, setIsEnable] = useState(false);
 
   const checkEmail = (email) => {
@@ -85,12 +70,11 @@ const PersonalDetails = () => {
   useEffect(() => {
     try {
       axios
-        .get(`http://localhost:3002/users/auth/details`, {
+        .get(`${global.API_BASE_URL}/users/auth/details`, {
           withCredentials: true,
         })
         .then((res) => {
           if (Response) {
-            console.log("apidata sd", res.data);
             setData({
               ...data,
               serviceNo: res.data.serviceNo,
@@ -112,7 +96,6 @@ const PersonalDetails = () => {
           }
         })
         .catch((err) => {
-          console.log("error", err);
           if (!err.response.data.autherized) {
             setErrorStatus({
               ...errorStatus,
@@ -132,12 +115,11 @@ const PersonalDetails = () => {
         });
 
       axios
-        .get("http://localhost:3002/users/auth/interested", {
+        .get(`${global.API_BASE_URL}/users/auth/interested`, {
           withCredentials: true,
         })
         .then((res) => {
           if (res.data) {
-            console.log("intresffedfsdf", res.data.userInterested.interested);
             if (res.data.userInterested.interested[0] !== null) {
               setInterests(res.data.userInterested.interested);
             }
@@ -153,7 +135,6 @@ const PersonalDetails = () => {
         })
         .catch((err) => {
           setIsHaveInterests(false);
-          console.log("error", err);
         });
     } catch (err) {
       Navigate("/");
@@ -167,10 +148,10 @@ const PersonalDetails = () => {
         serviceNo: data.serviceNo,
         email: data.email,
         contactNo: data.contactNo,
-        image:image,
+        image: image,
       };
       axios
-        .put("http://localhost:3002/users/auth", formData)
+        .put(`${global.API_BASE_URL}/users/auth`, formData)
         .then((res) => {
           if (res.data.success) {
             setErrorStatus({
@@ -179,7 +160,6 @@ const PersonalDetails = () => {
               type: "success",
               message: res.data.message,
             });
-            setIsUpdated(true);
           } else {
             setErrorStatus({
               ...errorStatus,
@@ -204,16 +184,9 @@ const PersonalDetails = () => {
         fac3: interests[2],
       };
 
-      axios
-        .put("http://localhost:3002/users/auth/interested", formData2, {
-          withCredentials: true,
-        })
-        .then((res) => {
-          console.log("interested", res.data);
-        })
-        .catch((err) => {
-          console.log("error", err);
-        });
+      axios.put(`${global.API_BASE_URL}/users/auth/interested`, formData2, {
+        withCredentials: true,
+      });
       setIsEnable(false);
     }
   };
@@ -297,28 +270,12 @@ const PersonalDetails = () => {
                     helperText={checkEmail(data.email) ? "Invalid Email" : ""}
                   />
                 </Box>
-                {/* <AvatarImage /> */}
-                {/* <ProfilePicUploadPopup
-                  open={open}
-                  setOpen={setOpen}
-                  setImage={}
-                /> */}
-
-                {/* change interest popup */}
                 <UserInterestedPopupProfile
                   open={insterestedPopup}
                   setOpen={setInsterestedPopup}
                   interests={interests}
                   setInterests={setInterests}
                 />
-
-                {/* add interest popup */}
-                {/* <UserInterestedPopup
-                  open={!isHaveInterests && insterestedPopup}
-                  setOpen={setInsterestedPopup}
-                  is
-                /> */}
-
                 <Stack
                   direction="column"
                   sx={{ width: { xs: "100%", sm: "30%" } }}
@@ -327,7 +284,6 @@ const PersonalDetails = () => {
                     direction="column"
                     sx={{
                       margin: "2% 0",
-                      // height: { xs: 80, sm: 100 },
                       width: "100%",
                       alignItems: "center",
                     }}
