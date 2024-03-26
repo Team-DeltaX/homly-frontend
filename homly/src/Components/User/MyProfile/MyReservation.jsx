@@ -32,6 +32,7 @@ const MyReservation = () => {
         withCredentials: true,
       })
       .then((response) => {
+        console.log(response.data)
         setOngoingReservation(response.data);
       })
       .catch((err) => {
