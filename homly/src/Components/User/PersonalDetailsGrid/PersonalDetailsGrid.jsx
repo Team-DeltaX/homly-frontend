@@ -15,7 +15,10 @@ const PersonalDetailsGrid = (props) => {
           alignItems: { xs: "center", sm: "flex-start" },
         }}
       >
-        <Typography fontWeight={"bold"} sx={{ margin: "4px 0",fontSize: { xs: "1.1rem", sm: "1.25rem" } }}>
+        <Typography
+          fontWeight={"bold"}
+          sx={{ margin: "4px 0", fontSize: { xs: "1.1rem", sm: "1.25rem" } }}
+        >
           {props.lable}
         </Typography>
       </Grid>
@@ -43,7 +46,7 @@ const PersonalDetailsGrid = (props) => {
         ) : (
           <Typography
             fontWeight={"regular"}
-            sx={{ margin: "4px 0", fontSize: { xs: "1.1rem", sm: "1.25rem" }}}
+            sx={{ margin: "4px 0", fontSize: { xs: "1.1rem", sm: "1.25rem" } }}
           >
             {props.value}
           </Typography>

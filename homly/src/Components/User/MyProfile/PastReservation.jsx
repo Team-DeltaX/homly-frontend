@@ -16,6 +16,7 @@ export default function pastReservation({ reservation }) {
                   HHreservation="Past"
                   HHName={reserv.holidayHome[0].Name}
                   HHAddress={reserv.holidayHome[0].Address}
+                  HHImage={reserv.holidayHome[0].MainImage}
                   HHReservedDate={reserv.reservation.createdAt}
                   HHCheckIn={reserv.reservation.CheckinDate}
                   HHCheckOut={reserv.reservation.CheckoutDate}

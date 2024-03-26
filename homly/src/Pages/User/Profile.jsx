@@ -1,45 +1,37 @@
-import React from "react";
-import { useState,useContext } from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Drawer from "@mui/material/Drawer";
-import IconButton from "@mui/material/IconButton";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import Avatar from "@mui/material/Avatar";
-import Tooltip from "@mui/material/Tooltip";
-import Container from "@mui/material/Container";
-import CssBaseline from "@mui/material/CssBaseline";
-// import Badge from "@mui/material/Badge";
-import Stack from "@mui/material/Stack";
-import Button from "@mui/material/Button";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
+import React, { useState, useContext, useEffect } from "react";
+import {
+  ThemeProvider,
+  AppBar,
+  Box,
+  Drawer,
+  IconButton,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  Toolbar,
+  Typography,
+  Menu,
+  MenuItem,
+  Avatar,
+  Tooltip,
+  Container,
+  CssBaseline,
+  Stack,
+  Button,
+  Tabs,
+  Tab,
+} from "@mui/material";
 
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 import ListAltIcon from "@mui/icons-material/ListAlt";
 import HttpsIcon from "@mui/icons-material/Https";
-
 import MenuIcon from "@mui/icons-material/Menu";
 
-import { ThemeProvider } from "@emotion/react";
-
 import { Link, NavLink } from "react-router-dom";
-
-// import NotificationPanel from "../NotificationPanel/NotificationPanel";
-
 import theme from "../../HomlyTheme";
 import "./Profile.css";
-// import "../../Components/NavBar/NavBar.css";
-
-// pages component
 import PersonalDetails from "../../Components/User/MyProfile/PersonalDetails";
 import PaymentDetailsCom from "../../Components/User/MyProfile/PaymentDetailsCom";
 import Security from "../../Components/User/MyProfile/Security";
@@ -78,12 +70,18 @@ const MyProfile = () => {
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
-
-  // tabs
   const [value, setValue] = useState(0);
+
+  useEffect(() => {
+    const selectedTab = localStorage.getItem("selectedTab");
+    if (selectedTab) {
+      setValue(parseInt(selectedTab));
+    }
+  }, []);
 
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
+    localStorage.setItem("selectedTab", newValue);
   };
 
   const bottomTabLable = (name, icon) => (
@@ -94,13 +92,11 @@ const MyProfile = () => {
         height: "100%",
         width: "15vw",
         color: "white",
-        // backgroundColor: "white",
       }}
     >
       <Box
         className="bottom-tab-icon"
         sx={{
-          // backgroundColor: "white",
           padding: "7px",
           borderRadius: "50%",
           display: "flex",
@@ -150,8 +146,6 @@ const MyProfile = () => {
       </Typography>
     </Stack>
   );
-
-  // tabs end
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -215,7 +209,6 @@ const MyProfile = () => {
   return (
     <ThemeProvider theme={theme}>
       <Box
-        // className="main_container"
         sx={{
           width: "100%",
           overflow: "hidden",
@@ -229,7 +222,6 @@ const MyProfile = () => {
               className="app_bar_main"
               sx={{
                 zIndex: (theme) => theme.zIndex.drawer + 1,
-                // ml: { sm: `${drawerWidth}px` },
                 bgcolor: "secondary.main",
                 flexDirection: "row",
                 justifyContent: "space-between",
@@ -249,9 +241,6 @@ const MyProfile = () => {
                 >
                   <MenuIcon />
                 </IconButton>
-                {/* <Typography variant="h6" noWrap component="div">
-                        Responsive drawer
-                                        </Typography> */}
               </Toolbar>
               <Stack
                 direction="row"
@@ -278,9 +267,6 @@ const MyProfile = () => {
                     </NavLink>
                   ))}
                 </Stack>
-                {/* notification button */}
-                {/* <NotificationPanel notifications={notifications} /> */}
-                {/* user button */}
                 <Box sx={{ flexGrow: 0 }}>
                   <Tooltip title="Open settings">
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -330,14 +316,13 @@ const MyProfile = () => {
               }}
               aria-label="mailbox folders"
             >
-              {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
               <Drawer
                 variant="temporary"
                 open={mobileOpen}
                 onTransitionEnd={handleDrawerTransitionEnd}
                 onClose={handleDrawerClose}
                 ModalProps={{
-                  keepMounted: true, // Better open performance on mobile.
+                  keepMounted: true,
                 }}
                 sx={{
                   display: { xs: "block", sm: "block", md: "none" },
@@ -353,14 +338,12 @@ const MyProfile = () => {
                 variant="permanent"
                 sx={{
                   display: { xs: "none", sm: "none", md: "block" },
-                  // marginTop: { xs: "0px", sm: "0px", md: "64px" },
                   "& .MuiDrawer-paper": {
-                    // boxSizing: "border-box",
                     width: drawerWidth,
                     bgcolor: "primary.main",
                   },
                   height: "100%",
-                  position: "fixed	"
+                  position: "fixed	",
                 }}
                 open
               >
@@ -406,7 +389,6 @@ const MyProfile = () => {
                 },
               }}
             >
-              
               {sidePages.map((item) => (
                 <Tab
                   key={item.name}

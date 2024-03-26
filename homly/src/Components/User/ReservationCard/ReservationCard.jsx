@@ -18,7 +18,6 @@ export default function ReservationCard(props) {
       if (props.HHpayment) {
         return (
           <Stack direction="row" sx={{ marginTop: { xs: "10px", sm: "0" } }}>
-            {/* <Button variant="contained" color="success" endIcon="" sx={{width:'108px'}}> */}
             <Stack
               direction="row"
               sx={{
@@ -76,13 +75,20 @@ export default function ReservationCard(props) {
         <Grid item xs={12} sm={3} sx={{ alignItems: "center" }}>
           <Box
             component="img"
-            src="https://amazingarchitecture.com/storage/files/1742/architecture-projects/damith-premathilake-architects/holiday-home/holiday-home-nuwara-eliya-damith-premathilake-architects-1.jpg"
+            src={props.HHImage}
             alt=""
             sx={{ height: "100%", width: "100%", borderRadius: "10px" }}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <Stack direction="column" sx={{ marginLeft: { sm: "10px" }, justifyContent:"space-between", height:"100%" }}>
+          <Stack
+            direction="column"
+            sx={{
+              marginLeft: { sm: "10px" },
+              justifyContent: "space-between",
+              height: "100%",
+            }}
+          >
             <Stack direction="column">
               <Typography sx={{ fontWeight: "bold", fontSize: "1.3rem" }}>
                 {props.HHName}
@@ -155,8 +161,18 @@ export default function ReservationCard(props) {
                 </Grid>
               </Grid>
             </Stack>
-            <Box sx={{display:props.HHreservation === "Ongoing" && !props.HHpayment?"flex":"none"}}>
-              <Typography sx={{color:"red"}}>Expire in <span style={{fontWeight:"600"}}>{props.ExpireIn} days</span> </Typography>
+            <Box
+              sx={{
+                display:
+                  props.HHreservation === "Ongoing" && !props.HHpayment
+                    ? "flex"
+                    : "none",
+              }}
+            >
+              <Typography sx={{ color: "red" }}>
+                Expire in{" "}
+                <span style={{ fontWeight: "600" }}>{props.ExpireIn} days</span>{" "}
+              </Typography>
             </Box>
           </Stack>
         </Grid>

@@ -1,47 +1,41 @@
-import React from "react";
-import { useState, useContext } from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Drawer from "@mui/material/Drawer";
-import IconButton from "@mui/material/IconButton";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import { CssBaseline } from "@mui/material";
-import Avatar from "@mui/material/Avatar";
-import Tooltip from "@mui/material/Tooltip";
-// import Badge from "@mui/material/Badge";
-import Stack from "@mui/material/Stack";
-import Button from "@mui/material/Button";
+import React, { useState, useContext } from "react";
+import {
+  ThemeProvider,
+  AppBar,
+  Box,
+  Drawer,
+  IconButton,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  Toolbar,
+  Typography,
+  Menu,
+  MenuItem,
+  Avatar,
+  Tooltip,
+  CssBaseline,
+  Stack,
+  Button,
+} from "@mui/material";
 
 import MenuIcon from "@mui/icons-material/Menu";
 
-import { ThemeProvider } from "@emotion/react";
-
 import { Link, NavLink } from "react-router-dom";
-
 import theme from "../../../HomlyTheme";
-import "./NavBar.css";
-
-// import auth context
+import "../../../Pages/User/Profile.css";
 import { AuthContext } from "../../../Contexts/AuthContext";
 
 const drawerWidth = 240;
 const pages = [
   { name: "Home", path: "/Home" },
   { name: "Holiday Homes", path: "/holidayHomes" },
-  // { name: "Contact Us", path: "/contactUs" }
 ];
 
 const respSidePages = [
   { name: "Home", path: "/Home" },
   { name: "Holiday Homes", path: "/holidayHomes/" },
-  // { name: "Contact Us", path: "/contactUs" },
   { name: "My Profile", path: "/myProfile" },
 ];
 
@@ -114,8 +108,6 @@ const NavBar = ({ refContactUS }) => {
             flexDirection: "row",
             justifyContent: "space-between",
             alignItems: "center",
-            // width: { sm: `calc(100% - ${drawerWidth}px)` },
-            // ml: { sm: `${drawerWidth}px` },
             position: { xs: "fixed", sm: "fixed", md: "sticky" },
           }}
         >
@@ -128,7 +120,6 @@ const NavBar = ({ refContactUS }) => {
             >
               <MenuIcon />
             </IconButton>
-
           </Toolbar>
           <Stack
             direction="row"
@@ -177,9 +168,6 @@ const NavBar = ({ refContactUS }) => {
                 </Typography>
               </Box>
             </Stack>
-            {/* notification button */}
-            {/* <NotificationPanel /> */}
-            {/* user button */}
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -235,7 +223,7 @@ const NavBar = ({ refContactUS }) => {
             onTransitionEnd={handleDrawerTransitionEnd}
             onClose={handleDrawerClose}
             ModalProps={{
-              keepMounted: true, // Better open performance on mobile.
+              keepMounted: true,
             }}
             sx={{
               display: { xs: "block", sm: "block", md: "none" },
