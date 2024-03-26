@@ -128,6 +128,7 @@ export default function IncomeReport() {
           <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={2}>
                   <Grid item xs={6}>
+                    {/* date */}
                     <Item> From Date : 02/16/2024 </Item>
                   </Grid>
                   <Grid item xs={6}>
@@ -162,9 +163,12 @@ export default function IncomeReport() {
             </TableContainer>
 
             <Typography gutterBottom style={{fontSize: '12px'}}>
+              {/* holiday home */}
                    Holiday Home count :   2 
             </Typography>
             <Typography gutterBottom align='right' style={{ fontWeight: 'bold' }}>
+
+                    {/* total price */}
                    Total Income (LKR) : 110 000
             </Typography>
           </DialogContent>
