@@ -1,5 +1,3 @@
-// import '../App.css';
-
 import React, { useEffect, useState } from "react";
 import SideNavbar from "../../Components/PrimaryAdmin/SideNavbar";
 import ComplaintCard from "../../Components/PrimaryAdmin/ComplaintCard";
@@ -7,16 +5,18 @@ import Box from "@mui/material/Box";
 import { Container, Grid, ThemeProvider, Typography } from "@mui/material";
 import theme from "../../HomlyTheme";
 import Pagetop from "../../Components/PrimaryAdmin/PageTop";
-// import Search from '../../Components/PrimaryAdmin/Search';
 import ViewPopupComplaints from "../../Components/PrimaryAdmin/ViewPopupComplints";
 import axios from "axios";
 import Switch from "@mui/material/Switch";
+import Snackbarp from "../../Components/PrimaryAdmin/snackbar/Snackbarp";
 
 const PrimaryComplaints = () => {
   const [popup, setpopup] = useState(false);
   const [selecteduser, setSelecteduser] = useState({});
   const [complaints, setcomplaints] = useState([]);
   const [prevcomplaints, setPrevcomplaints] = useState([]);
+  const [opensn, SetOpensn] = useState(false);
+  const [opensnE, SetOpensnE] = useState(false);
 
   const handlepopup = () => {
     setpopup(!popup);
@@ -33,9 +33,6 @@ const PrimaryComplaints = () => {
         console.log("finish");
         console.log("---------fetch prev complaints--------");
         console.log(res.data);
-        // console.log(prevcomplaints[0])
-        //   setLen(prevcomplaints.length)
-        //   console.log(len)
       })
       .catch((err) => {
         console.log(err);
@@ -86,6 +83,8 @@ const PrimaryComplaints = () => {
             fetchprevcomplaints={fetchprevcomplaints}
             prevcomplaints={prevcomplaints}
             popup={popup}
+            SetOpensn={SetOpensn}
+            SetOpensnE={SetOpensnE}
           />
         )}
 
@@ -108,6 +107,19 @@ const PrimaryComplaints = () => {
               }}
             >
               <Pagetop setShowNav={setShowNav} heading={"Complaints"} />
+              <Snackbarp
+                isOpen={opensn}
+                setIsOpen={SetOpensn}
+                type="success"
+                message={"User Blacklisted sucessFully!"}
+              />
+              <Snackbarp
+                isOpen={opensnE}
+                setIsOpen={SetOpensnE}
+                type="error"
+                message={"errr in user blacklisting!"}
+              />
+
               <Box
                 sx={{
                   display: "flex",

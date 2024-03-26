@@ -1,27 +1,75 @@
-import { Box, Button, InputAdornment, TextField, ThemeProvider, Typography } from "@mui/material";
-import SearchIcon from '@mui/icons-material/Search';
+import {
+  Box,
+  Button,
+  InputAdornment,
+  TextField,
+  ThemeProvider,
+  Typography,
+} from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
 import { useState } from "react";
-import theme from '../../HomlyTheme'
+import theme from "../../HomlyTheme";
 
-const SearchNew=(props)=>{
-    const [searchbox,setSearchbox]=useState('')
-    return<ThemeProvider theme={theme}>
-      <Box sx={{width:'100%',paddingLeft:'20px',paddingBottom:{xs:'20px',md:'0px'},display:'flex',justifyContent:'flex-end',flexDirection:'row',columnGap:'10px'}}>
-          <Box><TextField
-           InputProps={{
+const SearchNew = (props) => {
+  const [searchbox, setSearchbox] = useState("");
+  return (
+    <ThemeProvider theme={theme}>
+      <Box
+        sx={{
+          width: "100%",
+          paddingLeft: "20px",
+          paddingBottom: { xs: "20px", md: "0px" },
+          display: "flex",
+          justifyContent: "flex-end",
+          flexDirection: "row",
+          columnGap: "10px",
+        }}
+      >
+        <Box>
+          <TextField
+            InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <SearchIcon/>
+                  <SearchIcon />
                 </InputAdornment>
               ),
             }}
-      
-          type='text' alignItems="center" sx={{backgroundColor:"white",'& fieldset':{borderRadius:'120px'}}} size="small"  onChange={(e)=>setSearchbox(e.target.value)} value={searchbox}></TextField></Box>
-          <Box sx={{display:'flex',flexDirection:'row',paddingRight:'75px'}}><Button variant='contained' sx={{marginRight:'5%'} } onClick={()=>{props.setSearch(searchbox)}} ><Typography>Search</Typography></Button>
-          <Button variant='outlined' sx={{marginRight:'5%'}}  onClick={()=>{props.setSearch(''); setSearchbox('')}}><Typography>Reset</Typography></Button></Box>
-      
+            type="text"
+            alignItems="center"
+            sx={{
+              backgroundColor: "white",
+              "& fieldset": { borderRadius: "120px" },
+            }}
+            size="small"
+            onChange={(e) => setSearchbox(e.target.value)}
+            value={searchbox}
+          ></TextField>
+        </Box>
+        <Box
+          sx={{ display: "flex", flexDirection: "row", paddingRight: "75px" }}
+        >
+          <Button
+            variant="contained"
+            sx={{ marginRight: "5%" }}
+            onClick={() => {
+              props.setSearch(searchbox);
+            }}
+          >
+            <Typography>Search</Typography>
+          </Button>
+          <Button
+            variant="outlined"
+            sx={{ marginRight: "5%" }}
+            onClick={() => {
+              props.setSearch("");
+              setSearchbox("");
+            }}
+          >
+            <Typography>Reset</Typography>
+          </Button>
+        </Box>
       </Box>
     </ThemeProvider>
-
-}
+  );
+};
 export default SearchNew;

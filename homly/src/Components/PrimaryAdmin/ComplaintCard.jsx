@@ -11,9 +11,8 @@ import bul from "../PrimaryAdmin/Css/blacklisteduserslist.css";
 
 const ComplaintCard = (props) => {
   // extract only date from database created at
-
   const dateTimeString = props.data.created_at;
-  const dateObject = new Date(dateTimeString); //string to date obj
+  const dateObject = new Date(dateTimeString); 
   const year = dateObject.getFullYear();
   const month = String(dateObject.getMonth() + 1).padStart(2, "0");
   const day = String(dateObject.getDate()).padStart(2, "0");
@@ -65,11 +64,9 @@ const ComplaintCard = (props) => {
           <Button
             variant="contained"
             onClick={() => {
-               props.setSelecteduser(props.data);
-                // props.fetchprevcomplaints()
-               props.handlepopup();
-             
-              
+              props.setSelecteduser(props.data);
+
+              props.handlepopup();
             }}
           >
             <Typography>View</Typography>
