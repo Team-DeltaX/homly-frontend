@@ -47,7 +47,6 @@ const Search = () => {
             <MenuItem value={"Name"}>Name</MenuItem>
             <MenuItem value={"ServiceNumber"}>Service Number</MenuItem>
           </Select>
-          {/* </FormControl> */}
         </Box>
       </Grid>
       <Grid item md={2} sm={12}>

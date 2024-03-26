@@ -9,7 +9,6 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
 import { grey } from "@mui/material/colors";
 
-
 const historypopup2 = (props) => {
   return (
     <Box
@@ -39,7 +38,6 @@ const historypopup2 = (props) => {
             backgroundColor: "white",
             borderRadius: "10px",
             padding: "5px",
-            //    width:{md:'400px'},
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
@@ -99,7 +97,6 @@ const historypopup2 = (props) => {
 
             <Box
               sx={{
-                // width:"100%",
                 display: "flex",
                 flexDirection: { md: "row", xs: "column" },
                 justifyContent: "space-between",
@@ -170,7 +167,6 @@ const historypopup2 = (props) => {
 
             <Box
               sx={{
-                // width:"100%",
                 display: "flex",
                 flexDirection: { md: "row", xs: "column" },
                 justifyContent: "space-between",
@@ -240,7 +236,6 @@ const historypopup2 = (props) => {
 
             <Box
               sx={{
-                // width:"100%",
                 display: "flex",
                 flexDirection: { md: "row", xs: "column" },
                 justifyContent: "space-between",
@@ -264,7 +259,6 @@ const historypopup2 = (props) => {
 
             <Box
               sx={{
-                // width:"100%",
                 display: "flex",
                 flexDirection: { md: "row", xs: "column" },
                 justifyContent: "space-between",
@@ -288,7 +282,6 @@ const historypopup2 = (props) => {
 
             <Box
               sx={{
-                // width:"100%",
                 display: "flex",
                 flexDirection: { md: "row", xs: "column" },
                 justifyContent: "space-between",
@@ -334,7 +327,6 @@ const historypopup2 = (props) => {
 
             <Box
               sx={{
-                // width:"100%",
                 display: "flex",
                 flexDirection: { md: "row", xs: "column" },
                 justifyContent: "flex-end",

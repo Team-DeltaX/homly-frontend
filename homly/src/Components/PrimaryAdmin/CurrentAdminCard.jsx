@@ -118,27 +118,7 @@ const CurrentAdminCard = (props) => {
         <Box sx={{ padding: "10px", textAlign: "center" }}>
           <Box>Admin Number</Box>
           <Box>
-            {/* <TextField
-            
-              disabled={true}
-            
-              // onChange={(e) => {
-              //   setAdminNo(e.target.value);
-              // }}
-              value={props.data.AdminNo}
-              size="small"
-              type="text"
-              sx={{
-                backgroundColor: "white",
-                "& fieldset": { border: 'none' },
-                
-                
-              }}
-            
-              alignItems="center"
-              
-            ></TextField> */}
-            <Typography sx={{ color: "grey" }}>
+           <Typography sx={{ color: "grey" }}>
               {" "}
               {props.data.AdminNo}
             </Typography>

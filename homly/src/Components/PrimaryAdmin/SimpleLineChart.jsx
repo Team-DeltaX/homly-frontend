@@ -38,13 +38,14 @@ export default function SimpleLineChart() {
   const [HolidayHome2, SetHolidayHome2] = React.useState("");
   const [HolidayHome3, SetHolidayHome3] = React.useState("");
 
-
   const setearning_HH1 = (HolidayHome1) => {
     const promises = getLastSevenDays().map((date) => {
       return axios
-        .get(`http://localhost:3002/admin/auth/dayincome/${date}/${HolidayHome1}`)
+        .get(
+          `http://localhost:3002/admin/auth/dayincome/${date}/${HolidayHome1}`
+        )
         .then((res) => {
-        return res.data.sumForDate;
+          return res.data.sumForDate;
         })
         .catch((err) => {
           console.log(err);
@@ -55,21 +56,22 @@ export default function SimpleLineChart() {
     Promise.all(promises)
       .then((results) => {
         const filteredResults = results.filter((result) => result !== null);
-       
-        setH1data(filteredResults)
+
+        setH1data(filteredResults);
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
 
   const setearning_HH2 = (HolidayHome2) => {
     const promises = getLastSevenDays().map((date) => {
       return axios
-        .get(`http://localhost:3002/admin/auth/dayincome/${date}/${HolidayHome2}`)
+        .get(
+          `http://localhost:3002/admin/auth/dayincome/${date}/${HolidayHome2}`
+        )
         .then((res) => {
-        return res.data.sumForDate;
+          return res.data.sumForDate;
         })
         .catch((err) => {
           console.log(err);
@@ -80,21 +82,22 @@ export default function SimpleLineChart() {
     Promise.all(promises)
       .then((results) => {
         const filteredResults = results.filter((result) => result !== null);
-       
-        setH2data(filteredResults)
+
+        setH2data(filteredResults);
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
 
   const setearning_HH3 = (HolidayHome3) => {
     const promises = getLastSevenDays().map((date) => {
       return axios
-        .get(`http://localhost:3002/admin/auth/dayincome/${date}/${HolidayHome3}`)
+        .get(
+          `http://localhost:3002/admin/auth/dayincome/${date}/${HolidayHome3}`
+        )
         .then((res) => {
-        return res.data.sumForDate;
+          return res.data.sumForDate;
         })
         .catch((err) => {
           console.log(err);
@@ -105,19 +108,18 @@ export default function SimpleLineChart() {
     Promise.all(promises)
       .then((results) => {
         const filteredResults = results.filter((result) => result !== null);
-       
-        setH3data(filteredResults)
+
+        setH3data(filteredResults);
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-
   const handleChangehh1 = (event) => {
     SetHolidayHome1(event.target.value);
     setearning_HH1(event.target.value);
-    };
+  };
 
   const handleChangehh2 = (event) => {
     SetHolidayHome2(event.target.value);
@@ -181,9 +183,8 @@ export default function SimpleLineChart() {
               id="demo-simple-select-helper"
               value={HolidayHome1}
               label="Holidayhome1"
-              onChange={(e)=>{
-                handleChangehh1(e)
-
+              onChange={(e) => {
+                handleChangehh1(e);
               }}
             >
               {HolidayHomes.filter((hh) => {

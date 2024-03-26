@@ -1,4 +1,3 @@
-// import '../App.css';
 
 import SideNavbar from "../../Components/PrimaryAdmin/SideNavbar";
 
