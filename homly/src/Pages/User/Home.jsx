@@ -47,26 +47,23 @@ export default function Home() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3002/users/auth/holidayhomes/sort/topRated", {
+      .get(`${global.API_BASE_URL}/users/auth/holidayhomes/sort/topRated`, {
         withCredentials: true,
       })
       .then((res) => {
-        console.log("topRated", res.data);
         setSortedByRating(res.data);
       })
       .catch((err) => {
-        console.log(err);
         if (err.response.data.autherized === false) {
           Navigate("/");
         }
       });
 
     axios
-      .get(`http://localhost:3002/users/auth/interested`, {
+      .get(`${global.API_BASE_URL}/users/auth/interested`, {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res);
         if (res.data.updated) {
           setInsterestedPopup(false);
         } else {
@@ -74,7 +71,6 @@ export default function Home() {
         }
       })
       .catch((err) => {
-        console.log(err);
         if (err.response.data.autherized === false) {
           Navigate("/");
         }
@@ -84,13 +80,11 @@ export default function Home() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3002/users/auth/holidayhomes/sort", {
+      .get(`${global.API_BASE_URL}/users/auth/holidayhomes/sort`, {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res.data);
         if (res.data.interested) {
-          console.log(res.data.interested_hh);
           setInterestedHH(res.data.interested_hh);
           setIsDisplayInterest(true);
         } else {
@@ -99,7 +93,6 @@ export default function Home() {
       })
       .catch((err) => {
         setIsDisplayInterest(false);
-        console.log(err);
       });
   }, [interestsIsSubmited]);
 
@@ -182,7 +175,6 @@ export default function Home() {
                     direction="column"
                     sx={{ width: { xs: "97%", sm: "90%", md: "75%" } }}
                   >
-                    {/* <Typography variant="h5">Find</Typography> */}
                     <Grid
                       container
                       sx={{
@@ -270,7 +262,7 @@ export default function Home() {
                   </Stack>
                 </Stack>
               </Box>
-              {/* top rated holiday homes */}
+              {/* user interested holiday homes */}
               <Box>
                 {isDisplayInterest ? (
                   <UserInterestedHolidayHomes

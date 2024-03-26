@@ -1,5 +1,4 @@
-import React from "react";
-import { useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 import {
   Box,
@@ -26,8 +25,6 @@ import ForgetPasswordPopup from "../../Components/User/ForgetPassword/ForgetPass
 import ErrorSnackbar from "../../Components/User/ErrorSnackbar";
 import InputTextWithIcon from "../../Components/User/TextField/InputTextWithIcon";
 import InputPasswordWithIcon from "../../Components/User/TextField/InputPasswordWithIcon";
-
-// import auth context
 import { AuthContext } from "../../Contexts/AuthContext";
 
 const Img = styled("img")({
@@ -43,8 +40,6 @@ const UserLogin = () => {
   const [serviceNo, setServiceNo] = useState("");
   const [password, setPassword] = useState("");
 
-
-  // navigate
   const Navigate = useNavigate();
 
   const [errorStatus, setErrorStatus] = useState({
@@ -57,9 +52,8 @@ const UserLogin = () => {
     e.preventDefault();
     const formData = { serviceNo, password };
     axios
-      .post("http://localhost:3002/users/login", formData,{withCredentials: true})
+      .post(`${global.API_BASE_URL}/users/login`, formData,{withCredentials: true})
       .then((res) => {
-        console.log(res.data);
         if (res.data.success) {
           setServiceNo("");
           setPassword("");
@@ -109,7 +103,6 @@ const UserLogin = () => {
   return (
     <ThemeProvider theme={theme}>
       <Box
-        // className="main_container"
         sx={{
           width: "100%",
           overflow: "hidden",
