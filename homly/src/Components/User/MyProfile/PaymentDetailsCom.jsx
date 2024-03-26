@@ -1,4 +1,3 @@
-// import React, { useContext } from "react";
 import React, { useState } from "react";
 import {
   Box,
@@ -9,11 +8,6 @@ import {
   CardContent,
   Button,
 } from "@mui/material";
-
-// import PersonalDetailsGrid from "../PersonalDetailsGrid/PersonalDetailsGrid";
-// import UpdateButton from "../PersonalDetailsGrid/UpdateButton";
-
-// import { EditPersonalDetailsContext } from "../../Contexts/EditPersonalDetailsContext";
 
 import theme from "../../../HomlyTheme";
 import AddedCardCom from "../PaymentCard/AddedCardCom";
@@ -81,7 +75,7 @@ const PaymentDetailsCom = () => {
           setOpen={setCardOpen}
           cardDetails={cardDetails}
           setCardDetails={setCardDetails}
-          cardCount={cardDetails?cardDetails.length:0}
+          cardCount={cardDetails ? cardDetails.length : 0}
         />
       </Box>
     </ThemeProvider>

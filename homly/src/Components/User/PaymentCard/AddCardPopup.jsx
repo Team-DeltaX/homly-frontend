@@ -53,14 +53,11 @@ export default function AddCardPopup({
   };
 
   const handleChangeExpiryDate = (value) => {
-    // only allow numbers and forward slash
     const expiryDate = value
       .replace(/[^\dA-Z]/g, "")
       .replace(/(.{2})/g, "$1/")
       .trim();
 
-    console.log("expiryDate", expiryDate, expiryDate.length); // "12/23"
-    // check if the date is valid
     if (expiryDate.length < 7) {
       if (expiryDate.length === 5) {
         const [month, year, empty] = expiryDate.split("/");

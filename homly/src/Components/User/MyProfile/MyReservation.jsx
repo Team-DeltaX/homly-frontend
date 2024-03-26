@@ -28,30 +28,27 @@ const MyReservation = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3002/users/auth/userOngoingReservation", {
+      .get(`${global.API_BASE_URL}/users/auth/userOngoingReservation`, {
         withCredentials: true,
       })
       .then((response) => {
-        console.log("reservation ongoing", response.data);
+        console.log(response.data)
         setOngoingReservation(response.data);
       })
       .catch((err) => {
-        console.log("error", err);
         if (!err.response.data.autherized) {
           Navigate("/");
         }
       });
 
     axios
-      .get("http://localhost:3002/users/auth/userPastReservation", {
+      .get(`${global.API_BASE_URL}/users/auth/userPastReservation`, {
         withCredentials: true,
       })
       .then((response) => {
-        console.log("reservation past", response.data);
         setPastReservation(response.data);
       })
       .catch((err) => {
-        console.log("error", err);
         if (!err.response.data.autherized) {
           Navigate("/");
         }
