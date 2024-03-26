@@ -22,11 +22,8 @@ import Snackbarp from "../../Components/PrimaryAdmin/snackbar/Snackbarp";
 const PrimaryManageBlacklistedUsers = () => {
   const [search, setSearch] = useState("");
   const [popup, setpopup] = useState(false);
-  //for each user datacame from blacklist table
   const [selecteduser, setSelecteduser] = useState({});
-  //for each user datacame from user table
   const [selectuser, setSelectuser] = useState({});
-  //for each user datacame from employee table
   const [selectemp, setselectemp] = useState({});
   const [opensn, SetOpensn] = useState(false);
   const [opensnE, SetOpensnE] = useState(false);
@@ -64,7 +61,7 @@ const PrimaryManageBlacklistedUsers = () => {
 
   const fetch_current_blacklist = () => {
     axios
-      .get("http://localhost:3002/admin/auth/blacklist")
+      .get(`${global.API_BASE_URL}/admin/auth/blacklist`)
       .then((res) => {
         console.log("----fetch current blacklist---");
         setBlacklistedusers(res.data);

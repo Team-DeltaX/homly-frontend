@@ -52,7 +52,7 @@ export default function StatisticsDetails() {
 
   const getRoomCount = () => {
     axios
-      .get("http://localhost:3002/admin/auth/room")
+      .get(`${global.API_BASE_URL}/admin/auth/room`)
       .then((res) => {
         setRoomcount(res.data.count);
       })
@@ -62,13 +62,13 @@ export default function StatisticsDetails() {
   };
 
   const getHallCount = () => {
-    axios.get("http://localhost:3002/admin/auth/hall").then((res) => {
+    axios.get(`${global.API_BASE_URL}/admin/auth/hall`).then((res) => {
       setHallcount(res.data.count);
     });
   };
   const getHallincome = () => {
     axios
-      .get("http://localhost:3002/admin/auth/hallincome")
+      .get(`${global.API_BASE_URL}/admin/auth/hallincome`)
       .then((res) => {
         setHallrevenue(res.data.hallincome);
       })
@@ -78,7 +78,7 @@ export default function StatisticsDetails() {
   };
   const getRoomincome = () => {
     axios
-      .get("http://localhost:3002/admin/auth/roomincome")
+      .get(`${global.API_BASE_URL}/admin/auth/roomincome`)
       .then((res) => {
         setRoomrevenue(res.data.roomincome);
       })

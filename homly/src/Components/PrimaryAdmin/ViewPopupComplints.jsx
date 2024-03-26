@@ -26,7 +26,7 @@ const ViewPopupComplaints = (props) => {
   const check_already_exists = () => {
     axios
       .get(
-        `http://localhost:3002/admin/auth/isexist/${props.selecteduser.ServiceNo}`
+        `${global.API_BASE_URL}/admin/auth/isexist/${props.selecteduser.ServiceNo}`
       )
       .then((res) => {
         Setdisable(res.data.exist);
@@ -37,7 +37,7 @@ const ViewPopupComplaints = (props) => {
   };
   const mark_on_open = () => {
     axios
-      .put("http://localhost:3002/admin/auth/markcomplaint", {
+      .put( `${global.API_BASE_URL}/admin/auth/markcomplaint`, {
         CompID: props.selecteduser.ComplaintID,
       })
       .then(() => {
@@ -48,7 +48,7 @@ const ViewPopupComplaints = (props) => {
 
   const handleaddtoblacklist = () => {
     axios
-      .post("http://localhost:3002/admin/auth/blacklist", {
+      .post(`${global.API_BASE_URL}/admin/auth/blacklist`, {
         Reason: reson,
         ServiceNo: props.selecteduser.ServiceNo,
       })

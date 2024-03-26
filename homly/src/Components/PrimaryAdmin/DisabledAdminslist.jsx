@@ -26,7 +26,7 @@ const DisabledAdminslist = () => {
 
   const fetchadmins = () => {
     axios
-      .get("http://localhost:3002/admin/auth/locationadmin/all")
+      .get(`${global.API_BASE_URL}/admin/auth/locationadmin/all`)
       .then((res) => {
         console.log(res.data);
         //reverse array to keep new ones first

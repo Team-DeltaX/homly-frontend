@@ -26,7 +26,7 @@ const PrimaryComplaints = () => {
     console.log("start");
     axios
       .get(
-        `http://localhost:3002/admin/auth/locationadmin/complaint/${selecteduser.ServiceNo}`
+        `${global.API_BASE_URL}/admin/auth/locationadmin/complaint/${selecteduser.ServiceNo}`
       )
       .then((res) => {
         setPrevcomplaints(res.data);
@@ -41,7 +41,7 @@ const PrimaryComplaints = () => {
 
   const fetchcomplaints = () => {
     axios
-      .get("http://localhost:3002/admin/auth/locationadmin/complaints")
+      .get(`${global.API_BASE_URL}/admin/auth/locationadmin/complaints`)
       .then((res) => {
         setcomplaints(res.data);
       })
@@ -55,10 +55,8 @@ const PrimaryComplaints = () => {
   }, []);
 
   const [showNav, setShowNav] = useState("nav_grid_deactive");
-
   //switch
   const [checked, setChecked] = React.useState(true);
-
   const handleChangeswitch = (event) => {
     setChecked(event.target.checked);
   };

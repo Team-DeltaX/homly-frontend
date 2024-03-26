@@ -5,9 +5,7 @@ import {
   ThemeProvider,
   Typography,
 } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
-import { useState } from "react";
-import { grey } from "@mui/material/colors";
+
 
 const historypopup2 = (props) => {
   return (

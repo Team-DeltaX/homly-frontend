@@ -13,13 +13,11 @@ import {
 import theme from "../../HomlyTheme";
 import BlacklistHistoryCard from "../../Components/PrimaryAdmin/BlacklistHistoryCard";
 import { CSVLink } from "react-csv";
-
 import SummarizeIcon from "@mui/icons-material/Summarize";
 import SearchNew from "../../Components/PrimaryAdmin/SearchNew";
 import axios from "axios";
-const PrimaryBlacklistHistory = () => {
+  const PrimaryBlacklistHistory = () => {
   const [search, setSearch] = useState("");
-
   const [popup, setpopup] = useState(false);
   const [selecteduser, setSelecteduser] = useState({});
   const [SelectEmp, SetSelectEmp] = useState({});
@@ -62,7 +60,7 @@ const PrimaryBlacklistHistory = () => {
 
   const getblacklisthistory = () => {
     axios
-      .get("http://localhost:3002/admin/auth/blacklisthistory")
+      .get(`${global.API_BASE_URL}/admin/auth/blacklisthistory`)
       .then((res) => {
         const sortedData = res.data.sort(
           (a, b) => -(a.BlackListHistoryId - b.BlackListHistoryId)

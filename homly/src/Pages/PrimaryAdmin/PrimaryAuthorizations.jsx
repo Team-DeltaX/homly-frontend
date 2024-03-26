@@ -4,9 +4,7 @@ import Box from "@mui/material/Box";
 import { Container, Grid, ThemeProvider } from "@mui/material";
 import theme from "../../HomlyTheme";
 import Pagetop from "../../Components/PrimaryAdmin/PageTop";
-
 import AuthorizationsCard from "../../Components/PrimaryAdmin/authorizationsCard";
-import Model from "../../Components/PrimaryAdmin/Model";
 import axios from "axios";
 import Snackbarp from "../../Components/PrimaryAdmin/snackbar/Snackbarp";
 
@@ -17,7 +15,9 @@ const PrimaryAuthorizations = () => {
   const [opensnE, SetOpensnE] = React.useState(false);
   const get_pending = () => {
     axios
-      .get("http://localhost:3002/admin/auth/locationadmin/holidayhome/pending")
+      .get(
+        `${global.API_BASE_URL}/admin/auth/locationadmin/holidayhome/pending`
+      )
       .then((res) => {
         SetPending(res.data);
       })

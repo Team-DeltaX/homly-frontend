@@ -17,7 +17,7 @@ import SimpleCharts from "../../Components/PrimaryAdmin/Simplecharts";
 import { PieChart } from "@mui/x-charts/PieChart";
 import Income from "../../Components/PrimaryAdmin/Income";
 import PDashboardboxes from "../../Components/PrimaryAdmin/PDashboardboxes";
-import SimpleLineChart from "../../Components/PrimaryAdmin/SimpleLineChart";
+import CompareLineChart from "../../Components/PrimaryAdmin/CompareLineChart";
 import axios from "axios";
 
 const PrimaryDashboard = () => {
@@ -27,7 +27,7 @@ const PrimaryDashboard = () => {
 
   const getstatus = () => {
     axios
-      .get("http://localhost:3002/admin/auth/hhstatus")
+      .get(`${global.API_BASE_URL}/admin/auth/hhstatus`)
       .then((res) => {
         SetActivecount(res.data.Active);
         setInactivecount(res.data.Inactive);
@@ -136,7 +136,7 @@ const PrimaryDashboard = () => {
                         </Box>
                       </Box>
 
-                      <SimpleLineChart />
+                      <CompareLineChart />
                     </Box>
                   </Grid>
                   <Grid item md={4} sx={{ height: "100vh" }}>

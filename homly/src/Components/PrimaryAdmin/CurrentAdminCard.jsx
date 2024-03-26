@@ -8,7 +8,6 @@ import {
 } from "@mui/material";
 import theme from "../../HomlyTheme";
 import axios from "axios";
-
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useState } from "react";
 import ConfirmPopup from "./ConfirmPopup";
@@ -42,7 +41,7 @@ const CurrentAdminCard = (props) => {
     props.Seteditadmin("");
     setDisabled(true);
     axios
-      .put("http://localhost:3002/admin/auth/locationadmin", {
+      .put(`${global.API_BASE_URL}/admin/auth/locationadmin`, {
         AdminNo: props.data.AdminNo,
         Email: email,
         ContactNo: contact,
@@ -58,7 +57,7 @@ const CurrentAdminCard = (props) => {
 
   const resetpassword = () => {
     axios
-      .post("http://localhost:3002/admin/auth/locationadmin/resetpassword", {
+      .post(`${global.API_BASE_URL}/admin/auth/locationadmin/resetpassword`, {
         UserName: props.data.UserName,
         Email: props.data.Email,
         AdminNo: props.data.AdminNo,
@@ -76,7 +75,7 @@ const CurrentAdminCard = (props) => {
   const handleClick = () => {
     axios
       .put(
-        `http://localhost:3002/admin/auth/locationadmin/disable/${props.data.AdminNo}`,
+        `${global.API_BASE_URL}/admin/auth/locationadmin/disable/${props.data.AdminNo}`,
         {
           dis: true,
         }

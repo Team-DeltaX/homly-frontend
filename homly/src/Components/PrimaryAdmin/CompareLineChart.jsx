@@ -10,7 +10,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { CancelOutlined } from "@mui/icons-material";
 import axios from "axios";
 
-export default function SimpleLineChart() {
+export default function CompareLineChart() {
   const [h1data, setH1data] = React.useState([]);
   const [h2data, setH2data] = React.useState([]);
   const [h3data, setH3data] = React.useState([]);
@@ -42,7 +42,7 @@ export default function SimpleLineChart() {
     const promises = getLastSevenDays().map((date) => {
       return axios
         .get(
-          `http://localhost:3002/admin/auth/dayincome/${date}/${HolidayHome1}`
+          `${global.API_BASE_URL}/admin/auth/dayincome/${date}/${HolidayHome1}`
         )
         .then((res) => {
           return res.data.sumForDate;
@@ -63,12 +63,11 @@ export default function SimpleLineChart() {
         console.log(err);
       });
   };
-
   const setearning_HH2 = (HolidayHome2) => {
     const promises = getLastSevenDays().map((date) => {
       return axios
         .get(
-          `http://localhost:3002/admin/auth/dayincome/${date}/${HolidayHome2}`
+          `${global.API_BASE_URL}/admin/auth/dayincome/${date}/${HolidayHome2}`
         )
         .then((res) => {
           return res.data.sumForDate;
@@ -94,7 +93,7 @@ export default function SimpleLineChart() {
     const promises = getLastSevenDays().map((date) => {
       return axios
         .get(
-          `http://localhost:3002/admin/auth/dayincome/${date}/${HolidayHome3}`
+          `${global.API_BASE_URL}/admin/auth/dayincome/${date}/${HolidayHome3}`
         )
         .then((res) => {
           return res.data.sumForDate;
@@ -144,7 +143,7 @@ export default function SimpleLineChart() {
   };
   const getHHnames = () => {
     axios
-      .get("http://localhost:3002/admin/auth/hhnames")
+      .get(`${global.API_BASE_URL}/admin/auth/hhnames`)
       .then((res) => {
         setHolidayHomes(res.data.HH);
       })
