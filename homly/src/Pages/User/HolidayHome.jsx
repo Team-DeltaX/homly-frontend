@@ -41,7 +41,7 @@ export default function HolidayHomes() {
   const fetchData = () => {
     console.log("searchData", district);
     axios
-      .get("http://localhost:3002/users/auth/holidayhomes", {
+      .get(`${global.API_BASE_URL}/users/auth/holidayhomes`, {
         withCredentials: true,
         params: { district: district, search: searchValue },
       })

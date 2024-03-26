@@ -106,7 +106,7 @@ export default function HolidayHomeDetails() {
   useEffect(() => {
     axios
       .get(
-        `http://localhost:3002/admin/auth/locationadmin/holidayhome/${homeId}`,
+        `${global.API_BASE_URL}/admin/auth/locationadmin/holidayhome/${homeId}`,
         { withCredentials: true }
       )
       .then((res) => {

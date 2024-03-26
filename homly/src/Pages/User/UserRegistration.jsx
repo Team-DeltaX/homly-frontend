@@ -97,7 +97,7 @@ const UserRegistration = () => {
         image,
       };
       axios
-        .post("http://localhost:3002/users", formData)
+        .post(`${global.API_BASE_URL}/users`, formData)
         .then((res) => {
           console.log(res.data);
           if (res.data.success) {
