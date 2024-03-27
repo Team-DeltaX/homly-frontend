@@ -66,17 +66,20 @@ const UserRegistration = () => {
 
   useEffect(() => {
     if (
+      ServiceNo.length > 0 &&
       !checkEmail(Email) &&
       !checkContactNo(ContactNo) &&
       !errorConfirmPassword &&
-      passwordStrength > 0
+      passwordStrength > 1 &&
+      ConfirmPassword.length > 0
     ) {
+      
       setIsDisabled(false);
     } else {
       setIsDisabled(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [Email, ContactNo, errorConfirmPassword, passwordStrength]);
+  }, [ServiceNo,Email, ContactNo, errorConfirmPassword, passwordStrength, ConfirmPassword]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -87,7 +90,6 @@ const UserRegistration = () => {
       !errorConfirmPassword &&
       passwordStrength > 0
     ) {
-      console.log(ServiceNo, Email, ContactNo, Password);
 
       const formData = {
         ServiceNo,
@@ -99,7 +101,6 @@ const UserRegistration = () => {
       axios
         .post(`${global.API_BASE_URL}/users`, formData)
         .then((res) => {
-          console.log(res.data);
           if (res.data.success) {
             setErrorStatus({
               ...errorStatus,

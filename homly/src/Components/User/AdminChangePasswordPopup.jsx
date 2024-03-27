@@ -28,25 +28,28 @@ export default function AdminChangePasswordPopup({
     e.preventDefault();
     if (!errorConfirmPassword) {
       const formData = { adminId: adminId, password: password };
-      axios.put("http://localhost:3002/admin/", formData, {withCredentials:true})
-      .then((res) => {
-        if (res.data.success) {
-          setErrorStatus({
-            ...errorStatus,
-            isOpen: true,
-            type: "success",
-            message: res.data.message,
-          });
-          setOpen(false);
-        } else {
-          setErrorStatus({
-            ...errorStatus,
-            isOpen: true,
-            type: "error",
-            message: res.data.message,
-          });
-        }
-      });
+      axios
+        .put(`${global.API_BASE_URL}/admin/`, formData, {
+          withCredentials: true,
+        })
+        .then((res) => {
+          if (res.data.success) {
+            setErrorStatus({
+              ...errorStatus,
+              isOpen: true,
+              type: "success",
+              message: res.data.message,
+            });
+            setOpen(false);
+          } else {
+            setErrorStatus({
+              ...errorStatus,
+              isOpen: true,
+              type: "error",
+              message: res.data.message,
+            });
+          }
+        });
       setOpen(false);
     }
   };
@@ -60,9 +63,7 @@ export default function AdminChangePasswordPopup({
       <Dialog open={open}>
         <form onSubmit={handleSubmit}>
           <DialogTitle>Change Password</DialogTitle>
-          <DialogContent
-            sx={{ height:"160px", overflowY: "unset" }}
-          >
+          <DialogContent sx={{ height: "160px", overflowY: "unset" }}>
             <DialogContentText sx={{ marginBottom: "10px" }}>
               For your account's security, it is mandatory to change your
               password. Please add new password

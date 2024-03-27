@@ -44,7 +44,7 @@ export default function ScrollDialog({ name, id }) {
   useEffect(() => {
     
     axios
-      .get("http://localhost:3002/users/reservation/availableRooms",
+      .get(`${global.API_BASE_URL}/users/reservation/availableRooms`,
       { params:{
         holidayHomeId: id,
         checkinDate: CheckinDate,
@@ -110,7 +110,7 @@ export default function ScrollDialog({ name, id }) {
     };
 
     axios
-      .post("http://localhost:3002/users/auth/reservation", data, {
+      .post(`${global.API_BASE_URL}/users/auth/reservation`, data, {
         withCredentials: true,
       })
       .then((res) => {

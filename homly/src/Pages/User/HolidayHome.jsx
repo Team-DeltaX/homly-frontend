@@ -39,14 +39,12 @@ export default function HolidayHomes() {
   const Navigate = useNavigate();
 
   const fetchData = () => {
-    console.log("searchData", district);
     axios
       .get(`${global.API_BASE_URL}/users/auth/holidayhomes`, {
         withCredentials: true,
         params: { district: district, search: searchValue },
       })
       .then((res) => {
-        console.log("hhdetails", res.data);
         if (res.data.length > 0) {
           setPagination(Math.ceil(res.data.length / 9));
           setHolidayHomes(res.data);
@@ -124,6 +122,9 @@ export default function HolidayHomes() {
                     color="primary"
                     onClick={handleSearch}
                     size="small"
+                    sx={{
+                      padding: "7px 10px",
+                    }}
                   >
                     Search
                   </Button>
@@ -131,8 +132,11 @@ export default function HolidayHomes() {
 
                 <Box
                   sx={{
+                    width:"100%",
                     flexWrap: "wrap",
                     display: !showSkeleton ? "flex" : "none",
+                    justifyContent: "center",
+                    alignItems: "center",
                   }}
                 >
                   {displayedHH.length > 0 ? (
@@ -199,7 +203,6 @@ export default function HolidayHomes() {
                 shape="rounded"
                 color="primary"
                 onChange={(event, value) => {
-                  console.log("page", value);
                   setDisplayedHH(
                     holidayHomes.slice((value - 1) * 9, value * 9)
                   );
