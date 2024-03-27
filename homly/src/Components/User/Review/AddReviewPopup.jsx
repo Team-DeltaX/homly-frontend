@@ -1,27 +1,27 @@
 import React, { useState } from "react";
 import Button from "@mui/material/Button";
-import { styled } from "@mui/material/styles";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
-import { Typography } from "@mui/material";
-
-import Rating from "@mui/material/Rating";
-import Box from "@mui/material/Box";
-
-const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-  "& .MuiDialogContent-root": {
-    padding: theme.spacing(2),
-  },
-  "& .MuiDialogActions-root": {
-    padding: theme.spacing(1),
-  },
-}));
+import theme from "../../../HomlyTheme";
+import RatingComponent from "./RatingComponent";
+import { ThemeProvider } from "@mui/material";
+import axios from "axios";
+import ErrorSnackbar from "../ErrorSnackbar";
+import FormControl, { useFormControl } from '@mui/material/FormControl';
+import OutlinedInput from '@mui/material/OutlinedInput';
 
 export default function AddReviewPopup({ open, setOpen }) {
+  const [foodRating, setFoodRating] = useState(0);
+  const [valueForMoneyRating, setvalueForMoneyRating] = useState(0);
+  const [staffRating, setstaffRating] = useState(0);
+  const [locationRating, setlocationRating] = useState(0);
+  const [furnitureRating, setfurnitureRating] = useState(0);
+  const [wifiRating, setwifiRating] = useState(0);
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -29,20 +29,64 @@ export default function AddReviewPopup({ open, setOpen }) {
     setOpen(false);
   };
 
+  const [errorStatus, setErrorStatus] = useState({
+    isOpen: false,
+    type: "",
+    message: "",
+  });
+
   const [value, setValue] = useState(2);
 
+  const handleSubmit = () => {
+    const fromData = {
+      foodRating: foodRating,
+      valueForMoneyRating : valueForMoneyRating,
+      staffRating : staffRating,
+      locationRating : locationRating,
+      furnitureRating : furnitureRating,
+      wifiRating : wifiRating,
+      
+    };
+    axios
+      .post(`${global.API_BASE_URL}/users/auth/review`, fromData, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        if (res.data.success) {
+          setErrorStatus({
+            ...errorStatus,
+            isOpen: true,
+            type: "success",
+            message: res.data.message,
+          });
+          handleClose();
+        }
+      })
+      .catch((err) => {
+        setErrorStatus({
+          ...errorStatus,
+          isOpen: true,
+          type: "error",
+          message: err.message,
+        });
+      });
+  };
+
   return (
-    <React.Fragment>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Open dialog
-      </Button>
-      <BootstrapDialog
+    <ThemeProvider theme={theme}>
+      <Dialog
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
         open={open}
+        sx={{
+          "& .MuiDialog-paper": {
+            width: "400px", 
+            maxWidth: "90%",
+          },
+        }}
       >
-        <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-          Modal title
+        <DialogTitle sx={{ m: 0, p: 4 }} id="customized-dialog-title">
+          Rate Your Experience
         </DialogTitle>
         <IconButton
           aria-label="close"
@@ -57,35 +101,78 @@ export default function AddReviewPopup({ open, setOpen }) {
           <CloseIcon />
         </IconButton>
         <DialogContent dividers>
-          {/* ratings */}
 
-          <Box
-            sx={{
-              "& > legend": { mt: 2 },
-            }}
-          >
-            <Typography component="legend">Controlled</Typography>
-            <Rating
-              name="simple-controlled"
-              value={value}
-              onChange={(event, newValue) => {
-                setValue(newValue);
-              }}
-            />
-            <Typography component="legend">Read only</Typography>
-            <Rating name="read-only" value={value} readOnly />
-            <Typography component="legend">Disabled</Typography>
-            <Rating name="disabled" value={value} disabled />
-            <Typography component="legend">No rating given</Typography>
-            <Rating name="no-value" value={null} />
-          </Box>
+          {/* ratings */}
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+    <div>Food</div>
+          <RatingComponent
+            value={foodRating}
+            setValue={setFoodRating}
+          />
+          </div>
+
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <div>Value For Money</div>
+
+          <RatingComponent  
+            value={valueForMoneyRating}
+            setValue={setvalueForMoneyRating}
+          />
+          </div>
+
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <div>Staff</div>
+          <RatingComponent   
+            value={staffRating}
+            setValue={setstaffRating}
+          />
+          </div>
+
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <div>Location</div>
+          <RatingComponent 
+            value={locationRating}
+            setValue={setlocationRating}
+          />
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <div>Furniture</div>
+          <RatingComponent
+            value={furnitureRating}
+            setValue={setfurnitureRating}
+          />
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <div>Wifi</div>
+          <RatingComponent
+            value={wifiRating}
+            setValue={setwifiRating}
+          />
+          </div>
+
+
+          <div>
+          <div> Review about Holiday Home </div>
+          <form noValidate autoComplete="off">
+            <FormControl sx={{ width: '25ch' }}>
+              <OutlinedInput placeholder="Please enter text" />
+            </FormControl>
+          </form>
+          </div>
+
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleClose}>
+          <Button autoFocus onClick={handleSubmit}>
             Rate Now
           </Button>
         </DialogActions>
-      </BootstrapDialog>
-    </React.Fragment>
+      </Dialog>
+      <ErrorSnackbar
+        isOpen={errorStatus.isOpen}
+        type={errorStatus.type}
+        message={errorStatus.message}
+        setIsOpen={(value) => setErrorStatus({ ...errorStatus, isOpen: value })}
+      />
+    </ThemeProvider>
   );
 }
