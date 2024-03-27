@@ -16,12 +16,15 @@ import { CSVLink } from "react-csv";
 import SummarizeIcon from "@mui/icons-material/Summarize";
 import SearchNew from "../../Components/PrimaryAdmin/SearchNew";
 import axios from "axios";
+import Snackbarp from "../../Components/PrimaryAdmin/snackbar/Snackbarp";
 const PrimaryBlacklistHistory = () => {
   const [search, setSearch] = useState("");
   const [popup, setpopup] = useState(false);
   const [selecteduser, setSelecteduser] = useState({});
   const [SelectEmp, SetSelectEmp] = useState({});
   const [SelectUser, SetSelectUser] = useState({});
+  const [opensnE, SetOpensnE] = React.useState(false);
+
 
   const handlepopup = () => {
     setpopup(!popup);
@@ -70,7 +73,7 @@ const PrimaryBlacklistHistory = () => {
         console.log("blacklist history fetched");
       })
       .catch(() => {
-        console.log("error in getting blacklist history");
+       SetOpensnE(true)
       });
   };
 
@@ -122,6 +125,12 @@ const PrimaryBlacklistHistory = () => {
                 heading={"Blacklist User History"}
               />
               <SearchNew setSearch={setSearch} search={search} />
+              <Snackbarp
+                isOpen={opensnE}
+                setIsOpen={SetOpensnE}
+                type="error"
+                message={"Error occured!"}
+              />
 
               <Box
                 sx={{
@@ -147,6 +156,7 @@ const PrimaryBlacklistHistory = () => {
                         setSelecteduser={setSelecteduser}
                         SetSelectEmp={SetSelectEmp}
                         SetSelectUser={SetSelectUser}
+                        SetOpensnE={SetOpensnE}
                       />
                     );
                   })}

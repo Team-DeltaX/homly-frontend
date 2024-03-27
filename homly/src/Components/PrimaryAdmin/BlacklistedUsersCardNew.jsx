@@ -13,9 +13,6 @@ const BlacklistedUsersCardNew = (props) => {
       )
       .then((res) => {
         SetEmployee(res.data[0]);
-        console.log("----------fetched from employee-------");
-
-        console.log(Employee);
       })
       .catch((error) => {
         console.log(error);

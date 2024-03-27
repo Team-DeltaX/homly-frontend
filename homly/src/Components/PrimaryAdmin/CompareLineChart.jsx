@@ -67,7 +67,6 @@ export default function CompareLineChart() {
           return res.data.sumForDate;
         })
         .catch((err) => {
-          console.log(err);
           return null;
         });
     });
@@ -93,7 +92,6 @@ export default function CompareLineChart() {
           return res.data.sumForDate;
         })
         .catch((err) => {
-          console.log(err);
           return null;
         });
     });

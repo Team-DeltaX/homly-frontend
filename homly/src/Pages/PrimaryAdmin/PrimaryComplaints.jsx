@@ -30,12 +30,10 @@ const PrimaryComplaints = () => {
       )
       .then((res) => {
         setPrevcomplaints(res.data);
-        console.log("finish");
-        console.log("---------fetch prev complaints--------");
         console.log(res.data);
       })
       .catch((err) => {
-        console.log(err);
+       SetOpensnE(true)
       });
   };
 
@@ -46,7 +44,7 @@ const PrimaryComplaints = () => {
         setcomplaints(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        SetOpensnE(true);
       });
   };
 
@@ -114,7 +112,7 @@ const PrimaryComplaints = () => {
                 isOpen={opensnE}
                 setIsOpen={SetOpensnE}
                 type="error"
-                message={"errr in user blacklisting!"}
+                message={"errr occured!"}
               />
 
               <Box

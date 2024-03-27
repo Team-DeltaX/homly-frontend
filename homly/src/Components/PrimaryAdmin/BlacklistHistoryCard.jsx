@@ -22,7 +22,7 @@ const BlacklistHistoryCard = (props) => {
         SetEmployee(res.data[0]);
       })
       .catch((error) => {
-        console.log(error);
+        props.SetOpensnE(true);
       });
   };
 
@@ -35,7 +35,8 @@ const BlacklistHistoryCard = (props) => {
         SetUser(res.data[0]);
       })
       .catch((error) => {
-        console.log(error);
+        props.SetOpensnE(true);
+
       });
   };
   useEffect(() => {

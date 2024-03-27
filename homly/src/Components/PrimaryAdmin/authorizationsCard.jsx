@@ -31,7 +31,6 @@ const AuthorizationsCard = (props) => {
         props.Setopensn(true);
       })
       .catch((error) => {
-        console.log("error in updating as approved");
         props.opensnE(true);
       });
   };
@@ -55,7 +54,7 @@ const AuthorizationsCard = (props) => {
         Setopen(false);
       })
       .catch((error) => {
-        console.log("error in reject");
+        props.opensnE(true);
       });
   };
   return (

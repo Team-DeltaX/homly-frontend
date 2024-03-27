@@ -64,7 +64,6 @@ const PrimaryManageBlacklistedUsers = () => {
     axios
       .get(`${global.API_BASE_URL}/admin/auth/blacklist`)
       .then((res) => {
-        console.log("----fetch current blacklist---");
         setBlacklistedusers(res.data);
       })
       .catch((err) => {
@@ -72,7 +71,6 @@ const PrimaryManageBlacklistedUsers = () => {
       });
   };
   useEffect(() => {
-    console.log("---useeffect---");
     fetch_current_blacklist();
   }, []);
 

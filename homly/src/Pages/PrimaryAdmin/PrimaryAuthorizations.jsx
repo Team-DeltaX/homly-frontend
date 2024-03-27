@@ -22,7 +22,7 @@ const PrimaryAuthorizations = () => {
         SetPending(res.data);
       })
       .catch((error) => {
-        console.log(error);
+        SetOpensnE(true)
       });
   };
 
@@ -60,7 +60,7 @@ const PrimaryAuthorizations = () => {
                 isOpen={opensnE}
                 setIsOpen={SetOpensnE}
                 type="error"
-                message={"Erro in Approving Holiday Home!"}
+                message={"Error occured!"}
               />
             </Grid>
             <Grid

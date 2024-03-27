@@ -94,7 +94,7 @@ const PrimaryAddAdmin = () => {
           "Somthing Went Wrong,May be admin no duplicaion,Please Try Again!"
         );
         handleClick();
-        console.log(`error is  nm ${error}`);
+        
       });
 
     setadminno("");

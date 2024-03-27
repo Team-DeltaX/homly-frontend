@@ -31,13 +31,9 @@ const CurrentAdminslist = () => {
       .get(`${global.API_BASE_URL}/admin/auth/locationadmin/all`)
       .then((res) => {
         SetLoad(false);
-        console.log(res.data);
-
         setBlacklistedusers(res.data.reverse());
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      
   };
 
   useEffect(() => {
