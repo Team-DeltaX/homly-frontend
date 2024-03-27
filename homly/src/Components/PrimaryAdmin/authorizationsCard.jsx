@@ -9,7 +9,6 @@ import {
 import PreviewIcon from "@mui/icons-material/Preview";
 import theme from "../../HomlyTheme";
 import CheckIcon from "@mui/icons-material/Check";
-import CancelPresentationIcon from "@mui/icons-material/CancelPresentation";
 import CloseIcon from "@mui/icons-material/Close";
 import axios from "axios";
 import { useState } from "react";

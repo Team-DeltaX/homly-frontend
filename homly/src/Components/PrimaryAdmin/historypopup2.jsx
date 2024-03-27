@@ -6,7 +6,6 @@ import {
   Typography,
 } from "@mui/material";
 
-
 const historypopup2 = (props) => {
   return (
     <Box

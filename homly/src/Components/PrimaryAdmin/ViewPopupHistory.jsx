@@ -6,7 +6,6 @@ import {
   Typography,
 } from "@mui/material";
 import CancelIcon from "@mui/icons-material/Cancel";
-import { useEffect } from "react";
 
 const ViewPopupManage = (props) => {
   return (
@@ -137,7 +136,6 @@ const ViewPopupManage = (props) => {
 
             <Box
               sx={{
-                // width:"100%",
                 display: "flex",
                 flexDirection: { md: "row", xs: "column" },
                 justifyContent: "space-between",
@@ -160,7 +158,6 @@ const ViewPopupManage = (props) => {
 
             <Box
               sx={{
-                // width:"100%",
                 display: "flex",
                 flexDirection: { md: "row", xs: "column" },
                 justifyContent: "space-between",
@@ -183,7 +180,6 @@ const ViewPopupManage = (props) => {
 
             <Box
               sx={{
-                // width:"100%",
                 display: "flex",
                 flexDirection: { md: "row", xs: "column" },
                 justifyContent: "space-between",
@@ -206,7 +202,6 @@ const ViewPopupManage = (props) => {
 
             <Box
               sx={{
-                // width:"100%",
                 display: "flex",
                 flexDirection: { md: "row", xs: "column" },
                 justifyContent: "space-between",
@@ -229,7 +224,6 @@ const ViewPopupManage = (props) => {
 
             <Box
               sx={{
-                // width:"100%",
                 display: "flex",
                 flexDirection: { md: "row", xs: "column" },
                 justifyContent: "space-between",
@@ -252,7 +246,6 @@ const ViewPopupManage = (props) => {
 
             <Box
               sx={{
-                // width:"100%",
                 display: "flex",
                 flexDirection: { md: "row", xs: "column" },
                 justifyContent: "space-between",
@@ -274,7 +267,6 @@ const ViewPopupManage = (props) => {
             </Box>
             <Box
               sx={{
-                // width:"100%",
                 display: "flex",
                 flexDirection: { md: "row", xs: "column" },
                 justifyContent: "space-between",
@@ -297,7 +289,6 @@ const ViewPopupManage = (props) => {
 
             <Box
               sx={{
-                // width:"100%",
                 display: "flex",
                 flexDirection: { md: "row", xs: "column" },
                 justifyContent: "flex-end",
@@ -319,7 +310,6 @@ const ViewPopupManage = (props) => {
         </Box>
       </Box>
     </Box>
-    // </Themeprovider>
   );
 };
 export default ViewPopupManage;

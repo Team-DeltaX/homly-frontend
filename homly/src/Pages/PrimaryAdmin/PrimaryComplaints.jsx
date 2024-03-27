@@ -55,8 +55,7 @@ const PrimaryComplaints = () => {
   }, []);
 
   const [showNav, setShowNav] = useState("nav_grid_deactive");
-  //switch
-  const [checked, setChecked] = React.useState(true);
+  const [checked, setChecked] = React.useState(true); //switch
   const handleChangeswitch = (event) => {
     setChecked(event.target.checked);
   };
@@ -137,7 +136,6 @@ const PrimaryComplaints = () => {
                   <Typography sx={{ color: "grey" }}>Not Viewd</Typography>
                 )}
               </Box>
-
               <Box
                 sx={{
                   marginTop: "2%",

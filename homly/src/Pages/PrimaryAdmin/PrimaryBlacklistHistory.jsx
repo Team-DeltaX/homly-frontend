@@ -16,7 +16,7 @@ import { CSVLink } from "react-csv";
 import SummarizeIcon from "@mui/icons-material/Summarize";
 import SearchNew from "../../Components/PrimaryAdmin/SearchNew";
 import axios from "axios";
-  const PrimaryBlacklistHistory = () => {
+const PrimaryBlacklistHistory = () => {
   const [search, setSearch] = useState("");
   const [popup, setpopup] = useState(false);
   const [selecteduser, setSelecteduser] = useState({});
@@ -26,7 +26,6 @@ import axios from "axios";
   const handlepopup = () => {
     setpopup(!popup);
   };
-
   //csv headers
   const headers = [
     {

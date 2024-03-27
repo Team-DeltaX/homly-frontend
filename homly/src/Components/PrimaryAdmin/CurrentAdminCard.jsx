@@ -22,10 +22,12 @@ const CurrentAdminCard = (props) => {
   const [emaileerror, setemailerror] = useState(false);
   const [contact, setContact] = useState(props.data.ContactNo);
   const [email, setemail] = useState(props.data.Email);
+
   const validatemobile = (number) => {
     const pattern = /^(?:\+94|0)?(?:7\d{8}|[1-9]\d{8})$/;
     setmobileerror(!pattern.test(number));
   };
+
   const validateemail = (email) => {
     const pattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
     if (pattern.test(email)) {
@@ -117,7 +119,7 @@ const CurrentAdminCard = (props) => {
         <Box sx={{ padding: "10px", textAlign: "center" }}>
           <Box>Admin Number</Box>
           <Box>
-           <Typography sx={{ color: "grey" }}>
+            <Typography sx={{ color: "grey" }}>
               {" "}
               {props.data.AdminNo}
             </Typography>

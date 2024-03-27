@@ -18,10 +18,8 @@ import { SearchContext } from "../../Contexts/primryadmin/Searchcontext";
 import SearchNew from "../../Components/PrimaryAdmin/SearchNew";
 const PrimaryViewAdmins = () => {
   const [showNav, setShowNav] = useState("nav_grid_deactive");
-
   const { load, SetLoad } = useContext(CustomTabContext);
   const { Search, SetSearch } = useContext(SearchContext);
-
   return (
     <ThemeProvider theme={theme}>
       <Box
@@ -60,7 +58,6 @@ const PrimaryViewAdmins = () => {
               <Box>
                 <CustomTabPanel />
               </Box>
-
               <Box>
                 {!load && (
                   <Box>

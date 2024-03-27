@@ -19,7 +19,6 @@ import axios from "axios";
 const ViewPopupComplaints = (props) => {
   const [reson, setReson] = useState("");
   const [expand, setExpand] = useState(false);
-
   const [Open, setOpen] = useState(false);
   const [disable, Setdisable] = useState(false);
 
@@ -37,7 +36,7 @@ const ViewPopupComplaints = (props) => {
   };
   const mark_on_open = () => {
     axios
-      .put( `${global.API_BASE_URL}/admin/auth/markcomplaint`, {
+      .put(`${global.API_BASE_URL}/admin/auth/markcomplaint`, {
         CompID: props.selecteduser.ComplaintID,
       })
       .then(() => {

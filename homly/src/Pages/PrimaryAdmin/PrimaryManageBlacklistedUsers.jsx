@@ -27,6 +27,10 @@ const PrimaryManageBlacklistedUsers = () => {
   const [selectemp, setselectemp] = useState({});
   const [opensn, SetOpensn] = useState(false);
   const [opensnE, SetOpensnE] = useState(false);
+  const [blacklistedusers, setBlacklistedusers] = useState([]);
+  const [showNav, setShowNav] = useState("nav_grid_deactive");
+
+
 
   const handlepopup = () => {
     setpopup(!popup);
@@ -48,8 +52,6 @@ const PrimaryManageBlacklistedUsers = () => {
     },
   ];
 
-  const [blacklistedusers, setBlacklistedusers] = useState([]);
-
   //csv
   const csvLink = {
     filename: "blacklisteduserslist.csv",
@@ -57,7 +59,6 @@ const PrimaryManageBlacklistedUsers = () => {
     data: blacklistedusers,
   };
 
-  const [showNav, setShowNav] = useState("nav_grid_deactive");
 
   const fetch_current_blacklist = () => {
     axios

@@ -29,7 +29,6 @@ const BlacklistedUsersCardNew = (props) => {
       )
       .then((res) => {
         SetUser(res.data[0]);
-       
       })
       .catch((error) => {
         console.log(error);

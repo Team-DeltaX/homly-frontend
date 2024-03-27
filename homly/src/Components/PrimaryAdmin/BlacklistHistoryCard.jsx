@@ -20,7 +20,6 @@ const BlacklistHistoryCard = (props) => {
       )
       .then((res) => {
         SetEmployee(res.data[0]);
-
       })
       .catch((error) => {
         console.log(error);
@@ -34,8 +33,6 @@ const BlacklistHistoryCard = (props) => {
       )
       .then((res) => {
         SetUser(res.data[0]);
-     
-        
       })
       .catch((error) => {
         console.log(error);

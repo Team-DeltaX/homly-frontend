@@ -1,6 +1,5 @@
 import { Box } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
-import ViewAdminCard2 from "./ViewAdminCard2";
 import CurrentAdminCard from "./CurrentAdminCard";
 import AutohideSnackbar from "../../Components/PrimaryAdmin/AutohideSnackbar";
 import { CustomTabContext } from "../../Contexts/primryadmin/CustomTabContext";

@@ -434,5 +434,4 @@ const PrimaryAddAdmin = () => {
     </ThemeProvider>
   );
 };
-
 export default PrimaryAddAdmin;

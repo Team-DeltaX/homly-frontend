@@ -6,7 +6,6 @@ import FormHelperText from "@mui/material/FormHelperText";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { Box, Typography } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
 import { CancelOutlined } from "@mui/icons-material";
 import axios from "axios";
 
@@ -15,15 +14,14 @@ export default function CompareLineChart() {
   const [h2data, setH2data] = React.useState([]);
   const [h3data, setH3data] = React.useState([]);
   const [HolidayHomes, setHolidayHomes] = React.useState([]);
+  const [xaxisd, setXasisd] = React.useState([]);
+  const [HolidayHome1, SetHolidayHome1] = React.useState("");
+  const [HolidayHome2, SetHolidayHome2] = React.useState("");
+  const [HolidayHome3, SetHolidayHome3] = React.useState("");
 
   const Home1 = h1data;
-
   const Home2 = h2data;
-
   const Home3 = h3data;
-
-  const [xaxisd, setXasisd] = React.useState([]);
-
   const xLabels = [
     xaxisd[0],
     xaxisd[1],
@@ -33,10 +31,6 @@ export default function CompareLineChart() {
     xaxisd[5],
     xaxisd[6],
   ];
-
-  const [HolidayHome1, SetHolidayHome1] = React.useState("");
-  const [HolidayHome2, SetHolidayHome2] = React.useState("");
-  const [HolidayHome3, SetHolidayHome3] = React.useState("");
 
   const setearning_HH1 = (HolidayHome1) => {
     const promises = getLastSevenDays().map((date) => {

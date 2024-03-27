@@ -7,18 +7,12 @@ import {
   Typography,
 } from "@mui/material";
 import theme from "../../HomlyTheme";
-import axios from "axios";
-
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useState } from "react";
-import ConfirmPopup from "./ConfirmPopup";
 import Copy from "./Copy";
 
 const DisabledAdminCard = (props) => {
-  const [open, setOpen] = useState(false);
-  const [opend, setOpend] = useState(false);
   const [Disabled, setDisabled] = useState(true);
-  const [buttonname, setbuttonname] = useState("Edit");
   const [mobileerror, setmobileerror] = useState(false);
   const [emaileerror, setemailerror] = useState(false);
   const [contact, setContact] = useState(props.data.ContactNo);
@@ -35,7 +29,6 @@ const DisabledAdminCard = (props) => {
       setemailerror(true);
     }
   };
-
 
   return (
     <ThemeProvider theme={theme}>

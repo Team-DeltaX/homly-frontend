@@ -16,7 +16,6 @@ const Income = () => {
 
       dates.push(date.toISOString().split("T")[0]);
     }
-
     return dates;
   };
   const setearning = () => {
@@ -41,13 +40,11 @@ const Income = () => {
   };
 
   const [xaxisd, setXasisd] = React.useState(getLastSevenDays());
-
   React.useEffect(() => {
     const dates = getLastSevenDays();
     setXasisd(dates);
     setearning();
   }, []);
-
   const xLabels = xaxisd;
 
   return (

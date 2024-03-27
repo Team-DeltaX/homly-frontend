@@ -1,12 +1,9 @@
-import { useState } from "react";
 import { IconButton, Snackbar } from "@mui/material";
-
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 const Copy = (props) => {
   const handleClick = () => {
     navigator.clipboard.writeText(props.text);
   };
-
   return (
     <>
       <IconButton

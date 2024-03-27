@@ -13,7 +13,6 @@ import theme from "../../HomlyTheme";
 import Pagetop from "../../Components/PrimaryAdmin/PageTop";
 import DashViewAdminBox from "../../Components/PrimaryAdmin/DashViewAdminBox";
 import { Link } from "react-router-dom";
-import SimpleCharts from "../../Components/PrimaryAdmin/Simplecharts";
 import { PieChart } from "@mui/x-charts/PieChart";
 import Income from "../../Components/PrimaryAdmin/Income";
 import PDashboardboxes from "../../Components/PrimaryAdmin/PDashboardboxes";
@@ -101,7 +100,6 @@ const PrimaryDashboard = () => {
                         }}
                       >
                         <Income />
-
                         <Box sx={{ paddingTop: { xs: "5px", sm: "130px" } }}>
                           <PieChart
                             series={[
