@@ -34,8 +34,6 @@ export default function AdminLoginPage() {
     type: "",
     message: "",
   });
-
-  // navigate
   const Navigate = useNavigate();
 
   const [open, setOpen] = useState(false);
@@ -44,9 +42,8 @@ export default function AdminLoginPage() {
     e.preventDefault();
     const formData = { adminId, password };
     axios
-      .post("http://localhost:3002/admin/", formData, {withCredentials:true})
+      .post(`${global.API_BASE_URL}/admin`, formData, { withCredentials: true })
       .then((res) => {
-        console.log(res);
         if (res.data.success) {
           setErrorStatus({
             ...errorStatus,
@@ -56,14 +53,14 @@ export default function AdminLoginPage() {
           });
           if (!res.data.verified) {
             setOpen(true);
-          }else{
-            if(res.data.role === "LocationAdmin"){
+          } else {
+            if (res.data.role === "LocationAdmin") {
               Navigate("/Locationadmin/Dashboard");
-            }else{
+            } else {
               Navigate("/Primaryadmin/Dashboard");
             }
           }
-          setPassword("")
+          setPassword("");
         } else {
           setErrorStatus({
             ...errorStatus,

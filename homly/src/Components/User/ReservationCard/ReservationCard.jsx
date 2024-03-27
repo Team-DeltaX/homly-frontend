@@ -27,11 +27,10 @@ export default function ReservationCard({
   HHRooms,
   HHHalls,
   ExpireIn,
-
 }) {
   const buttons = () => {
-    if ( HHreservation === "Ongoing") {
-      if ( HHpayment) {
+    if (HHreservation === "Ongoing") {
+      if (HHpayment) {
         return (
           <Stack direction="row" sx={{ marginTop: { xs: "10px", sm: "0" } }}>
             <Stack
@@ -91,7 +90,7 @@ export default function ReservationCard({
         <Grid item xs={12} sm={3} sx={{ alignItems: "center" }}>
           <Box
             component="img"
-            src={ HHImage}
+            src={HHImage}
             alt=""
             sx={{ height: "100%", width: "100%", borderRadius: "10px" }}
           />
@@ -107,10 +106,10 @@ export default function ReservationCard({
           >
             <Stack direction="column">
               <Typography sx={{ fontWeight: "bold", fontSize: "1.3rem" }}>
-                { HHName}
+                {HHName}
               </Typography>
               <Typography sx={{ fontWeight: "light", fontSize: "0.8rem" }}>
-                { HHAddress}
+                {HHAddress}
               </Typography>
             </Stack>
             <Stack direction="column">
@@ -128,7 +127,7 @@ export default function ReservationCard({
                 </Grid>
                 <Grid item>
                   <Typography>
-                    {dayjs( HHReservedDate).format("DD-MM-YYYY")}
+                    {dayjs(HHReservedDate).format("DD-MM-YYYY")}
                   </Typography>
                 </Grid>
               </Grid>
@@ -138,7 +137,7 @@ export default function ReservationCard({
                 </Grid>
                 <Grid item>
                   <Typography>
-                    {dayjs( HHCheckIn).format("DD-MM-YYYY")}
+                    {dayjs(HHCheckIn).format("DD-MM-YYYY")}
                   </Typography>
                 </Grid>
               </Grid>
@@ -148,7 +147,7 @@ export default function ReservationCard({
                 </Grid>
                 <Grid item>
                   <Typography>
-                    {dayjs( HHCheckOut).format("DD-MM-YYYY")}
+                    {dayjs(HHCheckOut).format("DD-MM-YYYY")}
                   </Typography>
                 </Grid>
               </Grid>
@@ -171,7 +170,7 @@ export default function ReservationCard({
                       LKR
                     </Typography>
                     <Typography sx={{ fontSize: "1.1rem", fontWeight: "bold" }}>
-                      { HHPrice}
+                      {HHPrice}
                     </Typography>
                   </Stack>
                 </Grid>
@@ -180,14 +179,12 @@ export default function ReservationCard({
             <Box
               sx={{
                 display:
-                   HHreservation === "Ongoing" && ! HHpayment
-                    ? "flex"
-                    : "none",
+                  HHreservation === "Ongoing" && !HHpayment ? "flex" : "none",
               }}
             >
               <Typography sx={{ color: "red" }}>
                 Expire in{" "}
-                <span style={{ fontWeight: "600" }}>{ ExpireIn} days</span>{" "}
+                <span style={{ fontWeight: "600" }}>{ExpireIn} days</span>{" "}
               </Typography>
             </Box>
           </Stack>
@@ -222,7 +219,7 @@ export default function ReservationCard({
                       color: "white",
                     }}
                   >
-                    <Typography>{ HHAdults}</Typography>
+                    <Typography>{HHAdults}</Typography>
                   </Box>
                 </Grid>
               </Grid>
@@ -250,7 +247,7 @@ export default function ReservationCard({
                       color: "white",
                     }}
                   >
-                    <Typography>{ HHChildren}</Typography>
+                    <Typography>{HHChildren}</Typography>
                   </Box>
                 </Grid>
               </Grid>
@@ -278,7 +275,7 @@ export default function ReservationCard({
                       color: "white",
                     }}
                   >
-                    <Typography>{ HHRooms}</Typography>
+                    <Typography>{HHRooms ? HHRooms : "all"}</Typography>
                   </Box>
                 </Grid>
               </Grid>
@@ -306,7 +303,7 @@ export default function ReservationCard({
                       color: "white",
                     }}
                   >
-                    <Typography>{ HHHalls}</Typography>
+                    <Typography>{HHHalls != null ? HHHalls : "all"}</Typography>
                   </Box>
                 </Grid>
               </Grid>

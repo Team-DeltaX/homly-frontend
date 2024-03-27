@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {
   ThemeProvider,
@@ -6,9 +6,13 @@ import {
   DialogContent,
   DialogContentText,
   Button,
+  Box,
+  Stack,
 } from "@mui/material";
 import theme from "../../../HomlyTheme";
 import InputPassword from "../TextField/InputPassword";
+import PasswordStrength from "../PasswordStrength";
+
 export default function ChangePasswordCom({
   handleClose,
   setSelectedComponent,
@@ -19,6 +23,22 @@ export default function ChangePasswordCom({
   setOpen,
 }) {
   const [errorConfirmPassword, setErrorConfirmPassword] = useState(false);
+  const [passwordStrength, setPasswordStrength] = useState(0);
+  const [isDisabled, setIsDisabled] = useState(true);
+
+  useEffect(() => {
+    if (
+      !errorConfirmPassword &&
+      passwordStrength > 1 &&
+      value.confirmPassword.length > 0
+    ) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [errorConfirmPassword, passwordStrength, value.confirmPassword]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = { serviceNo: value.serviceNo, password: value.password };
@@ -62,18 +82,26 @@ export default function ChangePasswordCom({
           <DialogContentText sx={{ marginBottom: "10px" }}>
             Enter new password
           </DialogContentText>
-          <InputPassword
-            lable={"Password"}
-            helperText={""}
-            error={false}
-            password={value.password}
-            setPassword={(newValue) =>
-              setValue({ ...value, password: newValue })
-            }
-            confirmPassword={value.confirmPassword}
-            isCheck={true}
-            setErrorConfirmPassword={setErrorConfirmPassword}
-          />
+          <Stack direction="column">
+            <InputPassword
+              lable={"Password"}
+              helperText={""}
+              error={false}
+              password={value.password}
+              setPassword={(newValue) =>
+                setValue({ ...value, password: newValue })
+              }
+              confirmPassword={value.confirmPassword}
+              isCheck={true}
+              setErrorConfirmPassword={setErrorConfirmPassword}
+            />
+            <Box sx={{ width: "90%" }}>
+              <PasswordStrength
+                password={value.password}
+                setPasswordStrength={setPasswordStrength}
+              />
+            </Box>
+          </Stack>
           <InputPassword
             lable={"Confirm Password"}
             helperText={errorConfirmPassword ? "Password not match" : ""}
@@ -89,7 +117,9 @@ export default function ChangePasswordCom({
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button type="submit">Confirm</Button>
+          <Button type="submit" disabled={isDisabled}>
+            Confirm
+          </Button>
         </DialogActions>
       </form>
     </ThemeProvider>
