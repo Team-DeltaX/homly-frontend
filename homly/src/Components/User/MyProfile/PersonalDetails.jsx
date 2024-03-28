@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
@@ -13,6 +13,8 @@ import {
   Avatar,
 } from "@mui/material";
 
+import { AuthContext } from "../../../Contexts/AuthContext";
+
 import PersonalDetailsGrid from "../PersonalDetailsGrid/PersonalDetailsGrid";
 import theme from "../../../HomlyTheme";
 import UploadImageCloudinary from "../../Common/UploadImageCloudinary";
@@ -20,6 +22,7 @@ import ErrorSnackbar from "../ErrorSnackbar";
 import UserInterestedPopupProfile from "./UserInterestedPopupProfile";
 
 const PersonalDetails = () => {
+  const { setIsUpdated } = useContext(AuthContext);
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
   const phoneRegex = /^[0-9]{10}$/;
 
@@ -86,6 +89,7 @@ const PersonalDetails = () => {
               contactNo: res.data.contactNo,
             });
             setImage(res.data.image);
+            setIsUpdated(true);
           } else {
             setErrorStatus({
               ...errorStatus,
