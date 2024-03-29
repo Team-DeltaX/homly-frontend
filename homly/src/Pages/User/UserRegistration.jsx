@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import {
   Box,
@@ -25,6 +24,7 @@ import PasswordStrength from "../../Components/User/PasswordStrength";
 import UploadImageCloudinary from "../../Components/Common/UploadImageCloudinary";
 import theme from "../../HomlyTheme";
 import "./UserStyle.css";
+import AxiosClient from "../../services/AxiosClient";
 
 const Img = styled("img")({
   display: "block",
@@ -44,10 +44,8 @@ const UserRegistration = () => {
   const [Password, setPassword] = useState("");
   const [ConfirmPassword, setConfirmPassword] = useState("");
   const [image, setImage] = useState(null);
-
   const [errorConfirmPassword, setErrorConfirmPassword] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState(0);
-
   const [isDiabled, setIsDisabled] = useState(true);
 
   const checkEmail = (email) => {
@@ -73,13 +71,19 @@ const UserRegistration = () => {
       passwordStrength > 1 &&
       ConfirmPassword.length > 0
     ) {
-      
       setIsDisabled(false);
     } else {
       setIsDisabled(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ServiceNo,Email, ContactNo, errorConfirmPassword, passwordStrength, ConfirmPassword]);
+  }, [
+    ServiceNo,
+    Email,
+    ContactNo,
+    errorConfirmPassword,
+    passwordStrength,
+    ConfirmPassword,
+  ]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -90,7 +94,6 @@ const UserRegistration = () => {
       !errorConfirmPassword &&
       passwordStrength > 0
     ) {
-
       const formData = {
         ServiceNo,
         Password,
@@ -98,8 +101,7 @@ const UserRegistration = () => {
         ContactNo,
         image,
       };
-      axios
-        .post(`${global.API_BASE_URL}/users`, formData)
+      AxiosClient.post("/user", formData)
         .then((res) => {
           if (res.data.success) {
             setErrorStatus({
@@ -153,7 +155,6 @@ const UserRegistration = () => {
         }}
       >
         <Container maxWidth="xl" style={{ padding: 0, height: "95vh" }}>
-          {/* error snack bar */}
           <ErrorSnackbar
             isOpen={errorStatus.isOpen}
             type={errorStatus.type}

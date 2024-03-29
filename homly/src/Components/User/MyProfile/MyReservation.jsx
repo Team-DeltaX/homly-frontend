@@ -8,12 +8,11 @@ import {
   Card,
   CardContent,
 } from "@mui/material";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
 import OngoingReservation from "./OngoingReservation";
 import PastReservation from "./PastReservation";
 import theme from "../../../HomlyTheme";
+import AxiosClient from "../../../services/AxiosClient";
 
 const MyReservation = () => {
   const [value, setValue] = useState(0);
@@ -27,10 +26,7 @@ const MyReservation = () => {
   const Navigate = useNavigate();
 
   useEffect(() => {
-    axios
-      .get(`${global.API_BASE_URL}/users/auth/userOngoingReservation`, {
-        withCredentials: true,
-      })
+      AxiosClient.get("/user/auth/userOngoingReservation")
       .then((response) => {
         console.log(response.data)
         setOngoingReservation(response.data);
@@ -41,10 +37,7 @@ const MyReservation = () => {
         }
       });
 
-    axios
-      .get(`${global.API_BASE_URL}/users/auth/userPastReservation`, {
-        withCredentials: true,
-      })
+      AxiosClient.get("/user/auth/userPastReservation")
       .then((response) => {
         setPastReservation(response.data);
       })

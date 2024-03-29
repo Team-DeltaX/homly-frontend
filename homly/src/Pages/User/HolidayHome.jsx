@@ -9,8 +9,6 @@ import {
   Stack,
   Button,
 } from "@mui/material";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import NavBar from "../../Components/User/NavBar/NavBar";
 import Footer from "../../Components/User/Footer/Footer";
@@ -19,6 +17,7 @@ import HHCardSkeleton from "../../Components/User/Skeleton/HHCardSkeleton";
 import theme from "../../HomlyTheme";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import AxiosClient from "../../services/AxiosClient";
 export default function HolidayHomes() {
   const refContactUS = useRef(null);
   const refPageTop = useRef(null);
@@ -36,30 +35,24 @@ export default function HolidayHomes() {
   const params = useParams();
   const district = params ? params.district : " ";
 
-  const Navigate = useNavigate();
-
   const fetchData = () => {
-    axios
-      .get(`${global.API_BASE_URL}/users/auth/holidayhomes`, {
-        withCredentials: true,
-        params: { district: district, search: searchValue },
-      })
+    AxiosClient.get("/user/auth/holidayhomes", {
+      withCredentials: true,
+      params: { district: district, search: searchValue },
+    })
       .then((res) => {
         if (res.data.length > 0) {
           setPagination(Math.ceil(res.data.length / 9));
           setHolidayHomes(res.data);
           setDisplayedHH(res.data.slice(0, 9));
-          setShowSkeleton(false);
         } else {
           setHolidayHomes([]);
           setDisplayedHH([]);
-          setShowSkeleton(false);
         }
+        setShowSkeleton(false);
       })
-      .catch((err) => {
-        if (err.response.data.autherized === false) {
-          Navigate("/");
-        }
+      .catch(() => {
+        setShowSkeleton(false);
       });
   };
 
