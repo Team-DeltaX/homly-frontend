@@ -6,8 +6,6 @@ const AxiosClient = axios.create({
     "Content-Type": "application/json",
   },
   withCredentials: true,
-
-  // console log response error
 });
 
 AxiosClient.interceptors.response.use(
@@ -17,7 +15,6 @@ AxiosClient.interceptors.response.use(
   (error) => {
     if (error.response.status === 401) {
       window.location.href = "/";
-      console.log("Unauthorized");
     } else {
       return Promise.reject(error);
     }

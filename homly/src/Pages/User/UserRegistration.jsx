@@ -157,7 +157,6 @@ const UserRegistration = () => {
         }}
       >
         <Container maxWidth="xl" style={{ padding: 0, height: "95vh" }}>
-          {/* error snack bar */}
           <ErrorSnackbar
             isOpen={errorStatus.isOpen}
             type={errorStatus.type}

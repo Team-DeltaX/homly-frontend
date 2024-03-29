@@ -47,7 +47,9 @@ export default function Home() {
       AxiosClient.get(`/user/auth/holidayhomes/sort/topRated`)
       .then((res) => {
         setSortedByRating(res.data);
-      })
+      }).catch(() => {
+        setSortedByRating([]);
+      });
       
 
       AxiosClient.get(`/user/auth/interested`)
@@ -57,7 +59,9 @@ export default function Home() {
         } else {
           setInsterestedPopup(true);
         }
-      })
+      }).catch(() => {
+        setInsterestedPopup(false);
+      });
       
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
