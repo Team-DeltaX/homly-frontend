@@ -18,6 +18,7 @@ import ErrorSnackbar from "../ErrorSnackbar";
 import PasswordComGrid from "./PasswordComGrid";
 
 import theme from "../../../HomlyTheme";
+import AxiosClient from "../../../services/AxiosClient";
 
 const Security = () => {
   const { authServiceNumber } = useContext(AuthContext);
@@ -55,10 +56,7 @@ const Security = () => {
         oldPassword: password.currentPass,
         newPassword: password.newPass,
       };
-      axios
-        .put(`${global.API_BASE_URL}/users/auth/password`, formData, {
-          withCredentials: true,
-        })
+      AxiosClient.put("/user/auth/password", formData)
         .then((res) => {
           if (res.data.success) {
             setErrorStatus({

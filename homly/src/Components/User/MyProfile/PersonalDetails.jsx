@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import {
   Box,
   ThemeProvider,
@@ -12,14 +11,16 @@ import {
   Stack,
   Avatar,
 } from "@mui/material";
-
+import { AuthContext } from "../../../Contexts/AuthContext";
 import PersonalDetailsGrid from "../PersonalDetailsGrid/PersonalDetailsGrid";
 import theme from "../../../HomlyTheme";
 import UploadImageCloudinary from "../../Common/UploadImageCloudinary";
 import ErrorSnackbar from "../ErrorSnackbar";
 import UserInterestedPopupProfile from "./UserInterestedPopupProfile";
+import AxiosClient from "../../../services/AxiosClient";
 
 const PersonalDetails = () => {
+  const { setIsUpdated } = useContext(AuthContext);
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
   const phoneRegex = /^[0-9]{10}$/;
 
@@ -69,10 +70,7 @@ const PersonalDetails = () => {
 
   useEffect(() => {
     try {
-      axios
-        .get(`${global.API_BASE_URL}/users/auth/details`, {
-          withCredentials: true,
-        })
+        AxiosClient.get("/user/auth/details")
         .then((res) => {
           if (Response) {
             setData({
@@ -86,6 +84,7 @@ const PersonalDetails = () => {
               contactNo: res.data.contactNo,
             });
             setImage(res.data.image);
+            setIsUpdated(true);
           } else {
             setErrorStatus({
               ...errorStatus,
@@ -114,10 +113,7 @@ const PersonalDetails = () => {
           }
         });
 
-      axios
-        .get(`${global.API_BASE_URL}/users/auth/interested`, {
-          withCredentials: true,
-        })
+        AxiosClient.get("/user/auth/interested")
         .then((res) => {
           if (res.data) {
             if (res.data.userInterested.interested[0] !== null) {
@@ -150,8 +146,7 @@ const PersonalDetails = () => {
         contactNo: data.contactNo,
         image: image,
       };
-      axios
-        .put(`${global.API_BASE_URL}/users/auth`, formData)
+        AxiosClient.put("/user/auth", formData)
         .then((res) => {
           if (res.data.success) {
             setErrorStatus({
@@ -184,9 +179,7 @@ const PersonalDetails = () => {
         fac3: interests[2],
       };
 
-      axios.put(`${global.API_BASE_URL}/users/auth/interested`, formData2, {
-        withCredentials: true,
-      });
+      AxiosClient.put("/user/auth/interested", formData2)
       setIsEnable(false);
     }
   };
