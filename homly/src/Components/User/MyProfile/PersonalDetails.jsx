@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom";
 import {
   Box,
   ThemeProvider,
@@ -66,79 +65,66 @@ const PersonalDetails = () => {
     setIsEnable(true);
   };
 
-  const Navigate = useNavigate();
-
   useEffect(() => {
-    try {
-        AxiosClient.get("/user/auth/details")
-        .then((res) => {
-          if (Response) {
-            setData({
-              ...data,
-              serviceNo: res.data.serviceNo,
-              name: res.data.name,
-              nic: res.data.nic,
-              work: res.data.work,
-              address: res.data.address,
-              email: res.data.email,
-              contactNo: res.data.contactNo,
-            });
-            setImage(res.data.image);
-            setIsUpdated(true);
-          } else {
-            setErrorStatus({
-              ...errorStatus,
-              isOpen: true,
-              type: "error",
-              message: res.data.message,
-            });
-          }
-        })
-        .catch((err) => {
-          if (!err.response.data.autherized) {
-            setErrorStatus({
-              ...errorStatus,
-              isOpen: true,
-              type: "error",
-              message: "Unautherized Access",
-            });
-            Navigate("/");
-          } else {
-            setErrorStatus({
-              ...errorStatus,
-              isOpen: true,
-              type: "error",
-              message: "Server Error",
-            });
-          }
+    AxiosClient.get("/user/auth/details")
+      .then((res) => {
+        if (Response) {
+          setData({
+            ...data,
+            serviceNo: res.data.serviceNo,
+            name: res.data.name,
+            nic: res.data.nic,
+            work: res.data.work,
+            address: res.data.address,
+            email: res.data.email,
+            contactNo: res.data.contactNo,
+          });
+          setImage(res.data.image);
+          setIsUpdated(true);
+        } else {
+          setErrorStatus({
+            ...errorStatus,
+            isOpen: true,
+            type: "error",
+            message: res.data.message,
+          });
+        }
+      })
+      .catch(() => {
+        setErrorStatus({
+          ...errorStatus,
+          isOpen: true,
+          type: "error",
+          message: "Server Error",
         });
+      });
 
-        AxiosClient.get("/user/auth/interested")
-        .then((res) => {
-          if (res.data) {
-            if (res.data.userInterested.interested[0] !== null) {
-              setInterests(res.data.userInterested.interested);
-            }
-          } else {
-            setErrorStatus({
-              ...errorStatus,
-              isOpen: true,
-              type: "error",
-              message: res.data.message,
-            });
+    AxiosClient.get("/user/auth/interested")
+      .then((res) => {
+        if (res.data) {
+          if (res.data.userInterested.interested[0] !== null) {
+            setInterests(res.data.userInterested.interested);
           }
-          setIsHaveInterests(true);
-        })
-        .catch((err) => {
-          setIsHaveInterests(false);
-        });
-    } catch (err) {
-      Navigate("/");
-    }
+        } else {
+          setErrorStatus({
+            ...errorStatus,
+            isOpen: true,
+            type: "error",
+            message: res.data.message,
+          });
+        }
+        setIsHaveInterests(true);
+      })
+      .catch(() => {
+        setIsHaveInterests(false);
+      });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleUpdate = () => {
+    let isUpdated = false;
+
     if (!checkEmail(data.email) && !checkContactNo(data.contactNo)) {
       const formData = {
         serviceNo: data.serviceNo,
@@ -146,16 +132,12 @@ const PersonalDetails = () => {
         contactNo: data.contactNo,
         image: image,
       };
-        AxiosClient.put("/user/auth", formData)
+      AxiosClient.put("/user/auth", formData)
         .then((res) => {
           if (res.data.success) {
-            setErrorStatus({
-              ...errorStatus,
-              isOpen: true,
-              type: "success",
-              message: res.data.message,
-            });
+            isUpdated = true;
           } else {
+            isUpdated = false;
             setErrorStatus({
               ...errorStatus,
               isOpen: true,
@@ -165,6 +147,7 @@ const PersonalDetails = () => {
           }
         })
         .catch((err) => {
+          isUpdated = false;
           setErrorStatus({
             ...errorStatus,
             isOpen: true,
@@ -179,8 +162,23 @@ const PersonalDetails = () => {
         fac3: interests[2],
       };
 
-      AxiosClient.put("/user/auth/interested", formData2)
+      AxiosClient.put("/user/auth/interested", formData2).then((res) => {
+        if (res.data.success) {
+          isUpdated = true;
+        } else {
+          isUpdated = false;
+        }
+      });
       setIsEnable(false);
+
+      if (isUpdated) {
+        setErrorStatus({
+          ...errorStatus,
+          isOpen: true,
+          type: "success",
+          message: "Updated Successfully",
+        });
+      }
     }
   };
 
