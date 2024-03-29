@@ -163,7 +163,7 @@ const PrimaryDashboard = () => {
                       <CompareLineChart />
                     </Box>
                   </Grid>
-                  <Grid item md={4} sx={{ height: "100vh" }}>
+                  <Grid item md={4} sx={{ height: "100vh" ,marginLeft:{xs:'40px',md:'0px'}}}>
                     <Box sx={{ display: "flex", flexDirection: "column" }}>
                       <Box
                         sx={{
