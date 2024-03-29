@@ -19,6 +19,7 @@ import HHCardSkeleton from "../../Components/User/Skeleton/HHCardSkeleton";
 import theme from "../../HomlyTheme";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import AxiosClient from "../../services/AxiosClient";
 export default function HolidayHomes() {
   const refContactUS = useRef(null);
   const refPageTop = useRef(null);
@@ -39,11 +40,15 @@ export default function HolidayHomes() {
   const Navigate = useNavigate();
 
   const fetchData = () => {
-    axios
-      .get(`${global.API_BASE_URL}/users/auth/holidayhomes`, {
-        withCredentials: true,
-        params: { district: district, search: searchValue },
-      })
+    // axios
+    //   .get(`${global.API_BASE_URL}/users/auth/holidayhomes`, {
+    //     withCredentials: true,
+    //     params: { district: district, search: searchValue },
+    //   })
+    AxiosClient.get("/users/auth/holidayhomes", {
+      withCredentials: true,
+      params: { district: district, search: searchValue },
+    })
       .then((res) => {
         if (res.data.length > 0) {
           setPagination(Math.ceil(res.data.length / 9));
