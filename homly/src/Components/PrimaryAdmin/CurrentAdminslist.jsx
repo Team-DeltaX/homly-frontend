@@ -7,7 +7,7 @@ import { SearchContext } from "../../Contexts/primryadmin/Searchcontext";
 import axios from "axios";
 
 const CurrentAdminslist = () => {
-  const [blacklistedusers, setBlacklistedusers] = useState([]);
+  const [admins, setAdmins] = useState([]);
   const [open, setOpen] = useState(false);
   const [snacktext, setsnacktext] = useState("");
   const { load, SetLoad } = useContext(CustomTabContext);
@@ -31,7 +31,7 @@ const CurrentAdminslist = () => {
       .get(`${global.API_BASE_URL}/admin/auth/locationadmin/all`)
       .then((res) => {
         SetLoad(false);
-        setBlacklistedusers(res.data.reverse());
+        setAdmins(res.data.reverse());
       })
       
   };
@@ -59,7 +59,7 @@ const CurrentAdminslist = () => {
         <h1>Loading...</h1>
       ) : (
         <Box>
-          {blacklistedusers
+          {admins
             .filter((item) => {
               return (
                 item.Disabled === false &&

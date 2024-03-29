@@ -274,6 +274,7 @@ const CurrentAdminCard = (props) => {
               height: "25px",
               borderRadius: "15px",
               marginTop: "5px",
+              
             }}
             variant="contained"
             onClick={() => {

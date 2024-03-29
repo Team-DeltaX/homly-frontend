@@ -67,6 +67,8 @@ const PrimaryViewAdmins = () => {
                           position: "absolute",
                           top: "92%",
                           right: "6%",
+          
+                          
                         }}
                         component="label"
                         variant="contained"

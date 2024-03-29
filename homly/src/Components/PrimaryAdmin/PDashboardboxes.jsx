@@ -15,7 +15,7 @@ const PDashboardboxes = () => {
   const [unpaidcount, SetUnpaindcount] = useState("0");
   const gethhcount = () => {
     axios
-      .get(`${global.API_BASE_URL}/admin/auth/hhcount`)
+      .get(`${global.API_BASE_URL}/admin/auth/holidayhomecount`)
       .then((res) => {
         Sethhcount(res.data.count);
       })
@@ -215,7 +215,9 @@ const PDashboardboxes = () => {
                   }}
                 >
                   <Box>
-                    <HomeIcon sx={{ fontSize: "2.8rem" }} />
+                    {/* <HomeIcon sx={{ fontSize: "2.8rem" }} /> */}
+                    <PaidIcon sx={{ fontSize: "2.8rem" }} />
+
                   </Box>
                   <Box>
                     <Typography

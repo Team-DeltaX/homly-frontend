@@ -26,7 +26,7 @@ const PrimaryDashboard = () => {
 
   const getstatus = () => {
     axios
-      .get(`${global.API_BASE_URL}/admin/auth/hhstatus`)
+      .get(`${global.API_BASE_URL}/admin/auth/holidayhomehstatus`)
       .then((res) => {
         SetActivecount(res.data.Active);
         setInactivecount(res.data.Inactive);
