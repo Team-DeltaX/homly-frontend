@@ -19,6 +19,7 @@ import AvailableHallsPopUp from "../Common/AvailableHallsPopUp";
 import Autocomplete from "@mui/material/Autocomplete";
 import Stack from "@mui/material/Stack";
 import ConfirmPopup from "../PrimaryAdmin/ConfirmPopup";
+import AxiosClient from "../../services/AxiosClient";
 
 export default function ScrollDialog({ name, id }) {
   const [open, setOpen] = React.useState(false);
@@ -39,24 +40,20 @@ export default function ScrollDialog({ name, id }) {
   const [CheckoutDate, setCheckoutDate] = useState(dayjs().add(6, "day"));
   const [reserveDisabled, setReserveDisabled] = useState(false); // State to manage disable state of reserve button
   const [roomCodes, setRoomCodes] = useState([]);
-  const [room,setRoom] = useState([]);
+  const [room, setRoom] = useState([]);
 
   useEffect(() => {
-    
-    axios
-      .get(`${global.API_BASE_URL}/users/reservation/availableRooms`,
-      { params:{
+
+    AxiosClient.get("/user/reservation/availableRooms", {
+      params: {
         holidayHomeId: id,
         checkinDate: CheckinDate,
         checkoutDate: CheckoutDate,
-      }
-      }, {
-        withCredentials: true,
-      })
-      .then((res) => {
-        setRoom(res.data.availableRooms)
-        console.log("available room",res.data.availableRooms)
-      });
+      },
+    }).then((res) => {
+      setRoom(res.data.availableRooms);
+      console.log("available room", res.data.availableRooms);
+    });
   }, [id, CheckinDate, CheckoutDate]);
 
   const [errorStatus, setErrorStatus] = useState({

@@ -29,6 +29,7 @@ import MainHolidayHomePhoto from "../../Components/User/HolidayHomeDetailsGrid/M
 import HolidayHomeGrid from "../../Components/User/HolidayHomeDetailsGrid/HolidayHomeGrid";
 import AddReservationPopUp from "../../Components/Reservations/AddReservationPopUp";
 import Review from "../../Components/User/Review/Review";
+import AxiosClient from "../../services/AxiosClient";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -104,11 +105,7 @@ export default function HolidayHomeDetails() {
   // const homeId = "1710334919911";
   const { homeId } = useParams();
   useEffect(() => {
-    axios
-      .get(
-        `${global.API_BASE_URL}/admin/auth/locationadmin/holidayhome/${homeId}`,
-        { withCredentials: true }
-      )
+      AxiosClient.get(`/admin/auth/locationadmin/holidayhome/${homeId}`)
       .then((res) => {
         console.log("response", res.data.room);
         if (Response) {
