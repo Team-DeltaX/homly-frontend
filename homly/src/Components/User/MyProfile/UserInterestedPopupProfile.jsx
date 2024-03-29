@@ -14,11 +14,9 @@ import {
   Divider,
   Typography,
 } from "@mui/material";
-
 import ErrorSnackbar from "../ErrorSnackbar";
 import theme from "../../../HomlyTheme";
 
-// change toggle button style
 const style = {
   margin: "2px",
   border: "1px solid #872341",
@@ -46,7 +44,6 @@ export default function UserInterestedPopupProfile({
     message: "",
   });
 
-// add interests array to use state
   const [addInterest, setAddInterest] = useState([]);
   const [error, setError] = useState("");
 
@@ -61,7 +58,6 @@ export default function UserInterestedPopupProfile({
   };
 
   const handleFormat = (event, newInterest) => {
-    // select maximum 3 interests
     if (newInterest.length <= 3) {
       setAddInterest(newInterest);
     }

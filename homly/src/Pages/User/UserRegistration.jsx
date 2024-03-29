@@ -44,10 +44,8 @@ const UserRegistration = () => {
   const [Password, setPassword] = useState("");
   const [ConfirmPassword, setConfirmPassword] = useState("");
   const [image, setImage] = useState(null);
-
   const [errorConfirmPassword, setErrorConfirmPassword] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState(0);
-
   const [isDiabled, setIsDisabled] = useState(true);
 
   const checkEmail = (email) => {

@@ -27,6 +27,7 @@ export default function ReservationCard({
   HHRooms,
   HHHalls,
   ExpireIn,
+  IsReviewed,
 }) {
   const buttons = () => {
     if (HHreservation === "Ongoing") {
@@ -70,7 +71,9 @@ export default function ReservationCard({
     } else {
       return (
         <Stack direction="row" sx={{ marginTop: { xs: "10px", sm: "0" } }}>
-          <Button variant="contained">Review</Button>
+          <Button variant="contained" disabled={IsReviewed}>
+            {IsReviewed ? "Reviewed" : "Add Review"}
+          </Button>
         </Stack>
       );
     }

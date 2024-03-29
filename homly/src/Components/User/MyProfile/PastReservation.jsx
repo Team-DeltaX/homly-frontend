@@ -25,6 +25,7 @@ export default function pastReservation({ reservation }) {
                   HHChildren={reserv.reservation.NoOfChildren}
                   HHRooms={reserv.reservation.NoOfRooms}
                   HHHalls={reserv.reservation.NoOfHalls}
+                  IsReviewed = {reserv.IsReviewed}
                 />
               </Box>
             );
