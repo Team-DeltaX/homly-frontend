@@ -20,6 +20,8 @@ export default function CompareLineChart() {
   const [HolidayHome3, SetHolidayHome3] = React.useState("");
   const [HolidayHome1Rating,SetHolidayHome1Rating]=React.useState(0)
   const [HolidayHome2Rating,SetHolidayHome2Rating]=React.useState(0)
+  const [HolidayHome3Rating,SetHolidayHome3Rating]=React.useState(0)
+
 
 
   const Home1 = h1data;
@@ -132,6 +134,18 @@ export default function CompareLineChart() {
     })
   }
 
+  const getHolidayHome3Rating=(HolidayHome3)=>{
+    axios.get(`${global.API_BASE_URL}/admin/auth/holidayhomerating/${HolidayHome3}`)
+    .then((res)=>{
+      SetHolidayHome3Rating(res.data.rating[0].overall_rating)
+
+      })
+    .catch((error)=>{
+      console.log(error)
+    })
+  }
+
+
   const handleChangehh1 = (event) => {
     SetHolidayHome1(event.target.value);
     setearning_HH1(event.target.value);
@@ -147,6 +161,7 @@ export default function CompareLineChart() {
   const handleChangehh3 = (event) => {
     SetHolidayHome3(event.target.value);
     setearning_HH3(event.target.value);
+    getHolidayHome3Rating(event.target.value)
   };
   const getLastSevenDays = () => {
     const dates = [];
@@ -317,7 +332,7 @@ export default function CompareLineChart() {
                 "select Home three to analyse"
               ) : (
                 <Typography sx={{ color: "green" }}>
-                  6.87 Total Ratings
+                  {HolidayHome3Rating} Total Ratings
                 </Typography>
               )}{" "}
             </FormHelperText>
