@@ -144,9 +144,9 @@ export default function StatisticsDetails() {
                     Total number of Rooms
                   </Typography>
                 </Box>
-                <Box>
+                {/* <Box>
                   <CircularProgress variant="determinate" value={roomcount} />
-                </Box>
+                </Box> */}
               </Box>
             </Grid>
             <Grid item md={6}>
@@ -173,11 +173,11 @@ export default function StatisticsDetails() {
                   </Typography>
                 </Box>
                 <Box>
-                  <CircularProgress
+                  {/* <CircularProgress
                     sx={{ color: "#11BA40" }}
                     variant="determinate"
                     value={75}
-                  />
+                  /> */}
                 </Box>
               </Box>
             </Grid>
@@ -208,9 +208,9 @@ export default function StatisticsDetails() {
                     Total number of Halls
                   </Typography>
                 </Box>
-                <Box>
+                {/* <Box>
                   <CircularProgress variant="determinate" value={100} />
-                </Box>
+                </Box> */}
               </Box>
             </Grid>
             <Grid item md={6}>
@@ -237,11 +237,11 @@ export default function StatisticsDetails() {
                   </Typography>
                 </Box>
                 <Box>
-                  <CircularProgress
+                  {/* <CircularProgress
                     sx={{ color: "#11BA40", zIndex: "100" }}
                     variant="determinate"
                     value={50}
-                  />
+                  /> */}
                 </Box>
               </Box>
             </Grid>

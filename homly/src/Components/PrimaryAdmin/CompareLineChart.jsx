@@ -189,7 +189,7 @@ export default function CompareLineChart() {
             </Select>
             <FormHelperText>
               {HolidayHome1 === "" ? (
-                "select Home two to analyse"
+                "select Home one to analyse"
               ) : (
                 <Typography sx={{ color: "green" }}>
                   6.87 Total Ratings
@@ -287,7 +287,7 @@ export default function CompareLineChart() {
 
             <FormHelperText>
               {HolidayHome3 === "" ? (
-                "select Home two to analyse"
+                "select Home three to analyse"
               ) : (
                 <Typography sx={{ color: "green" }}>
                   6.87 Total Ratings

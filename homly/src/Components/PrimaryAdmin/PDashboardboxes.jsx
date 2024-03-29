@@ -215,8 +215,7 @@ const PDashboardboxes = () => {
                   }}
                 >
                   <Box>
-                    {/* <HomeIcon sx={{ fontSize: "2.8rem" }} /> */}
-                    <PaidIcon sx={{ fontSize: "2.8rem" }} />
+                    <HomeIcon sx={{ fontSize: "2.8rem" }} />
 
                   </Box>
                   <Box>
