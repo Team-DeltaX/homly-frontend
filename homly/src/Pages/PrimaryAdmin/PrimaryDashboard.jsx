@@ -24,6 +24,21 @@ const PrimaryDashboard = () => {
   const [activecount, SetActivecount] = useState(0);
   const [inactivecount, setInactivecount] = useState(0);
   const [latestFourAdmins,setlatestFourAdmins]=useState([]);
+  const [NotApprovedCount,SetNotApprovedCount]=useState(0)
+
+
+  const getNotApprovedCount=()=>{
+    axios.get('http://localhost:8080/admin/auth/notapprovedcount')
+    .then((res)=>{
+      SetNotApprovedCount(res.data.notapprovedcount)
+
+    })
+    .catch((error)=>{
+      console.log(error)
+    })
+  }
+
+
 
   const getadmins=()=>{
     axios.get(`${global.API_BASE_URL}/admin/auth/locationadmin/all`)
@@ -48,6 +63,7 @@ const PrimaryDashboard = () => {
   useEffect(() => {
     getstatus();
     getadmins();
+    getNotApprovedCount();
   }, []);
   return (
     <ThemeProvider theme={theme}>
@@ -218,7 +234,7 @@ const PrimaryDashboard = () => {
                               }}
                             >
                               <Box>
-                                <Avatar sx={{ bgcolor: "red" }}>6</Avatar>
+                                <Avatar sx={{ bgcolor: "red" }}>{NotApprovedCount}</Avatar>
                               </Box>
                               <Box>|</Box>
                               <Box>Requested Authorizations</Box>
