@@ -135,7 +135,7 @@ export default function CompareLineChart() {
   };
   const getHHnames = () => {
     axios
-      .get(`${global.API_BASE_URL}/admin/auth/hhnames`)
+      .get(`${global.API_BASE_URL}/admin/auth/holidayhomenames`)
       .then((res) => {
         setHolidayHomes(res.data.HH);
       })

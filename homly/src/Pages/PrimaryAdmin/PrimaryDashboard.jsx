@@ -23,6 +23,15 @@ const PrimaryDashboard = () => {
   const [showNav, setShowNav] = useState("nav_grid_deactive");
   const [activecount, SetActivecount] = useState(0);
   const [inactivecount, setInactivecount] = useState(0);
+  const [latestFourAdmins,setlatestFourAdmins]=useState([]);
+
+  const getadmins=()=>{
+    axios.get(`${global.API_BASE_URL}/admin/auth/locationadmin/all`)
+    .then((res)=>{
+      setlatestFourAdmins(res.data.reverse());
+     
+    })
+  }
 
   const getstatus = () => {
     axios
@@ -38,6 +47,7 @@ const PrimaryDashboard = () => {
   };
   useEffect(() => {
     getstatus();
+    getadmins();
   }, []);
   return (
     <ThemeProvider theme={theme}>
@@ -157,16 +167,16 @@ const PrimaryDashboard = () => {
                         </Box>
 
                         <Box>
-                          <DashViewAdminBox color={"#253DA1"} />
+                          <DashViewAdminBox color={"#253DA1"}  data={latestFourAdmins[0]}/>
                         </Box>
                         <Box>
-                          <DashViewAdminBox color={"pink"} />
+                          <DashViewAdminBox color={"pink"} data={latestFourAdmins[1]} />
                         </Box>
                         <Box>
-                          <DashViewAdminBox color={"#77ccff"} />
+                          <DashViewAdminBox color={"#77ccff"} data={latestFourAdmins[2]} />
                         </Box>
                         <Box>
-                          <DashViewAdminBox color={"#f5c77e"} />
+                          <DashViewAdminBox color={"#f5c77e"} data={latestFourAdmins[3]} />
                         </Box>
 
                         <Box>
