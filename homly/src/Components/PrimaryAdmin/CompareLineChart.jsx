@@ -233,7 +233,7 @@ export default function CompareLineChart() {
               {HolidayHome1 === "" ? (
                 "select Home one to analyse"
               ) : (
-                <Typography sx={{ color: "green" }}>
+                <Typography sx={{ color: (HolidayHome1Rating<5?"red":"green") }}>
                  {HolidayHome1Rating} Total Ratings
                 </Typography>
               )}
@@ -281,7 +281,7 @@ export default function CompareLineChart() {
               {HolidayHome2 === "" ? (
                 "select Home two to analyse"
               ) : (
-                <Typography sx={{ color: "red" }}>
+                <Typography sx={{ color: (HolidayHome1Rating<5?"red":"green") }}>
                  {HolidayHome2Rating} Total Ratings
                 </Typography>
               )}
@@ -331,7 +331,7 @@ export default function CompareLineChart() {
               {HolidayHome3 === "" ? (
                 "select Home three to analyse"
               ) : (
-                <Typography sx={{ color: "green" }}>
+                <Typography sx={{ color: (HolidayHome1Rating<5?"red":"green")}}>
                   {HolidayHome3Rating} Total Ratings
                 </Typography>
               )}{" "}
