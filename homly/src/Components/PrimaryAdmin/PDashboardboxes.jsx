@@ -16,7 +16,7 @@ const PDashboardboxes = () => {
   const [unpaidcount, SetUnpaindcount] = useState("0");
   const gethhcount = () => {
     axios
-      .get("http://localhost:3002/admin/auth/hhcount")
+      .get("http://localhost:8080/admin/auth/hhcount")
       .then((res) => {
         Sethhcount(res.data.count);
       })
@@ -27,7 +27,7 @@ const PDashboardboxes = () => {
 
   const getearning = () => {
     axios
-      .get("http://localhost:3002/admin/auth/earning")
+      .get("http://localhost:8080/admin/auth/earning")
       .then((res) => {
         SetEarning(res.data.sum);
       })
@@ -38,7 +38,7 @@ const PDashboardboxes = () => {
 
   const bookingcount = () => {
     axios
-      .get("http://localhost:3002/admin/auth/bookingcount")
+      .get("http://localhost:8080/admin/auth/bookingcount")
       .then((res) => {
         SetPaidcount(res.data.Paid);
         SetUnpaindcount(res.data.Unpaid);

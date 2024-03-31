@@ -177,7 +177,7 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
 
         })
 
-        axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/rental/${homeId}/${editedUnit.unitCode}`)
+        axios.get(`http://localhost:8080/admin/auth/locationadmin/holidayhome/rental/${homeId}/${editedUnit.unitCode}`)
             .then(res => {
                 console.log("get")
                 const rental = res.data.roomRental;
@@ -342,13 +342,13 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
                     unitArray.map((item, index) => {
                         item.selectedRooms = [];
 
-                        axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/${homeId}/${item.unitCode}`)
+                        axios.get(`http://localhost:8080/admin/auth/locationadmin/holidayhome/${homeId}/${item.unitCode}`)
                             .then((res) => {
                                 if (Response) {
                                     const srDetails = res.data.selectedRoom;
                                     console.log(srDetails);
                                     for (let i = 0; i < srDetails.length; i++) {
-                                        axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/room/${homeId}/${srDetails[i].roomCode}`)
+                                        axios.get(`http://localhost:8080/admin/auth/locationadmin/holidayhome/room/${homeId}/${srDetails[i].roomCode}`)
                                             .then((res) => {
                                                 const room = res.data;
                                                 // Check if 'room' already exists in 'selectedRooms' array

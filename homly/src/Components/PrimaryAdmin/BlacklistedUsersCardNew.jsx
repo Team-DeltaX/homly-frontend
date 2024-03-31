@@ -9,7 +9,7 @@ const BlacklistedUsersCardNew = (props) => {
   const fetchfromemployee = () => {
     axios
       .get(
-        `http://localhost:3002/admin/auth/locationadmin/employee/${props.data.ServiceNo}`
+        `http://localhost:8080/admin/auth/locationadmin/employee/${props.data.ServiceNo}`
       )
       .then((res) => {
         SetEmployee(res.data[0]);
@@ -25,7 +25,7 @@ const BlacklistedUsersCardNew = (props) => {
   const fetchfromuser = () => {
     axios
       .get(
-        `http://localhost:3002/admin/auth/locationadmin/user/${props.data.ServiceNo}`
+        `http://localhost:8080/admin/auth/locationadmin/user/${props.data.ServiceNo}`
       )
       .then((res) => {
         SetUser(res.data[0]);

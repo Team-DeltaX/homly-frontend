@@ -12,7 +12,7 @@ const OngoingReservationList = (props) => {
   const [reservations, setReservations] = useState([])
   const fetchreservations = () => {
     axios
-      .get("http://localhost:3002/users/reservation/ongoing")
+      .get("http://localhost:8080/users/reservation/ongoing")
       .then((res) => {
         console.log(res.data);
          //reverse array to keep new ones first 

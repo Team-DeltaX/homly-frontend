@@ -12,7 +12,7 @@ const SpecialReservationList = (props) => {
   const [reservations, setReservations] = useState([])
   const fetchadmins = () => {
     axios
-      .get("http://localhost:3002/admin/auth/locationadmin/reservations")
+      .get("http://localhost:8080/admin/auth/locationadmin/reservations")
       .then((res) => {
         console.log(res.data);
          //reverse array to keep new ones first 

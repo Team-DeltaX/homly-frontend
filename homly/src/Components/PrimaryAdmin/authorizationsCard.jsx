@@ -22,7 +22,7 @@ const AuthorizationsCard = (props) => {
   const approve = () => {
     axios
       .put(
-        "http://localhost:3002/admin/auth/locationadmin/holidayhome/accept",
+        "http://localhost:8080/admin/auth/locationadmin/holidayhome/accept",
         {
           id: props.data.HolidayHomeId,
         },
@@ -43,7 +43,7 @@ const AuthorizationsCard = (props) => {
     console.log(props.data.HolidayHomeId);
     axios
       .delete(
-        "http://localhost:3002/admin/auth/locationadmin/holidayhome/reject",
+        "http://localhost:8080/admin/auth/locationadmin/holidayhome/reject",
         {
           data: {
             id: props.data.HolidayHomeId,

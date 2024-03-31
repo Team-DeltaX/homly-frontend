@@ -132,7 +132,7 @@ const HolidayHomeEdit = () => {
 
     useEffect(() => {
 
-        axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/${homeId}`)
+        axios.get(`http://localhost:8080/admin/auth/locationadmin/holidayhome/${homeId}`)
             .then((res) => {
                 if (Response) {
                     const roomDetails = res.data.room;
@@ -215,7 +215,7 @@ const HolidayHomeEdit = () => {
         e.preventDefault();
         setApprovedClicked(true);
         console.log("allvalues", updatedData);
-        axios.post("http://localhost:3002/admin/auth/locationadmin/holidayhome/update", updatedData)
+        axios.post("http://localhost:8080/admin/auth/locationadmin/holidayhome/update", updatedData)
             .then((res) => {
                 console.log(res);
                 // navigate("/locationadmin/manage");
