@@ -12,7 +12,7 @@ const PastReservationList = (props) => {
   const [reservations, setReservations] = useState([])
   const fetchreservations = () => {
     axios
-      .get("http://localhost:8080/users/reservation/past")
+      .get("http://localhost:8080/user/reservation/past")
       .then((res) => {
         console.log(res.data);
          //reverse array to keep new ones first 

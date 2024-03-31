@@ -81,7 +81,7 @@ export default function UserInterestedPopup({
         formData = {};
       }
       axios
-        .post(`${global.API_BASE_URL}/users/auth/interested`, formData, {
+        .post(`${global.API_BASE_URL}/user/auth/interested`, formData, {
           withCredentials: true,
         })
         .then((res) => {

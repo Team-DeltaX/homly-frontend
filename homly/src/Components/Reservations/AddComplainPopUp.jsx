@@ -51,7 +51,7 @@ export default function AddComplainPopUp(props) {
     };
     console.log("aruna", data);
     axios
-      .post("http://localhost:8080/users/reservation/AddComplaint", data)
+      .post("http://localhost:8080/user/reservation/AddComplaint", data)
       .then((res) => {
         console.log("add complaint successfully");
         setOpen(false);

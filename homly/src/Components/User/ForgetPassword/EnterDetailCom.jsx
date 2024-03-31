@@ -24,7 +24,7 @@ export default function EnterDetailCom({
       email: value.email.toLowerCase(),
     };
     axios
-      .post(`${global.API_BASE_URL}/users/forgetPassword/`, formData)
+      .post(`${global.API_BASE_URL}/user/forgetPassword/`, formData)
       .then((res) => {
         if (res.data.success) {
           setErrorStatus({

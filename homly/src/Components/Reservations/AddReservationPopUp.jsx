@@ -107,7 +107,7 @@ export default function ScrollDialog({ name, id }) {
     };
 
     axios
-      .post(`${global.API_BASE_URL}/users/auth/reservation`, data, {
+      .post("http://localhost:8080/user/auth/reservation", data, {
         withCredentials: true,
       })
       .then((res) => {
@@ -129,6 +129,7 @@ export default function ScrollDialog({ name, id }) {
           message: "Reservation failed",
         });
         setPayNow(false);
+        console.error(error);
       });
   };
 
