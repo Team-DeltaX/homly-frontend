@@ -20,7 +20,7 @@ import Footer from "../../Components/User/Footer/Footer";
 import HHCarousel from "../../Components/User/Carousel/HHCarousel";
 import UserInterestedPopup from "../../Components/User/UserInterestedPopup";
 import UserInterestedHolidayHomes from "../../Components/User/UserInterestedHolidayHomes/UserInterestedHolidayHomes";
-
+import dayjs from "dayjs";
 import "./UserStyle.css";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -28,11 +28,7 @@ import "aos/dist/aos.css";
 export default function Home() {
   const refContactUS = useRef(null);
   const [sortedByRating, setSortedByRating] = useState([]);
-  const [selectionRange, setSelectRange] = useState({
-    startDate: new Date(),
-    endDate: new Date(),
-    key: "selection",
-  });
+  const [dateValue, setDateValue] = useState([dayjs(), dayjs()]);
   const [interestedHH, setInterestedHH] = useState();
   const [isDisplayInterest, setIsDisplayInterest] = useState(false);
   const [insterestedPopup, setInsterestedPopup] = useState(false);
@@ -44,30 +40,31 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-      AxiosClient.get(`/user/auth/holidayhomes/sort/topRated`)
+    AxiosClient.get(`/user/auth/holidayhomes/sort/topRated`)
       .then((res) => {
         setSortedByRating(res.data);
-      }).catch(() => {
+      })
+      .catch(() => {
         setSortedByRating([]);
       });
-      
 
-      AxiosClient.get(`/user/auth/interested`)
+    AxiosClient.get(`/user/auth/interested`)
       .then((res) => {
         if (res.data.updated) {
           setInsterestedPopup(false);
         } else {
           setInsterestedPopup(true);
         }
-      }).catch(() => {
+      })
+      .catch(() => {
         setInsterestedPopup(false);
       });
-      
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-      AxiosClient.get(`/user/auth/holidayhomes/sort`)
+    AxiosClient.get(`/user/auth/holidayhomes/sort`)
       .then((res) => {
         if (res.data.interested) {
           setInterestedHH(res.data.interested_hh);
@@ -90,9 +87,7 @@ export default function Home() {
         }}
       >
         <Container maxWidth="xl" style={{ padding: 0 }}>
-          {/* navbar */}
           <NavBar refContactUS={refContactUS} />
-          {/* user interested popup */}
           <UserInterestedPopup
             open={insterestedPopup}
             setOpen={setInsterestedPopup}
@@ -112,7 +107,6 @@ export default function Home() {
                 width: { xs: "100%", sm: "95%", padding: 0 },
               }}
             >
-              {/* top image with search bar */}
               <Box sx={{ position: "relative" }}>
                 <Box
                   component="img"
@@ -165,30 +159,24 @@ export default function Home() {
                       sx={{
                         bgcolor: "white",
                         width: "100%",
+                        padding: { xs: "3%", sm: "1%" },
                         borderRadius: { xs: "10px", sm: "40px" },
+                        display: "flex",
+                        alignItems: {xs: "center", sm: "flex-end" },
+                        justifyContent: "center",
                       }}
                     >
-                      {/* location */}
                       <Grid
                         item
                         xs={12}
                         sm={4}
-                        sx={{ padding: { xs: "3%", sm: "0 3% 0.5% 5%" } }}
+                        sx={{ padding: { xs: "3%", sm: "0 3%" } }}
                       >
-                        <Stack direction="column">
-                          <Typography
-                            sx={{ fontSize: "1rem", fontWeight: "bold" }}
-                          >
-                            Location
-                          </Typography>
-                          <DistrictSelectCom
-                            setDistrict={setDistrict}
-                            district={district}
-                          />
-                        </Stack>
+                        <DistrictSelectCom
+                          setDistrict={setDistrict}
+                          district={district}
+                        />
                       </Grid>
-
-                      {/* checkin-checkout */}
                       <Grid
                         item
                         xs={12}
@@ -196,12 +184,10 @@ export default function Home() {
                         sx={{ padding: { xs: "3%", sm: "0 3%" } }}
                       >
                         <DatePickerCom
-                          selectionRange={selectionRange}
-                          setSelectRange={setSelectRange}
+                          value={dateValue}
+                          setValue={setDateValue}
                         />
                       </Grid>
-
-                      {/* search */}
                       <Grid
                         item
                         xs={12}
@@ -247,7 +233,6 @@ export default function Home() {
                   </Stack>
                 </Stack>
               </Box>
-              {/* user interested holiday homes */}
               <Box>
                 {isDisplayInterest ? (
                   <UserInterestedHolidayHomes
