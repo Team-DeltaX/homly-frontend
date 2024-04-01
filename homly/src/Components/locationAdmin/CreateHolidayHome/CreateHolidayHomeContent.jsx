@@ -81,7 +81,7 @@ const CreateHolidayHomeContent = () => {
     e.preventDefault();
     setSubmitClicked(true);
     console.log("allvalues", formData);
-    axios.post("http://localhost:3002/admin/auth/locationadmin/holidayhome/", formData)
+    axios.post("http://localhost:8080/admin/auth/locationadmin/holidayhome/", formData)
       .then((res) => {
         // window.location.href("/locationadmin/manage");
         console.log(res);

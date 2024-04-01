@@ -24,7 +24,7 @@ const Income = () => {
   const setearning = () => {
     const promises = getLastSevenDays().map((date) => {
       return axios
-        .get(`http://localhost:3002/admin/auth/dayincome/${date}`)
+        .get(`http://localhost:8080/admin/auth/dayincome/${date}`)
         .then((res) => res.data.sumForDate)
         .catch((err) => {
           console.log(err);

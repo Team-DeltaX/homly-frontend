@@ -79,7 +79,7 @@ const HolidayHomeDetails = () => {
 
     //Holidayhomes list
     useEffect(() => {
-        axios.get('http://localhost:3002/admin/auth/locationadmin/holidayhome/names')
+        axios.get('http://localhost:8080/admin/auth/locationadmin/holidayhome/names')
             .then((res) => {
                 const data = res.data.names;
 
@@ -121,7 +121,7 @@ const HolidayHomeDetails = () => {
 
         console.log("idhol", id)
 
-        axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/reservation/${id}`)
+        axios.get(`http://localhost:8080/admin/auth/locationadmin/holidayhome/reservation/${id}`)
             .then((res) => {
 
                 const data = res.data.reservations;
@@ -190,7 +190,7 @@ const HolidayHomeDetails = () => {
 
     useEffect(() => {
         if (reservationIds.length > 0) {
-            axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/reserved/`, { params: reservationIds })
+            axios.get(`http://localhost:8080/admin/auth/locationadmin/holidayhome/reserved/`, { params: reservationIds })
                 .then((response) => {
                     const data = response.data;
                     setRooms(data)

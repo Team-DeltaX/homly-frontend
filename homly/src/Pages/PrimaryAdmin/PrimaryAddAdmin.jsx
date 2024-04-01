@@ -85,7 +85,7 @@ const PrimaryAddAdmin = () => {
       Sub: substitute,
     };
     axios
-      .post("http://localhost:3002/admin/auth/locationadmin/add", data)
+      .post("http://localhost:8080/admin/auth/locationadmin/add", data)
       .then((res) => {
         setnacktext("Admin Added Sucessfully!");
         handleClick();

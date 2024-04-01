@@ -54,7 +54,7 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
 
 // useEffect(() => {
 //   axios
-//     .get("http://localhost:3002/admin/auth/locationadmin/holidayhome/1709530965098")
+//     .get("http://localhost:8080/admin/auth/locationadmin/holidayhome/1709530965098")
 //     .then((res) => {
 //       if (res.data) {
 //         setHolidayHomes(res.data);

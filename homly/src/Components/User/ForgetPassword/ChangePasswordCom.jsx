@@ -43,7 +43,7 @@ export default function ChangePasswordCom({
     e.preventDefault();
     const formData = { serviceNo: value.serviceNo, password: value.password };
     axios
-      .put(`${global.API_BASE_URL}/users/forgetPassword/reset`, formData)
+      .put(`${global.API_BASE_URL}/user/forgetPassword/reset`, formData)
       .then((res) => {
         if (res.data.success) {
           setErrorStatus({

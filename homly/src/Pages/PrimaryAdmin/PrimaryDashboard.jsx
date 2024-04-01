@@ -27,7 +27,7 @@ const PrimaryDashboard = () => {
 
   const getstatus = () => {
     axios
-      .get("http://localhost:3002/admin/auth/hhstatus")
+      .get("http://localhost:8080/admin/auth/hhstatus")
       .then((res) => {
         SetActivecount(res.data.Active);
         setInactivecount(res.data.Inactive);

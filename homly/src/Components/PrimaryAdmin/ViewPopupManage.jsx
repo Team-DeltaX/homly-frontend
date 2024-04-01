@@ -15,7 +15,7 @@ const ViewPopupManage = (props) => {
 
   const handleremovefromblacklist = () => {
     axios
-      .delete("http://localhost:3002/admin/auth/unblacklist", {
+      .delete("http://localhost:8080/admin/auth/unblacklist", {
         data: { ServiceNo: props.selectemp.service_number },
         withCredentials: true,
       })
@@ -32,7 +32,7 @@ const ViewPopupManage = (props) => {
 
     axios
       .put(
-        "http://localhost:3002/admin/auth/unblacklist",
+        "http://localhost:8080/admin/auth/unblacklist",
         {
           Email: props.selectuser.email,
           ServiceNo: props.selectemp.service_number,
@@ -48,7 +48,7 @@ const ViewPopupManage = (props) => {
 
     axios
       .post(
-        "http://localhost:3002/admin/auth/blacklisthistory",
+        "http://localhost:8080/admin/auth/blacklisthistory",
         {
           ServiceNo: props.selectemp.service_number,
           AddReason: props.selecteduser.BlackListReason,

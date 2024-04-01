@@ -42,7 +42,7 @@ export default function SimpleLineChart() {
   const setearning_HH1 = (HolidayHome1) => {
     const promises = getLastSevenDays().map((date) => {
       return axios
-        .get(`http://localhost:3002/admin/auth/dayincome/${date}/${HolidayHome1}`)
+        .get(`http://localhost:8080/admin/auth/dayincome/${date}/${HolidayHome1}`)
         .then((res) => {
         return res.data.sumForDate;
         })
@@ -67,7 +67,7 @@ export default function SimpleLineChart() {
   const setearning_HH2 = (HolidayHome2) => {
     const promises = getLastSevenDays().map((date) => {
       return axios
-        .get(`http://localhost:3002/admin/auth/dayincome/${date}/${HolidayHome2}`)
+        .get(`http://localhost:8080/admin/auth/dayincome/${date}/${HolidayHome2}`)
         .then((res) => {
         return res.data.sumForDate;
         })
@@ -92,7 +92,7 @@ export default function SimpleLineChart() {
   const setearning_HH3 = (HolidayHome3) => {
     const promises = getLastSevenDays().map((date) => {
       return axios
-        .get(`http://localhost:3002/admin/auth/dayincome/${date}/${HolidayHome3}`)
+        .get(`http://localhost:8080/admin/auth/dayincome/${date}/${HolidayHome3}`)
         .then((res) => {
         return res.data.sumForDate;
         })
@@ -142,7 +142,7 @@ export default function SimpleLineChart() {
   };
   const getHHnames = () => {
     axios
-      .get("http://localhost:3002/admin/auth/hhnames")
+      .get("http://localhost:8080/admin/auth/hhnames")
       .then((res) => {
         setHolidayHomes(res.data.HH);
       })

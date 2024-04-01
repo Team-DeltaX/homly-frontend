@@ -18,17 +18,23 @@ const MyReservation = () => {
   const [value, setValue] = useState(0);
   const [ongoingReservation, setOngoingReservation] = useState([]);
   const [pastReservation, setPastReservation] = useState([]);
+
+  const [isAddReview, setIsAddReview] = useState(false);
+
   const tabComponent = [
     <OngoingReservation reservation={ongoingReservation} />,
-    <PastReservation reservation={pastReservation} />,
+    <PastReservation
+      reservation={pastReservation}
+      setIsAddReview={setIsAddReview}
+    />,
   ];
 
   const Navigate = useNavigate();
 
   useEffect(() => {
-      AxiosClient.get("/user/auth/userOngoingReservation")
+    AxiosClient.get("/user/auth/userOngoingReservation")
       .then((response) => {
-        console.log(response.data)
+        console.log(response.data);
         setOngoingReservation(response.data);
       })
       .catch((err) => {
@@ -37,9 +43,11 @@ const MyReservation = () => {
         }
       });
 
-      AxiosClient.get("/user/auth/userPastReservation")
+    AxiosClient.get("/user/auth/userPastReservation")
       .then((response) => {
+        console.log("pastttttttttt", response.data);
         setPastReservation(response.data);
+        setIsAddReview(false);
       })
       .catch((err) => {
         if (!err.response.data.autherized) {
@@ -47,7 +55,7 @@ const MyReservation = () => {
         }
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isAddReview]);
 
   const handleTabChange = (event, newValue) => {
     setValue(newValue);

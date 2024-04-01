@@ -26,7 +26,7 @@ const PrimaryComplaints = () => {
     console.log("start");
     axios
       .get(
-        `http://localhost:3002/admin/auth/locationadmin/complaint/${selecteduser.ServiceNo}`
+        `http://localhost:8080/admin/auth/locationadmin/complaint/${selecteduser.ServiceNo}`
       )
       .then((res) => {
         setPrevcomplaints(res.data);
@@ -41,7 +41,7 @@ const PrimaryComplaints = () => {
 
   const fetchcomplaints = () => {
     axios
-      .get("http://localhost:3002/admin/auth/locationadmin/complaints")
+      .get("http://localhost:8080/admin/auth/locationadmin/complaints")
       .then((res) => {
         setcomplaints(res.data);
       })

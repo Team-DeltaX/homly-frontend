@@ -62,7 +62,7 @@ const PrimaryBlacklistHistory = () => {
 
   const getblacklisthistory = () => {
     axios
-      .get("http://localhost:3002/admin/auth/blacklisthistory")
+      .get("http://localhost:8080/admin/auth/blacklisthistory")
       .then((res) => {
         const sortedData = res.data.sort(
           (a, b) => -(a.BlackListHistoryId - b.BlackListHistoryId)

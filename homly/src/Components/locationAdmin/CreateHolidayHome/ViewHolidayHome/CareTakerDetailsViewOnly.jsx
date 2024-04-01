@@ -12,7 +12,7 @@ const CareTakerDetailsViewOnly = ({ setAllValues }) => {
 
   const { homeId } = useParams();
   useEffect(() => {
-    axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/${homeId}`)
+    axios.get(`http://localhost:8080/admin/auth/locationadmin/holidayhome/${homeId}`)
       .then((res) => {
         if (Response) {
           const caretakerDetails = res.data.caretaker;

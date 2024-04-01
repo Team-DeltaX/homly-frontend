@@ -42,7 +42,7 @@ const DisabledAdminCard = (props) => {
     props.Seteditadmin("");
     setDisabled(true);
     axios
-      .put("http://localhost:3002/locationadmin", {
+      .put("http://localhost:8080/locationadmin", {
         AdminNo: props.data.AdminNo,
         Email: email,
         ContactNo: contact,
@@ -58,7 +58,7 @@ const DisabledAdminCard = (props) => {
 
   const resetpassword = () => {
     axios
-      .post("http://localhost:3002/admin/auth/locationadmin/resetpassword", {
+      .post("http://localhost:8080/admin/auth/locationadmin/resetpassword", {
         UserName: props.data.UserName,
         Email: props.data.Email,
         AdminNo: props.data.AdminNo,
@@ -76,7 +76,7 @@ const DisabledAdminCard = (props) => {
   const handleClick = () => {
     axios
       .put(
-        `http://localhost:3002/admin/auth/locationadmin/disable/${props.data.AdminNo}`,
+        `http://localhost:8080/admin/auth/locationadmin/disable/${props.data.AdminNo}`,
         {
           dis: true,
         }

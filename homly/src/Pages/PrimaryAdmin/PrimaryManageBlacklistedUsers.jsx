@@ -64,7 +64,7 @@ const PrimaryManageBlacklistedUsers = () => {
 
   const fetch_current_blacklist = () => {
     axios
-      .get("http://localhost:3002/admin/auth/blacklist")
+      .get("http://localhost:8080/admin/auth/blacklist")
       .then((res) => {
         console.log("----fetch current blacklist---");
         setBlacklistedusers(res.data);

@@ -13,7 +13,7 @@ import axios from "axios";
 const PastReservationCard = (props) => {
   const [Employee,SetEmployee]=useState({})
   const fetchfromemployee=()=>{
-      axios.get(`http://localhost:3002/admin/auth/locationadmin/employee/${props.reservation.ServiceNO}`)
+      axios.get(`http://localhost:8080/admin/auth/locationadmin/employee/${props.reservation.ServiceNO}`)
       .then((res)=>{
           SetEmployee(res.data[0])
           console.log('----------emp emp-------')
@@ -36,7 +36,7 @@ const PastReservationCard = (props) => {
 useEffect(() => {
     axios
       .get(
-        `http://localhost:3002/admin/auth/locationadmin/holidayhome/${props.reservation.HolidayHome}`,
+        `http://localhost:8080/admin/auth/locationadmin/holidayhome/${props.reservation.HolidayHome}`,
         { withCredentials: true }
       )
       .then((res) => {

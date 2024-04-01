@@ -80,7 +80,7 @@ const HomeBreakDownViewOnly = ({ setAllValues }) => {
   useEffect(() => {
 
     console.log(homeId);
-    axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/${homeId}`)
+    axios.get(`http://localhost:8080/admin/auth/locationadmin/holidayhome/${homeId}`)
       .then((res) => {
         if (Response) {
           const roomDetails = res.data.room;
@@ -93,7 +93,7 @@ const HomeBreakDownViewOnly = ({ setAllValues }) => {
         }
       })
 
-    axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/${homeId}`)
+    axios.get(`http://localhost:8080/admin/auth/locationadmin/holidayhome/${homeId}`)
       .then((res) => {
         if (Response) {
           const unitDetails = res.data.unit;
@@ -109,7 +109,7 @@ const HomeBreakDownViewOnly = ({ setAllValues }) => {
 
 
 
-    axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/${homeId}`)
+    axios.get(`http://localhost:8080/admin/auth/locationadmin/holidayhome/${homeId}`)
       .then((res) => {
         if (Response) {
           const hallDetails = res.data.hall;
@@ -123,7 +123,7 @@ const HomeBreakDownViewOnly = ({ setAllValues }) => {
       })
 
 
-    axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/${homeId}`)
+    axios.get(`http://localhost:8080/admin/auth/locationadmin/holidayhome/${homeId}`)
       .then((res) => {
         if (Response) {
           const homeDetails = res.data.homeDetails[0];
