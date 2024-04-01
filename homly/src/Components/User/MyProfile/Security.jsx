@@ -1,5 +1,4 @@
 import React, { useState, useContext, useEffect } from "react";
-import axios from "axios";
 import {
   Box,
   ThemeProvider,
@@ -10,13 +9,9 @@ import {
   Stack,
   CardActions,
 } from "@mui/material";
-
-import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../Contexts/AuthContext";
-
 import ErrorSnackbar from "../ErrorSnackbar";
 import PasswordComGrid from "./PasswordComGrid";
-
 import theme from "../../../HomlyTheme";
 import AxiosClient from "../../../services/AxiosClient";
 
@@ -35,8 +30,6 @@ const Security = () => {
 
   const [isEnable, setIsEnable] = useState(false);
 
-  const Navigate = useNavigate();
-
   const handleCancel = () => {
     setPassword({ currentPass: "", newPass: "", confirmPass: "" });
     setError({ currentPass: false, newPass: false, confirmPass: false });
@@ -46,7 +39,6 @@ const Security = () => {
     type: "",
     message: "",
   });
-
   const [passwordStrength, setPasswordStrength] = useState(0);
 
   const handleUpdateData = () => {
@@ -75,19 +67,12 @@ const Security = () => {
           }
         })
         .catch((err) => {
-          if (
-            err.response.data.autherized &&
-            err.response.data.autherized === false
-          ) {
-            Navigate("/");
-          } else {
-            setErrorStatus({
-              ...errorStatus,
-              isOpen: true,
-              type: "error",
-              message: err.message,
-            });
-          }
+          setErrorStatus({
+            ...errorStatus,
+            isOpen: true,
+            type: "error",
+            message: err.message,
+          });
         });
       setPassword({ currentPass: "", newPass: "", confirmPass: "" });
     }
