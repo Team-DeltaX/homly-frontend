@@ -1,33 +1,24 @@
 import React from "react";
 import { useState, createContext, useEffect } from "react";
-import axios from "axios";
+import AxiosClient from "../services/AxiosClient";
 
 export const AuthContext = createContext();
 
 const AuthContextProvider = ({ children }) => {
   const [isLogged, setIsLogged] = useState(false);
+  const [isUpdated, setIsUpdated] = useState(false);
   const [authServiceNumber, setAuthServiceNumber] = useState(null);
 
   const [user, setUser] = useState({
-    serviceNo: "",
     name: "",
-    nic: "",
-    work: "",
-    address: "",
-    contactNo: "",
-    email: "",
     image: "",
   });
 
-  // store the login status in local storage
   useEffect(() => {
-    if (isLogged) {
-      axios
-        .get(`${global.API_BASE_URL}/users/auth/details`, {
-          withCredentials: true,
-        })
+    if (isLogged || isUpdated) {
+      AxiosClient.get("/user/auth/details")
         .then((res) => {
-          if (Response) {
+          if (res) {
             setUser({
               ...user,
               name: res.data.name,
@@ -39,11 +30,11 @@ const AuthContextProvider = ({ children }) => {
         });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLogged]);
+  }, [isLogged,isUpdated]);
 
   return (
     <AuthContext.Provider
-      value={{ isLogged, setIsLogged, user, authServiceNumber, setAuthServiceNumber }}
+      value={{ isLogged, setIsLogged, user, authServiceNumber, setAuthServiceNumber ,setIsUpdated}}
     >
       {children}
     </AuthContext.Provider>

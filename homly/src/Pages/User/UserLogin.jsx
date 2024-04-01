@@ -1,5 +1,4 @@
 import React, { useState, useContext } from "react";
-import axios from "axios";
 import {
   Box,
   Container,
@@ -10,13 +9,10 @@ import {
   Stack,
   Button,
 } from "@mui/material";
-
 import { Link, useNavigate } from "react-router-dom";
-
 import BadgeIcon from "@mui/icons-material/Badge";
 import PasswordIcon from "@mui/icons-material/Password";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-
 import theme from "../../HomlyTheme";
 import "./UserStyle.css";
 import logo from "../../Assets/images/logo.png";
@@ -26,6 +22,7 @@ import ErrorSnackbar from "../../Components/User/ErrorSnackbar";
 import InputTextWithIcon from "../../Components/User/TextField/InputTextWithIcon";
 import InputPasswordWithIcon from "../../Components/User/TextField/InputPasswordWithIcon";
 import { AuthContext } from "../../Contexts/AuthContext";
+import AxiosClient from "../../services/AxiosClient";
 
 const Img = styled("img")({
   display: "block",
@@ -39,9 +36,8 @@ const UserLogin = () => {
   const { setIsLogged, setAuthServiceNumber } = useContext(AuthContext);
   const [serviceNo, setServiceNo] = useState("");
   const [password, setPassword] = useState("");
-
+  const [open, setOpen] = useState(false);
   const Navigate = useNavigate();
-
   const [errorStatus, setErrorStatus] = useState({
     isOpen: false,
     type: "",
@@ -51,8 +47,7 @@ const UserLogin = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = { serviceNo, password };
-    axios
-      .post(`${global.API_BASE_URL}/users/login`, formData,{withCredentials: true})
+    AxiosClient.post("/user/login", formData)
       .then((res) => {
         if (res.data.success) {
           setServiceNo("");
@@ -65,7 +60,6 @@ const UserLogin = () => {
           });
           setIsLogged(true);
           setAuthServiceNumber(serviceNo);
-          // delete local storage
           localStorage.removeItem("selectedTab");
           Navigate("/Home");
         } else {
@@ -79,12 +73,12 @@ const UserLogin = () => {
           });
         }
       })
-      .catch((error) => {
+      .catch(() => {
         setErrorStatus({
           ...errorStatus,
           isOpen: true,
           type: "error",
-          message: "Something went wrong",
+          message: `Something went wrong, Please try again later.`,
         });
       });
   };
@@ -95,8 +89,6 @@ const UserLogin = () => {
     setPassword("");
   };
 
-  // popup
-  const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -111,15 +103,12 @@ const UserLogin = () => {
         }}
       >
         <Container maxWidth="xl" style={{ padding: 0 }}>
-          {/* error snack bar */}
           <ErrorSnackbar
             isOpen={errorStatus.isOpen}
             type={errorStatus.type}
             message={errorStatus.message}
             setIsOpen={(val) => setErrorStatus({ ...errorStatus, isOpen: val })}
           />
-
-          {/* forget password popup */}
           <ForgetPasswordPopup open={open} setOpen={setOpen} />
           <Container className="registration-box-container">
             <Grid

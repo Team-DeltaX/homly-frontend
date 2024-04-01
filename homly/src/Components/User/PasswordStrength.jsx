@@ -8,7 +8,6 @@ export default function PasswordStrength({ password, setPasswordStrength }) {
       scoreWords={['too weak', 'weak', 'okay', 'good', 'strong']}
       onChangeScore={(e) => {
         setPasswordStrength(e);
-        console.log(e);
       }}
     />
   );

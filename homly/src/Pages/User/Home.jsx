@@ -9,8 +9,7 @@ import {
   Divider,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import AxiosClient from "../../services/AxiosClient";
 import NavBar from "../../Components/User/NavBar/NavBar";
 import theme from "../../HomlyTheme";
 import DatePickerCom from "../../Components/User/DatePickerCom/DatePickerCom";
@@ -38,7 +37,6 @@ export default function Home() {
   const [isDisplayInterest, setIsDisplayInterest] = useState(false);
   const [insterestedPopup, setInsterestedPopup] = useState(false);
   const [interestsIsSubmited, setInterestsIsSubmited] = useState(false);
-  const Navigate = useNavigate();
   const [district, setDistrict] = useState("");
 
   useEffect(() => {
@@ -46,43 +44,30 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    axios
-      .get(`${global.API_BASE_URL}/users/auth/holidayhomes/sort/topRated`, {
-        withCredentials: true,
-      })
+      AxiosClient.get(`/user/auth/holidayhomes/sort/topRated`)
       .then((res) => {
         setSortedByRating(res.data);
-      })
-      .catch((err) => {
-        if (err.response.data.autherized === false) {
-          Navigate("/");
-        }
+      }).catch(() => {
+        setSortedByRating([]);
       });
+      
 
-    axios
-      .get(`${global.API_BASE_URL}/users/auth/interested`, {
-        withCredentials: true,
-      })
+      AxiosClient.get(`/user/auth/interested`)
       .then((res) => {
         if (res.data.updated) {
           setInsterestedPopup(false);
         } else {
           setInsterestedPopup(true);
         }
-      })
-      .catch((err) => {
-        if (err.response.data.autherized === false) {
-          Navigate("/");
-        }
+      }).catch(() => {
+        setInsterestedPopup(false);
       });
+      
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    axios
-      .get(`${global.API_BASE_URL}/users/auth/holidayhomes/sort`, {
-        withCredentials: true,
-      })
+      AxiosClient.get(`/user/auth/holidayhomes/sort`)
       .then((res) => {
         if (res.data.interested) {
           setInterestedHH(res.data.interested_hh);
@@ -91,7 +76,7 @@ export default function Home() {
           setIsDisplayInterest(false);
         }
       })
-      .catch((err) => {
+      .catch(() => {
         setIsDisplayInterest(false);
       });
   }, [interestsIsSubmited]);

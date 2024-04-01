@@ -30,6 +30,7 @@ export default function PastReservation({ reservation }) {
                   HHRooms={reserv.reservation.NoOfRooms}
                   HHHalls={reserv.reservation.NoOfHalls}
                   setOpen={setOpenReview}
+                  IsReviewed={reserv.IsReviewed}
                 />
               </Box>
             );

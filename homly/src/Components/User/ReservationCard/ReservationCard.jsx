@@ -29,6 +29,7 @@ export default function ReservationCard({
   HHHalls,
   ExpireIn,
   ReservationId,
+  IsReviewed,
 }) {
   const [openReview, setOpenReview] = useState(false);
   const buttons = () => {
@@ -73,8 +74,8 @@ export default function ReservationCard({
     } else {
       return (
         <Stack direction="row" sx={{ marginTop: { xs: "10px", sm: "0" } }}>
-          <Button variant="contained" onClick={() => setOpenReview(true)}>
-            Review
+          <Button variant="contained" disabled={IsReviewed}>
+            {IsReviewed ? "Reviewed" : "Add Review"}
           </Button>
         </Stack>
       );
@@ -280,7 +281,7 @@ export default function ReservationCard({
                       color: "white",
                     }}
                   >
-                    <Typography>{HHRooms}</Typography>
+                    <Typography>{HHRooms ? HHRooms : "all"}</Typography>
                   </Box>
                 </Grid>
               </Grid>
@@ -308,7 +309,7 @@ export default function ReservationCard({
                       color: "white",
                     }}
                   >
-                    <Typography>{HHHalls}</Typography>
+                    <Typography>{HHHalls != null ? HHHalls : "all"}</Typography>
                   </Box>
                 </Grid>
               </Grid>
