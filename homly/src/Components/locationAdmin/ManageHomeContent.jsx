@@ -57,7 +57,7 @@ const ManageHomeContent = () => {
     const [active, setActive] = React.useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:3002/admin/auth/locationadmin/holidayhome/')
+        axios.get('http://localhost:8080/admin/auth/locationadmin/holidayhome/')
             .then((res) => {
                 if (Response) {
                     setPending(res.data.pending);

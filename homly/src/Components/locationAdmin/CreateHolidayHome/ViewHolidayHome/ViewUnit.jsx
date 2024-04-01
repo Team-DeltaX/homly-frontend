@@ -316,13 +316,13 @@ const ViewUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
                     unitArray.map((item, index) => {
                         item.selectedRooms = [];
 
-                        axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/${homeId}/${item.unitCode}`)
+                        axios.get(`http://localhost:8080/admin/auth/locationadmin/holidayhome/${homeId}/${item.unitCode}`)
                             .then((res) => {
                                 if (res.data) {
                                     const srDetails = res.data.selectedRoom;
                                     console.log("sr", srDetails);
                                     const promises = srDetails.map((sr) => {
-                                        return axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/room/${homeId}/${sr.roomCode}`)
+                                        return axios.get(`http://localhost:8080/admin/auth/locationadmin/holidayhome/room/${homeId}/${sr.roomCode}`)
                                             .then((res) => {
                                                 const room = res.data;
                                                 console.log("room", room);

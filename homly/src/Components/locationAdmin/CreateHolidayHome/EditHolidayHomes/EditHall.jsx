@@ -221,7 +221,7 @@ const EditHall = ({ hallArray, setHallArray }) => {
         });
 
 
-        axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/rental/${homeId}/${editedHall.hallCode}`)
+        axios.get(`http://localhost:8080/admin/auth/locationadmin/holidayhome/rental/${homeId}/${editedHall.hallCode}`)
             .then(res => {
                 console.log("get")
                 const rental = res.data.roomRental;

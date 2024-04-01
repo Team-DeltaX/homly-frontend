@@ -211,7 +211,7 @@ const EditRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount, room
 
         });
 
-        axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/rental/${homeId}/${editedRoom.roomCode}`)
+        axios.get(`http://localhost:8080/admin/auth/locationadmin/holidayhome/rental/${homeId}/${editedRoom.roomCode}`)
             .then(res => {
                 console.log("get")
                 const rental = res.data.roomRental;

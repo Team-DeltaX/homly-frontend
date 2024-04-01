@@ -48,7 +48,7 @@ export default function EnterDetailCom({
     if (otp.length === 6) {
       const formData = { serviceNo: value.serviceNo, otp: otp };
       axios
-        .post(`${global.API_BASE_URL}/users/forgetPassword/otp`, formData, {
+        .post(`${global.API_BASE_URL}/user/forgetPassword/otp`, formData, {
           withCredentials: true,
         })
         .then((res) => {
@@ -90,7 +90,7 @@ export default function EnterDetailCom({
   const handleNewOTP = () => {
     const formData = { serviceNo: value.serviceNo, email: value.email };
     axios
-      .post(`${global.API_BASE_URL}/users/forgetPassword`, formData, {
+      .post(`${global.API_BASE_URL}/user/forgetPassword`, formData, {
         withCredentials: true,
       })
       .then((res) => {

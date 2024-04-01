@@ -26,6 +26,7 @@ const AuthorizationsCard = (props) => {
         },
         { withCredentials: true }
       )
+      
       .then((res) => {
         props.get_pending();
         props.Setopensn(true);
