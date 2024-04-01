@@ -13,7 +13,12 @@ import axios from "axios";
 import ErrorSnackbar from "../ErrorSnackbar";
 import AxiosClient from "../../../services/AxiosClient";
 
-export default function AddReviewPopup({ open, setOpen, reservationId }) {
+export default function AddReviewPopup({
+  open,
+  setOpen,
+  reservationId,
+  setIsAddReview,
+}) {
   const [foodRating, setFoodRating] = useState(0);
   const [valueForMoneyRating, setvalueForMoneyRating] = useState(0);
   const [staffRating, setstaffRating] = useState(0);
@@ -57,6 +62,7 @@ export default function AddReviewPopup({ open, setOpen, reservationId }) {
             type: "success",
             message: res.data.message,
           });
+          setIsAddReview(true);
           setFoodRating(0);
           setwifiRating(0);
           setvalueForMoneyRating(0);

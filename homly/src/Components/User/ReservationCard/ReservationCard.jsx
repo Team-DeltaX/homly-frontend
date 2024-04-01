@@ -30,6 +30,7 @@ export default function ReservationCard({
   ExpireIn,
   ReservationId,
   IsReviewed,
+  setIsAddReview,
 }) {
   const [openReview, setOpenReview] = useState(false);
   const buttons = () => {
@@ -331,6 +332,7 @@ export default function ReservationCard({
         open={openReview}
         setOpen={setOpenReview}
         reservationId={ReservationId}
+        setIsAddReview={setIsAddReview}
       />
     </ThemeProvider>
   );

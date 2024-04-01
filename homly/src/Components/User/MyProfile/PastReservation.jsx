@@ -3,7 +3,7 @@ import ReservationCard from "../ReservationCard/ReservationCard";
 import { Box, Stack } from "@mui/material";
 import AddReviewPopup from "../Review/AddReviewPopup";
 
-export default function PastReservation({ reservation }) {
+export default function PastReservation({ reservation, setIsAddReview }) {
   return (
     <Stack
       direction="column"
@@ -30,6 +30,7 @@ export default function PastReservation({ reservation }) {
                   HHHalls={reserv.reservation.NoOfHalls}
                   ReservationId={reserv.reservation.ReservationId}
                   IsReviewed={reserv.IsReviewed}
+                  setIsAddReview={setIsAddReview}
                 />
               </Box>
             );
