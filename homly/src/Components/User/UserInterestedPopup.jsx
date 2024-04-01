@@ -14,11 +14,9 @@ import {
   Divider,
   Typography,
 } from "@mui/material";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-
 import ErrorSnackbar from "./ErrorSnackbar";
 import theme from "../../HomlyTheme";
+import AxiosClient from "../../services/AxiosClient";
 
 // change toggle button style
 const style = {
@@ -50,7 +48,6 @@ export default function UserInterestedPopup({
   const [interests, setInterests] = useState([]);
   const [error, setError] = useState("");
 
-  const Navigate = useNavigate();
 
   const handleClose = () => {
     setOpen(false);
@@ -80,12 +77,8 @@ export default function UserInterestedPopup({
         console.log("skipped");
         formData = {};
       }
-      axios
-        .post(`${global.API_BASE_URL}/user/auth/interested`, formData, {
-          withCredentials: true,
-        })
+      AxiosClient.post("/user/auth/interested", formData)
         .then((res) => {
-          console.log(res.data);
           if (res.data.success) {
             setOpen(false);
             setInterestsIsSubmited(true);
@@ -98,18 +91,13 @@ export default function UserInterestedPopup({
             });
           }
         })
-        .catch((err) => {
-          console.log(err);
-          if (err.response.data.autherized === false) {
-            Navigate("/");
-          } else {
-            setErrorStatus({
-              ...errorStatus,
-              isOpen: true,
-              type: "error",
-              message: "Server Error",
-            });
-          }
+        .catch(() => {
+          setErrorStatus({
+            ...errorStatus,
+            isOpen: true,
+            type: "error",
+            message: "Server Error",
+          });
         });
     }
   };

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useRef, useEffect, useState } from "react";
 import {
   Container,
@@ -22,8 +23,8 @@ export default function HolidayHomes() {
   const refContactUS = useRef(null);
   const refPageTop = useRef(null);
   const [holidayHomes, setHolidayHomes] = useState([]);
-  const [displayedHH, setDisplayedHH] = useState([]);
   const [pagination, setPagination] = useState(1);
+  const [selectedPage, setSelectedPage] = useState(1);
   const [searchValue, setSearchValue] = useState("");
   const [showSkeleton, setShowSkeleton] = useState(true);
 
@@ -37,29 +38,29 @@ export default function HolidayHomes() {
 
   const fetchData = () => {
     AxiosClient.get("/user/auth/holidayhomes", {
-      withCredentials: true,
-      params: { district: district, search: searchValue },
+      params: { district: district, search: searchValue, page:selectedPage },
     })
       .then((res) => {
-        if (res.data.length > 0) {
-          setPagination(Math.ceil(res.data.length / 9));
-          setHolidayHomes(res.data);
-          setDisplayedHH(res.data.slice(0, 9));
+        console.log("res", res);
+        if (res) {
+          console.log('dataaaaa',res);
+          setPagination(Math.ceil(res.data.HHcount / 9));
+          setHolidayHomes(res.data.holidayHomes);
         } else {
           setHolidayHomes([]);
-          setDisplayedHH([]);
         }
         setShowSkeleton(false);
       })
       .catch(() => {
+        console.log("error");
         setShowSkeleton(false);
       });
   };
 
   useEffect(() => {
+    setShowSkeleton(true);
     fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [selectedPage]);
 
   const handleSearch = () => {
     setShowSkeleton(true);
@@ -132,8 +133,8 @@ export default function HolidayHomes() {
                     alignItems: "center",
                   }}
                 >
-                  {displayedHH.length > 0 ? (
-                    displayedHH.map((item) => (
+                  {holidayHomes.length > 0 ? (
+                    holidayHomes.map((item) => (
                       <Box sx={{ padding: "7px" }} key={item.HolidayHomeId}>
                         <HolidayHomeCard
                           key={item.HolidayHomeId}
@@ -196,10 +197,7 @@ export default function HolidayHomes() {
                 shape="rounded"
                 color="primary"
                 onChange={(event, value) => {
-                  setDisplayedHH(
-                    holidayHomes.slice((value - 1) * 9, value * 9)
-                  );
-                  // go to pagetop
+                  setSelectedPage(value);
                   refPageTop.current.scrollIntoView({ behavior: "smooth" });
                 }}
               />
