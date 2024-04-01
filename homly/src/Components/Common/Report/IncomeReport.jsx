@@ -77,8 +77,8 @@ export default function IncomeReport() {
     }
 
     const rows = [
-      createData('Badulla Lotus by Kaumadi', 50000.00),
-      createData('Bndarawela Lotus by Dinali', 60000.00),
+      createData('Badulla Lotus by Kaumadi', 0.00),
+      createData('Bndarawela Lotus by Dinali', 0.00),
 
     ];
 
@@ -162,10 +162,12 @@ export default function IncomeReport() {
             </TableContainer>
 
             <Typography gutterBottom style={{fontSize: '12px'}}>
-                   Holiday Home count :   2 
+                   Holiday Home count :   0 
             </Typography>
             <Typography gutterBottom align='right' style={{ fontWeight: 'bold' }}>
-                   Total Income (LKR) : 110 000
+
+                    {/* total price */}
+                   Total Income (LKR) : 0
             </Typography>
           </DialogContent>
 

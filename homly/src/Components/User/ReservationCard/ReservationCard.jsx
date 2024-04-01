@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   ThemeProvider,
@@ -10,6 +10,7 @@ import {
 
 import dayjs from "dayjs";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import AddReviewPopup from "../Review/AddReviewPopup";
 import theme from "../../../HomlyTheme";
 
 export default function ReservationCard({
@@ -27,8 +28,11 @@ export default function ReservationCard({
   HHRooms,
   HHHalls,
   ExpireIn,
+  ReservationId,
   IsReviewed,
+  setIsAddReview,
 }) {
+  const [openReview, setOpenReview] = useState(false);
   const buttons = () => {
     if (HHreservation === "Ongoing") {
       if (HHpayment) {
@@ -71,7 +75,11 @@ export default function ReservationCard({
     } else {
       return (
         <Stack direction="row" sx={{ marginTop: { xs: "10px", sm: "0" } }}>
-          <Button variant="contained" disabled={IsReviewed}>
+          <Button
+            variant="contained"
+            disabled={IsReviewed}
+            onClick={() => setOpenReview(true)}
+          >
             {IsReviewed ? "Reviewed" : "Add Review"}
           </Button>
         </Stack>
@@ -319,6 +327,13 @@ export default function ReservationCard({
           </Stack>
         </Grid>
       </Grid>
+      {/* add review popup */}
+      <AddReviewPopup
+        open={openReview}
+        setOpen={setOpenReview}
+        reservationId={ReservationId}
+        setIsAddReview={setIsAddReview}
+      />
     </ThemeProvider>
   );
 }
