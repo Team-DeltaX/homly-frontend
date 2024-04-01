@@ -4,7 +4,6 @@ import { Box, Stack } from "@mui/material";
 import AddReviewPopup from "../Review/AddReviewPopup";
 
 export default function PastReservation({ reservation }) {
-  const [openReview, setOpenReview] = useState(false);
   return (
     <Stack
       direction="column"
@@ -29,15 +28,13 @@ export default function PastReservation({ reservation }) {
                   HHChildren={reserv.reservation.NoOfChildren}
                   HHRooms={reserv.reservation.NoOfRooms}
                   HHHalls={reserv.reservation.NoOfHalls}
-                  setOpen={setOpenReview}
+                  ReservationId={reserv.reservation.ReservationId}
                   IsReviewed={reserv.IsReviewed}
                 />
               </Box>
             );
           })
         : "No Reservations Found!"}
-
-      <AddReviewPopup open={openReview} setOpen={setOpenReview} />
     </Stack>
   );
 }

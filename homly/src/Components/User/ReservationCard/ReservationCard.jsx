@@ -74,7 +74,11 @@ export default function ReservationCard({
     } else {
       return (
         <Stack direction="row" sx={{ marginTop: { xs: "10px", sm: "0" } }}>
-          <Button variant="contained" disabled={IsReviewed}>
+          <Button
+            variant="contained"
+            disabled={IsReviewed}
+            onClick={() => setOpenReview(true)}
+          >
             {IsReviewed ? "Reviewed" : "Add Review"}
           </Button>
         </Stack>

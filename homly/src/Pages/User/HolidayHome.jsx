@@ -125,7 +125,7 @@ export default function HolidayHomes() {
 
                 <Box
                   sx={{
-                    width:"100%",
+                    width: "100%",
                     flexWrap: "wrap",
                     display: !showSkeleton ? "flex" : "none",
                     justifyContent: "center",
