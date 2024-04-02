@@ -316,31 +316,23 @@ const ViewUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
                     unitArray.map((item, index) => {
                         item.selectedRooms = [];
 
-                        axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/${homeId}/${item.unitCode}`)
+                        axios.get(`http://localhost:8080/admin/auth/locationadmin/holidayhome/${homeId}/${item.unitCode}`)
                             .then((res) => {
                                 if (res.data) {
                                     const srDetails = res.data.selectedRoom;
                                     console.log("sr", srDetails);
                                     const promises = srDetails.map((sr) => {
-                                        return axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/room/${homeId}/${sr.roomCode}`)
+                                        return axios.get(`http://localhost:8080/admin/auth/locationadmin/holidayhome/room/${homeId}/${sr.roomCode}`)
                                             .then((res) => {
                                                 const room = res.data;
                                                 console.log("room", room);
 
-                                                // Check if 'room' already exists in 'selectedRooms' array
-                                                const existingRoomIndex = item.selectedRooms.findIndex(existingRoom => existingRoom.roomCode === room.roomCode);
-                                                if (existingRoomIndex === -1) {
-                                                    // If not found, push 'room' into 'selectedRooms'
-                                                    item.selectedRooms.push(room);
-                                                } else {
-                                                    // If found, update the existing item with the new data
-                                                    item.selectedRooms[existingRoomIndex] = room;
-                                                }
+                                                item.selectedRooms.push(room);
                                             });
                                     });
                                     Promise.all(promises)
                                         .then(() => {
-                                            // All requests completed
+                                            console.log("in promis", item.selectedRooms);
                                         })
                                         .catch((error) => {
                                             console.log("Error:", error);
@@ -349,9 +341,6 @@ const ViewUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
                                     console.log("No data found");
                                 }
                             });
-
-
-
 
                         return (
                             // <UnitBreakDown key={index} unitCode={item.unitCode} unitAc={item.unitAc} floorLevel={item.floorLevel} unitNoOfAdults={item.unitNoOfAdults} unitNoOfChildren={item.unitNoOfChildren} unitRemarks={item.unitRemarks} unitRental={item.unitRental} roomArray={roomArray} setRoomArray={setRoomArray} selectedRooms={item.selectedRooms} handleUnitDelete={handleUnitDelete} handleUnitEdit={handleUnitEdit} index={index} />

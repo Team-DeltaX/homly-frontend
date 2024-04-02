@@ -16,17 +16,17 @@ const ViewPopupManage = (props) => {
   const handleremovefromblacklist = () => {
     axios
       .delete(
-        "http://localhost:3002/admin/auth/unblacklist",
+        "http://localhost:8080/admin/auth/unblacklist",
         {
-            data: { ServiceNo: props.selectemp.service_number }, 
-            withCredentials: true,
-          }
+          data: { ServiceNo: props.selectemp.service_number },
+          withCredentials: true,
+        }
       )
       .then((res) => {
         console.log("----------fetch after remove from blacklist--------");
         props.fetch_current_blacklist();
         console.log("remove from blacklist sucess");
-        
+
       })
       .catch((error) => {
 
@@ -35,7 +35,7 @@ const ViewPopupManage = (props) => {
 
     axios
       .put(
-        "http://localhost:3002/admin/auth/unblacklist",
+        "http://localhost:8080/admin/auth/unblacklist",
         {
           Email: props.selectuser.email,
           ServiceNo: props.selectemp.service_number,
@@ -44,14 +44,14 @@ const ViewPopupManage = (props) => {
       )
       .then((res) => {
         console.log("unblacklist homly usertable sucess");
-       
+
       })
       .catch((error) => {
         console.log(error);
       });
 
     axios.post(
-      "http://localhost:3002/admin/auth/blacklisthistory",
+      "http://localhost:8080/admin/auth/blacklisthistory",
       {
         ServiceNo: props.selectemp.service_number,
         AddReason: props.selecteduser.BlackListReason,
@@ -59,15 +59,15 @@ const ViewPopupManage = (props) => {
         RemoveReason: removeReson,
       },
       { withCredentials: true }
-    ) .then((res) => {
-        console.log("added to blacklist history sucess");
-        
-      })
+    ).then((res) => {
+      console.log("added to blacklist history sucess");
+
+    })
       .catch((error) => {
         console.log(error);
       });
 
-     
+
   };
 
   return (
@@ -398,10 +398,10 @@ const ViewPopupManage = (props) => {
                     variant="contained"
                     sx={{ marginRight: "3%" }}
                     onClick={() => {
-                        console.log("remove clicked");
-                        handleremovefromblacklist();
-                      
-                        props.handlepopup();
+                      console.log("remove clicked");
+                      handleremovefromblacklist();
+
+                      props.handlepopup();
                     }}
                   >
                     <Typography>Remove</Typography>

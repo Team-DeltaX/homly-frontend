@@ -7,21 +7,14 @@ import Select from '@mui/material/Select';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import UploadImageCloudinary from '../../Common/UploadImageCloudinary';
 
 
-const HomeDetailsView = ({ setSubmit, value, setValue }) => {
-
-  // const [value, setValue] = useState({
-  //   name: '', address: '', district: '', description: '', contactNo1: '', contactNo2: '', category: '', status: ''
-  // })
+const HomeDetailsView = ({ setSubmit, value, setValue, setMainImage, setImage1, setImage2, setImage3 }) => {
 
   const [error, setError] = useState({
     name: false, address: false, description: false, contactNo1: false, contactNo2: false
   });
-
-
-  // const [mainImage, setMainImage] = useState('');
-  const [images, setImages] = useState({ mainImage: '', image1: '', image2: '', image3: '' });
 
 
   useEffect(() => {
@@ -49,43 +42,13 @@ const HomeDetailsView = ({ setSubmit, value, setValue }) => {
       setSubmit(false)
     }
 
-    // setSubmit(prevSubmit => ({
-    //   ...prevSubmit,
-    //   isDetailsComplete
-    // }));
+
   }, [value, error, setSubmit]);
 
 
-  // useEffect(() => {
-
-  //   if (submitClicked) {
-  //     setAllValues(prev => ({
-  //       ...prev,
-  //       holidayHomeDetails: value,
-  //       images: images
-  //     }))
-
-  //   }
-  // }, [submitClicked])
 
 
 
-
-
-  const handleImageUpload = (name) => (e) => {
-    const fileReader = new FileReader();
-    fileReader.addEventListener('load', () => {
-      const imageData = fileReader.result;
-      setImages((prevImages) => ({
-        ...prevImages,
-        [name]: imageData,
-      }));
-      // setMainImage(imageData);
-      // console.log(imageData); // Log the result inside the event listener
-
-    });
-    fileReader.readAsDataURL(e.target.files[0]);
-  };
 
 
   const handleNameChange = (e) => {
@@ -295,33 +258,74 @@ const HomeDetailsView = ({ setSubmit, value, setValue }) => {
             <Typography variant='p' sx={{ color: 'black' }}>Main Image</Typography>
           </Box>
           <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
-            <input type="file" onChange={handleImageUpload('mainImage')} accept="image/*" />
+            <UploadImageCloudinary
+              folderName="caretaker"
+              setImage={setMainImage}
+              isMultiple={false}
+              limit={1}
+              buttonName="Upload Image"
+              buttonVariant="outlined"
+              isDisplayImageName={true}
+            />
+
+
           </Box>
         </Box>
         <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '1em', marginBottom: '12px' }}>
           <Box sx={{ minWidth: '100px', maxWidth: '100px' }} className="label_container">
-            <Typography variant='p' sx={{ color: 'black' }}>Image 1</Typography>
+            <Typography variant='p' sx={{ color: 'black' }}>Main Image</Typography>
           </Box>
           <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
-            <input type="file" onChange={handleImageUpload('image1')} accept="image/*" />
+            <UploadImageCloudinary
+              folderName="caretaker"
+              setImage={setImage1}
+              isMultiple={false}
+              limit={1}
+              buttonName="Upload Image"
+              buttonVariant="outlined"
+              isDisplayImageName={true}
+            />
+
+
           </Box>
         </Box>
         <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '1em', marginBottom: '12px' }}>
           <Box sx={{ minWidth: '100px', maxWidth: '100px' }} className="label_container">
-            <Typography variant='p' sx={{ color: 'black' }}>Image 2</Typography>
+            <Typography variant='p' sx={{ color: 'black' }}>Main Image</Typography>
           </Box>
           <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
-            <input type="file" onChange={handleImageUpload('image2')} accept="image/*" />
+            <UploadImageCloudinary
+              folderName="caretaker"
+              setImage={setImage2}
+              isMultiple={false}
+              limit={1}
+              buttonName="Upload Image"
+              buttonVariant="outlined"
+              isDisplayImageName={true}
+            />
+
+
           </Box>
         </Box>
         <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '1em', marginBottom: '12px' }}>
           <Box sx={{ minWidth: '100px', maxWidth: '100px' }} className="label_container">
-            <Typography variant='p' sx={{ color: 'black' }}>Image 3</Typography>
+            <Typography variant='p' sx={{ color: 'black' }}>Main Image</Typography>
           </Box>
           <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
-            <input type="file" onChange={handleImageUpload('image3')} accept="image/*" />
+            <UploadImageCloudinary
+              folderName="caretaker"
+              setImage={setImage3}
+              isMultiple={false}
+              limit={1}
+              buttonName="Upload Image"
+              buttonVariant="outlined"
+              isDisplayImageName={true}
+            />
+
+
           </Box>
         </Box>
+
 
 
       </fieldset>

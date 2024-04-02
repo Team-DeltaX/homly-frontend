@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Box, TextField, Typography, Grid } from '@mui/material'
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -7,14 +7,13 @@ import Select from '@mui/material/Select';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
-
 
 const EditHolidayHomeDetails = ({ value, setValue }) => {
     const [error, setError] = useState({
         name: false, address: false, description: false, contactNo1: false, contactNo2: false
     });
+
+    console.log("edithomedetails", value)
     const handleNameChange = (e) => {
         setValue({ ...value, name: e.target.value });
         const name_regex = /^[a-zA-Z\s]+$/;
@@ -101,31 +100,31 @@ const EditHolidayHomeDetails = ({ value, setValue }) => {
                                         label="Age"
                                         onChange={handleDistrictChange}
                                     >
-                                        <MenuItem value={"Colombo"}>Colombo</MenuItem>
-                                        <MenuItem value={"Gampaha"}>Gampaha</MenuItem>
-                                        <MenuItem value={"Kalutara"}>Kalutara</MenuItem>
-                                        <MenuItem value={"Kandy"}>Kandy</MenuItem>
-                                        <MenuItem value={"Matale"}>Matale</MenuItem>
-                                        <MenuItem value={"Nuwara Eliya"}>Nuwara Eliya</MenuItem>
-                                        <MenuItem value={"Galle"}>Galle</MenuItem>
-                                        <MenuItem value={"Matara"}>Matara</MenuItem>
-                                        <MenuItem value={"Hambantota"}>Hambantota</MenuItem>
-                                        <MenuItem value={"Jaffna"}>Jaffna</MenuItem>
-                                        <MenuItem value={"Kilinochchi"}>Kilinochchi</MenuItem>
-                                        <MenuItem value={"Mannar"}>Mannar</MenuItem>
-                                        <MenuItem value={"Vavuniya"}>Vavuniya</MenuItem>
-                                        <MenuItem value={"Mullaitivu"}>Mullaitivu</MenuItem>
-                                        <MenuItem value={"Batticaloa"}>Batticaloa</MenuItem>
-                                        <MenuItem value={"Ampara"}>Ampara</MenuItem>
-                                        <MenuItem value={"Trincomalee"}>Trincomalee</MenuItem>
-                                        <MenuItem value={"Kurunegala"}>Kurunegala</MenuItem>
-                                        <MenuItem value={"Puttalam"}>Puttalam</MenuItem>
-                                        <MenuItem value={"Anuradhapura"}>Anuradhapura</MenuItem>
-                                        <MenuItem value={"Polonnaruwa"}>Polonnaruwa</MenuItem>
-                                        <MenuItem value={"Badulla"}>Badulla</MenuItem>
-                                        <MenuItem value={"Monaragala"}>Monaragala</MenuItem>
-                                        <MenuItem value={"Ratnapura"}>Ratnapura</MenuItem>
-                                        <MenuItem value={"Kegalle"}>Kegalle</MenuItem>
+                                        <MenuItem value={"colombo"}>Colombo</MenuItem>
+                                        <MenuItem value={"gampaha"}>Gampaha</MenuItem>
+                                        <MenuItem value={"kalutara"}>Kalutara</MenuItem>
+                                        <MenuItem value={"kandy"}>Kandy</MenuItem>
+                                        <MenuItem value={"matale"}>Matale</MenuItem>
+                                        <MenuItem value={"nuwara eliya"}>Nuwara Eliya</MenuItem>
+                                        <MenuItem value={"galle"}>Galle</MenuItem>
+                                        <MenuItem value={"matara"}>Matara</MenuItem>
+                                        <MenuItem value={"hambantota"}>Hambantota</MenuItem>
+                                        <MenuItem value={"jaffna"}>Jaffna</MenuItem>
+                                        <MenuItem value={"kilinochchi"}>Kilinochchi</MenuItem>
+                                        <MenuItem value={"mannar"}>Mannar</MenuItem>
+                                        <MenuItem value={"vavuniya"}>Vavuniya</MenuItem>
+                                        <MenuItem value={"mullaitivu"}>Mullaitivu</MenuItem>
+                                        <MenuItem value={"batticaloa"}>Batticaloa</MenuItem>
+                                        <MenuItem value={"ampara"}>Ampara</MenuItem>
+                                        <MenuItem value={"trincomalee"}>Trincomalee</MenuItem>
+                                        <MenuItem value={"kurunegala"}>Kurunegala</MenuItem>
+                                        <MenuItem value={"puttalam"}>Puttalam</MenuItem>
+                                        <MenuItem value={"anuradhapura"}>Anuradhapura</MenuItem>
+                                        <MenuItem value={"bolonnaruwa"}>Polonnaruwa</MenuItem>
+                                        <MenuItem value={"badulla"}>Badulla</MenuItem>
+                                        <MenuItem value={"monaragala"}>Monaragala</MenuItem>
+                                        <MenuItem value={"ratnapura"}>Ratnapura</MenuItem>
+                                        <MenuItem value={"kegalle"}>Kegalle</MenuItem>
 
                                     </Select>
                                 </FormControl>

@@ -20,53 +20,53 @@ export default function EnterDetailCom({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const formData = {serviceNo:value.serviceNo,email:value.email.toLowerCase()}
-    axios.post("http://localhost:3002/users/forgetPassword/", formData)
-    .then((res) => {
-        if(res.data.success){
-            setErrorStatus({
-                ...errorStatus,
-                isOpen: true,
-                type: "success",
-                message: res.data.message,
-            })
-            setSelectedComponent(1)
-        }else{
-            setErrorStatus({
-                ...errorStatus,
-                isOpen: true,
-                type: "error",
-                message: res.data.message,
-            })
+    const formData = { serviceNo: value.serviceNo, email: value.email.toLowerCase() }
+    axios.post("http://localhost:8080/users/forgetPassword/", formData)
+      .then((res) => {
+        if (res.data.success) {
+          setErrorStatus({
+            ...errorStatus,
+            isOpen: true,
+            type: "success",
+            message: res.data.message,
+          })
+          setSelectedComponent(1)
+        } else {
+          setErrorStatus({
+            ...errorStatus,
+            isOpen: true,
+            type: "error",
+            message: res.data.message,
+          })
 
         }
-    });
+      });
   };
 
   return (
     <ThemeProvider theme={theme}>
       <form onSubmit={handleSubmit}>
-        <DialogContent sx={{ height: { xs: "130px", sm: "160px" } , overflowY:'unset' }}>
-          <DialogContentText sx={{marginBottom:'10px'}}>
+        <DialogContent sx={{ height: { xs: "130px", sm: "160px" }, overflowY: 'unset' }}>
+          <DialogContentText sx={{ marginBottom: '10px' }}>
             Enter the service number and email address to reset your password
           </DialogContentText>
-          <InputText 
+          <InputText
             lable={"Service Number"}
             inputType={"text"}
             error={false}
             helperText={""}
             required={true}
             inputValue={value.serviceNo}
-            setInputValue={(val)=>setValue({...value,serviceNo:val})}
+            setInputValue={(val) => setValue({ ...value, serviceNo: val })}
           />
-          <InputText 
+          <InputText
             lable={"Email Address"}
             inputType={"email"}
             error={false}
             helperText={""}
             required={true}
             inputValue={value.email}
-            setInputValue={(val)=>setValue({...value,email:val})}
+            setInputValue={(val) => setValue({ ...value, email: val })}
           />
         </DialogContent>
         <DialogActions>

@@ -52,7 +52,7 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
 
 // useEffect(() => {
 //   axios
-//     .get("http://localhost:3002/admin/auth/locationadmin/holidayhome/1709530965098")
+//     .get("http://localhost:8080/admin/auth/locationadmin/holidayhome/1709530965098")
 //     .then((res) => {
 //       if (res.data) {
 //         setHolidayHomes(res.data);
@@ -105,7 +105,7 @@ export default function HolidayHomeDetails() {
   useEffect(() => {
     axios
       .get(
-        `http://localhost:3002/admin/auth/locationadmin/holidayhome/${homeId}`,
+        `http://localhost:8080/admin/auth/locationadmin/holidayhome/${homeId}`,
         { withCredentials: true }
       )
       .then((res) => {
@@ -120,7 +120,7 @@ export default function HolidayHomeDetails() {
             id: homeDetails.HolidayHomeId || "",
             name: homeDetails.Name || "",
             address: homeDetails.Address || "",
-            district: "Kegalle", // Add the logic to get district if available
+            district: homeDetails.district || "", // Add the logic to get district if available
             description: homeDetails.Description || "",
             contactNo1:
               contactNo && contactNo.length > 0 ? contactNo[0].ContactNo : "",
@@ -129,7 +129,7 @@ export default function HolidayHomeDetails() {
             category: homeDetails.Category || "",
             status: homeDetails.Status || "",
             Gym: homeDetails.Gym === "0" ? false : true,
-            Kitchen: homeDetails.Kitchen  === "0" ? false : true,
+            Kitchen: homeDetails.Kitchen === "0" ? false : true,
             Park: homeDetails.Park === "0" ? false : true,
             Wifi: homeDetails.Wifi === "0" ? false : true,
             Pool: homeDetails.Pool === "0" ? false : true,
@@ -164,15 +164,15 @@ export default function HolidayHomeDetails() {
           >
             <Grid container spacing={2}>
               <Grid md={8}>
-                <Typography variant="h4" sx={{fontWeight:"550", textTransform:'uppercase'}}>
-                  {value.name} 
+                <Typography variant="h4" sx={{ fontWeight: "550", textTransform: 'uppercase' }}>
+                  {value.name}
                 </Typography>
-                <Typography variant="button" sx={{color:'#823', ml:'1%', fontSize:'1rem'}}>
+                <Typography variant="button" sx={{ color: '#823', ml: '1%', fontSize: '1rem' }}>
                   {value.category}
-                </Typography> 
+                </Typography>
               </Grid>
               <Grid md={4}>
-                <AddReservationPopUp name={value.name} id={value.id}/>
+                <AddReservationPopUp name={value.name} id={value.id} />
                 {/* <AddReservationPopUp name={value.name} id={value.id} room={room}/> */}
               </Grid>
               <Grid md={12}>

@@ -15,10 +15,10 @@ const Income = () => {
     for (let i = 6; i >= 0; i--) {
       const date = new Date();
       date.setDate(today.getDate() - i);
-     
+
       dates.push(date.toISOString().split("T")[0]);
-     
-      // axios.get('http://localhost:3002/admin/auth/dayincome',{date:date.toISOString().split("T")[0]})
+
+      // axios.get('http://localhost:8080/admin/auth/dayincome',{date:date.toISOString().split("T")[0]})
       // .then((res)=>{
       //   pData.push(res.data.sumForDate)
 
@@ -29,7 +29,7 @@ const Income = () => {
   };
   const setearning = () => {
     const promises = getLastSevenDays().map((date) => {
-      return axios.get(`http://localhost:3002/admin/auth/dayincome/${date}`)
+      return axios.get(`http://localhost:8080/admin/auth/dayincome/${date}`)
         .then((res) => res.data.sumForDate)
         .catch((err) => {
           console.log(err);
@@ -47,19 +47,19 @@ const Income = () => {
       });
   };
 
-  
+
   const [xaxisd, setXasisd] = React.useState(getLastSevenDays());
 
   React.useEffect(() => {
     const dates = getLastSevenDays();
     setXasisd(dates);
     setearning()
-    
-    // console.log(pData.slice(0,7))
-   
-  //  
 
-   
+    // console.log(pData.slice(0,7))
+
+    //  
+
+
     // console.log(pData)
   }, []);
 

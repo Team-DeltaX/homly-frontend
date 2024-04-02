@@ -59,9 +59,9 @@ export default function Home() {
   useEffect(() => {
 
     axios
-      .get("http://localhost:3002/users/auth/holidayhomes/sort/topRated", { withCredentials: true })
+      .get("http://localhost:8080/users/auth/holidayhomes/sort/topRated", { withCredentials: true })
       .then((res) => {
-        console.log("topRated",res.data);
+        console.log("topRated", res.data);
         setSortedByRating(res.data);
       }).catch((err) => {
         console.log(err);
@@ -71,7 +71,7 @@ export default function Home() {
       });
 
     axios
-      .get("http://localhost:3002/users/auth/interested", {
+      .get("http://localhost:8080/users/auth/interested", {
         withCredentials: true,
       })
       .then((res) => {
@@ -95,7 +95,7 @@ export default function Home() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3002/users/auth/holidayhomes/sort", {
+      .get("http://localhost:8080/users/auth/holidayhomes/sort", {
         withCredentials: true,
       })
       .then((res) => {

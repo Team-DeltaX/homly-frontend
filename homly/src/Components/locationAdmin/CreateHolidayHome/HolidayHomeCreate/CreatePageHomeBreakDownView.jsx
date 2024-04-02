@@ -303,12 +303,12 @@ const CreatePageHomeBreakDownView = ({ setSubmit, setAllValues, submitClicked, s
       // setHomeBreakDownError(true)
     }
 
-    if (bdValue.totalRental !== undefined && roomArray.length > 0 && unitArray.length > 0 && areErrorsEmpty) {
+    if (roomArray.length > 0 && unitArray.length > 0 && areErrorsEmpty) {
       setSubmit(true);
     } else {
       setSubmit(false);
     }
-  }, [bdValue.totalRental, roomArray, unitArray, setSubmit, error]);
+  }, [roomArray, unitArray, setSubmit, error]);
 
 
   // useEffect(() => {

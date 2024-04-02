@@ -57,16 +57,12 @@ const ManageHomeContent = () => {
     const [active, setActive] = React.useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:3002/admin/auth/locationadmin/holidayhome/')
+        axios.get('http://localhost:8080/admin/auth/locationadmin/holidayhome/')
             .then((res) => {
                 if (Response) {
                     setPending(res.data.pending);
                     setActive(res.data.active);
                     setInactive(res.data.inactive);
-
-                    console.log("active", active);
-
-
                 } else {
                     console.log("No data found");
                 }
@@ -124,11 +120,12 @@ const ManageHomeContent = () => {
                             <Box className="homes_container" sx={{ overflowY: "scroll", maxHeight: "60vh" }}>
 
                                 <Box className="homes_container_body">
-                                    {pending.map((item) => {
-                                        return (
-                                            <HolidayHomeCard key={item.HolidayHomeId} HolidayHomeName={item.Name} Category={item.Category} HolidayHomeId={item.HolidayHomeId} />
-                                        )
-                                    })}
+                                    {
+                                        pending.map((item) => {
+                                            return (
+                                                <HolidayHomeCard key={item.HolidayHomeId} HolidayHomeName={item.Name} Category={item.Category} HolidayHomeId={item.HolidayHomeId} />
+                                            )
+                                        })}
 
                                 </Box>
                             </Box>

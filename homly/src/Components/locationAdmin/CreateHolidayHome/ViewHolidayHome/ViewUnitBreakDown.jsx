@@ -6,13 +6,9 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
-import Snackbar from '@mui/material/Snackbar';
-import Alert from '@mui/material/Alert';
-
 
 const ViewUnitBreakDown = ({ unitCode, unitAc, floorLevel, unitRemarks, unitRental, selectedRooms, roomArray, setRoomArray, handleUnitDelete, handleUnitEdit, index }) => {
     const [open, setOpen] = useState(false);
@@ -24,8 +20,10 @@ const ViewUnitBreakDown = ({ unitCode, unitAc, floorLevel, unitRemarks, unitRent
     const [unitAdultCount, setUnitAdultCount] = useState(0);
     const [unitRoomCount, setUnitRoomCount] = useState(0);
 
-    console.log("selectedrooms", selectedRooms);
 
+
+
+    console.log("selectedrooms", selectedRooms);
 
 
     const handleClickOpen = () => {
@@ -280,31 +278,33 @@ const ViewUnitBreakDown = ({ unitCode, unitAc, floorLevel, unitRemarks, unitRent
                                                 <Typography variant='p' sx={{ color: 'grey' }}>No Selected Rooms</Typography>
                                             </Box>
                                             :
+
                                             selectedRooms.map((item, index) => {
-                                                console.log("item", item)
+                                                console.log("item", item.room[0])
+
                                                 return (
                                                     <Paper elevation={8} sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', padding: "10px", marginBottom: "10px" }}>
                                                         <Box sx={{ display: 'flex', gap: '1em' }}>
                                                             <Box className="card_item">
                                                                 <Typography variant='p' className='attach_card_item_title'>Room Code</Typography>
-                                                                <Typography variant='p' className='attach_card_item_value'>{item.room.roomCode}</Typography>
+                                                                <Typography variant='p' className='attach_card_item_value'>{item.room[index].roomCode}</Typography>
                                                             </Box>
                                                             <Box className="card_item">
                                                                 <Typography variant='p' className='attach_card_item_title'>AC/Non AC</Typography>
-                                                                <Typography variant='p' className='attach_card_item_value'>{item.room.roomAc}</Typography>
+                                                                <Typography variant='p' className='attach_card_item_value'>{item.room[index].roomAc}</Typography>
 
                                                             </Box>
                                                             <Box className="card_item">
                                                                 <Typography variant='p' className='attach_card_item_title'>Room Type</Typography>
-                                                                <Typography variant='p' className='attach_card_item_value'>{item.room.RoomType}</Typography>
+                                                                <Typography variant='p' className='attach_card_item_value'>{item.room[index].RoomType}</Typography>
                                                             </Box>
                                                             <Box className="card_item">
                                                                 <Typography variant='p' className='attach_card_item_title'>Adults</Typography>
-                                                                <Typography variant='p' className='attach_card_item_value'>{item.room.NoOfAdults}</Typography>
+                                                                <Typography variant='p' className='attach_card_item_value'>{item.room[index].NoOfAdults}</Typography>
                                                             </Box>
                                                             <Box className="card_item">
                                                                 <Typography variant='p' className='attach_card_item_title'>Children</Typography>
-                                                                <Typography variant='p' className='attach_card_item_value'>{item.room.NoOfChildren}</Typography>
+                                                                <Typography variant='p' className='attach_card_item_value'>{item.room[index].NoOfChildren}</Typography>
                                                             </Box>
 
                                                         </Box>

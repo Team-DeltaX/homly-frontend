@@ -1,26 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Box, Typography, TextField, Grid } from '@mui/material'
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
-import axios from 'axios';
-import { useParams } from 'react-router-dom';
-
 const EditCaretakerDetails = ({ value, setValue, valueSecond, setValueSecond }) => {
-
-    // const [value, setValue] = useState({
-    //     caretakerName: '', caretakerContactNo: '', caretakerStatus: '', caretakerAddress: '', caretakerDescription: '',
-    // })
-
-    // const [valueSecond, setValueSecond] = useState({
-    //     caretakerName: '', caretakerContactNo: '', caretakerStatus: '', caretakerAddress: '', caretakerDescription: '',
-    // })
-
-
-    console.log("in the comp", value);
-
-
 
 
     const [error, setError] = useState({

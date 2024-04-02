@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
-import { Container, Box, ThemeProvider, Pagination , Typography} from "@mui/material";
+import { Container, Box, ThemeProvider, Pagination, Typography } from "@mui/material";
 import axios from "axios";
-import { useParams} from "react-router-dom";
+import { useParams } from "react-router-dom";
 import NavBar from "../../Components/User/NavBar/NavBar";
 import Footer from "../../Components/User/Footer/Footer";
 import HolidayHomeCard from "../../Components/User/HHCard/HolidayHomeCard";
@@ -26,13 +26,13 @@ export default function HolidayHomes() {
     console.log("searchData", searchData);
     axios
       .get(
-        "http://localhost:3002/users/holidayhomes",
-        { params : { search:searchData} },
+        "http://localhost:8080/users/holidayhomes",
+        { params: { search: searchData } },
         { withCredentials: true }
       )
       .then((res) => {
         console.log("hhdetails", res.data);
-        setPagination( Math.ceil(res.data.length / 9));
+        setPagination(Math.ceil(res.data.length / 9));
         setHolidayHomes(res.data);
         setDisplayedHH(res.data.slice(0, 9));
       })
@@ -48,7 +48,7 @@ export default function HolidayHomes() {
           overflow: "hidden",
         }}
       >
-        <Container maxWidth="xl" style={{ padding: 0 }}  ref={refPageTop}>
+        <Container maxWidth="xl" style={{ padding: 0 }} ref={refPageTop}>
           <NavBar refContactUS={refContactUS} />
           <Container
             maxWidth="lg"
@@ -59,7 +59,7 @@ export default function HolidayHomes() {
           >
             <Container
               sx={{
-                marginTop:{xs:"20px", sm:"10px", ms:"0"},
+                marginTop: { xs: "20px", sm: "10px", ms: "0" },
                 width: { xs: "100%", sm: "95%", padding: 0 },
                 display: "flex",
                 flexWrap: "wrap",
@@ -67,7 +67,7 @@ export default function HolidayHomes() {
               }}
             >
               {displayedHH ? displayedHH.map((item) => (
-                <Box sx={{padding:"7px"}}>
+                <Box sx={{ padding: "7px" }}>
                   <HolidayHomeCard
                     key={item.HolidayHomeId}
                     HHID={item.HolidayHomeId}
@@ -82,16 +82,16 @@ export default function HolidayHomes() {
                     showInterest={false}
                   />
                 </Box>
-              )):
-              <Box
-                sx={{
-                  width: "100%",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  padding: "20px",
-                }}
-              ><Typography variant="h6">No Holiday Homes Found</Typography></Box>
+              )) :
+                <Box
+                  sx={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    padding: "20px",
+                  }}
+                ><Typography variant="h6">No Holiday Homes Found</Typography></Box>
               }
             </Container>
             <Box
@@ -108,9 +108,9 @@ export default function HolidayHomes() {
                 variant="outlined"
                 shape="rounded"
                 color="primary"
-                onChange={(event, value) => { 
+                onChange={(event, value) => {
                   console.log("page", value);
-                  setDisplayedHH(holidayHomes.slice((value-1)*9, value*9));
+                  setDisplayedHH(holidayHomes.slice((value - 1) * 9, value * 9));
                   // go to pagetop
                   refPageTop.current.scrollIntoView({ behavior: "smooth" });
                 }}

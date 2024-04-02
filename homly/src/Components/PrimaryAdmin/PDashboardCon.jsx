@@ -15,11 +15,11 @@ import axios from "axios";
 const PDashboardCon = () => {
   const [hhcount, Sethhcount] = useState("0");
   const [earning, SetEarning] = useState("0");
-  const [paidcount,SetPaidcount] = useState("0");
-  const [unpaidcount,SetUnpaindcount]=useState("0");
+  const [paidcount, SetPaidcount] = useState("0");
+  const [unpaidcount, SetUnpaindcount] = useState("0");
   const gethhcount = () => {
     axios
-      .get("http://localhost:3002/admin/auth/hhcount")
+      .get("http://localhost:8080/admin/auth/hhcount")
       .then((res) => {
         Sethhcount(res.data.count);
       })
@@ -30,7 +30,7 @@ const PDashboardCon = () => {
 
   const getearning = () => {
     axios
-      .get("http://localhost:3002/admin/auth/earning")
+      .get("http://localhost:8080/admin/auth/earning")
       .then((res) => {
         SetEarning(res.data.sum);
       })
@@ -39,16 +39,16 @@ const PDashboardCon = () => {
       });
   };
 
-  const bookingcount=()=>{
-    axios.get('http://localhost:3002/admin/auth/bookingcount')
-    .then((res)=>{
-     SetPaidcount(res.data.Paid);
-      SetUnpaindcount(res.data.Unpaid);
-    })
-    .catch((error)=>{
-      console.log(error);
-    
-    })
+  const bookingcount = () => {
+    axios.get('http://localhost:8080/admin/auth/bookingcount')
+      .then((res) => {
+        SetPaidcount(res.data.Paid);
+        SetUnpaindcount(res.data.Unpaid);
+      })
+      .catch((error) => {
+        console.log(error);
+
+      })
   }
   // const summaries = [
   //   {
@@ -133,7 +133,7 @@ const PDashboardCon = () => {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
-      
+
               }}
             >
               <Box sx={{ width: "350px", height: "150px" }}>
@@ -147,38 +147,38 @@ const PDashboardCon = () => {
                     flexDirection: "row",
                     justifyContent: "center",
                     gap: "0.2em",
-                    backgroundColor:"#FF5F51",
+                    backgroundColor: "#FF5F51",
                     color: "white",
                     borderRadius: "20px",
                     alignItems: "center",
                   }}
                 >
                   <Box><LibraryBooksIcon sx={{ fontSize: "2.8rem" }} /></Box>
-                  <Box sx={{display:'flex',flexDirection:'row',justifyContent:'space-between',columnGap:'50px'}}>
-                   <Box sx={{display:'flex',justifyContent:'center',alignItems:'center',flexDirection:'column',textAlign:'center'}}>
-                   <Typography
-                      variant="p"
-                      sx={{ fontSize: "0.85rem", fontWeight: "medium" }}
-                    >
-                      Pending Bookings
-                    </Typography>
-                    <Typography variant="h6" sx={{ marginLeft: "4px" }}>
-                      {unpaidcount}
-                    </Typography>
-                   </Box>
-                   <Box>
-                   <Typography
-                      variant="p"
-                      sx={{ fontSize: "0.85rem", fontWeight: "medium" }}
-                    >
-                    paid Bookings
-      
-                    </Typography>
-                    <Typography variant="h6" sx={{ marginLeft: "4px" }}>
-                    {paidcount}
-                    </Typography>
-                   </Box>
-      
+                  <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', columnGap: '50px' }}>
+                    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', textAlign: 'center' }}>
+                      <Typography
+                        variant="p"
+                        sx={{ fontSize: "0.85rem", fontWeight: "medium" }}
+                      >
+                        Pending Bookings
+                      </Typography>
+                      <Typography variant="h6" sx={{ marginLeft: "4px" }}>
+                        {unpaidcount}
+                      </Typography>
+                    </Box>
+                    <Box>
+                      <Typography
+                        variant="p"
+                        sx={{ fontSize: "0.85rem", fontWeight: "medium" }}
+                      >
+                        paid Bookings
+
+                      </Typography>
+                      <Typography variant="h6" sx={{ marginLeft: "4px" }}>
+                        {paidcount}
+                      </Typography>
+                    </Box>
+
                   </Box>
                 </Box>
               </Box>

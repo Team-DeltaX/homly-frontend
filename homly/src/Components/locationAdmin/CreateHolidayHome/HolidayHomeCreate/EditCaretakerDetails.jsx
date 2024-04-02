@@ -21,7 +21,7 @@ const EditCaretakerDetails = ({ value, setValue, valueSecond, setValueSecond }) 
 
     // const { homeId } = useParams();
     // useEffect(() => {
-    //     axios.get(`http://localhost:3002/locationadmin/holidayhome/${homeId}`)
+    //     axios.get(`http://localhost:8080/locationadmin/holidayhome/${homeId}`)
     //         .then((res) => {
     //             if (Response) {
     //                 const caretakerDetails = res.data.caretaker;

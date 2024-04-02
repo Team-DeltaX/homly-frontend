@@ -1,4 +1,4 @@
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
@@ -12,10 +12,10 @@ const PastReservationList = (props) => {
   const [reservations, setReservations] = useState([])
   const fetchreservations = () => {
     axios
-      .get("http://localhost:3002/users/reservation/past")
+      .get("http://localhost:8080/users/reservation/past")
       .then((res) => {
         console.log(res.data);
-         //reverse array to keep new ones first 
+        //reverse array to keep new ones first 
         setReservations(res.data);
       })
       .catch((err) => {
@@ -28,7 +28,7 @@ const PastReservationList = (props) => {
   }, []);
   return (
     <>
-        {/* <Box className="home">
+      {/* <Box className="home">
       {reservations.filter((reservations) => {
                     return props.search.toLowerCase() === ""
                       ? reservations
@@ -40,14 +40,14 @@ const PastReservationList = (props) => {
          (<OngoingReservationCard  reservation={reservation.Reservations[0]} name={reservation.empName}/>)    
       ))}
     </Box> */}
-    <Box className="home">
-      {reservations.map(reservation => (
-         <PastReservationCard  reservation={reservation}/>
-        // console.log("sadasd",reservation)
-      ))}
-    </Box>
+      <Box className="home">
+        {reservations.map(reservation => (
+          <PastReservationCard reservation={reservation} />
+          // console.log("sadasd",reservation)
+        ))}
+      </Box>
     </>
   );
 }
- 
+
 export default PastReservationList;

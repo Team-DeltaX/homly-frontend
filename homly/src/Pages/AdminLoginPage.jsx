@@ -44,7 +44,7 @@ export default function AdminLoginPage() {
     e.preventDefault();
     const formData = { adminId, password };
     axios
-      .post("http://localhost:3002/admin/", formData, {withCredentials:true})
+      .post("http://localhost:8080/admin/", formData, { withCredentials: true })
       .then((res) => {
         console.log(res);
         if (res.data.success) {
@@ -56,10 +56,10 @@ export default function AdminLoginPage() {
           });
           if (!res.data.verified) {
             setOpen(true);
-          }else{
-            if(res.data.role === "LocationAdmin"){
+          } else {
+            if (res.data.role === "LocationAdmin") {
               Navigate("/Locationadmin/Dashboard");
-            }else{
+            } else {
               Navigate("/Primaryadmin/Dashboard");
             }
           }

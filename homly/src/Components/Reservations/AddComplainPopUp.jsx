@@ -51,7 +51,7 @@ export default function AddComplainPopUp(props) {
     };
     console.log("aruna", data);
     axios
-      .post("http://localhost:3002/users/reservation/AddComplaint", data)
+      .post("http://localhost:8080/users/reservation/AddComplaint", data)
       .then((res) => {
         console.log("add complaint successfully");
         setOpen(false);
@@ -163,12 +163,12 @@ export default function AddComplainPopUp(props) {
             onChange={(e) => {
               setReason(e.target.value);
             }}
-            
+
             maxLength="parent.maxLength"
           />
         </DialogContent>
         <DialogActions>
-        <ConfirmPopup
+          <ConfirmPopup
             open={opened}
             setOpen={setOpened}
             title={"Reservation Confirmation"}
@@ -176,8 +176,8 @@ export default function AddComplainPopUp(props) {
             controlfunction={handlesubmit}
           />
           <Button autoFocus onClick={() => {
-                setOpened(true);
-              }} type="submit"
+            setOpened(true);
+          }} type="submit"
           >
             Add Complain
           </Button>

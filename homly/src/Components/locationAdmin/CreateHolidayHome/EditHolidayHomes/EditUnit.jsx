@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Box, Button, Typography, TextField, Paper } from '@mui/material'
-import CancelIcon from '@mui/icons-material/Cancel';
+import { Box, Button, Typography, TextField } from '@mui/material'
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -150,17 +149,12 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
             selectedRooms: editedUnit.selectedRooms
         })
 
-        axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/rental/${homeId}/${editedUnit.unitCode}`)
+        axios.get(`http://localhost:8080/admin/auth/locationadmin/holidayhome/rental/${homeId}/${editedUnit.unitCode}`)
             .then(res => {
                 const rental = res.data.roomRental;
                 for (let i = 0; i < rental.length; i++) {
                     console.log("in")
                     console.log(rental[i].Month);
-                    setUnitRental({
-                        district: rental[i].Month,
-                        weekDays: rental[i].WeekRental,
-                        weekEnds: rental[i].WeekEndRental,
-                    });
                     setUnitRentalArray(rental); // Use functional update
                 }
                 setOpenUnit(true)
@@ -196,49 +190,9 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
     };
 
 
-
-    const [unitRental, setUnitRental] = useState({
-        district: '', weekDays: '', weekEnds: ''
-    });
-
-    const handleUnitDistrict = (e) => {
-        setUnitRental({ ...unitRental, district: e.target.value });
-    }
-
-    const handleUnitWeedays = (e) => {
-        setUnitRental({ ...unitRental, weekDays: e.target.value });
-        setNewUnitWeekDayValue(e.target.value);
-    }
-
-    const handleUnitWeekends = (e) => {
-        setUnitRental({ ...unitRental, weekEnds: e.target.value });
-        setNewUnitWeekendValue(e.target.value);
-    }
-
-
-    const [newUnitWeekDayValue, setNewUnitWeekDayValue] = useState('')
-    const [newUnitWeekendValue, setNewUnitWeekendValue] = useState('')
-
-
-
     const [unitRentalArray, setUnitRentalArray] = useState([]);
-    const handleUnitAdd = () => {
-        if (unitRental.district === '' || unitRental.weekDays === '' || unitRental.weekEnds === '') return;
-        setUnitRentalArray([...unitRentalArray, unitRental]);
-        setUnitRental({
-            district: '',
-            weekDays: '',
-            weekEnds: '',
-        });
 
-        setNewUnitWeekDayValue('');
-        setNewUnitWeekendValue('');
-    };
 
-    const handleRemoveUnitRentalItem = (no) => {
-        const newUnitRentalArray = unitRentalArray.filter((item, index) => index !== no);
-        setUnitRentalArray(newUnitRentalArray);
-    }
 
     //unit - all fields should filled warning
     const [openUnitFillAlert, setOpenUnitFillAlert] = useState(false);
@@ -284,13 +238,13 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
                     :
                     unitArray.map((item, index) => {
                         item.selectedRooms = [];
-                        axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/${homeId}/${item.unitCode}`)
+                        axios.get(`http://localhost:8080/admin/auth/locationadmin/holidayhome/${homeId}/${item.unitCode}`)
                             .then((res) => {
                                 if (Response) {
                                     const srDetails = res.data.selectedRoom;
                                     console.log(srDetails);
                                     for (let i = 0; i < srDetails.length; i++) {
-                                        axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/room/${homeId}/${srDetails[i].roomCode}`)
+                                        axios.get(`http://localhost:8080/admin/auth/locationadmin/holidayhome/room/${homeId}/${srDetails[i].roomCode}`)
                                             .then((res) => {
                                                 const room = res.data;
                                                 // Check if 'room' already exists in 'selectedRooms' array

@@ -12,8 +12,8 @@ const CurrentAdminslist = () => {
   const [open, setOpen] = useState(false);
   const [snacktext, setsnacktext] = useState("");
   const { load, SetLoad } = useContext(CustomTabContext);
-  const [editadmin,Seteditadmin]=useState('')
-  const {Search,SetSearch}=useContext(SearchContext)
+  const [editadmin, Seteditadmin] = useState('')
+  const { Search, SetSearch } = useContext(SearchContext)
 
   const handleClick = () => {
     setOpen(true);
@@ -29,11 +29,11 @@ const CurrentAdminslist = () => {
   const fetchadmins = () => {
     SetLoad(true);
     axios
-      .get("http://localhost:3002/admin/auth/locationadmin/all")
+      .get("http://localhost:8080/admin/auth/locationadmin/all")
       .then((res) => {
         SetLoad(false);
         console.log(res.data);
-         //reverse array to keep new ones first 
+        //reverse array to keep new ones first 
         setBlacklistedusers(res.data.reverse());
       })
       .catch((err) => {
@@ -46,7 +46,7 @@ const CurrentAdminslist = () => {
   }, []);
 
   return (
-    <Box sx={{ marginTop: "0.5%", maxHeight: {md:'450px',xs:'550px'}, overflow: "scroll" }}>
+    <Box sx={{ marginTop: "0.5%", maxHeight: { md: '450px', xs: '550px' }, overflow: "scroll" }}>
       <AutohideSnackbar
         handleClick={handleClick}
         handleClose={handleClose}
@@ -59,13 +59,13 @@ const CurrentAdminslist = () => {
       ) : (
         <Box>
           {blacklistedusers
-            .filter((item) =>{
-              return  (   ( item.Disabled===false) &&(Search.toLowerCase() === ""
-              ? item
-              : (item.WorkLocation
-              .toLowerCase()
-              .startsWith(Search.toLowerCase()))))
-         
+            .filter((item) => {
+              return ((item.Disabled === false) && (Search.toLowerCase() === ""
+                ? item
+                : (item.WorkLocation
+                  .toLowerCase()
+                  .startsWith(Search.toLowerCase()))))
+
             })
             .map((item) => {
               return (
@@ -78,7 +78,7 @@ const CurrentAdminslist = () => {
                   loading={load}
                   editadmin={editadmin}
                   Seteditadmin={Seteditadmin}
-                  
+
                 />
               );
             })}

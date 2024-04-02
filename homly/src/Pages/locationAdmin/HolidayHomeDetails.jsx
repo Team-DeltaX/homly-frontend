@@ -2,55 +2,43 @@
 import './style.css';
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import React, { useState, useRef, useEffect } from 'react'
-
 import Box from '@mui/material/Box';
-import { Grid, ThemeProvider, Container, Typography, TextField, Button } from '@mui/material';
+import { Grid, ThemeProvider, Container, Typography, Button } from '@mui/material';
 import theme from '../../HomlyTheme';
-
 import SideNavbar from '../../Components/locationAdmin/SideNavbar'
 import PageTitle from '../../Components/locationAdmin/PageTitle';
-import CustomSelect from '../../Components/locationAdmin/CustomSelect/CustomSelect';
 import CalendarDetails from '../../Components/locationAdmin/CreateHolidayHome/popups/CalendarDetails';
-
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import moment from 'moment'
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import Select from 'react-select'
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 import axios from 'axios';
 import dayjs from 'dayjs';
-// dayjs.extend(require('dayjs/plugin/add'));
-// var add = require('dayjs/plugin/add')
+import Popup from '../../Components/Common/Popup';
 var isBetween = require('dayjs/plugin/isBetween')
 dayjs.extend(isBetween)
-// dayjs.extend(add)
-
-
-
-
 
 
 const HolidayHomeDetails = () => {
     const localizer = momentLocalizer(moment)
     const calendarRef = useRef();
-
     const [showNav, setShowNav] = useState('nav_grid_deactive')
     const [holidayHomes, setHolidayHomes] = useState([]);
-
     const [selectedHolidayHome, setSelectedHolidayHome] = useState('');
     const [names, setNames] = useState([]);
+    const [myEventsList, setMyEventsList] = useState([]);
+    const [openPopup, setOpenPopup] = React.useState(false);
+
+    const handleOpen = () => setOpenPopup(true);
+    const handleClosePopUp = () => setOpenPopup(false);
 
     const [displayedRange, setDisplayedRange] = useState({
         start: moment().startOf('month'),
         end: moment().endOf('month'),
     });
-
-
-    const [myEventsList, setMyEventsList] = useState([]);
-    const [event, setEvent] = useState({
-        start: "", end: "", title: ""
-    })
-
 
     const CustomToolbar = (toolbar) => {
         const goToBack = () => {
@@ -59,10 +47,6 @@ const HolidayHomeDetails = () => {
 
         const goToNext = () => {
             toolbar.onNavigate('NEXT');
-        };
-
-        const goToToday = () => {
-            toolbar.onNavigate('');
         };
 
         return (
@@ -79,7 +63,7 @@ const HolidayHomeDetails = () => {
 
     //Holidayhomes list
     useEffect(() => {
-        axios.get('http://localhost:3002/admin/auth/locationadmin/holidayhome/names')
+        axios.get('http://localhost:8080/admin/auth/locationadmin/holidayhome/names')
             .then((res) => {
                 const data = res.data.names;
 
@@ -113,7 +97,6 @@ const HolidayHomeDetails = () => {
         holidayHomes.forEach((item) => {
 
             if (item.name === homeName) {
-
                 id = item.id;
             }
         }
@@ -121,7 +104,7 @@ const HolidayHomeDetails = () => {
 
         console.log("idhol", id)
 
-        axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/reservation/${id}`)
+        axios.get(`http://localhost:8080/admin/auth/locationadmin/holidayhome/reservation/${id}`)
             .then((res) => {
 
                 const data = res.data.reservations;
@@ -129,30 +112,27 @@ const HolidayHomeDetails = () => {
                 const events = data.map((item) => {
                     return {
                         start: dayjs(item.CheckinDate).format('YYYY-MM-DD'),
-                        // end: dayjs(item.reservation.CheckoutDate).format('YYYY-MM-DD'),
                         end: dayjs(item.CheckoutDate).add(1, 'day').format('YYYY-MM-DD'),
-                        title: item.ReservationId
+                        title: item.ReservationId,
+                        paid: item.IsPaid
                     }
                 })
-                setMyEventsList(events);
-                console.log(events);
+                if (events.length === 0) {
+                    setMyEventsList([]);
+                    setOpenPopup(true);
+                }
+                else {
+                    setMyEventsList(events);
+                }
+
             })
             .catch((err) => {
                 console.log(err);
             })
 
-
         console.log("myEventlist", myEventsList)
 
-
-
-
-
-
     };
-
-
-
 
     const handleClear = () => {
         setSelectedHolidayHome('');
@@ -162,7 +142,8 @@ const HolidayHomeDetails = () => {
     const [open, setOpen] = useState(false);
     const [date, setDate] = useState('');
     const [reservationIds, setReservationIds] = useState([])
-    const [rooms, setRooms] = useState([])
+    const [paidRooms, setPaidRooms] = useState([])
+    const [pendingRooms, setPendingRooms] = useState([])
 
 
     const handleClickOpen = (event) => {
@@ -173,47 +154,76 @@ const HolidayHomeDetails = () => {
         console.log(newDate)
         setReservationIds([])
         myEventsList.map((item) => {
-            console.log("item", item.start)
+            console.log("item", item)
             if (dayjs(newDate).isBetween(item.start, item.end, 'day', '[)')) {
-                // setOpen(true);
-                // setDate(newDate);
                 console.log(newDate, item.title)
-                setReservationIds(prev => [...prev, item.title])
+                setReservationIds(prev => [...prev, { "id": item.title, "paid": item.paid }])
             }
 
         })
-
         setDate(newDate);
-        setOpen(true);
+        if (selectedHolidayHome === '') {
+            setOpenAlert(true);
+        }
+        else {
+            setOpen(true);
+
+        }
     };
 
 
     useEffect(() => {
+        console.log("reservationids array", reservationIds)
         if (reservationIds.length > 0) {
-            axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/reserved/`, { params: reservationIds })
-                .then((response) => {
-                    const data = response.data;
-                    setRooms(data)
-                })
-                .catch((err) => {
-                    console.log(err);
-                })
+            if (reservationIds[0].paid === true) {
+                for (let i = 0; i < reservationIds.length; i++) {
+                    console.log("reservation id", reservationIds[i].id)
+                    let reservationId = { "id": reservationIds[i].id }
+                    axios.get(`http://localhost:8080/admin/auth/locationadmin/holidayhome/reserved/`, { params: reservationId })
+                        .then((response) => {
+                            const data = response.data;
+                            setPaidRooms(data)
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                        })
+                }
+            } else {
+                for (let i = 0; i < reservationIds.length; i++) {
+                    console.log("reservation id", reservationIds[i].id)
+                    let reservationId = { "id": reservationIds[i].id }
+                    axios.get(`http://localhost:8080/admin/auth/locationadmin/holidayhome/reserved/`, { params: reservationId })
+                        .then((response) => {
+                            const data = response.data;
+                            setPendingRooms(data)
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                        })
+                }
+
+
+            }
         }
     }, [reservationIds]);
 
     const handleClose = (value) => {
         setOpen(false);
+        setPaidRooms([]);
+        setPendingRooms([]);
 
     };
 
-    const changeCalendarManually = (newDate) => {
-        const startOfMonth = moment(newDate).startOf('month');
-        const endOfMonth = moment(newDate).endOf('month');
-        setDisplayedRange({
-            start: startOfMonth,
-            end: endOfMonth,
-        });
+    const [openAlert, setOpenAlert] = useState(false);
+
+    const handleCloseAlert = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpenAlert(false);
     };
+
     return (
         <ThemeProvider theme={theme}>
             <Box className="main_container" sx={{ width: "100%", backgroundColor: 'primary.main', overflow: 'hidden' }}>
@@ -271,9 +281,23 @@ const HolidayHomeDetails = () => {
                                     />
                                 </Box>
 
-                                <CalendarDetails open={open} handleClose={handleClose} date={date} rooms={rooms} />
+                                <div>
+                                    <Snackbar open={openAlert} autoHideDuration={4000} onClose={handleCloseAlert}>
+                                        <Alert
+                                            onClose={handleCloseAlert}
+                                            severity="error"
+                                            variant="filled"
+                                            sx={{ width: '100%' }}
+                                        >
+                                            Can't View | Please Select a Holiday Home
+                                        </Alert>
+                                    </Snackbar>
+                                </div>
 
 
+                                <CalendarDetails open={open} handleClose={handleClose} date={date} paidRooms={paidRooms} pendingRooms={pendingRooms} selectedHolidayHome={selectedHolidayHome} />
+
+                                {/* <Popup openPopup={openPopup} setOpenPopup={setOpenPopup} handleClose={handleClosePopUp} handleOpen={handleOpen} /> */}
 
 
                             </Box>

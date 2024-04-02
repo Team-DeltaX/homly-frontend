@@ -25,12 +25,12 @@ const CurrentAdminCard = (props) => {
   // const [displayr, setDisplayr] = useState(false);
   const [open, setOpen] = useState(false);
   const [opend, setOpend] = useState(false);
-  const [Disabled,setDisabled]=useState(true)
-  const [buttonname,setbuttonname]=useState('Edit')
-  const [mobileerror,setmobileerror]=useState(false)
-  const [emaileerror,setemailerror]=useState(false)
-  const [contact,setContact]=useState(props.data.ContactNo)
-  const [email,setemail]=useState(props.data.Email)
+  const [Disabled, setDisabled] = useState(true)
+  const [buttonname, setbuttonname] = useState('Edit')
+  const [mobileerror, setmobileerror] = useState(false)
+  const [emaileerror, setemailerror] = useState(false)
+  const [contact, setContact] = useState(props.data.ContactNo)
+  const [email, setemail] = useState(props.data.Email)
   const validatemobile = (number) => {
     const pattern = /^(?:\+94|0)?(?:7\d{8}|[1-9]\d{8})$/;
     setmobileerror(!pattern.test(number))
@@ -45,36 +45,36 @@ const CurrentAdminCard = (props) => {
   };
 
 
-  const handlesave=()=>{
+  const handlesave = () => {
     console.log("saved");
     setbuttonname('Edit')
-    props. Seteditadmin('')
+    props.Seteditadmin('')
     setDisabled(true)
     axios
-    .put("http://localhost:3002/admin/auth/locationadmin", {
-      AdminNo:props.data.AdminNo,
-      Email: email,
-      ContactNo:contact
-    })
-    .then((res) => {
-      props.fetchadmins();
-      console.log("sucessfully updated");
-    })
-    .catch((error) => {
-      console.log(`error occured when updating error is ${error}`);
-    });
-  
+      .put("http://localhost:8080/admin/auth/locationadmin", {
+        AdminNo: props.data.AdminNo,
+        Email: email,
+        ContactNo: contact
+      })
+      .then((res) => {
+        props.fetchadmins();
+        console.log("sucessfully updated");
+      })
+      .catch((error) => {
+        console.log(`error occured when updating error is ${error}`);
+      });
+
 
   }
 
 
- 
+
 
 
 
   const resetpassword = () => {
     axios
-      .post("http://localhost:3002/admin/auth/locationadmin/resetpassword", {
+      .post("http://localhost:8080/admin/auth/locationadmin/resetpassword", {
         UserName: props.data.UserName,
         Email: props.data.Email,
         AdminNo: props.data.AdminNo,
@@ -91,7 +91,7 @@ const CurrentAdminCard = (props) => {
 
   const handleClick = () => {
     axios
-      .put(`http://localhost:3002/admin/auth/locationadmin/disable/${props.data.AdminNo}`, {
+      .put(`http://localhost:8080/admin/auth/locationadmin/disable/${props.data.AdminNo}`, {
         dis: true,
       })
       .then((res) => {
@@ -117,15 +117,15 @@ const CurrentAdminCard = (props) => {
           margin: "10px",
           padding: "0px",
           borderRadius: "15px",
-          alignItems: { xs: "center",md:'normal' },
+          alignItems: { xs: "center", md: 'normal' },
           columnGap: "84px",
           boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px;",
         }}
       >
-        <Box sx={{ padding: "10px",display:'flex',justifyContent:'center',alignItems:'center'}}>
-          <AccountCircleIcon sx={{ color: "Black", fontSize: "70px",}} />
+        <Box sx={{ padding: "10px", display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <AccountCircleIcon sx={{ color: "Black", fontSize: "70px", }} />
         </Box>
-        <Box sx={{ padding: "10px" ,textAlign:'center'}}>
+        <Box sx={{ padding: "10px", textAlign: 'center' }}>
           <Box>Admin Number</Box>
           <Box>
             {/* <TextField
@@ -148,47 +148,47 @@ const CurrentAdminCard = (props) => {
               alignItems="center"
               
             ></TextField> */}
-           <Typography sx={{color:'grey'}}> {props.data.AdminNo}</Typography>
+            <Typography sx={{ color: 'grey' }}> {props.data.AdminNo}</Typography>
           </Box>
 
           <Box>E-mail</Box>
-          <Box sx={{display:'flex',flexDirection:'row'}}>
-         
-         {props.editadmin===props.data.AdminNo?
-          <TextField
-          error={emaileerror}
-            disabled={Disabled}
-            onChange={(e) => {
-              validateemail(e.target.value)
-              setemail(e.target.value)
-            }}
-            size="small"
-            type="text"
-            value={email}
-            sx={{
-              backgroundColor: "white",
-              "& fieldset": { border: props.editadmin===props.data.AdminNo? "1px solid #ccc" : "none",},
-              
-            }}
-            InputProps={{
-              inputProps: {
-                  style: { textAlign: "left" },
-              }
-          }}
-            alignItems="center"
-          ></TextField>:   <Typography style={{color:'grey', overflowX: 'scroll', textOverflow: 'ellipsis', whiteSpace: 'nowrap', width: '100px' }}> {props.data.Email}</Typography>
-         }
-           
-                    
+          <Box sx={{ display: 'flex', flexDirection: 'row' }}>
 
-             <Copy text={props.data.Email}/>
+            {props.editadmin === props.data.AdminNo ?
+              <TextField
+                error={emaileerror}
+                disabled={Disabled}
+                onChange={(e) => {
+                  validateemail(e.target.value)
+                  setemail(e.target.value)
+                }}
+                size="small"
+                type="text"
+                value={email}
+                sx={{
+                  backgroundColor: "white",
+                  "& fieldset": { border: props.editadmin === props.data.AdminNo ? "1px solid #ccc" : "none", },
+
+                }}
+                InputProps={{
+                  inputProps: {
+                    style: { textAlign: "left" },
+                  }
+                }}
+                alignItems="center"
+              ></TextField> : <Typography style={{ color: 'grey', overflowX: 'scroll', textOverflow: 'ellipsis', whiteSpace: 'nowrap', width: '100px' }}> {props.data.Email}</Typography>
+            }
+
+
+
+            <Copy text={props.data.Email} />
           </Box>
         </Box>
 
-        <Box sx={{ padding: "10px",textAlign:'center' }}>
+        <Box sx={{ padding: "10px", textAlign: 'center' }}>
           <Box>User Name</Box>
           <Box>
-            
+
             {/* <TextField
               disabled={true}
               // onChange={(e) => {
@@ -203,43 +203,43 @@ const CurrentAdminCard = (props) => {
               }}
               size="small"
             ></TextField> */}
-                       <Typography sx={{color:'grey'}}> {props.data.UserName}</Typography>
+            <Typography sx={{ color: 'grey' }}> {props.data.UserName}</Typography>
 
-                       
+
 
           </Box>
 
           <Box>Contact Number</Box>
-          <Box sx={{textAlign:'center'}}>
-          {props.editadmin===props.data.AdminNo?
-         <TextField
-         error={mobileerror}
-         
-           disabled={Disabled}
-           // disabled={disabled}
-           onChange={(e) => {
-             validatemobile(e.target.value)
-             setContact(e.target.value)
-           }}
-           type="text"
-           value={contact}
-           alignItems="center"
-           sx={{
-             backgroundColor: "white",
-           "& fieldset": { border: props.editadmin===props.data.AdminNo? "1px solid #ccc" : "none",}
-           }}
-           size="small"
-         ></TextField>:   <Typography style={{color:'grey', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', width: '100px' }}>  {props.data.ContactNo}</Typography>
-         }
-           
-            
+          <Box sx={{ textAlign: 'center' }}>
+            {props.editadmin === props.data.AdminNo ?
+              <TextField
+                error={mobileerror}
+
+                disabled={Disabled}
+                // disabled={disabled}
+                onChange={(e) => {
+                  validatemobile(e.target.value)
+                  setContact(e.target.value)
+                }}
+                type="text"
+                value={contact}
+                alignItems="center"
+                sx={{
+                  backgroundColor: "white",
+                  "& fieldset": { border: props.editadmin === props.data.AdminNo ? "1px solid #ccc" : "none", }
+                }}
+                size="small"
+              ></TextField> : <Typography style={{ color: 'grey', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', width: '100px' }}>  {props.data.ContactNo}</Typography>
+            }
+
+
 
 
 
           </Box>
         </Box>
 
-        <Box sx={{ padding: "10px" ,display:'flex',flexDirection:'column',justifyContent:'flex-start',textAlign:'center'}}>
+        <Box sx={{ padding: "10px", display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', textAlign: 'center' }}>
           <Box>WorkLocation</Box>
           <Box>
             {/* <TextField
@@ -256,7 +256,7 @@ const CurrentAdminCard = (props) => {
               }}
               size="small"
             ></TextField> */}
-                       <Typography sx={{color:'grey',marginTop:'5px'}}> {props.data.WorkLocation}</Typography>
+            <Typography sx={{ color: 'grey', marginTop: '5px' }}> {props.data.WorkLocation}</Typography>
 
           </Box>
           {/* <Box>E-mail</Box>
@@ -315,7 +315,7 @@ const CurrentAdminCard = (props) => {
               setOpend(true)
             }}
           >
-            <Typography sx={{fontSize:'12px'}}>Disable</Typography>
+            <Typography sx={{ fontSize: '12px' }}>Disable</Typography>
           </Button>
           {/* edit button */}
 
@@ -325,23 +325,23 @@ const CurrentAdminCard = (props) => {
               height: "25px",
               borderRadius: "15px",
               marginTop: "5px",
-              
+
             }}
             variant="contained"
             onClick={() => {
-              if(props.editadmin===''){
+              if (props.editadmin === '') {
                 setDisabled(false)
-                props. Seteditadmin(props.data.AdminNo)
+                props.Seteditadmin(props.data.AdminNo)
                 setbuttonname('Save')
               }
-              if(buttonname=='Save' && mobileerror==false && emaileerror==false){
+              if (buttonname == 'Save' && mobileerror == false && emaileerror == false) {
                 handlesave()
               }
-              
+
 
             }}
           >
-            <Typography sx={{fontSize:'12px'}}>{buttonname}</Typography>
+            <Typography sx={{ fontSize: '12px' }}>{buttonname}</Typography>
           </Button>
 
           <ConfirmPopup
@@ -366,7 +366,7 @@ const CurrentAdminCard = (props) => {
               setOpen(true);
             }}
           >
-            <Typography sx={{fontSize:'12px'}}>Reset Password</Typography>
+            <Typography sx={{ fontSize: '12px' }}>Reset Password</Typography>
           </Button>
         </Box>
       </Box>

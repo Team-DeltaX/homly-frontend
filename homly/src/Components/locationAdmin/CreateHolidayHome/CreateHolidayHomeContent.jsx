@@ -1,11 +1,10 @@
-import { Grid, Box, Button, Typography } from "@mui/material";
+import { Grid, Box, Button } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import HomeDetailsView from "./HomeDetailsView";
 import CareTakerDetailsView from "./CareTakerDetailsView";
 import CreatePageHomeBreakDownView from "./HolidayHomeCreate/CreatePageHomeBreakDownView";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import ErrorIcon from "@mui/icons-material/Error";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 
@@ -68,8 +67,12 @@ const CreateHolidayHomeContent = () => {
   const [submitClicked, setSubmitClicked] = useState(false);
   const [open, setOpen] = React.useState(false);
 
-  // all values from three components
-  // const [allValues, setAllValues] = useState({});
+
+  const [mainImage, setMainImage] = useState(null);
+  const [image1, setImage1] = useState(null);
+  const [image2, setImage2] = useState(null);
+  const [image3, setImage3] = useState(null);
+
 
   const handleClose = () => {
     setOpen(false);
@@ -78,7 +81,10 @@ const CreateHolidayHomeContent = () => {
   const handleSubmit = (e) => {
     let formData = {
       holidayHomeDetails: value,
-      images: null,
+      mainImage: mainImage,
+      image1: image1,
+      image2: image2,
+      image3: image3,
       caretaker1: valueCareTaker,
       caretaker1Image: caretaker1Image,
       caretaker2: valueSecond,
@@ -92,16 +98,16 @@ const CreateHolidayHomeContent = () => {
     };
     e.preventDefault();
     setSubmitClicked(true);
-    console.log("allvalues", formData);
+    // console.log("allvalues", formData);
     axios
       .post(
-        "http://localhost:3002/admin/auth/locationadmin/holidayhome/",
+        "http://localhost:8080/admin/auth/locationadmin/holidayhome/",
         formData
       )
       .then((res) => {
         // window.location.href("/locationadmin/manage");
         console.log(res);
-        // navigate("/locationadmin/manage");
+        navigate("/locationadmin/manage");
       })
       .catch((err) => {
         console.log(err);
@@ -113,33 +119,15 @@ const CreateHolidayHomeContent = () => {
   const [caretakerSubmit, setCaretakerSubmit] = useState(false);
   const [homeBreakdownSubmit, setHomeBreakdownSubmit] = useState(false);
 
-  // const [holidayHomeError, setHolidayHomeError] = useState(false);
-  // const [caretakerError, setcaretakerError] = useState(false);
-  // const [homeBreakDownError, setHomeBreakDownError] = useState(false);
-
-  // console.log("holierror", holidayHomeError)
-  // console.log("care errro", caretakerError)
-  // console.log("homebrake error ", homeBreakDownError)
-  // const [submitError, setSubmitError] = useState(false);
 
   useEffect(() => {
-    if (holidayHomeSubmit || caretakerSubmit || homeBreakdownSubmit) {
+    if (holidayHomeSubmit && caretakerSubmit && homeBreakdownSubmit) {
       setSubmitDisable(false);
     } else {
       setSubmitDisable(true); // Make sure to set to false or true explicitly
     }
   }, [holidayHomeSubmit, caretakerSubmit, homeBreakdownSubmit]);
 
-  // useEffect(() => {
-  //   if (holidayHomeError && caretakerError && homeBreakDownError) {
-  //     setSubmitError(true)
-  //   }
-  //   else {
-  //     setSubmitError(false)
-  //   }
-  // }, [caretakerError, homeBreakDownError, holidayHomeError])
-
-  // console.log("submiterror", submitError)
 
   return (
     <Box className="content_container" sx={{ maxHeight: "90vh" }}>
@@ -160,6 +148,10 @@ const CreateHolidayHomeContent = () => {
               setSubmitClicked={setSubmitClicked}
               value={value}
               setValue={setValue}
+              setMainImage={setMainImage}
+              setImage1={setImage1}
+              setImage2={setImage2}
+              setImage3={setImage3}
             />
             {/* <HomeDetailsView setSubmit={setSubmit} /> */}
           </Grid>

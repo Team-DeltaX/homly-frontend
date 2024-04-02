@@ -23,8 +23,8 @@ const PrimaryBlacklistHistory = () => {
 
   const [popup, setpopup] = useState(false);
   const [selecteduser, setSelecteduser] = useState({});
-  const [SelectEmp,SetSelectEmp]=useState({});
-  const [SelectUser,SetSelectUser]=useState({});
+  const [SelectEmp, SetSelectEmp] = useState({});
+  const [SelectUser, SetSelectUser] = useState({});
 
   // const [User,SetUser]=useState({})
   // const [Employee,SetEmployee]=useState({})
@@ -137,22 +137,22 @@ const PrimaryBlacklistHistory = () => {
     data: blacklisthistory,
   };
 
-  const getblacklisthistory=()=>{
-    axios.get('http://localhost:3002/admin/auth/blacklisthistory')
-    .then((res)=>{
-      const sortedData = res.data.sort((a, b) => -(a.BlackListHistoryId - b.BlackListHistoryId) );
+  const getblacklisthistory = () => {
+    axios.get('http://localhost:8080/admin/auth/blacklisthistory')
+      .then((res) => {
+        const sortedData = res.data.sort((a, b) => -(a.BlackListHistoryId - b.BlackListHistoryId));
 
-      setBlacklisthistory(sortedData);
-      
-      console.log("blacklist history fetched")
-      
-    })
-    .catch(()=>{
-      console.log("error in getting blacklist history")
-    
-    })
+        setBlacklisthistory(sortedData);
+
+        console.log("blacklist history fetched")
+
+      })
+      .catch(() => {
+        console.log("error in getting blacklist history")
+
+      })
   }
- 
+
 
   useEffect(() => {
     getblacklisthistory();
@@ -207,7 +207,7 @@ const PrimaryBlacklistHistory = () => {
               <Box
                 sx={{
                   marginTop: "2%",
-                  maxHeight: {md:"470px",xs:'630px'},
+                  maxHeight: { md: "470px", xs: '630px' },
                   overflow: "scroll",
                   padding: "1.5%",
                 }}
@@ -218,8 +218,8 @@ const PrimaryBlacklistHistory = () => {
                     return search.toLowerCase() === ""
                       ? data
                       : (data.ServiceNo)
-                      .toLowerCase()
-                      .startsWith(search.toLocaleLowerCase())
+                        .toLowerCase()
+                        .startsWith(search.toLocaleLowerCase())
                   })
                   .map((data) => {
                     return (
@@ -229,8 +229,8 @@ const PrimaryBlacklistHistory = () => {
                         setSelecteduser={setSelecteduser}
                         SetSelectEmp={SetSelectEmp}
                         SetSelectUser={SetSelectUser}
-                      
-                       
+
+
                       />
                     );
                   })}
@@ -243,8 +243,8 @@ const PrimaryBlacklistHistory = () => {
 
                     marginLeft: "2%",
                     marginTop: { xs: "10%", sm: "1.5%" },
-                    position:'absolute',
-                    top:'88%'
+                    position: 'absolute',
+                    top: '88%'
                   }}
                   component="label"
                   variant="contained"

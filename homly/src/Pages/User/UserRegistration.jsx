@@ -78,12 +78,13 @@ const UserRegistration = () => {
       !errorConfirmPassword &&
       passwordStrength > 0
     ) {
-      setIsDisabled(false);}
+      setIsDisabled(false);
+    }
     else {
       setIsDisabled(true);
     }
 
-  }, [Email,ContactNo,errorConfirmPassword,passwordStrength]);
+  }, [Email, ContactNo, errorConfirmPassword, passwordStrength]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -104,7 +105,7 @@ const UserRegistration = () => {
         image,
       };
       axios
-        .post("http://localhost:3002/users", formData)
+        .post("http://localhost:8080/users", formData)
         .then((res) => {
           console.log(res.data);
           if (res.data.success) {

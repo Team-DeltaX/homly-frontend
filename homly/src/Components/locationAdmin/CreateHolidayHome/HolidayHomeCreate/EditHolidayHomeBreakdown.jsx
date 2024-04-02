@@ -58,17 +58,17 @@ const EditHolidayHomeBreakdown = ({ roomArray, setRoomArray, unitArray, setUnitA
     const [serviceCharges, setServiceCharges] = useState(0);
     // const [totalRental, setTotalRental] = useState(0);
     const [facilities, setFacilities] = useState('');
-    const [gym, setGym] = useState(false);
-    const [kitchen, setKitchen] = useState(false);
-    const [park, setPark] = useState(false);
-    const [wifi, setWifi] = useState(false);
+    const [gym, setGym] = useState('');
+    const [kitchen, setKitchen] = useState('');
+    const [park, setPark] = useState('');
+    const [wifi, setWifi] = useState('');
 
 
 
     const { homeId } = useParams();
 
     useEffect(() => {
-        axios.get(`http://localhost:3002/locationadmin/holidayhome/${homeId}`)
+        axios.get(`http://localhost:8080/locationadmin/holidayhome/${homeId}`)
             .then((res) => {
                 if (Response) {
                     const homeDetails = res.data.homeDetails;
@@ -77,7 +77,6 @@ const EditHolidayHomeBreakdown = ({ roomArray, setRoomArray, unitArray, setUnitA
                     setChildCount(homeDetails.MaxNoOfChildren);
                     setOtherCharges(homeDetails.OtherCharge);
                     setServiceCharges(homeDetails.ServiceCharge);
-                    // setTotalRental(homeDetails.TotalRental);
                     setFacilities(homeDetails.Facilities);
                     setGym(homeDetails.Gym);
                     setKitchen(homeDetails.Kitchen);
@@ -114,20 +113,19 @@ const EditHolidayHomeBreakdown = ({ roomArray, setRoomArray, unitArray, setUnitA
     }
 
     const hangleGymChange = (e) => {
-        setGym(e.target.checked);
+        setGym(e.target.value);
     }
 
     const handleKitchenChange = (e) => {
-        setKitchen(e.target.checked);
+        setKitchen(e.target.value);
     }
 
     const handleParkChange = (e) => {
-
-        setPark(e.target.checked);
+        setPark(e.target.value);
     }
 
     const handleWifiChange = (e) => {
-        setWifi(e.target.checked);
+        setWifi(e.target.value);
     }
 
 
@@ -183,10 +181,10 @@ const EditHolidayHomeBreakdown = ({ roomArray, setRoomArray, unitArray, setUnitA
                     </Grid>
                     <Grid item md={6} sm={12} xs={12}>
                         <FormGroup sx={{ display: 'flex', width: '100%' }}>
-                            <FormControlLabel control={<Checkbox />} label="Gym" checked={gym} onChange={hangleGymChange} />
-                            <FormControlLabel control={<Checkbox />} label="Kitchen" checked={kitchen} onChange={handleKitchenChange} />
-                            <FormControlLabel control={<Checkbox />} label="Park" checked={park} onChange={handleParkChange} />
-                            <FormControlLabel control={<Checkbox />} label="Wifi" checked={wifi} onChange={handleWifiChange} />
+                            <FormControlLabel control={<Checkbox />} label="Gym" checked={gym == 'on' ? true : false} onChange={hangleGymChange} />
+                            <FormControlLabel control={<Checkbox />} label="Kitchen" checked={kitchen == 'on' ? true : false} onChange={handleKitchenChange} />
+                            <FormControlLabel control={<Checkbox />} label="Park" checked={park == 'on' ? true : false} onChange={handleParkChange} />
+                            <FormControlLabel control={<Checkbox />} label="Wifi" checked={wifi == 'on' ? true : false} onChange={handleWifiChange} />
 
                         </FormGroup>
                     </Grid>

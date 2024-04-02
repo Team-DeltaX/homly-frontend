@@ -123,13 +123,13 @@ const PrimaryManageBlacklistedUsers = () => {
   const [popup, setpopup] = useState(false);
   //for each user datacame from blacklist table
   const [selecteduser, setSelecteduser] = useState({});
-   //for each user datacame from user table
+  //for each user datacame from user table
   const [selectuser, setSelectuser] = useState({});
-     //for each user datacame from employee table
+  //for each user datacame from employee table
 
-  const [selectemp,setselectemp]=useState({});
- 
-  
+  const [selectemp, setselectemp] = useState({});
+
+
 
   const handlepopup = () => {
     setpopup(!popup);
@@ -222,7 +222,7 @@ const PrimaryManageBlacklistedUsers = () => {
       key: "Date",
     },
   ];
- 
+
   const [blacklistedusers, setBlacklistedusers] = useState([]);
 
   //csv
@@ -232,20 +232,20 @@ const PrimaryManageBlacklistedUsers = () => {
     data: blacklistedusers,
   };
 
- 
+
 
   const [showNav, setShowNav] = useState("nav_grid_deactive");
 
-  const fetch_current_blacklist=()=>{
+  const fetch_current_blacklist = () => {
     axios
-    .get("http://localhost:3002/admin/auth/blacklist")
-    .then((res) => {
-      console.log('----fetch current blacklist---');
-      setBlacklistedusers(res.data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+      .get("http://localhost:8080/admin/auth/blacklist")
+      .then((res) => {
+        console.log('----fetch current blacklist---');
+        setBlacklistedusers(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
   }
   useEffect(() => {
@@ -271,8 +271,8 @@ const PrimaryManageBlacklistedUsers = () => {
             selectuser={selectuser}
             selectemp={selectemp}
             fetch_current_blacklist={fetch_current_blacklist}
-            
-           
+
+
           />
         )}
         <Container maxWidth="xl" style={{ padding: "0px" }}>
@@ -297,12 +297,12 @@ const PrimaryManageBlacklistedUsers = () => {
             >
               <Pagetop setShowNav={setShowNav} heading={"Manage Blacklist"} />
               <SearchNew setSearch={setSearch} search={search} />
-             
+
 
               <Box
                 sx={{
                   marginTop: "1%",
-                  maxHeight: {md:"470px",xs:'630px'},
+                  maxHeight: { md: "470px", xs: '630px' },
                   overflow: "scroll",
                   padding: "2%",
                 }}
@@ -313,8 +313,8 @@ const PrimaryManageBlacklistedUsers = () => {
                     return search.toLowerCase() === ""
                       ? data
                       : serviceNumberString
-                          .toLowerCase()
-                          .startsWith(search.toLocaleLowerCase()) 
+                        .toLowerCase()
+                        .startsWith(search.toLocaleLowerCase())
                   })
                   .map((data) => {
                     console.log('---mapping start---')
@@ -325,12 +325,12 @@ const PrimaryManageBlacklistedUsers = () => {
                         setSelecteduser={setSelecteduser}
                         setSelectuser={setSelectuser}
                         setselectemp={setselectemp}
-                       
-                       
+
+
                       />
 
-                     
-                     
+
+
                     );
                   })}
               </Box>
@@ -341,8 +341,8 @@ const PrimaryManageBlacklistedUsers = () => {
                     sx={{
                       marginLeft: "2%",
                       marginTop: { xs: "10%", sm: "1.5%" },
-                      position:'absolute',
-                      top:'88%'
+                      position: 'absolute',
+                      top: '88%'
                     }}
                     component="label"
                     variant="contained"

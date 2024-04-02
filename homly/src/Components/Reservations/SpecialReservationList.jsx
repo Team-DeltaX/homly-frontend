@@ -12,11 +12,11 @@ const SpecialReservationList = (props) => {
   const [reservations, setReservations] = useState([])
   const fetchadmins = () => {
     axios
-      .get("http://localhost:3002/admin/auth/locationadmin/reservations")
+      .get("http://localhost:8080/admin/auth/locationadmin/reservations")
       .then((res) => {
         console.log(res.data);
-         //reverse array to keep new ones first 
-         setReservations(res.data.reverse());
+        //reverse array to keep new ones first 
+        setReservations(res.data.reverse());
       })
       .catch((err) => {
         console.log(err);
@@ -30,17 +30,17 @@ const SpecialReservationList = (props) => {
   return (
     <Box className="home">
       {reservations.filter((reservations) => {
-                    return props.search.toLowerCase() === ""
-                      ? reservations
-                      : reservations.holidayhomename.toLowerCase().startsWith(
-                            props.search.toLocaleLowerCase()
-                        );
-                  })
-                  .map(reservation => (
-         (<SpecialReservationCard  reservation={reservation}/>)    
-      ))}
+        return props.search.toLowerCase() === ""
+          ? reservations
+          : reservations.holidayhomename.toLowerCase().startsWith(
+            props.search.toLocaleLowerCase()
+          );
+      })
+        .map(reservation => (
+          (<SpecialReservationCard reservation={reservation} />)
+        ))}
     </Box>
   );
 }
- 
+
 export default SpecialReservationList;

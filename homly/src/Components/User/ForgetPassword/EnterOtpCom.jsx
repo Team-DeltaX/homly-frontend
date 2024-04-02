@@ -34,7 +34,7 @@ export default function EnterDetailCom({
     }
   }, [btnDisabled]);
 
-  useEffect(()=>{
+  useEffect(() => {
     if (btnDisabled) {
       // exit early when we reach 0
       if (!time) return;
@@ -48,14 +48,14 @@ export default function EnterDetailCom({
       // clear interval on re-render to avoid memory leaks
       return () => clearInterval(intervalId);
     }
-  },[time,btnDisabled])
+  }, [time, btnDisabled])
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (otp.length === 6) {
       const formData = { serviceNo: value.serviceNo, otp: otp };
       axios
-        .post("http://localhost:3002/users/forgetPassword/otp", formData, {withCredentials:true})
+        .post("http://localhost:8080/users/forgetPassword/otp", formData, { withCredentials: true })
         .then((res) => {
           if (res.data.success) {
             setErrorStatus({
@@ -73,7 +73,7 @@ export default function EnterDetailCom({
               message: res.data.message,
             });
           }
-        }).catch((err)=>{
+        }).catch((err) => {
           setErrorStatus({
             ...errorStatus,
             isOpen: true,
@@ -94,7 +94,7 @@ export default function EnterDetailCom({
   const handleNewOTP = () => {
     const formData = { serviceNo: value.serviceNo, email: value.email };
     axios
-      .post("http://localhost:3002/users/forgetPassword", formData, {withCredentials:true})
+      .post("http://localhost:8080/users/forgetPassword", formData, { withCredentials: true })
       .then((res) => {
         if (res.data.success) {
           setErrorStatus({
@@ -120,7 +120,7 @@ export default function EnterDetailCom({
     <ThemeProvider theme={theme}>
       <form onSubmit={handleSubmit}>
         <DialogContent
-          sx={{ height: "160px" , overflowY: "unset" }}
+          sx={{ height: "160px", overflowY: "unset" }}
         >
           <DialogContentText sx={{ marginBottom: "10px" }}>
             Check your email for the OTP
@@ -140,7 +140,7 @@ export default function EnterDetailCom({
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              ml:"27px"
+              ml: "27px"
             }}
           >
             <Stack
@@ -148,13 +148,13 @@ export default function EnterDetailCom({
               sx={{
                 justifyContent: "center",
                 alignItems: "center",
-                width:"100%"
+                width: "100%"
               }}
             >
               <Button onClick={handleNewOTP} disabled={btnDisabled}>
                 Try Again
               </Button>
-              <Typography sx={{ marginLeft: 2,fontWeight:'bold',opacity:time===0?0:1,color:time<6?"red":"black" }}>
+              <Typography sx={{ marginLeft: 2, fontWeight: 'bold', opacity: time === 0 ? 0 : 1, color: time < 6 ? "red" : "black" }}>
                 {time < 10 ? "0" + time : time}s
               </Typography>
             </Stack>

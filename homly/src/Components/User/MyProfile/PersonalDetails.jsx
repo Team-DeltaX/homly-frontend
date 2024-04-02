@@ -82,7 +82,7 @@ const PersonalDetails = () => {
   useEffect(() => {
     try {
       axios
-        .get(`http://localhost:3002/users/auth/details`, {
+        .get(`http://localhost:8080/users/auth/details`, {
           withCredentials: true,
         })
         .then((res) => {
@@ -129,13 +129,13 @@ const PersonalDetails = () => {
         });
 
       axios
-        .get("http://localhost:3002/users/auth/interested", {
+        .get("http://localhost:8080/users/auth/interested", {
           withCredentials: true,
         })
         .then((res) => {
           if (res.data) {
-            console.log("intresffedfsdf",res.data.userInterested.interested);
-            if(res.data.userInterested.interested[0] !== null){
+            console.log("intresffedfsdf", res.data.userInterested.interested);
+            if (res.data.userInterested.interested[0] !== null) {
               setInterests(res.data.userInterested.interested);
             }
           } else {
@@ -167,7 +167,7 @@ const PersonalDetails = () => {
         image: data.image,
       };
       axios
-        .put("http://localhost:3002/users/auth", formData)
+        .put("http://localhost:8080/users/auth", formData)
         .then((res) => {
           if (res.data.success) {
             setErrorStatus({
@@ -201,7 +201,7 @@ const PersonalDetails = () => {
       };
 
       axios
-        .put("http://localhost:3002/users/auth/interested", formData2, {
+        .put("http://localhost:8080/users/auth/interested", formData2, {
           withCredentials: true,
         })
         .then((res) => {
@@ -302,7 +302,7 @@ const PersonalDetails = () => {
 
                 {/* change interest popup */}
                 <UserInterestedPopupProfile
-                  open={ insterestedPopup}
+                  open={insterestedPopup}
                   setOpen={setInsterestedPopup}
                   interests={interests}
                   setInterests={setInterests}
@@ -363,7 +363,7 @@ const PersonalDetails = () => {
                     disabled={!isEnable}
                     variant="outlined"
                     size="small"
-                    sx={{ marginTop: "10px", display:isHaveInterests?"block":"none" }}
+                    sx={{ marginTop: "10px", display: isHaveInterests ? "block" : "none" }}
                     onClick={() => setInsterestedPopup(true)}
                   >
                     <Typography sx={{ fontSize: { xs: "0.9rem", md: "1rem" } }}>

@@ -15,9 +15,9 @@ const PrimaryAuthorizations = () => {
   const [popup, setpopup] = useState(false);
   const [Pending, SetPending] = useState([]);
   const get_pending = () => {
-    
+
     axios
-      .get("http://localhost:3002/admin/auth/locationadmin/holidayhome/pending")
+      .get("http://localhost:8080/admin/auth/locationadmin/holidayhome/pending")
       .then((res) => {
         SetPending(res.data);
       })
@@ -134,7 +134,7 @@ const PrimaryAuthorizations = () => {
               }}
             >
               <Pagetop setShowNav={setShowNav} heading={"Authorizations"} />
-          
+
 
               <Box
                 sx={{

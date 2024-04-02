@@ -52,50 +52,50 @@ export default function StatisticsDetails() {
 
 
   const getRoomCount = () => {
-    axios.get('http://localhost:3002/admin/auth/room')
-    .then((res)=>{
-      setRoomcount(res.data.count)
-    })
-    .catch((err)=>{
-      console.log(err)
-    })
+    axios.get('http://localhost:8080/admin/auth/room')
+      .then((res) => {
+        setRoomcount(res.data.count)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 
 
   const getHallCount = () => {
-    axios.get('http://localhost:3002/admin/auth/hall')
-    .then((res)=>{
-      setHallcount(res.data.count)
-    })
+    axios.get('http://localhost:8080/admin/auth/hall')
+      .then((res) => {
+        setHallcount(res.data.count)
+      })
   }
-  const getHallincome=()=>{
-    axios.get('http://localhost:3002/admin/auth/hallincome')
-    .then((res)=>{
-      setHallrevenue(res.data.hallincome)
-    
-    }).catch((err)=>{
-      console.log(err)
-    })
+  const getHallincome = () => {
+    axios.get('http://localhost:8080/admin/auth/hallincome')
+      .then((res) => {
+        setHallrevenue(res.data.hallincome)
+
+      }).catch((err) => {
+        console.log(err)
+      })
   }
-  const getRoomincome=()=>{
-    axios.get('http://localhost:3002/admin/auth/roomincome')
-    .then((res)=>{
-      setRoomrevenue(res.data.roomincome)
-    }).catch((err)=>{ 
-      console.log(err)
-    })
+  const getRoomincome = () => {
+    axios.get('http://localhost:8080/admin/auth/roomincome')
+      .then((res) => {
+        setRoomrevenue(res.data.roomincome)
+      }).catch((err) => {
+        console.log(err)
+      })
   }
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  React.useEffect(()=>{
+  React.useEffect(() => {
     getRoomCount()
     getHallCount()
     getHallincome()
     getRoomincome()
 
-  },[])
+  }, [])
 
   return (
     <Box sx={{ width: "100%", paddingRight: "32px" }}>

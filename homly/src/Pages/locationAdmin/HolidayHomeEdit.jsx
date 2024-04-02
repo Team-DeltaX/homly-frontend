@@ -132,7 +132,7 @@ const HolidayHomeEdit = () => {
 
     useEffect(() => {
 
-        axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/${homeId}`)
+        axios.get(`http://localhost:8080/admin/auth/locationadmin/holidayhome/${homeId}`)
             .then((res) => {
                 if (Response) {
                     const roomDetails = res.data.room;
@@ -167,7 +167,7 @@ const HolidayHomeEdit = () => {
                     setDetailsValue({
                         name: homeDetails.Name || '',
                         address: homeDetails.Address || '',
-                        district: 'Kegalle', // Add the logic to get district if available
+                        district: homeDetails.District || '', // Add the logic to get district if available
                         description: homeDetails.Description || '',
                         contactNo1: (contactNo && contactNo.length > 0) ? contactNo[0].ContactNo : '',
                         contactNo2: (contactNo && contactNo.length > 1) ? contactNo[1].ContactNo : '',
@@ -215,14 +215,15 @@ const HolidayHomeEdit = () => {
         e.preventDefault();
         setApprovedClicked(true);
         console.log("allvalues", updatedData);
-        axios.post("http://localhost:3002/admin/auth/locationadmin/holidayhome/update", updatedData)
+        axios.post("http://localhost:8080/admin/auth/locationadmin/holidayhome/update", updatedData)
             .then((res) => {
                 console.log(res);
-                // navigate("/locationadmin/manage");
+                navigate("/locationadmin/manage");
             })
             .catch((err) => {
                 console.log(err);
             });
+
 
     };
 
@@ -265,7 +266,7 @@ const HolidayHomeEdit = () => {
                                     <CustomTabPanel value={value} index={2}>
                                         <EditCaretakerDetails value={valueCaretaker} setValue={setValueCareTaker} valueSecond={valueSecond} setValueSecond={setValueSecond} />
                                         <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginRight: "1.5em" }}>
-                                            <Button variant="contained" sx={{ marginTop: '1em' }} onClick={handleApproval}>Get Approval</Button>
+                                            <Button variant="contained" sx={{ marginTop: '1em' }} onClick={handleApproval}>Update</Button>
                                         </Box>
 
                                     </CustomTabPanel>

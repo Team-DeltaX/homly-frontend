@@ -24,7 +24,7 @@ const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     if (isLogged) {
       axios
-        .get(`http://localhost:3002/users/auth/details`, {
+        .get(`http://localhost:8080/users/auth/details`, {
           withCredentials: true,
         })
         .then((res) => {

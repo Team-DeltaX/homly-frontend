@@ -18,46 +18,46 @@ export default function ChangePasswordCom({
   setValue,
   setOpen,
 }) {
- 
+
   const [errorConfirmPassword, setErrorConfirmPassword] = useState(false);
   const handleSubmit = (e) => {
     e.preventDefault();
-    const formData = {serviceNo:value.serviceNo,password:value.password}
-    axios.put("http://localhost:3002/users/forgetPassword/reset", formData)
-    .then((res) => {
-        if(res.data.success){
-            setErrorStatus({
-                ...errorStatus,
-                isOpen: true,
-                type: "success",
-                message: res.data.message,
-            })
-            setSelectedComponent(0);
-            setOpen(false)
-        }else{
-            setErrorStatus({
-                ...errorStatus,
-                isOpen: true,
-                type: "error",
-                message: res.data.message,
-            })
-
-        }
-    }).catch((err)=>{
-        setErrorStatus({
+    const formData = { serviceNo: value.serviceNo, password: value.password }
+    axios.put("http://localhost:8080/users/forgetPassword/reset", formData)
+      .then((res) => {
+        if (res.data.success) {
+          setErrorStatus({
+            ...errorStatus,
+            isOpen: true,
+            type: "success",
+            message: res.data.message,
+          })
+          setSelectedComponent(0);
+          setOpen(false)
+        } else {
+          setErrorStatus({
             ...errorStatus,
             isOpen: true,
             type: "error",
-            message: "Somthing went wrong",
+            message: res.data.message,
+          })
+
+        }
+      }).catch((err) => {
+        setErrorStatus({
+          ...errorStatus,
+          isOpen: true,
+          type: "error",
+          message: "Somthing went wrong",
         })
-    })
+      })
   };
 
   return (
     <ThemeProvider theme={theme}>
       <form onSubmit={handleSubmit}>
-        <DialogContent sx={{ height: { xs: "130px", sm: "160px" } , overflowY:'unset' }}>
-          <DialogContentText sx={{marginBottom:'10px'}}>
+        <DialogContent sx={{ height: { xs: "130px", sm: "160px" }, overflowY: 'unset' }}>
+          <DialogContentText sx={{ marginBottom: '10px' }}>
             Enter new password
           </DialogContentText>
           <InputPassword
@@ -72,7 +72,7 @@ export default function ChangePasswordCom({
           />
           <InputPassword
             lable={"Confirm Password"}
-            helperText={errorConfirmPassword?"Password not match":""}
+            helperText={errorConfirmPassword ? "Password not match" : ""}
             error={errorConfirmPassword}
             password={value.confirmPassword}
             setPassword={(newValue) => setValue({ ...value, confirmPassword: newValue })}

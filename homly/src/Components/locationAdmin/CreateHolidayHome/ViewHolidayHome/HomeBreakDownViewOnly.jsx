@@ -66,8 +66,6 @@ const HomeBreakDownViewOnly = ({ setAllValues }) => {
 
   const [adultsCount, setAdultsCount] = useState(0);
   const [childCount, setChildCount] = useState(0);
-  const [otherCharges, setOtherCharges] = useState();
-  const [serviceCharges, setServiceCharges] = useState();
   const [totalRental, setTotalRental] = useState();
   const [facilities, setFacilities] = useState('');
   const [gym, setGym] = useState('');
@@ -80,7 +78,7 @@ const HomeBreakDownViewOnly = ({ setAllValues }) => {
   useEffect(() => {
 
     console.log(homeId);
-    axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/${homeId}`)
+    axios.get(`http://localhost:8080/admin/auth/locationadmin/holidayhome/${homeId}`)
       .then((res) => {
         if (Response) {
           const roomDetails = res.data.room;
@@ -93,7 +91,7 @@ const HomeBreakDownViewOnly = ({ setAllValues }) => {
         }
       })
 
-    axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/${homeId}`)
+    axios.get(`http://localhost:8080/admin/auth/locationadmin/holidayhome/${homeId}`)
       .then((res) => {
         if (Response) {
           const unitDetails = res.data.unit;
@@ -109,7 +107,7 @@ const HomeBreakDownViewOnly = ({ setAllValues }) => {
 
 
 
-    axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/${homeId}`)
+    axios.get(`http://localhost:8080/admin/auth/locationadmin/holidayhome/${homeId}`)
       .then((res) => {
         if (Response) {
           const hallDetails = res.data.hall;
@@ -123,15 +121,13 @@ const HomeBreakDownViewOnly = ({ setAllValues }) => {
       })
 
 
-    axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/${homeId}`)
+    axios.get(`http://localhost:8080/admin/auth/locationadmin/holidayhome/${homeId}`)
       .then((res) => {
         if (Response) {
           const homeDetails = res.data.homeDetails[0];
           console.log(homeDetails);
           setAdultsCount(homeDetails.MaxNoOfAdults);
           setChildCount(homeDetails.MaxNoOfChildren);
-          // setOtherCharges(homeDetails.OtherCharge);
-          // setServiceCharges(homeDetails.ServiceCharge);
           setTotalRental(homeDetails.TotalRental);
           setFacilities(homeDetails.Facilities);
           setGym(homeDetails.Gym);
@@ -199,24 +195,6 @@ const HomeBreakDownViewOnly = ({ setAllValues }) => {
             </FormGroup>
           </Grid>
           <Grid item md={6} sm={12} xs={12}>
-            {/* <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
-              <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
-                <Typography variant='p' sx={{ color: 'black' }}>Other Charges</Typography>
-              </Box>
-              <TextField value={otherCharges} type='number' id="outlined-required" placeholder='Other Charges' fullWidth size='small' />
-            </Box>
-            <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
-              <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
-                <Typography variant='p' sx={{ color: 'black' }}>Service Charges</Typography>
-              </Box>
-              <TextField value={serviceCharges} type='number' id="outlined-required" placeholder='Service Charges' fullWidth size='small' />
-            </Box> */}
-            <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
-              <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
-                <Typography variant='p' sx={{ color: 'black' }}>Total Rental</Typography>
-              </Box>
-              <TextField value={totalRental} type='number' id="outlined-required" placeholder='Total Rental' fullWidth size='small' required />
-            </Box>
             <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
               <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
                 <Typography variant='p' sx={{ color: 'black' }}>Enter facilities</Typography>

@@ -75,19 +75,19 @@ export default function SimpleLineChart() {
 
     return dates;
   };
-  const getHHnames=()=>{
-    axios.get('http://localhost:3002/admin/auth/hhnames')
-    .then((res)=>{
-      // setHolidayHomes1(res.data.HH)
-      // console.log('---------holiday homes-------')
-      // console.log(res.data.HH)
-      setHolidayHomes(res.data.HH)
-    
-    })
-    .catch((err)=>{
-      console.log(err)
-    }
-    )
+  const getHHnames = () => {
+    axios.get('http://localhost:8080/admin/auth/hhnames')
+      .then((res) => {
+        // setHolidayHomes1(res.data.HH)
+        // console.log('---------holiday homes-------')
+        // console.log(res.data.HH)
+        setHolidayHomes(res.data.HH)
+
+      })
+      .catch((err) => {
+        console.log(err)
+      }
+      )
   }
   React.useEffect(() => {
     setXasisd(getLastSevenDays());
@@ -132,7 +132,7 @@ export default function SimpleLineChart() {
 
               {HolidayHomes.filter((hh) => {
                 return (
-                  (HolidayHome2 !== hh.HolidayHomeId && HolidayHome3 !== hh.HolidayHomeId) 
+                  (HolidayHome2 !== hh.HolidayHomeId && HolidayHome3 !== hh.HolidayHomeId)
                 );
               }).map((hh) => {
                 return <MenuItem value={hh.HolidayHomeId}>{hh.Name}</MenuItem>;

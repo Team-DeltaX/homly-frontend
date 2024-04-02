@@ -59,7 +59,7 @@ export default function AddSpecialReservationPopUp() {
     };
     console.log("aruna", data);
     axios
-      .post("http://localhost:3002/users/specialreservation", data)
+      .post("http://localhost:8080/users/specialreservation", data)
       .then((res) => {
         console.log("add special reservation successfully");
         setErrorStatus({
@@ -134,7 +134,7 @@ export default function AddSpecialReservationPopUp() {
     if (ServiceNo) {
       axios
         .get(
-          `http://localhost:3002/admin/auth/locationadmin/employee/${ServiceNo}`
+          `http://localhost:8080/admin/auth/locationadmin/employee/${ServiceNo}`
         )
         .then((res) => {
           const employeeData = res.data[0];
@@ -149,14 +149,14 @@ export default function AddSpecialReservationPopUp() {
     if (HolidayHomeName) {
       axios
         .get(
-          `http://localhost:3002/users/reservation/getTotalRoomRental/${HolidayHomeName}`
+          `http://localhost:8080/users/reservation/getTotalRoomRental/${HolidayHomeName}`
         )
         .then((response) => {
           setMaxAdults(response.data.maxAdults);
           setMaxChildren(response.data.maxChildren);
           setRoomRental(response.data.totalRoomRental);
           setHallRental(response.data.totalHallRental); //
-          
+
         })
         .catch((error) => {
           console.log(error);
@@ -173,7 +173,7 @@ export default function AddSpecialReservationPopUp() {
   };
   useEffect(() => {
     axios
-      .get("http://localhost:3002/users/reservation/holidayhomes")
+      .get("http://localhost:8080/users/reservation/holidayhomes")
       .then((res) => {
         if (Response) {
           setHolidayHomes(res.data);
@@ -230,7 +230,7 @@ export default function AddSpecialReservationPopUp() {
               fullWidth
               variant="outlined"
             />
-            
+
             <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label">
                 Select Holiday Home*

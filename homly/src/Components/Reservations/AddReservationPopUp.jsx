@@ -39,23 +39,24 @@ export default function ScrollDialog({ name, id }) {
   const [CheckoutDate, setCheckoutDate] = useState(dayjs().add(6, "day"));
   const [reserveDisabled, setReserveDisabled] = useState(false); // State to manage disable state of reserve button
   const [roomCodes, setRoomCodes] = useState([]);
-  const [room,setRoom] = useState([]);
+  const [room, setRoom] = useState([]);
 
   useEffect(() => {
-    
+
     axios
-      .get("http://localhost:3002/users/reservation/availableRooms",
-      { params:{
-        holidayHomeId: id,
-        checkinDate: CheckinDate,
-        checkoutDate: CheckoutDate,
-      }
-      }, {
+      .get("http://localhost:8080/users/reservation/availableRooms",
+        {
+          params: {
+            holidayHomeId: id,
+            checkinDate: CheckinDate,
+            checkoutDate: CheckoutDate,
+          }
+        }, {
         withCredentials: true,
       })
       .then((res) => {
         setRoom(res.data.availableRooms)
-        console.log("available room",res.data.availableRooms)
+        console.log("available room", res.data.availableRooms)
       });
   }, [id, CheckinDate, CheckoutDate]);
 
@@ -110,7 +111,7 @@ export default function ScrollDialog({ name, id }) {
     };
 
     axios
-      .post("http://localhost:3002/users/auth/reservation", data, {
+      .post("http://localhost:8080/users/auth/reservation", data, {
         withCredentials: true,
       })
       .then((res) => {

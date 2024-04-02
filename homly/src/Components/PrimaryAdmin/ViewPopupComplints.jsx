@@ -22,10 +22,10 @@ const ViewPopupComplaints = (props) => {
   const [expand, setExpand] = useState(false);
   // const [opend, setOpend] = useState(false);
   const [Open, setOpen] = useState(false);
-  const [disable,Setdisable]=useState(false)
+  const [disable, Setdisable] = useState(false)
 
 
-  
+
 
   // const data = [
   //   {
@@ -47,7 +47,7 @@ const ViewPopupComplaints = (props) => {
   // ];
 
   //   const fetchcomplaints=()=>{
-  //     axios.get('http://localhost:3002/locationadmin/complaints')
+  //     axios.get('http://localhost:8080/locationadmin/complaints')
   //     .then(res=>{
   //         setPrevcomplaints(res.data)
 
@@ -55,39 +55,39 @@ const ViewPopupComplaints = (props) => {
   //         console.log(err)
   //     })
   // }
-  const check_already_exists=()=>{
-    axios.get(`http://localhost:3002/admin/auth/isexist/${props.selecteduser.ServiceNo}`)
-    .then((res)=>{
-      Setdisable(res.data.exist)
-      
-    }).catch(err=>{
-      console.log(err)
-    })
+  const check_already_exists = () => {
+    axios.get(`http://localhost:8080/admin/auth/isexist/${props.selecteduser.ServiceNo}`)
+      .then((res) => {
+        Setdisable(res.data.exist)
+
+      }).catch(err => {
+        console.log(err)
+      })
 
   }
-  const mark_on_open=()=>{
-    axios.put("http://localhost:3002/admin/auth/markcomplaint",{
-      ServiceNo:props.selecteduser.ServiceNo
-    }).then(()=>{
+  const mark_on_open = () => {
+    axios.put("http://localhost:8080/admin/auth/markcomplaint", {
+      ServiceNo: props.selecteduser.ServiceNo
+    }).then(() => {
       console.log('marked as blacklisted')
       props.fetchcomplaints();
     })
   }
-  
-  const handleaddtoblacklist=()=>{
-    axios.post('http://localhost:3002/admin/auth/blacklist',{
+
+  const handleaddtoblacklist = () => {
+    axios.post('http://localhost:8080/admin/auth/blacklist', {
       Reason: reson,
       ServiceNo: props.selecteduser.ServiceNo
-    }).then(res=>{
+    }).then(res => {
       console.log(res)
-    }).catch(err=>{
+    }).catch(err => {
       console.log(err)
     })
 
-    
+
     setOpen(false)
     props.handlepopup();
-    
+
   }
 
 
@@ -95,31 +95,31 @@ const ViewPopupComplaints = (props) => {
     props.fetchprevcomplaints();
     check_already_exists();
     mark_on_open();
-    }, [props.popup]);
+  }, [props.popup]);
 
-  const handleclick=()=>{
+  const handleclick = () => {
     console.log('handle')
     setOpen(false);
-    
+
 
   }
 
- 
 
-  const getonlydate=(date)=>{
+
+  const getonlydate = (date) => {
     const dateTimeString = props.prevcomplaints[date].created_at;
     const dateObject = new Date(dateTimeString);
     const year = dateObject.getFullYear();
     const month = String(dateObject.getMonth() + 1).padStart(2, "0");
     const day = String(dateObject.getDate()).padStart(2, "0");
-  
+
     const dateOnlyString = `${year}-${month}-${day}`;
     return dateOnlyString
 
 
 
   }
- 
+
 
 
   return (
@@ -340,7 +340,7 @@ const ViewPopupComplaints = (props) => {
                 {/* {props.complaints.filter(data=>((data.Marked===true)&&(data.ServiceNo===props.selecteduser.ServiceNo))).map(data =>  setPrevcomplaints(prevArray => [...prevArray, data.Reson]))} */}
 
                 <div>
-                  {(props.prevcomplaints.length >0 )&&( props.selecteduser.ComplaintID!==props.prevcomplaints[props.prevcomplaints.length-1].ComplaintID)? (
+                  {(props.prevcomplaints.length > 0) && (props.selecteduser.ComplaintID !== props.prevcomplaints[props.prevcomplaints.length - 1].ComplaintID) ? (
                     <Accordion
                       expanded={!expand}
                       onClick={() => {
@@ -357,28 +357,28 @@ const ViewPopupComplaints = (props) => {
                         id="panel2-header"
                       >
                         <Typography >
-                          
-                            <Box>Complaint on</Box>
-                            
-                          
-                          
+
+                          <Box>Complaint on</Box>
+
+
+
                         </Typography>
                         <Typography >
-                          
-                          
-                          <Box > {getonlydate(props.prevcomplaints.length-1)}</Box>
-                        
-                        
-                      </Typography>
+
+
+                          <Box > {getonlydate(props.prevcomplaints.length - 1)}</Box>
+
+
+                        </Typography>
                       </AccordionSummary>
                       <AccordionDetails>
-                        <Typography>{props.prevcomplaints[props.prevcomplaints.length-1].Reason}</Typography>
+                        <Typography>{props.prevcomplaints[props.prevcomplaints.length - 1].Reason}</Typography>
                       </AccordionDetails>
                     </Accordion>
                   ) : (
                     ""
                   )}
-                  {(props.prevcomplaints.length >=2)&&( props.selecteduser.ComplaintID!==props.prevcomplaints[props.prevcomplaints.length-2].ComplaintID) ? (
+                  {(props.prevcomplaints.length >= 2) && (props.selecteduser.ComplaintID !== props.prevcomplaints[props.prevcomplaints.length - 2].ComplaintID) ? (
                     <Accordion
                       expanded={expand}
                       onClick={() => {
@@ -395,11 +395,11 @@ const ViewPopupComplaints = (props) => {
                         id="panel2-header"
                       >
                         <Typography>
-                          Complaint on {getonlydate(props.prevcomplaints.length-2)}
+                          Complaint on {getonlydate(props.prevcomplaints.length - 2)}
                         </Typography>
                       </AccordionSummary>
                       <AccordionDetails>
-                        <Typography>{props.prevcomplaints[props.prevcomplaints.length-2].Reason}</Typography>
+                        <Typography>{props.prevcomplaints[props.prevcomplaints.length - 2].Reason}</Typography>
                       </AccordionDetails>
                     </Accordion>
                   ) : (
@@ -421,45 +421,45 @@ const ViewPopupComplaints = (props) => {
                 {/* <Box><Typography sx={{fontFamily:'roboto',}} h6>Service Number</Typography></Box>
                             <Box ></Box> */}
                 <Button variant="contained" sx={{ marginRight: "3%", }}>
-                  <Typography sx={{fontSize:'10px'}}>Send Warning</Typography>
+                  <Typography sx={{ fontSize: '10px' }}>Send Warning</Typography>
                 </Button>
                 <ConfirmPopup
-            open={Open}
-            setOpen={setOpen}
-            title={"Black List User Confirmation"}
-            text={"Are you sure you want to Blacklist This User?"}
-            
-            controlfunction={handleaddtoblacklist}
-          />
+                  open={Open}
+                  setOpen={setOpen}
+                  title={"Black List User Confirmation"}
+                  text={"Are you sure you want to Blacklist This User?"}
+
+                  controlfunction={handleaddtoblacklist}
+                />
 
                 <Button variant="contained" sx={{ marginRight: "3%" }}
-                onClick={()=>{
-                 if(reson!==""){
-                  setOpen(true)
-                 }  
-                
-                }}
-                disabled={disable}
+                  onClick={() => {
+                    if (reson !== "") {
+                      setOpen(true)
+                    }
+
+                  }}
+                  disabled={disable}
                 >
-               
-                  <Typography sx={{fontSize:'10px'}}>Add To Blacklist</Typography>
+
+                  <Typography sx={{ fontSize: '10px' }}>Add To Blacklist</Typography>
                 </Button>
                 <Button
-                
+
                   variant="outlined"
                   sx={{ marginRight: "5%" }}
                   onClick={() => {
                     setOpen(true)
-                    
+
                     props.handlepopup();
-                    
+
                   }}
                 >
-                 <Typography sx={{fontSize:'11px'}} > Mark</Typography>
+                  <Typography sx={{ fontSize: '11px' }} > Mark</Typography>
                 </Button>
-                
+
               </Box>
-              {disable &&<Typography sx={{color:'red',fontSize:'10px'}}>Note:This User Alread Blacklisted!</Typography>}
+              {disable && <Typography sx={{ color: 'red', fontSize: '10px' }}>Note:This User Alread Blacklisted!</Typography>}
             </Box>
           </Box>
         </Box>

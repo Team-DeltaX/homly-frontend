@@ -105,7 +105,7 @@ const PrimaryAddAdmin = () => {
       Sub: substitute,
     };
     axios
-      .post("http://localhost:3002/admin/auth/locationadmin/add", data)
+      .post("http://localhost:8080/admin/auth/locationadmin/add", data)
       .then((res) => {
         setnacktext("Admin Added Sucessfully!");
         handleClick();
@@ -244,7 +244,7 @@ const PrimaryAddAdmin = () => {
                           <InputLabel>Admin Number</InputLabel>
                         </Grid>
                         <Grid item md={6} sm={12} xs={12}> */}
-                          {/* <TextField
+                    {/* <TextField
                     
                                     required={true}
                                     value={serviceno}
@@ -256,7 +256,7 @@ const PrimaryAddAdmin = () => {
                     
                     
                                    ></TextField> */}
-                          {/* <TextField
+                    {/* <TextField
                             value={adminno}
                             required={true}
                             onChange={(e) => {

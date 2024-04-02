@@ -26,28 +26,28 @@ import axios from "axios";
 
 const PrimaryDashboard = () => {
   const [showNav, setShowNav] = useState("nav_grid_deactive");
-  const [activecount,SetActivecount]=useState("")
-  const [inactivecount,setInactivecount]=useState("")
+  const [activecount, SetActivecount] = useState("")
+  const [inactivecount, setInactivecount] = useState("")
 
 
-const getstatus=()=>{
-  axios.get('http://localhost:3002/admin/auth/hhstatus')
-  .then((res)=>{
-    SetActivecount(res.data.Active)
-    setInactivecount(res.data.Inactive)
-    console.log(`--------------------`)
-    console.log(res)
-    // console.log(activecount)
-  
+  const getstatus = () => {
+    axios.get('http://localhost:8080/admin/auth/hhstatus')
+      .then((res) => {
+        SetActivecount(res.data.Active)
+        setInactivecount(res.data.Inactive)
+        console.log(`--------------------`)
+        console.log(res)
+        // console.log(activecount)
 
-  }).catch((err)=>{
-    console.log(err)
-  })
-}
-useEffect(()=>{
-  getstatus()
 
-},[])
+      }).catch((err) => {
+        console.log(err)
+      })
+  }
+  useEffect(() => {
+    getstatus()
+
+  }, [])
   return (
     <ThemeProvider theme={theme}>
       <Box
@@ -121,7 +121,7 @@ useEffect(()=>{
                                   },
                                   {
                                     id: 1,
-                                    value:inactivecount,
+                                    value: inactivecount,
                                     label: "Inactive",
                                     color: "#002347",
                                   },

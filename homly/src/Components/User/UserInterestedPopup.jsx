@@ -81,7 +81,7 @@ export default function UserInterestedPopup({
         formData = {};
       }
       axios
-        .post("http://localhost:3002/users/auth/interested", formData, {
+        .post("http://localhost:8080/users/auth/interested", formData, {
           withCredentials: true,
         })
         .then((res) => {
@@ -155,9 +155,9 @@ export default function UserInterestedPopup({
                   flexWrap: "wrap",
 
                   ".css-q9gk48-MuiButtonBase-root-MuiToggleButton-root.Mui-selected, .css-q9gk48-MuiButtonBase-root-MuiToggleButton-root.Mui-selected:hover":
-                    {
-                      backgroundColor: "#f8abc3",
-                    },
+                  {
+                    backgroundColor: "#f8abc3",
+                  },
                 }}
               >
                 <ToggleButton value="food" aria-label="food" style={style}>

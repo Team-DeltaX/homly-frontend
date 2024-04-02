@@ -22,7 +22,7 @@ import PasswordComGrid from "./PasswordComGrid";
 import theme from "../../../HomlyTheme";
 
 const Security = () => {
-  const {authServiceNumber} = useContext(AuthContext);
+  const { authServiceNumber } = useContext(AuthContext);
   const [password, setPassword] = useState({
     currentPass: "",
     newPass: "",
@@ -33,7 +33,7 @@ const Security = () => {
     newPass: false,
     confirmPass: false,
   });
-  
+
   const [isEnable, setIsEnable] = useState(false);
 
   const Navigate = useNavigate();
@@ -51,43 +51,43 @@ const Security = () => {
   const [passwordStrength, setPasswordStrength] = useState(0);
 
   const handleUpdateData = () => {
-    if(passwordStrength > 1){
+    if (passwordStrength > 1) {
 
-      const formData = {serviceNo:authServiceNumber, oldPassword:password.currentPass, newPassword:password.newPass}
+      const formData = { serviceNo: authServiceNumber, oldPassword: password.currentPass, newPassword: password.newPass }
       axios
-      .put("http://localhost:3002/users/auth/password",formData, {withCredentials:true} )
-      .then((res) => {
-        if (res.data.success) {
-          setErrorStatus({
-            ...errorStatus,
-            isOpen: true,
-            type: "success",
-            message: res.data.message,
-          });
-        }else{
-          setErrorStatus({
-            ...errorStatus,
-            isOpen: true,
-            type: "error",
-            message: res.data.message,
-          });
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        if (err.response.data.autherized === false) {
-          Navigate("/");
-        }else{
+        .put("http://localhost:8080/users/auth/password", formData, { withCredentials: true })
+        .then((res) => {
+          if (res.data.success) {
+            setErrorStatus({
+              ...errorStatus,
+              isOpen: true,
+              type: "success",
+              message: res.data.message,
+            });
+          } else {
+            setErrorStatus({
+              ...errorStatus,
+              isOpen: true,
+              type: "error",
+              message: res.data.message,
+            });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          if (err.response.data.autherized === false) {
+            Navigate("/");
+          } else {
 
-          setErrorStatus({
-            ...errorStatus,
-            isOpen: true,
-            type: "error",
-            message: err.message,
-          });
-        }
-      });
-      setPassword({ currentPass: "", newPass: "", confirmPass: "" });     
+            setErrorStatus({
+              ...errorStatus,
+              isOpen: true,
+              type: "error",
+              message: err.message,
+            });
+          }
+        });
+      setPassword({ currentPass: "", newPass: "", confirmPass: "" });
       console.log("update");
     }
   };
@@ -95,10 +95,10 @@ const Security = () => {
   useEffect(() => {
     setIsEnable(
       password.currentPass.length > 0 &&
-        password.newPass.length > 0 &&
-        password.confirmPass.length > 0 &&
-        !error.confirmPass &&
-        !error.password
+      password.newPass.length > 0 &&
+      password.confirmPass.length > 0 &&
+      !error.confirmPass &&
+      !error.password
     );
   }, [password, error]);
 
@@ -204,11 +204,11 @@ const Security = () => {
           </Card>
         </Box>
         <ErrorSnackbar
-            isOpen={errorStatus.isOpen}
-            type={errorStatus.type}
-            message={errorStatus.message}
-            setIsOpen={(value) => setErrorStatus({ ...errorStatus, isOpen: value })}
-          />
+          isOpen={errorStatus.isOpen}
+          type={errorStatus.type}
+          message={errorStatus.message}
+          setIsOpen={(value) => setErrorStatus({ ...errorStatus, isOpen: value })}
+        />
       </Box>
     </ThemeProvider>
   );

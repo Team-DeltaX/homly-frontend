@@ -158,7 +158,7 @@ const EditRoom = ({ roomArray, setRoomArray, setAdultsCount, setChildCount, room
             groupByUnit: editedRoom.groupByUnit,
 
         });
-        axios.get(`http://localhost:3002/admin/auth/locationadmin/holidayhome/rental/${homeId}/${editedRoom.roomCode}`)
+        axios.get(`http://localhost:8080/admin/auth/locationadmin/holidayhome/rental/${homeId}/${editedRoom.roomCode}`)
             .then(res => {
                 const rental = res.data.roomRental;
                 for (let i = 0; i < rental.length; i++) {

@@ -6,15 +6,11 @@ import Tab from '@mui/material/Tab';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import CancelIcon from '@mui/icons-material/Cancel';
-import Snackbar from '@mui/material/Snackbar';
-import Alert from '@mui/material/Alert';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import EditRoom from './EditRoom';
 import EditUnit from './EditUnit';
 import EditHall from './EditHall';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
 
@@ -254,15 +250,7 @@ const EditHolidayHomeBreakdown = ({ roomArray, setRoomArray, unitArray, setUnitA
                             <TextField value={childCount} type='number' id="outlined-required" label="Maximum Children" placeholder='Maximum Children' fullWidth size='small' />
                         </Box>
                     </Grid>
-                    <Grid item md={6} sm={12} xs={12}>
 
-                        <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
-                            <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
-                                <Typography variant='p' sx={{ color: 'black' }}>Total Rental</Typography>
-                            </Box>
-                            <TextField onchange={handleTotalRentalChange} type='number' id="outlined-required" label="Total Rental" placeholder='Total Rental' fullWidth size='small' required value={bdValue.totalRental} />
-                        </Box>
-                    </Grid>
                 </Grid>
                 <Grid container spacing={2}>
                     <Grid item md={12} sm={12} xs={12}>
