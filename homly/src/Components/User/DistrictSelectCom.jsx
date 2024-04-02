@@ -48,7 +48,7 @@ export default function DistrictSelectCom({ district, setDistrict }) {
         onChange={handleChange}
       >
         {districts.map((district) => {
-          return <MenuItem value={district.toLowerCase()}>{district}</MenuItem>;
+          return <MenuItem key={district} value={district.toLowerCase()}>{district}</MenuItem>;
         })}
       </Select>
       </FormControl>
