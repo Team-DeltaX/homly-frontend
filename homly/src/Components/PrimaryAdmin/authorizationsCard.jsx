@@ -8,9 +8,7 @@ import {
 } from "@mui/material";
 import PreviewIcon from "@mui/icons-material/Preview";
 import theme from "../../HomlyTheme";
-
 import CheckIcon from "@mui/icons-material/Check";
-import CancelPresentationIcon from "@mui/icons-material/CancelPresentation";
 import CloseIcon from "@mui/icons-material/Close";
 import axios from "axios";
 import { useState } from "react";
@@ -22,18 +20,18 @@ const AuthorizationsCard = (props) => {
   const approve = () => {
     axios
       .put(
-        "http://localhost:8080/admin/auth/locationadmin/holidayhome/accept",
+        `${global.API_BASE_URL}/admin/auth/locationadmin/holidayhome/accept`,
         {
           id: props.data.HolidayHomeId,
         },
         { withCredentials: true }
       )
+      
       .then((res) => {
         props.get_pending();
         props.Setopensn(true);
       })
       .catch((error) => {
-        console.log("error in updating as approved");
         props.opensnE(true);
       });
   };
@@ -43,7 +41,7 @@ const AuthorizationsCard = (props) => {
     console.log(props.data.HolidayHomeId);
     axios
       .delete(
-        "http://localhost:8080/admin/auth/locationadmin/holidayhome/reject",
+        `${global.API_BASE_URL}/admin/auth/locationadmin/holidayhome/reject`,
         {
           data: {
             id: props.data.HolidayHomeId,
@@ -57,7 +55,7 @@ const AuthorizationsCard = (props) => {
         Setopen(false);
       })
       .catch((error) => {
-        console.log("error in reject");
+        props.opensnE(true);
       });
   };
   return (

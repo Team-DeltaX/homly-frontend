@@ -19,14 +19,13 @@ import axios from "axios";
 const ViewPopupComplaints = (props) => {
   const [reson, setReson] = useState("");
   const [expand, setExpand] = useState(false);
-
   const [Open, setOpen] = useState(false);
   const [disable, Setdisable] = useState(false);
 
   const check_already_exists = () => {
     axios
       .get(
-        `http://localhost:8080/admin/auth/isexist/${props.selecteduser.ServiceNo}`
+        `${global.API_BASE_URL}/admin/auth/isexist/${props.selecteduser.ServiceNo}`
       )
       .then((res) => {
         Setdisable(res.data.exist);
@@ -37,8 +36,8 @@ const ViewPopupComplaints = (props) => {
   };
   const mark_on_open = () => {
     axios
-      .put("http://localhost:8080/admin/auth/markcomplaint", {
-        CompID: props.selecteduser.ComplaintID
+      .put(`${global.API_BASE_URL}/admin/auth/markcomplaint`, {
+        CompID: props.selecteduser.ComplaintID,
       })
       .then(() => {
         console.log("marked as blacklisted");
@@ -48,7 +47,7 @@ const ViewPopupComplaints = (props) => {
 
   const handleaddtoblacklist = () => {
     axios
-      .post("http://localhost:8080/admin/auth/blacklist", {
+      .post(`${global.API_BASE_URL}/admin/auth/blacklist`, {
         Reason: reson,
         ServiceNo: props.selecteduser.ServiceNo,
       })
@@ -145,7 +144,6 @@ const ViewPopupComplaints = (props) => {
               sx={{
                 display: "felx",
                 flexDirection: "column",
-               
               }}
             >
               <Box

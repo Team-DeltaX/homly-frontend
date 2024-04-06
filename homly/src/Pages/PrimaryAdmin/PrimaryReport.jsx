@@ -1,7 +1,5 @@
-// import '../App.css';
 
 import SideNavbar from "../../Components/PrimaryAdmin/SideNavbar";
-
 import Box from "@mui/material/Box";
 import { Container, Grid, ThemeProvider } from "@mui/material";
 import theme from "../../HomlyTheme";

@@ -1,6 +1,5 @@
 import { Box, Button, Grid, Stack, ThemeProvider } from "@mui/material";
 import theme from "../../HomlyTheme";
-import bul from "../PrimaryAdmin/Css/blacklisteduserslist.css";
 
 const BlacklistedUsersList = ({ item }) => {
   return (

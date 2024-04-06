@@ -6,24 +6,27 @@ import FormHelperText from "@mui/material/FormHelperText";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { Box, Typography } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
 import { CancelOutlined } from "@mui/icons-material";
 import axios from "axios";
 
-export default function SimpleLineChart() {
+export default function CompareLineChart() {
   const [h1data, setH1data] = React.useState([]);
   const [h2data, setH2data] = React.useState([]);
   const [h3data, setH3data] = React.useState([]);
   const [HolidayHomes, setHolidayHomes] = React.useState([]);
+  const [xaxisd, setXasisd] = React.useState([]);
+  const [HolidayHome1, SetHolidayHome1] = React.useState("");
+  const [HolidayHome2, SetHolidayHome2] = React.useState("");
+  const [HolidayHome3, SetHolidayHome3] = React.useState("");
+  const [HolidayHome1Rating,SetHolidayHome1Rating]=React.useState(0)
+  const [HolidayHome2Rating,SetHolidayHome2Rating]=React.useState(0)
+  const [HolidayHome3Rating,SetHolidayHome3Rating]=React.useState(0)
+
+
 
   const Home1 = h1data;
-
   const Home2 = h2data;
-
   const Home3 = h3data;
-
-  const [xaxisd, setXasisd] = React.useState([]);
-
   const xLabels = [
     xaxisd[0],
     xaxisd[1],
@@ -34,17 +37,16 @@ export default function SimpleLineChart() {
     xaxisd[6],
   ];
 
-  const [HolidayHome1, SetHolidayHome1] = React.useState("");
-  const [HolidayHome2, SetHolidayHome2] = React.useState("");
-  const [HolidayHome3, SetHolidayHome3] = React.useState("");
 
 
   const setearning_HH1 = (HolidayHome1) => {
     const promises = getLastSevenDays().map((date) => {
       return axios
-        .get(`http://localhost:8080/admin/auth/dayincome/${date}/${HolidayHome1}`)
+        .get(
+          `${global.API_BASE_URL}/admin/auth/dayincome/${date}/${HolidayHome1}`
+        )
         .then((res) => {
-        return res.data.sumForDate;
+          return res.data.sumForDate;
         })
         .catch((err) => {
           console.log(err);
@@ -55,24 +57,23 @@ export default function SimpleLineChart() {
     Promise.all(promises)
       .then((results) => {
         const filteredResults = results.filter((result) => result !== null);
-       
-        setH1data(filteredResults)
+
+        setH1data(filteredResults);
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
-
   const setearning_HH2 = (HolidayHome2) => {
     const promises = getLastSevenDays().map((date) => {
       return axios
-        .get(`http://localhost:8080/admin/auth/dayincome/${date}/${HolidayHome2}`)
+        .get(
+          `${global.API_BASE_URL}/admin/auth/dayincome/${date}/${HolidayHome2}`
+        )
         .then((res) => {
-        return res.data.sumForDate;
+          return res.data.sumForDate;
         })
         .catch((err) => {
-          console.log(err);
           return null;
         });
     });
@@ -80,24 +81,24 @@ export default function SimpleLineChart() {
     Promise.all(promises)
       .then((results) => {
         const filteredResults = results.filter((result) => result !== null);
-       
-        setH2data(filteredResults)
+
+        setH2data(filteredResults);
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
 
   const setearning_HH3 = (HolidayHome3) => {
     const promises = getLastSevenDays().map((date) => {
       return axios
-        .get(`http://localhost:8080/admin/auth/dayincome/${date}/${HolidayHome3}`)
+        .get(
+          `${global.API_BASE_URL}/admin/auth/dayincome/${date}/${HolidayHome3}`
+        )
         .then((res) => {
-        return res.data.sumForDate;
+          return res.data.sumForDate;
         })
         .catch((err) => {
-          console.log(err);
           return null;
         });
     });
@@ -105,28 +106,62 @@ export default function SimpleLineChart() {
     Promise.all(promises)
       .then((results) => {
         const filteredResults = results.filter((result) => result !== null);
-       
-        setH3data(filteredResults)
+        setH3data(filteredResults);
       })
       .catch((err) => {
         console.log(err);
       });
   };
+  const getHolidayHome1Rating=(HolidayHome1)=>{
+    axios.get(`${global.API_BASE_URL}/admin/auth/holidayhomerating/${HolidayHome1}`)
+    .then((res)=>{
+      SetHolidayHome1Rating(res.data.rating[0].overall_rating)
+
+      })
+    .catch((error)=>{
+      console.log(error)
+    })
+  }
+
+  const getHolidayHome2Rating=(HolidayHome2)=>{
+    axios.get(`${global.API_BASE_URL}/admin/auth/holidayhomerating/${HolidayHome2}`)
+    .then((res)=>{
+      SetHolidayHome2Rating(res.data.rating[0].overall_rating)
+
+      })
+    .catch((error)=>{
+      console.log(error)
+    })
+  }
+
+  const getHolidayHome3Rating=(HolidayHome3)=>{
+    axios.get(`${global.API_BASE_URL}/admin/auth/holidayhomerating/${HolidayHome3}`)
+    .then((res)=>{
+      SetHolidayHome3Rating(res.data.rating[0].overall_rating)
+
+      })
+    .catch((error)=>{
+      console.log(error)
+    })
+  }
 
 
   const handleChangehh1 = (event) => {
     SetHolidayHome1(event.target.value);
     setearning_HH1(event.target.value);
-    };
+    getHolidayHome1Rating(event.target.value)
+  };
 
   const handleChangehh2 = (event) => {
     SetHolidayHome2(event.target.value);
     setearning_HH2(event.target.value);
+    getHolidayHome2Rating(event.target.value);
   };
 
   const handleChangehh3 = (event) => {
     SetHolidayHome3(event.target.value);
     setearning_HH3(event.target.value);
+    getHolidayHome3Rating(event.target.value)
   };
   const getLastSevenDays = () => {
     const dates = [];
@@ -142,7 +177,7 @@ export default function SimpleLineChart() {
   };
   const getHHnames = () => {
     axios
-      .get("http://localhost:8080/admin/auth/hhnames")
+      .get(`${global.API_BASE_URL}/admin/auth/holidayhomenames`)
       .then((res) => {
         setHolidayHomes(res.data.HH);
       })
@@ -181,9 +216,8 @@ export default function SimpleLineChart() {
               id="demo-simple-select-helper"
               value={HolidayHome1}
               label="Holidayhome1"
-              onChange={(e)=>{
-                handleChangehh1(e)
-
+              onChange={(e) => {
+                handleChangehh1(e);
               }}
             >
               {HolidayHomes.filter((hh) => {
@@ -197,10 +231,10 @@ export default function SimpleLineChart() {
             </Select>
             <FormHelperText>
               {HolidayHome1 === "" ? (
-                "select Home two to analyse"
+                "select Home one to analyse"
               ) : (
-                <Typography sx={{ color: "green" }}>
-                  6.87 Total Ratings
+                <Typography sx={{ color: (HolidayHome1Rating<5?"red":"green") }}>
+                 {HolidayHome1Rating} Total Ratings
                 </Typography>
               )}
             </FormHelperText>
@@ -247,8 +281,8 @@ export default function SimpleLineChart() {
               {HolidayHome2 === "" ? (
                 "select Home two to analyse"
               ) : (
-                <Typography sx={{ color: "red" }}>
-                  3.87 Total Ratings
+                <Typography sx={{ color: (HolidayHome1Rating<5?"red":"green") }}>
+                 {HolidayHome2Rating} Total Ratings
                 </Typography>
               )}
             </FormHelperText>
@@ -295,10 +329,10 @@ export default function SimpleLineChart() {
 
             <FormHelperText>
               {HolidayHome3 === "" ? (
-                "select Home two to analyse"
+                "select Home three to analyse"
               ) : (
-                <Typography sx={{ color: "green" }}>
-                  6.87 Total Ratings
+                <Typography sx={{ color: (HolidayHome1Rating<5?"red":"green")}}>
+                  {HolidayHome3Rating} Total Ratings
                 </Typography>
               )}{" "}
             </FormHelperText>

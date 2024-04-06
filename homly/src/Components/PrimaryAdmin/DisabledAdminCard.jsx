@@ -7,18 +7,12 @@ import {
   Typography,
 } from "@mui/material";
 import theme from "../../HomlyTheme";
-import axios from "axios";
-
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useState } from "react";
-import ConfirmPopup from "./ConfirmPopup";
 import Copy from "./Copy";
 
 const DisabledAdminCard = (props) => {
-  const [open, setOpen] = useState(false);
-  const [opend, setOpend] = useState(false);
   const [Disabled, setDisabled] = useState(true);
-  const [buttonname, setbuttonname] = useState("Edit");
   const [mobileerror, setmobileerror] = useState(false);
   const [emaileerror, setemailerror] = useState(false);
   const [contact, setContact] = useState(props.data.ContactNo);
@@ -34,61 +28,6 @@ const DisabledAdminCard = (props) => {
     } else {
       setemailerror(true);
     }
-  };
-
-  const handlesave = () => {
-    console.log("saved");
-    setbuttonname("Edit");
-    props.Seteditadmin("");
-    setDisabled(true);
-    axios
-      .put("http://localhost:8080/locationadmin", {
-        AdminNo: props.data.AdminNo,
-        Email: email,
-        ContactNo: contact,
-      })
-      .then((res) => {
-        props.fetchadmins();
-        console.log("sucessfully updated");
-      })
-      .catch((error) => {
-        console.log(`error occured when updating error is ${error}`);
-      });
-  };
-
-  const resetpassword = () => {
-    axios
-      .post("http://localhost:8080/admin/auth/locationadmin/resetpassword", {
-        UserName: props.data.UserName,
-        Email: props.data.Email,
-        AdminNo: props.data.AdminNo,
-      })
-      .then((res) => {
-        console.log("sucessfully sent");
-        props.fetchadmins();
-      })
-      .catch((error) => {
-        console.log(`error occured when send mail error is ${error}`);
-      });
-    setOpen(false);
-  };
-
-  const handleClick = () => {
-    axios
-      .put(
-        `http://localhost:8080/admin/auth/locationadmin/disable/${props.data.AdminNo}`,
-        {
-          dis: true,
-        }
-      )
-      .then((res) => {
-        props.fetchadmins();
-        props.setsnacktext("Admin Disabled Successfully!");
-        props.handlesnack();
-      })
-      .catch((error) => {
-        console.log(`error is  nm ${error}`);
-      });
   };
 
   return (

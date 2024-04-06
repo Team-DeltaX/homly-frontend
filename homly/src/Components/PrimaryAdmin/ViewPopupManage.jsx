@@ -15,24 +15,21 @@ const ViewPopupManage = (props) => {
 
   const handleremovefromblacklist = () => {
     axios
-      .delete("http://localhost:8080/admin/auth/unblacklist", {
+      .delete(`${global.API_BASE_URL}/admin/auth/unblacklist`, {
         data: { ServiceNo: props.selectemp.service_number },
         withCredentials: true,
       })
       .then((res) => {
-        console.log("----------fetch after remove from blacklist--------");
         props.fetch_current_blacklist();
-        console.log("remove from blacklist sucess");
         props.SetOpensn(true);
       })
       .catch((error) => {
-        console.log(`delete from error is : ${error}`);
         props.SetOpensnE(true);
       });
 
     axios
       .put(
-        "http://localhost:8080/admin/auth/unblacklist",
+        `${global.API_BASE_URL}/admin/auth/unblacklist`,
         {
           Email: props.selectuser.email,
           ServiceNo: props.selectemp.service_number,
@@ -48,7 +45,7 @@ const ViewPopupManage = (props) => {
 
     axios
       .post(
-        "http://localhost:8080/admin/auth/blacklisthistory",
+        `${global.API_BASE_URL}/admin/auth/blacklisthistory`,
         {
           ServiceNo: props.selectemp.service_number,
           AddReason: props.selecteduser.BlackListReason,
