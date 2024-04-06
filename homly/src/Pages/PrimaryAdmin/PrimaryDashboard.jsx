@@ -186,7 +186,7 @@ const PrimaryDashboard = () => {
                           <DashViewAdminBox color={"#253DA1"}  data={latestFourAdmins[0]}/>
                         </Box>
                         <Box>
-                          <DashViewAdminBox color={"pink"} data={latestFourAdmins[1]} />
+                          <DashViewAdminBox color={"#FF69B4"} data={latestFourAdmins[1]} />
                         </Box>
                         <Box>
                           <DashViewAdminBox color={"#77ccff"} data={latestFourAdmins[2]} />
