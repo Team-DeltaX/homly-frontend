@@ -6,6 +6,8 @@ import DatePickerCom from "../DatePickerCom/DatePickerCom";
 import SearchIcon from "@mui/icons-material/Search";
 import dayjs from "dayjs";
 import SearchResaltDrawer from "./SearchResaltDrawer";
+import AxiosClient from "../../../services/AxiosClient";
+
 const SearchBarHome = () => {
   const [dateValue, setDateValue] = useState([dayjs(), dayjs()]);
   const [district, setDistrict] = useState("");
@@ -14,30 +16,20 @@ const SearchBarHome = () => {
 
   const handleSearch = () => {
     setOpenDrawer(true);
-    console.log("searching");
-    setSearchedHH([
-      {
-        name: "Holiday Home 1",
-        description: "This is a holiday home",
-        address: "No 1, Colombo",
-        image:
-          "https://images.adsttc.com/media/images/60e8/711c/f758/6e7f/c904/5c07/large_jpg/orangearchitects-holiday-home-04.jpg?1625846074",
+    AxiosClient.get("/user/auth/holidayhomes/search", {
+      params: {
+        district: district,
+        startDate: dateValue[0].format("YYYY-MM-DD"),
+        endDate: dateValue[1].format("YYYY-MM-DD"),
       },
-      {
-        name: "Holiday Home 2",
-        description: "This is a holiday home",
-        address: "No 2, Colombo",
-        image:
-          "https://images.adsttc.com/media/images/60e8/711c/f758/6e7f/c904/5c07/large_jpg/orangearchitects-holiday-home-04.jpg?1625846074",
-      },
-      {
-        name: "Holiday Home 3",
-        description: "This is a holiday home",
-        address: "No 3, Colombo",
-        image:
-          "https://aro-au-prod-storage.s3-ap-southeast-2.amazonaws.com/umbrella/medias/pic_1-61a712fb1f688.jpeg",
-      }
-    ]);
+    })
+      .then((res) => {
+        console.log(res.data);
+        setSearchedHH(res.data);
+      })
+      .catch(() => {
+        setSearchedHH([]);
+      });
   };
   return (
     <ThemeProvider theme={theme}>
@@ -108,7 +100,6 @@ const SearchBarHome = () => {
             </Stack>
           </Grid>
         </Grid>
-        <Typography>dfgg</Typography>
         <SearchResaltDrawer
           open={openDrawer}
           setOpen={setOpenDrawer}

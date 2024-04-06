@@ -1,5 +1,11 @@
 import React from "react";
-import { ThemeProvider, MenuItem, Select, InputLabel, FormControl  } from "@mui/material";
+import {
+  ThemeProvider,
+  Select,
+  InputLabel,
+  FormControl,
+  MenuItem,
+} from "@mui/material";
 
 import theme from "../../HomlyTheme";
 
@@ -37,20 +43,27 @@ export default function DistrictSelectCom({ district, setDistrict }) {
   };
   return (
     <ThemeProvider theme={theme}>
-         <FormControl fullWidth>
+      <FormControl fullWidth size="small">
         <InputLabel id="district">District</InputLabel>
-      <Select
-        size="small"
-        labelId="district"
-        value={district}
-        label="District"
-        sx={{ width: "100%" }}
-        onChange={handleChange}
-      >
-        {districts.map((district) => {
-          return <MenuItem key={district} value={district.toLowerCase()}>{district}</MenuItem>;
-        })}
-      </Select>
+        <Select
+          size="small"
+          labelId="district"
+          defaultValue={"None"}
+          value={district}
+          label="District"
+          sx={{ width: "100%" }}
+          onChange={handleChange}
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+
+          {districts.map((district, index) => (
+            <MenuItem key={index} value={district}>
+              {district}
+            </MenuItem>
+          ))}
+        </Select>
       </FormControl>
     </ThemeProvider>
   );

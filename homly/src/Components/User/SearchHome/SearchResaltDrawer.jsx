@@ -6,23 +6,23 @@ export default function SearchResaltDrawer({ open, setOpen, searchedHH }) {
         setOpen(newOpen);
     };
 
-    console.log(open);
-
     return (
         <div>
             <Drawer open={open} onClose={toggleDrawer(false)} sx={{ zIndex: 1500 }}>
-                <Typography color="initial">Your Search result</Typography>
                 <Box
-                    sx={{ width: { xs: 275, sm: 400 } }}
+                    sx={{ width: { xs: 275, sm: 400 },bgcolor:'#FEF2F4',overflowY:'auto',height:'100vh' }}
                     role="presentation"
                     onClick={toggleDrawer(false)}
                 >
+                <Typography color="initial" sx={{ml:'10px',fontWeight:'bold'}}>Your Search result</Typography>
                     {searchedHH && searchedHH.length > 0  ? (
                         searchedHH.map((hh) => {
-                            return <SerachResultCard searchedHH={hh} />;
+                            return <SerachResultCard searchedHH={hh} key={hh.HolidayHomeId}/>;
                         })
                     ) : (
-                        <Typography color="initial">No result</Typography>
+                        <Box sx={{bgcolor:'red',display:'flex',justifyContent:'center',fontWeight:'medium'}}>
+                        <Typography color="initial">No result Found</Typography>
+                        </Box>
                     )}
                 </Box>
             </Drawer>

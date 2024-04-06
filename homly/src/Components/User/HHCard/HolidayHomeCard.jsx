@@ -58,7 +58,7 @@ export default function HolidayHomeCard({
               <Stack direction="row" sx={{ alignItems: "center" }}>
                 <StarIcon sx={{ color: "primary.main" }} />
                 <Typography sx={{ fontWeight: "medium" }}>
-                  {HHRating}
+                  {HHRating.toFixed(1)}
                 </Typography>
               </Stack>
             </Stack>
