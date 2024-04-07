@@ -108,9 +108,23 @@ const PrimaryDashboard = () => {
                       maxHeight: { md: "645px", xs: "auto" },
                     }}
                   >
-                    <Box>
+                      <Box sx={{display:{xs:'flex',md:'none'},justifyContent:'center',gap:'3px'}}>
+                          <Link to="/primaryadmin/viewadmin">
+                            <Button  variant="contained">
+                              <Typography>Location Admins</Typography>
+                            </Button>
+                          </Link>
+                          <Link to="/primaryadmin/viewadmin">
+                            <Button  variant="contained">
+                              <Typography>Authorizations</Typography>
+                            </Button>
+                          </Link>
+                        </Box>
+                    <Box sx={{display:'flex',justifyContent:'center'}}>
                       <PDashboardboxes />
                     </Box>
+                  
+                    
                     <Box
                       sx={{
                         display: "flex",
@@ -174,6 +188,7 @@ const PrimaryDashboard = () => {
                           padding: "1px",
                           margin: "10px",
                           borderRadius: "20px",
+                          display:{xs:'none',md:'flex'}
                         }}
                       >
                         <Box>

@@ -53,7 +53,7 @@ const PDashboardboxes = () => {
     bookingcount();
   }, []);
   return (
-    <Box>
+    <Box >
       <Grid
         container
         sx={{
@@ -61,14 +61,16 @@ const PDashboardboxes = () => {
           display: "flex",
           justifyContent: "center",
           width: "100%",
+          
         }}
       >
         <Grid item md={12}>
           <Grid
             container
             justifyContent={"space-between"}
-            sx={{ marginBottom: "25px", width: "100%" }}
+            sx={{ marginBottom: "25px", width: "100%", }}
             spacing={1}
+            
           >
             <Grid
               item
