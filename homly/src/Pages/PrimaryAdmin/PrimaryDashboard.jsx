@@ -114,7 +114,7 @@ const PrimaryDashboard = () => {
                               <Typography>Location Admins</Typography>
                             </Button>
                           </Link>
-                          <Link to="/primaryadmin/viewadmin">
+                          <Link to="/primaryadmin/authorizations">
                             <Button  variant="contained">
                               <Typography>Authorizations</Typography>
                             </Button>
