@@ -141,7 +141,7 @@ const AuthorizationsCard = (props) => {
               background: "#39e75f",
               color: "black",
             }}
-            startIcon={<CheckIcon />}
+            startIcon={<CheckIcon sx={{display:{xs:'none',md:'block'}}}/>}
             onClick={() => {
               approve();
             }}
@@ -162,7 +162,7 @@ const AuthorizationsCard = (props) => {
             onClick={() => {
               Setopen(true);
             }}
-            startIcon={<CloseIcon />}
+            startIcon={<CloseIcon sx={{display:{xs:'none',md:'block'}}}/>}
           >
             <Typography>Decline</Typography>
           </Button>
@@ -176,7 +176,7 @@ const AuthorizationsCard = (props) => {
               borderRadius: "15px",
               display: { xs: "flex", md: "none" },
             }}
-            startIcon={<PreviewIcon />}
+            startIcon={<PreviewIcon  sx={{display:{xs:'none',md:'block'}}}/>}
             onClick={() => {}}
           >
             <Typography>View</Typography>
