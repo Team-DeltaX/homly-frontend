@@ -32,6 +32,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { Link, NavLink } from "react-router-dom";
 import theme from "../../HomlyTheme";
 import "./Profile.css";
+import "../../Components/User/NavBar/NavBar.css";
 import PersonalDetails from "../../Components/User/MyProfile/PersonalDetails";
 import PaymentDetailsCom from "../../Components/User/MyProfile/PaymentDetailsCom";
 import Security from "../../Components/User/MyProfile/Security";
