@@ -24,9 +24,9 @@ import MenuIcon from "@mui/icons-material/Menu";
 
 import { Link, NavLink } from "react-router-dom";
 import theme from "../../../HomlyTheme";
-import "../../../Pages/User/Profile.css";
+import "./NavBar.css";
 import { AuthContext } from "../../../Contexts/AuthContext";
-
+import Notification from "../../locationAdmin/Notification";
 const drawerWidth = 240;
 const pages = [
   { name: "Home", path: "/Home" },
@@ -39,12 +39,21 @@ const respSidePages = [
   { name: "My Profile", path: "/myProfile" },
 ];
 
-const NavBar = ({ refContactUS }) => {
+const NavBar = ({ refContactUS, position }) => {
   const { user } = useContext(AuthContext);
 
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
+  const [notifications, setNotifications] = useState([
+    {
+      type: "New Feedback",
+      url: "https://www.w3schools.com/howto/img_avatar.png",
+      data: "123433v",
+      id: 1,
+      updateNotifications: () => {},
+    }
+  ]);
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -87,7 +96,10 @@ const NavBar = ({ refContactUS }) => {
             </ListItemButton>
           </ListItem>
         ))}
-        <ListItem disablePadding>
+        <ListItem
+          disablePadding
+          sx={{ display: refContactUS ? "flex" : "none" }}
+        >
           <ListItemButton onClick={handleScrollClick}>
             <ListItemText primary="Contact Us" />
           </ListItemButton>
@@ -108,7 +120,9 @@ const NavBar = ({ refContactUS }) => {
             flexDirection: "row",
             justifyContent: "space-between",
             alignItems: "center",
-            position: { xs: "fixed", sm: "fixed", md: "sticky" },
+            position: position
+              ? position
+              : { xs: "fixed", sm: "fixed", md: "sticky" },
           }}
         >
           <Toolbar>
@@ -134,7 +148,9 @@ const NavBar = ({ refContactUS }) => {
               display={{ xs: "none", sm: "none", md: "flex" }}
             >
               {pages.map((page) => (
-                <Box sx={{ position: "relative" }} key={page.name}>
+                <Box sx={{ position: "relative",display: "flex",
+                alignItems: "center",
+                justifyContent: "center", }} key={page.name}>
                   <NavLink
                     key={page.name}
                     to={page.path}
@@ -162,10 +178,20 @@ const NavBar = ({ refContactUS }) => {
                     textTransform: "uppercase",
                     fontSize: "0.875rem",
                     fontWeight: "500",
+                    display: refContactUS ? "flex" : "none",
                   }}
                 >
                   Contact Us
                 </Typography>
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                
               </Box>
             </Stack>
             <Box sx={{ flexGrow: 0 }}>
