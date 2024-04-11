@@ -69,7 +69,7 @@ const AuthorizationsCard = (props) => {
       />
       <Stack
         sx={{
-          width:{md:'350px',xs:'310px'},
+          width:{md:'350px',xs:'300px'},
           background: "#E9E9E9",
           padding: "20px",
           borderRadius: "20px",
