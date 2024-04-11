@@ -16,35 +16,33 @@ const BlacklistHistoryCard = (props) => {
   const fetchfromemployee = () => {
     axios
       .get(
-        `http://localhost:8080/admin/auth/locationadmin/employee/${props.data.ServiceNo}`
+        `${global.API_BASE_URL}/admin/auth/locationadmin/employee/${props.data.ServiceNo}`
       )
       .then((res) => {
         SetEmployee(res.data[0]);
-
-        console.log(`Employee ---------- ${Employee}`);
       })
       .catch((error) => {
-        console.log(error);
+        props.SetOpensnE(true);
       });
   };
 
   const fetchfromuser = () => {
     axios
       .get(
-        `http://localhost:8080/admin/auth/locationadmin/user/${props.data.ServiceNo}`
+        `${global.API_BASE_URL}/admin/auth/locationadmin/user/${props.data.ServiceNo}`
       )
       .then((res) => {
         SetUser(res.data[0]);
-        // console.log(User)
       })
       .catch((error) => {
-        console.log(error);
+        props.SetOpensnE(true);
+
       });
   };
   useEffect(() => {
     fetchfromemployee();
     fetchfromuser();
-  }, []);
+  }, [props.data.ServiceNo]);
   return (
     <ThemeProvider theme={theme}>
       <Box

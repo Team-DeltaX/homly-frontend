@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import SideNavbar from "../../Components/PrimaryAdmin/SideNavbar";
-// import ComplaintCard from '../../Components/PrimaryAdmin/ComplaintCard';
 import Box from "@mui/material/Box";
 import axios from "axios";
 import {
@@ -85,7 +84,7 @@ const PrimaryAddAdmin = () => {
       Sub: substitute,
     };
     axios
-      .post("http://localhost:8080/admin/auth/locationadmin/add", data)
+      .post(`${global.API_BASE_URL}/admin/auth/locationadmin/add`, data)
       .then((res) => {
         setnacktext("Admin Added Sucessfully!");
         handleClick();
@@ -95,7 +94,7 @@ const PrimaryAddAdmin = () => {
           "Somthing Went Wrong,May be admin no duplicaion,Please Try Again!"
         );
         handleClick();
-        console.log(`error is  nm ${error}`);
+        
       });
 
     setadminno("");
@@ -435,5 +434,4 @@ const PrimaryAddAdmin = () => {
     </ThemeProvider>
   );
 };
-
 export default PrimaryAddAdmin;

@@ -4,7 +4,6 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-
 import { Grid } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 import axios from "axios";
@@ -52,7 +51,7 @@ export default function StatisticsDetails() {
 
   const getRoomCount = () => {
     axios
-      .get("http://localhost:8080/admin/auth/room")
+      .get(`${global.API_BASE_URL}/admin/auth/room`)
       .then((res) => {
         setRoomcount(res.data.count);
       })
@@ -62,13 +61,13 @@ export default function StatisticsDetails() {
   };
 
   const getHallCount = () => {
-    axios.get("http://localhost:8080/admin/auth/hall").then((res) => {
+    axios.get(`${global.API_BASE_URL}/admin/auth/hall`).then((res) => {
       setHallcount(res.data.count);
     });
   };
   const getHallincome = () => {
     axios
-      .get("http://localhost:8080/admin/auth/hallincome")
+      .get(`${global.API_BASE_URL}/admin/auth/hallincome`)
       .then((res) => {
         setHallrevenue(res.data.hallincome);
       })
@@ -78,7 +77,7 @@ export default function StatisticsDetails() {
   };
   const getRoomincome = () => {
     axios
-      .get("http://localhost:8080/admin/auth/roomincome")
+      .get(`${global.API_BASE_URL}/admin/auth/roomincome`)
       .then((res) => {
         setRoomrevenue(res.data.roomincome);
       })
@@ -145,9 +144,9 @@ export default function StatisticsDetails() {
                     Total number of Rooms
                   </Typography>
                 </Box>
-                <Box>
+                {/* <Box>
                   <CircularProgress variant="determinate" value={roomcount} />
-                </Box>
+                </Box> */}
               </Box>
             </Grid>
             <Grid item md={6}>
@@ -174,11 +173,11 @@ export default function StatisticsDetails() {
                   </Typography>
                 </Box>
                 <Box>
-                  <CircularProgress
+                  {/* <CircularProgress
                     sx={{ color: "#11BA40" }}
                     variant="determinate"
                     value={75}
-                  />
+                  /> */}
                 </Box>
               </Box>
             </Grid>
@@ -209,9 +208,9 @@ export default function StatisticsDetails() {
                     Total number of Halls
                   </Typography>
                 </Box>
-                <Box>
+                {/* <Box>
                   <CircularProgress variant="determinate" value={100} />
-                </Box>
+                </Box> */}
               </Box>
             </Grid>
             <Grid item md={6}>
@@ -238,11 +237,11 @@ export default function StatisticsDetails() {
                   </Typography>
                 </Box>
                 <Box>
-                  <CircularProgress
+                  {/* <CircularProgress
                     sx={{ color: "#11BA40", zIndex: "100" }}
                     variant="determinate"
                     value={50}
-                  />
+                  /> */}
                 </Box>
               </Box>
             </Grid>

@@ -5,12 +5,7 @@ import {
   ThemeProvider,
   Typography,
 } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
-import { useState } from "react";
-import { grey } from "@mui/material/colors";
-import theme from "../../HomlyTheme";
 import CancelIcon from "@mui/icons-material/Cancel";
-import axios from "axios";
 
 const ViewPopupManage = (props) => {
   return (

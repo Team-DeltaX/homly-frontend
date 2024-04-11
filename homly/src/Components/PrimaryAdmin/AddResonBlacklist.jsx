@@ -5,13 +5,11 @@ import {
   ThemeProvider,
   Typography,
 } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
-import { grey } from "@mui/material/colors";
-import theme from "../../HomlyTheme";
+
 
 const ViewPopupComplaints = (props) => {
-  const [reson, setReson] = useState("");
+const [reson, setReson] = useState("");
 
   return (
     <Box

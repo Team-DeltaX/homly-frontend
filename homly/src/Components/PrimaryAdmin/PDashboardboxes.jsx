@@ -3,7 +3,6 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import PStatisticsDetails from "./PStatisticsDetails";
-import DirectionsWalkIcon from "@mui/icons-material/DirectionsWalk";
 import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
 import PaidIcon from "@mui/icons-material/Paid";
 import HomeIcon from "@mui/icons-material/Home";
@@ -16,7 +15,7 @@ const PDashboardboxes = () => {
   const [unpaidcount, SetUnpaindcount] = useState("0");
   const gethhcount = () => {
     axios
-      .get("http://localhost:8080/admin/auth/hhcount")
+      .get(`${global.API_BASE_URL}/admin/auth/holidayhomecount`)
       .then((res) => {
         Sethhcount(res.data.count);
       })
@@ -27,7 +26,7 @@ const PDashboardboxes = () => {
 
   const getearning = () => {
     axios
-      .get("http://localhost:8080/admin/auth/earning")
+      .get(`${global.API_BASE_URL}/admin/auth/earning`)
       .then((res) => {
         SetEarning(res.data.sum);
       })
@@ -38,7 +37,7 @@ const PDashboardboxes = () => {
 
   const bookingcount = () => {
     axios
-      .get("http://localhost:8080/admin/auth/bookingcount")
+      .get(`${global.API_BASE_URL}/admin/auth/bookingcount`)
       .then((res) => {
         SetPaidcount(res.data.Paid);
         SetUnpaindcount(res.data.Unpaid);
@@ -217,6 +216,7 @@ const PDashboardboxes = () => {
                 >
                   <Box>
                     <HomeIcon sx={{ fontSize: "2.8rem" }} />
+
                   </Box>
                   <Box>
                     <Typography

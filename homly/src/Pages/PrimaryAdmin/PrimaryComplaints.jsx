@@ -26,27 +26,25 @@ const PrimaryComplaints = () => {
     console.log("start");
     axios
       .get(
-        `http://localhost:8080/admin/auth/locationadmin/complaint/${selecteduser.ServiceNo}`
+        `${global.API_BASE_URL}/admin/auth/locationadmin/complaint/${selecteduser.ServiceNo}`
       )
       .then((res) => {
         setPrevcomplaints(res.data);
-        console.log("finish");
-        console.log("---------fetch prev complaints--------");
         console.log(res.data);
       })
       .catch((err) => {
-        console.log(err);
+       SetOpensnE(true)
       });
   };
 
   const fetchcomplaints = () => {
     axios
-      .get("http://localhost:8080/admin/auth/locationadmin/complaints")
+      .get(`${global.API_BASE_URL}/admin/auth/locationadmin/complaints`)
       .then((res) => {
         setcomplaints(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        SetOpensnE(true);
       });
   };
 
@@ -55,10 +53,7 @@ const PrimaryComplaints = () => {
   }, []);
 
   const [showNav, setShowNav] = useState("nav_grid_deactive");
-
-  //switch
-  const [checked, setChecked] = React.useState(true);
-
+  const [checked, setChecked] = React.useState(true); //switch
   const handleChangeswitch = (event) => {
     setChecked(event.target.checked);
   };
@@ -117,7 +112,7 @@ const PrimaryComplaints = () => {
                 isOpen={opensnE}
                 setIsOpen={SetOpensnE}
                 type="error"
-                message={"errr in user blacklisting!"}
+                message={"errr occured!"}
               />
 
               <Box
@@ -139,7 +134,6 @@ const PrimaryComplaints = () => {
                   <Typography sx={{ color: "grey" }}>Not Viewd</Typography>
                 )}
               </Box>
-
               <Box
                 sx={{
                   marginTop: "2%",

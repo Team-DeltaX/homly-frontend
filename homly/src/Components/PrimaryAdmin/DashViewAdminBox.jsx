@@ -1,6 +1,11 @@
 import { Avatar, Box, Typography } from "@mui/material";
+import { useEffect } from "react";
 
 const DashViewAdminBox = (props) => {
+  useEffect(()=>{
+   
+
+  },[])
   return (
     <Box
       sx={{
@@ -10,6 +15,8 @@ const DashViewAdminBox = (props) => {
         justifyContent: "center",
         columnGap: "20px",
         margin: "3px",
+        
+      
       }}
     >
       <Box>
@@ -26,6 +33,7 @@ const DashViewAdminBox = (props) => {
           padding: "10px",
           borderRadius: "10px",
           columnGap: "20px",
+          width:'210px'
         }}
       >
         <Box sx={{ display: "flex", flexDirection: "column" }}>
@@ -38,10 +46,10 @@ const DashViewAdminBox = (props) => {
         </Box>
         <Box sx={{ display: "flex", flexDirection: "column" }}>
           <Box>
-            <Typography sx={{ color: "#8e918f" }}>John Doe</Typography>
+            <Typography sx={{ color: "#8e918f" }}>{props.data?.UserName}</Typography>
           </Box>
           <Box>
-            <Typography sx={{ color: "#8e918f" }}>Colombo</Typography>
+            <Typography sx={{ color: "#8e918f" }}>{props.data?.WorkLocation}</Typography>
           </Box>
         </Box>
       </Box>

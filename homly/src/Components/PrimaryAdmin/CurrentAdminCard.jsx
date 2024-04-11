@@ -8,7 +8,6 @@ import {
 } from "@mui/material";
 import theme from "../../HomlyTheme";
 import axios from "axios";
-
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useState } from "react";
 import ConfirmPopup from "./ConfirmPopup";
@@ -23,10 +22,12 @@ const CurrentAdminCard = (props) => {
   const [emaileerror, setemailerror] = useState(false);
   const [contact, setContact] = useState(props.data.ContactNo);
   const [email, setemail] = useState(props.data.Email);
+
   const validatemobile = (number) => {
     const pattern = /^(?:\+94|0)?(?:7\d{8}|[1-9]\d{8})$/;
     setmobileerror(!pattern.test(number));
   };
+
   const validateemail = (email) => {
     const pattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
     if (pattern.test(email)) {
@@ -42,7 +43,7 @@ const CurrentAdminCard = (props) => {
     props.Seteditadmin("");
     setDisabled(true);
     axios
-      .put("http://localhost:8080/admin/auth/locationadmin", {
+      .put(`${global.API_BASE_URL}/admin/auth/locationadmin`, {
         AdminNo: props.data.AdminNo,
         Email: email,
         ContactNo: contact,
@@ -58,7 +59,7 @@ const CurrentAdminCard = (props) => {
 
   const resetpassword = () => {
     axios
-      .post("http://localhost:8080/admin/auth/locationadmin/resetpassword", {
+      .post(`${global.API_BASE_URL}/admin/auth/locationadmin/resetpassword`, {
         UserName: props.data.UserName,
         Email: props.data.Email,
         AdminNo: props.data.AdminNo,
@@ -76,7 +77,7 @@ const CurrentAdminCard = (props) => {
   const handleClick = () => {
     axios
       .put(
-        `http://localhost:8080/admin/auth/locationadmin/disable/${props.data.AdminNo}`,
+        `${global.API_BASE_URL}/admin/auth/locationadmin/disable/${props.data.AdminNo}`,
         {
           dis: true,
         }
@@ -118,26 +119,6 @@ const CurrentAdminCard = (props) => {
         <Box sx={{ padding: "10px", textAlign: "center" }}>
           <Box>Admin Number</Box>
           <Box>
-            {/* <TextField
-            
-              disabled={true}
-            
-              // onChange={(e) => {
-              //   setAdminNo(e.target.value);
-              // }}
-              value={props.data.AdminNo}
-              size="small"
-              type="text"
-              sx={{
-                backgroundColor: "white",
-                "& fieldset": { border: 'none' },
-                
-                
-              }}
-            
-              alignItems="center"
-              
-            ></TextField> */}
             <Typography sx={{ color: "grey" }}>
               {" "}
               {props.data.AdminNo}
@@ -293,6 +274,7 @@ const CurrentAdminCard = (props) => {
               height: "25px",
               borderRadius: "15px",
               marginTop: "5px",
+              
             }}
             variant="contained"
             onClick={() => {

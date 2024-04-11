@@ -9,13 +9,10 @@ const BlacklistedUsersCardNew = (props) => {
   const fetchfromemployee = () => {
     axios
       .get(
-        `http://localhost:8080/admin/auth/locationadmin/employee/${props.data.ServiceNo}`
+        `${global.API_BASE_URL}/admin/auth/locationadmin/employee/${props.data.ServiceNo}`
       )
       .then((res) => {
         SetEmployee(res.data[0]);
-        console.log("----------fetched from employee-------");
-
-        console.log(Employee);
       })
       .catch((error) => {
         console.log(error);
@@ -25,11 +22,10 @@ const BlacklistedUsersCardNew = (props) => {
   const fetchfromuser = () => {
     axios
       .get(
-        `http://localhost:8080/admin/auth/locationadmin/user/${props.data.ServiceNo}`
+        `${global.API_BASE_URL}/admin/auth/locationadmin/user/${props.data.ServiceNo}`
       )
       .then((res) => {
         SetUser(res.data[0]);
-        console.log("----------fetched from user-------");
       })
       .catch((error) => {
         console.log(error);
