@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   ThemeProvider,
   AppBar,
@@ -19,14 +19,13 @@ import {
   Stack,
   Button,
 } from "@mui/material";
-
 import MenuIcon from "@mui/icons-material/Menu";
-
 import { Link, NavLink } from "react-router-dom";
 import theme from "../../../HomlyTheme";
 import "./NavBar.css";
+// import useSocketioClient from "../../../services/SocketioClient";
 import { AuthContext } from "../../../Contexts/AuthContext";
-import Notification from "../../locationAdmin/Notification";
+import NotificationPanal from "../../Common/NotificationPanal/NotificationPanal";
 const drawerWidth = 240;
 const pages = [
   { name: "Home", path: "/Home" },
@@ -45,15 +44,57 @@ const NavBar = ({ refContactUS, position }) => {
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
-  const [notifications, setNotifications] = useState([
+  const [notifications, SetNotifications] = useState([
     {
-      type: "New Feedback",
-      url: "https://www.w3schools.com/howto/img_avatar.png",
-      data: "123433v",
       id: 1,
-      updateNotifications: () => {},
-    }
+      type: "New Feedback",
+      image: "../assest/images/profile.jpeg",
+      data: {
+        serviceNumber: "18964v",
+        HolidayHomeName: "Anuradhapura resort by samitha",
+      },
+    },
+
+    {
+      id: 2,
+      type: "Authorization Successful",
+      image: "",
+      data: "Remove HolidayHome",
+    },
+    {
+      id: 3,
+      type: "New Feedback",
+      image: "../assest/images/profile.jpeg",
+      data: {
+        serviceNumber: "18964v",
+        HolidayHomeName: "Anuradhapura resort by samitha",
+      },
+    },
+    {
+      id: 4,
+      type: "New Feedback",
+      image: "../assest/images/profile.jpeg",
+      data: {
+        serviceNumber: "18964v",
+        HolidayHomeName: "Anuradhapura resort by samitha",
+      },
+    },
+    {
+      id: 5,
+      type: "Authorization Denied",
+      image: "",
+      data: "Remove HolidayHome",
+    },
   ]);
+
+  // const socket = useSocketioClient();
+
+  // useEffect(() => {
+  //   socket &&
+  //     socket.on("connection", (data) => {
+  //       console.log(data);
+  //     });
+  // }, [socket]);
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -148,9 +189,15 @@ const NavBar = ({ refContactUS, position }) => {
               display={{ xs: "none", sm: "none", md: "flex" }}
             >
               {pages.map((page) => (
-                <Box sx={{ position: "relative",display: "flex",
-                alignItems: "center",
-                justifyContent: "center", }} key={page.name}>
+                <Box
+                  sx={{
+                    position: "relative",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                  key={page.name}
+                >
                   <NavLink
                     key={page.name}
                     to={page.path}
@@ -184,54 +231,62 @@ const NavBar = ({ refContactUS, position }) => {
                   Contact Us
                 </Typography>
               </Box>
+            </Stack>
+            <Box sx={{ position: "relative" }}>
               <Box
                 sx={{
                   display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
+                  alignItems: "flex-basis",
+                  gap: "1.5em",
                 }}
               >
-                
+                <NotificationPanal
+                  notifications={notifications}
+                  SetNotifications={SetNotifications}
+                  bell={true}
+                />
+              </Box>
+            </Box>
+            <Stack direction="row">
+              <Box sx={{ flexGrow: 0 }}>
+                <Tooltip title="Open settings">
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <Avatar
+                      alt="Remy Sharp"
+                      sx={{ height: "48px", width: "48px" }}
+                      src={user.image}
+                    />
+                  </IconButton>
+                </Tooltip>
+                <Menu
+                  sx={{ mt: "45px" }}
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                >
+                  <MenuItem
+                    onClick={handleCloseUserMenu}
+                    component={Link}
+                    to="/myProfile"
+                  >
+                    <Typography textAlign="center">My Profile</Typography>
+                  </MenuItem>
+                  <MenuItem onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center">Logout</Typography>
+                  </MenuItem>
+                </Menu>
               </Box>
             </Stack>
-            <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar
-                    alt="Remy Sharp"
-                    sx={{ height: "48px", width: "48px" }}
-                    src={user.image}
-                  />
-                </IconButton>
-              </Tooltip>
-              <Menu
-                sx={{ mt: "45px" }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                <MenuItem
-                  onClick={handleCloseUserMenu}
-                  component={Link}
-                  to="/myProfile"
-                >
-                  <Typography textAlign="center">My Profile</Typography>
-                </MenuItem>
-                <MenuItem onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">Logout</Typography>
-                </MenuItem>
-              </Menu>
-            </Box>
           </Stack>
         </AppBar>
         <Box
