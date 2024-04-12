@@ -23,7 +23,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { Link, NavLink } from "react-router-dom";
 import theme from "../../../HomlyTheme";
 import "./NavBar.css";
-import useSocketioClient from "../../../services/SocketioClient";
+// import useSocketioClient from "../../../services/SocketioClient";
 import { AuthContext } from "../../../Contexts/AuthContext";
 import NotificationPanal from "../../Common/NotificationPanal/NotificationPanal";
 const drawerWidth = 240;
@@ -87,14 +87,14 @@ const NavBar = ({ refContactUS, position }) => {
     },
   ]);
 
-  const socket = useSocketioClient();
+  // const socket = useSocketioClient();
 
-  useEffect(() => {
-    socket &&
-      socket.on("connection", (data) => {
-        console.log(data);
-      });
-  }, [socket]);
+  // useEffect(() => {
+  //   socket &&
+  //     socket.on("connection", (data) => {
+  //       console.log(data);
+  //     });
+  // }, [socket]);
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
