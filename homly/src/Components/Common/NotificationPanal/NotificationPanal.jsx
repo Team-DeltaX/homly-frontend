@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import Notification from "./Notification";
 import NotifyEmpty from "./NotifyEmpty";
-import { Paper, Box, Typography, ThemeProvider } from "@mui/material";
+import { Paper, Box, Typography,  Badge } from "@mui/material";
 
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import theme from "../../../HomlyTheme";
+
+import "../../../Pages/locationAdmin/style.css";
 
 const NotificationPanal = ({ notifications, SetNotifications, bell }) => {
   const [Messagecount, SetMessagecount] = useState(notifications.length);
@@ -44,7 +45,7 @@ const NotificationPanal = ({ notifications, SetNotifications, bell }) => {
     SetMessagecount((prevCount) => prevCount - 1);
   };
   return (
-    <ThemeProvider theme={theme}>
+    <Box>
       <Box
         className="bell_container"
         id="bell"
@@ -52,25 +53,17 @@ const NotificationPanal = ({ notifications, SetNotifications, bell }) => {
         onClick={handleBellClick}
       >
         {bell ? (
-          <NotificationsIcon
-            sx={{ color: "grey6", fontSize: "2.5rem", cursor: "pointer" }}
-          />
+          <Badge badgeContent={Messagecount} color="primary" sx={{ ".css-6yc3qz-MuiBadge-badge ":{
+            top:'7px',
+            right:'7px',
+          }}}>
+            <NotificationsIcon
+              sx={{ color: "grey6", fontSize: "2.5rem", cursor: "pointer" }}
+            />
+          </Badge>
         ) : (
           ""
         )}
-        <Box
-          className="notify_count_container"
-          sx={{ display: Messagecount === 0 ? "none" : "block" }}
-        >
-          <Box className="count_inner">
-            <Typography
-              variant="p"
-              sx={{ fontSize: "10px", fontWeight: "bold" }}
-            >
-              {Messagecount}
-            </Typography>
-          </Box>
-        </Box>
       </Box>
       <Paper
         ref={notificationsContainerRef}
@@ -126,7 +119,7 @@ const NotificationPanal = ({ notifications, SetNotifications, bell }) => {
           )}
         </Box>
       </Paper>
-    </ThemeProvider>
+    </Box>
   );
 };
 
