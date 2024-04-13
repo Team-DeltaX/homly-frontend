@@ -1,15 +1,15 @@
 import React from "react";
 import { useState, createContext, useEffect } from "react";
 import AxiosClient from "../services/AxiosClient";
-
 export const AuthContext = createContext();
 
 const AuthContextProvider = ({ children }) => {
   const [isLogged, setIsLogged] = useState(false);
   const [isUpdated, setIsUpdated] = useState(false);
   const [authServiceNumber, setAuthServiceNumber] = useState(null);
-
+  // const [socket, setSocket] = useState(null);
   const [user, setUser] = useState({
+    serviceNo: "",
     name: "",
     image: "",
   });
@@ -21,20 +21,33 @@ const AuthContextProvider = ({ children }) => {
           if (res) {
             setUser({
               ...user,
+              serviceNo: res.data.serviceNo,
               name: res.data.name,
               image: res.data.image,
             });
+
+            localStorage.setItem("serviceNo", res.data.serviceNo);
+            localStorage.setItem("name", res.data.name);
+            localStorage.setItem("image", res.data.image);
           }
         })
-        .catch((err) => {
-        });
+        .catch((err) => {});
     }
+
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLogged,isUpdated]);
+  }, [isLogged || isUpdated]);
 
   return (
     <AuthContext.Provider
-      value={{ isLogged, setIsLogged, user, authServiceNumber, setAuthServiceNumber ,setIsUpdated}}
+      value={{
+        isLogged,
+        setIsLogged,
+        user,
+        authServiceNumber,
+        setAuthServiceNumber,
+        setIsUpdated,
+      }}
     >
       {children}
     </AuthContext.Provider>

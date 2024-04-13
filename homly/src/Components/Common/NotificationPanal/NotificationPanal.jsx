@@ -1,17 +1,20 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import Notification from "./Notification";
 import NotifyEmpty from "./NotifyEmpty";
-import { Paper, Box, Typography,  Badge } from "@mui/material";
-
+import { Paper, Box, Typography, Badge } from "@mui/material";
+import NotificationSnackBar from "./NotificationSnackBar";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-
 import "../../../Pages/locationAdmin/style.css";
+import { SocketioContext } from "../../../Contexts/SocketioContext";
 
 const NotificationPanal = ({ notifications, SetNotifications, bell }) => {
+  const { socket } = useContext(SocketioContext);
   const [Messagecount, SetMessagecount] = useState(notifications.length);
   const [showNotifications, setShowNotifications] = useState(false);
-
+  const [openSnackBar, setOpenSnackBar] = useState(false);
+  const [newNotifications, setNewNotifications] = useState('');
   const notificationsContainerRef = useRef(null);
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -26,6 +29,24 @@ const NotificationPanal = ({ notifications, SetNotifications, bell }) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  useEffect(() => {
+    console.log("socket", socket);
+    if (socket) {
+      socket.on("notification", (notification) => {
+        // check whether id is included in the new notifications
+
+        SetNotifications((prevNotifications) => [
+          notification,
+          ...prevNotifications,
+        ]);
+        SetMessagecount((prevCount) => prevCount + 1);
+        setOpenSnackBar(true);
+        setNewNotifications(notification.data);
+        console.log(notification, "new notification");
+      });
+    }
+  }, [socket]);
 
   const handleBellClick = () => {
     setShowNotifications((prev) => !prev);
@@ -53,10 +74,16 @@ const NotificationPanal = ({ notifications, SetNotifications, bell }) => {
         onClick={handleBellClick}
       >
         {bell ? (
-          <Badge badgeContent={Messagecount} color="primary" sx={{ ".css-6yc3qz-MuiBadge-badge ":{
-            top:'7px',
-            right:'7px',
-          }}}>
+          <Badge
+            badgeContent={Messagecount}
+            color="primary"
+            sx={{
+              ".css-6yc3qz-MuiBadge-badge ": {
+                top: "7px",
+                right: "7px",
+              },
+            }}
+          >
             <NotificationsIcon
               sx={{ color: "grey6", fontSize: "2.5rem", cursor: "pointer" }}
             />
@@ -119,6 +146,11 @@ const NotificationPanal = ({ notifications, SetNotifications, bell }) => {
           )}
         </Box>
       </Paper>
+      <NotificationSnackBar
+        open={openSnackBar}
+        setOpen={setOpenSnackBar}
+        message={newNotifications}
+      />
     </Box>
   );
 };

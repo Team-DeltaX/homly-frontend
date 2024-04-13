@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { ThemeProvider, Grid, Stack, Typography } from "@mui/material";
 import theme from "../../../HomlyTheme";
 import DistrictSelectCom from "../DistrictSelectCom";
@@ -7,8 +7,10 @@ import SearchIcon from "@mui/icons-material/Search";
 import dayjs from "dayjs";
 import SearchResaltDrawer from "./SearchResaltDrawer";
 import AxiosClient from "../../../services/AxiosClient";
+import { SocketioContext } from "../../../Contexts/SocketioContext";
 
 const SearchBarHome = () => {
+  const { socket } = useContext(SocketioContext);
   const [dateValue, setDateValue] = useState([dayjs(), dayjs()]);
   const [district, setDistrict] = useState("");
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -30,6 +32,11 @@ const SearchBarHome = () => {
       .catch(() => {
         setSearchedHH([]);
       });
+
+    socket.emit("newNotification", {
+      senderId:'214028', receiverId:'214029', text:'test message'
+    });
+
   };
   return (
     <ThemeProvider theme={theme}>
