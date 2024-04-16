@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState } from "react";
 import {
   ThemeProvider,
   AppBar,
@@ -23,8 +23,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { Link, NavLink } from "react-router-dom";
 import theme from "../../../HomlyTheme";
 import "./NavBar.css";
-// import useSocketioClient from "../../../services/SocketioClient";
-import { AuthContext } from "../../../Contexts/AuthContext";
 import NotificationPanal from "../../Common/NotificationPanal/NotificationPanal";
 const drawerWidth = 240;
 const pages = [
@@ -39,8 +37,6 @@ const respSidePages = [
 ];
 
 const NavBar = ({ refContactUS, position }) => {
-  const { user } = useContext(AuthContext);
-
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
@@ -86,15 +82,6 @@ const NavBar = ({ refContactUS, position }) => {
       data: "Remove HolidayHome",
     },
   ]);
-
-  // const socket = useSocketioClient();
-
-  // useEffect(() => {
-  //   socket &&
-  //     socket.on("connection", (data) => {
-  //       console.log(data);
-  //     });
-  // }, [socket]);
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -254,7 +241,7 @@ const NavBar = ({ refContactUS, position }) => {
                     <Avatar
                       alt="Remy Sharp"
                       sx={{ height: "48px", width: "48px" }}
-                      src={user.image}
+                      src={localStorage.getItem("image")}
                     />
                   </IconButton>
                 </Tooltip>
@@ -275,7 +262,10 @@ const NavBar = ({ refContactUS, position }) => {
                   onClose={handleCloseUserMenu}
                 >
                   <MenuItem
-                    onClick={handleCloseUserMenu}
+                    onClick={() => {
+                      handleCloseUserMenu();
+                      localStorage.removeItem("selectedTab");
+                    }}
                     component={Link}
                     to="/myProfile"
                   >

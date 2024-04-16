@@ -16,9 +16,11 @@ const AuthContextProvider = ({ children }) => {
 
   useEffect(() => {
     if (isLogged || isUpdated) {
+      localStorage.setItem("isLogged", isLogged);
       AxiosClient.get("/user/auth/details")
         .then((res) => {
           if (res) {
+            console.log(res);
             setUser({
               ...user,
               serviceNo: res.data.serviceNo,
@@ -31,12 +33,11 @@ const AuthContextProvider = ({ children }) => {
             localStorage.setItem("image", res.data.image);
           }
         })
-        .catch((err) => {});
+        .catch(() => {});
     }
 
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLogged || isUpdated]);
+  }, []);
 
   return (
     <AuthContext.Provider

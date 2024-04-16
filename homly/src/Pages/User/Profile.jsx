@@ -13,14 +13,14 @@ import {
 } from "@mui/material";
 
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
-import CreditCardIcon from "@mui/icons-material/CreditCard";
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import ListAltIcon from "@mui/icons-material/ListAlt";
 import HttpsIcon from "@mui/icons-material/Https";
 import theme from "../../HomlyTheme";
 import "./Profile.css";
 import "../../Components/User/NavBar/NavBar.css";
 import PersonalDetails from "../../Components/User/MyProfile/PersonalDetails";
-import PaymentDetailsCom from "../../Components/User/MyProfile/PaymentDetailsCom";
+import FavouriteHH from "../../Components/User/MyProfile/FavouriteHH";
 import Security from "../../Components/User/MyProfile/Security";
 import MyReservation from "../../Components/User/MyProfile/MyReservation";
 import NavBar from "../../Components/User/NavBar/NavBar";
@@ -30,14 +30,14 @@ const drawerWidth = 240;
 const sidePages = [
   { name: "Personal Details", icon: <ManageAccountsIcon />, value: 0 },
   { name: "Security", icon: <HttpsIcon />, value: 1 },
-  { name: "Payement Details", icon: <CreditCardIcon />, value: 2 },
+  { name: "Favourite Holiday Homes", icon: <FavoriteIcon />, value: 2 },
   { name: "My Reservation", icon: <ListAltIcon />, value: 3 },
 ];
 
 const tabComponent = [
   <PersonalDetails />,
   <Security />,
-  <PaymentDetailsCom />,
+  <FavouriteHH />,
   <MyReservation />,
 ];
 
@@ -129,6 +129,10 @@ const MyProfile = () => {
           onChange={handleTabChange}
           textColor="secondary"
           aria-label="secondary tabs example"
+          sx={{ ".css-ts0m74-MuiStack-root":{
+            paddingRight: "10px",
+            textAlign:"left",
+          }}}
         >
           {sidePages.map((item) => (
             <Tab
@@ -195,6 +199,7 @@ const MyProfile = () => {
               position: "fixed",
               bottom: 0,
               display: { md: "none" },
+              zIndex: 100,
             }}
           >
             <Tabs

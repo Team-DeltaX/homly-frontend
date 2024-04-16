@@ -201,7 +201,7 @@ const PersonalDetails = () => {
           }}
         >
           <Card sx={{ width: { xs: "100%", sm: "90%" } }}>
-            <CardContent>
+            <CardContent sx={{ padding: { xs: 0, sm: "16px" } }}>
               <Stack direction="row" sx={{ flexWrap: "wrap" }}>
                 <Box sx={{ width: { xs: "100%", sm: "70%" } }}>
                   <PersonalDetailsGrid
