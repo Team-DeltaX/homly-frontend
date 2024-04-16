@@ -145,6 +145,7 @@ export default function HolidayHomes() {
                           HHRating={item.overall_rating}
                           HHImage={item.HHImage}
                           showInterest={false}
+                          isWishListed={item.isWishListed}
                         />
                       </Box>
                     ))

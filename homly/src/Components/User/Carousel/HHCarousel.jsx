@@ -75,6 +75,7 @@ export default function HHCarousel({ sortedByRatingHH }) {
               HHPrice={item.TotalRental}
               HHRating={item.overall_rating}
               HHImage={item.HHImage}
+              isWishListed={item.isWishListed}
               showInterest={false}
             />
           </div>
