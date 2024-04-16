@@ -9,20 +9,21 @@ import {
 
 import theme from "../../../HomlyTheme";
 import AxiosClient from "../../../services/AxiosClient";
-import FavouriteHHCard from "../HHCard/FavouriteHHCard";
+import FavoritesHHCard from "../HHCard/FavoritesHHCard";
 
-const FavouriteHH = () => {
-  const [favouriteHH, setFavouriteHH] = useState([]);
+const FavoritesHH = () => {
+      
+  const [favoritesHH, setFavoritesHH] = useState([]);
   const [isChanged, setIsChanged] = useState(false);
 
   useEffect(() => {
     AxiosClient.get("/user/auth/wishlist")
       .then((res) => {
-        setFavouriteHH(res.data);
+        setFavoritesHH(res.data);
         setIsChanged(false);
       })
       .catch(() => {
-        setFavouriteHH([]);
+        setFavoritesHH([]);
       });
   }, [isChanged]);
 
@@ -30,7 +31,7 @@ const FavouriteHH = () => {
     <ThemeProvider theme={theme}>
       <Box>
         <Typography sx={{ fontSize: { xs: "29px", sm: "34px" } }}>
-          Favourite Holiday Homes
+          Favorites Holiday Homes
         </Typography>
         <Box
           sx={{
@@ -57,12 +58,12 @@ const FavouriteHH = () => {
                 sx={{
                   display: "flex",
                   flexWrap: "wrap",
-                  justifyContent: "center",
+                  justifyContent:{ xs:"center",md:"flex-start"},
                 }}
               >
-                {favouriteHH.length > 0 ? (
-                  favouriteHH.map((hh) => (
-                    <FavouriteHHCard
+                {favoritesHH.length > 0 ? (
+                  favoritesHH.map((hh) => (
+                    <FavoritesHHCard
                       key={hh.HolidayHomeId}
                       HHID={hh.HolidayHomeId}
                       HHImage={hh.HHImage}
@@ -76,7 +77,7 @@ const FavouriteHH = () => {
                   ))
                 ) : (
                   <Typography variant="h6">
-                    No Favourite Holiday Homes
+                    No Favorites Holiday Homes
                   </Typography>
                 )}
               </Box>
@@ -88,4 +89,4 @@ const FavouriteHH = () => {
   );
 };
 
-export default FavouriteHH;
+export default FavoritesHH;

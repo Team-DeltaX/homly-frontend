@@ -42,6 +42,7 @@ export default function HolidayHomeCard({
           setIsFavorite(true);
         });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOK]);
   const handleFavorite = (e) => {
     e.preventDefault();

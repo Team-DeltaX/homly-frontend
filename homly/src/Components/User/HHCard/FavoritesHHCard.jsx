@@ -7,7 +7,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import ConfirmationBox from "../../Common/ConfirmationBox";
 import AxiosClient from "../../../services/AxiosClient";
 import theme from "../../../HomlyTheme";
-const FavouriteHHCard = ({
+const FavoritesHHCard = ({
   HHID,
   HHImage,
   HHName,
@@ -17,35 +17,36 @@ const FavouriteHHCard = ({
   HHRating,
   setIsChanged,
 }) => {
-  const [isFavorite, setIsFavorite] = useState(isWishListed);
+  const [isFavorites, setIsFavorites] = useState(isWishListed);
   const [open, setOpen] = useState(false);
   const [isOK, setIsOK] = useState(false);
   useEffect(() => {
-    if (isOK && isFavorite) {
-      setIsFavorite(!isFavorite);
+    if (isOK && isFavorites) {
+      setIsFavorites(!isFavorites);
       AxiosClient.delete("/user/auth/wishlist", {
         data: { holidayHomeId: HHID },
       })
         .then(() => {
-          setIsFavorite(false);
+          setIsFavorites(false);
           setIsChanged(true);
         })
         .catch(() => {
-          setIsFavorite(true);
+          setIsFavorites(true);
         });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOK]);
-  const handleFavorite = (e) => {
+  const handleFavorites = (e) => {
     e.preventDefault();
-    if (isFavorite) {
+    if (isFavorites) {
       setOpen(true);
     } else {
       AxiosClient.post("/user/auth/wishlist", { holidayHomeId: HHID })
         .then(() => {
-          setIsFavorite(true);
+          setIsFavorites(true);
         })
         .catch(() => {
-          setIsFavorite(false);
+          setIsFavorites(false);
         });
     }
   };
@@ -83,17 +84,17 @@ const FavouriteHHCard = ({
                 alignItems: "center",
               }}
             >
-              {isFavorite ? (
+              {isFavorites ? (
                 <FavoriteIcon
                   onClick={(e) => {
-                    handleFavorite(e);
+                    handleFavorites(e);
                   }}
                   sx={{ cursor: "pointer !important" }}
                 />
               ) : (
                 <FavoriteBorderIcon
                   onClick={(e) => {
-                    handleFavorite(e);
+                    handleFavorites(e);
                   }}
                   sx={{ cursor: "pointer !important" }}
                 />
@@ -181,11 +182,11 @@ const FavouriteHHCard = ({
         open={open}
         setOpen={setOpen}
         title="Are you sure?"
-        content="Are you sure you want to remove this from your wishlist?"
+        content="Are you sure you want to remove this from your favoritess list?"
         setIsOK={setIsOK}
       />
     </ThemeProvider>
   );
 };
 
-export default FavouriteHHCard;
+export default FavoritesHHCard;

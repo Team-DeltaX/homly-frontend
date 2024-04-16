@@ -20,7 +20,7 @@ import theme from "../../HomlyTheme";
 import "./Profile.css";
 import "../../Components/User/NavBar/NavBar.css";
 import PersonalDetails from "../../Components/User/MyProfile/PersonalDetails";
-import FavouriteHH from "../../Components/User/MyProfile/FavouriteHH";
+import FavouriteHH from "../../Components/User/MyProfile/FavoritesHH";
 import Security from "../../Components/User/MyProfile/Security";
 import MyReservation from "../../Components/User/MyProfile/MyReservation";
 import NavBar from "../../Components/User/NavBar/NavBar";
