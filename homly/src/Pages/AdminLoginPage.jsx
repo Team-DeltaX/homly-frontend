@@ -59,6 +59,8 @@ export default function AdminLoginPage() {
             } else {
               Navigate("/Primaryadmin/Dashboard");
             }
+            localStorage.setItem("userId", adminId);
+            localStorage.setItem("token", res.data.token);
           }
           setPassword("");
         } else {

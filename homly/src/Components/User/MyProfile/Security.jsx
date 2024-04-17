@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   ThemeProvider,
@@ -9,14 +9,12 @@ import {
   Stack,
   CardActions,
 } from "@mui/material";
-import { AuthContext } from "../../../Contexts/AuthContext";
 import ErrorSnackbar from "../ErrorSnackbar";
 import PasswordComGrid from "./PasswordComGrid";
 import theme from "../../../HomlyTheme";
 import AxiosClient from "../../../services/AxiosClient";
 
 const Security = () => {
-  const { authServiceNumber } = useContext(AuthContext);
   const [password, setPassword] = useState({
     currentPass: "",
     newPass: "",
@@ -44,7 +42,6 @@ const Security = () => {
   const handleUpdateData = () => {
     if (passwordStrength > 1) {
       const formData = {
-        serviceNo: authServiceNumber,
         oldPassword: password.currentPass,
         newPassword: password.newPass,
       };

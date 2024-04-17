@@ -59,7 +59,10 @@ const UserLogin = () => {
             message: res.data.message,
           });
           setIsLogged(true);
+          localStorage.setItem("isLogged", true);
           setAuthServiceNumber(serviceNo);
+          localStorage.setItem("userId", serviceNo);
+          localStorage.setItem("token", res.data.token);
           localStorage.removeItem("selectedTab");
           Navigate("/Home");
         } else {
@@ -88,7 +91,6 @@ const UserLogin = () => {
     setServiceNo("");
     setPassword("");
   };
-
 
   const handleClickOpen = () => {
     setOpen(true);

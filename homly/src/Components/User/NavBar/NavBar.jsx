@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   ThemeProvider,
   AppBar,
@@ -20,10 +20,11 @@ import {
   Button,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import theme from "../../../HomlyTheme";
 import "./NavBar.css";
 import NotificationPanal from "../../Common/NotificationPanal/NotificationPanal";
+import { AuthContext } from "../../../Contexts/AuthContext";
 const drawerWidth = 240;
 const pages = [
   { name: "Home", path: "/Home" },
@@ -37,6 +38,8 @@ const respSidePages = [
 ];
 
 const NavBar = ({ refContactUS, position }) => {
+  const { user, setIsLogout } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
@@ -111,6 +114,17 @@ const NavBar = ({ refContactUS, position }) => {
       setMobileOpen(!mobileOpen);
     }
     refContactUS.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handleLogout = () => {
+    handleCloseUserMenu();
+    setIsLogout(true);
+    localStorage.removeItem("token");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("image");
+    localStorage.removeItem("selectedTab");
+    localStorage.setItem("isLogged", false);
+    navigate("/");
   };
 
   const mainDrawer = (
@@ -241,7 +255,7 @@ const NavBar = ({ refContactUS, position }) => {
                     <Avatar
                       alt="Remy Sharp"
                       sx={{ height: "48px", width: "48px" }}
-                      src={localStorage.getItem("image")}
+                      src={user.image ? user.image : ""}
                     />
                   </IconButton>
                 </Tooltip>
@@ -271,7 +285,7 @@ const NavBar = ({ refContactUS, position }) => {
                   >
                     <Typography textAlign="center">My Profile</Typography>
                   </MenuItem>
-                  <MenuItem onClick={handleCloseUserMenu}>
+                  <MenuItem onClick={handleLogout}>
                     <Typography textAlign="center">Logout</Typography>
                   </MenuItem>
                 </Menu>
