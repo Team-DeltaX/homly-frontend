@@ -32,6 +32,7 @@ const PersonalDetails = () => {
     contactNo: "",
     email: "",
   });
+  const [oldEmail, setOldEmail] = useState("");
   const [image, setImage] = useState("");
   const [interests, setInterests] = useState([]);
   const [isHaveInterests, setIsHaveInterests] = useState(false);
@@ -68,6 +69,7 @@ const PersonalDetails = () => {
   useEffect(() => {
     AxiosClient.get("/user/auth/details")
       .then((res) => {
+        console.log(res, "res asdasdasf");
         if (Response) {
           setData({
             ...data,
@@ -79,6 +81,7 @@ const PersonalDetails = () => {
             email: res.data.email,
             contactNo: res.data.contactNo,
           });
+          setOldEmail(res.data.email);
           setImage(res.data.image);
           setIsUpdated(true);
         } else {
@@ -123,7 +126,7 @@ const PersonalDetails = () => {
   }, []);
 
   const handleUpdate = () => {
-    let isUpdated = false;
+    let emailUpdated = false;
 
     if (!checkEmail(data.email) && !checkContactNo(data.contactNo)) {
       const formData = {
@@ -132,12 +135,39 @@ const PersonalDetails = () => {
         contactNo: data.contactNo,
         image: image,
       };
-      AxiosClient.put("/user/auth", formData)
+      AxiosClient.put("/user/auth/details", formData)
         .then((res) => {
+          console.log(res, "res updateeee");
           if (res.data.success) {
-            isUpdated = true;
+            if (res.data.emailUpdated) {
+              emailUpdated = true;
+            }
+            const formData2 = {
+              fac1: interests[0],
+              fac2: interests[1],
+              fac3: interests[2],
+            };
+
+            AxiosClient.put("/user/auth/interested", formData2).then((res) => {
+              if (res.data.success) {
+                setErrorStatus({
+                  ...errorStatus,
+                  isOpen: true,
+                  type: "success",
+                  message: emailUpdated
+                    ? "Check your email,We will send you a verification link"
+                    : "Updated Successfully",
+                });
+              } else {
+                setErrorStatus({
+                  ...errorStatus,
+                  isOpen: true,
+                  type: "error",
+                  message: res.data.message,
+                });
+              }
+            });
           } else {
-            isUpdated = false;
             setErrorStatus({
               ...errorStatus,
               isOpen: true,
@@ -147,7 +177,6 @@ const PersonalDetails = () => {
           }
         })
         .catch((err) => {
-          isUpdated = false;
           setErrorStatus({
             ...errorStatus,
             isOpen: true,
@@ -155,30 +184,8 @@ const PersonalDetails = () => {
             message: err.message,
           });
         });
-
-      const formData2 = {
-        fac1: interests[0],
-        fac2: interests[1],
-        fac3: interests[2],
-      };
-
-      AxiosClient.put("/user/auth/interested", formData2).then((res) => {
-        if (res.data.success) {
-          isUpdated = true;
-        } else {
-          isUpdated = false;
-        }
-      });
+      setData({ ...data, email: oldEmail });
       setIsEnable(false);
-
-      if (isUpdated) {
-        setErrorStatus({
-          ...errorStatus,
-          isOpen: true,
-          type: "success",
-          message: "Updated Successfully",
-        });
-      }
     }
   };
 
