@@ -218,7 +218,7 @@ const HolidayHomeEdit = () => {
         axios.post("http://localhost:8080/admin/auth/locationadmin/holidayhome/update", updatedData)
             .then((res) => {
                 console.log(res);
-                navigate("/locationadmin/manage");
+                // navigate("/locationadmin/manage");
             })
             .catch((err) => {
                 console.log(err);
