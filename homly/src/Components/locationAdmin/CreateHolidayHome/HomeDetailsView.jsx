@@ -1,31 +1,40 @@
-import React, { useState, useEffect } from 'react'
-import { Box, TextField, Typography } from '@mui/material'
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import UploadImageCloudinary from '../../Common/UploadImageCloudinary';
+import React, { useState, useEffect } from "react";
+import { Box, TextField, Typography } from "@mui/material";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import UploadImageCloudinary from "../../Common/UploadImageCloudinary";
 
-
-const HomeDetailsView = ({ setSubmit, value, setValue, setMainImage, setImage1, setImage2, setImage3 }) => {
-
+const HomeDetailsView = ({
+  setSubmit,
+  value,
+  setValue,
+  setMainImage,
+  setImage1,
+  setImage2,
+  setImage3,
+}) => {
   const [error, setError] = useState({
-    name: false, address: false, description: false, contactNo1: false, contactNo2: false
+    name: false,
+    address: false,
+    description: false,
+    contactNo1: false,
+    contactNo2: false,
   });
-
 
   useEffect(() => {
     const isDetailsComplete =
-      value.name !== '' &&
-      value.address !== '' &&
-      value.district !== '' &&
-      value.description !== '' &&
-      value.contactNo1 !== '' &&
-      value.category !== '' &&
-      value.status !== '';
+      value.name !== "" &&
+      value.address !== "" &&
+      value.district !== "" &&
+      value.description !== "" &&
+      value.contactNo1 !== "" &&
+      value.category !== "" &&
+      value.status !== "";
 
     const areErrorsEmpty =
       !error.name &&
@@ -34,22 +43,12 @@ const HomeDetailsView = ({ setSubmit, value, setValue, setMainImage, setImage1, 
       !error.contactNo1 &&
       !error.contactNo2;
 
-
-
     if (isDetailsComplete && areErrorsEmpty) {
-      setSubmit(true)
+      setSubmit(true);
     } else {
-      setSubmit(false)
+      setSubmit(false);
     }
-
-
   }, [value, error, setSubmit]);
-
-
-
-
-
-
 
   const handleNameChange = (e) => {
     setValue({ ...value, name: e.target.value });
@@ -61,23 +60,19 @@ const HomeDetailsView = ({ setSubmit, value, setValue, setMainImage, setImage1, 
         setError({ ...error, name: false });
       }
     }
-  }
-
+  };
 
   const handleAddressChange = (e) => {
     setValue({ ...value, address: e.target.value });
-  }
-
+  };
 
   const handleDistrictChange = (e) => {
     setValue({ ...value, district: e.target.value });
-  }
+  };
 
   const handleDisriptionChange = (e) => {
-
-    let wordCount = e.target.value.split(' ').length;
+    let wordCount = e.target.value.split(" ").length;
     // console.log("word", wordCount);
-
 
     if (e.target.value.length > 0) {
       if (wordCount < 50 || wordCount > 150) {
@@ -86,11 +81,8 @@ const HomeDetailsView = ({ setSubmit, value, setValue, setMainImage, setImage1, 
         setValue({ ...value, description: e.target.value });
         setError({ ...error, description: false });
       }
-
-
     }
-
-  }
+  };
 
   const handleContactNo1Change = (e) => {
     setValue({ ...value, contactNo1: e.target.value });
@@ -102,7 +94,7 @@ const HomeDetailsView = ({ setSubmit, value, setValue, setMainImage, setImage1, 
         setError({ ...error, contactNo1: false });
       }
     }
-  }
+  };
 
   const handleContactNo2Change = (e) => {
     setValue({ ...value, contactNo2: e.target.value });
@@ -114,46 +106,105 @@ const HomeDetailsView = ({ setSubmit, value, setValue, setMainImage, setImage1, 
         setError({ ...error, contactNo2: false });
       }
     }
-  }
+  };
 
   const handlestatusChange = (e) => {
     setValue({ ...value, status: e.target.value });
-  }
+  };
 
   const handleCategoryChange = (e) => {
     setValue({ ...value, category: e.target.value });
-  }
-
-
+  };
 
   return (
     <Box>
-
-      <fieldset style={{ borderRadius: '16px', color: 'grey' }}>
+      <fieldset style={{ borderRadius: "16px", color: "grey" }}>
         <legend>Holiday Home Details</legend>
-        <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
-          <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
-            <Typography variant='p' sx={{ color: 'black' }}>Name</Typography>
+        <Box
+          className="input_container"
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: "1em",
+            marginBottom: "12px",
+          }}
+        >
+          <Box
+            sx={{ minWidth: "100px", maxWidth: "200px" }}
+            className="label_container"
+          >
+            <Typography variant="p" sx={{ color: "black" }}>
+              Name
+            </Typography>
           </Box>
-          <TextField error={error.name} className='input_field' required id="outlined-required" label="Enter Name" placeholder='Enter Name' fullWidth size='small' onChange={handleNameChange} helperText={error.name ? "Invalid Input" : ''} />
+          <TextField
+            error={error.name}
+            className="input_field"
+            required
+            id="outlined-required"
+            label="Enter Name"
+            placeholder="Enter Name"
+            fullWidth
+            size="small"
+            onChange={handleNameChange}
+            helperText={error.name ? "Invalid Input" : ""}
+          />
         </Box>
-        <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
-          <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
-            <Typography variant='p' sx={{ color: 'black' }}>Address</Typography>
+        <Box
+          className="input_container"
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: "1em",
+            marginBottom: "12px",
+          }}
+        >
+          <Box
+            sx={{ minWidth: "100px", maxWidth: "200px" }}
+            className="label_container"
+          >
+            <Typography variant="p" sx={{ color: "black" }}>
+              Address
+            </Typography>
           </Box>
-          <TextField required id="outlined-required" label="Enter Address" placeholder='Enter Address' fullWidth size='small' onChange={handleAddressChange} />
+          <TextField
+            required
+            id="outlined-required"
+            label="Enter Address"
+            placeholder="Enter Address"
+            fullWidth
+            size="small"
+            onChange={handleAddressChange}
+          />
         </Box>
-        <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
-          <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
-            <Typography variant='p' sx={{ color: 'black' }}>District</Typography>
+        <Box
+          className="input_container"
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: "1em",
+            marginBottom: "12px",
+          }}
+        >
+          <Box
+            sx={{ minWidth: "100px", maxWidth: "200px" }}
+            className="label_container"
+          >
+            <Typography variant="p" sx={{ color: "black" }}>
+              District
+            </Typography>
           </Box>
-          <Box sx={{ width: "100%" }} >
-            <FormControl sx={{ width: '100%', }}>
-              <InputLabel required id="demo-simple-select-label">District</InputLabel>
+          <Box sx={{ width: "100%" }}>
+            <FormControl sx={{ width: "100%" }}>
+              <InputLabel required id="demo-simple-select-label">
+                District
+              </InputLabel>
               <Select
-
                 xs={{ width: "5%" }}
-                size='small'
+                size="small"
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 value={value.district}
@@ -185,41 +236,126 @@ const HomeDetailsView = ({ setSubmit, value, setValue, setMainImage, setImage1, 
                 <MenuItem value={"Monaragala"}>Monaragala</MenuItem>
                 <MenuItem value={"Ratnapura"}>Ratnapura</MenuItem>
                 <MenuItem value={"Kegalle"}>Kegalle</MenuItem>
-
               </Select>
             </FormControl>
           </Box>
         </Box>
-        <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
-          <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
-            <Typography variant='p' sx={{ color: 'black' }}>Description</Typography>
+        <Box
+          className="input_container"
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: "1em",
+            marginBottom: "12px",
+          }}
+        >
+          <Box
+            sx={{ minWidth: "100px", maxWidth: "200px" }}
+            className="label_container"
+          >
+            <Typography variant="p" sx={{ color: "black" }}>
+              Description
+            </Typography>
           </Box>
-          <TextField error={error.description} required multiline id="outlined-required" label="Enter Description" placeholder='Enter Description' fullWidth size='small' onChange={handleDisriptionChange} helperText={error.description ? "50-150 words" : " "} />
+          <TextField
+            error={error.description}
+            required
+            multiline
+            id="outlined-required"
+            label="Enter Description"
+            placeholder="Enter Description"
+            fullWidth
+            size="small"
+            onChange={handleDisriptionChange}
+            helperText={error.description ? "50-150 words" : " "}
+          />
         </Box>
-        <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
-          <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
-            <Typography variant='p' sx={{ color: 'black' }}>Contact No 1</Typography>
+        <Box
+          className="input_container"
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: "1em",
+            marginBottom: "12px",
+          }}
+        >
+          <Box
+            sx={{ minWidth: "100px", maxWidth: "200px" }}
+            className="label_container"
+          >
+            <Typography variant="p" sx={{ color: "black" }}>
+              Contact No 1
+            </Typography>
           </Box>
-          <TextField error={error.contactNo1} required id="outlined-required" label="Enter Contact No" placeholder='Enter Contact No' fullWidth size='small' onChange={handleContactNo1Change} helperText={error.contactNo1 ? "There should be 10 digits" : ''} />
+          <TextField
+            error={error.contactNo1}
+            required
+            id="outlined-required"
+            label="Enter Contact No"
+            placeholder="Enter Contact No"
+            fullWidth
+            size="small"
+            onChange={handleContactNo1Change}
+            helperText={error.contactNo1 ? "There should be 10 digits" : ""}
+          />
         </Box>
-        <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
-          <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
-            <Typography variant='p' sx={{ color: 'black' }}>Contact No 2</Typography>
+        <Box
+          className="input_container"
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: "1em",
+            marginBottom: "12px",
+          }}
+        >
+          <Box
+            sx={{ minWidth: "100px", maxWidth: "200px" }}
+            className="label_container"
+          >
+            <Typography variant="p" sx={{ color: "black" }}>
+              Contact No 2
+            </Typography>
           </Box>
-          <TextField error={error.contactNo2} id="outlined-required" label="Enter Contact No2" placeholder='Enter Contact No2' fullWidth size='small' onChange={handleContactNo2Change} helperText={error.contactNo2 ? "There should be 10 digits" : ''} />
+          <TextField
+            error={error.contactNo2}
+            id="outlined-required"
+            label="Enter Contact No2"
+            placeholder="Enter Contact No2"
+            fullWidth
+            size="small"
+            onChange={handleContactNo2Change}
+            helperText={error.contactNo2 ? "There should be 10 digits" : ""}
+          />
         </Box>
 
-        <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
-          <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
-            <Typography variant='p' sx={{ color: 'black' }}>Category</Typography>
+        <Box
+          className="input_container"
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: "1em",
+            marginBottom: "12px",
+          }}
+        >
+          <Box
+            sx={{ minWidth: "100px", maxWidth: "200px" }}
+            className="label_container"
+          >
+            <Typography variant="p" sx={{ color: "black" }}>
+              Category
+            </Typography>
           </Box>
-          <Box sx={{ width: "100%" }} >
-            <FormControl sx={{ width: '100%', }}>
+          <Box sx={{ width: "100%" }}>
+            <FormControl sx={{ width: "100%" }}>
               <InputLabel id="demo-simple-select-label">select</InputLabel>
               <Select
                 required
                 xs={{ width: "5%" }}
-                size='small'
+                size="small"
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 value={value.catogery}
@@ -228,36 +364,75 @@ const HomeDetailsView = ({ setSubmit, value, setValue, setMainImage, setImage1, 
               >
                 <MenuItem value={"exclusive"}>Exclusive</MenuItem>
                 <MenuItem value={"nonExclusive"}>Non-Exclusive</MenuItem>
-
               </Select>
             </FormControl>
           </Box>
         </Box>
 
-
-
-        <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
-          <Box sx={{ minWidth: '100px', maxWidth: '100px' }} className="label_container">
-            <Typography variant='p' sx={{ color: 'black' }}>Status</Typography>
+        <Box
+          className="input_container"
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: "1em",
+            marginBottom: "12px",
+          }}
+        >
+          <Box
+            sx={{ minWidth: "100px", maxWidth: "100px" }}
+            className="label_container"
+          >
+            <Typography variant="p" sx={{ color: "black" }}>
+              Status
+            </Typography>
           </Box>
-          <Box sx={{ display: 'flex', justifyContent: 'flex-start', width: "100%", alignItems: 'center' }}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "flex-start",
+              width: "100%",
+              alignItems: "center",
+            }}
+          >
             <RadioGroup
               aria-labelledby="demo-controlled-radio-buttons-group"
               name="controlled-radio-buttons-group"
               value={value.status}
               onChange={handlestatusChange}
-
             >
-              <FormControlLabel value="Active" control={<Radio />} label="Active" />
-              <FormControlLabel value="Inactive" control={<Radio />} label="Inactive" />
+              <FormControlLabel
+                value="Active"
+                control={<Radio />}
+                label="Active"
+              />
+              <FormControlLabel
+                value="Inactive"
+                control={<Radio />}
+                label="Inactive"
+              />
             </RadioGroup>
           </Box>
         </Box>
-        <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '1em', marginBottom: '12px' }}>
-          <Box sx={{ minWidth: '100px', maxWidth: '100px' }} className="label_container">
-            <Typography variant='p' sx={{ color: 'black' }}>Main Image</Typography>
+        <Box
+          className="input_container"
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-start",
+            gap: "1em",
+            marginBottom: "12px",
+          }}
+        >
+          <Box
+            sx={{ minWidth: "100px", maxWidth: "100px" }}
+            className="label_container"
+          >
+            <Typography variant="p" sx={{ color: "black" }}>
+              Main Image
+            </Typography>
           </Box>
-          <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
+          <Box sx={{ display: "flex", justifyContent: "flex-start" }}>
             <UploadImageCloudinary
               folderName="caretaker"
               setImage={setMainImage}
@@ -267,15 +442,27 @@ const HomeDetailsView = ({ setSubmit, value, setValue, setMainImage, setImage1, 
               buttonVariant="outlined"
               isDisplayImageName={true}
             />
-
-
           </Box>
         </Box>
-        <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '1em', marginBottom: '12px' }}>
-          <Box sx={{ minWidth: '100px', maxWidth: '100px' }} className="label_container">
-            <Typography variant='p' sx={{ color: 'black' }}>Main Image</Typography>
+        <Box
+          className="input_container"
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-start",
+            gap: "1em",
+            marginBottom: "12px",
+          }}
+        >
+          <Box
+            sx={{ minWidth: "100px", maxWidth: "100px" }}
+            className="label_container"
+          >
+            <Typography variant="p" sx={{ color: "black" }}>
+              Main Image
+            </Typography>
           </Box>
-          <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
+          <Box sx={{ display: "flex", justifyContent: "flex-start" }}>
             <UploadImageCloudinary
               folderName="caretaker"
               setImage={setImage1}
@@ -285,15 +472,27 @@ const HomeDetailsView = ({ setSubmit, value, setValue, setMainImage, setImage1, 
               buttonVariant="outlined"
               isDisplayImageName={true}
             />
-
-
           </Box>
         </Box>
-        <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '1em', marginBottom: '12px' }}>
-          <Box sx={{ minWidth: '100px', maxWidth: '100px' }} className="label_container">
-            <Typography variant='p' sx={{ color: 'black' }}>Main Image</Typography>
+        <Box
+          className="input_container"
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-start",
+            gap: "1em",
+            marginBottom: "12px",
+          }}
+        >
+          <Box
+            sx={{ minWidth: "100px", maxWidth: "100px" }}
+            className="label_container"
+          >
+            <Typography variant="p" sx={{ color: "black" }}>
+              Main Image
+            </Typography>
           </Box>
-          <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
+          <Box sx={{ display: "flex", justifyContent: "flex-start" }}>
             <UploadImageCloudinary
               folderName="caretaker"
               setImage={setImage2}
@@ -303,15 +502,27 @@ const HomeDetailsView = ({ setSubmit, value, setValue, setMainImage, setImage1, 
               buttonVariant="outlined"
               isDisplayImageName={true}
             />
-
-
           </Box>
         </Box>
-        <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '1em', marginBottom: '12px' }}>
-          <Box sx={{ minWidth: '100px', maxWidth: '100px' }} className="label_container">
-            <Typography variant='p' sx={{ color: 'black' }}>Main Image</Typography>
+        <Box
+          className="input_container"
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-start",
+            gap: "1em",
+            marginBottom: "12px",
+          }}
+        >
+          <Box
+            sx={{ minWidth: "100px", maxWidth: "100px" }}
+            className="label_container"
+          >
+            <Typography variant="p" sx={{ color: "black" }}>
+              Main Image
+            </Typography>
           </Box>
-          <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
+          <Box sx={{ display: "flex", justifyContent: "flex-start" }}>
             <UploadImageCloudinary
               folderName="caretaker"
               setImage={setImage3}
@@ -321,17 +532,11 @@ const HomeDetailsView = ({ setSubmit, value, setValue, setMainImage, setImage1, 
               buttonVariant="outlined"
               isDisplayImageName={true}
             />
-
-
           </Box>
         </Box>
-
-
-
       </fieldset>
-
     </Box>
-  )
-}
+  );
+};
 
-export default HomeDetailsView
+export default HomeDetailsView;
