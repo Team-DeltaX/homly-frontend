@@ -34,7 +34,7 @@ const SearchBarHome = () => {
       });
 
     socket.emit("newNotification", {
-      senderId:'214028', receiverId:'214029', text:'test message'
+      senderId:'214028', receiverId:'214029', data:'test message', type:"Authorization Denied", time: new Date()
     });
 
   };

@@ -139,7 +139,7 @@ const NotificationPanal = ({ notifications, SetNotifications, bell }) => {
                 id={notifi.id}
                 type={notifi.type}
                 data={notifi.data}
-                senderID={notifi.senderID}
+                senderId={notifi.senderId}
                 time={notifi.time}
                 updateNotifications={updateNotifications}
               ></Notification>

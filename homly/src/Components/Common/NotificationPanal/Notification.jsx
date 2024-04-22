@@ -9,7 +9,7 @@ import CancelIcon from "@mui/icons-material/Cancel";
 const Notification = ({
   type,
   data,
-  senderID,
+  senderId,
   id,
   updateNotifications,
   time,
@@ -80,7 +80,7 @@ const Notification = ({
               variant="p"
               sx={{ fontWeight: "bold", fontSize: "14px", color: "#4E4E4E" }}
             >
-              Sender ID : {senderID}
+              Sender ID : {senderId}
             </Typography>
           </Grid>
         </Grid>
