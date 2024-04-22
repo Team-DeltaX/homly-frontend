@@ -34,7 +34,6 @@ const MyReservation = () => {
   useEffect(() => {
     AxiosClient.get("/user/auth/userOngoingReservation")
       .then((response) => {
-        console.log(response.data);
         setOngoingReservation(response.data);
       })
       .catch((err) => {
@@ -45,7 +44,6 @@ const MyReservation = () => {
 
     AxiosClient.get("/user/auth/userPastReservation")
       .then((response) => {
-        console.log("pastttttttttt", response.data);
         setPastReservation(response.data);
         setIsAddReview(false);
       })
@@ -58,6 +56,7 @@ const MyReservation = () => {
   }, [isAddReview]);
 
   const handleTabChange = (event, newValue) => {
+    event.preventDefault();
     setValue(newValue);
   };
   return (
@@ -75,7 +74,9 @@ const MyReservation = () => {
           }}
         >
           <Card sx={{ width: { xs: "100%", sm: "90%" } }}>
-            <CardContent sx={{ display: "flex", flexDirection: "column" }}>
+            <CardContent
+              sx={{ display: "flex", flexDirection: "column", padding: 1.5 }}
+            >
               <Tabs
                 value={value}
                 onChange={handleTabChange}

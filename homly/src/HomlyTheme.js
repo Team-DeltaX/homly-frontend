@@ -14,6 +14,8 @@ const theme = createTheme({
         grey2: grey[200],
         grey3: grey[300],
         grey4: grey[400],
+        grey5: grey[500],
+        grey6: grey[600],
 
         text: {
             primary: '#2c2c2c',

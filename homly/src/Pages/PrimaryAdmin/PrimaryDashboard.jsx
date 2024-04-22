@@ -18,39 +18,35 @@ import Income from "../../Components/PrimaryAdmin/Income";
 import PDashboardboxes from "../../Components/PrimaryAdmin/PDashboardboxes";
 import CompareLineChart from "../../Components/PrimaryAdmin/CompareLineChart";
 import axios from "axios";
+import AxiosClient from "../../services/AxiosClient";
 
 const PrimaryDashboard = () => {
   const [showNav, setShowNav] = useState("nav_grid_deactive");
   const [activecount, SetActivecount] = useState(0);
   const [inactivecount, setInactivecount] = useState(0);
-  const [latestFourAdmins,setlatestFourAdmins]=useState([]);
-  const [NotApprovedCount,SetNotApprovedCount]=useState(0)
+  const [latestFourAdmins, setlatestFourAdmins] = useState([]);
+  const [NotApprovedCount, SetNotApprovedCount] = useState(0);
 
+  const getNotApprovedCount = () => {
+    // axios.get('http://localhost:8080/admin/auth/notapprovedcount')
+    AxiosClient.get("/admin/auth/notapprovedcount")
+      .then((res) => {
+        SetNotApprovedCount(res.data.notapprovedcount);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
-  const getNotApprovedCount=()=>{
-    axios.get('http://localhost:8080/admin/auth/notapprovedcount')
-    .then((res)=>{
-      SetNotApprovedCount(res.data.notapprovedcount)
-
-    })
-    .catch((error)=>{
-      console.log(error)
-    })
-  }
-
-
-
-  const getadmins=()=>{
-    axios.get(`${global.API_BASE_URL}/admin/auth/locationadmin/all`)
-    .then((res)=>{
+  const getadmins = () => {
+    // axios.get(`${global.API_BASE_URL}/admin/auth/locationadmin/all`)
+    AxiosClient.get("/admin/auth/locationadmin/all").then((res) => {
       setlatestFourAdmins(res.data.reverse());
-     
-    })
-  }
+    });
+  };
 
   const getstatus = () => {
-    axios
-      .get(`${global.API_BASE_URL}/admin/auth/holidayhomehstatus`)
+    AxiosClient.get("/admin/auth/locationadmin/statuscount")
       .then((res) => {
         SetActivecount(res.data.Active);
         setInactivecount(res.data.Inactive);
@@ -177,7 +173,14 @@ const PrimaryDashboard = () => {
                       <CompareLineChart />
                     </Box>
                   </Grid>
-                  <Grid item md={4} sx={{ height: "100vh" ,marginLeft:{xs:'40px',md:'0px'}}}>
+                  <Grid
+                    item
+                    md={4}
+                    sx={{
+                      height: "100vh",
+                      marginLeft: { xs: "40px", md: "0px" },
+                    }}
+                  >
                     <Box sx={{ display: "flex", flexDirection: "column" }}>
                       <Box
                         sx={{
@@ -198,16 +201,25 @@ const PrimaryDashboard = () => {
                         </Box>
 
                         <Box>
-                          <DashViewAdminBox color={"#253DA1"}  data={latestFourAdmins[0]}/>
+                          <DashViewAdminBox
+                            color={"#253DA1"}
+                            data={latestFourAdmins[0]}
+                          />
                         </Box>
                         <Box>
                           <DashViewAdminBox color={"#FF69B4"} data={latestFourAdmins[1]} />
                         </Box>
                         <Box>
-                          <DashViewAdminBox color={"#77ccff"} data={latestFourAdmins[2]} />
+                          <DashViewAdminBox
+                            color={"#77ccff"}
+                            data={latestFourAdmins[2]}
+                          />
                         </Box>
                         <Box>
-                          <DashViewAdminBox color={"#f5c77e"} data={latestFourAdmins[3]} />
+                          <DashViewAdminBox
+                            color={"#f5c77e"}
+                            data={latestFourAdmins[3]}
+                          />
                         </Box>
 
                         <Box>
@@ -249,7 +261,9 @@ const PrimaryDashboard = () => {
                               }}
                             >
                               <Box>
-                                <Avatar sx={{ bgcolor: "red" }}>{NotApprovedCount}</Avatar>
+                                <Avatar sx={{ bgcolor: "red" }}>
+                                  {NotApprovedCount}
+                                </Avatar>
                               </Box>
                               <Box>|</Box>
                               <Box>Requested Authorizations</Box>

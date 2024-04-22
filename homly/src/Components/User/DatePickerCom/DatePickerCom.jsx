@@ -5,7 +5,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
 import { DateRangePicker } from "@mui/x-date-pickers-pro/DateRangePicker";
 
-export default function DateRangePickerValue({ value, setValue }) {
+export default function DatePickerCom({ value, setValue }) {
   const minDate = dayjs();
   
   return (

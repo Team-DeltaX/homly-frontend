@@ -7,6 +7,7 @@ import Box from "@mui/material/Box";
 import { Grid } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 import axios from "axios";
+import AxiosClient from "../../services/AxiosClient";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -50,8 +51,9 @@ export default function StatisticsDetails() {
   const [hallrevenue, setHallrevenue] = React.useState(0);
 
   const getRoomCount = () => {
-    axios
-      .get(`${global.API_BASE_URL}/admin/auth/room`)
+    // axios
+    //   .get(`${global.API_BASE_URL}/admin/auth/room`)
+    AxiosClient.get("/admin/auth/room")
       .then((res) => {
         setRoomcount(res.data.count);
       })
@@ -61,7 +63,8 @@ export default function StatisticsDetails() {
   };
 
   const getHallCount = () => {
-    axios.get(`${global.API_BASE_URL}/admin/auth/hall`).then((res) => {
+    // axios.get(`${global.API_BASE_URL}/admin/auth/hall`)
+    AxiosClient.get("/admin/auth/hall").then((res) => {
       setHallcount(res.data.count);
     });
   };
@@ -76,8 +79,9 @@ export default function StatisticsDetails() {
       });
   };
   const getRoomincome = () => {
-    axios
-      .get(`${global.API_BASE_URL}/admin/auth/roomincome`)
+    // axios
+    //   .get(`${global.API_BASE_URL}/admin/auth/roomincome`)
+    AxiosClient.get("/admin/auth/roomincome")
       .then((res) => {
         setRoomrevenue(res.data.roomincome);
       })

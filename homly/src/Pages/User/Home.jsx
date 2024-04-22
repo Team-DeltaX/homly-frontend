@@ -5,22 +5,19 @@ import {
   Typography,
   ThemeProvider,
   Stack,
-  Grid,
   Divider,
 } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
 import AxiosClient from "../../services/AxiosClient";
 import NavBar from "../../Components/User/NavBar/NavBar";
 import theme from "../../HomlyTheme";
-import DatePickerCom from "../../Components/User/DatePickerCom/DatePickerCom";
-import DistrictSelectCom from "../../Components/User/DistrictSelectCom";
 import OurPlaces from "../../Components/User/OurPlaces/OurPlaces";
 import BrowseMoreCom from "../../Components/User/BrowseMore/BrowseMoreCom";
 import Footer from "../../Components/User/Footer/Footer";
 import HHCarousel from "../../Components/User/Carousel/HHCarousel";
 import UserInterestedPopup from "../../Components/User/UserInterestedPopup";
 import UserInterestedHolidayHomes from "../../Components/User/UserInterestedHolidayHomes/UserInterestedHolidayHomes";
-import dayjs from "dayjs";
+import SearchBarHome from "../../Components/User/SearchHome/SearchBarHome";
+
 import "./UserStyle.css";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -28,12 +25,10 @@ import "aos/dist/aos.css";
 export default function Home() {
   const refContactUS = useRef(null);
   const [sortedByRating, setSortedByRating] = useState([]);
-  const [dateValue, setDateValue] = useState([dayjs(), dayjs()]);
   const [interestedHH, setInterestedHH] = useState();
   const [isDisplayInterest, setIsDisplayInterest] = useState(false);
   const [insterestedPopup, setInsterestedPopup] = useState(false);
   const [interestsIsSubmited, setInterestsIsSubmited] = useState(false);
-  const [district, setDistrict] = useState("");
 
   useEffect(() => {
     AOS.init();
@@ -77,6 +72,7 @@ export default function Home() {
         setIsDisplayInterest(false);
       });
   }, [interestsIsSubmited]);
+  
 
   return (
     <ThemeProvider theme={theme}>
@@ -150,87 +146,8 @@ export default function Home() {
                       with beautiful views
                     </Typography>
                   </Stack>
-                  <Stack
-                    direction="column"
-                    sx={{ width: { xs: "97%", sm: "90%", md: "75%" } }}
-                  >
-                    <Grid
-                      container
-                      sx={{
-                        bgcolor: "white",
-                        width: "100%",
-                        padding: { xs: "3%", sm: "1%" },
-                        borderRadius: { xs: "10px", sm: "40px" },
-                        display: "flex",
-                        alignItems: {xs: "center", sm: "flex-end" },
-                        justifyContent: "center",
-                      }}
-                    >
-                      <Grid
-                        item
-                        xs={12}
-                        sm={4}
-                        sx={{ padding: { xs: "3%", sm: "0 3%" } }}
-                      >
-                        <DistrictSelectCom
-                          setDistrict={setDistrict}
-                          district={district}
-                        />
-                      </Grid>
-                      <Grid
-                        item
-                        xs={12}
-                        sm={6}
-                        sx={{ padding: { xs: "3%", sm: "0 3%" } }}
-                      >
-                        <DatePickerCom
-                          value={dateValue}
-                          setValue={setDateValue}
-                        />
-                      </Grid>
-                      <Grid
-                        item
-                        xs={12}
-                        sm={2}
-                        sx={{
-                          padding: { xs: "3%", sm: "0 1% 0 3%" },
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "flex-end",
-                        }}
-                      >
-                        <Stack
-                          direction="row"
-                          sx={{
-                            bgcolor: "#484848",
-                            width: { xs: "100%", sm: "50px" },
-                            height: "50px",
-                            borderRadius: { xs: "10px", sm: "50%" },
-                            alignItems: "center",
-                            justifyContent: "center",
-                            color: "white",
-                          }}
-                        >
-                          <Typography
-                            sx={{
-                              display: { xs: "flex", sm: "none" },
-                              fontSize: "1.2rem",
-                              fontWeight: "bold",
-                            }}
-                          >
-                            Search
-                          </Typography>
-                          <SearchIcon
-                            sx={{
-                              marginLeft: { xs: "5px", sm: "0" },
-                              fontSize: { xs: "1.5rem", sm: "2.5rem" },
-                              fontWeight: "bold",
-                            }}
-                          />
-                        </Stack>
-                      </Grid>
-                    </Grid>
-                  </Stack>
+                  
+                    <SearchBarHome />
                 </Stack>
               </Box>
               <Box>
