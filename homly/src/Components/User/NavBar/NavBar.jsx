@@ -47,42 +47,23 @@ const NavBar = ({ refContactUS, position }) => {
     {
       id: 1,
       type: "New Feedback",
-      image: "../assest/images/profile.jpeg",
-      data: {
-        serviceNumber: "18964v",
-        HolidayHomeName: "Anuradhapura resort by samitha",
-      },
+      data: "added Anuradhapura resort by samitha",
+      senderId: "18964v",
+      time: "2021-10-10T10:10:10",
     },
-
     {
       id: 2,
       type: "Authorization Successful",
-      image: "",
-      data: "Remove HolidayHome",
+      data: "added Anuradhapura resort by samitha",
+      senderId: "18964v",
+      time: "2021-10-10T10:10:10",
     },
     {
-      id: 3,
-      type: "New Feedback",
-      image: "../assest/images/profile.jpeg",
-      data: {
-        serviceNumber: "18964v",
-        HolidayHomeName: "Anuradhapura resort by samitha",
-      },
-    },
-    {
-      id: 4,
-      type: "New Feedback",
-      image: "../assest/images/profile.jpeg",
-      data: {
-        serviceNumber: "18964v",
-        HolidayHomeName: "Anuradhapura resort by samitha",
-      },
-    },
-    {
-      id: 5,
+      id: 2,
       type: "Authorization Denied",
-      image: "",
-      data: "Remove HolidayHome",
+      data: "added Anuradhapura resort by samitha",
+      senderId: "18964v",
+      time: "2021-10-10T10:10:10",
     },
   ]);
 
