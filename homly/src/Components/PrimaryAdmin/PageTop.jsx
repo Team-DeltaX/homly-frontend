@@ -1,5 +1,5 @@
 import { Box, Menu, MenuItem, ThemeProvider, Typography } from "@mui/material";
-import NotificationsIcon from "@mui/icons-material/Notifications";
+
 import { useState } from "react";
 import theme from "../../HomlyTheme";
 
@@ -8,30 +8,8 @@ import NotificationPanal from "../Common/NotificationPanal/NotificationPanal";
 
 const Pagetop = ({ heading, setShowNav }) => {
   const [open, setOpen] = useState(false);
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [notifications, SetNotifications] = useState([
-    {
-      id: 1,
-      type: "New Feedback",
-      data: "added Anuradhapura resort by samitha",
-      senderId: "18964v",
-      time: "2021-10-10T10:10:10",
-    },
-    {
-      id: 2,
-      type: "Authorization Successful",
-      data: "added Anuradhapura resort by samitha",
-      senderId: "18964v",
-      time: "2021-10-10T10:10:10",
-    },
-    {
-      id: 2,
-      type: "Authorization Denied",
-      data: "added Anuradhapura resort by samitha",
-      senderId: "18964v",
-      time: "2021-10-10T10:10:10",
-    },
-  ]);
+
+ 
   const handleIconClick = () => {
     setOpen(!open);
   };
@@ -129,8 +107,7 @@ const Pagetop = ({ heading, setShowNav }) => {
           </Box> */}
 
           <NotificationPanal
-            notifications={notifications}
-            SetNotifications={SetNotifications}
+            
             bell={true}
           />
 
