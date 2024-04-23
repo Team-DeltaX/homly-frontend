@@ -1,6 +1,4 @@
-import React from "react";
-import { useState, useContext } from "react";
-import axios from "axios";
+import React, { useState, useContext } from "react";
 import {
   Box,
   Container,
@@ -11,13 +9,10 @@ import {
   Stack,
   Button,
 } from "@mui/material";
-
 import { Link, useNavigate } from "react-router-dom";
-
 import BadgeIcon from "@mui/icons-material/Badge";
 import PasswordIcon from "@mui/icons-material/Password";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-
 import theme from "../../HomlyTheme";
 import "./UserStyle.css";
 import logo from "../../Assets/images/logo.png";
@@ -26,9 +21,8 @@ import ForgetPasswordPopup from "../../Components/User/ForgetPassword/ForgetPass
 import ErrorSnackbar from "../../Components/User/ErrorSnackbar";
 import InputTextWithIcon from "../../Components/User/TextField/InputTextWithIcon";
 import InputPasswordWithIcon from "../../Components/User/TextField/InputPasswordWithIcon";
-
-// import auth context
 import { AuthContext } from "../../Contexts/AuthContext";
+import AxiosClient from "../../services/AxiosClient";
 
 const Img = styled("img")({
   display: "block",
@@ -42,11 +36,8 @@ const UserLogin = () => {
   const { setIsLogged, setAuthServiceNumber } = useContext(AuthContext);
   const [serviceNo, setServiceNo] = useState("");
   const [password, setPassword] = useState("");
-
-
-  // navigate
+  const [open, setOpen] = useState(false);
   const Navigate = useNavigate();
-
   const [errorStatus, setErrorStatus] = useState({
     isOpen: false,
     type: "",
@@ -56,10 +47,8 @@ const UserLogin = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = { serviceNo, password };
-    axios
-      .post("http://localhost:8080/users/login", formData, { withCredentials: true })
+    AxiosClient.post("/user/login", formData)
       .then((res) => {
-        console.log(res.data);
         if (res.data.success) {
           setServiceNo("");
           setPassword("");
@@ -70,7 +59,11 @@ const UserLogin = () => {
             message: res.data.message,
           });
           setIsLogged(true);
+          localStorage.setItem("isLogged", true);
           setAuthServiceNumber(serviceNo);
+          localStorage.setItem("userId", serviceNo);
+          localStorage.setItem("token", res.data.token);
+          localStorage.removeItem("selectedTab");
           Navigate("/Home");
         } else {
           setServiceNo("");
@@ -83,12 +76,12 @@ const UserLogin = () => {
           });
         }
       })
-      .catch((error) => {
+      .catch(() => {
         setErrorStatus({
           ...errorStatus,
           isOpen: true,
           type: "error",
-          message: "Something went wrong",
+          message: `Something went wrong, Please try again later.`,
         });
       });
   };
@@ -99,9 +92,6 @@ const UserLogin = () => {
     setPassword("");
   };
 
-  // popup
-  const [open, setOpen] = useState(false);
-
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -109,22 +99,18 @@ const UserLogin = () => {
   return (
     <ThemeProvider theme={theme}>
       <Box
-        // className="main_container"
         sx={{
           width: "100%",
           overflow: "hidden",
         }}
       >
         <Container maxWidth="xl" style={{ padding: 0 }}>
-          {/* error snack bar */}
           <ErrorSnackbar
             isOpen={errorStatus.isOpen}
             type={errorStatus.type}
             message={errorStatus.message}
             setIsOpen={(val) => setErrorStatus({ ...errorStatus, isOpen: val })}
           />
-
-          {/* forget password popup */}
           <ForgetPasswordPopup open={open} setOpen={setOpen} />
           <Container className="registration-box-container">
             <Grid

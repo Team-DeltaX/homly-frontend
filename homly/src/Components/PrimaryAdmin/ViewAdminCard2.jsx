@@ -1,8 +1,12 @@
-import { Box, Button, Grid, TextField, ThemeProvider, Typography } from "@mui/material";
-import css from "./Css/viewadmin.css";
+import {
+  Box,
+  Button,
+  Grid,
+  TextField,
+  ThemeProvider,
+  Typography,
+} from "@mui/material";
 import theme from "../../HomlyTheme";
-import EditIcon from "@mui/icons-material/EditCalendar";
-import SaveIcon from "@mui/icons-material/Save";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useState } from "react";
 
@@ -159,28 +163,15 @@ const ViewAdminCard2 = (props) => {
             marginTop: "10px",
           }}
         >
-          {/* <Button
-            startIcon={<EditIcon />}
-            sx={{ width: "90px", borderRadius: "15px", height: "30px" }}
-            variant="contained"
-            onClick={() => {
-              setDisabled(!disabled);
-            }}
-          >
-            <Typography>Edit</Typography>
-          </Button> */}
-          {/* <Box>{dataobj}</Box> */}
           <Box sx={{ height: "20px" }}></Box>
           <Button
-           
-            
             sx={{ width: "90px", height: "30px", borderRadius: "15px" }}
             variant="contained"
             onClick={() => {
               handlesave();
             }}
           >
-           <Typography>Disable</Typography>
+            <Typography>Disable</Typography>
           </Button>
         </Box>
       </Box>

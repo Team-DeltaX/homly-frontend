@@ -20,11 +20,9 @@ const BlacklistHistoryCard = (props) => {
       )
       .then((res) => {
         SetEmployee(res.data[0]);
-
-        console.log(`Employee ---------- ${Employee}`);
       })
       .catch((error) => {
-        console.log(error);
+        props.SetOpensnE(true);
       });
   };
 
@@ -35,16 +33,15 @@ const BlacklistHistoryCard = (props) => {
       )
       .then((res) => {
         SetUser(res.data[0]);
-        // console.log(User)
       })
       .catch((error) => {
-        console.log(error);
+        props.SetOpensnE(true);
       });
   };
   useEffect(() => {
     fetchfromemployee();
     fetchfromuser();
-  }, []);
+  }, [props.data.ServiceNo]);
   return (
     <ThemeProvider theme={theme}>
       <Box

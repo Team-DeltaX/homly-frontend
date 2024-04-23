@@ -1,21 +1,21 @@
 import { useEffect, useState } from "react";
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
-import holidayhome from '../../Assets/images/holidayHome.jpg';
-import './Reservation.css';
-import ViewPopUp from './ViewPopup';
-import PastReservationCard from './PastReservationCard';
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
+import holidayhome from "../../Assets/images/holidayHome.jpg";
+import "./Reservation.css";
+import ViewPopUp from "./ViewPopup";
+import PastReservationCard from "./PastReservationCard";
 import axios from "axios";
 
 const PastReservationList = (props) => {
-  const [reservations, setReservations] = useState([])
+  const [reservations, setReservations] = useState([]);
   const fetchreservations = () => {
     axios
-      .get("http://localhost:8080/users/reservation/past")
+      .get("http://localhost:8080/user/reservation/past")
       .then((res) => {
         console.log(res.data);
-        //reverse array to keep new ones first 
+        //reverse array to keep new ones first
         setReservations(res.data);
       })
       .catch((err) => {
@@ -41,13 +41,13 @@ const PastReservationList = (props) => {
       ))}
     </Box> */}
       <Box className="home">
-        {reservations.map(reservation => (
+        {reservations.map((reservation) => (
           <PastReservationCard reservation={reservation} />
           // console.log("sadasd",reservation)
         ))}
       </Box>
     </>
   );
-}
+};
 
 export default PastReservationList;

@@ -274,6 +274,59 @@ const EditRoom = ({
         NoOfChildren: "",
       };
     });
+    const handleRoomEdit = (index) => {
+      const editedRoom = roomArray[index];
+
+      setValues({
+        roomCode: editedRoom.roomCode,
+        roomAc: editedRoom.roomAc,
+        RoomType: editedRoom.RoomType,
+        floorLevel: editedRoom.floorLevel,
+        NoOfAdults: editedRoom.NoOfAdults,
+        NoOfChildren: editedRoom.NoOfChildren,
+        roomRemarks: editedRoom.roomRemarks,
+        roomRental: editedRoom.roomRental,
+        groupByUnit: editedRoom.groupByUnit,
+      });
+
+      axios
+        .get(
+          `http://localhost:8080/admin/auth/locationadmin/holidayhome/rental/${homeId}/${editedRoom.roomCode}`
+        )
+        .then((res) => {
+          console.log("get");
+          const rental = res.data.roomRental;
+          console.log(rental);
+          for (let i = 0; i < rental.length; i++) {
+            console.log("in");
+            console.log(rental[i].Month);
+            setRental({
+              district: rental[i].Month,
+              weekDays: rental[i].WeekRental,
+              weekEnds: rental[i].WeekEndRental,
+            });
+
+            console.log("rental", rental);
+
+            setRentalArray(rental); // Use functional update
+            console.log("rental array", rentalArray);
+          }
+
+          setOpen(true);
+          setEditIndex(index);
+          setIsEditMode(true);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+
+    const [error, setError] = useState({
+      ctName: false,
+      ctAddress: false,
+      ctDescription: false,
+      ctContactNo: false,
+    });
   };
 
   useEffect(() => {

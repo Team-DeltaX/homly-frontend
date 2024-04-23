@@ -1,89 +1,59 @@
-import React from "react";
-import { useState,useContext } from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Drawer from "@mui/material/Drawer";
-import IconButton from "@mui/material/IconButton";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import Avatar from "@mui/material/Avatar";
-import Tooltip from "@mui/material/Tooltip";
-import Container from "@mui/material/Container";
-import CssBaseline from "@mui/material/CssBaseline";
-// import Badge from "@mui/material/Badge";
-import Stack from "@mui/material/Stack";
-import Button from "@mui/material/Button";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
+import React, { useState, useEffect } from "react";
+import {
+  ThemeProvider,
+  Box,
+  Drawer,
+  Toolbar,
+  Typography,
+  Container,
+  CssBaseline,
+  Stack,
+  Tabs,
+  Tab,
+} from "@mui/material";
 
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
-import CreditCardIcon from "@mui/icons-material/CreditCard";
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import ListAltIcon from "@mui/icons-material/ListAlt";
 import HttpsIcon from "@mui/icons-material/Https";
-
-import MenuIcon from "@mui/icons-material/Menu";
-
-import { ThemeProvider } from "@emotion/react";
-
-import { Link, NavLink } from "react-router-dom";
-
-// import NotificationPanel from "../NotificationPanel/NotificationPanel";
-
 import theme from "../../HomlyTheme";
 import "./Profile.css";
-// import "../../Components/NavBar/NavBar.css";
-
-// pages component
+import "../../Components/User/NavBar/NavBar.css";
 import PersonalDetails from "../../Components/User/MyProfile/PersonalDetails";
-import PaymentDetailsCom from "../../Components/User/MyProfile/PaymentDetailsCom";
+import FavouriteHH from "../../Components/User/MyProfile/FavoritesHH";
 import Security from "../../Components/User/MyProfile/Security";
 import MyReservation from "../../Components/User/MyProfile/MyReservation";
-
-import { AuthContext } from "../../Contexts/AuthContext";
+import NavBar from "../../Components/User/NavBar/NavBar";
 
 const drawerWidth = 240;
 
-const pages = [
-  { name: "Home", path: "/Home" },
-  { name: "Holiday Homes", path: "/holidayHomes/all" },
-];
-
-const respSidePages = [
-  { name: "Home", path: "/Home" },
-  { name: "Holiday Homes", path: "/holidayHomes/all" },
-  { name: "My Profile", path: "/myProfile" },
-];
 const sidePages = [
   { name: "Personal Details", icon: <ManageAccountsIcon />, value: 0 },
   { name: "Security", icon: <HttpsIcon />, value: 1 },
-  { name: "Payement Details", icon: <CreditCardIcon />, value: 2 },
+  { name: "Favourite Holiday Homes", icon: <FavoriteIcon />, value: 2 },
   { name: "My Reservation", icon: <ListAltIcon />, value: 3 },
 ];
 
 const tabComponent = [
   <PersonalDetails />,
   <Security />,
-  <PaymentDetailsCom />,
+  <FavouriteHH />,
   <MyReservation />,
 ];
 
 const MyProfile = () => {
-  const { user } = useContext(AuthContext);
-  const [anchorElUser, setAnchorElUser] = useState(null);
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [isClosing, setIsClosing] = useState(false);
-
-  // tabs
   const [value, setValue] = useState(0);
+
+  useEffect(() => {
+    const selectedTab = localStorage.getItem("selectedTab");
+    if (selectedTab) {
+      setValue(parseInt(selectedTab));
+    }
+  }, []);
 
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
+    localStorage.setItem("selectedTab", newValue);
   };
 
   const bottomTabLable = (name, icon) => (
@@ -94,13 +64,11 @@ const MyProfile = () => {
         height: "100%",
         width: "15vw",
         color: "white",
-        // backgroundColor: "white",
       }}
     >
       <Box
         className="bottom-tab-icon"
         sx={{
-          // backgroundColor: "white",
           padding: "7px",
           borderRadius: "50%",
           display: "flex",
@@ -151,45 +119,6 @@ const MyProfile = () => {
     </Stack>
   );
 
-  // tabs end
-
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
-
-  const handleDrawerClose = () => {
-    setIsClosing(true);
-    setMobileOpen(false);
-  };
-
-  const handleDrawerTransitionEnd = () => {
-    setIsClosing(false);
-  };
-
-  const handleDrawerToggle = () => {
-    if (!isClosing) {
-      setMobileOpen(!mobileOpen);
-    }
-  };
-
-  const mainDrawer = (
-    <div>
-      <Toolbar />
-      <List>
-        {respSidePages.map((text) => (
-          <ListItem key={text.name} disablePadding>
-            <ListItemButton component={Link} to={text.path}>
-              <ListItemText primary={text.name} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-    </div>
-  );
   const drawer = (
     <div>
       <Toolbar />
@@ -200,6 +129,10 @@ const MyProfile = () => {
           onChange={handleTabChange}
           textColor="secondary"
           aria-label="secondary tabs example"
+          sx={{ ".css-ts0m74-MuiStack-root":{
+            paddingRight: "10px",
+            textAlign:"left",
+          }}}
         >
           {sidePages.map((item) => (
             <Tab
@@ -215,7 +148,6 @@ const MyProfile = () => {
   return (
     <ThemeProvider theme={theme}>
       <Box
-        // className="main_container"
         sx={{
           width: "100%",
           overflow: "hidden",
@@ -224,104 +156,7 @@ const MyProfile = () => {
         <Container maxWidth="xl" style={{ padding: 0, position: "relative" }}>
           <Box sx={{ display: "flex" }}>
             <CssBaseline />
-
-            <AppBar
-              className="app_bar_main"
-              sx={{
-                zIndex: (theme) => theme.zIndex.drawer + 1,
-                // ml: { sm: `${drawerWidth}px` },
-                bgcolor: "secondary.main",
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-                width: "100%",
-                position: "absolute",
-                left: 0,
-              }}
-            >
-              <Toolbar>
-                <IconButton
-                  color="text.primary"
-                  aria-label="open drawer"
-                  edge="start"
-                  onClick={handleDrawerToggle}
-                  sx={{ mr: 2, display: { sm: "block", md: "none" } }}
-                >
-                  <MenuIcon />
-                </IconButton>
-                {/* <Typography variant="h6" noWrap component="div">
-                        Responsive drawer
-                                        </Typography> */}
-              </Toolbar>
-              <Stack
-                direction="row"
-                spacing={1}
-                alignItems="center"
-                sx={{ paddingRight: { xs: "4%", sm: "2%" } }}
-              >
-                <Stack
-                  direction="row"
-                  spacing={2}
-                  display={{ xs: "none", sm: "none", md: "flex" }}
-                >
-                  {pages.map((page) => (
-                    <NavLink
-                      key={page.name}
-                      to={page.path}
-                      className={({ isActive }) =>
-                        isActive ? "activePage" : "normalPage"
-                      }
-                    >
-                      <Button variant="text" sx={{ color: "text.primary" }}>
-                        {page.name}
-                      </Button>
-                    </NavLink>
-                  ))}
-                </Stack>
-                {/* notification button */}
-                {/* <NotificationPanel notifications={notifications} /> */}
-                {/* user button */}
-                <Box sx={{ flexGrow: 0 }}>
-                  <Tooltip title="Open settings">
-                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                      <Avatar
-                        alt="Remy Sharp"
-                        sx={{ height: "48px", width: "48px" }}
-                        src={user.image}
-                      />
-                    </IconButton>
-                  </Tooltip>
-                  <Menu
-                    sx={{ mt: "45px" }}
-                    id="menu-appbar"
-                    anchorEl={anchorElUser}
-                    anchorOrigin={{
-                      vertical: "top",
-                      horizontal: "right",
-                    }}
-                    keepMounted
-                    transformOrigin={{
-                      vertical: "top",
-                      horizontal: "right",
-                    }}
-                    open={Boolean(anchorElUser)}
-                    onClose={handleCloseUserMenu}
-                  >
-                    <MenuItem
-                      onClick={handleCloseUserMenu}
-                      component={Link}
-                      to="/myProfile"
-                    >
-                      <Typography textAlign="center">My Profile</Typography>
-                    </MenuItem>
-                    <MenuItem onClick={handleCloseUserMenu}>
-                      <Typography textAlign="center">Logout</Typography>
-                    </MenuItem>
-                  </Menu>
-                </Box>
-              </Stack>
-            </AppBar>
-
+            <NavBar position={"absolute"} />
             <Box
               component="nav"
               sx={{
@@ -330,37 +165,16 @@ const MyProfile = () => {
               }}
               aria-label="mailbox folders"
             >
-              {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-              <Drawer
-                variant="temporary"
-                open={mobileOpen}
-                onTransitionEnd={handleDrawerTransitionEnd}
-                onClose={handleDrawerClose}
-                ModalProps={{
-                  keepMounted: true, // Better open performance on mobile.
-                }}
-                sx={{
-                  display: { xs: "block", sm: "block", md: "none" },
-                  "& .MuiDrawer-paper": {
-                    boxSizing: "border-box",
-                    width: drawerWidth,
-                  },
-                }}
-              >
-                {mainDrawer}
-              </Drawer>
               <Drawer
                 variant="permanent"
                 sx={{
                   display: { xs: "none", sm: "none", md: "block" },
-                  // marginTop: { xs: "0px", sm: "0px", md: "64px" },
                   "& .MuiDrawer-paper": {
-                    // boxSizing: "border-box",
                     width: drawerWidth,
                     bgcolor: "primary.main",
                   },
                   height: "100%",
-                  position: "fixed	"
+                  position: "fixed	",
                 }}
                 open
               >
@@ -385,6 +199,7 @@ const MyProfile = () => {
               position: "fixed",
               bottom: 0,
               display: { md: "none" },
+              zIndex: 100,
             }}
           >
             <Tabs
@@ -406,7 +221,6 @@ const MyProfile = () => {
                 },
               }}
             >
-              
               {sidePages.map((item) => (
                 <Tab
                   key={item.name}

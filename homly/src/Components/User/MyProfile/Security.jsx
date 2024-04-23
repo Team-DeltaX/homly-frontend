@@ -1,5 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   ThemeProvider,
@@ -10,19 +9,12 @@ import {
   Stack,
   CardActions,
 } from "@mui/material";
-
-import { useNavigate } from "react-router-dom";
-
-// import auth context
-import { AuthContext } from "../../../Contexts/AuthContext";
-
 import ErrorSnackbar from "../ErrorSnackbar";
 import PasswordComGrid from "./PasswordComGrid";
-
 import theme from "../../../HomlyTheme";
+import AxiosClient from "../../../services/AxiosClient";
 
 const Security = () => {
-  const { authServiceNumber } = useContext(AuthContext);
   const [password, setPassword] = useState({
     currentPass: "",
     newPass: "",
@@ -36,8 +28,6 @@ const Security = () => {
 
   const [isEnable, setIsEnable] = useState(false);
 
-  const Navigate = useNavigate();
-
   const handleCancel = () => {
     setPassword({ currentPass: "", newPass: "", confirmPass: "" });
     setError({ currentPass: false, newPass: false, confirmPass: false });
@@ -47,15 +37,15 @@ const Security = () => {
     type: "",
     message: "",
   });
-
   const [passwordStrength, setPasswordStrength] = useState(0);
 
   const handleUpdateData = () => {
     if (passwordStrength > 1) {
-
-      const formData = { serviceNo: authServiceNumber, oldPassword: password.currentPass, newPassword: password.newPass }
-      axios
-        .put("http://localhost:8080/users/auth/password", formData, { withCredentials: true })
+      const formData = {
+        oldPassword: password.currentPass,
+        newPassword: password.newPass,
+      };
+      AxiosClient.put("/user/auth/password", formData)
         .then((res) => {
           if (res.data.success) {
             setErrorStatus({
@@ -74,31 +64,24 @@ const Security = () => {
           }
         })
         .catch((err) => {
-          console.log(err);
-          if (err.response.data.autherized === false) {
-            Navigate("/");
-          } else {
-
-            setErrorStatus({
-              ...errorStatus,
-              isOpen: true,
-              type: "error",
-              message: err.message,
-            });
-          }
+          setErrorStatus({
+            ...errorStatus,
+            isOpen: true,
+            type: "error",
+            message: err.message,
+          });
         });
       setPassword({ currentPass: "", newPass: "", confirmPass: "" });
-      console.log("update");
     }
   };
 
   useEffect(() => {
     setIsEnable(
       password.currentPass.length > 0 &&
-      password.newPass.length > 0 &&
-      password.confirmPass.length > 0 &&
-      !error.confirmPass &&
-      !error.password
+        password.newPass.length > 0 &&
+        password.confirmPass.length > 0 &&
+        !error.confirmPass &&
+        !error.password
     );
   }, [password, error]);
 
@@ -207,7 +190,9 @@ const Security = () => {
           isOpen={errorStatus.isOpen}
           type={errorStatus.type}
           message={errorStatus.message}
-          setIsOpen={(value) => setErrorStatus({ ...errorStatus, isOpen: value })}
+          setIsOpen={(value) =>
+            setErrorStatus({ ...errorStatus, isOpen: value })
+          }
         />
       </Box>
     </ThemeProvider>

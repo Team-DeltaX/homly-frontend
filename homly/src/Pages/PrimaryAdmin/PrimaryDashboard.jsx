@@ -1,8 +1,5 @@
-// import '../App.css';
-
 import React, { useEffect, useState } from "react";
 import SideNavbar from "../../Components/PrimaryAdmin/SideNavbar";
-
 import Box from "@mui/material/Box";
 import {
   Avatar,
@@ -16,38 +13,54 @@ import theme from "../../HomlyTheme";
 import Pagetop from "../../Components/PrimaryAdmin/PageTop";
 import DashViewAdminBox from "../../Components/PrimaryAdmin/DashViewAdminBox";
 import { Link } from "react-router-dom";
-import SimpleCharts from "../../Components/PrimaryAdmin/Simplecharts";
 import { PieChart } from "@mui/x-charts/PieChart";
-
 import Income from "../../Components/PrimaryAdmin/Income";
-import PDashboardCon from "../../Components/PrimaryAdmin/PDashboardCon";
-import SimpleLineChart from "../../Components/PrimaryAdmin/SimpleLineChart";
+import PDashboardboxes from "../../Components/PrimaryAdmin/PDashboardboxes";
+import CompareLineChart from "../../Components/PrimaryAdmin/CompareLineChart";
 import axios from "axios";
+import AxiosClient from "../../services/AxiosClient";
 
 const PrimaryDashboard = () => {
   const [showNav, setShowNav] = useState("nav_grid_deactive");
-  const [activecount, SetActivecount] = useState("")
-  const [inactivecount, setInactivecount] = useState("")
+  const [activecount, SetActivecount] = useState(0);
+  const [inactivecount, setInactivecount] = useState(0);
+  const [latestFourAdmins, setlatestFourAdmins] = useState([]);
+  const [NotApprovedCount, SetNotApprovedCount] = useState(0);
 
+  const getNotApprovedCount = () => {
+    // axios.get('http://localhost:8080/admin/auth/notapprovedcount')
+    AxiosClient.get("/admin/auth/notapprovedcount")
+      .then((res) => {
+        SetNotApprovedCount(res.data.notapprovedcount);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const getadmins = () => {
+    // axios.get(`${global.API_BASE_URL}/admin/auth/locationadmin/all`)
+    AxiosClient.get("/admin/auth/locationadmin/all").then((res) => {
+      setlatestFourAdmins(res.data.reverse());
+    });
+  };
 
   const getstatus = () => {
-    axios.get('http://localhost:8080/admin/auth/hhstatus')
+    AxiosClient.get("/admin/auth/locationadmin/statuscount")
       .then((res) => {
-        SetActivecount(res.data.Active)
-        setInactivecount(res.data.Inactive)
-        console.log(`--------------------`)
-        console.log(res)
-        // console.log(activecount)
-
-
-      }).catch((err) => {
-        console.log(err)
+        SetActivecount(res.data.Active);
+        setInactivecount(res.data.Inactive);
+        console.log(res);
       })
-  }
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   useEffect(() => {
-    getstatus()
-
-  }, [])
+    getstatus();
+    getadmins();
+    getNotApprovedCount();
+  }, []);
   return (
     <ThemeProvider theme={theme}>
       <Box
@@ -91,7 +104,9 @@ const PrimaryDashboard = () => {
                       maxHeight: { md: "645px", xs: "auto" },
                     }}
                   >
-                    <Box><PDashboardCon /></Box>
+                    <Box>
+                      <PDashboardboxes />
+                    </Box>
                     <Box
                       sx={{
                         display: "flex",
@@ -107,7 +122,6 @@ const PrimaryDashboard = () => {
                         }}
                       >
                         <Income />
-
                         <Box sx={{ paddingTop: { xs: "5px", sm: "130px" } }}>
                           <PieChart
                             series={[
@@ -142,12 +156,17 @@ const PrimaryDashboard = () => {
                         </Box>
                       </Box>
 
-                      {/* <SimpleCharts /> */}
-
-                      <SimpleLineChart />
+                      <CompareLineChart />
                     </Box>
                   </Grid>
-                  <Grid item md={4} sx={{ height: "100vh" }}>
+                  <Grid
+                    item
+                    md={4}
+                    sx={{
+                      height: "100vh",
+                      marginLeft: { xs: "40px", md: "0px" },
+                    }}
+                  >
                     <Box sx={{ display: "flex", flexDirection: "column" }}>
                       <Box
                         sx={{
@@ -167,19 +186,30 @@ const PrimaryDashboard = () => {
                         </Box>
 
                         <Box>
-                          <DashViewAdminBox color={"#253DA1"} />
+                          <DashViewAdminBox
+                            color={"#253DA1"}
+                            data={latestFourAdmins[0]}
+                          />
                         </Box>
                         <Box>
-                          <DashViewAdminBox color={"pink"} />
+                          <DashViewAdminBox
+                            color={"pink"}
+                            data={latestFourAdmins[1]}
+                          />
                         </Box>
                         <Box>
-                          <DashViewAdminBox color={"#77ccff"} />
+                          <DashViewAdminBox
+                            color={"#77ccff"}
+                            data={latestFourAdmins[2]}
+                          />
                         </Box>
                         <Box>
-                          <DashViewAdminBox color={"#f5c77e"} />
+                          <DashViewAdminBox
+                            color={"#f5c77e"}
+                            data={latestFourAdmins[3]}
+                          />
                         </Box>
 
-                        {/* <Box><DashViewAdminBox color={"#bebdb8"}/></Box> */}
                         <Box>
                           <Link to="/primaryadmin/viewadmin">
                             <Button sx={{ color: "#19BDFF" }}>
@@ -219,7 +249,9 @@ const PrimaryDashboard = () => {
                               }}
                             >
                               <Box>
-                                <Avatar sx={{ bgcolor: "red" }}>6</Avatar>
+                                <Avatar sx={{ bgcolor: "red" }}>
+                                  {NotApprovedCount}
+                                </Avatar>
                               </Box>
                               <Box>|</Box>
                               <Box>Requested Authorizations</Box>
@@ -239,12 +271,7 @@ const PrimaryDashboard = () => {
                             </Box>
                           </Box>
                         </Box>
-                        <Box>
-                          {/* <Button sx={{  marginLeft: "5%", marginTop: { xs: '10%', sm: '2px' }}} component="label" variant="contained" startIcon={<AddCircleIcon/>}>
-                                    Add Admin
-
-                                </Button> */}
-                        </Box>
+                        <Box></Box>
                       </Box>
                     </Box>
                   </Grid>

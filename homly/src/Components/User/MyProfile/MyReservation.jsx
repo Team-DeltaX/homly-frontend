@@ -8,54 +8,57 @@ import {
   Card,
   CardContent,
 } from "@mui/material";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
 import OngoingReservation from "./OngoingReservation";
 import PastReservation from "./PastReservation";
 import theme from "../../../HomlyTheme";
+import AxiosClient from "../../../services/AxiosClient";
 
 const MyReservation = () => {
-  const [value, setValue] = React.useState(0);
-
-  const handleTabChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  const Navigate = useNavigate();
-
+  const [value, setValue] = useState(0);
   const [ongoingReservation, setOngoingReservation] = useState([]);
   const [pastReservation, setPastReservation] = useState([]);
 
+  const [isAddReview, setIsAddReview] = useState(false);
+
+  const tabComponent = [
+    <OngoingReservation reservation={ongoingReservation} />,
+    <PastReservation
+      reservation={pastReservation}
+      setIsAddReview={setIsAddReview}
+    />,
+  ];
+
+  const Navigate = useNavigate();
+
   useEffect(() => {
-    axios.get('http://localhost:8080/users/auth/userOngoingReservation', { withCredentials: true })
+    AxiosClient.get("/user/auth/userOngoingReservation")
       .then((response) => {
-        console.log("reservation ongoing", response.data);
         setOngoingReservation(response.data);
-      }).catch((err) => {
-        console.log("error", err);
+      })
+      .catch((err) => {
         if (!err.response.data.autherized) {
           Navigate("/");
         }
       });
 
-    axios.get('http://localhost:8080/users/auth/userPastReservation', { withCredentials: true })
+    AxiosClient.get("/user/auth/userPastReservation")
       .then((response) => {
-        console.log("reservation past", response.data);
         setPastReservation(response.data);
+        setIsAddReview(false);
       })
       .catch((err) => {
-        console.log("error", err);
         if (!err.response.data.autherized) {
           Navigate("/");
         }
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isAddReview]);
 
-
-  const tabComponent = [<OngoingReservation reservation={ongoingReservation} />, <PastReservation reservation={pastReservation} />];
-
+  const handleTabChange = (event, newValue) => {
+    event.preventDefault();
+    setValue(newValue);
+  };
   return (
     <ThemeProvider theme={theme}>
       <Box>
@@ -71,19 +74,22 @@ const MyReservation = () => {
           }}
         >
           <Card sx={{ width: { xs: "100%", sm: "90%" } }}>
-            <CardContent sx={{ display: "flex", flexDirection: "column" }}>
+            <CardContent
+              sx={{ display: "flex", flexDirection: "column", padding: 1.5 }}
+            >
               <Tabs
                 value={value}
                 onChange={handleTabChange}
                 textColor="secondary"
                 aria-label="secondary tabs example"
                 sx={{
-                  "& .css-1qqs86a-MuiButtonBase-root-MuiTab-root.Mui-selected ": {
-                    bgcolor: "primary.main",
-                    color: "white",
-                    fontWeight: 'bold',
-                    width: "50% !important",
-                  },
+                  "& .css-1qqs86a-MuiButtonBase-root-MuiTab-root.Mui-selected ":
+                    {
+                      bgcolor: "primary.main",
+                      color: "white",
+                      fontWeight: "bold",
+                      width: "50% !important",
+                    },
                   "& .css-1qqs86a-MuiButtonBase-root-MuiTab-root ": {
                     padding: "10px !important",
                     border: "1px solid #872341",

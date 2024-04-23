@@ -18,7 +18,8 @@
 .Mui-selected .side-tab-text{
     color: #2c2c2c !important;
     font-weight: 700;
-    line-height: 1.5
+    line-height: 1.5;
+    text-align: left;
 }
 
 .css-1iai66b-MuiFormHelperText-root{

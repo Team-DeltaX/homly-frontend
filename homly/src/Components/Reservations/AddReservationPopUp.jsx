@@ -19,6 +19,7 @@ import AvailableHallsPopUp from "../Common/AvailableHallsPopUp";
 import Autocomplete from "@mui/material/Autocomplete";
 import Stack from "@mui/material/Stack";
 import ConfirmPopup from "../PrimaryAdmin/ConfirmPopup";
+import AxiosClient from "../../services/AxiosClient";
 
 export default function ScrollDialog({ name, id }) {
   const [open, setOpen] = React.useState(false);
@@ -42,22 +43,16 @@ export default function ScrollDialog({ name, id }) {
   const [room, setRoom] = useState([]);
 
   useEffect(() => {
-
-    axios
-      .get("http://localhost:8080/users/reservation/availableRooms",
-        {
-          params: {
-            holidayHomeId: id,
-            checkinDate: CheckinDate,
-            checkoutDate: CheckoutDate,
-          }
-        }, {
-        withCredentials: true,
-      })
-      .then((res) => {
-        setRoom(res.data.availableRooms)
-        console.log("available room", res.data.availableRooms)
-      });
+    AxiosClient.get("/user/reservation/availableRooms", {
+      params: {
+        holidayHomeId: id,
+        checkinDate: CheckinDate,
+        checkoutDate: CheckoutDate,
+      },
+    }).then((res) => {
+      setRoom(res.data.availableRooms);
+      console.log("available room", res.data.availableRooms);
+    });
   }, [id, CheckinDate, CheckoutDate]);
 
   const [errorStatus, setErrorStatus] = useState({
@@ -111,7 +106,7 @@ export default function ScrollDialog({ name, id }) {
     };
 
     axios
-      .post("http://localhost:8080/users/auth/reservation", data, {
+      .post("http://localhost:8080/user/auth/reservation", data, {
         withCredentials: true,
       })
       .then((res) => {
@@ -133,6 +128,7 @@ export default function ScrollDialog({ name, id }) {
           message: "Reservation failed",
         });
         setPayNow(false);
+        console.error(error);
       });
   };
 

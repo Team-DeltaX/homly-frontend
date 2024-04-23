@@ -4,10 +4,10 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-
 import { Grid } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 import axios from "axios";
+import AxiosClient from "../../services/AxiosClient";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -50,52 +50,55 @@ export default function StatisticsDetails() {
   const [roomrevenue, setRoomrevenue] = React.useState(0);
   const [hallrevenue, setHallrevenue] = React.useState(0);
 
-
   const getRoomCount = () => {
-    axios.get('http://localhost:8080/admin/auth/room')
+    // axios
+    //   .get(`${global.API_BASE_URL}/admin/auth/room`)
+    AxiosClient.get("/admin/auth/room")
       .then((res) => {
-        setRoomcount(res.data.count)
+        setRoomcount(res.data.count);
       })
       .catch((err) => {
-        console.log(err)
-      })
-  }
-
+        console.log(err);
+      });
+  };
 
   const getHallCount = () => {
-    axios.get('http://localhost:8080/admin/auth/hall')
-      .then((res) => {
-        setHallcount(res.data.count)
-      })
-  }
+    // axios.get(`${global.API_BASE_URL}/admin/auth/hall`)
+    AxiosClient.get("/admin/auth/hall").then((res) => {
+      setHallcount(res.data.count);
+    });
+  };
   const getHallincome = () => {
-    axios.get('http://localhost:8080/admin/auth/hallincome')
+    axios
+      .get(`http://localhost:8080/admin/auth/hallincome`)
       .then((res) => {
-        setHallrevenue(res.data.hallincome)
-
-      }).catch((err) => {
-        console.log(err)
+        setHallrevenue(res.data.hallincome);
       })
-  }
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   const getRoomincome = () => {
-    axios.get('http://localhost:8080/admin/auth/roomincome')
+    // axios
+    //   .get(`${global.API_BASE_URL}/admin/auth/roomincome`)
+    AxiosClient.get("/admin/auth/roomincome")
       .then((res) => {
-        setRoomrevenue(res.data.roomincome)
-      }).catch((err) => {
-        console.log(err)
+        setRoomrevenue(res.data.roomincome);
       })
-  }
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
   React.useEffect(() => {
-    getRoomCount()
-    getHallCount()
-    getHallincome()
-    getRoomincome()
-
-  }, [])
+    getRoomCount();
+    getHallCount();
+    getHallincome();
+    getRoomincome();
+  }, []);
 
   return (
     <Box sx={{ width: "100%", paddingRight: "32px" }}>
@@ -145,9 +148,9 @@ export default function StatisticsDetails() {
                     Total number of Rooms
                   </Typography>
                 </Box>
-                <Box>
+                {/* <Box>
                   <CircularProgress variant="determinate" value={roomcount} />
-                </Box>
+                </Box> */}
               </Box>
             </Grid>
             <Grid item md={6}>
@@ -174,11 +177,11 @@ export default function StatisticsDetails() {
                   </Typography>
                 </Box>
                 <Box>
-                  <CircularProgress
+                  {/* <CircularProgress
                     sx={{ color: "#11BA40" }}
                     variant="determinate"
                     value={75}
-                  />
+                  /> */}
                 </Box>
               </Box>
             </Grid>
@@ -209,9 +212,9 @@ export default function StatisticsDetails() {
                     Total number of Halls
                   </Typography>
                 </Box>
-                <Box>
+                {/* <Box>
                   <CircularProgress variant="determinate" value={100} />
-                </Box>
+                </Box> */}
               </Box>
             </Grid>
             <Grid item md={6}>
@@ -238,11 +241,11 @@ export default function StatisticsDetails() {
                   </Typography>
                 </Box>
                 <Box>
-                  <CircularProgress
+                  {/* <CircularProgress
                     sx={{ color: "#11BA40", zIndex: "100" }}
                     variant="determinate"
                     value={50}
-                  />
+                  /> */}
                 </Box>
               </Box>
             </Grid>

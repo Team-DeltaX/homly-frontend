@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Container,
   Box,
@@ -24,8 +24,11 @@ import theme from "../HomlyTheme";
 
 import logo from "../Assets/images/logo.png";
 import "./User/UserStyle.css";
+import AxiosClient from "../services/AxiosClient";
+import { AuthContext } from "../Contexts/AuthContext";
 
 export default function AdminLoginPage() {
+  const { setIsLogged } = useContext(AuthContext);
   const [adminId, setAdminId] = useState("");
   const [password, setPassword] = useState("");
 
@@ -34,8 +37,6 @@ export default function AdminLoginPage() {
     type: "",
     message: "",
   });
-
-  // navigate
   const Navigate = useNavigate();
 
   const [open, setOpen] = useState(false);
@@ -43,10 +44,8 @@ export default function AdminLoginPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = { adminId, password };
-    axios
-      .post("http://localhost:8080/admin/", formData, { withCredentials: true })
+    AxiosClient.post("/admin", formData)
       .then((res) => {
-        console.log(res);
         if (res.data.success) {
           setErrorStatus({
             ...errorStatus,
@@ -54,16 +53,21 @@ export default function AdminLoginPage() {
             type: "success",
             message: res.data.message,
           });
-          if (!res.data.verified) {
-            setOpen(true);
+
+          if (res.data.role === "PrimaryAdmin") {
+            Navigate("/Primaryadmin/Dashboard");
           } else {
-            if (res.data.role === "LocationAdmin") {
+            if (res.data.verified) {
               Navigate("/Locationadmin/Dashboard");
             } else {
-              Navigate("/Primaryadmin/Dashboard");
+              setOpen(true);
             }
           }
-          setPassword("")
+          setIsLogged(true);
+          localStorage.setItem("isLogged", true);
+          localStorage.setItem("userId", adminId);
+          localStorage.setItem("token", res.data.token);
+          setPassword("");
         } else {
           setErrorStatus({
             ...errorStatus,

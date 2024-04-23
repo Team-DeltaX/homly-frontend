@@ -15,27 +15,21 @@ const ViewPopupManage = (props) => {
 
   const handleremovefromblacklist = () => {
     axios
-      .delete(
-        "http://localhost:8080/admin/auth/unblacklist",
-        {
-          data: { ServiceNo: props.selectemp.service_number },
-          withCredentials: true,
-        }
-      )
+      .delete(`http://localhost:8080/admin/auth/unblacklist`, {
+        data: { ServiceNo: props.selectemp.service_number },
+        withCredentials: true,
+      })
       .then((res) => {
-        console.log("----------fetch after remove from blacklist--------");
         props.fetch_current_blacklist();
-        console.log("remove from blacklist sucess");
-
+        props.SetOpensn(true);
       })
       .catch((error) => {
-
-        console.log(`delete from error is : ${error}`);
+        props.SetOpensnE(true);
       });
 
     axios
       .put(
-        "http://localhost:8080/admin/auth/unblacklist",
+        `http://localhost:8080/admin/auth/unblacklist`,
         {
           Email: props.selectuser.email,
           ServiceNo: props.selectemp.service_number,
@@ -44,30 +38,28 @@ const ViewPopupManage = (props) => {
       )
       .then((res) => {
         console.log("unblacklist homly usertable sucess");
-
       })
       .catch((error) => {
         console.log(error);
       });
 
-    axios.post(
-      "http://localhost:8080/admin/auth/blacklisthistory",
-      {
-        ServiceNo: props.selectemp.service_number,
-        AddReason: props.selecteduser.BlackListReason,
-        BlacklistedDate: props.selecteduser.Date,
-        RemoveReason: removeReson,
-      },
-      { withCredentials: true }
-    ).then((res) => {
-      console.log("added to blacklist history sucess");
-
-    })
+    axios
+      .post(
+        `http://localhost:8080/admin/auth/blacklisthistory`,
+        {
+          ServiceNo: props.selectemp.service_number,
+          AddReason: props.selecteduser.BlackListReason,
+          BlacklistedDate: props.selecteduser.Date,
+          RemoveReason: removeReson,
+        },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        console.log("added to blacklist history sucess");
+      })
       .catch((error) => {
         console.log(error);
       });
-
-
   };
 
   return (
@@ -126,13 +118,7 @@ const ViewPopupManage = (props) => {
               <CancelIcon />
             </Button>
 
-            <Box
-            //    sx={{
-            //     Height:'50px',
-            //     overflow:'scroll',
-            //     background:'red'
-            //    }}
-            >
+            <Box>
               <Button
                 sx={{
                   position: "absolute",
@@ -153,17 +139,14 @@ const ViewPopupManage = (props) => {
                 sx={{
                   display: "felx",
                   flexDirection: "column",
-                  // width:'100%',
                 }}
               >
                 <Box
                   sx={{
-                    // width:"100%",
                     display: "flex",
                     flexDirection: { md: "row", xs: "column" },
                     justifyContent: "space-between",
                     alignItems: "center",
-                    // margin:'5px'
                     marginTop: { md: "5px", xs: "199px" },
                   }}
                 >
@@ -181,7 +164,6 @@ const ViewPopupManage = (props) => {
                 </Box>
                 <Box
                   sx={{
-                    // width:"100%",
                     display: "flex",
                     flexDirection: { md: "row", xs: "column" },
                     justifyContent: "space-between",
@@ -203,7 +185,6 @@ const ViewPopupManage = (props) => {
                 </Box>
                 <Box
                   sx={{
-                    // width:"100%",
                     display: "flex",
                     flexDirection: { md: "row", xs: "column" },
                     justifyContent: "space-between",
@@ -227,7 +208,6 @@ const ViewPopupManage = (props) => {
                 </Box>
                 <Box
                   sx={{
-                    // width:"100%",
                     display: "flex",
                     flexDirection: { md: "row", xs: "column" },
                     justifyContent: "space-between",
@@ -249,7 +229,6 @@ const ViewPopupManage = (props) => {
                 </Box>
                 <Box
                   sx={{
-                    // width:"100%",
                     display: "flex",
                     flexDirection: { md: "row", xs: "column" },
                     justifyContent: "space-between",
@@ -293,31 +272,15 @@ const ViewPopupManage = (props) => {
                 </Box>
                 <Box
                   sx={{
-                    // width:"100%",
                     display: "flex",
                     flexDirection: { md: "row", xs: "column" },
                     justifyContent: "space-between",
                     alignItems: "center",
                     margin: "5px",
                   }}
-                >
-                  {/* <Box><Typography  h6>Personal Address</Typography></Box>
-                                <Box ><TextField disabled size="small" sx={{width:'85%',margin:"5px"}}></TextField></Box>
-                            </Box>
-                            <Box sx={{
-                                // width:"100%",
-                                display:'flex',
-                                flexDirection:{md:'row',xs:'column'},
-                                justifyContent:"space-between",
-                                alignItems:'center',
-                                margin:'5px'
-                            }}>
-                                <Box><Typography  h6>Residental District</Typography></Box>
-                                <Box ><TextField disabled size="small" sx={{width:'85%',margin:"5px"}}></TextField></Box> */}
-                </Box>
+                ></Box>
                 <Box
                   sx={{
-                    // width:"100%",
                     display: "flex",
                     flexDirection: { md: "row", xs: "column" },
                     justifyContent: "space-between",
@@ -339,7 +302,6 @@ const ViewPopupManage = (props) => {
                 </Box>
                 <Box
                   sx={{
-                    // width:"100%",
                     display: "flex",
                     flexDirection: { md: "row", xs: "column" },
                     justifyContent: "space-between",
@@ -361,7 +323,6 @@ const ViewPopupManage = (props) => {
                 </Box>
                 <Box
                   sx={{
-                    // width:"100%",
                     display: "flex",
                     flexDirection: { md: "row", xs: "column" },
                     justifyContent: "space-between",
@@ -382,7 +343,6 @@ const ViewPopupManage = (props) => {
                 </Box>
                 <Box
                   sx={{
-                    // width:"100%",
                     display: "flex",
                     flexDirection: "row",
                     justifyContent: "flex-end",
@@ -390,9 +350,6 @@ const ViewPopupManage = (props) => {
                     margin: "5px",
                   }}
                 >
-                  {/* <Box><Typography sx={{fontFamily:'roboto',}} h6>Service Number</Typography></Box>
-                                <Box ></Box> */}
-
                   <Button
                     disabled={(removeReson?.trim().length ?? 0) === 0}
                     variant="contained"

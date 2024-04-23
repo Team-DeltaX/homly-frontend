@@ -14,11 +14,9 @@ import {
   Divider,
   Typography,
 } from "@mui/material";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-
 import ErrorSnackbar from "./ErrorSnackbar";
 import theme from "../../HomlyTheme";
+import AxiosClient from "../../services/AxiosClient";
 
 // change toggle button style
 const style = {
@@ -50,8 +48,6 @@ export default function UserInterestedPopup({
   const [interests, setInterests] = useState([]);
   const [error, setError] = useState("");
 
-  const Navigate = useNavigate();
-
   const handleClose = () => {
     setOpen(false);
   };
@@ -80,12 +76,8 @@ export default function UserInterestedPopup({
         console.log("skipped");
         formData = {};
       }
-      axios
-        .post("http://localhost:8080/users/auth/interested", formData, {
-          withCredentials: true,
-        })
+      AxiosClient.post("/user/auth/interested", formData)
         .then((res) => {
-          console.log(res.data);
           if (res.data.success) {
             setOpen(false);
             setInterestsIsSubmited(true);
@@ -98,18 +90,13 @@ export default function UserInterestedPopup({
             });
           }
         })
-        .catch((err) => {
-          console.log(err);
-          if (err.response.data.autherized === false) {
-            Navigate("/");
-          } else {
-            setErrorStatus({
-              ...errorStatus,
-              isOpen: true,
-              type: "error",
-              message: "Server Error",
-            });
-          }
+        .catch(() => {
+          setErrorStatus({
+            ...errorStatus,
+            isOpen: true,
+            type: "error",
+            message: "Server Error",
+          });
         });
     }
   };
@@ -155,9 +142,9 @@ export default function UserInterestedPopup({
                   flexWrap: "wrap",
 
                   ".css-q9gk48-MuiButtonBase-root-MuiToggleButton-root.Mui-selected, .css-q9gk48-MuiButtonBase-root-MuiToggleButton-root.Mui-selected:hover":
-                  {
-                    backgroundColor: "#f8abc3",
-                  },
+                    {
+                      backgroundColor: "#f8abc3",
+                    },
                 }}
               >
                 <ToggleButton value="food" aria-label="food" style={style}>

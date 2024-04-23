@@ -28,6 +28,8 @@ import MainHolidayHomePhoto from "../../Components/User/HolidayHomeDetailsGrid/M
 // import MainHolidayHomePhoto from '../../Components/User/HolidayHomeDetailsGrid/MainHolidayHomePhoto';
 import HolidayHomeGrid from "../../Components/User/HolidayHomeDetailsGrid/HolidayHomeGrid";
 import AddReservationPopUp from "../../Components/Reservations/AddReservationPopUp";
+import Review from "../../Components/User/Review/Review";
+import AxiosClient from "../../services/AxiosClient";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -103,11 +105,7 @@ export default function HolidayHomeDetails() {
   // const homeId = "1710334919911";
   const { homeId } = useParams();
   useEffect(() => {
-    axios
-      .get(
-        `http://localhost:8080/admin/auth/locationadmin/holidayhome/${homeId}`,
-        { withCredentials: true }
-      )
+    AxiosClient.get(`/admin/auth/locationadmin/holidayhome/${homeId}`)
       .then((res) => {
         console.log("response", res.data.room);
         if (Response) {
@@ -134,7 +132,6 @@ export default function HolidayHomeDetails() {
             Wifi: homeDetails.Wifi === "0" ? false : true,
             Pool: homeDetails.Pool === "0" ? false : true,
             Bar: homeDetails.Bar === "0" ? false : true,
-
           });
         } else {
           console.log("No data found");
@@ -164,10 +161,16 @@ export default function HolidayHomeDetails() {
           >
             <Grid container spacing={2}>
               <Grid md={8}>
-                <Typography variant="h4" sx={{ fontWeight: "550", textTransform: 'uppercase' }}>
+                <Typography
+                  variant="h4"
+                  sx={{ fontWeight: "550", textTransform: "uppercase" }}
+                >
                   {value.name}
                 </Typography>
-                <Typography variant="button" sx={{ color: '#823', ml: '1%', fontSize: '1rem' }}>
+                <Typography
+                  variant="button"
+                  sx={{ color: "#823", ml: "1%", fontSize: "1rem" }}
+                >
                   {value.category}
                 </Typography>
               </Grid>
@@ -183,32 +186,56 @@ export default function HolidayHomeDetails() {
                 <Stack spacing={2}>
                   <Stack spacing={2} direction="row">
                     <Box sx={{ width: 1 / 6 }}>
-                      <Button variant="outlined" fullWidth disabled={!value.Gym}>
+                      <Button
+                        variant="outlined"
+                        fullWidth
+                        disabled={!value.Gym}
+                      >
                         Gym
                       </Button>
                     </Box>
                     <Box sx={{ width: 1 / 6 }}>
-                      <Button variant="outlined" fullWidth disabled={!value.Kitchen}>
+                      <Button
+                        variant="outlined"
+                        fullWidth
+                        disabled={!value.Kitchen}
+                      >
                         Kitchen
                       </Button>
                     </Box>
                     <Box sx={{ width: 1 / 6 }}>
-                      <Button variant="outlined" fullWidth disabled={!value.Park}>
+                      <Button
+                        variant="outlined"
+                        fullWidth
+                        disabled={!value.Park}
+                      >
                         Park
                       </Button>
                     </Box>
                     <Box sx={{ width: 1 / 6 }}>
-                      <Button variant="outlined" fullWidth disabled={!value.Wifi}>
+                      <Button
+                        variant="outlined"
+                        fullWidth
+                        disabled={!value.Wifi}
+                      >
                         Wi-fi
                       </Button>
                     </Box>
                     <Box sx={{ width: 1 / 6 }}>
-                      <Button variant="outlined" fullWidth disabled={!value.Bar}>
+                      <Button
+                        variant="outlined"
+                        fullWidth
+                        disabled={!value.Bar}
+                      >
                         Bar
                       </Button>
                     </Box>
                     <Box sx={{ width: 1 / 6 }}>
-                      <Button variant="outlined" fullWidth disabled={!value.Pool}>
+                      <Button
+                        variant="outlined"
+                        fullWidth
+                        disabled={!value.Pool}
+                      >
                         Pool
                       </Button>
                     </Box>
@@ -275,7 +302,10 @@ export default function HolidayHomeDetails() {
                   </Grid>
                 </Box>
 
-                <Item>Review</Item>
+                {/* user review */}
+                <Box>
+                  <Review />
+                </Box>
               </Stack>
             </Grid>
           </Container>

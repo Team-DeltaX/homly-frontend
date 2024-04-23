@@ -1,56 +1,71 @@
-import React from "react";
-import { useState, useContext } from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Drawer from "@mui/material/Drawer";
-import IconButton from "@mui/material/IconButton";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import { CssBaseline } from "@mui/material";
-import Avatar from "@mui/material/Avatar";
-import Tooltip from "@mui/material/Tooltip";
-// import Badge from "@mui/material/Badge";
-import Stack from "@mui/material/Stack";
-import Button from "@mui/material/Button";
-
+import React, { useState, useContext, useEffect } from "react";
+import {
+  ThemeProvider,
+  AppBar,
+  Box,
+  Drawer,
+  IconButton,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  Toolbar,
+  Typography,
+  Menu,
+  MenuItem,
+  Avatar,
+  Tooltip,
+  CssBaseline,
+  Stack,
+  Button,
+} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-
-import { ThemeProvider } from "@emotion/react";
-
-import { Link, NavLink } from "react-router-dom";
-
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import theme from "../../../HomlyTheme";
 import "./NavBar.css";
-
-// import auth context
+import NotificationPanal from "../../Common/NotificationPanal/NotificationPanal";
 import { AuthContext } from "../../../Contexts/AuthContext";
-
+import AxiosClient from "../../../services/AxiosClient";
 const drawerWidth = 240;
 const pages = [
   { name: "Home", path: "/Home" },
   { name: "Holiday Homes", path: "/holidayHomes" },
-  // { name: "Contact Us", path: "/contactUs" }
 ];
 
 const respSidePages = [
   { name: "Home", path: "/Home" },
   { name: "Holiday Homes", path: "/holidayHomes/" },
-  // { name: "Contact Us", path: "/contactUs" },
   { name: "My Profile", path: "/myProfile" },
 ];
 
-const NavBar = ({ refContactUS }) => {
-  const { user } = useContext(AuthContext);
-
+const NavBar = ({ refContactUS, position }) => {
+  const { user, setIsLogout } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
+
+  // {
+  //   id: 1,
+  //   type: "New Feedback",
+  //   data: "added Anuradhapura resort by samitha",
+  //   senderId: "18964v",
+  //   time: "2021-10-10T10:10:10",
+  // },
+  // {
+  //   id: 2,
+  //   type: "Authorization Successful",
+  //   data: "added Anuradhapura resort by samitha",
+  //   senderId: "18964v",
+  //   time: "2021-10-10T10:10:10",
+  // },
+  // {
+  //   id: 3,
+  //   type: "Authorization Denied",
+  //   data: "added Anuradhapura resort by samitha",
+  //   senderId: "18964v",
+  //   time: "2021-10-10T10:10:10",
+  // },
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -82,6 +97,17 @@ const NavBar = ({ refContactUS }) => {
     refContactUS.current?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const handleLogout = () => {
+    handleCloseUserMenu();
+    setIsLogout(true);
+    localStorage.removeItem("token");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("image");
+    localStorage.removeItem("selectedTab");
+    localStorage.setItem("isLogged", false);
+    navigate("/");
+  };
+
   const mainDrawer = (
     <div>
       <Toolbar />
@@ -93,7 +119,10 @@ const NavBar = ({ refContactUS }) => {
             </ListItemButton>
           </ListItem>
         ))}
-        <ListItem disablePadding>
+        <ListItem
+          disablePadding
+          sx={{ display: refContactUS ? "flex" : "none" }}
+        >
           <ListItemButton onClick={handleScrollClick}>
             <ListItemText primary="Contact Us" />
           </ListItemButton>
@@ -114,9 +143,9 @@ const NavBar = ({ refContactUS }) => {
             flexDirection: "row",
             justifyContent: "space-between",
             alignItems: "center",
-            // width: { sm: `calc(100% - ${drawerWidth}px)` },
-            // ml: { sm: `${drawerWidth}px` },
-            position: { xs: "fixed", sm: "fixed", md: "sticky" },
+            position: position
+              ? position
+              : { xs: "fixed", sm: "fixed", md: "sticky" },
           }}
         >
           <Toolbar>
@@ -128,7 +157,6 @@ const NavBar = ({ refContactUS }) => {
             >
               <MenuIcon />
             </IconButton>
-
           </Toolbar>
           <Stack
             direction="row"
@@ -143,7 +171,15 @@ const NavBar = ({ refContactUS }) => {
               display={{ xs: "none", sm: "none", md: "flex" }}
             >
               {pages.map((page) => (
-                <Box sx={{ position: "relative" }} key={page.name}>
+                <Box
+                  sx={{
+                    position: "relative",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                  key={page.name}
+                >
                   <NavLink
                     key={page.name}
                     to={page.path}
@@ -171,53 +207,67 @@ const NavBar = ({ refContactUS }) => {
                     textTransform: "uppercase",
                     fontSize: "0.875rem",
                     fontWeight: "500",
+                    display: refContactUS ? "flex" : "none",
                   }}
                 >
                   Contact Us
                 </Typography>
               </Box>
             </Stack>
-            {/* notification button */}
-            {/* <NotificationPanel /> */}
-            {/* user button */}
-            <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar
-                    alt="Remy Sharp"
-                    sx={{ height: "48px", width: "48px" }}
-                    src={user.image}
-                  />
-                </IconButton>
-              </Tooltip>
-              <Menu
-                sx={{ mt: "45px" }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
+            <Box sx={{ position: "relative" }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "flex-basis",
+                  gap: "1.5em",
                 }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
               >
-                <MenuItem
-                  onClick={handleCloseUserMenu}
-                  component={Link}
-                  to="/myProfile"
-                >
-                  <Typography textAlign="center">My Profile</Typography>
-                </MenuItem>
-                <MenuItem onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">Logout</Typography>
-                </MenuItem>
-              </Menu>
+                <NotificationPanal bell={true} />
+              </Box>
             </Box>
+            <Stack direction="row">
+              <Box sx={{ flexGrow: 0 }}>
+                <Tooltip title="Open settings">
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <Avatar
+                      alt="Remy Sharp"
+                      sx={{ height: "48px", width: "48px" }}
+                      src={user.image ? user.image : ""}
+                    />
+                  </IconButton>
+                </Tooltip>
+                <Menu
+                  sx={{ mt: "45px" }}
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                >
+                  <MenuItem
+                    onClick={() => {
+                      handleCloseUserMenu();
+                      localStorage.removeItem("selectedTab");
+                    }}
+                    component={Link}
+                    to="/myProfile"
+                  >
+                    <Typography textAlign="center">My Profile</Typography>
+                  </MenuItem>
+                  <MenuItem onClick={handleLogout}>
+                    <Typography textAlign="center">Logout</Typography>
+                  </MenuItem>
+                </Menu>
+              </Box>
+            </Stack>
           </Stack>
         </AppBar>
         <Box
@@ -235,7 +285,7 @@ const NavBar = ({ refContactUS }) => {
             onTransitionEnd={handleDrawerTransitionEnd}
             onClose={handleDrawerClose}
             ModalProps={{
-              keepMounted: true, // Better open performance on mobile.
+              keepMounted: true,
             }}
             sx={{
               display: { xs: "block", sm: "block", md: "none" },

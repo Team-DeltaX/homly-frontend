@@ -30,32 +30,27 @@ export default function EnterDetailCom({
       setTimeout(() => {
         setBtnDisabled(false);
       }, 30000);
-
     }
   }, [btnDisabled]);
 
   useEffect(() => {
     if (btnDisabled) {
-      // exit early when we reach 0
       if (!time) return;
-
-      // save intervalId to clear the interval when the
-      // component re-renders
       const intervalId = setInterval(() => {
         setTime(time - 1);
       }, 1000);
-
-      // clear interval on re-render to avoid memory leaks
       return () => clearInterval(intervalId);
     }
-  }, [time, btnDisabled])
+  }, [time, btnDisabled]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (otp.length === 6) {
       const formData = { serviceNo: value.serviceNo, otp: otp };
       axios
-        .post("http://localhost:8080/users/forgetPassword/otp", formData, { withCredentials: true })
+        .post("http://localhost:8080/users/forgetPassword/otp", formData, {
+          withCredentials: true,
+        })
         .then((res) => {
           if (res.data.success) {
             setErrorStatus({
@@ -73,14 +68,15 @@ export default function EnterDetailCom({
               message: res.data.message,
             });
           }
-        }).catch((err) => {
+        })
+        .catch((err) => {
           setErrorStatus({
             ...errorStatus,
             isOpen: true,
             type: "error",
             message: "Somthing went wrong",
           });
-        })
+        });
     } else {
       setErrorStatus({
         ...errorStatus,
@@ -94,7 +90,9 @@ export default function EnterDetailCom({
   const handleNewOTP = () => {
     const formData = { serviceNo: value.serviceNo, email: value.email };
     axios
-      .post("http://localhost:8080/users/forgetPassword", formData, { withCredentials: true })
+      .post("http://localhost:8080/users/forgetPassword", formData, {
+        withCredentials: true,
+      })
       .then((res) => {
         if (res.data.success) {
           setErrorStatus({
@@ -119,9 +117,7 @@ export default function EnterDetailCom({
   return (
     <ThemeProvider theme={theme}>
       <form onSubmit={handleSubmit}>
-        <DialogContent
-          sx={{ height: "160px", overflowY: "unset" }}
-        >
+        <DialogContent sx={{ height: "160px", overflowY: "unset" }}>
           <DialogContentText sx={{ marginBottom: "10px" }}>
             Check your email for the OTP
           </DialogContentText>
@@ -140,7 +136,7 @@ export default function EnterDetailCom({
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              ml: "27px"
+              ml: "27px",
             }}
           >
             <Stack
@@ -148,13 +144,20 @@ export default function EnterDetailCom({
               sx={{
                 justifyContent: "center",
                 alignItems: "center",
-                width: "100%"
+                width: "100%",
               }}
             >
               <Button onClick={handleNewOTP} disabled={btnDisabled}>
                 Try Again
               </Button>
-              <Typography sx={{ marginLeft: 2, fontWeight: 'bold', opacity: time === 0 ? 0 : 1, color: time < 6 ? "red" : "black" }}>
+              <Typography
+                sx={{
+                  marginLeft: 2,
+                  fontWeight: "bold",
+                  opacity: time === 0 ? 0 : 1,
+                  color: time < 6 ? "red" : "black",
+                }}
+              >
                 {time < 10 ? "0" + time : time}s
               </Typography>
             </Stack>

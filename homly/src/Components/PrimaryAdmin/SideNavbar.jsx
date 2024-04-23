@@ -4,13 +4,9 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import { Typography } from "@mui/material";
-import logo from "../../Assets/images/logo.png";
-import user from "../../Assets/images/profile.jpeg";
 import { Link } from "react-router-dom";
 import logo1 from "../../Assets/images/logo1.png";
-import './Css/navbar.css';
-
-
+import "./Css/navbar.css";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
@@ -67,9 +63,6 @@ export default function SideNavbar({ setShowNav }) {
               >
                 <img src={logo1} alt="logoOfHomely" />
               </Box>
-              {/* <Box>
-                    <Typography variant='h5' sx={{color:'white',fontFamily:theme.fontFamily} }>Admin</Typography>
-                    </Box> */}
             </Grid>
           </Box>
           <Box
@@ -91,9 +84,9 @@ export default function SideNavbar({ setShowNav }) {
               sx={{
                 backgroundColor:
                   selectedMenuItem === "dashboard" ||
-                    selectedMenuItem === "viewadmin" ||
-                    selectedMenuItem === "addadmin" ||
-                    selectedMenuItem === "authorizations"
+                  selectedMenuItem === "viewadmin" ||
+                  selectedMenuItem === "addadmin" ||
+                  selectedMenuItem === "authorizations"
                     ? "white"
                     : "primary.main",
               }}
@@ -104,9 +97,9 @@ export default function SideNavbar({ setShowNav }) {
                   sx={{
                     color:
                       selectedMenuItem === "dashboard" ||
-                        selectedMenuItem === "viewadmin" ||
-                        selectedMenuItem === "addadmin" ||
-                        selectedMenuItem === "authorizations"
+                      selectedMenuItem === "viewadmin" ||
+                      selectedMenuItem === "addadmin" ||
+                      selectedMenuItem === "authorizations"
                         ? "black"
                         : "white",
                   }}
@@ -119,9 +112,9 @@ export default function SideNavbar({ setShowNav }) {
                     sx={{
                       color:
                         selectedMenuItem === "dashboard" ||
-                          selectedMenuItem === "viewadmin" ||
-                          selectedMenuItem === "addadmin" ||
-                          selectedMenuItem === "authorizations"
+                        selectedMenuItem === "viewadmin" ||
+                        selectedMenuItem === "addadmin" ||
+                        selectedMenuItem === "authorizations"
                           ? "black"
                           : "white",
                     }}

@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import {
   Box,
   ThemeProvider,
@@ -12,14 +10,12 @@ import {
   Stack,
   Avatar,
 } from "@mui/material";
-
 import PersonalDetailsGrid from "../PersonalDetailsGrid/PersonalDetailsGrid";
-
 import theme from "../../../HomlyTheme";
-import ProfilePicUploadPopup from "../ProfilePicUploadPopup";
+import UploadImageCloudinary from "../../Common/UploadImageCloudinary";
 import ErrorSnackbar from "../ErrorSnackbar";
-// import UserInterestedPopup from "../UserInterestedPopup";
 import UserInterestedPopupProfile from "./UserInterestedPopupProfile";
+import AxiosClient from "../../../services/AxiosClient";
 
 const PersonalDetails = () => {
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -33,27 +29,18 @@ const PersonalDetails = () => {
     address: "",
     contactNo: "",
     email: "",
-    image: "",
   });
+  const [oldEmail, setOldEmail] = useState("");
+  const [image, setImage] = useState("");
   const [interests, setInterests] = useState([]);
   const [isHaveInterests, setIsHaveInterests] = useState(false);
-
   const [insterestedPopup, setInsterestedPopup] = useState(false);
-
-  // const [interestsIsSubmited, setInterestsIsSubmited] = useState(false);
-
   const [errorStatus, setErrorStatus] = useState({
     isOpen: false,
     type: "",
     message: "",
   });
-
   const [isEnable, setIsEnable] = useState(false);
-
-  const [open, setOpen] = useState(false);
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
 
   const checkEmail = (email) => {
     if (email) {
@@ -77,104 +64,105 @@ const PersonalDetails = () => {
     setIsEnable(true);
   };
 
-  const Navigate = useNavigate();
-
   useEffect(() => {
-    try {
-      axios
-        .get(`http://localhost:8080/users/auth/details`, {
-          withCredentials: true,
-        })
-        .then((res) => {
-          if (Response) {
-            console.log("apidata sd", res.data);
-            setData({
-              ...data,
-              serviceNo: res.data.serviceNo,
-              name: res.data.name,
-              nic: res.data.nic,
-              work: res.data.work,
-              address: res.data.address,
-              email: res.data.email,
-              contactNo: res.data.contactNo,
-              image: res.data.image,
-            });
-          } else {
-            setErrorStatus({
-              ...errorStatus,
-              isOpen: true,
-              type: "error",
-              message: res.data.message,
-            });
-          }
-        })
-        .catch((err) => {
-          console.log("error", err);
-          if (!err.response.data.autherized) {
-            setErrorStatus({
-              ...errorStatus,
-              isOpen: true,
-              type: "error",
-              message: "Unautherized Access",
-            });
-            Navigate("/");
-          } else {
-            setErrorStatus({
-              ...errorStatus,
-              isOpen: true,
-              type: "error",
-              message: "Server Error",
-            });
-          }
+    AxiosClient.get("/user/auth/details")
+      .then((res) => {
+        console.log(res, "res asdasdasf");
+        if (Response) {
+          setData({
+            ...data,
+            serviceNo: res.data.serviceNo,
+            name: res.data.name,
+            nic: res.data.nic,
+            work: res.data.work,
+            address: res.data.address,
+            email: res.data.email,
+            contactNo: res.data.contactNo,
+          });
+          setOldEmail(res.data.email);
+          setImage(res.data.image);
+        } else {
+          setErrorStatus({
+            ...errorStatus,
+            isOpen: true,
+            type: "error",
+            message: res.data.message,
+          });
+        }
+      })
+      .catch((err) => {
+        setErrorStatus({
+          ...errorStatus,
+          isOpen: true,
+          type: "error",
+          message: err.message,
         });
+      });
 
-      axios
-        .get("http://localhost:8080/users/auth/interested", {
-          withCredentials: true,
-        })
-        .then((res) => {
-          if (res.data) {
-            console.log("intresffedfsdf", res.data.userInterested.interested);
-            if (res.data.userInterested.interested[0] !== null) {
-              setInterests(res.data.userInterested.interested);
-            }
-          } else {
-            setErrorStatus({
-              ...errorStatus,
-              isOpen: true,
-              type: "error",
-              message: res.data.message,
-            });
+    AxiosClient.get("/user/auth/interested")
+      .then((res) => {
+        if (res.data) {
+          if (res.data.userInterested.interested[0] !== null) {
+            setInterests(res.data.userInterested.interested);
           }
-          setIsHaveInterests(true);
-        })
-        .catch((err) => {
-          setIsHaveInterests(false);
-          console.log("error", err);
-        });
-    } catch (err) {
-      Navigate("/");
-    }
+        } else {
+          setErrorStatus({
+            ...errorStatus,
+            isOpen: true,
+            type: "error",
+            message: res.data.message,
+          });
+        }
+        setIsHaveInterests(true);
+      })
+      .catch(() => {
+        setIsHaveInterests(false);
+      });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleUpdate = () => {
+    let emailUpdated = false;
+
     if (!checkEmail(data.email) && !checkContactNo(data.contactNo)) {
       const formData = {
         serviceNo: data.serviceNo,
         email: data.email,
         contactNo: data.contactNo,
-        image: data.image,
+        image: image,
       };
-      axios
-        .put("http://localhost:8080/users/auth", formData)
+      AxiosClient.put("/user/auth/details", formData)
         .then((res) => {
+          console.log(res, "res updateeee");
           if (res.data.success) {
-            setErrorStatus({
-              ...errorStatus,
-              isOpen: true,
-              type: "success",
-              message: res.data.message,
+            if (res.data.emailUpdated) {
+              emailUpdated = true;
+            }
+            const formData2 = {
+              fac1: interests[0],
+              fac2: interests[1],
+              fac3: interests[2],
+            };
+
+            AxiosClient.put("/user/auth/interested", formData2).then((res) => {
+              if (res.data.success) {
+                setErrorStatus({
+                  ...errorStatus,
+                  isOpen: true,
+                  type: "success",
+                  message: emailUpdated
+                    ? "Check your email,We will send you a verification link"
+                    : "Updated Successfully",
+                });
+              } else {
+                setErrorStatus({
+                  ...errorStatus,
+                  isOpen: true,
+                  type: "error",
+                  message: res.data.message,
+                });
+              }
             });
           } else {
             setErrorStatus({
@@ -193,23 +181,7 @@ const PersonalDetails = () => {
             message: err.message,
           });
         });
-
-      const formData2 = {
-        fac1: interests[0],
-        fac2: interests[1],
-        fac3: interests[2],
-      };
-
-      axios
-        .put("http://localhost:8080/users/auth/interested", formData2, {
-          withCredentials: true,
-        })
-        .then((res) => {
-          console.log("interested", res.data);
-        })
-        .catch((err) => {
-          console.log("error", err);
-        });
+      setData({ ...data, email: oldEmail });
       setIsEnable(false);
     }
   };
@@ -233,7 +205,7 @@ const PersonalDetails = () => {
           }}
         >
           <Card sx={{ width: { xs: "100%", sm: "90%" } }}>
-            <CardContent>
+            <CardContent sx={{ padding: { xs: 0, sm: "16px" } }}>
               <Stack direction="row" sx={{ flexWrap: "wrap" }}>
                 <Box sx={{ width: { xs: "100%", sm: "70%" } }}>
                   <PersonalDetailsGrid
@@ -293,28 +265,12 @@ const PersonalDetails = () => {
                     helperText={checkEmail(data.email) ? "Invalid Email" : ""}
                   />
                 </Box>
-                {/* <AvatarImage /> */}
-                <ProfilePicUploadPopup
-                  open={open}
-                  setOpen={setOpen}
-                  setImage={(image) => setData({ ...data, image: image })}
-                />
-
-                {/* change interest popup */}
                 <UserInterestedPopupProfile
                   open={insterestedPopup}
                   setOpen={setInsterestedPopup}
                   interests={interests}
                   setInterests={setInterests}
                 />
-
-                {/* add interest popup */}
-                {/* <UserInterestedPopup
-                  open={!isHaveInterests && insterestedPopup}
-                  setOpen={setInsterestedPopup}
-                  is
-                /> */}
-
                 <Stack
                   direction="column"
                   sx={{ width: { xs: "100%", sm: "30%" } }}
@@ -323,17 +279,17 @@ const PersonalDetails = () => {
                     direction="column"
                     sx={{
                       margin: "2% 0",
-                      // height: { xs: 80, sm: 100 },
                       width: "100%",
                       alignItems: "center",
                     }}
                   >
                     <Avatar
                       alt="Remy Sharp"
-                      src={data.image}
+                      src={image}
                       sx={{
                         width: 150,
                         height: 150,
+                        border: "2px solid #3f51b5",
                       }}
                     />
                     <Box
@@ -345,25 +301,26 @@ const PersonalDetails = () => {
                         marginLeft: "8px",
                       }}
                     >
-                      <Button
-                        variant="outlined"
-                        onClick={handleClickOpen}
-                        disabled={!isEnable}
-                        size="small"
-                      >
-                        <Typography
-                          sx={{ fontSize: { xs: "0.9rem", md: "1rem" } }}
-                        >
-                          Edit Profile Picture
-                        </Typography>
-                      </Button>
+                      <UploadImageCloudinary
+                        folderName="profile-pic"
+                        setImage={setImage}
+                        isMultiple={false}
+                        limit={1}
+                        buttonName="Upload Profile Picture"
+                        buttonVariant="outlined"
+                        isDisplayImageName={false}
+                        isDisabled={!isEnable}
+                      />
                     </Box>
                   </Stack>
                   <Button
                     disabled={!isEnable}
                     variant="outlined"
                     size="small"
-                    sx={{ marginTop: "10px", display: isHaveInterests ? "block" : "none" }}
+                    sx={{
+                      marginTop: "10px",
+                      display: isHaveInterests ? "block" : "none",
+                    }}
                     onClick={() => setInsterestedPopup(true)}
                   >
                     <Typography sx={{ fontSize: { xs: "0.9rem", md: "1rem" } }}>

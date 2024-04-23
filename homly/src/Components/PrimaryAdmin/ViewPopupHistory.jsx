@@ -5,17 +5,10 @@ import {
   ThemeProvider,
   Typography,
 } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
-import { useState } from "react";
-import { grey } from "@mui/material/colors";
-import theme from "../../HomlyTheme";
 import CancelIcon from "@mui/icons-material/Cancel";
-import axios from "axios";
 
 const ViewPopupManage = (props) => {
- 
   return (
-    // <ThemeProvider theme={theme}>
     <Box
       className="popup"
       sx={{
@@ -40,19 +33,6 @@ const ViewPopupManage = (props) => {
       <Box>
         <Box
           sx={{
-            //     backgroundColor:'white',
-            //     borderRadius:"10px",
-            //    padding:'5px',
-            //    width:{md:'400px'},
-            //     display:'flex',
-            //     flexDirection:'column',
-            //     justifyContent:"center",
-            //     alignItems:'center',
-            //     position:'relative',
-            //     marginTop:{md:'20px',xs:'100px'},
-            //     maxHeight:{md:'100%',xs:'690px'},
-            //     overflow:'auto',
-
             backgroundColor: "white",
             borderRadius: "10px",
             padding: "10px",
@@ -86,12 +66,10 @@ const ViewPopupManage = (props) => {
             sx={{
               display: "felx",
               flexDirection: "column",
-              // width:'100%',
             }}
           >
             <Box
               sx={{
-                // width:"100%",
                 display: "flex",
                 flexDirection: { md: "row", xs: "column" },
                 justifyContent: "space-between",
@@ -114,7 +92,6 @@ const ViewPopupManage = (props) => {
 
             <Box
               sx={{
-                // width:"100%",
                 display: "flex",
                 flexDirection: { md: "row", xs: "column" },
                 justifyContent: "space-between",
@@ -137,7 +114,6 @@ const ViewPopupManage = (props) => {
 
             <Box
               sx={{
-                // width:"100%",
                 display: "flex",
                 flexDirection: { md: "row", xs: "column" },
                 justifyContent: "space-between",
@@ -150,7 +126,7 @@ const ViewPopupManage = (props) => {
               </Box>
               <Box>
                 <TextField
-                value={props.SelectUser.contact_number}
+                  value={props.SelectUser.contact_number}
                   disabled
                   size="small"
                   sx={{ width: "85%", margin: "5px" }}
@@ -160,7 +136,6 @@ const ViewPopupManage = (props) => {
 
             <Box
               sx={{
-                // width:"100%",
                 display: "flex",
                 flexDirection: { md: "row", xs: "column" },
                 justifyContent: "space-between",
@@ -183,7 +158,6 @@ const ViewPopupManage = (props) => {
 
             <Box
               sx={{
-                // width:"100%",
                 display: "flex",
                 flexDirection: { md: "row", xs: "column" },
                 justifyContent: "space-between",
@@ -206,7 +180,6 @@ const ViewPopupManage = (props) => {
 
             <Box
               sx={{
-                // width:"100%",
                 display: "flex",
                 flexDirection: { md: "row", xs: "column" },
                 justifyContent: "space-between",
@@ -229,7 +202,6 @@ const ViewPopupManage = (props) => {
 
             <Box
               sx={{
-                // width:"100%",
                 display: "flex",
                 flexDirection: { md: "row", xs: "column" },
                 justifyContent: "space-between",
@@ -241,10 +213,8 @@ const ViewPopupManage = (props) => {
                 <Typography h6>Personal Address</Typography>
               </Box>
               <Box>
-                
-             
                 <TextField
-                 value={props.SelectEmp.address}
+                  value={props.SelectEmp.address}
                   disabled
                   size="small"
                   sx={{ width: "85%", margin: "5px" }}
@@ -252,11 +222,8 @@ const ViewPopupManage = (props) => {
               </Box>
             </Box>
 
-            
-
             <Box
               sx={{
-                // width:"100%",
                 display: "flex",
                 flexDirection: { md: "row", xs: "column" },
                 justifyContent: "space-between",
@@ -269,7 +236,7 @@ const ViewPopupManage = (props) => {
               </Box>
               <Box>
                 <TextField
-                value={props.selecteduser.BlacklistedDate}
+                  value={props.selecteduser.BlacklistedDate}
                   disabled
                   size="small"
                   sx={{ width: "85%", margin: "5px" }}
@@ -279,7 +246,6 @@ const ViewPopupManage = (props) => {
 
             <Box
               sx={{
-                // width:"100%",
                 display: "flex",
                 flexDirection: { md: "row", xs: "column" },
                 justifyContent: "space-between",
@@ -292,7 +258,7 @@ const ViewPopupManage = (props) => {
               </Box>
               <Box>
                 <TextField
-                 value={props.selecteduser.Addreason}
+                  value={props.selecteduser.Addreason}
                   disabled
                   size="small"
                   sx={{ width: "85%", margin: "5px" }}
@@ -301,7 +267,6 @@ const ViewPopupManage = (props) => {
             </Box>
             <Box
               sx={{
-                // width:"100%",
                 display: "flex",
                 flexDirection: { md: "row", xs: "column" },
                 justifyContent: "space-between",
@@ -314,7 +279,7 @@ const ViewPopupManage = (props) => {
               </Box>
               <Box>
                 <TextField
-                 value={props.selecteduser.RemoveReason}
+                  value={props.selecteduser.RemoveReason}
                   disabled
                   size="small"
                   sx={{ width: "85%", margin: "5px" }}
@@ -324,7 +289,6 @@ const ViewPopupManage = (props) => {
 
             <Box
               sx={{
-                // width:"100%",
                 display: "flex",
                 flexDirection: { md: "row", xs: "column" },
                 justifyContent: "flex-end",
@@ -346,7 +310,6 @@ const ViewPopupManage = (props) => {
         </Box>
       </Box>
     </Box>
-    // </Themeprovider>
   );
 };
 export default ViewPopupManage;

@@ -59,7 +59,7 @@ export default function AddSpecialReservationPopUp() {
     };
     console.log("aruna", data);
     axios
-      .post("http://localhost:8080/users/specialreservation", data)
+      .post("http://localhost:8080/user/specialreservation", data)
       .then((res) => {
         console.log("add special reservation successfully");
         setErrorStatus({
@@ -149,14 +149,13 @@ export default function AddSpecialReservationPopUp() {
     if (HolidayHomeName) {
       axios
         .get(
-          `http://localhost:8080/users/reservation/getTotalRoomRental/${HolidayHomeName}`
+          `http://localhost:8080/user/reservation/getTotalRoomRental/${HolidayHomeName}`
         )
         .then((response) => {
           setMaxAdults(response.data.maxAdults);
           setMaxChildren(response.data.maxChildren);
           setRoomRental(response.data.totalRoomRental);
           setHallRental(response.data.totalHallRental); //
-
         })
         .catch((error) => {
           console.log(error);
@@ -173,7 +172,7 @@ export default function AddSpecialReservationPopUp() {
   };
   useEffect(() => {
     axios
-      .get("http://localhost:8080/users/reservation/holidayhomes")
+      .get("http://localhost:8080/user/reservation/holidayhomes")
       .then((res) => {
         if (Response) {
           setHolidayHomes(res.data);

@@ -1,45 +1,72 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useRef, useEffect, useState } from "react";
-import { Container, Box, ThemeProvider, Pagination, Typography } from "@mui/material";
-import axios from "axios";
+import {
+  Container,
+  Box,
+  ThemeProvider,
+  Pagination,
+  Typography,
+  TextField,
+  Stack,
+  Button,
+} from "@mui/material";
 import { useParams } from "react-router-dom";
 import NavBar from "../../Components/User/NavBar/NavBar";
 import Footer from "../../Components/User/Footer/Footer";
 import HolidayHomeCard from "../../Components/User/HHCard/HolidayHomeCard";
+import HHCardSkeleton from "../../Components/User/Skeleton/HHCardSkeleton";
 import theme from "../../HomlyTheme";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import AxiosClient from "../../services/AxiosClient";
 export default function HolidayHomes() {
   const refContactUS = useRef(null);
   const refPageTop = useRef(null);
   const [holidayHomes, setHolidayHomes] = useState([]);
-  const [displayedHH, setDisplayedHH] = useState([]);
   const [pagination, setPagination] = useState(1);
+  const [selectedPage, setSelectedPage] = useState(1);
+  const [searchValue, setSearchValue] = useState("");
+  const [showSkeleton, setShowSkeleton] = useState(true);
+
   useEffect(() => {
     window.scrollTo(0, 0);
     AOS.init();
   }, []);
 
   const params = useParams();
-  const searchData = params ? params.searchData : " ";
+  const district = params ? params.district : " ";
+
+  const fetchData = () => {
+    AxiosClient.get("/user/auth/holidayhomes", {
+      params: { district: district, search: searchValue, page: selectedPage },
+    })
+      .then((res) => {
+        console.log("res", res);
+        if (res) {
+          console.log("dataaaaa", res);
+          setPagination(Math.ceil(res.data.HHcount / 9));
+          setHolidayHomes(res.data.holidayHomes);
+        } else {
+          setHolidayHomes([]);
+        }
+        setShowSkeleton(false);
+      })
+      .catch(() => {
+        console.log("error");
+        setShowSkeleton(false);
+      });
+  };
 
   useEffect(() => {
-    console.log("searchData", searchData);
-    axios
-      .get(
-        "http://localhost:8080/users/holidayhomes",
-        { params: { search: searchData } },
-        { withCredentials: true }
-      )
-      .then((res) => {
-        console.log("hhdetails", res.data);
-        setPagination(Math.ceil(res.data.length / 9));
-        setHolidayHomes(res.data);
-        setDisplayedHH(res.data.slice(0, 9));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [searchData]);
+    setShowSkeleton(true);
+    fetchData();
+  }, [selectedPage]);
+
+  const handleSearch = () => {
+    setShowSkeleton(true);
+    fetchData();
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <Box
@@ -61,38 +88,100 @@ export default function HolidayHomes() {
               sx={{
                 marginTop: { xs: "20px", sm: "10px", ms: "0" },
                 width: { xs: "100%", sm: "95%", padding: 0 },
-                display: "flex",
-                flexWrap: "wrap",
                 justifyContent: "center",
               }}
             >
-              {displayedHH ? displayedHH.map((item) => (
-                <Box sx={{ padding: "7px" }}>
-                  <HolidayHomeCard
-                    key={item.HolidayHomeId}
-                    HHID={item.HolidayHomeId}
-                    HHName={item.Name}
-                    HHLocation={item.Address}
-                    HHPrice={item.TotalRental}
-                    HHRating={item.overall_rating}
-                    // HHImage={
-                    //   "https://www.cnaccountants.com.au/wp-content/uploads/2023/03/hOLIDAY-HOMES-TAX.jpg"
-                    // }
-                    HHImage={item.HHImage}
-                    showInterest={false}
+              <Stack direction="column">
+                <Stack
+                  direction="row"
+                  sx={{
+                    width: "95%",
+                    justifyContent: "flex-end",
+                    alignItems: "center",
+                    marginBottom: "10px",
+                  }}
+                >
+                  <TextField
+                    id="search"
+                    placeholder="Search"
+                    size="small"
+                    value={searchValue}
+                    onChange={(e) => setSearchValue(e.target.value)}
+                    sx={{
+                      marginRight: "10px",
+                    }}
                   />
-                </Box>
-              )) :
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleSearch}
+                    size="small"
+                    sx={{
+                      padding: "7px 10px",
+                    }}
+                  >
+                    Search
+                  </Button>
+                </Stack>
+
                 <Box
                   sx={{
                     width: "100%",
-                    display: "flex",
+                    flexWrap: "wrap",
+                    display: !showSkeleton ? "flex" : "none",
                     justifyContent: "center",
                     alignItems: "center",
-                    padding: "20px",
                   }}
-                ><Typography variant="h6">No Holiday Homes Found</Typography></Box>
-              }
+                >
+                  {holidayHomes.length > 0 ? (
+                    holidayHomes.map((item) => (
+                      <Box sx={{ padding: "7px" }} key={item.HolidayHomeId}>
+                        <HolidayHomeCard
+                          key={item.HolidayHomeId}
+                          HHID={item.HolidayHomeId}
+                          HHName={item.Name}
+                          HHLocation={item.Address}
+                          HHPrice={item.TotalRental}
+                          HHRating={item.overall_rating}
+                          HHImage={item.HHImage}
+                          showInterest={false}
+                          isWishListed={item.isWishListed}
+                        />
+                      </Box>
+                    ))
+                  ) : (
+                    <Box
+                      sx={{
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        padding: "20px",
+                      }}
+                    >
+                      <Typography variant="h6">
+                        No Holiday Homes Found!
+                      </Typography>
+                    </Box>
+                  )}
+                </Box>
+                <Box
+                  sx={{
+                    flexWrap: "wrap",
+                    display: showSkeleton ? "flex" : "none",
+                  }}
+                >
+                  <Box sx={{ padding: "20px" }}>
+                    <HHCardSkeleton showInterest={false} />
+                  </Box>
+                  <Box sx={{ padding: "20px" }}>
+                    <HHCardSkeleton showInterest={false} />
+                  </Box>
+                  <Box sx={{ padding: "20px" }}>
+                    <HHCardSkeleton showInterest={false} />
+                  </Box>
+                </Box>
+              </Stack>
             </Container>
             <Box
               sx={{
@@ -109,9 +198,7 @@ export default function HolidayHomes() {
                 shape="rounded"
                 color="primary"
                 onChange={(event, value) => {
-                  console.log("page", value);
-                  setDisplayedHH(holidayHomes.slice((value - 1) * 9, value * 9));
-                  // go to pagetop
+                  setSelectedPage(value);
                   refPageTop.current.scrollIntoView({ behavior: "smooth" });
                 }}
               />

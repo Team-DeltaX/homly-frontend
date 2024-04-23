@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { Link } from "react-router-dom";
 import {
   Box,
   Container,
@@ -11,24 +11,20 @@ import {
   Stack,
   Avatar,
 } from "@mui/material";
-
 import BadgeIcon from "@mui/icons-material/Badge";
 import EmailIcon from "@mui/icons-material/Email";
 import CallIcon from "@mui/icons-material/Call";
 import PasswordIcon from "@mui/icons-material/Password";
-
-import ProfilePicUploadPopup from "../../Components/User/ProfilePicUploadPopup";
 import ErrorSnackbar from "../../Components/User/ErrorSnackbar";
-
-import theme from "../../HomlyTheme";
-import "./UserStyle.css";
 import logo from "../../Assets/images/logo.png";
 import wave from "../../Assets/images/wave.png";
-
-import { Link } from "react-router-dom";
 import InputPasswordWithIcon from "../../Components/User/TextField/InputPasswordWithIcon";
 import InputTextWithIcon from "../../Components/User/TextField/InputTextWithIcon";
 import PasswordStrength from "../../Components/User/PasswordStrength";
+import UploadImageCloudinary from "../../Components/Common/UploadImageCloudinary";
+import theme from "../../HomlyTheme";
+import "./UserStyle.css";
+import AxiosClient from "../../services/AxiosClient";
 
 const Img = styled("img")({
   display: "block",
@@ -37,9 +33,6 @@ const Img = styled("img")({
   padding: "5%",
   filter: "drop-shadow(17px 18px 90px  #872341)",
 });
-
-// let vh = window.innerHeight * 0.01;
-// document.documentElement.style.setProperty("--vh", `${vh}px`);
 
 const UserRegistration = () => {
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -51,10 +44,8 @@ const UserRegistration = () => {
   const [Password, setPassword] = useState("");
   const [ConfirmPassword, setConfirmPassword] = useState("");
   const [image, setImage] = useState(null);
-
   const [errorConfirmPassword, setErrorConfirmPassword] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState(0);
-
   const [isDiabled, setIsDisabled] = useState(true);
 
   const checkEmail = (email) => {
@@ -73,18 +64,26 @@ const UserRegistration = () => {
 
   useEffect(() => {
     if (
+      ServiceNo.length > 0 &&
       !checkEmail(Email) &&
       !checkContactNo(ContactNo) &&
       !errorConfirmPassword &&
-      passwordStrength > 0
+      passwordStrength > 1 &&
+      ConfirmPassword.length > 0
     ) {
       setIsDisabled(false);
-    }
-    else {
+    } else {
       setIsDisabled(true);
     }
-
-  }, [Email, ContactNo, errorConfirmPassword, passwordStrength]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    ServiceNo,
+    Email,
+    ContactNo,
+    errorConfirmPassword,
+    passwordStrength,
+    ConfirmPassword,
+  ]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -95,8 +94,6 @@ const UserRegistration = () => {
       !errorConfirmPassword &&
       passwordStrength > 0
     ) {
-      console.log(ServiceNo, Email, ContactNo, Password);
-
       const formData = {
         ServiceNo,
         Password,
@@ -104,10 +101,8 @@ const UserRegistration = () => {
         ContactNo,
         image,
       };
-      axios
-        .post("http://localhost:8080/users", formData)
+      AxiosClient.post("/user", formData)
         .then((res) => {
-          console.log(res.data);
           if (res.data.success) {
             setErrorStatus({
               ...errorStatus,
@@ -151,12 +146,6 @@ const UserRegistration = () => {
     setImage(null);
   };
 
-  const [open, setOpen] = useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
   return (
     <ThemeProvider theme={theme}>
       <Box
@@ -166,7 +155,6 @@ const UserRegistration = () => {
         }}
       >
         <Container maxWidth="xl" style={{ padding: 0, height: "95vh" }}>
-          {/* error snack bar */}
           <ErrorSnackbar
             isOpen={errorStatus.isOpen}
             type={errorStatus.type}
@@ -259,12 +247,6 @@ const UserRegistration = () => {
                     onSubmit={handleSubmit}
                     onReset={handleReset}
                   >
-                    {/* <AvatarImage /> */}
-                    <ProfilePicUploadPopup
-                      open={open}
-                      setOpen={setOpen}
-                      setImage={setImage}
-                    />
                     <Stack
                       direction="row"
                       sx={{
@@ -289,16 +271,16 @@ const UserRegistration = () => {
                           marginLeft: { xs: "8px" },
                         }}
                       >
-                        <Button variant="outlined" onClick={handleClickOpen}>
-                          <Typography
-                            sx={{
-                              fontSize: { xs: "0.7rem" },
-                              fontWeight: "bold",
-                            }}
-                          >
-                            Upload Profile Picture
-                          </Typography>
-                        </Button>
+                        <UploadImageCloudinary
+                          folderName="profile-pic"
+                          setImage={setImage}
+                          isMultiple={false}
+                          limit={1}
+                          buttonName="Upload Profile Picture"
+                          buttonVariant="outlined"
+                          isDisplayImageName={false}
+                          isDisabled={false}
+                        />
                       </Box>
                     </Stack>
 
@@ -389,7 +371,12 @@ const UserRegistration = () => {
                       >
                         Reset
                       </Button>
-                      <Button type="submit" variant="contained" color="primary" disabled={isDiabled}>
+                      <Button
+                        type="submit"
+                        variant="contained"
+                        color="primary"
+                        disabled={isDiabled}
+                      >
                         Register
                       </Button>
                     </Box>

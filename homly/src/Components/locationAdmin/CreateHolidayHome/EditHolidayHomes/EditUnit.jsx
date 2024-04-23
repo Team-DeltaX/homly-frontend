@@ -204,6 +204,167 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
       );
       return newUnitArray;
     });
+
+    const [unitValues, setUnitValues] = useState({
+      unitCode: "",
+      unitAc: "",
+      floorLevel: "",
+      unitRemark: "",
+      unitRental: "",
+      roomAttached: false,
+      selectedRooms: [],
+    });
+    const [unitExist, setUnitExist] = useState(false);
+    const handleUnitCodeChange = (e) => {
+      const unitCodeExists = unitArray.some(
+        (unit) => unit.unitCode === e.target.value
+      );
+      if (unitCodeExists) {
+        setUnitExist(true);
+      } else {
+        setUnitExist(false);
+      }
+      setUnitValues({ ...unitValues, unitCode: e.target.value });
+    };
+
+    const handleUnitAcChange = (e) => {
+      setUnitValues({ ...unitValues, unitAc: e.target.value });
+    };
+
+    const handleFloorLevelChange = (e) => {
+      setUnitValues({ ...unitValues, floorLevel: e.target.value });
+    };
+
+    const handleUnitRemarkChange = (e) => {
+      setUnitValues({ ...unitValues, unitRemark: e.target.value });
+    };
+
+    const handleUnitRentalChange = (e) => {
+      setUnitValues({ ...unitValues, unitRental: e.target.value });
+    };
+
+    const handleSaveUnit = () => {
+      if (
+        unitValues.unitCode === "" ||
+        unitValues.unitAc === "" ||
+        unitValues.floorLevel === "" ||
+        unitValues.unitRemark === "" ||
+        unitValues.unitRental === ""
+      ) {
+        setOpenUnitFillAlert(true);
+        return;
+      }
+
+      // if (unitExist) {
+      //     setOpenUnitExistAlert(true);
+      //     return;
+      // }
+
+      if (isEditMode && editIndex !== null) {
+        // Editing an existing room
+        const updatedUnitArray = [...unitArray];
+        updatedUnitArray[editIndex] = {
+          ...updatedUnitArray[editIndex],
+          ...unitValues,
+          unitRentalArray: [...unitRentalArray], // Copy the rentalArray as well
+        };
+        setUnitArray(updatedUnitArray);
+      } else {
+        // Adding a new room
+        // const updatedValues = { ...unitValues, unitRentalArray };
+        // setUnitArray([...unitArray, updatedValues]);
+
+        const newUnit = {
+          ...unitValues,
+          selectedRooms: [],
+          unitRentalArray,
+        };
+        setUnitArray([...unitArray, newUnit]);
+      }
+
+      setUnitRentalArray([]);
+      setOpenUnit(false);
+      setIsEditMode(false);
+      setEditIndex(null);
+
+      console.log(unitArray);
+    };
+
+    console.log(unitArray);
+
+    const handleUnitEdit = (index) => {
+      const editedUnit = unitArray[index];
+
+      setUnitValues({
+        unitCode: editedUnit.unitCode,
+        unitAC: editedUnit.unitAc,
+        floorLevel: editedUnit.floorLevel,
+        unitRemark: editedUnit.unitRemark,
+        unitRental: editedUnit.unitRental,
+        roomAttached: editedUnit.roomAttached,
+        selectedRooms: editedUnit.selectedRooms,
+      });
+
+      axios
+        .get(
+          `http://localhost:8080/admin/auth/locationadmin/holidayhome/rental/${homeId}/${editedUnit.unitCode}`
+        )
+        .then((res) => {
+          console.log("get");
+          const rental = res.data.roomRental;
+          console.log(rental);
+          for (let i = 0; i < rental.length; i++) {
+            console.log("in");
+            console.log(rental[i].Month);
+            setUnitRental({
+              district: rental[i].Month,
+              weekDays: rental[i].WeekRental,
+              weekEnds: rental[i].WeekEndRental,
+            });
+
+            console.log("rental", rental);
+
+            setUnitRentalArray(rental); // Use functional update
+            console.log("rental array", unitRentalArray);
+          }
+
+          setOpenUnit(true);
+          setEditIndex(index);
+          setIsEditMode(true);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+
+    const handleUnitDelete = (unitCode, selectedRooms) => {
+      setRoomArray((prevRoomArray) => {
+        const updatedRoomArray = prevRoomArray.map((room) => {
+          if (selectedRooms.some((item) => item.roomCode === room.roomCode)) {
+            return { ...room, groupByUnit: false };
+          }
+          return room;
+        });
+
+        return updatedRoomArray;
+      });
+
+      selectedRooms.length = 0;
+
+      setUnitArray((prevUnitArray) => {
+        const newUnitArray = prevUnitArray.filter(
+          (item) => item.unitCode !== unitCode
+        );
+        return newUnitArray;
+      });
+      return null;
+    };
+
+    const [unitRental, setUnitRental] = useState({
+      district: "",
+      weekDays: "",
+      weekEnds: "",
+    });
     return null;
   };
 

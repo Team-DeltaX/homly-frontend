@@ -5,9 +5,11 @@ import theme from "../../../HomlyTheme";
 export default function PlacesCard(props) {
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{
-        padding:{xs:'0 2% 0 3%',sm:'0 0'}
-      }}>
+      <Box
+        sx={{
+          padding: { xs: "0 2% 0 3%", sm: "0 0" },
+        }}
+      >
         <Box
           sx={{
             width: "100%",
@@ -15,14 +17,18 @@ export default function PlacesCard(props) {
             borderRadius: "10px",
             position: "relative",
             overflow: "hidden",
-            boxShadow:10,
+            boxShadow: 10,
           }}
         >
           <Box
             component="img"
             src={props.img}
             alt=""
-            sx={{ width: "100%", objectFit: "cover",height:{sm:'100%',md:'auto'}}}
+            sx={{
+              width: "100%",
+              objectFit: "cover",
+              height: { sm: "100%", md: "auto" },
+            }}
           />
           <Box
             sx={{
@@ -39,7 +45,9 @@ export default function PlacesCard(props) {
                 "linear-gradient(355deg, rgba(0,0,0,0.36074940229998254) 52%, rgba(0,0,0,1) 92%)",
             }}
           >
-            <Typography sx={{fontSize:'1.5rem',fontWeight:'medium'}}>{props.name}</Typography>
+            <Typography sx={{ fontSize: "1.5rem", fontWeight: "medium" }}>
+              {props.name}
+            </Typography>
           </Box>
         </Box>
       </Box>

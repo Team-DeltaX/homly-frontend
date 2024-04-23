@@ -67,12 +67,10 @@ const CreateHolidayHomeContent = () => {
   const [submitClicked, setSubmitClicked] = useState(false);
   const [open, setOpen] = React.useState(false);
 
-
   const [mainImage, setMainImage] = useState(null);
   const [image1, setImage1] = useState(null);
   const [image2, setImage2] = useState(null);
   const [image3, setImage3] = useState(null);
-
 
   const handleClose = () => {
     setOpen(false);
@@ -98,7 +96,7 @@ const CreateHolidayHomeContent = () => {
     };
     e.preventDefault();
     setSubmitClicked(true);
-    // console.log("allvalues", formData);
+    console.log("allvalues", formData);
     axios
       .post(
         "http://localhost:8080/admin/auth/locationadmin/holidayhome/",
@@ -119,7 +117,6 @@ const CreateHolidayHomeContent = () => {
   const [caretakerSubmit, setCaretakerSubmit] = useState(false);
   const [homeBreakdownSubmit, setHomeBreakdownSubmit] = useState(false);
 
-
   useEffect(() => {
     if (holidayHomeSubmit && caretakerSubmit && homeBreakdownSubmit) {
       setSubmitDisable(false);
@@ -127,7 +124,6 @@ const CreateHolidayHomeContent = () => {
       setSubmitDisable(true); // Make sure to set to false or true explicitly
     }
   }, [holidayHomeSubmit, caretakerSubmit, homeBreakdownSubmit]);
-
 
   return (
     <Box className="content_container" sx={{ maxHeight: "90vh" }}>

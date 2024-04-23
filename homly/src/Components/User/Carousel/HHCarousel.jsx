@@ -1,10 +1,7 @@
 import React from "react";
 import { ThemeProvider } from "@mui/material";
-
 import HolidayHomeCard from "../HHCard/HolidayHomeCard";
-
 import theme from "../../../HomlyTheme";
-
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
@@ -65,16 +62,23 @@ export default function HHCarousel({ sortedByRatingHH }) {
         swipeable
       >
         {sortedByRatingHH.map((item, index) => (
-          <HolidayHomeCard
+          <div
+            data-aos="fade-right"
+            data-aos-duration="700"
             key={item.HolidayHomeId}
-            HHID={item.HolidayHomeId}
-            HHName={item.Name}
-            HHLocation={item.Address}
-            HHPrice={item.TotalRental}
-            HHRating={item.overall_rating}
-            HHImage={item.HHImage}
-            showInterest={false}
-          />
+          >
+            <HolidayHomeCard
+              key={item.HolidayHomeId}
+              HHID={item.HolidayHomeId}
+              HHName={item.Name}
+              HHLocation={item.Address}
+              HHPrice={item.TotalRental}
+              HHRating={item.overall_rating}
+              HHImage={item.HHImage}
+              isWishListed={item.isWishListed}
+              showInterest={false}
+            />
+          </div>
         ))}
       </Carousel>
     </ThemeProvider>
