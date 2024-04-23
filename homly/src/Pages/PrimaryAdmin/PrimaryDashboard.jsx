@@ -17,7 +17,6 @@ import { PieChart } from "@mui/x-charts/PieChart";
 import Income from "../../Components/PrimaryAdmin/Income";
 import PDashboardboxes from "../../Components/PrimaryAdmin/PDashboardboxes";
 import CompareLineChart from "../../Components/PrimaryAdmin/CompareLineChart";
-import axios from "axios";
 import AxiosClient from "../../services/AxiosClient";
 
 const PrimaryDashboard = () => {

@@ -13,14 +13,15 @@ import CloseIcon from "@mui/icons-material/Close";
 import axios from "axios";
 import { useState } from "react";
 import ConfirmPopup from "./ConfirmPopup";
+import AxiosClient from "../../services/AxiosClient";
 
 const AuthorizationsCard = (props) => {
   const [open, Setopen] = useState(false);
 
   const approve = () => {
-    axios
+  AxiosClient
       .put(
-        `${global.API_BASE_URL}/admin/auth/locationadmin/holidayhome/accept`,
+        `/admin/auth/locationadmin/holidayhome/accept`,
         {
           id: props.data.HolidayHomeId,
         },
@@ -39,9 +40,9 @@ const AuthorizationsCard = (props) => {
   const rejectHH = () => {
     console.log("reject called ");
     console.log(props.data.HolidayHomeId);
-    axios
+    AxiosClient
       .delete(
-        `${global.API_BASE_URL}/admin/auth/locationadmin/holidayhome/reject`,
+        `/admin/auth/locationadmin/holidayhome/reject`,
         {
           data: {
             id: props.data.HolidayHomeId,
