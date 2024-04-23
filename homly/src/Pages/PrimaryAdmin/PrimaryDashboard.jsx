@@ -39,7 +39,14 @@ const PrimaryDashboard = () => {
 
   const getadmins = () => {
     AxiosClient.get("/admin/auth/locationadmin/all").then((res) => {
+      
       setlatestFourAdmins(res.data.reverse());
+      const primaryAdminRemoved = latestFourAdmins.filter(admin => admin.Role =='LocationAdmin');
+      console.log('------------admins-----------------')
+      console.log(primaryAdminRemoved);
+      // console.log(latestFourAdmins)
+      // setlatestFourAdmins(primaryAdminRemoved);
+      
     });
   };
 
