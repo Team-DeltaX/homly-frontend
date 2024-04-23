@@ -4,10 +4,34 @@ import { useState } from "react";
 import theme from "../../HomlyTheme";
 
 import MenuIcon from "@mui/icons-material/Menu";
+import NotificationPanal from "../Common/NotificationPanal/NotificationPanal";
 
 const Pagetop = ({ heading, setShowNav }) => {
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [notifications, SetNotifications] = useState([
+    {
+      id: 1,
+      type: "New Feedback",
+      data: "added Anuradhapura resort by samitha",
+      senderId: "18964v",
+      time: "2021-10-10T10:10:10",
+    },
+    {
+      id: 2,
+      type: "Authorization Successful",
+      data: "added Anuradhapura resort by samitha",
+      senderId: "18964v",
+      time: "2021-10-10T10:10:10",
+    },
+    {
+      id: 2,
+      type: "Authorization Denied",
+      data: "added Anuradhapura resort by samitha",
+      senderId: "18964v",
+      time: "2021-10-10T10:10:10",
+    },
+  ]);
   const handleIconClick = () => {
     setOpen(!open);
   };
@@ -62,7 +86,7 @@ const Pagetop = ({ heading, setShowNav }) => {
           <Typography variant="h4"> {heading}</Typography>
         </Box>
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          <Box>
+          {/* <Box>
             <NotificationsIcon
               sx={{ fontSize: "50px", color: "#999090" }}
               onClick={handleIconClick}
@@ -102,7 +126,14 @@ const Pagetop = ({ heading, setShowNav }) => {
                 );
               })}
             </Menu>
-          </Box>
+          </Box> */}
+
+          <NotificationPanal
+            notifications={notifications}
+            SetNotifications={SetNotifications}
+            bell={true}
+          />
+
           <Box className="burger_icon" sx={{ display: "none" }}>
             <MenuIcon
               id="burgerIcon"

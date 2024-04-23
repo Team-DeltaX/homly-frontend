@@ -27,7 +27,7 @@ const PrimaryDashboard = () => {
   const [NotApprovedCount, SetNotApprovedCount] = useState(0);
 
   const getNotApprovedCount = () => {
-    // axios.get('http://localhost:8080/admin/auth/notapprovedcount')
+    
     AxiosClient.get("/admin/auth/notapprovedcount")
       .then((res) => {
         SetNotApprovedCount(res.data.notapprovedcount);
@@ -38,7 +38,6 @@ const PrimaryDashboard = () => {
   };
 
   const getadmins = () => {
-    // axios.get(`${global.API_BASE_URL}/admin/auth/locationadmin/all`)
     AxiosClient.get("/admin/auth/locationadmin/all").then((res) => {
       setlatestFourAdmins(res.data.reverse());
     });
