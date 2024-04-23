@@ -16,7 +16,7 @@ import ViewPopupManage from "../../Components/PrimaryAdmin/ViewPopupManage";
 import SearchNew from "../../Components/PrimaryAdmin/SearchNew";
 import "../../Components/PrimaryAdmin/Css/fontchange.css";
 import { CSVLink } from "react-csv";
-import axios from "axios";
+import AxiosClient from "../../services/AxiosClient";
 import Snackbarp from "../../Components/PrimaryAdmin/snackbar/Snackbarp";
 
 const PrimaryManageBlacklistedUsers = () => {
@@ -61,8 +61,8 @@ const PrimaryManageBlacklistedUsers = () => {
 
 
   const fetch_current_blacklist = () => {
-    axios
-      .get(`${global.API_BASE_URL}/admin/auth/blacklist`)
+    AxiosClient
+      .get(`/admin/auth/blacklist`)
       .then((res) => {
         setBlacklistedusers(res.data);
       })
@@ -149,7 +149,7 @@ const PrimaryManageBlacklistedUsers = () => {
                           .startsWith(search.toLocaleLowerCase());
                   })
                   .map((data) => {
-                    console.log("---mapping start---");
+                
                     return (
                       <BlacklistedUsersCardNew
                         handlepopup={handlepopup}
