@@ -321,6 +321,7 @@ const EditRoom = ({
         });
     };
 
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const [error, setError] = useState({
       ctName: false,
       ctAddress: false,

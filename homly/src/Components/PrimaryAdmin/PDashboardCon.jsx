@@ -7,9 +7,10 @@ import PStatisticsDetails from "../../Components/PrimaryAdmin/PStatisticsDetails
 import DirectionsWalkIcon from "@mui/icons-material/DirectionsWalk";
 import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
 import PaidIcon from "@mui/icons-material/Paid";
-import HomeIcon from '@mui/icons-material/Home';
+import HomeIcon from "@mui/icons-material/Home";
 // import PSummary from "../../Components/PrimaryAdmin/Psummery";
 import axios from "axios";
+import AxiosClient from "../../services/AxiosClient";
 // import { set } from "date-fns";
 
 const PDashboardCon = () => {
@@ -18,8 +19,9 @@ const PDashboardCon = () => {
   const [paidcount, SetPaidcount] = useState("0");
   const [unpaidcount, SetUnpaindcount] = useState("0");
   const gethhcount = () => {
-    axios
-      .get("http://localhost:8080/admin/auth/hhcount")
+    // axios
+    //   .get("http://localhost:8080/admin/auth/hhcount")
+    AxiosClient.get("/admin/auth/hhcount")
       .then((res) => {
         Sethhcount(res.data.count);
       })
@@ -29,8 +31,9 @@ const PDashboardCon = () => {
   };
 
   const getearning = () => {
-    axios
-      .get("http://localhost:8080/admin/auth/earning")
+    // axios
+    //   .get("http://localhost:8080/admin/auth/earning")
+    AxiosClient.get("/admin/auth/earning")
       .then((res) => {
         SetEarning(res.data.sum);
       })
@@ -40,16 +43,17 @@ const PDashboardCon = () => {
   };
 
   const bookingcount = () => {
-    axios.get('http://localhost:8080/admin/auth/bookingcount')
+    // axios
+    //   .get("http://localhost:8080/admin/auth/bookingcount")
+    AxiosClient.get("/admin/auth/bookingcount")
       .then((res) => {
         SetPaidcount(res.data.Paid);
         SetUnpaindcount(res.data.Unpaid);
       })
       .catch((error) => {
         console.log(error);
-
-      })
-  }
+      });
+  };
   // const summaries = [
   //   {
   //     color: "#8CB7A3",
@@ -133,7 +137,6 @@ const PDashboardCon = () => {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
-
               }}
             >
               <Box sx={{ width: "350px", height: "150px" }}>
@@ -153,9 +156,26 @@ const PDashboardCon = () => {
                     alignItems: "center",
                   }}
                 >
-                  <Box><LibraryBooksIcon sx={{ fontSize: "2.8rem" }} /></Box>
-                  <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', columnGap: '50px' }}>
-                    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', textAlign: 'center' }}>
+                  <Box>
+                    <LibraryBooksIcon sx={{ fontSize: "2.8rem" }} />
+                  </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      columnGap: "50px",
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        flexDirection: "column",
+                        textAlign: "center",
+                      }}
+                    >
                       <Typography
                         variant="p"
                         sx={{ fontSize: "0.85rem", fontWeight: "medium" }}
@@ -172,13 +192,11 @@ const PDashboardCon = () => {
                         sx={{ fontSize: "0.85rem", fontWeight: "medium" }}
                       >
                         paid Bookings
-
                       </Typography>
                       <Typography variant="h6" sx={{ marginLeft: "4px" }}>
                         {paidcount}
                       </Typography>
                     </Box>
-
                   </Box>
                 </Box>
               </Box>
@@ -211,7 +229,9 @@ const PDashboardCon = () => {
                     textAlign: "center",
                   }}
                 >
-                  <Box><PaidIcon sx={{ fontSize: "2.8rem" }} /></Box>
+                  <Box>
+                    <PaidIcon sx={{ fontSize: "2.8rem" }} />
+                  </Box>
                   <Box>
                     <Typography
                       variant="p"
@@ -253,7 +273,9 @@ const PDashboardCon = () => {
                     alignItems: "center",
                   }}
                 >
-                  <Box><HomeIcon sx={{ fontSize: "2.8rem" }} /></Box>
+                  <Box>
+                    <HomeIcon sx={{ fontSize: "2.8rem" }} />
+                  </Box>
                   <Box>
                     <Typography
                       variant="p"

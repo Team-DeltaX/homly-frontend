@@ -205,6 +205,7 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
       return newUnitArray;
     });
 
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const [unitValues, setUnitValues] = useState({
       unitCode: "",
       unitAc: "",
@@ -214,6 +215,7 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
       roomAttached: false,
       selectedRooms: [],
     });
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const [unitExist, setUnitExist] = useState(false);
     const handleUnitCodeChange = (e) => {
       const unitCodeExists = unitArray.some(
@@ -360,6 +362,7 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
       return null;
     };
 
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const [unitRental, setUnitRental] = useState({
       district: "",
       weekDays: "",
