@@ -31,7 +31,7 @@ const EditRoom = ({
   const [isEditMode, setIsEditMode] = useState(false);
   const [editIndex, setEditIndex] = useState(null);
 
-  console.log("editroom", roomTypeArray, settingRoomRentalArray);
+  console.log("editroom room array", roomArray);
 
   useEffect(() => {
     if (isEditMode && editIndex !== null) {
@@ -41,7 +41,7 @@ const EditRoom = ({
         roomCode: editedRoom.roomCode,
         roomAc: editedRoom.roomAc,
         RoomType: editedRoom.RoomType,
-        floorLevel: editedRoom.floorLevel,
+        floorLevel: editedRoom.FloorLevel,
         NoOfAdults: editedRoom.NoOfAdults,
         NoOfChildren: editedRoom.NoOfChildren,
         roomRemarks: editedRoom.roomRemarks,
@@ -256,92 +256,53 @@ const EditRoom = ({
   };
 
   const handleRoomTypeChange = (e) => {
-    console.log("editpage", roomTypeArray);
+    console.log("createpage", roomTypeArray);
     const type = e.target.value;
-    setValues((prevValues) => {
-      // Find the room type object based on the selected type
-      const roomType = roomTypeArray.find((room) => room.type === type);
-      // If room type is found, update the state
-      if (roomType) {
-        return {
-          ...prevValues,
-          RoomType: type,
-          NoOfAdults: roomType.adults,
-          NoOfChildren: roomType.children,
-        };
-      }
-      // If room type is not found, just update RoomType
-      return {
-        ...prevValues,
+    const roomType = roomTypeArray.find((room) => room.roomType === type);
+    console.log("roomtypetrue", roomType, type);
+    if (roomType) {
+      setValues({
+        ...values,
+        RoomType: type,
+        NoOfAdults: roomType.adults,
+        NoOfChildren: roomType.children,
+      });
+    } else {
+      setValues({
+        ...values,
         RoomType: type,
         NoOfAdults: "",
         NoOfChildren: "",
-      };
-    });
-    const handleRoomEdit = (index) => {
-      const editedRoom = roomArray[index];
-
-      setValues({
-        roomCode: editedRoom.roomCode,
-        roomAc: editedRoom.roomAc,
-        RoomType: editedRoom.RoomType,
-        floorLevel: editedRoom.floorLevel,
-        NoOfAdults: editedRoom.NoOfAdults,
-        NoOfChildren: editedRoom.NoOfChildren,
-        roomRemarks: editedRoom.roomRemarks,
-        roomRental: editedRoom.roomRental,
-        groupByUnit: editedRoom.groupByUnit,
       });
-
-      // axios
-      //   .get(
-      //     `http://localhost:8080/admin/auth/locationadmin/holidayhome/rental/${homeId}/${editedRoom.roomCode}`
-      //   )
-      AxiosClient.get(
-        `/admin/auth/locationadmin/holidayhome/rental/${homeId}/${editedRoom.roomCode}`
-      )
-        .then((res) => {
-          console.log("get");
-          const rental = res.data.roomRental;
-          console.log(rental);
-          for (let i = 0; i < rental.length; i++) {
-            console.log("in");
-            console.log(rental[i].Month);
-            setRental({
-              district: rental[i].Month,
-              weekDays: rental[i].WeekRental,
-              weekEnds: rental[i].WeekEndRental,
-            });
-
-            console.log("rental", rental);
-
-            setRentalArray(rental); // Use functional update
-            console.log("rental array", rentalArray);
-          }
-
-          setOpen(true);
-          setEditIndex(index);
-          setIsEditMode(true);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
-
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [error, setError] = useState({
-      ctName: false,
-      ctAddress: false,
-      ctDescription: false,
-      ctContactNo: false,
-    });
+    }
+    // setValues((prevValues) => {
+    //   // Find the room type object based on the selected type
+    //   const roomType = roomTypeArray.find((room) => room.type === type);
+    //   // If room type is found, update the state
+    //   if (roomType) {
+    //     return {
+    //       ...prevValues,
+    //       RoomType: type,
+    //       NoOfAdults: roomType.adults,
+    //       NoOfChildren: roomType.children,
+    //     };
+    //   }
+    //   // If room type is not found, just update RoomType
+    //   return {
+    //     ...prevValues,
+    //     RoomType: type,
+    //     NoOfAdults: "",
+    //     NoOfChildren: "",
+    //   };
+    // });
   };
 
   useEffect(() => {
     let valid = false;
+    console.log("setting", settingRoomRentalArray);
     for (let i = 0; i < settingRoomRentalArray.length; i++) {
       if (
-        settingRoomRentalArray[i].type === values.RoomType &&
+        settingRoomRentalArray[i].roomType === values.RoomType &&
         settingRoomRentalArray[i].acNonAc === values.roomAc
       ) {
         setValues((prevValues) => ({

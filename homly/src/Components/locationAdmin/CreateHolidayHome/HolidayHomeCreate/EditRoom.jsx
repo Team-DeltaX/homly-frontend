@@ -277,6 +277,7 @@ const EditRoom = ({
     setValues((prevValues) => {
       // Find the room type object based on the selected type
       const roomType = roomTypeArray.find((room) => room.type === type);
+
       // If room type is found, update the state
       if (roomType) {
         return {

@@ -25,6 +25,8 @@ const EditHall = ({ hallArray, setHallArray }) => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [editIndex, setEditIndex] = useState(null);
 
+  console.log("edithall", hallArray);
+
   useEffect(() => {
     if (isEditMode && editIndex !== null) {
       const editedHall = hallArray[editIndex];
@@ -209,12 +211,13 @@ const EditHall = ({ hallArray, setHallArray }) => {
         const rental = res.data.roomRental;
         for (let i = 0; i < rental.length; i++) {
           setHallRental({
-            district: rental[i].Month,
-            weekDays: rental[i].WeekRental,
-            weekEnds: rental[i].WeekEndRental,
+            Month: rental[i].Month,
+            WeekRental: rental[i].WeekRental,
+            WeekEndRental: rental[i].WeekEndRental,
           });
           setHallRentalArray(rental); // Use functional update
         }
+        console.log("first", hallRentalArray);
         setOpenHall(true);
         setEditIndex(index);
         setIsEditMode(true);
@@ -224,29 +227,29 @@ const EditHall = ({ hallArray, setHallArray }) => {
       });
   };
   const [hallRental, setHallRental] = useState({
-    district: "",
-    weekDays: "",
-    weekEnds: "",
+    Month: "",
+    WeekRental: "",
+    WeekEndRental: "",
   });
 
   const handleHallDistrict = (e) => {
-    setHallRental({ ...hallRental, district: e.target.value });
+    setHallRental({ ...hallRental, Month: e.target.value });
   };
 
   const handleHallWeekdays = (e) => {
-    setHallRental({ ...hallRental, weekDays: e.target.value });
+    setHallRental({ ...hallRental, WeekRental: e.target.value });
   };
 
   const handleHallWeekends = (e) => {
-    setHallRental({ ...hallRental, weekEnds: e.target.value });
+    setHallRental({ ...hallRental, WeekEndRental: e.target.value });
   };
 
   const [hallRentalArray, setHallRentalArray] = useState([]);
   const handleHallAdd = () => {
     if (
-      hallRental.district === "" ||
-      hallRental.weekDays === "" ||
-      hallRental.weekEnds === ""
+      hallRental.Month === "" ||
+      hallRental.WeekRental === "" ||
+      hallRental.WeekEndRental === ""
     )
       return;
     setHallRentalArray([...hallRentalArray, hallRental]);
@@ -595,7 +598,7 @@ const EditHall = ({ hallArray, setHallArray }) => {
                         size="small"
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
-                        value={value.district}
+                        value={value.Month}
                         label="Age"
                         sx={{ width: "150px" }}
                         onChange={handleHallDistrict}
@@ -669,7 +672,7 @@ const EditHall = ({ hallArray, setHallArray }) => {
                             variant="p"
                             sx={{ color: "grey", fontWeight: "500" }}
                           >
-                            {item.district}
+                            {item.Month}
                           </Typography>
                         </Box>
                         <Box>
@@ -687,7 +690,7 @@ const EditHall = ({ hallArray, setHallArray }) => {
                             variant="p"
                             sx={{ color: "grey", fontWeight: "500" }}
                           >
-                            {item.weekDays}
+                            {item.WeekRental}
                           </Typography>
                         </Box>
                         <Box>
@@ -705,7 +708,7 @@ const EditHall = ({ hallArray, setHallArray }) => {
                             variant="p"
                             sx={{ color: "grey", fontWeight: "500" }}
                           >
-                            {item.weekEnds}
+                            {item.WeekEndRental}
                           </Typography>
                         </Box>
                         <CancelIcon

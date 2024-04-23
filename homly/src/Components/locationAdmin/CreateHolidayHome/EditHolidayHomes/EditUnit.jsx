@@ -22,13 +22,15 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [editIndex, setEditIndex] = useState(null);
 
+  console.log("unitArray", unitArray);
+
   useEffect(() => {
     if (isEditMode && editIndex !== null) {
       // Editing an existing room
       const editedUnit = unitArray[editIndex];
       setUnitValues({
         unitCode: editedUnit.unitCode,
-        unitAC: editedUnit.unitAc,
+        unitAc: editedUnit.unitAc,
         floorLevel: editedUnit.floorLevel,
         unitRemark: editedUnit.unitRemark,
         unitRental: editedUnit.unitRental,
@@ -525,7 +527,7 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
                   className="label_container"
                 >
                   <Typography variant="p" sx={{ color: "black" }}>
-                    Unit No
+                    Unit No {}
                   </Typography>
                 </Box>
                 <TextField
@@ -567,7 +569,13 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
                     size="small"
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value={unitValues.unitAc}
+                    value={
+                      unitValues.unitAc === "AC"
+                        ? "AC"
+                        : unitValues.unitAc === "Non-AC"
+                        ? "Non-AC"
+                        : ""
+                    }
                     label="Age"
                     onChange={handleUnitAcChange}
                   >

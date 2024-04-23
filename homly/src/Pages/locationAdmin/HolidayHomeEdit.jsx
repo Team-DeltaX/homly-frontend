@@ -226,11 +226,12 @@ const HolidayHomeEdit = () => {
     e.preventDefault();
     setApprovedClicked(true);
     console.log("allvalues", updatedData);
-    axios
-      .post(
-        "http://localhost:8080/admin/auth/locationadmin/holidayhome/update",
-        updatedData
-      )
+    // axios
+    //   .post(
+    //     "http://localhost:8080/admin/auth/locationadmin/holidayhome/update",
+    //     updatedData
+    //   )
+    AxiosClient.post("admin/auth/locationadmin/holidayhome/update", updatedData)
       .then((res) => {
         console.log(res);
         // navigate("/locationadmin/manage");
