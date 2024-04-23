@@ -7,6 +7,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
+import AxiosClient from "../../../services/AxiosClient";
 
 const CreateHolidayHomeContent = () => {
   const navigate = useNavigate();
@@ -97,11 +98,12 @@ const CreateHolidayHomeContent = () => {
     e.preventDefault();
     setSubmitClicked(true);
     console.log("allvalues", formData);
-    axios
-      .post(
-        "http://localhost:8080/admin/auth/locationadmin/holidayhome/",
-        formData
-      )
+    // axios
+    //   .post(
+    //     "http://localhost:8080/admin/auth/locationadmin/holidayhome/",
+    //     formData
+    //   )
+    AxiosClient.post("/admin/auth/locationadmin/holidayhome/", formData)
       .then((res) => {
         // window.location.href("/locationadmin/manage");
         console.log(res);

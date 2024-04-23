@@ -13,6 +13,7 @@ import Alert from "@mui/material/Alert";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import UnitBreakDown from "../UnitBreakDown";
+import AxiosClient from "../../../../services/AxiosClient";
 const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
   const { homeId } = useParams();
   const [openUnit, setOpenUnit] = useState(false);
@@ -164,10 +165,13 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
       selectedRooms: editedUnit.selectedRooms,
     });
 
-    axios
-      .get(
-        `http://localhost:8080/admin/auth/locationadmin/holidayhome/rental/${homeId}/${editedUnit.unitCode}`
-      )
+    // axios
+    //   .get(
+    //     `http://localhost:8080/admin/auth/locationadmin/holidayhome/rental/${homeId}/${editedUnit.unitCode}`
+    //   )
+    AxiosClient.get(
+      `/admin/auth/locationadmin/holidayhome/rental/${homeId}/${editedUnit.unitCode}`
+    )
       .then((res) => {
         const rental = res.data.roomRental;
         for (let i = 0; i < rental.length; i++) {
@@ -307,10 +311,13 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
         selectedRooms: editedUnit.selectedRooms,
       });
 
-      axios
-        .get(
-          `http://localhost:8080/admin/auth/locationadmin/holidayhome/rental/${homeId}/${editedUnit.unitCode}`
-        )
+      // axios
+      //   .get(
+      //     `http://localhost:8080/admin/auth/locationadmin/holidayhome/rental/${homeId}/${editedUnit.unitCode}`
+      //   )
+      AxiosClient.get(
+        `/admin/auth/locationadmin/holidayhome/rental/${homeId}/${editedUnit.unitCode}`
+      )
         .then((res) => {
           console.log("get");
           const rental = res.data.roomRental;
@@ -433,39 +440,42 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
         ) : (
           unitArray.map((item, index) => {
             item.selectedRooms = [];
-            axios
-              .get(
-                `http://localhost:8080/admin/auth/locationadmin/holidayhome/${homeId}/${item.unitCode}`
-              )
-              .then((res) => {
-                if (Response) {
-                  const srDetails = res.data.selectedRoom;
-                  console.log(srDetails);
-                  for (let i = 0; i < srDetails.length; i++) {
-                    axios
-                      .get(
-                        `http://localhost:8080/admin/auth/locationadmin/holidayhome/room/${homeId}/${srDetails[i].roomCode}`
-                      )
-                      .then((res) => {
-                        const room = res.data;
-                        // Check if 'room' already exists in 'selectedRooms' array
-                        const existingRoomIndex = item.selectedRooms.findIndex(
-                          (existingRoom) =>
-                            existingRoom.roomCode === room.roomCode
-                        );
-                        if (existingRoomIndex === -1) {
-                          // If not found, push 'room' into 'selectedRooms'
-                          item.selectedRooms.push(room);
-                        } else {
-                          // If found, update the existing item with the new data
-                          item.selectedRooms[existingRoomIndex] = room;
-                        }
-                      });
-                  }
-                } else {
-                  console.log("No data found");
+            // axios
+            //   .get(
+            //     `http://localhost:8080/admin/auth/locationadmin/holidayhome/${homeId}/${item.unitCode}`
+            //   )
+            AxiosClient.get(
+              `/admin/auth/locationadmin/holidayhome/${homeId}/${item.unitCode}`
+            ).then((res) => {
+              if (Response) {
+                const srDetails = res.data.selectedRoom;
+                console.log(srDetails);
+                for (let i = 0; i < srDetails.length; i++) {
+                  // axios
+                  //   .get(
+                  //     `http://localhost:8080/admin/auth/locationadmin/holidayhome/room/${homeId}/${srDetails[i].roomCode}`
+                  //   )
+                  AxiosClient.get(
+                    `/admin/auth/locationadmin/holidayhome/room/${homeId}/${srDetails[i].roomCode}`
+                  ).then((res) => {
+                    const room = res.data;
+                    // Check if 'room' already exists in 'selectedRooms' array
+                    const existingRoomIndex = item.selectedRooms.findIndex(
+                      (existingRoom) => existingRoom.roomCode === room.roomCode
+                    );
+                    if (existingRoomIndex === -1) {
+                      // If not found, push 'room' into 'selectedRooms'
+                      item.selectedRooms.push(room);
+                    } else {
+                      // If found, update the existing item with the new data
+                      item.selectedRooms[existingRoomIndex] = room;
+                    }
+                  });
                 }
-              });
+              } else {
+                console.log("No data found");
+              }
+            });
 
             return (
               <UnitBreakDown

@@ -14,6 +14,7 @@ import Alert from "@mui/material/Alert";
 import RoomBreakdown from "../RoomBreakdown";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import AxiosClient from "../../../../services/AxiosClient";
 
 const EditRoom = ({
   roomArray,
@@ -204,10 +205,13 @@ const EditRoom = ({
       roomRental: editedRoom.roomRental,
       groupByUnit: editedRoom.groupByUnit,
     });
-    axios
-      .get(
-        `http://localhost:8080/admin/auth/locationadmin/holidayhome/rental/${homeId}/${editedRoom.roomCode}`
-      )
+    // axios
+    //   .get(
+    //     `http://localhost:8080/admin/auth/locationadmin/holidayhome/rental/${homeId}/${editedRoom.roomCode}`
+    //   )
+    AxiosClient.get(
+      `/admin/auth/locationadmin/holidayhome/rental/${homeId}/${editedRoom.roomCode}`
+    )
       .then((res) => {
         const rental = res.data.roomRental;
         for (let i = 0; i < rental.length; i++) {
@@ -289,10 +293,13 @@ const EditRoom = ({
         groupByUnit: editedRoom.groupByUnit,
       });
 
-      axios
-        .get(
-          `http://localhost:8080/admin/auth/locationadmin/holidayhome/rental/${homeId}/${editedRoom.roomCode}`
-        )
+      // axios
+      //   .get(
+      //     `http://localhost:8080/admin/auth/locationadmin/holidayhome/rental/${homeId}/${editedRoom.roomCode}`
+      //   )
+      AxiosClient.get(
+        `/admin/auth/locationadmin/holidayhome/rental/${homeId}/${editedRoom.roomCode}`
+      )
         .then((res) => {
           console.log("get");
           const rental = res.data.roomRental;

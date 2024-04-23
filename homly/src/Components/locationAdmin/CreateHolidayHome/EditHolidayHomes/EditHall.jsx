@@ -12,8 +12,9 @@ import Select from "@mui/material/Select";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import HallBreakDown from "../HallBreakDown";
-import axios from "axios";
+import axios, { Axios } from "axios";
 import { useParams } from "react-router-dom";
+import AxiosClient from "../../../../services/AxiosClient";
 
 const EditHall = ({ hallArray, setHallArray }) => {
   const { homeId } = useParams();
@@ -197,10 +198,13 @@ const EditHall = ({ hallArray, setHallArray }) => {
       hallRental: editedHall.hallRental,
     });
 
-    axios
-      .get(
-        `http://localhost:8080/admin/auth/locationadmin/holidayhome/rental/${homeId}/${editedHall.hallCode}`
-      )
+    // axios
+    //   .get(
+    //     `http://localhost:8080/admin/auth/locationadmin/holidayhome/rental/${homeId}/${editedHall.hallCode}`
+    //   )
+    AxiosClient.get(
+      `/admin/auth/locationadmin/holidayhome/rental/${homeId}/${editedHall.hallCode}`
+    )
       .then((res) => {
         const rental = res.data.roomRental;
         for (let i = 0; i < rental.length; i++) {

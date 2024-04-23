@@ -18,6 +18,7 @@ import Income from "../../Components/PrimaryAdmin/Income";
 import PDashboardboxes from "./Dashboard/PDashboardboxes";
 import CompareLineChart from "./Dashboard/CompareLineChart";
 import axios from "axios";
+import AxiosClient from "../../services/AxiosClient";
 
 const DashboardContent = () => {
   const [activecount, SetActivecount] = useState(0);
@@ -26,8 +27,9 @@ const DashboardContent = () => {
   const [NotApprovedCount, SetNotApprovedCount] = useState(0);
 
   const getNotApprovedCount = () => {
-    axios
-      .get("http://localhost:8080/admin/auth/notapprovedcount")
+    // axios
+    //   .get("http://localhost:8080/admin/auth/notapprovedcount")
+    AxiosClient.get("admin/auth/notapprovedcount")
       .then((res) => {
         SetNotApprovedCount(res.data.notapprovedcount);
       })
@@ -37,16 +39,17 @@ const DashboardContent = () => {
   };
 
   const getadmins = () => {
-    axios
-      .get(`http://localhost:8080/admin/auth/locationadmin/all`)
-      .then((res) => {
-        setlatestFourAdmins(res.data.reverse());
-      });
+    // axios
+    //   .get(`http://localhost:8080/admin/auth/locationadmin/all`)
+    AxiosClient.get("admin/auth/locationadmin/all").then((res) => {
+      setlatestFourAdmins(res.data.reverse());
+    });
   };
 
   const getstatus = () => {
-    axios
-      .get(`http://localhost:8080/admin/auth/holidayhomehstatus`)
+    // axios
+    //   .get(`http://localhost:8080/admin/auth/holidayhomehstatus`)
+    AxiosClient.get("admin/auth/holidayhomehstatus")
       .then((res) => {
         SetActivecount(res.data.Active);
         setInactivecount(res.data.Inactive);
