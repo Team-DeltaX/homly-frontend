@@ -11,6 +11,13 @@ export default function BasicDatePicker({ title, date, setDate }) {
     nextFiveDays.setDate(today.getDate() + 5);
     return day < nextFiveDays;
   };
+  // disable dates after 3 months
+  const shouldDisableMonth = (day) => {
+    const today = new Date();
+    const nextThreeMonths = new Date();
+    nextThreeMonths.setMonth(today.getMonth() + 3);
+    return day > nextThreeMonths;
+  };
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -21,6 +28,7 @@ export default function BasicDatePicker({ title, date, setDate }) {
           disablePast={true}
           // disableFuture={true}
           shouldDisableDate={shouldDisableDate}
+          shouldDisableMonth={shouldDisableMonth}
           onChange={(newValue) => setDate(newValue)}
           slotProps={{ textField: { fullWidth: true } }}
         />

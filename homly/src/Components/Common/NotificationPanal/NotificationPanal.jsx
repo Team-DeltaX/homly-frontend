@@ -6,13 +6,14 @@ import NotificationSnackBar from "./NotificationSnackBar";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import "../../../Pages/locationAdmin/style.css";
 import { SocketioContext } from "../../../Contexts/SocketioContext";
+import AxiosClient from "../../../services/AxiosClient";
 
 const NotificationPanal = ({ notifications, SetNotifications, bell }) => {
   const { socket } = useContext(SocketioContext);
   const [Messagecount, SetMessagecount] = useState(notifications.length);
   const [showNotifications, setShowNotifications] = useState(false);
   const [openSnackBar, setOpenSnackBar] = useState(false);
-  const [newNotifications, setNewNotifications] = useState('');
+  const [newNotifications, setNewNotifications] = useState("");
   const notificationsContainerRef = useRef(null);
 
   useEffect(() => {
@@ -53,17 +54,32 @@ const NotificationPanal = ({ notifications, SetNotifications, bell }) => {
   };
 
   const removeAllNotifications = () => {
-    SetNotifications([]);
-    SetMessagecount(0);
+    const notificationIds = notifications.map(
+      (notification) => notification.id
+    );
+    AxiosClient.delete("/user/auth/notifications", {
+      data: { notificationIds: notificationIds },
+    })
+      .then(() => {
+        SetNotifications([]);
+        SetMessagecount(0);
+      })
+      .catch(() => {});
   };
 
   const updateNotifications = (removedNotificationId) => {
-    SetNotifications((prevNotifications) =>
-      prevNotifications.filter(
-        (notification) => notification.id !== removedNotificationId
-      )
-    );
-    SetMessagecount((prevCount) => prevCount - 1);
+    AxiosClient.delete("/user/auth/notifications", {
+      data: { notificationIds: [removedNotificationId] },
+    })
+      .then(() => {
+        SetNotifications((prevNotifications) =>
+          prevNotifications.filter(
+            (notification) => notification.id !== removedNotificationId
+          )
+        );
+        SetMessagecount((prevCount) => prevCount - 1);
+      })
+      .catch(() => {});
   };
   return (
     <Box>
@@ -142,7 +158,7 @@ const NotificationPanal = ({ notifications, SetNotifications, bell }) => {
                 senderId={notifi.senderId}
                 time={notifi.time}
                 updateNotifications={updateNotifications}
-              ></Notification>
+              />
             ))
           )}
         </Box>

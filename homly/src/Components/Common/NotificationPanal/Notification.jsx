@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Grid, Typography } from "@mui/material";
+import dayjs from "dayjs";
 
 import FeedbackIcon from "@mui/icons-material/Feedback";
 import CloudDoneIcon from "@mui/icons-material/CloudDone";
@@ -14,12 +15,34 @@ const Notification = ({
   updateNotifications,
   time,
 }) => {
-  const [isRemoving, setIsRemoving] = React.useState(false);
+  const [isRemoving, setIsRemoving] = useState(false);
+  const [showtime, setShowtime] = useState("");
   const chooseIcon = {
     "New Feedback": <FeedbackIcon sx={{ color: "grey6" }} />,
     "Authorization Successful": <CloudDoneIcon sx={{ color: "grey6" }} />,
     "Authorization Denied": <DangerousIcon sx={{ color: "grey6" }} />,
   };
+
+  useEffect(() => {
+    const today = dayjs();
+    const diff = today.diff(dayjs(time), "minute");
+
+    if (diff < 1) {
+      setShowtime("Just Now");
+    } else if (diff < 60) {
+      setShowtime(`${diff} minutes ago`);
+    } else if (diff < 1440) {
+      setShowtime(`${Math.floor(diff / 60)} hours ago`);
+    } else if (diff < 10080) {
+      setShowtime(`${Math.floor(diff / 1440)} days ago`);
+    } else if (diff < 40320) {
+      setShowtime(`${Math.floor(diff / 10080)} weeks ago`);
+    } else if (diff < 525600) {
+      setShowtime(`${Math.floor(diff / 40320)} months ago`);
+    } else {
+      setShowtime(`${Math.floor(diff / 525600)} years ago`);
+    }
+  }, []);
 
   const removeNotification = () => {
     setIsRemoving(true);
@@ -48,7 +71,7 @@ const Notification = ({
         }}
       >
         <Box display={"flex"} gap={"10px"}>
-          {chooseIcon[type]}
+          {chooseIcon[type] ? chooseIcon[type] : ""}
           <Typography variant="p" sx={{ fontWeight: "bold" }}>
             {type}
           </Typography>
@@ -80,7 +103,7 @@ const Notification = ({
               variant="p"
               sx={{ fontWeight: "bold", fontSize: "14px", color: "#4E4E4E" }}
             >
-              Sender ID : {senderId}
+              Sender ID : {senderId} - {id}
             </Typography>
           </Grid>
         </Grid>
@@ -96,7 +119,7 @@ const Notification = ({
           variant="p"
           sx={{ padding: "0 15px", color: "grey6", fontSize: "12px" }}
         >
-          {time}
+          {showtime}
         </Typography>
       </Box>
     </Box>
