@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   ThemeProvider,
   AppBar,
@@ -25,6 +25,7 @@ import theme from "../../../HomlyTheme";
 import "./NavBar.css";
 import NotificationPanal from "../../Common/NotificationPanal/NotificationPanal";
 import { AuthContext } from "../../../Contexts/AuthContext";
+import AxiosClient from "../../../services/AxiosClient";
 const drawerWidth = 240;
 const pages = [
   { name: "Home", path: "/Home" },
@@ -59,13 +60,21 @@ const NavBar = ({ refContactUS, position }) => {
       time: "2021-10-10T10:10:10",
     },
     {
-      id: 2,
+      id: 3,
       type: "Authorization Denied",
       data: "added Anuradhapura resort by samitha",
       senderId: "18964v",
       time: "2021-10-10T10:10:10",
     },
   ]);
+
+  useEffect(() => {
+    AxiosClient.get("/user/auth/notifications")
+      .then((res) => {
+        SetNotifications(res.data);
+      })
+      .catch(() => {});
+  }, []);
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);

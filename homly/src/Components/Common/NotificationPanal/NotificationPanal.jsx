@@ -6,13 +6,14 @@ import NotificationSnackBar from "./NotificationSnackBar";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import "../../../Pages/locationAdmin/style.css";
 import { SocketioContext } from "../../../Contexts/SocketioContext";
+import AxiosClient from "../../../services/AxiosClient";
 
 const NotificationPanal = ({ notifications, SetNotifications, bell }) => {
   const { socket } = useContext(SocketioContext);
   const [Messagecount, SetMessagecount] = useState(notifications.length);
   const [showNotifications, setShowNotifications] = useState(false);
   const [openSnackBar, setOpenSnackBar] = useState(false);
-  const [newNotifications, setNewNotifications] = useState('');
+  const [newNotifications, setNewNotifications] = useState("");
   const notificationsContainerRef = useRef(null);
 
   useEffect(() => {
@@ -53,17 +54,30 @@ const NotificationPanal = ({ notifications, SetNotifications, bell }) => {
   };
 
   const removeAllNotifications = () => {
-    SetNotifications([]);
-    SetMessagecount(0);
+    try {
+      const notificationIds = notifications.map(
+        (notification) => notification.id
+      );
+      AxiosClient.delete("/user/auth/notifications", {
+        data: { notificationIds:"sdf" },
+      });
+      SetNotifications([]);
+      SetMessagecount(0);
+    } catch (err) {}
   };
 
   const updateNotifications = (removedNotificationId) => {
-    SetNotifications((prevNotifications) =>
-      prevNotifications.filter(
-        (notification) => notification.id !== removedNotificationId
-      )
-    );
-    SetMessagecount((prevCount) => prevCount - 1);
+    try {
+      SetNotifications((prevNotifications) =>
+        prevNotifications.filter(
+          (notification) => notification.id !== removedNotificationId
+        )
+      );
+      AxiosClient.delete("/user/auth/notifications", {
+        notificationIds: [removedNotificationId],
+      });
+      SetMessagecount((prevCount) => prevCount - 1);
+    } catch (err) {}
   };
   return (
     <Box>
@@ -142,7 +156,7 @@ const NotificationPanal = ({ notifications, SetNotifications, bell }) => {
                 senderId={notifi.senderId}
                 time={notifi.time}
                 updateNotifications={updateNotifications}
-              ></Notification>
+              />
             ))
           )}
         </Box>
