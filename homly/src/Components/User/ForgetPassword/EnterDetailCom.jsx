@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import theme from "../../../HomlyTheme";
 import InputText from "../TextField/InputText";
+import AxiosClient from "../../../services/AxiosClient";
 export default function EnterDetailCom({
   handleClose,
   setSelectedComponent,
@@ -23,26 +24,24 @@ export default function EnterDetailCom({
       serviceNo: value.serviceNo,
       email: value.email.toLowerCase(),
     };
-    axios
-      .post(`${global.API_BASE_URL}/user/forgetPassword/`, formData)
-      .then((res) => {
-        if (res.data.success) {
-          setErrorStatus({
-            ...errorStatus,
-            isOpen: true,
-            type: "success",
-            message: res.data.message,
-          });
-          setSelectedComponent(1);
-        } else {
-          setErrorStatus({
-            ...errorStatus,
-            isOpen: true,
-            type: "error",
-            message: res.data.message,
-          });
-        }
-      });
+    AxiosClient.post("/user/forgetPassword/", formData).then((res) => {
+      if (res.data.success) {
+        setErrorStatus({
+          ...errorStatus,
+          isOpen: true,
+          type: "success",
+          message: res.data.message,
+        });
+        setSelectedComponent(1);
+      } else {
+        setErrorStatus({
+          ...errorStatus,
+          isOpen: true,
+          type: "error",
+          message: res.data.message,
+        });
+      }
+    });
   };
 
   return (

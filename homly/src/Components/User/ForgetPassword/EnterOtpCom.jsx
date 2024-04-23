@@ -13,6 +13,7 @@ import {
 import theme from "../../../HomlyTheme";
 import "./forgetPassword.css";
 import OtpInput from "react-otp-input";
+import AxiosClient from "../../../services/AxiosClient";
 
 export default function EnterDetailCom({
   handleClose,
@@ -47,10 +48,7 @@ export default function EnterDetailCom({
     e.preventDefault();
     if (otp.length === 6) {
       const formData = { serviceNo: value.serviceNo, otp: otp };
-      axios
-        .post(`${global.API_BASE_URL}/user/forgetPassword/otp`, formData, {
-          withCredentials: true,
-        })
+      AxiosClient.post("/user/forgetPassword/otp", formData)
         .then((res) => {
           if (res.data.success) {
             setErrorStatus({
