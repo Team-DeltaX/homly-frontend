@@ -49,13 +49,16 @@ const PrimaryDashboard = () => {
   };
 
   const getstatus = () => {
-    AxiosClient.get("/admin/auth/locationadmin/statuscount")
+    AxiosClient.get("/admin/auth/holidayhomestatus")
       .then((res) => {
         SetActivecount(res.data.Active);
         setInactivecount(res.data.Inactive);
+        console.log('-getstatus then-')
         console.log(res);
       })
       .catch((err) => {
+        console.log('-getstatus catch-')
+
         console.log(err);
       });
   };
