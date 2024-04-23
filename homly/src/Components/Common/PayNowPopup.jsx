@@ -70,17 +70,19 @@ script.src = 'https://www.payhere.lk/lib/payhere.js';
 //     console.error('PayHere library not loaded');
 //   }
 // };
-document.body.appendChild(script);
-  if (!window.payhere) {
-    window.payhere = {};
-  }
+// document.body.appendChild(script);
+//   if (!window.payhere) {
+//     window.payhere = {};
+//   }
   function pay() {
+    console.log("beforeeeeeee");
     window.payhere.startPayment(payment);
+    console.log("after");
   }
   
   // Called when user completed the payment. It can be a successful payment or failure
-  window.payhere.onCompleted = function onCompleted(orderId) {
-    console.log("Payment completed. OrderID:" + orderId);
+  window.payhere.onCompleted = function onCompleted() {
+    console.log("Payment completed");
     //Note: validate the payment and show success or failure page to the customer
   };
 
@@ -129,6 +131,5 @@ document.body.appendChild(script);
         </DialogActions>
       </Dialog>
     </React.Fragment>
-  );
-  
+  ); 
 }
