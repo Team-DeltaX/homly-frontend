@@ -12,6 +12,7 @@ import {
 import theme from "../../../HomlyTheme";
 import InputPassword from "../TextField/InputPassword";
 import PasswordStrength from "../PasswordStrength";
+import AxiosClient from "../../../services/AxiosClient";
 
 export default function ChangePasswordCom({
   handleClose,
@@ -42,8 +43,7 @@ export default function ChangePasswordCom({
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = { serviceNo: value.serviceNo, password: value.password };
-    axios
-      .put("http://localhost:8080/users/forgetPassword/reset", formData)
+    AxiosClient.put("/user/forgetPassword/reset", formData)
       .then((res) => {
         if (res.data.success) {
           setErrorStatus({
