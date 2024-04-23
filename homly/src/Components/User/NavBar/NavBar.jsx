@@ -44,33 +44,34 @@ const NavBar = ({ refContactUS, position }) => {
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
-  const [notifications, SetNotifications] = useState([
-    {
-      id: 1,
-      type: "New Feedback",
-      data: "added Anuradhapura resort by samitha",
-      senderId: "18964v",
-      time: "2021-10-10T10:10:10",
-    },
-    {
-      id: 2,
-      type: "Authorization Successful",
-      data: "added Anuradhapura resort by samitha",
-      senderId: "18964v",
-      time: "2021-10-10T10:10:10",
-    },
-    {
-      id: 3,
-      type: "Authorization Denied",
-      data: "added Anuradhapura resort by samitha",
-      senderId: "18964v",
-      time: "2021-10-10T10:10:10",
-    },
-  ]);
+  const [notifications, SetNotifications] = useState([]);
+
+  // {
+  //   id: 1,
+  //   type: "New Feedback",
+  //   data: "added Anuradhapura resort by samitha",
+  //   senderId: "18964v",
+  //   time: "2021-10-10T10:10:10",
+  // },
+  // {
+  //   id: 2,
+  //   type: "Authorization Successful",
+  //   data: "added Anuradhapura resort by samitha",
+  //   senderId: "18964v",
+  //   time: "2021-10-10T10:10:10",
+  // },
+  // {
+  //   id: 3,
+  //   type: "Authorization Denied",
+  //   data: "added Anuradhapura resort by samitha",
+  //   senderId: "18964v",
+  //   time: "2021-10-10T10:10:10",
+  // },
 
   useEffect(() => {
     AxiosClient.get("/user/auth/notifications")
       .then((res) => {
+        console.log(res.data, "notifications");
         SetNotifications(res.data);
       })
       .catch(() => {});

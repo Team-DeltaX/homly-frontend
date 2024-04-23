@@ -54,30 +54,32 @@ const NotificationPanal = ({ notifications, SetNotifications, bell }) => {
   };
 
   const removeAllNotifications = () => {
-    try {
-      const notificationIds = notifications.map(
-        (notification) => notification.id
-      );
-      AxiosClient.delete("/user/auth/notifications", {
-        data: { notificationIds:"sdf" },
-      });
-      SetNotifications([]);
-      SetMessagecount(0);
-    } catch (err) {}
+    const notificationIds = notifications.map(
+      (notification) => notification.id
+    );
+    AxiosClient.delete("/user/auth/notifications", {
+      data: { notificationIds: notificationIds },
+    })
+      .then(() => {
+        SetNotifications([]);
+        SetMessagecount(0);
+      })
+      .catch(() => {});
   };
 
   const updateNotifications = (removedNotificationId) => {
-    try {
-      SetNotifications((prevNotifications) =>
-        prevNotifications.filter(
-          (notification) => notification.id !== removedNotificationId
-        )
-      );
-      AxiosClient.delete("/user/auth/notifications", {
-        notificationIds: [removedNotificationId],
-      });
-      SetMessagecount((prevCount) => prevCount - 1);
-    } catch (err) {}
+    AxiosClient.delete("/user/auth/notifications", {
+      data: { notificationIds: [removedNotificationId] },
+    })
+      .then(() => {
+        SetNotifications((prevNotifications) =>
+          prevNotifications.filter(
+            (notification) => notification.id !== removedNotificationId
+          )
+        );
+        SetMessagecount((prevCount) => prevCount - 1);
+      })
+      .catch(() => {});
   };
   return (
     <Box>
