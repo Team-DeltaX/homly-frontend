@@ -7,19 +7,24 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import "../../../Pages/locationAdmin/style.css";
 import { SocketioContext } from "../../../Contexts/SocketioContext";
 import AxiosClient from "../../../services/AxiosClient";
-import { all } from "axios";
 
-const NotificationPanal = ({ notifications, SetNotifications, bell }) => {
+const NotificationPanal = ({ bell }) => {
   const { socket } = useContext(SocketioContext);
-  const [Messagecount, SetMessagecount] = useState(notifications.length);
+  const [Messagecount, SetMessagecount] = useState(0);
+  const [notifications, SetNotifications] = useState([]);
   const [showNotifications, setShowNotifications] = useState(false);
   const [openSnackBar, setOpenSnackBar] = useState(false);
   const [newNotifications, setNewNotifications] = useState("");
   const notificationsContainerRef = useRef(null);
 
   useEffect(() => {
-    SetMessagecount(notifications.length);
-  }, [notifications]);
+    AxiosClient.get("/user/auth/notifications")
+      .then((res) => {
+        SetNotifications(res.data);
+        SetMessagecount(res.data.length);
+      })
+      .catch(() => {});
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -40,8 +45,6 @@ const NotificationPanal = ({ notifications, SetNotifications, bell }) => {
     console.log("socket", socket);
     if (socket) {
       socket.on("notification", (notification) => {
-        // check whether id is included in the new notifications
-
         SetNotifications((prevNotifications) => [
           notification,
           ...prevNotifications,
@@ -49,7 +52,6 @@ const NotificationPanal = ({ notifications, SetNotifications, bell }) => {
         SetMessagecount((prevCount) => prevCount + 1);
         setOpenSnackBar(true);
         setNewNotifications(notification.data);
-        console.log(notification, "new notification");
       });
     }
   }, [socket]);
@@ -59,9 +61,8 @@ const NotificationPanal = ({ notifications, SetNotifications, bell }) => {
   };
 
   const removeAllNotifications = () => {
-   
     AxiosClient.delete("/user/auth/notifications", {
-      data: { notificationIds: null, all: true},
+      data: { notificationIds: null, all: true },
     })
       .then(() => {
         SetNotifications([]);
@@ -75,7 +76,7 @@ const NotificationPanal = ({ notifications, SetNotifications, bell }) => {
       data: { notificationIds: removedNotificationId },
     })
       .then((res) => {
-        console.log(res,'delete notification');
+        console.log(res, "delete notification");
         SetNotifications((prevNotifications) =>
           prevNotifications.filter(
             (notification) => notification.id !== removedNotificationId
@@ -84,7 +85,7 @@ const NotificationPanal = ({ notifications, SetNotifications, bell }) => {
         SetMessagecount((prevCount) => prevCount - 1);
       })
       .catch((err) => {
-         console.log(err,'delete notification');
+        console.log(err, "delete notification");
       });
   };
   return (

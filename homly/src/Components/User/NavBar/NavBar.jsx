@@ -44,7 +44,6 @@ const NavBar = ({ refContactUS, position }) => {
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
-  const [notifications, SetNotifications] = useState([]);
 
   // {
   //   id: 1,
@@ -67,15 +66,6 @@ const NavBar = ({ refContactUS, position }) => {
   //   senderId: "18964v",
   //   time: "2021-10-10T10:10:10",
   // },
-
-  useEffect(() => {
-    AxiosClient.get("/user/auth/notifications")
-      .then((res) => {
-        console.log(res.data, "notifications");
-        SetNotifications(res.data);
-      })
-      .catch(() => {});
-  }, []);
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -232,11 +222,7 @@ const NavBar = ({ refContactUS, position }) => {
                   gap: "1.5em",
                 }}
               >
-                <NotificationPanal
-                  notifications={notifications}
-                  SetNotifications={SetNotifications}
-                  bell={true}
-                />
+                <NotificationPanal bell={true} />
               </Box>
             </Box>
             <Stack direction="row">
