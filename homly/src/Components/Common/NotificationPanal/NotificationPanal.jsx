@@ -7,6 +7,7 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import "../../../Pages/locationAdmin/style.css";
 import { SocketioContext } from "../../../Contexts/SocketioContext";
 import AxiosClient from "../../../services/AxiosClient";
+import { all } from "axios";
 
 const NotificationPanal = ({ notifications, SetNotifications, bell }) => {
   const { socket } = useContext(SocketioContext);
@@ -15,6 +16,10 @@ const NotificationPanal = ({ notifications, SetNotifications, bell }) => {
   const [openSnackBar, setOpenSnackBar] = useState(false);
   const [newNotifications, setNewNotifications] = useState("");
   const notificationsContainerRef = useRef(null);
+
+  useEffect(() => {
+    SetMessagecount(notifications.length);
+  }, [notifications]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -54,11 +59,9 @@ const NotificationPanal = ({ notifications, SetNotifications, bell }) => {
   };
 
   const removeAllNotifications = () => {
-    const notificationIds = notifications.map(
-      (notification) => notification.id
-    );
+   
     AxiosClient.delete("/user/auth/notifications", {
-      data: { notificationIds: notificationIds },
+      data: { notificationIds: null, all: true},
     })
       .then(() => {
         SetNotifications([]);
@@ -69,9 +72,10 @@ const NotificationPanal = ({ notifications, SetNotifications, bell }) => {
 
   const updateNotifications = (removedNotificationId) => {
     AxiosClient.delete("/user/auth/notifications", {
-      data: { notificationIds: [removedNotificationId] },
+      data: { notificationIds: removedNotificationId },
     })
-      .then(() => {
+      .then((res) => {
+        console.log(res,'delete notification');
         SetNotifications((prevNotifications) =>
           prevNotifications.filter(
             (notification) => notification.id !== removedNotificationId
@@ -79,7 +83,9 @@ const NotificationPanal = ({ notifications, SetNotifications, bell }) => {
         );
         SetMessagecount((prevCount) => prevCount - 1);
       })
-      .catch(() => {});
+      .catch((err) => {
+         console.log(err,'delete notification');
+      });
   };
   return (
     <Box>
