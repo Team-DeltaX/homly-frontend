@@ -14,7 +14,8 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import CancelIcon from "@mui/icons-material/Cancel";
 import ConfirmPopup from "./ConfirmPopup";
-import axios from "axios";
+import AxiosClient from "../../services/AxiosClient";
+
 
 const ViewPopupComplaints = (props) => {
   const [reson, setReson] = useState("");
@@ -23,9 +24,9 @@ const ViewPopupComplaints = (props) => {
   const [disable, Setdisable] = useState(false);
 
   const check_already_exists = () => {
-    axios
+    AxiosClient
       .get(
-        `${global.API_BASE_URL}/admin/auth/isexist/${props.selecteduser.ServiceNo}`
+        `/admin/auth/isexist/${props.selecteduser.ServiceNo}`
       )
       .then((res) => {
         Setdisable(res.data.exist);
@@ -35,8 +36,8 @@ const ViewPopupComplaints = (props) => {
       });
   };
   const mark_on_open = () => {
-    axios
-      .put(`${global.API_BASE_URL}/admin/auth/markcomplaint`, {
+    AxiosClient
+      .put(`/admin/auth/markcomplaint`, {
         CompID: props.selecteduser.ComplaintID,
       })
       .then(() => {
@@ -46,8 +47,8 @@ const ViewPopupComplaints = (props) => {
   };
 
   const handleaddtoblacklist = () => {
-    axios
-      .post(`${global.API_BASE_URL}/admin/auth/blacklist`, {
+    AxiosClient
+      .post(`/admin/auth/blacklist`, {
         Reason: reson,
         ServiceNo: props.selecteduser.ServiceNo,
       })
