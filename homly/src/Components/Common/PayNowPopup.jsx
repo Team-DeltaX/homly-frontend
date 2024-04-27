@@ -59,17 +59,17 @@ const script = document.createElement('script');
 // Set the src attribute to the URL of the PayHere script
 script.src = 'https://www.payhere.lk/lib/payhere.js';
 
-// // Listen to the load event of the script element
-// script.onload = () => {
-//   // The script is fully loaded, you can now call window.payhere.startPayment
-//   if (window.payhere) {
-//     // Call startPayment here
-//     window.payhere.startPayment(payment);
-//   } else {
-//     // Handle the case where the PayHere library couldn't be loaded
-//     console.error('PayHere library not loaded');
-//   }
-// };
+// Listen to the load event of the script element
+script.onload = () => {
+  // The script is fully loaded, you can now call window.payhere.startPayment
+  if (window.payhere) {
+    // Call startPayment here
+    window.payhere.startPayment(payment);
+  } else {
+    // Handle the case where the PayHere library couldn't be loaded
+    console.error('PayHere library not loaded');
+  }
+};
 document.body.appendChild(script);
   if (!window.payhere) {
     window.payhere = {};
