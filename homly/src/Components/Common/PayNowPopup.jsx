@@ -53,29 +53,18 @@ export default function AlertDialog(
     hash: hash,
   };
 
-// Listen to the load event of the script element
-// Create a new script element
+// // Listen to the load event of the script element
+// // Create a new script element
 const script = document.createElement('script');
 // Set the src attribute to the URL of the PayHere script
 script.src = 'https://www.payhere.lk/lib/payhere.js';
 
-// // Listen to the load event of the script element
-// script.onload = () => {
-//   // The script is fully loaded, you can now call window.payhere.startPayment
-//   if (window.payhere) {
-//     // Call startPayment here
-//     window.payhere.startPayment(payment);
-//   } else {
-//     // Handle the case where the PayHere library couldn't be loaded
-//     console.error('PayHere library not loaded');
-//   }
-// };
-// document.body.appendChild(script);
-//   if (!window.payhere) {
-//     window.payhere = {};
-//   }
+document.body.appendChild(script);
+  if (!window.payhere) {
+    window.payhere = {};
+  }
   function pay() {
-    console.log("beforeeeeeee");
+    console.log("paying");
     window.payhere.startPayment(payment);
     console.log("after");
   }
@@ -83,6 +72,7 @@ script.src = 'https://www.payhere.lk/lib/payhere.js';
   // Called when user completed the payment. It can be a successful payment or failure
   window.payhere.onCompleted = function onCompleted() {
     console.log("Payment completed");
+
     //Note: validate the payment and show success or failure page to the customer
   };
 
