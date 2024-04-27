@@ -59,45 +59,20 @@ const script = document.createElement('script');
 // Set the src attribute to the URL of the PayHere script
 script.src = 'https://www.payhere.lk/lib/payhere.js';
 
-<<<<<<< Updated upstream
-// // Listen to the load event of the script element
-// script.onload = () => {
-//   // The script is fully loaded, you can now call window.payhere.startPayment
-//   if (window.payhere) {
-//     // Call startPayment here
-//     window.payhere.startPayment(payment);
-//   } else {
-//     // Handle the case where the PayHere library couldn't be loaded
-//     console.error('PayHere library not loaded');
-//   }
-// };
-// document.body.appendChild(script);
-//   if (!window.payhere) {
-//     window.payhere = {};
-//   }
-  function pay() {
-    console.log("beforeeeeeee");
-=======
 document.body.appendChild(script);
   if (!window.payhere) {
     window.payhere = {};
   }
   function pay() {
     console.log("paying");
->>>>>>> Stashed changes
     window.payhere.startPayment(payment);
     console.log("after");
   }
   
   // Called when user completed the payment. It can be a successful payment or failure
-<<<<<<< Updated upstream
   window.payhere.onCompleted = function onCompleted() {
     console.log("Payment completed");
-=======
-  window.payhere.onCompleted = function onCompleted(orderId) {
-    orderId = '';	
-    console.log("Payment completed. OrderID:" + orderId);
->>>>>>> Stashed changes
+
     //Note: validate the payment and show success or failure page to the customer
   };
 
