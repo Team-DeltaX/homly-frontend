@@ -134,10 +134,6 @@ export default function AddSpecialReservationPopUp() {
   };
   useEffect(() => {
     if (ServiceNo) {
-      // axios
-      //   .get(
-      //     `http://localhost:8080/admin/auth/locationadmin/employee/${ServiceNo}`
-      //   )
       AxiosClient.get(`/admin/auth/locationadmin/employee/${ServiceNo}`)
         .then((res) => {
           const employeeData = res.data[0];
@@ -150,10 +146,11 @@ export default function AddSpecialReservationPopUp() {
   }, [ServiceNo]);
   useEffect(() => {
     if (HolidayHomeName) {
-      axios
-        .get(
-          `http://localhost:8080/user/reservation/getTotalRoomRental/${HolidayHomeName}`
-        )
+      // axios
+      //   .get(
+      //     `http://localhost:8080/user/reservation/getTotalRoomRental/${HolidayHomeName}`
+      //   )
+      AxiosClient.get(`/user/reservation/getTotalRoomRental/${HolidayHomeName}`)
         .then((response) => {
           setMaxAdults(response.data.maxAdults);
           setMaxChildren(response.data.maxChildren);
