@@ -8,13 +8,18 @@ import ViewPopUp from './ViewPopup';
 import dayjs, { Dayjs } from 'dayjs';
 import { useEffect, useState } from "react";
 import axios from "axios";
+<<<<<<< Updated upstream
 import Typography from '@mui/material/Typography';
+=======
+import AxiosClient from '../../services/AxiosClient';
+>>>>>>> Stashed changes
 
 const OngoingReservationCard = (props) => {
     const [Employee,SetEmployee]=useState({})
     const [isSpecial, setIsSpecial] = useState(props.reservation.IsSpecial);
     const fetchfromemployee=()=>{
-        axios.get(`http://localhost:8080/admin/auth/locationadmin/employee/${props.reservation.ServiceNO}`)
+        // axios.get(`http://localhost:8080/admin/auth/locationadmin/employee/${props.reservation.ServiceNO}`)
+        AxiosClient.get(`/admin/auth/locationadmin/employee/${props.reservation.ServiceNO}`)
         .then((res)=>{
             SetEmployee(res.data[0])
         })
@@ -32,11 +37,12 @@ const OngoingReservationCard = (props) => {
     });
 
     useEffect(() => {
-        axios
-          .get(
-            `http://localhost:8080/admin/auth/locationadmin/holidayhome/${props.reservation.HolidayHome}`,
-            { withCredentials: true }
-          )
+        // axios
+        //   .get(
+        //     `http://localhost:8080/admin/auth/locationadmin/holidayhome/${props.reservation.HolidayHome}`,
+        //     { withCredentials: true }
+        //   )
+        AxiosClient.get(`/admin/auth/locationadmin/holidayhome/${props.reservation.HolidayHome}`)
           .then((res) => {
             console.log("response", res.data.room);
             if (Response) {

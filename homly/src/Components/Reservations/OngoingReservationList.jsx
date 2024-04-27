@@ -7,12 +7,14 @@ import './Reservation.css';
 import ViewPopUp from './ViewPopup';
 import OngoingReservationCard from './OngoingReservationCard';
 import axios from "axios";
+import AxiosClient from "../../services/AxiosClient";
 
 const OngoingReservationList = (props) => {
   const [reservations, setReservations] = useState([])
   const fetchreservations = () => {
-    axios
-      .get("http://localhost:8080/user/reservation/ongoing")
+    // axios
+    //   .get("http://localhost:8080/user/reservation/ongoing")
+    AxiosClient.get("/user/reservation/ongoing")
       .then((res) => {
         console.log(res.data);
          //reverse array to keep new ones first 
