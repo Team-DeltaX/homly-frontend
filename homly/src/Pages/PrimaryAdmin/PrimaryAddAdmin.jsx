@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import SideNavbar from "../../Components/PrimaryAdmin/SideNavbar";
 import Box from "@mui/material/Box";
-import axios from "axios";
+import AxiosClient from "../../services/AxiosClient";
 import {
   Button,
   Container,
@@ -83,8 +83,8 @@ const PrimaryAddAdmin = () => {
       Disabled: false,
       Sub: substitute,
     };
-    axios
-      .post(`${global.API_BASE_URL}/admin/auth/locationadmin/add`, data)
+    AxiosClient
+      .post(`/admin/auth/locationadmin/add`, data)
       .then((res) => {
         setnacktext("Admin Added Sucessfully!");
         handleClick();

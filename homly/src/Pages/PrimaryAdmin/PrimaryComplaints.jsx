@@ -6,7 +6,7 @@ import { Container, Grid, ThemeProvider, Typography } from "@mui/material";
 import theme from "../../HomlyTheme";
 import Pagetop from "../../Components/PrimaryAdmin/PageTop";
 import ViewPopupComplaints from "../../Components/PrimaryAdmin/ViewPopupComplints";
-import axios from "axios";
+import AxiosClient from "../../services/AxiosClient";
 import Switch from "@mui/material/Switch";
 import Snackbarp from "../../Components/PrimaryAdmin/snackbar/Snackbarp";
 
@@ -24,9 +24,9 @@ const PrimaryComplaints = () => {
 
   const fetchprevcomplaints = () => {
     console.log("start");
-    axios
+    AxiosClient
       .get(
-        `${global.API_BASE_URL}/admin/auth/locationadmin/complaint/${selecteduser.ServiceNo}`
+        `/admin/auth/locationadmin/complaint/${selecteduser.ServiceNo}`
       )
       .then((res) => {
         setPrevcomplaints(res.data);
@@ -38,8 +38,8 @@ const PrimaryComplaints = () => {
   };
 
   const fetchcomplaints = () => {
-    axios
-      .get(`${global.API_BASE_URL}/admin/auth/locationadmin/complaints`)
+    AxiosClient
+      .get(`/admin/auth/locationadmin/complaints`)
       .then((res) => {
         setcomplaints(res.data);
       })

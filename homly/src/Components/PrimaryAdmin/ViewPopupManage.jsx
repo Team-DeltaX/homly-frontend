@@ -8,14 +8,15 @@ import {
 import { useState } from "react";
 import theme from "../../HomlyTheme";
 import CancelIcon from "@mui/icons-material/Cancel";
-import axios from "axios";
+import AxiosClient from "../../services/AxiosClient";
+
 
 const ViewPopupManage = (props) => {
   const [removeReson, setRemoveReson] = useState("");
 
   const handleremovefromblacklist = () => {
-    axios
-      .delete(`${global.API_BASE_URL}/admin/auth/unblacklist`, {
+    AxiosClient
+      .delete(`/admin/auth/unblacklist`, {
         data: { ServiceNo: props.selectemp.service_number },
         withCredentials: true,
       })
@@ -27,9 +28,9 @@ const ViewPopupManage = (props) => {
         props.SetOpensnE(true);
       });
 
-    axios
+    AxiosClient
       .put(
-        `${global.API_BASE_URL}/admin/auth/unblacklist`,
+        `/admin/auth/unblacklist`,
         {
           Email: props.selectuser.email,
           ServiceNo: props.selectemp.service_number,
@@ -43,9 +44,9 @@ const ViewPopupManage = (props) => {
         console.log(error);
       });
 
-    axios
+    AxiosClient
       .post(
-        `${global.API_BASE_URL}/admin/auth/blacklisthistory`,
+        `/admin/auth/blacklisthistory`,
         {
           ServiceNo: props.selectemp.service_number,
           AddReason: props.selecteduser.BlackListReason,
