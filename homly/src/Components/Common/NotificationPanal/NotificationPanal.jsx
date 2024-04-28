@@ -20,6 +20,7 @@ const NotificationPanal = ({ bell }) => {
   useEffect(() => {
     AxiosClient.get("/user/auth/notifications")
       .then((res) => {
+        console.log(res.data,'notifications')
         SetNotifications(res.data);
         SetMessagecount(res.data.length);
       })

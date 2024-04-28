@@ -6,6 +6,8 @@ import FeedbackIcon from "@mui/icons-material/Feedback";
 import CloudDoneIcon from "@mui/icons-material/CloudDone";
 import DangerousIcon from "@mui/icons-material/Dangerous";
 import CancelIcon from "@mui/icons-material/Cancel";
+import WarningAmberIcon from '@mui/icons-material/WarningAmber';
+import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 
 const Notification = ({
   type,
@@ -21,6 +23,7 @@ const Notification = ({
     "New Feedback": <FeedbackIcon sx={{ color: "grey6" }} />,
     "Authorization Successful": <CloudDoneIcon sx={{ color: "grey6" }} />,
     "Authorization Denied": <DangerousIcon sx={{ color: "grey6" }} />,
+    "Warning": <WarningAmberIcon sx={{ color: "grey6" }} />, 
   };
 
   useEffect(() => {
@@ -71,7 +74,7 @@ const Notification = ({
         }}
       >
         <Box display={"flex"} gap={"10px"}>
-          {chooseIcon[type] ? chooseIcon[type] : ""}
+          {chooseIcon[type] ? chooseIcon[type] : <NotificationsActiveIcon sx={{ color: "grey6" }} />}
           <Typography variant="p" sx={{ fontWeight: "bold" }}>
             {type}
           </Typography>
