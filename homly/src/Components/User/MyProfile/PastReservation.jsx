@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import ReservationCard from "../ReservationCard/ReservationCard";
 import { Box, Stack } from "@mui/material";
-import AddReviewPopup from "../Review/AddReviewPopup";
 
 export default function PastReservation({ reservation, setIsAddReview }) {
   return (

@@ -7,21 +7,15 @@ import {
   Stack,
   Button,
 } from "@mui/material/";
-
-import axios from "axios";
-
 import { Link, useNavigate } from "react-router-dom";
-
 import BadgeIcon from "@mui/icons-material/Badge";
 import PasswordIcon from "@mui/icons-material/Password";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-
 import InputTextWithIcon from "../Components/User/TextField/InputTextWithIcon";
 import InputPasswordWithIcon from "../Components/User/TextField/InputPasswordWithIcon";
 import ErrorSnackbar from "../Components/User/ErrorSnackbar";
 import AdminChangePasswordPopup from "../Components/User/AdminChangePasswordPopup";
 import theme from "../HomlyTheme";
-
 import logo from "../Assets/images/logo.png";
 import "./User/UserStyle.css";
 import AxiosClient from "../services/AxiosClient";
