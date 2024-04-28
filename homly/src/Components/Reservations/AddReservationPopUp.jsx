@@ -106,8 +106,8 @@ export default function ScrollDialog({ name, id }) {
       RoomCodes: roomCodes,
     };
 
-    axios
-      .post("http://localhost:8080/user/auth/reservation", data, {
+    AxiosClient
+      .post(`/user/auth/reservation`, data, {
         withCredentials: true,
       })
       .then((res) => {

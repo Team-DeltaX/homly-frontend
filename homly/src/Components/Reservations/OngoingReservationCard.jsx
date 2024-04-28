@@ -8,11 +8,16 @@ import ViewPopUp from './ViewPopup';
 import dayjs, { Dayjs } from 'dayjs';
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Typography from '@mui/material/Typography';
+import AxiosClient from '../../services/AxiosClient';
 
 const OngoingReservationCard = (props) => {
     const [Employee,SetEmployee]=useState({})
+    const [isSpecial, setIsSpecial] = useState(props.reservation.IsSpecial);
+    const [isCancelled, setIsCancelled] = useState(props.reservation.IsCancelled);
     const fetchfromemployee=()=>{
-        axios.get(`http://localhost:8080/admin/auth/locationadmin/employee/${props.reservation.ServiceNO}`)
+        // axios.get(`http://localhost:8080/admin/auth/locationadmin/employee/${props.reservation.ServiceNO}`)
+        AxiosClient.get(`/admin/auth/locationadmin/employee/${props.reservation.ServiceNO}`)
         .then((res)=>{
             SetEmployee(res.data[0])
         })
@@ -30,11 +35,12 @@ const OngoingReservationCard = (props) => {
     });
 
     useEffect(() => {
-        axios
-          .get(
-            `http://localhost:8080/admin/auth/locationadmin/holidayhome/${props.reservation.HolidayHome}`,
-            { withCredentials: true }
-          )
+        // axios
+        //   .get(
+        //     `http://localhost:8080/admin/auth/locationadmin/holidayhome/${props.reservation.HolidayHome}`,
+        //     { withCredentials: true }
+        //   )
+        AxiosClient.get(`/admin/auth/locationadmin/holidayhome/${props.reservation.HolidayHome}`)
           .then((res) => {
             console.log("response", res.data.room);
             if (Response) {
@@ -75,6 +81,10 @@ const OngoingReservationCard = (props) => {
                         <p>Check In : { dayjs(props.reservation.CheckinDate).format('DD/MM/YYYY')}</p>
                         <p>Check Out : { dayjs(props.reservation.CheckoutDate).format('DD/MM/YYYY')}</p>
                         <ViewPopUp reservation={props.reservation} reservedRoom={props.reservedRoom} name = {Employee.name} holidayName={value.name}/>
+                        {/* if reservation is special pass special */}
+                        {isSpecial ? <Typography  variant="button" color="green">Special</Typography > : null}
+                        {isCancelled ? <Typography  variant="button" color="red">Cancelled</Typography > : null}
+                        
                     </Stack>
                     {/* <h2>{ reservation.holidayhomename }</h2>
                     <p>Check In : { reservation.checkindate }</p>
