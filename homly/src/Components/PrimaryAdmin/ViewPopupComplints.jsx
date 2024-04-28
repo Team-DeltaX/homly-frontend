@@ -17,7 +17,6 @@ import ConfirmPopup from "./ConfirmPopup";
 import AxiosClient from "../../services/AxiosClient";
 import { SocketioContext } from "../../Contexts/SocketioContext";
 
-
 const ViewPopupComplaints = (props) => {
   const [reson, setReson] = useState("");
   const [expand, setExpand] = useState(false);
@@ -26,10 +25,7 @@ const ViewPopupComplaints = (props) => {
   const { socket } = useContext(SocketioContext);
 
   const check_already_exists = () => {
-    AxiosClient
-      .get(
-        `/admin/auth/isexist/${props.selecteduser.ServiceNo}`
-      )
+    AxiosClient.get(`/admin/auth/isexist/${props.selecteduser.ServiceNo}`)
       .then((res) => {
         Setdisable(res.data.exist);
       })
@@ -38,22 +34,19 @@ const ViewPopupComplaints = (props) => {
       });
   };
   const mark_on_open = () => {
-    AxiosClient
-      .put(`/admin/auth/markcomplaint`, {
-        CompID: props.selecteduser.ComplaintID,
-      })
-      .then(() => {
-        console.log("marked as blacklisted");
-        props.fetchcomplaints();
-      });
+    AxiosClient.put(`/admin/auth/markcomplaint`, {
+      CompID: props.selecteduser.ComplaintID,
+    }).then(() => {
+      console.log("marked as blacklisted");
+      props.fetchcomplaints();
+    });
   };
 
   const handleaddtoblacklist = () => {
-    AxiosClient
-      .post(`/admin/auth/blacklist`, {
-        Reason: reson,
-        ServiceNo: props.selecteduser.ServiceNo,
-      })
+    AxiosClient.post(`/admin/auth/blacklist`, {
+      Reason: reson,
+      ServiceNo: props.selecteduser.ServiceNo,
+    })
       .then((res) => {
         console.log(res);
         props.SetOpensn(true);
@@ -364,16 +357,23 @@ const ViewPopupComplaints = (props) => {
                   margin: "10px",
                 }}
               >
-                <Button variant="contained" sx={{ marginRight: "3%" }} onClick={()=>{
-                   socket.emit("newNotification", {
-                    senderId:localStorage.getItem("userId"), receiverId:props.selecteduser.ServiceNo, data:'You Are Warned By Homly Adminstation', type:"Authorization Denied", time: new Date()
+                <Button
+                  variant="contained"
+                  sx={{ marginRight: "3%" }}
+                  onClick={() => {
+                    //send notification
+                    socket.emit("newNotification", {
+                      senderId: localStorage.getItem("userId"),
+                      receiverId: props.selecteduser.ServiceNo,
+                      data: "You Are Warned By Homly Adminstation",
+                      type: "Authorization Denied",
+                      time: new Date(),
+                    });
+                    //close popup after send
                     
-                  });
-
-
-
-
-                }}>
+                    props.handlepopup();
+                  }}
+                >
                   <Typography sx={{ fontSize: "10px" }}>
                     Send Warning
                   </Typography>
