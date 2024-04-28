@@ -369,9 +369,11 @@ const ViewPopupComplaints = (props) => {
                       type: "Authorization Denied",
                       time: new Date(),
                     });
-                    //close popup after send
+
+                    //close popup after send notification
                     
                     props.handlepopup();
+                    props.SetopenNotifySncak(true)
                   }}
                 >
                   <Typography sx={{ fontSize: "10px" }}>

@@ -44,7 +44,7 @@ export default function ConfirmPopup({
         </Button>
         <Button
           onClick={() => {
-            console.log("ok clicked");
+            
             controlfunction();
           }}
         >
