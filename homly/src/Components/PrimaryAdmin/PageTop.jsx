@@ -7,16 +7,16 @@ import MenuIcon from "@mui/icons-material/Menu";
 import NotificationPanal from "../Common/NotificationPanal/NotificationPanal";
 
 const Pagetop = ({ heading, setShowNav }) => {
-  const [open, setOpen] = useState(false);
+  // const [open, setOpen] = useState(false);
 
  
-  const handleIconClick = () => {
-    setOpen(!open);
-  };
-  const handleClose = () => {
-    setOpen(false);
-    setAnchorEl(null);
-  };
+  // const handleIconClick = () => {
+  //   setOpen(!open);
+  // };
+  // const handleClose = () => {
+  //   setOpen(false);
+  //   setAnchorEl(null);
+  // };
   const notifyarray = [
     {
       id: 1,

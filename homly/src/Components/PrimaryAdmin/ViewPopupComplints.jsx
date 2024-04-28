@@ -5,7 +5,7 @@ import {
   ThemeProvider,
   Typography,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import theme from "../../HomlyTheme";
 import "../../Components/PrimaryAdmin/Css/complaintpopup.css";
 import Accordion from "@mui/material/Accordion";
@@ -15,6 +15,7 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import CancelIcon from "@mui/icons-material/Cancel";
 import ConfirmPopup from "./ConfirmPopup";
 import AxiosClient from "../../services/AxiosClient";
+import { SocketioContext } from "../../Contexts/SocketioContext";
 
 
 const ViewPopupComplaints = (props) => {
@@ -22,6 +23,7 @@ const ViewPopupComplaints = (props) => {
   const [expand, setExpand] = useState(false);
   const [Open, setOpen] = useState(false);
   const [disable, Setdisable] = useState(false);
+  const { socket } = useContext(SocketioContext);
 
   const check_already_exists = () => {
     AxiosClient
@@ -362,7 +364,16 @@ const ViewPopupComplaints = (props) => {
                   margin: "10px",
                 }}
               >
-                <Button variant="contained" sx={{ marginRight: "3%" }}>
+                <Button variant="contained" sx={{ marginRight: "3%" }} onClick={()=>{
+                   socket.emit("newNotification", {
+                    senderId:localStorage.getItem("userId"), receiverId:props.selecteduser.ServiceNo, data:'You Are Warned By Homly Adminstation', type:"Authorization Denied", time: new Date()
+                    
+                  });
+
+
+
+
+                }}>
                   <Typography sx={{ fontSize: "10px" }}>
                     Send Warning
                   </Typography>
