@@ -20,6 +20,8 @@ import AxiosClient from "../../services/AxiosClient";
 
 
 
+
+
 const PrimaryBlacklistHistory = () => {
   const [search, setSearch] = useState("");
   const [popup, setpopup] = useState(false);
