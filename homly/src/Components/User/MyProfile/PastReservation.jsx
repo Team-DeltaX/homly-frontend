@@ -31,6 +31,7 @@ export default function PastReservation({ reservation, setIsAddReview }) {
                   ReservationId={reserv.reservation.ReservationId}
                   IsReviewed={reserv.IsReviewed}
                   setIsAddReview={setIsAddReview}
+                  IsCancelled={reserv.reservation.IsCancelled}
                 />
               </Box>
             );

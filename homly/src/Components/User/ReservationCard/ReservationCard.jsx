@@ -12,6 +12,10 @@ import dayjs from "dayjs";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import AddReviewPopup from "../Review/AddReviewPopup";
 import theme from "../../../HomlyTheme";
+import AlertDialog from "../../Common/PayNowPopup";
+import ConfirmPopup from "../../PrimaryAdmin/ConfirmPopup";
+import AxiosClient from "../../../services/AxiosClient";
+import ErrorSnackbar from "../ErrorSnackbar";
 
 export default function ReservationCard({
   HHreservation,
@@ -30,9 +34,52 @@ export default function ReservationCard({
   ExpireIn,
   ReservationId,
   IsReviewed,
+  IsCancelled,
   setIsAddReview,
 }) {
   const [openReview, setOpenReview] = useState(false);
+  const [openConfirm, setOpenConfirm] = useState(false);
+  const [openPay, setOpenPay] = useState(false);
+  const [errorStatus, setErrorStatus] = useState({
+    isOpen: false,
+    type: "",
+    message: "",
+  });
+
+  const handleCancelReservation = () => {
+    console.log("Cancel Reservation");
+    AxiosClient.put("/user/auth/userReservation", {
+      reservationId: ReservationId,
+      isPaid: HHpayment,
+    })
+      .then((res) => {
+        if (res.data.success) {
+          setErrorStatus({
+            ...errorStatus,
+            isOpen: true,
+            type: "success",
+            message: res.data.message,
+          });
+        } else {
+          setErrorStatus({
+            ...errorStatus,
+            isOpen: true,
+            type: "error",
+            message: res.data.message,
+          });
+        }
+      })
+      .catch(() => {
+        setErrorStatus({
+          ...errorStatus,
+          isOpen: true,
+          type: "error",
+          message: "Something went wrong",
+        });
+      });
+    setOpenConfirm(false);
+  };
+
   const buttons = () => {
     if (HHreservation === "Ongoing") {
       if (HHpayment) {
@@ -55,7 +102,11 @@ export default function ReservationCard({
               </Typography>
               <CheckCircleIcon sx={{ color: "white", marginLeft: "10px" }} />
             </Stack>
-            <Button variant="outlined" sx={{ marginLeft: "15px" }}>
+            <Button
+              variant="outlined"
+              onClick={() => setOpenConfirm(true)}
+              sx={{ marginLeft: "15px" }}
+            >
               Cancel
             </Button>
           </Stack>
@@ -63,10 +114,19 @@ export default function ReservationCard({
       } else {
         return (
           <Stack direction="row" sx={{ marginTop: { xs: "10px", sm: "0" } }}>
-            <Button variant="contained" color="error" sx={{ width: "108px" }}>
+            <Button
+              variant="contained"
+              color="error"
+              sx={{ width: "108px", cursor: "pointer" }}
+              onClick={() => setOpenPay(true)}
+            >
               Checkout
             </Button>
-            <Button variant="outlined" sx={{ marginLeft: "15px" }}>
+            <Button
+              variant="outlined"
+              onClick={() => setOpenConfirm(true)}
+              sx={{ marginLeft: "15px", cursor: "pointer" }}
+            >
               Cancel
             </Button>
           </Stack>
@@ -75,13 +135,22 @@ export default function ReservationCard({
     } else {
       return (
         <Stack direction="row" sx={{ marginTop: { xs: "10px", sm: "0" } }}>
-          <Button
-            variant="contained"
-            disabled={IsReviewed}
-            onClick={() => setOpenReview(true)}
-          >
-            {IsReviewed ? "Reviewed" : "Add Review"}
-          </Button>
+          {IsCancelled ? (
+            <Typography
+              sx={{ color: "red", fontSize: "1.2rem", fontWeight: "medium" }}
+            >
+              Cancelled
+            </Typography>
+          ) : (
+            <Button
+              variant="contained"
+              disabled={IsReviewed}
+              onClick={() => setOpenReview(true)}
+              sx={{ cursor: "pointer" }}
+            >
+              {IsReviewed ? "Reviewed" : "Add Review"}
+            </Button>
+          )}
         </Stack>
       );
     }
@@ -117,7 +186,7 @@ export default function ReservationCard({
           >
             <Stack direction="column">
               <Typography sx={{ fontWeight: "bold", fontSize: "1.3rem" }}>
-                {HHName}
+                {HHName.toUpperCase()}
               </Typography>
               <Typography sx={{ fontWeight: "light", fontSize: "0.8rem" }}>
                 {HHAddress}
@@ -243,7 +312,7 @@ export default function ReservationCard({
                 }}
               >
                 <Grid item xs={6} sm={8}>
-                  <Typography>No of Childlen</Typography>
+                  <Typography>No of Children</Typography>
                 </Grid>
                 <Grid item>
                   <Box
@@ -333,6 +402,20 @@ export default function ReservationCard({
         setOpen={setOpenReview}
         reservationId={ReservationId}
         setIsAddReview={setIsAddReview}
+      />
+      <ConfirmPopup
+        open={openConfirm}
+        setOpen={setOpenConfirm}
+        title={"Cancel Your Reservation"}
+        text={"Are you sure to cancel this reservation?"}
+        controlfunction={handleCancelReservation}
+      />
+      <AlertDialog isOpen={openPay} setIsOpen={setOpenPay} />
+      <ErrorSnackbar
+        isOpen={errorStatus.isOpen}
+        type={errorStatus.type}
+        message={errorStatus.message}
+        setIsOpen={(val) => setErrorStatus({ ...errorStatus, isOpen: val })}
       />
     </ThemeProvider>
   );
