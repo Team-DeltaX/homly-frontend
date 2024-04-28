@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { ThemeProvider, Card, Stack, Box, Typography } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import ConfirmationBox from "../../Common/ConfirmationBox";
 import AxiosClient from "../../../services/AxiosClient";
 import theme from "../../../HomlyTheme";
+import ConfirmPopup from "../../PrimaryAdmin/ConfirmPopup";
 const FavoritesHHCard = ({
   HHID,
   HHImage,
@@ -19,23 +19,6 @@ const FavoritesHHCard = ({
 }) => {
   const [isFavorites, setIsFavorites] = useState(isWishListed);
   const [open, setOpen] = useState(false);
-  const [isOK, setIsOK] = useState(false);
-  useEffect(() => {
-    if (isOK && isFavorites) {
-      setIsFavorites(!isFavorites);
-      AxiosClient.delete("/user/auth/wishlist", {
-        data: { holidayHomeId: HHID },
-      })
-        .then(() => {
-          setIsFavorites(false);
-          setIsChanged(true);
-        })
-        .catch(() => {
-          setIsFavorites(true);
-        });
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isOK]);
   const handleFavorites = (e) => {
     e.preventDefault();
     if (isFavorites) {
@@ -49,6 +32,23 @@ const FavoritesHHCard = ({
           setIsFavorites(false);
         });
     }
+  };
+
+  const handleRemoveFavorites = () => {
+    if (isFavorites) {
+      setIsFavorites(!isFavorites);
+      AxiosClient.delete("/user/auth/wishlist", {
+        data: { holidayHomeId: HHID },
+      })
+        .then(() => {
+          setIsFavorites(false);
+          setIsChanged(true);
+        })
+        .catch(() => {
+          setIsFavorites(true);
+        });
+    }
+    setOpen(false);
   };
   return (
     <ThemeProvider theme={theme}>
@@ -133,10 +133,12 @@ const FavoritesHHCard = ({
                 </Typography>
                 <Typography variant="body1">{HHLocation}</Typography>
               </Stack>
-              <Stack direction="row" sx={{justifyContent:'space-between'}}>
+              <Stack direction="row" sx={{ justifyContent: "space-between" }}>
                 <Stack direction="row" sx={{ alignItems: "center" }}>
-                  <StarIcon  />
-                  <Typography sx={{ fontWeight: "medium",margin:"3px 0 0 5px" }}>
+                  <StarIcon />
+                  <Typography
+                    sx={{ fontWeight: "medium", margin: "3px 0 0 5px" }}
+                  >
                     {HHRating.toFixed(1)}
                   </Typography>
                 </Stack>
@@ -178,12 +180,12 @@ const FavoritesHHCard = ({
           </Box>
         </Card>
       </Box>
-      <ConfirmationBox
+      <ConfirmPopup
         open={open}
         setOpen={setOpen}
         title="Are you sure?"
-        content="Are you sure you want to remove this from your favoritess list?"
-        setIsOK={setIsOK}
+        text="Are you sure you want to remove this from your favoritess list?"
+        controlfunction={handleRemoveFavorites}
       />
     </ThemeProvider>
   );

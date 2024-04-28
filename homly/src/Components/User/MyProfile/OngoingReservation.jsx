@@ -5,7 +5,10 @@ import dayjs from "dayjs";
 
 export default function OngoingReservation({ reservation }) {
   return (
-    <Stack direction="column" sx={{ height: { md: "380px" } }}>
+    <Stack
+      direction="column"
+      sx={{ height: { md: "380px" }, overflowY: { xs: "none", md: "scroll" } }}
+    >
       {reservation.length > 0
         ? reservation.map((reserv, index) => {
             return (
