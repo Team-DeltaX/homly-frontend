@@ -33,6 +33,8 @@ export default function ScrollDialog({ name, id }) {
   const [hallPrice, setHallPrice] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
   const [NoOfAdults, setNoOfAdults] = useState(0);
+  const [hallNoOfAdults, setHallNoOfAdults] = useState(0);
+  const [hallNoOfChildren, setHallNoOfChildren] = useState(0);
   const [NoOfChildren, setNoOfChildren] = useState(0);
   const [NoOfRooms, setNoOfRooms] = useState(0);
   const [NoOfHalls, setNoOfHalls] = useState(0);
@@ -40,7 +42,9 @@ export default function ScrollDialog({ name, id }) {
   const [CheckoutDate, setCheckoutDate] = useState(dayjs().add(6, "day"));
   const [reserveDisabled, setReserveDisabled] = useState(false); // State to manage disable state of reserve button
   const [roomCodes, setRoomCodes] = useState([]);
+  const [hallCodes, setHallCodes] = useState([]);
   const [room, setRoom] = useState([]);
+  const [hall, setHall] = useState([]);
 
   useEffect(() => {
 
@@ -55,6 +59,21 @@ export default function ScrollDialog({ name, id }) {
       console.log("available room", res.data.availableRooms);
     });
   }, [id, CheckinDate, CheckoutDate]);
+
+  //get available halls
+  useEffect(() => {
+    AxiosClient.get("/user/reservation/availableHalls", {
+      params: {
+        holidayHomeId: id,
+        checkinDate: CheckinDate,
+        checkoutDate: CheckoutDate,
+      },
+    }).then((res) => {
+      setHall(res.data.availableHalls);
+      console.log("available halls", res.data.availableHalls);
+    });
+  }, [id, CheckinDate, CheckoutDate]);
+
 
   const [errorStatus, setErrorStatus] = useState({
     isOpen: false,
@@ -96,6 +115,8 @@ export default function ScrollDialog({ name, id }) {
       CheckinDate: CheckinDate,
       CheckoutDate: CheckoutDate,
       NoOfAdults: NoOfAdults,
+      hallNoOfAdults: hallNoOfAdults,
+      hallNoOfChildren: hallNoOfChildren,
       NoOfChildren: NoOfChildren,
       NoOfRooms: NoOfRooms,
       NoOfHalls: NoOfHalls,
@@ -104,6 +125,7 @@ export default function ScrollDialog({ name, id }) {
       Price: roomPrice + hallPrice,
       IsPaid: false,
       RoomCodes: roomCodes,
+      HallCodes: hallCodes,
     };
 
     AxiosClient
@@ -238,7 +260,22 @@ export default function ScrollDialog({ name, id }) {
                   holidayHomeId={id}
                   room={room}
                 />
-                <AvailableHallsPopUp />
+                <AvailableHallsPopUp 
+                  margin="dense"
+                  NoOfHalls={NoOfHalls}
+                  setNoOfHalls={setNoOfHalls}
+                  hallCodes={hallCodes}
+                  setHallCodes={setHallCodes}
+                  hallNoOfAdults={hallNoOfAdults}
+                  setHallNoOfAdults={setHallNoOfAdults}
+                  hallNoOfChildren={hallNoOfChildren}
+                  setHallNoOfChildren={setHallNoOfChildren}
+                  hallPrice={hallPrice}
+                  setHallPrice={setHallPrice}
+                  holidayHomeName={name}
+                  holidayHomeId={id}
+                  hall={hall}
+                />
               </Stack>
               <Box component="section" sx={{ mt: 1 }}>
                 <Typography variant="h6" gutterBottom>
@@ -334,6 +371,34 @@ export default function ScrollDialog({ name, id }) {
                   />
                 </Typography>
               </Box>
+              <Box component="section">
+                <Typography variant="h6" gutterBottom>
+                  Halls :
+                  <Typography
+                    variant="h5"
+                    gutterBottom
+                    style={{
+                      display: "inline-block",
+                      marginLeft: "10px",
+                      color: "green",
+                    }}
+                  ></Typography>
+                  {/* show array value */}
+                  {hallCodes.map((hallCode) => (
+                    <Typography
+                      variant="h5"
+                      gutterBottom
+                      style={{
+                        display: "inline-block",
+                        marginLeft: "10px",
+                        color: "green",
+                      }}
+                    >
+                      {hallCode}
+                    </Typography>
+                  ))}
+                </Typography>
+              </Box>
               <Box component="section" sx={{ mt: 1 }}>
                 <Typography variant="h6" gutterBottom>
                   Adults count for Rooms (Maximum) :
@@ -409,6 +474,83 @@ export default function ScrollDialog({ name, id }) {
                     />
                   </Typography>
                 </Typography>
+              </Box>
+              <Box component="section" sx={{ mt: 1 }}>
+                    <Typography variant="h6" gutterBottom>
+                      Adults count for Halls (Maximum) :
+                      <Typography
+                        variant="h5"
+                        gutterBottom
+                        style={{
+                          display: "inline-block",
+                          marginLeft: "10px",
+                          color: "green",
+                        }}
+                      >
+                        <TextField
+                          required
+                          disabled
+                          type="number"
+                          onChange={(e) => {
+                            setHallNoOfAdults(e.target.value);
+                          }}
+                          value={hallNoOfAdults}
+                          sx={{
+                            "& .MuiOutlinedInput-root": {
+                              "& fieldset": {
+                                border: "none", // Change this line
+                              },
+                              "&:hover fieldset": {
+                                border: "none", // Change this line
+                              },
+                              "&.Mui-focused fieldset": {
+                                border: "none", // Change this line
+                              },
+                            },
+                            mt: -1.5,
+                          }}
+                        />
+                      </Typography>
+                    </Typography>
+                  </Box>
+              {/* maximum children count for halls */}
+              <Box component="section">
+                <Typography variant="h6" gutterBottom>
+                  Children count for Halls (Maximum) :
+                  <Typography
+                    variant="h5"
+                    gutterBottom
+                    style={{
+                      display: "inline-block",
+                      marginLeft: "10px",
+                      color: "green",
+                    }}
+                  >
+                    <TextField
+                      required
+                      disabled
+                      type="number"
+                      onChange={(e) => {
+                        setHallNoOfChildren(e.target.value);
+                      }}
+                      value={hallNoOfChildren}
+                      sx={{
+                        "& .MuiOutlinedInput-root": {
+                          "& fieldset": {
+                            border: "none", // Change this line
+                          },
+                          "&:hover fieldset": {
+                            border: "none", // Change this line
+                          },
+                          "&.Mui-focused fieldset": {
+                            border: "none", // Change this line
+                          },
+                        },
+                        mt: -1,
+                      }}
+                    />
+                  </Typography>
+                </Typography>	
               </Box>
               <Box component="section">
                 <Typography variant="h6" gutterBottom>
