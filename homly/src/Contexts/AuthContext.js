@@ -7,6 +7,7 @@ const AuthContextProvider = ({ children }) => {
   const [authServiceNumber, setAuthServiceNumber] = useState(null);
   const [isLogout, setIsLogout] = useState(false);
   const [role, setRole] = useState("User");
+  const [auth, setAuth] = useState({});
 
   return (
     <AuthContext.Provider
@@ -19,6 +20,7 @@ const AuthContextProvider = ({ children }) => {
         setIsLogout,
         role,
         setRole,
+        auth, setAuth
       }}
     >
       {children}
