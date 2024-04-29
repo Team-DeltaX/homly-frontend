@@ -7,7 +7,6 @@ export default function SearchResaltDrawer({
   setOpen,
   searchedHH,
   showSkeleton,
-  setShowSkeleton,
 }) {
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
@@ -30,13 +29,9 @@ export default function SearchResaltDrawer({
             Your Search result
           </Typography>
           {showSkeleton ? (
-            <>
-              <SerachResultCardSkeleton />
-              <SerachResultCardSkeleton />
-              <SerachResultCardSkeleton />
-              <SerachResultCardSkeleton />
-              <SerachResultCardSkeleton />
-            </>
+            [1, 2, 3, 4, 5].map((index) => {
+              return <SerachResultCardSkeleton key={index} />;
+            })
           ) : searchedHH && searchedHH.length > 0 ? (
             searchedHH.map((hh) => {
               return (
