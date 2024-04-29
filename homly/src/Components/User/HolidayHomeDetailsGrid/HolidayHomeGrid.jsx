@@ -4,8 +4,7 @@ import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Grid from '@mui/material/Unstable_Grid2';
-import holidayhome from '../../../Assets/images/holidayHome.jpg';
-import MainHolidayHomePhoto from './MainHolidayHomePhoto';
+import noImage from '../../../Assets/images/no image.jpg'
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -17,201 +16,16 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
   
 
-export default function HolidayHomeGrid() {
-    const [reservations, setReservations] = useState([
-    
-        {
-            img: holidayhome,
-            //isspecial: true,
-            receiptName: "Jhon Doe",
-            reciptTelephone: "0765678453",
-            recervationNO: '4501',
-            amount: '3500',
-            holidayhomename: 'Anuradhapura Lotus',
-            checkindate: '2024-03-01',
-            checoutdate: '2024-03-03',
-            holidayHomeAddress: "89/A, Anuradhapura, Malwathuoya",
-            noOfRooms: "3",
-            noOfHalls: "0",
-            roomId: "R001,R002,R003",
-            hallId: "",
-            reservedDate: "2024-01-12",
-            id: 1
-        }
-        // },
-        //     {
-        //         img: holidayhome,
-        //         //isspecial: true,
-        //         receiptName: "Jhon Doe",
-        //         reciptTelephone: "0765678453",
-        //         recervationNO: '4501',
-        //         amount: '3500',
-        //         holidayhomename: 'Anuradhapura Lotus by nipun',
-        //         checkindate: '2024-03-01',
-        //         checoutdate: '2024-03-03',
-        //         holidayHomeAddress: "89/A, Anuradhapura, Malwathuoya",
-        //         noOfRooms: "3",
-        //         noOfHalls: "0",
-        //         //const [roomId,setRoomId] = useState(["R001","R002","R003"]),
-        //         roomId: "R001,R002,R003",
-        //         hallId: "",
-        //         reservedDate: "2024-01-12",
-        //         id: 2
-        //     },
-        //     {
-        //         img: holidayhome,
-        //         //isspecial: true,
-        //         receiptName: "Jhon Doe",
-        //         reciptTelephone: "0765678453",
-        //         recervationNO: '4501',
-        //         amount: '3500',
-        //         holidayhomename: 'Anuradhapura Lotus by nipun',
-        //         checkindate: '2024-03-01',
-        //         checoutdate: '2024-03-03',
-        //         holidayHomeAddress: "89/A, Anuradhapura, Malwathuoya",
-        //         noOfRooms: "3",
-        //         noOfHalls: "0",
-        //         roomId: "R001,R002,R003",
-        //         hallId: "",
-        //         reservedDate: "2024-01-12",
-        //         id: 3
-        //     },
-        //     {
-        //         img: holidayhome,
-        //         //isspecial: true,
-        //         receiptName: "Jhon Doe",
-        //         reciptTelephone: "0765678453",
-        //         recervationNO: '4501',
-        //         amount: '3500',
-        //         holidayhomename: 'Anuradhapura Lotus by nipun',
-        //         checkindate: '2024-03-01',
-        //         checoutdate: '2024-03-03',
-        //         holidayHomeAddress: "89/A, Anuradhapura, Malwathuoya",
-        //         noOfRooms: "3",
-        //         noOfHalls: "0",
-        //         roomId: "R001,R002,R003",
-        //         hallId: "",
-        //         reservedDate: "2024-01-12",
-        //         id: 4
-        //     },
-        //     {
-        //         img: holidayhome,
-        //         //isspecial: true,
-        //         receiptName: "Jhon Doe",
-        //         reciptTelephone: "0765678453",
-        //         recervationNO: '4501',
-        //         amount: '3500',
-        //         holidayhomename: 'Anuradhapura Lotus by nipun',
-        //         checkindate: '2024-03-01',
-        //         checoutdate: '2024-03-03',
-        //         holidayHomeAddress: "89/A, Anuradhapura, Malwathuoya",
-        //         noOfRooms: "3",
-        //         noOfHalls: "0",
-        //         roomId: "R001,R002,R003",
-        //         hallId: "",
-        //         reservedDate: "2024-01-12",
-        //         id: 5
-        //     },
-        //     {
-        //         img: holidayhome,
-        //         //isspecial: true,
-        //         receiptName: "Jhon Doe",
-        //         reciptTelephone: "0765678453",
-        //         recervationNO: '4501',
-        //         amount: '3500',
-        //         holidayhomename: 'Anuradhapura Lotus by nipun',
-        //         checkindate: '2024-03-01',
-        //         checoutdate: '2024-03-03',
-        //         holidayHomeAddress: "89/A, Anuradhapura, Malwathuoya",
-        //         noOfRooms: "3",
-        //         noOfHalls: "0",
-        //         roomId: "R001,R002,R003",
-        //         hallId: "",
-        //         reservedDate: "2024-01-12",
-        //         id: 6
-        //     },
-        //     {
-        //         img: holidayhome,
-        //         //isspecial: true,
-        //         receiptName: "Jhon Doe",
-        //         reciptTelephone: "0765678453",
-        //         recervationNO: '4501',
-        //         amount: '3500',
-        //         holidayhomename: 'kurunagala Lotus by nipun',
-        //         checkindate: '2024-03-01',
-        //         checoutdate: '2024-03-03',
-        //         holidayHomeAddress: "89/A, Anuradhapura, Malwathuoya",
-        //         noOfRooms: "3",
-        //         noOfHalls: "0",
-        //         roomId: "R001,R002,R003",
-        //         hallId: "",
-        //         reservedDate: "2024-01-12",
-        //         id: 7
-        //     },
-        //     {
-        //         img: holidayhome,
-        //         //isspecial: true,
-        //         receiptName: "Jhon Doe",
-        //         reciptTelephone: "0765678453",
-        //         recervationNO: '4501',
-        //         amount: '3500',
-        //         holidayhomename: 'Anuradhapura Lotus',
-        //         checkindate: '2024-03-01',
-        //         checoutdate: '2024-03-03',
-        //         holidayHomeAddress: "89/A, Anuradhapura, Malwathuoya",
-        //         noOfRooms: "3",
-        //         noOfHalls: "0",
-        //         roomId: "R001,R002,R003",
-        //         hallId: "",
-        //         reservedDate: "2024-01-12",
-        //         id: 8
-        //     },
-        //     {
-        //         img: holidayhome,
-        //         //isspecial: true,
-        //         receiptName: "Jhon Doe",
-        //         reciptTelephone: "0765678453",
-        //         recervationNO: '4501',
-        //         amount: '3500',
-        //         holidayhomename: 'Anuradhapura Lotus by nipun',
-        //         checkindate: '2024-03-01',
-        //         checoutdate: '2024-03-03',
-        //         holidayHomeAddress: "89/A, Anuradhapura, Malwathuoya",
-        //         noOfRooms: "3",
-        //         noOfHalls: "0",
-        //         roomId: "R001,R002,R003",
-        //         hallId: "",
-        //         reservedDate: "2024-01-12",
-        //         id: 9
-        //     },
-        //     {
-        //         img: holidayhome,
-        //         //isspecial: true,
-        //         receiptName: "Jhon Doe",
-        //         reciptTelephone: "0765678453",
-        //         recervationNO: '4501',
-        //         amount: '3500',
-        //         holidayhomename: 'Anuradhapura Lotus by nipun',
-        //         checkindate: '2024-03-01',
-        //         checoutdate: '2024-03-03',
-        //         holidayHomeAddress: "89/A, Anuradhapura, Malwathuoya",
-        //         noOfRooms: "3",
-        //         noOfHalls: "0",
-        //         roomId: "R001,R002,R003",
-        //         hallId: "",
-        //         reservedDate: "2024-01-12",
-        //         id: 10
-        //     }
-      ])
+export default function HolidayHomeGrid({MainImage,Image1,Image2}) {
   return (
     <Grid container spacing={2}>
         <Grid md={8} sm={12}>
-            <img className="reservation-photo" src={holidayhome} alt="HH PHOTO 1" width={"100%"} height={"460vh"} style={{ borderRadius: '2%' }}/>
+            <img className="reservation-photo" src={MainImage?MainImage:noImage} alt="HH PHOTO 1" width={"100%"} height={"460vh"} style={{ borderRadius: '2%' }}/>
         </Grid>
         <Grid md={4} sm={12}>
             <Stack spacing={2}>
-                <img className="reservation-photo" src={holidayhome} alt="HH PHOTO 2" width={"100%"} height={"222vh"} style={{ borderRadius: '4%' }}/>
-                <img className="reservation-photo" src={holidayhome} alt="HH PHOTO 3" width={"100%"} height={"222vh"} style={{ borderRadius: '4%' }}/>
+                <img className="reservation-photo" src={Image1?Image1:noImage} alt="HH PHOTO 2" width={"100%"} height={"222vh"} style={{ borderRadius: '4%' }}/>
+                <img className="reservation-photo" src={Image2?Image2:noImage} alt="HH PHOTO 3" width={"100%"} height={"222vh"} style={{ borderRadius: '4%' }}/>
             </Stack>
         </Grid>
     </Grid> 
