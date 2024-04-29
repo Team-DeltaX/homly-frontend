@@ -22,7 +22,7 @@ import AxiosClient from "../services/AxiosClient";
 import { AuthContext } from "../Contexts/AuthContext";
 
 export default function AdminLoginPage() {
-  const { setIsLogged,setRole, setAuth } = useContext(AuthContext)
+  const { setIsLogged } = useContext(AuthContext);
   const [adminId, setAdminId] = useState("");
   const [password, setPassword] = useState("");
 
@@ -49,35 +49,22 @@ export default function AdminLoginPage() {
           });
 
           if (res.data.role === "PrimaryAdmin") {
-            setAuth({
-              isLogged: true,
-              role: "PrimaryAdmin",
-              userId: adminId,
-              token: res.data.token,
-            });
-            setRole("PrimaryAdmin");
-            localStorage.setItem("role", "PrimaryAdmin");
+            sessionStorage.removeItem("role");
+            sessionStorage.setItem("role", "PrimaryAdmin");
             Navigate("/Primaryadmin/Dashboard");
           } else {
             if (res.data.verified) {
-              setAuth({
-                isLogged: true,
-                role: "LocationAdmin",
-                userId: adminId,
-                token: res.data.token,
-              });
-              setRole("LocationAdmin");
-              localStorage.removeItem("role");
-              localStorage.setItem("role", "LocationAdmin");
+              sessionStorage.removeItem("role");
+              sessionStorage.setItem("role", "LocationAdmin");
               Navigate("/Locationadmin/Dashboard");
             } else {
               setOpen(true);
             }
           }
           setIsLogged(true);
-          localStorage.setItem("isLogged", true);
-          localStorage.setItem("userId", adminId);
-          localStorage.setItem("token", res.data.token);
+          sessionStorage.setItem("isLogged", true);
+          sessionStorage.setItem("userId", adminId);
+          sessionStorage.setItem("token", res.data.token);
           setPassword("");
         } else {
           setErrorStatus({

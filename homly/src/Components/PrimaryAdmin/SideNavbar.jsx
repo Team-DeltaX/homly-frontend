@@ -20,6 +20,7 @@ import DoNotDisturbAltIcon from "@mui/icons-material/DoNotDisturbAlt";
 import SpeakerNotesIcon from "@mui/icons-material/SpeakerNotes";
 import CloseIcon from "@mui/icons-material/Close";
 import theme from "../../HomlyTheme";
+import { useNavigate } from "react-router-dom";
 
 export default function SideNavbar({ setShowNav }) {
   const [selectedMenuItem, setSelectedMenuItem] = React.useState("");
@@ -32,6 +33,12 @@ export default function SideNavbar({ setShowNav }) {
 
   const closeNav = () => {
     setShowNav("nav_grid_deactive");
+  };
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    closeNav();
+    sessionStorage.clear();
+    navigate("/admin/login");
   };
 
   return (
@@ -372,11 +379,13 @@ export default function SideNavbar({ setShowNav }) {
               </Typography>
             </Box>
             <Box
+              onclick={{ handleLogout }}
               sx={{
                 display: "flex",
                 marginBottom: "35px",
                 marginTop: "10px",
                 gap: "3px",
+                cursor: "pointer",
               }}
             >
               <LogoutOutlinedIcon
