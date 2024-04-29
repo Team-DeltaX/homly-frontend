@@ -19,6 +19,8 @@ const SearchBarHome = () => {
 
   const handleSearch = () => {
     setOpenDrawer(true);
+    setShowSkeleton(true);
+    setSearchedHH([]);
     AxiosClient.get("/user/auth/holidayhomes/search", {
       params: {
         district: district,
