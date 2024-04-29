@@ -1,12 +1,12 @@
 import React from "react";
-import { useState, createContext, useEffect } from "react";
-import AxiosClient from "../services/AxiosClient";
+import { useState, createContext } from "react";
 export const AuthContext = createContext();
 
 const AuthContextProvider = ({ children }) => {
   const [isLogged, setIsLogged] = useState(false);
   const [authServiceNumber, setAuthServiceNumber] = useState(null);
   const [isLogout, setIsLogout] = useState(false);
+  const [role, setRole] = useState("User");
 
   return (
     <AuthContext.Provider
@@ -17,6 +17,8 @@ const AuthContextProvider = ({ children }) => {
         setAuthServiceNumber,
         isLogout,
         setIsLogout,
+        role,
+        setRole,
       }}
     >
       {children}

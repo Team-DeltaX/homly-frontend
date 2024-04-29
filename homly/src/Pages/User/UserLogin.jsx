@@ -33,7 +33,7 @@ const Img = styled("img")({
 });
 
 const UserLogin = () => {
-  const { setIsLogged, setAuthServiceNumber } = useContext(AuthContext);
+  const { setIsLogged, setAuthServiceNumber,setRole } = useContext(AuthContext);
   const [serviceNo, setServiceNo] = useState("");
   const [password, setPassword] = useState("");
   const [open, setOpen] = useState(false);
@@ -60,6 +60,8 @@ const UserLogin = () => {
           });
           setIsLogged(true);
           localStorage.setItem("isLogged", true);
+          setRole("User");
+          localStorage.setItem("role", "User");
           setAuthServiceNumber(serviceNo);
           localStorage.setItem("userId", serviceNo);
           localStorage.setItem("token", res.data.token);

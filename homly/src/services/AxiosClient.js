@@ -29,8 +29,9 @@ AxiosClient.interceptors.response.use(
   (error) => {
     if (error.response && error.response.status === 401) {
       localStorage.setItem("isLogged", false);
-      // localStorage.removeItem("token");
-      // localStorage.removeItem("userId");
+      localStorage.removeItem("token");
+      localStorage.removeItem("userId");
+      localStorage.removeItem("role");
       if(error.response.data.role === "admin"){
         window.location.href = "/admin/login";
       }else{

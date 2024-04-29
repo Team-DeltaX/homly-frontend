@@ -22,7 +22,7 @@ import AxiosClient from "../services/AxiosClient";
 import { AuthContext } from "../Contexts/AuthContext";
 
 export default function AdminLoginPage() {
-  const { setIsLogged } = useContext(AuthContext)
+  const { setIsLogged,setRole } = useContext(AuthContext)
   const [adminId, setAdminId] = useState("");
   const [password, setPassword] = useState("");
 
@@ -49,9 +49,13 @@ export default function AdminLoginPage() {
           });
 
           if (res.data.role === "PrimaryAdmin") {
+            setRole("PrimaryAdmin");
+            localStorage.setItem("role", "PrimaryAdmin");
             Navigate("/Primaryadmin/Dashboard");
           } else {
             if (res.data.verified) {
+              setRole("LocationAdmin");
+              localStorage.setItem("role", "LocationAdmin");
               Navigate("/Locationadmin/Dashboard");
             } else {
               setOpen(true);

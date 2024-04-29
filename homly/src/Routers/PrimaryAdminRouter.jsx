@@ -1,5 +1,6 @@
-import React, { lazy } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React, { lazy, useContext } from "react";
+import { Routes, Route } from "react-router-dom";
+import { AuthContext } from "../Contexts/AuthContext";
 
 const PrimaryDashboard = lazy(() =>
   import("../Pages/PrimaryAdmin/PrimaryDashboard")
@@ -29,20 +30,64 @@ const PrimaryViewAdmin = lazy(() =>
 const PrimaryAuthorizations = lazy(() =>
   import("../Pages/PrimaryAdmin/PrimaryAuthorizations")
 );
+const NotFoundPage = lazy(() => import("../Pages/NotFountPage"));
 
-const PrimaryAdminRouter = () => (
-  <Routes>
-    <Route path="/dashboard" element={<PrimaryDashboard />}></Route>
-    <Route path="/reservations" element={<PrimaryReservations />}></Route>
-    <Route path="/holidayhomes" element={<PrimaryHolidayHomes />}></Route>
-    <Route path="/report" element={<PrimaryReport />}></Route>
-    <Route path="/blacklistedusers/manage"element={<PrimaryManageBlacklistedUsers />}></Route>
-    <Route path="/blacklistedusers/history"element={<PrimaryBlacklistHistory />}></Route>
-    <Route path="/blacklistedusers/complaints"element={<PrimaryComplaints />}></Route>
-    <Route path="/addadmin" element={<PrimaryAddAdmin />}></Route>
-    <Route path="/viewadmin" element={<PrimaryViewAdmin />}></Route>
-    <Route path="/authorizations" element={<PrimaryAuthorizations />}></Route>
-  </Routes>
-);
+const PrimaryAdminRouter = () => {
+  const { role, isLogged } = useContext(AuthContext);
+  const validateRoute = () => {
+    return (
+      (isLogged === "true" || localStorage.getItem("isLogged") === "true") &&
+      (role === "PrimaryAdmin" || localStorage.getItem("role") === "PrimaryAdmin")
+    );
+  };
+  return (
+    <Routes>
+      <Route
+        path="/dashboard"
+        element={validateRoute() ? <PrimaryDashboard /> : <NotFoundPage />}
+      ></Route>
+      <Route
+        path="/reservations"
+        element={validateRoute() ? <PrimaryReservations /> : <NotFoundPage />}
+      ></Route>
+      <Route
+        path="/holidayhomes"
+        element={validateRoute() ? <PrimaryHolidayHomes /> : <NotFoundPage />}
+      ></Route>
+      <Route
+        path="/report"
+        element={validateRoute() ? <PrimaryReport /> : <NotFoundPage />}
+      ></Route>
+      <Route
+        path="/blacklistedusers/manage"
+        element={
+          validateRoute() ? <PrimaryManageBlacklistedUsers /> : <NotFoundPage />
+        }
+      ></Route>
+      <Route
+        path="/blacklistedusers/history"
+        element={
+          validateRoute() ? <PrimaryBlacklistHistory /> : <NotFoundPage />
+        }
+      ></Route>
+      <Route
+        path="/blacklistedusers/complaints"
+        element={validateRoute() ? <PrimaryComplaints /> : <NotFoundPage />}
+      ></Route>
+      <Route
+        path="/addadmin"
+        element={validateRoute() ? <PrimaryAddAdmin /> : <NotFoundPage />}
+      ></Route>
+      <Route
+        path="/viewadmin"
+        element={validateRoute() ? <PrimaryViewAdmin /> : <NotFoundPage />}
+      ></Route>
+      <Route
+        path="/authorizations"
+        element={validateRoute() ? <PrimaryAuthorizations /> : <NotFoundPage />}
+      ></Route>
+    </Routes>
+  );
+};
 
 export default PrimaryAdminRouter;

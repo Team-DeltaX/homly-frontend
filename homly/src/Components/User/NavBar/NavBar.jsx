@@ -63,6 +63,7 @@ const NavBar = ({ refContactUS, position }) => {
         }
       })
       .catch(() => {});
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleOpenUserMenu = (event) => {
