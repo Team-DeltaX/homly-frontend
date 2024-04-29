@@ -10,13 +10,14 @@ import PreviewIcon from "@mui/icons-material/Preview";
 import theme from "../../HomlyTheme";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
-import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import ConfirmPopup from "./ConfirmPopup";
 import AxiosClient from "../../services/AxiosClient";
+import { SocketioContext } from "../../Contexts/SocketioContext";
 
 const AuthorizationsCard = (props) => {
   const [open, Setopen] = useState(false);
+  const { socket } = useContext(SocketioContext);
 
   const approve = () => {
   AxiosClient
@@ -31,6 +32,14 @@ const AuthorizationsCard = (props) => {
       .then((res) => {
         props.get_pending();
         props.Setopensn(true);
+        //sent approvel notification to location admin
+        socket.emit("newNotification", {
+          senderId: localStorage.getItem("userId"),
+          receiverId: props.data.AdminNo,
+          data: `${props.data.Name} Holiday Home has been approved`,
+          type: "Authorization Denied",
+          time: new Date(),
+        });
       })
       .catch((error) => {
         props.opensnE(true);
@@ -54,6 +63,13 @@ const AuthorizationsCard = (props) => {
         console.log("rejection done");
         props.get_pending();
         Setopen(false);
+        socket.emit("newNotification", {
+          senderId: localStorage.getItem("userId"),
+          receiverId: props.data.AdminNo,
+          data: `${props.data.Name} Holiday Home has been Declined`,
+          type: "Authorization Denied",
+          time: new Date(),
+        });
       })
       .catch((error) => {
         props.opensnE(true);

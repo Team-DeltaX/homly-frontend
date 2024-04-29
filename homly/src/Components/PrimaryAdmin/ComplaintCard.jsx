@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import theme from "../../HomlyTheme";
 
+
 const ComplaintCard = (props) => {
   // extract only date from database created at
   const dateTimeString = props.data.created_at;

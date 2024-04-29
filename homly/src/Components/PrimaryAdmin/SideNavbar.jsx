@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ThemeProvider, styled } from "@mui/material/styles";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import { Typography } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo1 from "../../Assets/images/logo1.png";
 import "./Css/navbar.css";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
@@ -20,11 +20,13 @@ import DoNotDisturbAltIcon from "@mui/icons-material/DoNotDisturbAlt";
 import SpeakerNotesIcon from "@mui/icons-material/SpeakerNotes";
 import CloseIcon from "@mui/icons-material/Close";
 import theme from "../../HomlyTheme";
-import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../Contexts/AuthContext";
+
+
 
 export default function SideNavbar({ setShowNav }) {
   const [selectedMenuItem, setSelectedMenuItem] = React.useState("");
-
+  const { user } = useContext(AuthContext);
   useEffect(() => {
     const currentUrl = window.location.href;
     const urlArray = currentUrl.split("/");
@@ -389,9 +391,13 @@ export default function SideNavbar({ setShowNav }) {
               }}
             >
               <LogoutOutlinedIcon
-                sx={{ color: "grey5", textShadow: "unset" }}
+                sx={{ color: "grey5", textShadow: "unset",cursor:"pointer" }}
+                onClick={handleLogout}
+                cursor="pointer"
               />
-              <Typography variant="p" sx={{ color: "grey1" }}>
+              <Typography variant="p" sx={{ color: "grey1",cursor:"pointer" }}
+              onClick={handleLogout}
+              >
                 Log Out
               </Typography>
             </Box>

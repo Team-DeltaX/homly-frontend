@@ -17,6 +17,7 @@ const PrimaryComplaints = () => {
   const [prevcomplaints, setPrevcomplaints] = useState([]);
   const [opensn, SetOpensn] = useState(false);
   const [opensnE, SetOpensnE] = useState(false);
+  const [openNotifySnack,SetopenNotifySncak]=useState(false);
 
   const handlepopup = () => {
     setpopup(!popup);
@@ -80,6 +81,8 @@ const PrimaryComplaints = () => {
             popup={popup}
             SetOpensn={SetOpensn}
             SetOpensnE={SetOpensnE}
+            openNotifySnack={openNotifySnack}
+            SetopenNotifySncak={SetopenNotifySncak}
           />
         )}
 
@@ -112,7 +115,13 @@ const PrimaryComplaints = () => {
                 isOpen={opensnE}
                 setIsOpen={SetOpensnE}
                 type="error"
-                message={"errr occured!"}
+                message={"error occured!"}
+              />
+              <Snackbarp
+                isOpen={openNotifySnack}
+                setIsOpen={SetopenNotifySncak}
+                type="success"
+                message={"Warning sent Sucessfully!"}
               />
 
               <Box
