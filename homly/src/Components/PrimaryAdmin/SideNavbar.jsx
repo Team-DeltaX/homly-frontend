@@ -22,19 +22,11 @@ import CloseIcon from "@mui/icons-material/Close";
 import theme from "../../HomlyTheme";
 import { AuthContext } from "../../Contexts/AuthContext";
 
+
+
 export default function SideNavbar({ setShowNav }) {
   const [selectedMenuItem, setSelectedMenuItem] = React.useState("");
-  const { user, setIsLogout } = useContext(AuthContext);
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    setIsLogout(true);
-    localStorage.removeItem("token");
-    localStorage.removeItem("userId");
-    localStorage.setItem("isLogged", false);
-    navigate("/");
-  };
-
+  const { user } = useContext(AuthContext);
   useEffect(() => {
     const currentUrl = window.location.href;
     const urlArray = currentUrl.split("/");
@@ -43,6 +35,12 @@ export default function SideNavbar({ setShowNav }) {
 
   const closeNav = () => {
     setShowNav("nav_grid_deactive");
+  };
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    closeNav();
+    sessionStorage.clear();
+    navigate("/admin/login");
   };
 
   return (
@@ -383,11 +381,13 @@ export default function SideNavbar({ setShowNav }) {
               </Typography>
             </Box>
             <Box
+              onclick={{ handleLogout }}
               sx={{
                 display: "flex",
                 marginBottom: "35px",
                 marginTop: "10px",
                 gap: "3px",
+                cursor: "pointer",
               }}
             >
               <LogoutOutlinedIcon

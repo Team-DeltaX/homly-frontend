@@ -44,7 +44,7 @@ const MyProfile = () => {
   const [value, setValue] = useState(0);
 
   useEffect(() => {
-    const selectedTab = localStorage.getItem("selectedTab");
+    const selectedTab = sessionStorage.getItem("selectedTab");
     if (selectedTab) {
       setValue(parseInt(selectedTab));
     }
@@ -52,7 +52,7 @@ const MyProfile = () => {
 
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
-    localStorage.setItem("selectedTab", newValue);
+    sessionStorage.setItem("selectedTab", newValue);
   };
 
   const bottomTabLable = (name, icon) => (

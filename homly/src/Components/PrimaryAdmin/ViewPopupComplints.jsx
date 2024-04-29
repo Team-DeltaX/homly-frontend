@@ -363,7 +363,7 @@ const ViewPopupComplaints = (props) => {
                   onClick={() => {
                     //send notification
                     socket.emit("newNotification", {
-                      senderId: localStorage.getItem("userId"),
+                      senderId: sessionStorage.getItem("userId"),
                       receiverId: props.selecteduser.ServiceNo,
                       data: "You Are Warned By Homly Adminstation",
                       type: "Authorization Denied",
