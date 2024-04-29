@@ -1,15 +1,23 @@
-import React, { useState } from "react";
+import React from "react";
 import ReservationCard from "../ReservationCard/ReservationCard";
 import { Box, Stack } from "@mui/material";
-import AddReviewPopup from "../Review/AddReviewPopup";
+import ReservationCardSkeleton from "../Skeleton/ReservationCardSkeleton";
 
-export default function PastReservation({ reservation, setIsAddReview }) {
+export default function PastReservation({
+  reservation,
+  setIsAddReview,
+  showSkeleton,
+}) {
   return (
     <Stack
       direction="column"
       sx={{ height: { md: "380px" }, overflowY: { xs: "none", md: "scroll" } }}
     >
-      {reservation.length > 0
+      {showSkeleton
+        ? [1, 2, 3].map((index) => {
+            return <ReservationCardSkeleton key={index} />;
+          })
+        : reservation.length > 0
         ? reservation.map((reserv, index) => {
             return (
               <Box sx={{ marginTop: "10px" }} key={index}>

@@ -11,7 +11,6 @@ import {
   Tabs,
   Tab,
 } from "@mui/material";
-
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ListAltIcon from "@mui/icons-material/ListAlt";

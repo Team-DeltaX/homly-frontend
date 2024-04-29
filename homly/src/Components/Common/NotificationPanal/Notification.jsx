@@ -45,7 +45,7 @@ const Notification = ({
     } else {
       setShowtime(`${Math.floor(diff / 525600)} years ago`);
     }
-  }, []);
+  }, [showtime, time]);
 
   const removeNotification = () => {
     setIsRemoving(true);

@@ -14,12 +14,10 @@ const AuthContextProvider = ({ children }) => {
   });
 
   useEffect(() => {
-    console.log(isLogged, localStorage.getItem("isLogged"), "isLogged");
     if (isLogged || localStorage.getItem("isLogged") === "true") {
       AxiosClient.get("/user/auth/details")
         .then((res) => {
           if (res) {
-            console.log(res);
             setUser({
               ...user,
               serviceNo: res.data.serviceNo,

@@ -10,20 +10,23 @@ import {
 import theme from "../../../HomlyTheme";
 import AxiosClient from "../../../services/AxiosClient";
 import FavoritesHHCard from "../HHCard/FavoritesHHCard";
+import FavoritesHHCardSkeleton from "../Skeleton/FavoritesHHCardSkeleton";
 
 const FavoritesHH = () => {
-      
   const [favoritesHH, setFavoritesHH] = useState([]);
   const [isChanged, setIsChanged] = useState(false);
+  const [showSkeleton, setShowSkeleton] = useState(true);
 
   useEffect(() => {
     AxiosClient.get("/user/auth/wishlist")
       .then((res) => {
         setFavoritesHH(res.data);
         setIsChanged(false);
+        setShowSkeleton(false);
       })
       .catch(() => {
         setFavoritesHH([]);
+        setShowSkeleton(false);
       });
   }, [isChanged]);
 
@@ -58,10 +61,14 @@ const FavoritesHH = () => {
                 sx={{
                   display: "flex",
                   flexWrap: "wrap",
-                  justifyContent:{ xs:"center",md:"flex-start"},
+                  justifyContent: { xs: "center", md: "flex-start" },
                 }}
               >
-                {favoritesHH.length > 0 ? (
+                {showSkeleton ? (
+                  [1, 2, 3, 4].map((index) => {
+                    return <FavoritesHHCardSkeleton key={index} />;
+                  })	
+                ) : favoritesHH.length > 0 ? (
                   favoritesHH.map((hh) => (
                     <FavoritesHHCard
                       key={hh.HolidayHomeId}
