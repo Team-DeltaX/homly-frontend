@@ -31,7 +31,12 @@ AxiosClient.interceptors.response.use(
       localStorage.setItem("isLogged", false);
       localStorage.removeItem("token");
       localStorage.removeItem("userId");
-      window.location.href = "/";
+      localStorage.removeItem("role");
+      if(error.response.data.role === "admin"){
+        window.location.href = "/admin/login";
+      }else{
+        window.location.href = "/";
+      }
     } else {
       return Promise.reject(error);
     }

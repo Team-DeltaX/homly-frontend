@@ -7,28 +7,22 @@ import {
   Stack,
   Button,
 } from "@mui/material/";
-
-import axios from "axios";
-
 import { Link, useNavigate } from "react-router-dom";
-
 import BadgeIcon from "@mui/icons-material/Badge";
 import PasswordIcon from "@mui/icons-material/Password";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-
 import InputTextWithIcon from "../Components/User/TextField/InputTextWithIcon";
 import InputPasswordWithIcon from "../Components/User/TextField/InputPasswordWithIcon";
 import ErrorSnackbar from "../Components/User/ErrorSnackbar";
 import AdminChangePasswordPopup from "../Components/User/AdminChangePasswordPopup";
 import theme from "../HomlyTheme";
-
 import logo from "../Assets/images/logo.png";
 import "./User/UserStyle.css";
 import AxiosClient from "../services/AxiosClient";
 import { AuthContext } from "../Contexts/AuthContext";
 
 export default function AdminLoginPage() {
-  const { setIsLogged } = useContext(AuthContext)
+  const { setIsLogged,setRole } = useContext(AuthContext)
   const [adminId, setAdminId] = useState("");
   const [password, setPassword] = useState("");
 
@@ -55,9 +49,13 @@ export default function AdminLoginPage() {
           });
 
           if (res.data.role === "PrimaryAdmin") {
+            setRole("PrimaryAdmin");
+            localStorage.setItem("role", "PrimaryAdmin");
             Navigate("/Primaryadmin/Dashboard");
           } else {
             if (res.data.verified) {
+              setRole("LocationAdmin");
+              localStorage.setItem("role", "LocationAdmin");
               Navigate("/Locationadmin/Dashboard");
             } else {
               setOpen(true);

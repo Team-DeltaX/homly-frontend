@@ -3,7 +3,8 @@ import { useContext, useEffect, useState } from "react";
 import DisabledAdminCard from "./DisabledAdminCard";
 import AutohideSnackbar from "../../Components/PrimaryAdmin/AutohideSnackbar";
 import { SearchContext } from "../../Contexts/primryadmin/Searchcontext";
-import axios from "axios";
+import AxiosClient from "../../services/AxiosClient";
+
 
 const DisabledAdminslist = () => {
   const { Search, SetSearch } = useContext(SearchContext);
@@ -24,8 +25,8 @@ const DisabledAdminslist = () => {
   };
 
   const fetchadmins = () => {
-    axios
-      .get(`${global.API_BASE_URL}/admin/auth/locationadmin/all`)
+    AxiosClient
+      .get(`/admin/auth/locationadmin/all`)
       .then((res) => {
         console.log(res.data);
         //reverse array to keep new ones first

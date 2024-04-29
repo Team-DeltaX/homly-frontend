@@ -8,15 +8,16 @@ import {
 } from "@mui/material";
 import theme from "../../HomlyTheme";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import AxiosClient from "../../services/AxiosClient";
+
 
 const BlacklistHistoryCard = (props) => {
   const [User, SetUser] = useState({});
   const [Employee, SetEmployee] = useState({});
   const fetchfromemployee = () => {
-    axios
+    AxiosClient
       .get(
-        `${global.API_BASE_URL}/admin/auth/locationadmin/employee/${props.data.ServiceNo}`
+        `/admin/auth/locationadmin/employee/${props.data.ServiceNo}`
       )
       .then((res) => {
         SetEmployee(res.data[0]);
@@ -27,9 +28,9 @@ const BlacklistHistoryCard = (props) => {
   };
 
   const fetchfromuser = () => {
-    axios
+    AxiosClient
       .get(
-        `${global.API_BASE_URL}/admin/auth/locationadmin/user/${props.data.ServiceNo}`
+        `/admin/auth/locationadmin/user/${props.data.ServiceNo}`
       )
       .then((res) => {
         SetUser(res.data[0]);

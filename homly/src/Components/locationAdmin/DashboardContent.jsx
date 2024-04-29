@@ -35,7 +35,7 @@ const DashboardContent = () => {
             count: 879,
             iconComponent: <PaidIcon sx={{fontSize:'2.8rem'}}/>,
           }
-        // Add more objects as needed for additional summaries
+
       ];
   return (
     <Grid container sx={{padding:'10px 30px'}}>
