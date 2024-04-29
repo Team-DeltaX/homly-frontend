@@ -33,7 +33,7 @@ const Img = styled("img")({
 });
 
 const UserLogin = () => {
-  const { setIsLogged, setAuthServiceNumber, setRole, setAuth } =
+  const { setIsLogged, setAuthServiceNumber } =
     useContext(AuthContext);
   const [serviceNo, setServiceNo] = useState("");
   const [password, setPassword] = useState("");
@@ -60,19 +60,12 @@ const UserLogin = () => {
             message: res.data.message,
           });
           setIsLogged(true);
-          setAuth({
-            isLogged: true,
-            role: "User",
-            userId: serviceNo,
-            token: res.data.token,
-          });
-          localStorage.setItem("isLogged", true);
-          setRole("User");
-          localStorage.setItem("role", "User");
           setAuthServiceNumber(serviceNo);
-          localStorage.setItem("userId", serviceNo);
-          localStorage.setItem("token", res.data.token);
-          localStorage.removeItem("selectedTab");
+          sessionStorage.setItem("role", "User");
+          sessionStorage.setItem("userId", serviceNo);
+          sessionStorage.setItem("token", res.data.token);
+          sessionStorage.setItem("isLogged", true);
+          sessionStorage.removeItem("selectedTab");
           Navigate("/Home");
         } else {
           setServiceNo("");

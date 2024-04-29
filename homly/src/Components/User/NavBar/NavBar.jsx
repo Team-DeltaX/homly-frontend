@@ -99,11 +99,7 @@ const NavBar = ({ refContactUS, position }) => {
   const handleLogout = () => {
     handleCloseUserMenu();
     setIsLogout(true);
-    localStorage.removeItem("token");
-    localStorage.removeItem("userId");
-    localStorage.removeItem("image");
-    localStorage.removeItem("selectedTab");
-    localStorage.setItem("isLogged", false);
+    sessionStorage.clear();
     navigate("/");
   };
 
@@ -254,7 +250,7 @@ const NavBar = ({ refContactUS, position }) => {
                   <MenuItem
                     onClick={() => {
                       handleCloseUserMenu();
-                      localStorage.removeItem("selectedTab");
+                      sessionStorage.removeItem("selectedTab");
                     }}
                     component={Link}
                     to="/myProfile"
