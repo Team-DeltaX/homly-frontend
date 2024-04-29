@@ -63,6 +63,13 @@ const AuthorizationsCard = (props) => {
         console.log("rejection done");
         props.get_pending();
         Setopen(false);
+        socket.emit("newNotification", {
+          senderId: localStorage.getItem("userId"),
+          receiverId: props.data.AdminNo,
+          data: `${props.data.Name} Holiday Home has been Declined`,
+          type: "Authorization Denied",
+          time: new Date(),
+        });
       })
       .catch((error) => {
         props.opensnE(true);
