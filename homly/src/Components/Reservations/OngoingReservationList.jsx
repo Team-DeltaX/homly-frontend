@@ -12,7 +12,7 @@ import AxiosClient from "../../services/AxiosClient";
 const OngoingReservationList = (props) => {
   const [reservations, setReservations] = useState([])
   const fetchreservations = () => {
-    AxiosClient.get("/user/reservation/ongoing")
+    AxiosClient.get("/admin/auth/reservation/ongoing")
       .then((res) => {
         console.log("fbnh fjnygfvfrvegbh",res.data);
          //reverse array to keep new ones first 
