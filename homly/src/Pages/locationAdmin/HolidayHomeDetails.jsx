@@ -20,9 +20,10 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import Select from "react-select";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-import axios from "axios";
+import axios, { Axios } from "axios";
 import dayjs from "dayjs";
 import Popup from "../../Components/Common/Popup";
+import AxiosClient from "../../services/AxiosClient";
 var isBetween = require("dayjs/plugin/isBetween");
 dayjs.extend(isBetween);
 
@@ -70,8 +71,9 @@ const HolidayHomeDetails = () => {
 
   //Holidayhomes list
   useEffect(() => {
-    axios
-      .get("http://localhost:8080/admin/auth/locationadmin/holidayhome/names")
+    AxiosClient.get(
+      "http://localhost:8080/admin/auth/locationadmin/holidayhome/names"
+    )
       .then((res) => {
         const data = res.data.names;
 
@@ -102,10 +104,9 @@ const HolidayHomeDetails = () => {
 
     console.log("idhol", id);
 
-    axios
-      .get(
-        `http://localhost:8080/admin/auth/locationadmin/holidayhome/reservation/${id}`
-      )
+    AxiosClient.get(
+      `http://localhost:8080/admin/auth/locationadmin/holidayhome/reservation/${id}`
+    )
       .then((res) => {
         const data = res.data.reservations;
         console.log("get", data);
@@ -173,11 +174,10 @@ const HolidayHomeDetails = () => {
         for (let i = 0; i < reservationIds.length; i++) {
           console.log("reservation id", reservationIds[i].id);
           let reservationId = { id: reservationIds[i].id };
-          axios
-            .get(
-              `http://localhost:8080/admin/auth/locationadmin/holidayhome/reserved/`,
-              { params: reservationId }
-            )
+          AxiosClient.get(
+            `http://localhost:8080/admin/auth/locationadmin/holidayhome/reserved/`,
+            { params: reservationId }
+          )
             .then((response) => {
               const data = response.data;
               setPaidRooms(data);
@@ -190,11 +190,10 @@ const HolidayHomeDetails = () => {
         for (let i = 0; i < reservationIds.length; i++) {
           console.log("reservation id", reservationIds[i].id);
           let reservationId = { id: reservationIds[i].id };
-          axios
-            .get(
-              `http://localhost:8080/admin/auth/locationadmin/holidayhome/reserved/`,
-              { params: reservationId }
-            )
+          AxiosClient.get(
+            `http://localhost:8080/admin/auth/locationadmin/holidayhome/reserved/`,
+            { params: reservationId }
+          )
             .then((response) => {
               const data = response.data;
               setPendingRooms(data);
