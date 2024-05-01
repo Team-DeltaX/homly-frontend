@@ -9,10 +9,10 @@ import ViewReservationCard from './ViewReservationCard';
 import axios from "axios";
 import AxiosClient from "../../services/AxiosClient";
 
-const OngoingReservationList = (props) => {
+const CancelledReservationList = (props) => {
   const [reservations, setReservations] = useState([])
   const fetchreservations = () => {
-    AxiosClient.get("/admin/auth/reservation/ongoing")
+    AxiosClient.get("/admin/auth/reservation/cancelled")
       .then((res) => {
         console.log("fbnh fjnygfvfrvegbh",res.data);
          //reverse array to keep new ones first 
@@ -37,4 +37,4 @@ const OngoingReservationList = (props) => {
   );
 }
  
-export default OngoingReservationList;
+export default CancelledReservationList;

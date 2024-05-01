@@ -25,6 +25,7 @@ export default function ScrollDialog({ name, id }) {
   const [open, setOpen] = React.useState(false);
   const [opened, setOpened] = React.useState(false);
   const [scroll, setScroll] = React.useState("paper");
+  const [reservationId, setReservationId] = React.useState("");
   const [HolidayHomeName, setHolidayHomeName] = useState("");
   const [HolidayHomeId, setHolidayHomeId] = useState("");
   const [holidayHomes, setHolidayHomes] = React.useState([]);
@@ -39,7 +40,7 @@ export default function ScrollDialog({ name, id }) {
   const [NoOfRooms, setNoOfRooms] = useState(0);
   const [NoOfHalls, setNoOfHalls] = useState(0);
   const [CheckinDate, setCheckinDate] = useState(dayjs().add(6, "day"));
-  const [CheckoutDate, setCheckoutDate] = useState(dayjs().add(6, "day"));
+  const [CheckoutDate, setCheckoutDate] = useState(dayjs().add(7, "day"));
   const [reserveDisabled, setReserveDisabled] = useState(false); // State to manage disable state of reserve button
   const [roomCodes, setRoomCodes] = useState([]);
   const [hallCodes, setHallCodes] = useState([]);
@@ -112,8 +113,8 @@ export default function ScrollDialog({ name, id }) {
 
     const data = {
       HolidayHome: id,
-      CheckinDate: CheckinDate,
-      CheckoutDate: CheckoutDate,
+      CheckinDate:CheckinDate,
+      CheckoutDate:CheckoutDate,
       NoOfAdults: NoOfAdults,
       hallNoOfAdults: hallNoOfAdults,
       hallNoOfChildren: hallNoOfChildren,
@@ -139,9 +140,28 @@ export default function ScrollDialog({ name, id }) {
           type: "success",
           message: "Reservation added successfully",
         });
+        console.log("anujjaasda"+res.data.message);
+        console.log("anujjaasdsdsda"+res.data.reservationId);
+        setReservationId(res.data.reservationId);
+        setCheckinDate(dayjs().add(6, "day"));
+        setCheckoutDate(dayjs().add(7, "day"));
         setOpen(false);
         setOpened(false);
         setPayNow(true);
+        setNoOfAdults(0);
+        setHallNoOfAdults(0);
+        setHallNoOfChildren(0);
+        setNoOfChildren(0);
+        setNoOfRooms(0);
+        setNoOfHalls(0);
+        setTotalPrice(roomPrice+hallPrice);
+        setRoomPrice(0);
+        setHallPrice(0);
+        setReserveDisabled(false);
+        setRoomCodes([]);
+        setHallCodes([]);
+        setRoom([]);
+        setHall([]);
       })
       .catch((error) => {
         setErrorStatus({
@@ -157,13 +177,29 @@ export default function ScrollDialog({ name, id }) {
 
   const handleCheckinDateChange = (newDate) => {
     setCheckinDate(newDate);
-    // Check if CheckinDate is after CheckoutDate
-    if (newDate.isAfter(CheckoutDate)) {
+    const nextDay = newDate.add(1, "day");
+    setCheckoutDate(nextDay);
+    setNoOfAdults(0);
+    setHallNoOfAdults(0);
+    setHallNoOfChildren(0);
+    setNoOfChildren(0);
+    setNoOfRooms(0);
+    setNoOfHalls(0);
+    setRoomPrice(0);
+    setHallPrice(0);
+    setTotalPrice(0);
+    setReserveDisabled(false);
+    setRoomCodes([]);
+    setHallCodes([]);
+    setRoom([]);
+    setHall([]);
+    const today = dayjs();
+    if (newDate.isBefore(today)) {
       setReserveDisabled(true); // Disable reserve button
       setErrorStatus({
         isOpen: true,
         type: "warning",
-        message: "Check-in date cannot be after Check-out date",
+        message: "Check-in date cannot be in the past",
       });
     } else {
       setReserveDisabled(false); // Enable reserve button
@@ -177,13 +213,26 @@ export default function ScrollDialog({ name, id }) {
 
   const handleCheckoutDateChange = (newDate) => {
     setCheckoutDate(newDate);
-    // Check if CheckinDate is after CheckoutDate
-    if (CheckinDate.isAfter(newDate)) {
+    setNoOfAdults(0);
+    setHallNoOfAdults(0);
+    setHallNoOfChildren(0);
+    setNoOfChildren(0);
+    setNoOfRooms(0);
+    setNoOfHalls(0);
+    setRoomPrice(0);
+    setHallPrice(0);
+    setTotalPrice(0);
+    setReserveDisabled(false);
+    setRoomCodes([]);
+    setHallCodes([]);
+    setRoom([]);
+    setHall([]);
+    if ((CheckinDate.isAfter(newDate)) || (CheckinDate.isSame(newDate))) {
       setReserveDisabled(true); // Disable reserve button
       setErrorStatus({
         isOpen: true,
         type: "warning",
-        message: "Check-in date cannot be after Check-out date",
+        message: "Check-in date cannot be same or after Check-out date",
       });
     } else {
       setReserveDisabled(false); // Enable reserve button
@@ -618,7 +667,6 @@ export default function ScrollDialog({ name, id }) {
                     onChange={(e) => {
                       setTotalPrice(e.target.value);
                     }}
-                    // totalPrice={roomPrice+hallPrice}
                     value={roomPrice + hallPrice}
                     sx={{
                       "& .MuiOutlinedInput-root": {
@@ -670,7 +718,9 @@ export default function ScrollDialog({ name, id }) {
         message={errorStatus.message}
         setIsOpen={(val) => setErrorStatus({ ...errorStatus, isOpen: val })}
       />
-      <PayNowPopup isOpen={PayNow} setIsOpen={setPayNow} />
+      {console.log("totalllls",(roomPrice+hallPrice))}
+      <PayNowPopup isOpen={PayNow} setIsOpen={setPayNow} reservationId={reservationId} price={totalPrice}/>
+      
     </React.Fragment>
   );
 }
