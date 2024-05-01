@@ -30,7 +30,7 @@ const PastReservationList = (props) => {
     <>
     <Box className="home">
       {reservations.map(reservation => (
-         <PastReservationCard holidayHome={reservation.holidayHome[0]} reservation={reservation.reservation} reservedRoom={reservation.reservedrooms} reservedHall={reservation.reservedhalls}/>
+         <PastReservationCard holidayHome={reservation.holidayHome[0]} reservation={reservation.reservation} reservedRoom={reservation.reservedrooms} reservedHall={reservation.reservedhalls} employeeName={reservation.employeeName[0]}/>
       ))}
     </Box>
     </>

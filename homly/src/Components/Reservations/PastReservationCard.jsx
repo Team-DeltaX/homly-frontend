@@ -14,49 +14,49 @@ import AddComplainPopUp from "../Reservations/AddComplainPopUp";
 
 
 const PastReservationCard = (props) => {
-  const [Employee, SetEmployee] = useState({});
+//  const [Employee, SetEmployee] = useState({});
   const [isSpecial, setIsSpecial] = useState(props.reservation.IsSpecial);
   const [isCancelled, setIsCancelled] = useState(props.reservation.IsCancelled);
-  const fetchfromemployee = () => {
-    AxiosClient.get(
-      `/admin/auth/locationadmin/employee/${props.reservation.ServiceNO}`
-    )
-      .then((res) => {
-        SetEmployee(res.data[0]);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-  useEffect(() => {
-    fetchfromemployee();
-  }, []);
-  const [value, setValue] = useState({
-    id: "",
-    name: "",
-  });
+  // const fetchfromemployee = () => {
+  //   AxiosClient.get(
+  //     `/admin/auth/locationadmin/employee/${props.reservation.ServiceNO}`
+  //   )
+  //     .then((res) => {
+  //       SetEmployee(res.data[0]);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
+  // useEffect(() => {
+  //   fetchfromemployee();
+  // }, []);
+  // const [value, setValue] = useState({
+  //   id: "",
+  //   name: "",
+  // });
 
-  useEffect(() => {
-    AxiosClient.get(
-      `/admin/auth/locationadmin/holidayhome/${props.reservation.HolidayHome}`
-    )
-      .then((res) => {
-        console.log("response", res.data.room);
-        if (Response) {
-          const homeDetails = res.data.homeDetails[0];
-          const contactNo = res.data.contactNo;
-          setValue({
-            id: homeDetails.HolidayHomeId || "",
-            name: homeDetails.Name || "",
-          });
-        } else {
-          console.log("No data found");
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching holiday homes:", error);
-      });
-  }, []);
+  // useEffect(() => {
+  //   AxiosClient.get(
+  //     `/admin/auth/locationadmin/holidayhome/${props.reservation.HolidayHome}`
+  //   )
+  //     .then((res) => {
+  //       console.log("response", res.data.room);
+  //       if (Response) {
+  //         const homeDetails = res.data.homeDetails[0];
+  //         const contactNo = res.data.contactNo;
+  //         setValue({
+  //           id: homeDetails.HolidayHomeId || "",
+  //           name: homeDetails.Name || "",
+  //         });
+  //       } else {
+  //         console.log("No data found");
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching holiday homes:", error);
+  //     });
+  // }, []);
   return (
     <Grid
       container
@@ -87,7 +87,7 @@ const PastReservationCard = (props) => {
           md={4}
           sx={{ justifyContent: "center", alignItems: "center" }}
         >
-          <h4>{Employee.name}</h4>
+          <h4>{props.employeeName.name}</h4>
           <p>Service number : {props.reservation.ServiceNO}</p>
           <p>Reservation Number {props.reservation.ReservationId}</p>
           <p>Amount {props.reservation.Price}</p>
@@ -122,7 +122,7 @@ const PastReservationCard = (props) => {
               reservation={props.reservation}
               reservedRoom={props.reservedRoom}
               reservedHall={props.reservedHall}
-              name={Employee.name}
+              //name={props.employeeName.name}
               holidayhome={props.holidayHome}
             />
             <AddComplainPopUp reservation={props.reservation} />
@@ -144,15 +144,4 @@ const PastReservationCard = (props) => {
   );
 };
 
-
 export default PastReservationCard;
-
-// <Stack
-// direction="row"
-// justifyContent="flex-end"
-// alignItems="center"
-// spacing={2}
-// > 
-// <ViewPopUp reservation={props.reservation} name = {Employee.name} />
-// <AddComplainPopUp reservation={props.reservation} />
-// </Stack>

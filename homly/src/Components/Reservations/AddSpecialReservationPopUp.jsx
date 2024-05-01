@@ -40,8 +40,7 @@ export default function AddSpecialReservationPopUp() {
     message: "",
   });
   const [CheckinDate, setCheckinDate] = useState(dayjs().add(6, "day"));
-
-  const [CheckoutDate, setCheckoutDate] = useState(dayjs().add(6, "day"));
+  const [CheckoutDate, setCheckoutDate] = useState(dayjs().add(7, "day")); 
 
   const handlesubmit = (e) => {
     const data = {
@@ -61,7 +60,7 @@ export default function AddSpecialReservationPopUp() {
     console.log("aruna", data);
     // axios
     //   .post("http://localhost:8080/user/specialreservation", data)
-    AxiosClient.post("/user/specialreservation", data)
+    AxiosClient.post("/admin/auth/specialreservation", data)
       .then((res) => {
         console.log("add special reservation successfully");
         setErrorStatus({
@@ -111,6 +110,7 @@ export default function AddSpecialReservationPopUp() {
         message: "no",
       });
     }
+    //setCheckoutDate(newDate.add(1, "day")); // Add one day to CheckinDate
   };
 
   const handleCheckoutDateChange = (newDate) => {

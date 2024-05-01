@@ -1,8 +1,5 @@
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
-import holidayhome from "../../Assets/images/holidayHome.jpg";
 import "./Reservation.css";
 import ViewPopUp from "./ViewPopup";
 import dayjs, { Dayjs } from "dayjs";
@@ -11,50 +8,50 @@ import axios from "axios";
 import Typography from "@mui/material/Typography";
 import AxiosClient from "../../services/AxiosClient";
 
-const OngoingReservationCard = (props) => {
-  const [Employee, SetEmployee] = useState({});
+const ViewReservationCard = (props) => {
+//  const [Employee, SetEmployee] = useState({});
   const [isSpecial, setIsSpecial] = useState(props.reservation.IsSpecial);
   const [isCancelled, setIsCancelled] = useState(props.reservation.IsCancelled);
-  const fetchfromemployee = () => {
-    AxiosClient.get(
-      `/admin/auth/locationadmin/employee/${props.reservation.ServiceNO}`
-    )
-      .then((res) => {
-        SetEmployee(res.data[0]);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-  useEffect(() => {
-    fetchfromemployee();
-  }, []);
-  const [value, setValue] = useState({
-    id: "",
-    name: "",
-  });
+  // const fetchfromemployee = () => {
+  //   AxiosClient.get(
+  //     `/admin/auth/locationadmin/employee/${props.reservation.ServiceNO}`
+  //   )
+  //     .then((res) => {
+  //       SetEmployee(res.data[0]);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
+  // useEffect(() => {
+  //   fetchfromemployee();
+  // }, []);
+  // const [value, setValue] = useState({
+  //   id: "",
+  //   name: "",
+  // });
 
-  useEffect(() => {
-    AxiosClient.get(
-      `/admin/auth/locationadmin/holidayhome/${props.reservation.HolidayHome}`
-    )
-      .then((res) => {
-        console.log("response", res.data.room);
-        if (Response) {
-          const homeDetails = res.data.homeDetails[0];
-          const contactNo = res.data.contactNo;
-          setValue({
-            id: homeDetails.HolidayHomeId || "",
-            name: homeDetails.Name || "",
-          });
-        } else {
-          console.log("No data found");
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching holiday homes:", error);
-      });
-  }, []);
+  // useEffect(() => {
+  //   AxiosClient.get(
+  //     `/admin/auth/locationadmin/holidayhome/${props.reservation.HolidayHome}`
+  //   )
+  //     .then((res) => {
+  //       console.log("response", res.data.room);
+  //       if (Response) {
+  //         const homeDetails = res.data.homeDetails[0];
+  //         const contactNo = res.data.contactNo;
+  //         setValue({
+  //           id: homeDetails.HolidayHomeId || "",
+  //           name: homeDetails.Name || "",
+  //         });
+  //       } else {
+  //         console.log("No data found");
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching holiday homes:", error);
+  //     });
+  // }, []);
   return (
     <Grid
       container
@@ -85,9 +82,10 @@ const OngoingReservationCard = (props) => {
           md={4}
           sx={{ justifyContent: "center", alignItems: "center" }}
         >
-          <h4>{Employee.name}</h4>
-          <p>Service number : {props.reservation.ServiceNO}</p>
+          <h4>{props.employeeName.name}</h4>
+          {/* <p>Service number : {props.reservation.ServiceNO}</p> */}
           <p>Reservation Number {props.reservation.ReservationId}</p>
+          <p>Contact Number : {props.employeeDetails.contact_number}</p>
           <p>Amount {props.reservation.Price}</p>
         </Grid>
         <Grid
@@ -120,10 +118,9 @@ const OngoingReservationCard = (props) => {
               reservation={props.reservation}
               reservedRoom={props.reservedRoom}
               reservedHall={props.reservedHall}
-              name={Employee.name}
+              //name={props.employeeName.name}
               holidayhome={props.holidayHome}
             />
-            {/* if reservation is special pass special */}
             {isSpecial ? (
               <Typography variant="button" color="green">
                 Special
@@ -141,4 +138,4 @@ const OngoingReservationCard = (props) => {
   );
 };
 
-export default OngoingReservationCard;
+export default ViewReservationCard;

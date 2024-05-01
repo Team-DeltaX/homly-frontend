@@ -1,12 +1,7 @@
 import { useEffect,useState } from "react";
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
-import holidayhome from '../../Assets/images/holidayHome.jpg';
 import './Reservation.css';
-import ViewPopUp from './ViewPopup';
-import SpeicalReservationCard from './SpecialReservationCard';
-import axios from "axios";
+import ViewReservationCard from "./ViewReservationCard";
 import AxiosClient from "../../services/AxiosClient";
 
 const SpeicalReservationList = (props) => {
@@ -30,7 +25,7 @@ const SpeicalReservationList = (props) => {
     <>
     <Box className="home">
       {reservations.map(reservation => (
-         <SpeicalReservationCard holidayHome={reservation.holidayHome[0]} reservation={reservation.reservation} reservedRoom={reservation.reservedrooms} reservedHall={reservation.reservedhalls}/>
+         <ViewReservationCard holidayHome={reservation.holidayHome[0]} reservation={reservation.reservation} reservedRoom={reservation.reservedrooms} reservedHall={reservation.reservedhalls} employeeName={reservation.employeeName[0]}/>
       ))}
     </Box>
     </>

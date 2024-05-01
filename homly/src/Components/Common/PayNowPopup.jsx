@@ -6,12 +6,14 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import md5 from "crypto-js/md5";
+import AxiosClient from '../../services/AxiosClient';
 
-export default function AlertDialog({ isOpen, setIsOpen }) {
+export default function AlertDialog({ isOpen, setIsOpen, reservationId, price }) {
   
-  const orderId = 45896588;
-  const name = "Cake";
-  const amount = 4500;
+  const orderId = reservationId;
+  const name = "Reservation";
+  //const amount = parseInt(price);
+  const amount = 2456;
   const merchantId = "1226126";
   const merchantSecret =
     "MzQxNTg0NDg5Mzk5NzMxOTMxNTE0NDI3NDI0MTIxNTA5ODc0NTM3";
@@ -63,9 +65,18 @@ export default function AlertDialog({ isOpen, setIsOpen }) {
   }, []);
 
   const handlePaymentCompleted = (orderId) => {
+    //setIsOpen(false);
     if (orderId) {
       console.log("Payment successful");
       // Update UI or perform actions for successful payment
+      AxiosClient.put(`/user/auth/reservation/completePayment`,{reservationId,status:true})
+        .then((response) => {
+          console.log(reservationId);
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     } else {
       console.log("Payment failed");
       // Handle failure scenario
@@ -75,6 +86,14 @@ export default function AlertDialog({ isOpen, setIsOpen }) {
   const handlePaymentDismissed = () => {
     console.log("Payment dismissed");
     // Handle payment dismissal
+    AxiosClient.put(`/user/auth/reservation/completePayment`,{reservationId, status:false})
+        .then((response) => {
+          console.log(reservationId);
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
   };
 
   const handlePaymentError = (error) => {
@@ -86,7 +105,7 @@ export default function AlertDialog({ isOpen, setIsOpen }) {
     console.log("Paying");
     window.payhere.startPayment(payment);
     // Event listeners for payment completion, dismissal, and error
-    window.payhere.onCompleted = handlePaymentCompleted;
+    window.payhere.onCompleted = handlePaymentCompleted(orderId);
     window.payhere.onDismissed = handlePaymentDismissed;
     window.payhere.onError = handlePaymentError;
   };
