@@ -12,7 +12,7 @@ import dayjs from "dayjs";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import AddReviewPopup from "../Review/AddReviewPopup";
 import theme from "../../../HomlyTheme";
-import AlertDialog from "../../Common/PayNowPopup";
+import PayNowPopup from "../../Common/PayNowPopup";
 import ConfirmPopup from "../../PrimaryAdmin/ConfirmPopup";
 import AxiosClient from "../../../services/AxiosClient";
 import ErrorSnackbar from "../ErrorSnackbar";
@@ -410,7 +410,12 @@ export default function ReservationCard({
         text={"Are you sure to cancel this reservation?"}
         controlfunction={handleCancelReservation}
       />
-      <AlertDialog isOpen={openPay} setIsOpen={setOpenPay} />
+      <PayNowPopup
+        isOpen={openPay}
+        setIsOpen={setOpenPay}
+        reservationId={ReservationId}
+        price={HHPrice}
+      />
       <ErrorSnackbar
         isOpen={errorStatus.isOpen}
         type={errorStatus.type}
