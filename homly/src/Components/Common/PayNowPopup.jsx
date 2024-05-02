@@ -8,7 +8,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import md5 from "crypto-js/md5";
 import AxiosClient from '../../services/AxiosClient';
 
-export default function AlertDialog({ isOpen, setIsOpen, reservationId, price }) {
+export default function PayNowPopup({ isOpen, setIsOpen, reservationId, price }) {
   
   const orderId = reservationId;
   const name = "Reservation";
