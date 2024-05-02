@@ -7,6 +7,8 @@ import CloudDoneIcon from "@mui/icons-material/CloudDone";
 import DangerousIcon from "@mui/icons-material/Dangerous";
 import CancelIcon from "@mui/icons-material/Cancel";
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
+import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
+import BlockIcon from '@mui/icons-material/Block';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 
 const Notification = ({
@@ -24,6 +26,8 @@ const Notification = ({
     "Authorization Successful": <CloudDoneIcon sx={{ color: "grey6" }} />,
     "Authorization Denied": <DangerousIcon sx={{ color: "grey6" }} />,
     "Warning": <WarningAmberIcon sx={{ color: "grey6" }} />, 
+    "New Reservation Added": <AddToPhotosIcon sx={{ color: "grey6" }} />,	
+    "Cancel Reservation": <BlockIcon sx={{ color: "grey6" }} />,
   };
 
   useEffect(() => {

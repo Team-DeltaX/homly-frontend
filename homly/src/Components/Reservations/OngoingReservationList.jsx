@@ -8,8 +8,10 @@ import ViewPopUp from './ViewPopup';
 import ViewReservationCard from './ViewReservationCard';
 import axios from "axios";
 import AxiosClient from "../../services/AxiosClient";
+import SearchNew from "../../Components/PrimaryAdmin/SearchNew";
 
 const OngoingReservationList = (props) => {
+  const [search, setSearch] = useState("");
   const [reservations, setReservations] = useState([])
   const fetchreservations = () => {
     AxiosClient.get("/admin/auth/reservation/ongoing")
@@ -28,11 +30,26 @@ const OngoingReservationList = (props) => {
   }, []);
   return (
     <>
-    <Box className="home">
-      {reservations.map(reservation => (
-         <ViewReservationCard holidayHome={reservation.holidayHome[0]} reservation={reservation.reservation} reservedRoom={reservation.reservedrooms} reservedHall={reservation.reservedhalls} employeeName={reservation.employeeName[0]} employeeDetails={reservation.employeeDetails[0]}/>
-      ))}
-    </Box>
+      <Box className="home">
+        {/* {console.log("Searchhihhhhh", reservation.ServiceNo)} */}
+        {console.log("resssssssss",reservations)}
+        {reservations
+          .filter((reservations) => {
+            return props.search.toLowerCase() === "" ||
+              reservations.holidayHome[0].name.toLowerCase().includes(search.toLowerCase()) ||
+              reservations.reservation.reservationId.toLowerCase().includes(search.toLowerCase());
+          })
+          .map((reservation) => (
+            <ViewReservationCard
+              holidayHome={reservation.holidayHome[0]}
+              reservation={reservation.reservation}
+              reservedRoom={reservation.reservedrooms}
+              reservedHall={reservation.reservedhalls}
+              employeeName={reservation.employeeName[0]}
+              employeeDetails={reservation.employeeDetails[0]}
+            />
+          ))}
+      </Box>
     </>
   );
 }
