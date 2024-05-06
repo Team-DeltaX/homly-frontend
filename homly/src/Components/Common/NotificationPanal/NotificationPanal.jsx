@@ -73,7 +73,7 @@ const NotificationPanal = ({ bell }) => {
   };
 
   const updateNotifications = (removedNotificationId) => {
-    AxiosClient.delete("/user/auth/notifications", {
+    AxiosClient.delete("/common/auth/notifications", {
       data: { notificationIds: removedNotificationId },
     })
       .then((res) => {
