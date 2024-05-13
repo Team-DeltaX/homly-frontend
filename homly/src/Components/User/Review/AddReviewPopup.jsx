@@ -9,7 +9,6 @@ import CloseIcon from "@mui/icons-material/Close";
 import theme from "../../../HomlyTheme";
 import RatingComponent from "./RatingComponent";
 import { ThemeProvider, Typography, Box, TextField } from "@mui/material";
-import axios from "axios";
 import ErrorSnackbar from "../ErrorSnackbar";
 import AxiosClient from "../../../services/AxiosClient";
 
@@ -49,10 +48,7 @@ export default function AddReviewPopup({
       wifi_rating: wifiRating,
       review: review,
     };
-    // axios
-    //   .post(`${global.API_BASE_URL}/user/auth/review`, fromData, {
-    //     withCredentials: true,
-    //   })
+    
     AxiosClient.post(`/user/auth/review`, formData)
       .then((res) => {
         if (res.data.success) {

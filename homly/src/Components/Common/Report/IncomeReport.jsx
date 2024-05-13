@@ -45,7 +45,6 @@ export default function IncomeReport() {
         toDate: toDate,
       },
     }).then((res) => {
-      console.log(res.data);
       setPreviewData(res.data);
       setOpen(true);
     });
@@ -54,7 +53,6 @@ export default function IncomeReport() {
   useEffect(() => {
     AxiosClient.get("admin/HHnames")
       .then((res) => {
-        console.log(res.data, "hhnames    sdsd");
         setHHNames(res.data);
       })
       .catch(() => {});
@@ -84,9 +82,7 @@ export default function IncomeReport() {
                 <Select
                   labelId="demo-select-small-label1"
                   id="demo-select-small"
-                  // value={age}
                   label="Select Report type"
-                  // onChange={handleChange}
                 >
                   <MenuItem value="">
                     <em>None</em>
@@ -117,8 +113,10 @@ export default function IncomeReport() {
                   label="Select Holiday Home"
                   onChange={(e) => setHolidayHome(e.target.value)}
                   defaultValue="all"
+                  
                 >
                   <MenuItem value={"all"}>All</MenuItem>
+                  
                   {HHNames &&
                     HHNames.map((hh) => (
                       <MenuItem key={hh.HolidayHomeId} value={hh.HolidayHomeId}>

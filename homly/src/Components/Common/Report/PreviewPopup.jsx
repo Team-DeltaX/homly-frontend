@@ -18,8 +18,6 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import logo from "../../../Assets/images/logo.png";
-import { usePDF } from "react-to-pdf";
-import DownlodReport from "./DownlodReport";
 import dayjs from "dayjs";
 import { useState } from "react";
 const Item = styled(Paper)(({ theme }) => ({
@@ -48,11 +46,6 @@ const PreviewPopup = ({ open, setOpen, previewData, toDate, fromDate }) => {
   function createData(name, protein) {
     return { name, protein };
   }
-
-  // const rows = [
-  //   createData("Badulla Lotus by Kaumadi", 0.0),
-  //   createData("Bndarawela Lotus by Dinali", 0.0),
-  // ];
   return (
     <React.Fragment>
       <BootstrapDialog
@@ -140,10 +133,10 @@ const PreviewPopup = ({ open, setOpen, previewData, toDate, fromDate }) => {
             </Table>
           </TableContainer>
           <Typography gutterBottom align="right" style={{ fontWeight: "bold" }}>
-            {/* total price */}
             Total Income (LKR) : {previewData && previewData.TotalPrice}
           </Typography>
         </DialogContent>
+        
         <DialogActions>
           <Button autoFocus onClick={() => setIsDownload(true)}>
             Download
