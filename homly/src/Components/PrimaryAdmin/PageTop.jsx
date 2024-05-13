@@ -1,20 +1,22 @@
 import { Box, Menu, MenuItem, ThemeProvider, Typography } from "@mui/material";
-import NotificationsIcon from "@mui/icons-material/Notifications";
+
 import { useState } from "react";
 import theme from "../../HomlyTheme";
 
 import MenuIcon from "@mui/icons-material/Menu";
+import NotificationPanal from "../Common/NotificationPanal/NotificationPanal";
 
 const Pagetop = ({ heading, setShowNav }) => {
-  const [open, setOpen] = useState(false);
-  const [anchorEl, setAnchorEl] = useState(null);
-  const handleIconClick = () => {
-    setOpen(!open);
-  };
-  const handleClose = () => {
-    setOpen(false);
-    setAnchorEl(null);
-  };
+  // const [open, setOpen] = useState(false);
+
+ 
+  // const handleIconClick = () => {
+  //   setOpen(!open);
+  // };
+  // const handleClose = () => {
+  //   setOpen(false);
+  //   setAnchorEl(null);
+  // };
   const notifyarray = [
     {
       id: 1,
@@ -62,7 +64,7 @@ const Pagetop = ({ heading, setShowNav }) => {
           <Typography variant="h4"> {heading}</Typography>
         </Box>
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          <Box>
+          {/* <Box>
             <NotificationsIcon
               sx={{ fontSize: "50px", color: "#999090" }}
               onClick={handleIconClick}
@@ -102,7 +104,13 @@ const Pagetop = ({ heading, setShowNav }) => {
                 );
               })}
             </Menu>
-          </Box>
+          </Box> */}
+
+          <NotificationPanal
+            
+            bell={true}
+          />
+
           <Box className="burger_icon" sx={{ display: "none" }}>
             <MenuIcon
               id="burgerIcon"

@@ -6,6 +6,8 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import OngoingReservationList from '../../Reservations/OngoingReservationList';
 import PastReservationList from '../../Reservations/PastReservationList';
+import SpeicalReservationList from '../../Reservations/SpecialReservationList';
+import CancelledReservationList from '../../Reservations/CancelReservationList';
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -53,6 +55,8 @@ export default function BasicTabs(props) {
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
           <Tab label="Ongoing Reservations" {...a11yProps(0)} />
           <Tab label="Past Reservations" {...a11yProps(1)} />
+          <Tab label="Special Reservations" {...a11yProps(2)} />
+          <Tab label="cancelled Reservations" {...a11yProps(3)} />
 
 
         </Tabs>
@@ -62,6 +66,12 @@ export default function BasicTabs(props) {
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         <PastReservationList search={props.search} setSearch={props.setSearch}/>
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={2}>
+        <SpeicalReservationList search={props.search} setSearch={props.setSearch}/>
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={3}>
+        <CancelledReservationList search={props.search} setSearch={props.setSearch}/>
       </CustomTabPanel>
     </Box>
   );

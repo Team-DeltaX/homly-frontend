@@ -16,6 +16,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import ErrorSnackbar from '../User/ErrorSnackbar';
 import ConfirmPopup from "../PrimaryAdmin/ConfirmPopup";
+import AxiosClient from '../../services/AxiosClient';
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -50,8 +51,9 @@ export default function AddComplainPopUp(props) {
       Reason: reason
     };
     console.log("aruna", data);
-    axios
-      .post("http://localhost:8080/user/reservation/AddComplaint", data)
+    // axios
+    //   .post("http://localhost:8080/user/reservation/AddComplaint", data)
+    AxiosClient.post(`/admin/auth/reservation/AddComplaint`,data)
       .then((res) => {
         console.log("add complaint successfully");
         setOpen(false);

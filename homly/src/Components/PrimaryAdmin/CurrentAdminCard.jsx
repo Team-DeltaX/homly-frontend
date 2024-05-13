@@ -7,11 +7,12 @@ import {
   Typography,
 } from "@mui/material";
 import theme from "../../HomlyTheme";
-import axios from "axios";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useState } from "react";
 import ConfirmPopup from "./ConfirmPopup";
 import Copy from "./Copy";
+import AxiosClient from "../../services/AxiosClient";
+
 
 const CurrentAdminCard = (props) => {
   const [open, setOpen] = useState(false);
@@ -42,8 +43,8 @@ const CurrentAdminCard = (props) => {
     setbuttonname("Edit");
     props.Seteditadmin("");
     setDisabled(true);
-    axios
-      .put(`${global.API_BASE_URL}/admin/auth/locationadmin`, {
+    AxiosClient
+      .put(`/admin/auth/locationadmin`, {
         AdminNo: props.data.AdminNo,
         Email: email,
         ContactNo: contact,
@@ -58,8 +59,8 @@ const CurrentAdminCard = (props) => {
   };
 
   const resetpassword = () => {
-    axios
-      .post(`${global.API_BASE_URL}/admin/auth/locationadmin/resetpassword`, {
+    AxiosClient
+      .post(`/admin/auth/locationadmin/resetpassword`, {
         UserName: props.data.UserName,
         Email: props.data.Email,
         AdminNo: props.data.AdminNo,
@@ -75,9 +76,9 @@ const CurrentAdminCard = (props) => {
   };
 
   const handleClick = () => {
-    axios
+    AxiosClient
       .put(
-        `${global.API_BASE_URL}/admin/auth/locationadmin/disable/${props.data.AdminNo}`,
+        `/admin/auth/locationadmin/disable/${props.data.AdminNo}`,
         {
           dis: true,
         }

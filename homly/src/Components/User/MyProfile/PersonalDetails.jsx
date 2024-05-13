@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   ThemeProvider,
@@ -10,7 +10,6 @@ import {
   Stack,
   Avatar,
 } from "@mui/material";
-import { AuthContext } from "../../../Contexts/AuthContext";
 import PersonalDetailsGrid from "../PersonalDetailsGrid/PersonalDetailsGrid";
 import theme from "../../../HomlyTheme";
 import UploadImageCloudinary from "../../Common/UploadImageCloudinary";
@@ -19,7 +18,6 @@ import UserInterestedPopupProfile from "./UserInterestedPopupProfile";
 import AxiosClient from "../../../services/AxiosClient";
 
 const PersonalDetails = () => {
-  const { setIsUpdated } = useContext(AuthContext);
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
   const phoneRegex = /^[0-9]{10}$/;
 
@@ -69,7 +67,6 @@ const PersonalDetails = () => {
   useEffect(() => {
     AxiosClient.get("/user/auth/details")
       .then((res) => {
-        console.log(res, "res asdasdasf");
         if (Response) {
           setData({
             ...data,
@@ -83,7 +80,6 @@ const PersonalDetails = () => {
           });
           setOldEmail(res.data.email);
           setImage(res.data.image);
-          setIsUpdated(true);
         } else {
           setErrorStatus({
             ...errorStatus,
@@ -93,12 +89,12 @@ const PersonalDetails = () => {
           });
         }
       })
-      .catch(() => {
+      .catch((err) => {
         setErrorStatus({
           ...errorStatus,
           isOpen: true,
           type: "error",
-          message: "Server Error",
+          message: err.message,
         });
       });
 
@@ -137,7 +133,6 @@ const PersonalDetails = () => {
       };
       AxiosClient.put("/user/auth/details", formData)
         .then((res) => {
-          console.log(res, "res updateeee");
           if (res.data.success) {
             if (res.data.emailUpdated) {
               emailUpdated = true;

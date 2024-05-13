@@ -2,11 +2,19 @@ import React from "react";
 import { Box, Stack } from "@mui/material";
 import ReservationCard from "../ReservationCard/ReservationCard";
 import dayjs from "dayjs";
+import ReservationCardSkeleton from "../Skeleton/ReservationCardSkeleton";
 
-export default function OngoingReservation({ reservation }) {
+export default function OngoingReservation({ reservation, showSkeleton }) {
   return (
-    <Stack direction="column" sx={{ height: { md: "380px" } }}>
-      {reservation.length > 0
+    <Stack
+      direction="column"
+      sx={{ height: { md: "380px" }, overflowY: { xs: "none", md: "scroll" } }}
+    >
+      {showSkeleton
+        ? [1, 2].map((index) => {
+          return <ReservationCardSkeleton key={index} />;
+        })
+        : reservation.length > 0
         ? reservation.map((reserv, index) => {
             return (
               <Box sx={{ marginTop: "10px" }} key={index}>

@@ -6,7 +6,7 @@ import PStatisticsDetails from "./PStatisticsDetails";
 import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
 import PaidIcon from "@mui/icons-material/Paid";
 import HomeIcon from "@mui/icons-material/Home";
-import axios from "axios";
+import AxiosClient from "../../services/AxiosClient";
 
 const PDashboardboxes = () => {
   const [hhcount, Sethhcount] = useState("0");
@@ -14,8 +14,8 @@ const PDashboardboxes = () => {
   const [paidcount, SetPaidcount] = useState("0");
   const [unpaidcount, SetUnpaindcount] = useState("0");
   const gethhcount = () => {
-    axios
-      .get(`${global.API_BASE_URL}/admin/auth/holidayhomecount`)
+    AxiosClient
+      .get(`/admin/auth/holidayhomecount`)
       .then((res) => {
         Sethhcount(res.data.count);
       })
@@ -25,8 +25,8 @@ const PDashboardboxes = () => {
   };
 
   const getearning = () => {
-    axios
-      .get(`${global.API_BASE_URL}/admin/auth/earning`)
+    AxiosClient
+      .get(`/admin/auth/earning`)
       .then((res) => {
         SetEarning(res.data.sum);
       })
@@ -36,8 +36,8 @@ const PDashboardboxes = () => {
   };
 
   const bookingcount = () => {
-    axios
-      .get(`${global.API_BASE_URL}/admin/auth/bookingcount`)
+    AxiosClient
+      .get(`/admin/auth/bookingcount`)
       .then((res) => {
         SetPaidcount(res.data.Paid);
         SetUnpaindcount(res.data.Unpaid);
@@ -53,7 +53,7 @@ const PDashboardboxes = () => {
     bookingcount();
   }, []);
   return (
-    <Box>
+    <Box >
       <Grid
         container
         sx={{
@@ -61,14 +61,16 @@ const PDashboardboxes = () => {
           display: "flex",
           justifyContent: "center",
           width: "100%",
+          
         }}
       >
         <Grid item md={12}>
           <Grid
             container
             justifyContent={"space-between"}
-            sx={{ marginBottom: "25px", width: "100%" }}
+            sx={{ marginBottom: "25px", width: "100%", }}
             spacing={1}
+            
           >
             <Grid
               item

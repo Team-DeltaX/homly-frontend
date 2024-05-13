@@ -1,8 +1,5 @@
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
-import holidayhome from "../../Assets/images/holidayHome.jpg";
 import "./Reservation.css";
 import ViewPopUp from "./ViewPopup";
 import dayjs, { Dayjs } from "dayjs";
@@ -10,10 +7,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Typography from "@mui/material/Typography";
 import AxiosClient from "../../services/AxiosClient";
-import AddComplainPopUp from "../Reservations/AddComplainPopUp";
 
-
-const PastReservationCard = (props) => {
+const ViewReservationCard = (props) => {
 //  const [Employee, SetEmployee] = useState({});
   const [isSpecial, setIsSpecial] = useState(props.reservation.IsSpecial);
   const [isCancelled, setIsCancelled] = useState(props.reservation.IsCancelled);
@@ -88,8 +83,9 @@ const PastReservationCard = (props) => {
           sx={{ justifyContent: "center", alignItems: "center" }}
         >
           <h4>{props.employeeName.name}</h4>
-          <p>Service number : {props.reservation.ServiceNO}</p>
+          {/* <p>Service number : {props.reservation.ServiceNO}</p> */}
           <p>Reservation Number {props.reservation.ReservationId}</p>
+          <p>Contact Number : {props.employeeDetails.contact_number}</p>
           <p>Amount {props.reservation.Price}</p>
         </Grid>
         <Grid
@@ -125,8 +121,6 @@ const PastReservationCard = (props) => {
               //name={props.employeeName.name}
               holidayhome={props.holidayHome}
             />
-            <AddComplainPopUp reservation={props.reservation} />
-            {/* if reservation is special pass special */}
             {isSpecial ? (
               <Typography variant="button" color="green">
                 Special
@@ -144,4 +138,4 @@ const PastReservationCard = (props) => {
   );
 };
 
-export default PastReservationCard;
+export default ViewReservationCard;

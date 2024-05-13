@@ -25,6 +25,7 @@ export default function ScrollDialog({ name, id }) {
   const [open, setOpen] = React.useState(false);
   const [opened, setOpened] = React.useState(false);
   const [scroll, setScroll] = React.useState("paper");
+  const [reservationId, setReservationId] = React.useState("");
   const [HolidayHomeName, setHolidayHomeName] = useState("");
   const [HolidayHomeId, setHolidayHomeId] = useState("");
   const [holidayHomes, setHolidayHomes] = React.useState([]);
@@ -33,14 +34,18 @@ export default function ScrollDialog({ name, id }) {
   const [hallPrice, setHallPrice] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
   const [NoOfAdults, setNoOfAdults] = useState(0);
+  const [hallNoOfAdults, setHallNoOfAdults] = useState(0);
+  const [hallNoOfChildren, setHallNoOfChildren] = useState(0);
   const [NoOfChildren, setNoOfChildren] = useState(0);
   const [NoOfRooms, setNoOfRooms] = useState(0);
   const [NoOfHalls, setNoOfHalls] = useState(0);
   const [CheckinDate, setCheckinDate] = useState(dayjs().add(6, "day"));
-  const [CheckoutDate, setCheckoutDate] = useState(dayjs().add(6, "day"));
+  const [CheckoutDate, setCheckoutDate] = useState(dayjs().add(7, "day"));
   const [reserveDisabled, setReserveDisabled] = useState(false); // State to manage disable state of reserve button
   const [roomCodes, setRoomCodes] = useState([]);
+  const [hallCodes, setHallCodes] = useState([]);
   const [room, setRoom] = useState([]);
+  const [hall, setHall] = useState([]);
 
   useEffect(() => {
 
@@ -55,6 +60,21 @@ export default function ScrollDialog({ name, id }) {
       console.log("available room", res.data.availableRooms);
     });
   }, [id, CheckinDate, CheckoutDate]);
+
+  //get available halls
+  useEffect(() => {
+    AxiosClient.get("/user/reservation/availableHalls", {
+      params: {
+        holidayHomeId: id,
+        checkinDate: CheckinDate,
+        checkoutDate: CheckoutDate,
+      },
+    }).then((res) => {
+      setHall(res.data.availableHalls);
+      console.log("available halls", res.data.availableHalls);
+    });
+  }, [id, CheckinDate, CheckoutDate]);
+
 
   const [errorStatus, setErrorStatus] = useState({
     isOpen: false,
@@ -93,9 +113,11 @@ export default function ScrollDialog({ name, id }) {
 
     const data = {
       HolidayHome: id,
-      CheckinDate: CheckinDate,
-      CheckoutDate: CheckoutDate,
+      CheckinDate:CheckinDate,
+      CheckoutDate:CheckoutDate,
       NoOfAdults: NoOfAdults,
+      hallNoOfAdults: hallNoOfAdults,
+      hallNoOfChildren: hallNoOfChildren,
       NoOfChildren: NoOfChildren,
       NoOfRooms: NoOfRooms,
       NoOfHalls: NoOfHalls,
@@ -104,10 +126,11 @@ export default function ScrollDialog({ name, id }) {
       Price: roomPrice + hallPrice,
       IsPaid: false,
       RoomCodes: roomCodes,
+      HallCodes: hallCodes,
     };
 
-    axios
-      .post("http://localhost:8080/user/auth/reservation", data, {
+    AxiosClient
+      .post(`/user/auth/reservation`, data, {
         withCredentials: true,
       })
       .then((res) => {
@@ -117,9 +140,28 @@ export default function ScrollDialog({ name, id }) {
           type: "success",
           message: "Reservation added successfully",
         });
+        console.log("anujjaasda"+res.data.message);
+        console.log("anujjaasdsdsda"+res.data.reservationId);
+        setReservationId(res.data.reservationId);
+        setCheckinDate(dayjs().add(6, "day"));
+        setCheckoutDate(dayjs().add(7, "day"));
         setOpen(false);
         setOpened(false);
         setPayNow(true);
+        setNoOfAdults(0);
+        setHallNoOfAdults(0);
+        setHallNoOfChildren(0);
+        setNoOfChildren(0);
+        setNoOfRooms(0);
+        setNoOfHalls(0);
+        setTotalPrice(roomPrice+hallPrice);
+        setRoomPrice(0);
+        setHallPrice(0);
+        setReserveDisabled(false);
+        setRoomCodes([]);
+        setHallCodes([]);
+        setRoom([]);
+        setHall([]);
       })
       .catch((error) => {
         setErrorStatus({
@@ -135,13 +177,29 @@ export default function ScrollDialog({ name, id }) {
 
   const handleCheckinDateChange = (newDate) => {
     setCheckinDate(newDate);
-    // Check if CheckinDate is after CheckoutDate
-    if (newDate.isAfter(CheckoutDate)) {
+    const nextDay = newDate.add(1, "day");
+    setCheckoutDate(nextDay);
+    setNoOfAdults(0);
+    setHallNoOfAdults(0);
+    setHallNoOfChildren(0);
+    setNoOfChildren(0);
+    setNoOfRooms(0);
+    setNoOfHalls(0);
+    setRoomPrice(0);
+    setHallPrice(0);
+    setTotalPrice(0);
+    setReserveDisabled(false);
+    setRoomCodes([]);
+    setHallCodes([]);
+    setRoom([]);
+    setHall([]);
+    const today = dayjs();
+    if (newDate.isBefore(today)) {
       setReserveDisabled(true); // Disable reserve button
       setErrorStatus({
         isOpen: true,
         type: "warning",
-        message: "Check-in date cannot be after Check-out date",
+        message: "Check-in date cannot be in the past",
       });
     } else {
       setReserveDisabled(false); // Enable reserve button
@@ -155,13 +213,26 @@ export default function ScrollDialog({ name, id }) {
 
   const handleCheckoutDateChange = (newDate) => {
     setCheckoutDate(newDate);
-    // Check if CheckinDate is after CheckoutDate
-    if (CheckinDate.isAfter(newDate)) {
+    setNoOfAdults(0);
+    setHallNoOfAdults(0);
+    setHallNoOfChildren(0);
+    setNoOfChildren(0);
+    setNoOfRooms(0);
+    setNoOfHalls(0);
+    setRoomPrice(0);
+    setHallPrice(0);
+    setTotalPrice(0);
+    setReserveDisabled(false);
+    setRoomCodes([]);
+    setHallCodes([]);
+    setRoom([]);
+    setHall([]);
+    if ((CheckinDate.isAfter(newDate)) || (CheckinDate.isSame(newDate))) {
       setReserveDisabled(true); // Disable reserve button
       setErrorStatus({
         isOpen: true,
         type: "warning",
-        message: "Check-in date cannot be after Check-out date",
+        message: "Check-in date cannot be same or after Check-out date",
       });
     } else {
       setReserveDisabled(false); // Enable reserve button
@@ -238,7 +309,22 @@ export default function ScrollDialog({ name, id }) {
                   holidayHomeId={id}
                   room={room}
                 />
-                <AvailableHallsPopUp />
+                <AvailableHallsPopUp 
+                  margin="dense"
+                  NoOfHalls={NoOfHalls}
+                  setNoOfHalls={setNoOfHalls}
+                  hallCodes={hallCodes}
+                  setHallCodes={setHallCodes}
+                  hallNoOfAdults={hallNoOfAdults}
+                  setHallNoOfAdults={setHallNoOfAdults}
+                  hallNoOfChildren={hallNoOfChildren}
+                  setHallNoOfChildren={setHallNoOfChildren}
+                  hallPrice={hallPrice}
+                  setHallPrice={setHallPrice}
+                  holidayHomeName={name}
+                  holidayHomeId={id}
+                  hall={hall}
+                />
               </Stack>
               <Box component="section" sx={{ mt: 1 }}>
                 <Typography variant="h6" gutterBottom>
@@ -334,6 +420,34 @@ export default function ScrollDialog({ name, id }) {
                   />
                 </Typography>
               </Box>
+              <Box component="section">
+                <Typography variant="h6" gutterBottom>
+                  Halls :
+                  <Typography
+                    variant="h5"
+                    gutterBottom
+                    style={{
+                      display: "inline-block",
+                      marginLeft: "10px",
+                      color: "green",
+                    }}
+                  ></Typography>
+                  {/* show array value */}
+                  {hallCodes.map((hallCode) => (
+                    <Typography
+                      variant="h5"
+                      gutterBottom
+                      style={{
+                        display: "inline-block",
+                        marginLeft: "10px",
+                        color: "green",
+                      }}
+                    >
+                      {hallCode}
+                    </Typography>
+                  ))}
+                </Typography>
+              </Box>
               <Box component="section" sx={{ mt: 1 }}>
                 <Typography variant="h6" gutterBottom>
                   Adults count for Rooms (Maximum) :
@@ -410,6 +524,83 @@ export default function ScrollDialog({ name, id }) {
                   </Typography>
                 </Typography>
               </Box>
+              <Box component="section" sx={{ mt: 1 }}>
+                    <Typography variant="h6" gutterBottom>
+                      Adults count for Halls (Maximum) :
+                      <Typography
+                        variant="h5"
+                        gutterBottom
+                        style={{
+                          display: "inline-block",
+                          marginLeft: "10px",
+                          color: "green",
+                        }}
+                      >
+                        <TextField
+                          required
+                          disabled
+                          type="number"
+                          onChange={(e) => {
+                            setHallNoOfAdults(e.target.value);
+                          }}
+                          value={hallNoOfAdults}
+                          sx={{
+                            "& .MuiOutlinedInput-root": {
+                              "& fieldset": {
+                                border: "none", // Change this line
+                              },
+                              "&:hover fieldset": {
+                                border: "none", // Change this line
+                              },
+                              "&.Mui-focused fieldset": {
+                                border: "none", // Change this line
+                              },
+                            },
+                            mt: -1.5,
+                          }}
+                        />
+                      </Typography>
+                    </Typography>
+                  </Box>
+              {/* maximum children count for halls */}
+              <Box component="section">
+                <Typography variant="h6" gutterBottom>
+                  Children count for Halls (Maximum) :
+                  <Typography
+                    variant="h5"
+                    gutterBottom
+                    style={{
+                      display: "inline-block",
+                      marginLeft: "10px",
+                      color: "green",
+                    }}
+                  >
+                    <TextField
+                      required
+                      disabled
+                      type="number"
+                      onChange={(e) => {
+                        setHallNoOfChildren(e.target.value);
+                      }}
+                      value={hallNoOfChildren}
+                      sx={{
+                        "& .MuiOutlinedInput-root": {
+                          "& fieldset": {
+                            border: "none", // Change this line
+                          },
+                          "&:hover fieldset": {
+                            border: "none", // Change this line
+                          },
+                          "&.Mui-focused fieldset": {
+                            border: "none", // Change this line
+                          },
+                        },
+                        mt: -1,
+                      }}
+                    />
+                  </Typography>
+                </Typography>	
+              </Box>
               <Box component="section">
                 <Typography variant="h6" gutterBottom>
                   Total Price for Rooms :
@@ -476,7 +667,6 @@ export default function ScrollDialog({ name, id }) {
                     onChange={(e) => {
                       setTotalPrice(e.target.value);
                     }}
-                    // totalPrice={roomPrice+hallPrice}
                     value={roomPrice + hallPrice}
                     sx={{
                       "& .MuiOutlinedInput-root": {
@@ -528,7 +718,9 @@ export default function ScrollDialog({ name, id }) {
         message={errorStatus.message}
         setIsOpen={(val) => setErrorStatus({ ...errorStatus, isOpen: val })}
       />
-      <PayNowPopup isOpen={PayNow} setIsOpen={setPayNow} />
+      {console.log("totalllls",(roomPrice+hallPrice))}
+      <PayNowPopup isOpen={PayNow} setIsOpen={setPayNow} reservationId={reservationId} price={totalPrice}/>
+      
     </React.Fragment>
   );
 }

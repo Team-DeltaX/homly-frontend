@@ -1,37 +1,36 @@
-import * as React from 'react';
+import * as React from "react";
 import { useState } from "react";
-import Button from '@mui/material/Button';
-import { styled } from '@mui/material/styles';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Unstable_Grid2';
-import Paper from '@mui/material/Paper';
-import holidayhome from '../../Assets/images/holidayHome.jpg';
-import Stack from '@mui/material/Stack';
-import Divider from '@mui/material/Divider';
-import { alignProperty } from '@mui/material/styles/cssUtils';
-import dayjs, { Dayjs } from 'dayjs';
-
+import Button from "@mui/material/Button";
+import { styled } from "@mui/material/styles";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Unstable_Grid2";
+import Paper from "@mui/material/Paper";
+import holidayhome from "../../Assets/images/holidayHome.jpg";
+import Stack from "@mui/material/Stack";
+import Divider from "@mui/material/Divider";
+import { alignProperty } from "@mui/material/styles/cssUtils";
+import dayjs, { Dayjs } from "dayjs";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-  '& .MuiDialogContent-root': {
+  "& .MuiDialogContent-root": {
     padding: theme.spacing(2),
   },
-  '& .MuiDialogActions-root': {
+  "& .MuiDialogActions-root": {
     padding: theme.spacing(1),
   },
 }));
 const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
   ...theme.typography.body2,
   padding: theme.spacing(1),
-  textAlign: 'center',
+  textAlign: "center",
   color: theme.palette.text.secondary,
 }));
 export default function ViewPopUp(props) {
@@ -44,9 +43,7 @@ export default function ViewPopUp(props) {
     setOpen(false);
   };
 
-
   return (
-
     <React.Fragment>
       <Button variant="outlined" onClick={handleClickOpen}>
         View
@@ -63,7 +60,7 @@ export default function ViewPopUp(props) {
           aria-label="close"
           onClick={handleClose}
           sx={{
-            position: 'absolute',
+            position: "absolute",
             right: 8,
             top: 8,
             color: (theme) => theme.palette.grey[500],
@@ -86,45 +83,139 @@ export default function ViewPopUp(props) {
             magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec
             ullamcorper nulla non metus auctor fringilla.
           </Typography> */}
-          <Box sx={{ width: '100%'}} elevation={0}>
-            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 2 }} elevation={0}>
+          <Box sx={{ width: "100%" }} elevation={0}>
+            <Grid
+              container
+              rowSpacing={1}
+              columnSpacing={{ xs: 1, sm: 2, md: 2 }}
+              elevation={0}
+            >
               <Grid xs={4}>
-                <Item sx={{boxShadow: "none"}}>
-                  <img className="reservation-photo" src={"https://images.unsplash.com/photo-1605352081508-2e09927ecfe3?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8aG9saWRheSUyMGhvbWV8ZW58MHx8MHx8fDA%3D"} alt="" />
+                <Item sx={{ boxShadow: "none" }}>
+                  <img
+                    className="reservation-photo"
+                    src={props.holidayhome.MainImage}
+                    alt=""
+                  />
                 </Item>
               </Grid>
-                          <Grid xs={4}>
-                          <Item sx={{boxShadow: "none"}}>
-                            <Typography variant="button" align="left" display="block" gutterBottom sx={{fontWeight:'bold'}}>{ props.name }</Typography>
-                            <Typography variant="body2" align="left" display="block" gutterBottom>Reservation Number  { props.reservation.ReservationId }</Typography>
-                            <Typography variant="body2" align="left" display="block" gutterBottom>Amount { props.reservation.Price }</Typography>
-                          </Item>
-                          </Grid>
-                          <Grid xs={4}>
-                          <Item sx={{boxShadow: "none"}}>
-                            <Typography variant="button" align="right" display="block" gutterBottom sx={{fontWeight:'bold'}}>{ props.holidayName}</Typography>
-                            <Typography variant="body2" align="right" display="block" gutterBottom>Check In : { dayjs(props.reservation.CheckinDate).format('DD/MM/YYYY') }</Typography>
-                            <Typography variant="body2" align="right" display="block" gutterBottom>Check Out : { dayjs(props.reservation.CheckoutDate).format('DD/MM/YYYY') }</Typography>
-                          </Item>
-                          </Grid>
-                          <Grid xs={5}>
-                          <Item sx={{boxShadow: "none"}}>
-                          <Stack direction="column" spacing={1} sx={{ width: '100%', maxWidth: 500 }}>
-                            <item>
-                             <Typography variant="body2" align="left" display="block" gutterBottom>No. of Rooms : { props.reservation.NoOfRooms }</Typography>
-                             <Typography variant="body3" align="left" display="block" gutterBottom>No. of Halls : { props.reservation.NoOfHalls }</Typography>
-                            </item>
-                            <item>
-                            <Typography variant="body3" align="left" display="block" gutterBottom>Reserved date : { dayjs(props.reservation.createdAt).format('DD/MM/YYYY') }</Typography>
-                  </item>
-                </Stack>
+              <Grid xs={4}>
+                <Item sx={{ boxShadow: "none" }}>
+                  <Typography
+                    variant="button"
+                    align="left"
+                    display="block"
+                    gutterBottom
+                    sx={{ fontWeight: "bold" }}
+                  >
+                    {props.holidayhome.Name.toUpperCase()}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    align="left"
+                    display="block"
+                    gutterBottom
+                  >
+                    Reservation Number {props.reservation.ReservationId}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    align="left"
+                    display="block"
+                    gutterBottom
+                  >
+                    Amount {props.reservation.Price}
+                  </Typography>
+                </Item>
+              </Grid>
+              <Grid xs={4}>
+                <Item sx={{ boxShadow: "none" }}>
+                  <Typography
+                    variant="button"
+                    align="right"
+                    display="block"
+                    gutterBottom
+                    sx={{ fontWeight: "bold" }}
+                  >
+                    {props.holidayName}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    align="right"
+                    display="block"
+                    gutterBottom
+                  >
+                    Check In :{" "}
+                    {dayjs(props.reservation.CheckinDate).format("DD/MM/YYYY")}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    align="right"
+                    display="block"
+                    gutterBottom
+                  >
+                    Check Out :{" "}
+                    {dayjs(props.reservation.CheckoutDate).format("DD/MM/YYYY")}
+                  </Typography>
+                </Item>
+              </Grid>
+              <Grid xs={5}>
+                <Item sx={{ boxShadow: "none" }}>
+                  <Stack
+                    direction="column"
+                    spacing={1}
+                    sx={{ width: "100%", maxWidth: 500 }}
+                  >
+                    <item>
+                      <Typography
+                        variant="body2"
+                        align="left"
+                        display="block"
+                        gutterBottom
+                      >
+                        No. of Rooms : {props.reservation.NoOfRooms}
+                      </Typography>
+                      <Typography
+                        variant="body3"
+                        align="left"
+                        display="block"
+                        gutterBottom
+                      >
+                        No. of Halls : {props.reservation.NoOfHalls}
+                      </Typography>
+                    </item>
+                    <item>
+                      <Typography
+                        variant="body3"
+                        align="left"
+                        display="block"
+                        gutterBottom
+                      >
+                        Reserved date :{" "}
+                        {dayjs(props.reservation.createdAt).format(
+                          "DD/MM/YYYY"
+                        )}
+                      </Typography>
+                    </item>
+                  </Stack>
                 </Item>
               </Grid>
               <Grid xs={7}>
-                <Item sx={{boxShadow: "none"}}>
-                  <Stack direction="row" spacing={3} divider={<Divider orientation="vertical" flexItem />}>
-                    <Item sx={{boxShadow: "none"}}>
-                      <Typography variant="body3" align="center" display="block" gutterBottom>Reserved Room ID</Typography>
+                <Item sx={{ boxShadow: "none" }}>
+                  <Stack
+                    direction="row"
+                    spacing={3}
+                    divider={<Divider orientation="vertical" flexItem />}
+                  >
+                    <Item sx={{ boxShadow: "none" }}>
+                      <Typography
+                        variant="body3"
+                        align="center"
+                        display="block"
+                        gutterBottom
+                      >
+                        Reserved Room ID
+                      </Typography>
                       {/* <Typography variant="body3" align="center" display="block" gutterBottom>{ props.reservedRoom }</Typography> */}
                       {
                         // props.reservedRoom.map((room) => {
@@ -133,16 +224,65 @@ export default function ViewPopUp(props) {
                         //   )
                         // })
                         // console.log("roomsss",props.reservedRoom)
-                        props.reservedRoom.map((room) => {
-                          return(
-                            <Typography variant="body3" align="center" display="block" gutterBottom>{ room.roomCode }</Typography>
-                          )
-                        })
+                        props.reservedRoom  ? (
+                          props.reservedRoom.map((room) => {
+                            return (
+                              <Typography
+                                variant="body3"
+                                align="center"
+                                display="block"
+                                gutterBottom
+                              >
+                                {room.roomCode}
+                              </Typography>
+                            );
+                          })
+                        ) : (
+                          <Typography
+                            variant="body3"
+                            align="center"
+                            display="block"
+                            fontWeight="bold"
+                            gutterBottom
+                          >
+                            aaaaaaaaaaaa
+                          </Typography>
+                        )
                       }
                     </Item>
-                    <Item sx={{boxShadow: "none"}}>
-                      <Typography variant="body3" align="center" display="block" gutterBottom>Reserved Hall ID</Typography>
-                      <Typography variant="body3" align="center" display="block" > { props.reservation.hallId }</Typography>
+                    <Item sx={{ boxShadow: "none" }}>
+                      <Typography
+                        variant="body3"
+                        align="center"
+                        display="block"
+                        gutterBottom
+                      >
+                        Reserved Hall ID
+                      </Typography>
+                      {props.reservedHall ? (
+                        props.reservedHall.map((hall) => {
+                          return (
+                            <Typography
+                              variant="body3"
+                              align="center"
+                              display="block"
+                              gutterBottom
+                            >
+                              {hall.hallCode}
+                            </Typography>
+                          );
+                        })
+                      ) : (
+                        <Typography
+                          variant="body3"
+                          align="center"
+                          display="block"
+                          fontWeight="bold"
+                          gutterBottom
+                        >
+                          aaaaaaaaaa
+                        </Typography>
+                      )}
                     </Item>
                   </Stack>
                 </Item>

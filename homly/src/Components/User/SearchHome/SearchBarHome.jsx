@@ -15,9 +15,12 @@ const SearchBarHome = () => {
   const [district, setDistrict] = useState("");
   const [openDrawer, setOpenDrawer] = useState(false);
   const [searchedHH, setSearchedHH] = useState([]);
+  const [showSkeleton, setShowSkeleton] = useState(true);
 
   const handleSearch = () => {
     setOpenDrawer(true);
+    setShowSkeleton(true);
+    setSearchedHH([]);
     AxiosClient.get("/user/auth/holidayhomes/search", {
       params: {
         district: district,
@@ -26,11 +29,12 @@ const SearchBarHome = () => {
       },
     })
       .then((res) => {
-        console.log(res.data);
         setSearchedHH(res.data);
+        setShowSkeleton(false);
       })
       .catch(() => {
         setSearchedHH([]);
+        setShowSkeleton(false);
       });
 
     socket.emit("newNotification", {
@@ -111,6 +115,7 @@ const SearchBarHome = () => {
           open={openDrawer}
           setOpen={setOpenDrawer}
           searchedHH={searchedHH}
+          showSkeleton={showSkeleton}
         />
       </Stack>
     </ThemeProvider>

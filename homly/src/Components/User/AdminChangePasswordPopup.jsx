@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import theme from "../../HomlyTheme";
 import InputPassword from "./TextField/InputPassword";
+import AxiosClient from "../../services/AxiosClient";
 
 export default function AdminChangePasswordPopup({
   open,
@@ -28,28 +29,24 @@ export default function AdminChangePasswordPopup({
     e.preventDefault();
     if (!errorConfirmPassword) {
       const formData = { adminId: adminId, password: password };
-      axios
-        .put(`${global.API_BASE_URL}/admin/`, formData, {
-          withCredentials: true,
-        })
-        .then((res) => {
-          if (res.data.success) {
-            setErrorStatus({
-              ...errorStatus,
-              isOpen: true,
-              type: "success",
-              message: res.data.message,
-            });
-            setOpen(false);
-          } else {
-            setErrorStatus({
-              ...errorStatus,
-              isOpen: true,
-              type: "error",
-              message: res.data.message,
-            });
-          }
-        });
+      AxiosClient.put("/admin", formData).then((res) => {
+        if (res.data.success) {
+          setErrorStatus({
+            ...errorStatus,
+            isOpen: true,
+            type: "success",
+            message: res.data.message,
+          });
+          setOpen(false);
+        } else {
+          setErrorStatus({
+            ...errorStatus,
+            isOpen: true,
+            type: "error",
+            message: res.data.message,
+          });
+        }
+      });
       setOpen(false);
     }
   };

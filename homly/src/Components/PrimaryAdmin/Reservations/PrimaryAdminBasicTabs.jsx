@@ -7,6 +7,7 @@ import Box from '@mui/material/Box';
 import OngoingReservationList from '../../Reservations/OngoingReservationList';
 import PastReservationList from '../../Reservations/PastReservationList';
 import SpecialReservationList from '../../Reservations/SpecialReservationList';
+import CancelledReservationList from '../../Reservations/CancelReservationList';
 import AddSpecialReservationPopUp from '../../Reservations/AddSpecialReservationPopUp';
 
 function CustomTabPanel(props) {
@@ -57,8 +58,7 @@ export default function PrimaryAdminBasicTabs(props) {
           <Tab label="Ongoing Reservations" {...a11yProps(0)} />
           <Tab label="Past Reservations" {...a11yProps(1)} />
           <Tab label="Special Reservations" {...a11yProps(2)} />
-
-
+          <Tab label="Cancelled Reservations" {...a11yProps(3)} />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
@@ -72,6 +72,10 @@ export default function PrimaryAdminBasicTabs(props) {
       <CustomTabPanel value={value} index={2}>
         {/* <PastReservationList search={props.search} setSearch={props.setSearch}/> */}
         <SpecialReservationList search={props.search} setSearch={props.setSearch}/>
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={3}>
+        {/* <PastReservationList search={props.search} setSearch={props.setSearch}/> */}
+        <CancelledReservationList search={props.search} setSearch={props.setSearch}/>
       </CustomTabPanel>
     </Box>
   );

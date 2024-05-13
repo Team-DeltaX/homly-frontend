@@ -15,8 +15,13 @@ import BlacklistHistoryCard from "../../Components/PrimaryAdmin/BlacklistHistory
 import { CSVLink } from "react-csv";
 import SummarizeIcon from "@mui/icons-material/Summarize";
 import SearchNew from "../../Components/PrimaryAdmin/SearchNew";
-import axios from "axios";
 import Snackbarp from "../../Components/PrimaryAdmin/snackbar/Snackbarp";
+import AxiosClient from "../../services/AxiosClient";
+
+
+
+
+
 const PrimaryBlacklistHistory = () => {
   const [search, setSearch] = useState("");
   const [popup, setpopup] = useState(false);
@@ -61,8 +66,8 @@ const PrimaryBlacklistHistory = () => {
   };
 
   const getblacklisthistory = () => {
-    axios
-      .get(`${global.API_BASE_URL}/admin/auth/blacklisthistory`)
+    AxiosClient
+      .get(`/admin/auth/blacklisthistory`)
       .then((res) => {
         const sortedData = res.data.sort(
           (a, b) => -(a.BlackListHistoryId - b.BlackListHistoryId)

@@ -8,7 +8,6 @@ import {
   Card,
   CardContent,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import OngoingReservation from "./OngoingReservation";
 import PastReservation from "./PastReservation";
 import theme from "../../../HomlyTheme";
@@ -18,39 +17,43 @@ const MyReservation = () => {
   const [value, setValue] = useState(0);
   const [ongoingReservation, setOngoingReservation] = useState([]);
   const [pastReservation, setPastReservation] = useState([]);
+  const [showPastSkeleton, setShowPastSkeleton] = useState(true);
+  const [showOngoingSkeleton, setShowOngoingSkeleton] = useState(true);
 
   const [isAddReview, setIsAddReview] = useState(false);
 
   const tabComponent = [
-    <OngoingReservation reservation={ongoingReservation} />,
+    <OngoingReservation
+      reservation={ongoingReservation}
+      showSkeleton={showOngoingSkeleton}
+    />,
     <PastReservation
       reservation={pastReservation}
       setIsAddReview={setIsAddReview}
+      showSkeleton={showPastSkeleton}
     />,
   ];
-
-  const Navigate = useNavigate();
 
   useEffect(() => {
     AxiosClient.get("/user/auth/userOngoingReservation")
       .then((response) => {
         setOngoingReservation(response.data);
+        setShowOngoingSkeleton(false);
       })
-      .catch((err) => {
-        if (!err.response.data.autherized) {
-          Navigate("/");
-        }
+      .catch(() => {
+        setOngoingReservation([]);
+        setShowOngoingSkeleton(false);
       });
 
     AxiosClient.get("/user/auth/userPastReservation")
       .then((response) => {
         setPastReservation(response.data);
         setIsAddReview(false);
+        setShowPastSkeleton(false);
       })
-      .catch((err) => {
-        if (!err.response.data.autherized) {
-          Navigate("/");
-        }
+      .catch(() => {
+        setPastReservation([]);
+        setShowPastSkeleton(false);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAddReview]);
