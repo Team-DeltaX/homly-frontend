@@ -1,8 +1,5 @@
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
-import holidayhome from "../../Assets/images/holidayHome.jpg";
 import "./Reservation.css";
 import ViewPopUp from "./ViewPopup";
 import dayjs, { Dayjs } from "dayjs";
@@ -11,9 +8,9 @@ import axios from "axios";
 import Typography from "@mui/material/Typography";
 import AxiosClient from "../../services/AxiosClient";
 
-const SpeicalReservationCard = (props) => {
-  //  const [Employee, SetEmployee] = useState({});
-  //const [isSpecial, setIsSpecial] = useState(props.reservation.IsSpecial);
+const ViewReservationCard = (props) => {
+//  const [Employee, SetEmployee] = useState({});
+  const [isSpecial, setIsSpecial] = useState(props.reservation.IsSpecial);
   const [isCancelled, setIsCancelled] = useState(props.reservation.IsCancelled);
   // const fetchfromemployee = () => {
   //   AxiosClient.get(
@@ -88,7 +85,7 @@ const SpeicalReservationCard = (props) => {
           <h4>{props.employeeName.name}</h4>
           {/* <p>Service number : {props.reservation.ServiceNO}</p> */}
           <p>Reservation Number {props.reservation.ReservationId}</p>
-          {/* <p>Contact Number : {Employee.contactNumber}</p> */}
+          <p>Contact Number : {props.employeeDetails.contact_number}</p>
           <p>Amount {props.reservation.Price}</p>
         </Grid>
         <Grid
@@ -124,11 +121,11 @@ const SpeicalReservationCard = (props) => {
               //name={props.employeeName.name}
               holidayhome={props.holidayHome}
             />
-            {/* if reservation is special pass special */}
-            <Typography variant="button" color="green">
-              Special
-            </Typography>
-
+            {isSpecial ? (
+              <Typography variant="button" color="green">
+                Special
+              </Typography>
+            ) : null}
             {isCancelled ? (
               <Typography variant="button" color="red">
                 Cancelled
@@ -141,4 +138,4 @@ const SpeicalReservationCard = (props) => {
   );
 };
 
-export default SpeicalReservationCard;
+export default ViewReservationCard;

@@ -128,12 +128,16 @@ export default function HolidayHomes() {
                   sx={{
                     width: "100%",
                     flexWrap: "wrap",
-                    display: !showSkeleton ? "flex" : "none",
+                    display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
                   }}
                 >
-                  {holidayHomes.length > 0 ? (
+                  {showSkeleton ? (
+                    [1, 2, 3].map((index) => {
+                      return <HHCardSkeleton key={index} />;
+                    })
+                  ) : holidayHomes.length > 0 ? (
                     holidayHomes.map((item) => (
                       <Box sx={{ padding: "7px" }} key={item.HolidayHomeId}>
                         <HolidayHomeCard
@@ -164,22 +168,6 @@ export default function HolidayHomes() {
                       </Typography>
                     </Box>
                   )}
-                </Box>
-                <Box
-                  sx={{
-                    flexWrap: "wrap",
-                    display: showSkeleton ? "flex" : "none",
-                  }}
-                >
-                  <Box sx={{ padding: "20px" }}>
-                    <HHCardSkeleton showInterest={false} />
-                  </Box>
-                  <Box sx={{ padding: "20px" }}>
-                    <HHCardSkeleton showInterest={false} />
-                  </Box>
-                  <Box sx={{ padding: "20px" }}>
-                    <HHCardSkeleton showInterest={false} />
-                  </Box>
                 </Box>
               </Stack>
             </Container>

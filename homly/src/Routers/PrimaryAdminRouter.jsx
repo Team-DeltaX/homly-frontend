@@ -1,5 +1,6 @@
 import React, { lazy } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+import PrivateRoutes from "./PrivateRoutes";
 
 const PrimaryDashboard = lazy(() =>
   import("../Pages/PrimaryAdmin/PrimaryDashboard")
@@ -30,19 +31,33 @@ const PrimaryAuthorizations = lazy(() =>
   import("../Pages/PrimaryAdmin/PrimaryAuthorizations")
 );
 
-const PrimaryAdminRouter = () => (
-  <Routes>
-    <Route path="/dashboard" element={<PrimaryDashboard />}></Route>
-    <Route path="/reservations" element={<PrimaryReservations />}></Route>
-    <Route path="/holidayhomes" element={<PrimaryHolidayHomes />}></Route>
-    <Route path="/report" element={<PrimaryReport />}></Route>
-    <Route path="/blacklistedusers/manage"element={<PrimaryManageBlacklistedUsers />}></Route>
-    <Route path="/blacklistedusers/history"element={<PrimaryBlacklistHistory />}></Route>
-    <Route path="/blacklistedusers/complaints"element={<PrimaryComplaints />}></Route>
-    <Route path="/addadmin" element={<PrimaryAddAdmin />}></Route>
-    <Route path="/viewadmin" element={<PrimaryViewAdmin />}></Route>
-    <Route path="/authorizations" element={<PrimaryAuthorizations />}></Route>
-  </Routes>
-);
+const PrimaryAdminRouter = () => {
+  return (
+    <Routes>
+     
+      <Route element={<PrivateRoutes allowedRoles={"PrimaryAdmin"} />}>
+        <Route path="/dashboard" element={<PrimaryDashboard />} />
+        <Route path="/reservations" element={<PrimaryReservations />} />
+        <Route path="/holidayhomes" element={<PrimaryHolidayHomes />} />
+        <Route path="/report" element={<PrimaryReport />} />
+        <Route
+          path="/blacklistedusers/manage"
+          element={<PrimaryManageBlacklistedUsers />}
+        />
+        <Route
+          path="/blacklistedusers/history"
+          element={<PrimaryBlacklistHistory />}
+        />
+        <Route
+          path="/blacklistedusers/complaints"
+          element={<PrimaryComplaints />}
+        />
+        <Route path="/addadmin" element={<PrimaryAddAdmin />} />
+        <Route path="/viewadmin" element={<PrimaryViewAdmin />} />
+        <Route path="/authorizations" element={<PrimaryAuthorizations />} />
+      </Route>
+    </Routes>
+  );
+};
 
 export default PrimaryAdminRouter;

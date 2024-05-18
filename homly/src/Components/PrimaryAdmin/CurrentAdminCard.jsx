@@ -7,11 +7,11 @@ import {
   Typography,
 } from "@mui/material";
 import theme from "../../HomlyTheme";
-import axios from "axios";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useState } from "react";
 import ConfirmPopup from "./ConfirmPopup";
 import Copy from "./Copy";
+import AxiosClient from "../../services/AxiosClient";
 
 const CurrentAdminCard = (props) => {
   const [open, setOpen] = useState(false);
@@ -42,12 +42,11 @@ const CurrentAdminCard = (props) => {
     setbuttonname("Edit");
     props.Seteditadmin("");
     setDisabled(true);
-    axios
-      .put("http://localhost:8080/admin/auth/locationadmin", {
-        AdminNo: props.data.AdminNo,
-        Email: email,
-        ContactNo: contact,
-      })
+    AxiosClient.put(`/admin/auth/locationadmin`, {
+      AdminNo: props.data.AdminNo,
+      Email: email,
+      ContactNo: contact,
+    })
       .then((res) => {
         props.fetchadmins();
         console.log("sucessfully updated");
@@ -58,12 +57,11 @@ const CurrentAdminCard = (props) => {
   };
 
   const resetpassword = () => {
-    axios
-      .post("http://localhost:8080/admin/auth/locationadmin/resetpassword", {
-        UserName: props.data.UserName,
-        Email: props.data.Email,
-        AdminNo: props.data.AdminNo,
-      })
+    AxiosClient.post(`/admin/auth/locationadmin/resetpassword`, {
+      UserName: props.data.UserName,
+      Email: props.data.Email,
+      AdminNo: props.data.AdminNo,
+    })
       .then((res) => {
         console.log("sucessfully sent");
         props.fetchadmins();
@@ -75,13 +73,9 @@ const CurrentAdminCard = (props) => {
   };
 
   const handleClick = () => {
-    axios
-      .put(
-        `http://localhost:8080/admin/auth/locationadmin/disable/${props.data.AdminNo}`,
-        {
-          dis: true,
-        }
-      )
+    AxiosClient.put(`/admin/auth/locationadmin/disable/${props.data.AdminNo}`, {
+      dis: true,
+    })
       .then((res) => {
         props.fetchadmins();
         props.setsnacktext("Admin Disabled Successfully!");

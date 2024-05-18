@@ -18,6 +18,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import ErrorSnackbar from "../User/ErrorSnackbar";
 import ConfirmPopup from "../PrimaryAdmin/ConfirmPopup";
+import AxiosClient from "../../services/AxiosClient";
 
 export default function AddSpecialReservationPopUp() {
   const [open, setOpen] = React.useState(false);
@@ -39,8 +40,7 @@ export default function AddSpecialReservationPopUp() {
     message: "",
   });
   const [CheckinDate, setCheckinDate] = useState(dayjs().add(6, "day"));
-
-  const [CheckoutDate, setCheckoutDate] = useState(dayjs().add(6, "day"));
+  const [CheckoutDate, setCheckoutDate] = useState(dayjs().add(7, "day")); 
 
   const handlesubmit = (e) => {
     const data = {
@@ -58,8 +58,9 @@ export default function AddSpecialReservationPopUp() {
       IsPaid: false,
     };
     console.log("aruna", data);
-    axios
-      .post("http://localhost:8080/user/specialreservation", data)
+    // axios
+    //   .post("http://localhost:8080/user/specialreservation", data)
+    AxiosClient.post("/admin/auth/specialreservation", data)
       .then((res) => {
         console.log("add special reservation successfully");
         setErrorStatus({
@@ -109,6 +110,7 @@ export default function AddSpecialReservationPopUp() {
         message: "no",
       });
     }
+    //setCheckoutDate(newDate.add(1, "day")); // Add one day to CheckinDate
   };
 
   const handleCheckoutDateChange = (newDate) => {
@@ -132,10 +134,7 @@ export default function AddSpecialReservationPopUp() {
   };
   useEffect(() => {
     if (ServiceNo) {
-      axios
-        .get(
-          `http://localhost:8080/admin/auth/locationadmin/employee/${ServiceNo}`
-        )
+      AxiosClient.get(`/admin/auth/locationadmin/employee/${ServiceNo}`)
         .then((res) => {
           const employeeData = res.data[0];
           setEmployeeName(employeeData.name);
@@ -147,10 +146,11 @@ export default function AddSpecialReservationPopUp() {
   }, [ServiceNo]);
   useEffect(() => {
     if (HolidayHomeName) {
-      axios
-        .get(
-          `http://localhost:8080/user/reservation/getTotalRoomRental/${HolidayHomeName}`
-        )
+      // axios
+      //   .get(
+      //     `http://localhost:8080/user/reservation/getTotalRoomRental/${HolidayHomeName}`
+      //   )
+      AxiosClient.get(`/user/reservation/getTotalRoomRental/${HolidayHomeName}`)
         .then((response) => {
           setMaxAdults(response.data.maxAdults);
           setMaxChildren(response.data.maxChildren);

@@ -6,7 +6,7 @@ import { Container, Grid, ThemeProvider, Typography } from "@mui/material";
 import theme from "../../HomlyTheme";
 import Pagetop from "../../Components/PrimaryAdmin/PageTop";
 import ViewPopupComplaints from "../../Components/PrimaryAdmin/ViewPopupComplints";
-import axios from "axios";
+import AxiosClient from "../../services/AxiosClient";
 import Switch from "@mui/material/Switch";
 import Snackbarp from "../../Components/PrimaryAdmin/snackbar/Snackbarp";
 
@@ -17,6 +17,7 @@ const PrimaryComplaints = () => {
   const [prevcomplaints, setPrevcomplaints] = useState([]);
   const [opensn, SetOpensn] = useState(false);
   const [opensnE, SetOpensnE] = useState(false);
+  const [openNotifySnack, SetopenNotifySncak] = useState(false);
 
   const handlepopup = () => {
     setpopup(!popup);
@@ -24,10 +25,9 @@ const PrimaryComplaints = () => {
 
   const fetchprevcomplaints = () => {
     console.log("start");
-    axios
-      .get(
-        `http://localhost:8080/admin/auth/locationadmin/complaint/${selecteduser.ServiceNo}`
-      )
+    AxiosClient.get(
+      `/admin/auth/locationadmin/complaint/${selecteduser.ServiceNo}`
+    )
       .then((res) => {
         setPrevcomplaints(res.data);
         console.log(res.data);
@@ -38,8 +38,7 @@ const PrimaryComplaints = () => {
   };
 
   const fetchcomplaints = () => {
-    axios
-      .get("http://localhost:8080/admin/auth/locationadmin/complaints")
+    AxiosClient.get(`/admin/auth/locationadmin/complaints`)
       .then((res) => {
         setcomplaints(res.data);
       })
@@ -80,6 +79,8 @@ const PrimaryComplaints = () => {
             popup={popup}
             SetOpensn={SetOpensn}
             SetOpensnE={SetOpensnE}
+            openNotifySnack={openNotifySnack}
+            SetopenNotifySncak={SetopenNotifySncak}
           />
         )}
 
@@ -112,7 +113,13 @@ const PrimaryComplaints = () => {
                 isOpen={opensnE}
                 setIsOpen={SetOpensnE}
                 type="error"
-                message={"errr occured!"}
+                message={"error occured!"}
+              />
+              <Snackbarp
+                isOpen={openNotifySnack}
+                setIsOpen={SetopenNotifySncak}
+                type="success"
+                message={"Warning sent Sucessfully!"}
               />
 
               <Box

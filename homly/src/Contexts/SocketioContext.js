@@ -8,7 +8,7 @@ export const SocketioContext = createContext();
 const SocketioContextProvider = ({ children }) => {
   const { authServiceNumber,isLogout, isLogged } = useContext(AuthContext);
   const [socket, setSocket] = useState(null);
-  const userId = localStorage.getItem("userId");
+  const userId = sessionStorage.getItem("userId");
   useEffect(() => {
     const newSocket = io("http://localhost:8081");
     

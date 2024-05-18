@@ -8,17 +8,16 @@ import {
 import { useState } from "react";
 import theme from "../../HomlyTheme";
 import CancelIcon from "@mui/icons-material/Cancel";
-import axios from "axios";
+import AxiosClient from "../../services/AxiosClient";
 
 const ViewPopupManage = (props) => {
   const [removeReson, setRemoveReson] = useState("");
 
   const handleremovefromblacklist = () => {
-    axios
-      .delete(`http://localhost:8080/admin/auth/unblacklist`, {
-        data: { ServiceNo: props.selectemp.service_number },
-        withCredentials: true,
-      })
+    AxiosClient.delete(`/admin/auth/unblacklist`, {
+      data: { ServiceNo: props.selectemp.service_number },
+      withCredentials: true,
+    })
       .then((res) => {
         props.fetch_current_blacklist();
         props.SetOpensn(true);
@@ -27,15 +26,14 @@ const ViewPopupManage = (props) => {
         props.SetOpensnE(true);
       });
 
-    axios
-      .put(
-        `http://localhost:8080/admin/auth/unblacklist`,
-        {
-          Email: props.selectuser.email,
-          ServiceNo: props.selectemp.service_number,
-        },
-        { withCredentials: true }
-      )
+    AxiosClient.put(
+      `/admin/auth/unblacklist`,
+      {
+        Email: props.selectuser.email,
+        ServiceNo: props.selectemp.service_number,
+      },
+      { withCredentials: true }
+    )
       .then((res) => {
         console.log("unblacklist homly usertable sucess");
       })
@@ -43,17 +41,16 @@ const ViewPopupManage = (props) => {
         console.log(error);
       });
 
-    axios
-      .post(
-        `http://localhost:8080/admin/auth/blacklisthistory`,
-        {
-          ServiceNo: props.selectemp.service_number,
-          AddReason: props.selecteduser.BlackListReason,
-          BlacklistedDate: props.selecteduser.Date,
-          RemoveReason: removeReson,
-        },
-        { withCredentials: true }
-      )
+    AxiosClient.post(
+      `/admin/auth/blacklisthistory`,
+      {
+        ServiceNo: props.selectemp.service_number,
+        AddReason: props.selecteduser.BlackListReason,
+        BlacklistedDate: props.selecteduser.Date,
+        RemoveReason: removeReson,
+      },
+      { withCredentials: true }
+    )
       .then((res) => {
         console.log("added to blacklist history sucess");
       })

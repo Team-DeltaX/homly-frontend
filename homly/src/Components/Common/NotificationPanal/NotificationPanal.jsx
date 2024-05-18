@@ -18,8 +18,9 @@ const NotificationPanal = ({ bell }) => {
   const notificationsContainerRef = useRef(null);
 
   useEffect(() => {
-    AxiosClient.get("/user/auth/notifications")
+    AxiosClient.get("/common/auth/notifications")
       .then((res) => {
+        console.log(res.data,'notifications')
         SetNotifications(res.data);
         SetMessagecount(res.data.length);
       })
@@ -61,7 +62,7 @@ const NotificationPanal = ({ bell }) => {
   };
 
   const removeAllNotifications = () => {
-    AxiosClient.delete("/user/auth/notifications", {
+    AxiosClient.delete("/common/auth/notifications", {
       data: { notificationIds: null, all: true },
     })
       .then(() => {
@@ -72,7 +73,7 @@ const NotificationPanal = ({ bell }) => {
   };
 
   const updateNotifications = (removedNotificationId) => {
-    AxiosClient.delete("/user/auth/notifications", {
+    AxiosClient.delete("/common/auth/notifications", {
       data: { notificationIds: removedNotificationId },
     })
       .then((res) => {

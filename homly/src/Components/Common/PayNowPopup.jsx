@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -6,29 +6,26 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import md5 from "crypto-js/md5";
+import AxiosClient from '../../services/AxiosClient';
 
-export default function AlertDialog(
-    {
-        isOpen,
-        setIsOpen
-    }) 
-{
+export default function PayNowPopup({ isOpen, setIsOpen, reservationId, price }) {
   
-  const orderId = 45896588;
-  const name = "Cake";
-  const amount = 4500;
+  const orderId = reservationId;
+  const name = "Reservation";
+  //const amount = parseInt(price);
+  const amount = 2456;
   const merchantId = "1226126";
   const merchantSecret =
     "MzQxNTg0NDg5Mzk5NzMxOTMxNTE0NDI3NDI0MTIxNTA5ODc0NTM3";
 
   const hashedSecret = md5(merchantSecret).toString().toUpperCase();
-  const amountFormated = parseFloat(amount)
+  const amountFormatted = parseFloat(amount)
     .toLocaleString("en-us", { minimumFractionDigits: 2 })
     .replaceAll(",", "");
   const currency = "LKR";
 
   const hash = md5(
-    merchantId + orderId + amountFormated + currency + hashedSecret
+    merchantId + orderId + amountFormatted + currency + hashedSecret
   )
     .toString()
     .toUpperCase();
@@ -43,6 +40,8 @@ export default function AlertDialog(
     items: name,
     amount: amount,
     currency: currency,
+    status_code: 2,
+    md5sig: '',
     first_name: "Saman",
     last_name: "Perera",
     email: "samanp@gmail.com",
@@ -53,62 +52,70 @@ export default function AlertDialog(
     hash: hash,
   };
 
-// Listen to the load event of the script element
-// Create a new script element
-const script = document.createElement('script');
-// Set the src attribute to the URL of the PayHere script
-script.src = 'https://www.payhere.lk/lib/payhere.js';
+  useEffect(() => {
+    // Load PayHere script dynamically
+    const script = document.createElement('script');
+    script.src = 'https://www.payhere.lk/lib/payhere.js';
+    document.body.appendChild(script);
 
-// // Listen to the load event of the script element
-// script.onload = () => {
-//   // The script is fully loaded, you can now call window.payhere.startPayment
-//   if (window.payhere) {
-//     // Call startPayment here
-//     window.payhere.startPayment(payment);
-//   } else {
-//     // Handle the case where the PayHere library couldn't be loaded
-//     console.error('PayHere library not loaded');
-//   }
-// };
-// document.body.appendChild(script);
-//   if (!window.payhere) {
-//     window.payhere = {};
-//   }
-  function pay() {
-    console.log("beforeeeeeee");
-    window.payhere.startPayment(payment);
-    console.log("after");
-  }
-  
-  // Called when user completed the payment. It can be a successful payment or failure
-  window.payhere.onCompleted = function onCompleted() {
-    console.log("Payment completed");
-    //Note: validate the payment and show success or failure page to the customer
+    // Cleanup function to remove the script when component unmounts
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+
+  const handlePaymentCompleted = (orderId) => {
+    //setIsOpen(false);
+    if (orderId) {
+      console.log("Payment successful");
+      // Update UI or perform actions for successful payment
+      AxiosClient.put(`/user/auth/reservation/completePayment`,{reservationId,status:true})
+        .then((response) => {
+          console.log(reservationId);
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      console.log("Payment failed");
+      // Handle failure scenario
+    }
   };
 
-  // Called when user closes the payment without completing
-  window.payhere.onDismissed = function onDismissed() {
-    //Note: Prompt user to pay again or show an error page
+  const handlePaymentDismissed = () => {
     console.log("Payment dismissed");
+    // Handle payment dismissal
+    AxiosClient.put(`/user/auth/reservation/completePayment`,{reservationId, status:false})
+        .then((response) => {
+          console.log(reservationId);
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
   };
 
-  // Called when error happens when initializing payment such as invalid parameters
-  window.payhere.onError = function onError(error) {
-    // Note: show an error page
-    console.log("Error:" + error);
+  const handlePaymentError = (error) => {
+    console.log("Error:", error);
+    // Handle payment error
   };
-    const handleAlertClose = (event, reason) => {
-        if (reason === "clickaway") {
-          return;
-        }
-        setIsOpen(false);
-      };
+
+  const pay = () => {
+    console.log("Paying");
+    window.payhere.startPayment(payment);
+    // Event listeners for payment completion, dismissal, and error
+    window.payhere.onCompleted = handlePaymentCompleted(orderId);
+    window.payhere.onDismissed = handlePaymentDismissed;
+    window.payhere.onError = handlePaymentError;
+  };
+
+  const handleAlertClose = () => {
+    setIsOpen(false);
+  };
 
   return (
     <React.Fragment>
-      {/* <Button variant="outlined" onClick={handleClickOpen}>
-        Open alert dialog
-      </Button> */}
       <Dialog
         open={isOpen}
         onClose={handleAlertClose}
@@ -120,7 +127,7 @@ script.src = 'https://www.payhere.lk/lib/payhere.js';
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            You can pay with any debit card with fully security.
+            You can pay with any debit card with full security.
           </DialogContentText>
         </DialogContent>
         <DialogActions>

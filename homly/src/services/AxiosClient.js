@@ -11,7 +11,7 @@ const AxiosClient = axios.create({
 // config axios client header
 AxiosClient.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -28,10 +28,12 @@ AxiosClient.interceptors.response.use(
   },
   (error) => {
     if (error.response && error.response.status === 401) {
-      localStorage.setItem("isLogged", false);
-      localStorage.removeItem("token");
-      localStorage.removeItem("userId");
-      window.location.href = "/";
+      sessionStorage.clear();
+      if(error.response.data.role === "admin"){
+        window.location.href = "/admin/login";
+      }else{
+        window.location.href = "/";
+      }
     } else {
       return Promise.reject(error);
     }

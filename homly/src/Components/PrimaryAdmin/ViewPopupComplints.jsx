@@ -5,7 +5,7 @@ import {
   ThemeProvider,
   Typography,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import theme from "../../HomlyTheme";
 import "../../Components/PrimaryAdmin/Css/complaintpopup.css";
 import Accordion from "@mui/material/Accordion";
@@ -14,19 +14,18 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import CancelIcon from "@mui/icons-material/Cancel";
 import ConfirmPopup from "./ConfirmPopup";
-import axios from "axios";
+import AxiosClient from "../../services/AxiosClient";
+import { SocketioContext } from "../../Contexts/SocketioContext";
 
 const ViewPopupComplaints = (props) => {
   const [reson, setReson] = useState("");
   const [expand, setExpand] = useState(false);
   const [Open, setOpen] = useState(false);
   const [disable, Setdisable] = useState(false);
+  const { socket } = useContext(SocketioContext);
 
   const check_already_exists = () => {
-    axios
-      .get(
-        `${global.API_BASE_URL}/admin/auth/isexist/${props.selecteduser.ServiceNo}`
-      )
+    AxiosClient.get(`/admin/auth/isexist/${props.selecteduser.ServiceNo}`)
       .then((res) => {
         Setdisable(res.data.exist);
       })
@@ -35,22 +34,19 @@ const ViewPopupComplaints = (props) => {
       });
   };
   const mark_on_open = () => {
-    axios
-      .put(`${global.API_BASE_URL}/admin/auth/markcomplaint`, {
-        CompID: props.selecteduser.ComplaintID,
-      })
-      .then(() => {
-        console.log("marked as blacklisted");
-        props.fetchcomplaints();
-      });
+    AxiosClient.put(`/admin/auth/markcomplaint`, {
+      CompID: props.selecteduser.ComplaintID,
+    }).then(() => {
+      console.log("marked as blacklisted");
+      props.fetchcomplaints();
+    });
   };
 
   const handleaddtoblacklist = () => {
-    axios
-      .post(`http://localhost:8080/admin/auth/blacklist`, {
-        Reason: reson,
-        ServiceNo: props.selecteduser.ServiceNo,
-      })
+    AxiosClient.post(`/admin/auth/blacklist`, {
+      Reason: reson,
+      ServiceNo: props.selecteduser.ServiceNo,
+    })
       .then((res) => {
         console.log(res);
         props.SetOpensn(true);
@@ -361,7 +357,25 @@ const ViewPopupComplaints = (props) => {
                   margin: "10px",
                 }}
               >
-                <Button variant="contained" sx={{ marginRight: "3%" }}>
+                <Button
+                  variant="contained"
+                  sx={{ marginRight: "3%" }}
+                  onClick={() => {
+                    //send notification
+                    socket.emit("newNotification", {
+                      senderId: sessionStorage.getItem("userId"),
+                      receiverId: props.selecteduser.ServiceNo,
+                      data: "You Are Warned By Homly Adminstation",
+                      type: "Authorization Denied",
+                      time: new Date(),
+                    });
+
+                    //close popup after send notification
+
+                    props.handlepopup();
+                    props.SetopenNotifySncak(true);
+                  }}
+                >
                   <Typography sx={{ fontSize: "10px" }}>
                     Send Warning
                   </Typography>

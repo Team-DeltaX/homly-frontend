@@ -101,16 +101,20 @@ export default function HolidayHomeDetails() {
     furniture_rating: 0,
     wifi_rating: 0,
     overall_rating: 0,
+    MainImage: "",
+    Image1: "",
+    Image2: "",
   });
   // const homeId = "1710334919911";
   const { homeId } = useParams();
   useEffect(() => {
-    AxiosClient.get(`/admin/auth/locationadmin/holidayhome/${homeId}`)
+    AxiosClient.get(`/user/auth/locationadmin/holidayhome/${homeId}`)
       .then((res) => {
-        console.log("response", res.data.room);
+        console.log("response", res.data);
         if (Response) {
           const homeDetails = res.data.homeDetails[0];
           const contactNo = res.data.contactNo;
+          console.log(homeDetails.MainImage, "imageeeeeeeeeeeeeeeeeee");
           //setRoom(res.data.room);
 
           // Extract relevant data from response and set to 'value' state
@@ -132,6 +136,17 @@ export default function HolidayHomeDetails() {
             Wifi: homeDetails.Wifi === "0" ? false : true,
             Pool: homeDetails.Pool === "0" ? false : true,
             Bar: homeDetails.Bar === "0" ? false : true,
+            Facilities: homeDetails.Facilities || "",
+            food_rating: homeDetails.FoodRating || 0,
+            value_for_money_rating: homeDetails.ValueForMoneyRating || 0,
+            staff_rating: homeDetails.StaffRating || 0,
+            location_rating: homeDetails.LocationRating || 0,
+            furniture_rating: homeDetails.FurnitureRating || 0,
+            wifi_rating: homeDetails.WifiRating || 0,
+            overall_rating: homeDetails.OverallRating || 0,
+            MainImage: homeDetails.MainImage,
+            Image1: homeDetails.Image1,
+            Image2: homeDetails.Image2,
           });
         } else {
           console.log("No data found");
@@ -179,7 +194,11 @@ export default function HolidayHomeDetails() {
                 {/* <AddReservationPopUp name={value.name} id={value.id} room={room}/> */}
               </Grid>
               <Grid md={12}>
-                <HolidayHomeGrid />
+                <HolidayHomeGrid
+                  MainImage={value.MainImage}
+                  Image1={value.Image1}
+                  Image2={value.Image2}
+                />
               </Grid>
 
               <Grid md={8}>

@@ -67,7 +67,6 @@ const PersonalDetails = () => {
   useEffect(() => {
     AxiosClient.get("/user/auth/details")
       .then((res) => {
-        console.log(res, "res asdasdasf");
         if (Response) {
           setData({
             ...data,
@@ -134,7 +133,6 @@ const PersonalDetails = () => {
       };
       AxiosClient.put("/user/auth/details", formData)
         .then((res) => {
-          console.log(res, "res updateeee");
           if (res.data.success) {
             if (res.data.emailUpdated) {
               emailUpdated = true;

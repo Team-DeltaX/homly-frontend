@@ -17,7 +17,6 @@ import { PieChart } from "@mui/x-charts/PieChart";
 import Income from "../../Components/PrimaryAdmin/Income";
 import PDashboardboxes from "../../Components/PrimaryAdmin/PDashboardboxes";
 import CompareLineChart from "../../Components/PrimaryAdmin/CompareLineChart";
-import axios from "axios";
 import AxiosClient from "../../services/AxiosClient";
 
 const PrimaryDashboard = () => {
@@ -28,7 +27,7 @@ const PrimaryDashboard = () => {
   const [NotApprovedCount, SetNotApprovedCount] = useState(0);
 
   const getNotApprovedCount = () => {
-    // axios.get('http://localhost:8080/admin/auth/notapprovedcount')
+    
     AxiosClient.get("/admin/auth/notapprovedcount")
       .then((res) => {
         SetNotApprovedCount(res.data.notapprovedcount);
@@ -39,20 +38,27 @@ const PrimaryDashboard = () => {
   };
 
   const getadmins = () => {
-    // axios.get(`${global.API_BASE_URL}/admin/auth/locationadmin/all`)
     AxiosClient.get("/admin/auth/locationadmin/all").then((res) => {
+      
       setlatestFourAdmins(res.data.reverse());
+      const primaryAdminRemoved = res.data.filter(admin => admin.Role =='LocationAdmin');
+    
+      setlatestFourAdmins(primaryAdminRemoved);
+      
     });
   };
 
   const getstatus = () => {
-    AxiosClient.get("/admin/auth/locationadmin/statuscount")
+    AxiosClient.get("/admin/auth/holidayhomestatus")
       .then((res) => {
         SetActivecount(res.data.Active);
         setInactivecount(res.data.Inactive);
+        console.log('-getstatus then-')
         console.log(res);
       })
       .catch((err) => {
+        console.log('-getstatus catch-')
+
         console.log(err);
       });
   };
@@ -104,9 +110,23 @@ const PrimaryDashboard = () => {
                       maxHeight: { md: "645px", xs: "auto" },
                     }}
                   >
-                    <Box>
+                      <Box sx={{display:{xs:'flex',md:'none'},justifyContent:'center',gap:'3px'}}>
+                          <Link to="/primaryadmin/viewadmin">
+                            <Button  variant="contained">
+                              <Typography>Location Admins</Typography>
+                            </Button>
+                          </Link>
+                          <Link to="/primaryadmin/authorizations">
+                            <Button  variant="contained">
+                              <Typography>Authorizations</Typography>
+                            </Button>
+                          </Link>
+                        </Box>
+                    <Box sx={{display:'flex',justifyContent:'center'}}>
                       <PDashboardboxes />
                     </Box>
+                  
+                    
                     <Box
                       sx={{
                         display: "flex",
@@ -177,6 +197,7 @@ const PrimaryDashboard = () => {
                           padding: "1px",
                           margin: "10px",
                           borderRadius: "20px",
+                          display:{xs:'none',md:'flex'}
                         }}
                       >
                         <Box>
@@ -192,10 +213,7 @@ const PrimaryDashboard = () => {
                           />
                         </Box>
                         <Box>
-                          <DashViewAdminBox
-                            color={"pink"}
-                            data={latestFourAdmins[1]}
-                          />
+                          <DashViewAdminBox color={"#FF69B4"} data={latestFourAdmins[1]} />
                         </Box>
                         <Box>
                           <DashViewAdminBox

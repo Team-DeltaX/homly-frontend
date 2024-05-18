@@ -16,9 +16,8 @@ import ViewPopupManage from "../../Components/PrimaryAdmin/ViewPopupManage";
 import SearchNew from "../../Components/PrimaryAdmin/SearchNew";
 import "../../Components/PrimaryAdmin/Css/fontchange.css";
 import { CSVLink } from "react-csv";
-import axios from "axios";
-import Snackbarp from "../../Components/PrimaryAdmin/snackbar/Snackbarp";
 import AxiosClient from "../../services/AxiosClient";
+import Snackbarp from "../../Components/PrimaryAdmin/snackbar/Snackbarp";
 
 const PrimaryManageBlacklistedUsers = () => {
   const [search, setSearch] = useState("");
@@ -59,9 +58,7 @@ const PrimaryManageBlacklistedUsers = () => {
   };
 
   const fetch_current_blacklist = () => {
-    // axios
-    //   .get(`http://localhost:8080/admin/auth/blacklist`)
-    AxiosClient.get("admin/auth/blacklist")
+    AxiosClient.get(`/admin/auth/blacklist`)
       .then((res) => {
         setBlacklistedusers(res.data);
       })

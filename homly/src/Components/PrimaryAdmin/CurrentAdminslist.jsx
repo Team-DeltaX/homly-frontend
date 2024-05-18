@@ -4,7 +4,7 @@ import CurrentAdminCard from "./CurrentAdminCard";
 import AutohideSnackbar from "../../Components/PrimaryAdmin/AutohideSnackbar";
 import { CustomTabContext } from "../../Contexts/primryadmin/CustomTabContext";
 import { SearchContext } from "../../Contexts/primryadmin/Searchcontext";
-import axios from "axios";
+import AxiosClient from "../../services/AxiosClient";
 
 const CurrentAdminslist = () => {
   const [admins, setAdmins] = useState([]);
@@ -27,12 +27,10 @@ const CurrentAdminslist = () => {
 
   const fetchadmins = () => {
     SetLoad(true);
-    axios
-      .get(`http://localhost:8080/admin/auth/locationadmin/all`)
-      .then((res) => {
-        SetLoad(false);
-        setAdmins(res.data.reverse());
-      });
+    AxiosClient.get(`/admin/auth/locationadmin/all`).then((res) => {
+      SetLoad(false);
+      setAdmins(res.data.reverse());
+    });
   };
 
   useEffect(() => {

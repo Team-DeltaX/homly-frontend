@@ -5,16 +5,16 @@ import Stack from "@mui/material/Stack";
 import holidayhome from "../../Assets/images/holidayHome.jpg";
 import "./Reservation.css";
 import ViewPopUp from "./ViewPopup";
-import OngoingReservationCard from "./OngoingReservationCard";
+import ViewReservationCard from "./ViewReservationCard";
 import axios from "axios";
+import AxiosClient from "../../services/AxiosClient";
 
 const OngoingReservationList = (props) => {
   const [reservations, setReservations] = useState([]);
   const fetchreservations = () => {
-    axios
-      .get("http://localhost:8080/user/reservation/ongoing")
+    AxiosClient.get("/admin/auth/reservation/ongoing")
       .then((res) => {
-        console.log(res.data);
+        console.log("fbnh fjnygfvfrvegbh", res.data);
         //reverse array to keep new ones first
         setReservations(res.data.reverse());
       })
@@ -28,25 +28,16 @@ const OngoingReservationList = (props) => {
   }, []);
   return (
     <>
-      {/* <Box className="home">
-      {reservations.filter((reservations) => {
-                    return props.search.toLowerCase() === ""
-                      ? reservations
-                      : reservations.empName.toLowerCase().startsWith(
-                            props.search.toLocaleLowerCase()
-                        );
-                  })
-                  .map(reservation => (
-         (<OngoingReservationCard  reservation={reservation.Reservations[0]} name={reservation.empName}/>)    
-      ))}
-    </Box> */}
       <Box className="home">
         {reservations.map((reservation) => (
-          <OngoingReservationCard
+          <ViewReservationCard
+            holidayHome={reservation.holidayHome[0]}
             reservation={reservation.reservation}
             reservedRoom={reservation.reservedrooms}
+            reservedHall={reservation.reservedhalls}
+            employeeName={reservation.employeeName[0]}
+            employeeDetails={reservation.employeeDetails[0]}
           />
-          // console.log("sadasd",reservation)
         ))}
       </Box>
     </>

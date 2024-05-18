@@ -39,33 +39,32 @@ const respSidePages = [
 ];
 
 const NavBar = ({ refContactUS, position }) => {
-  const { user, setIsLogout } = useContext(AuthContext);
+  const { setIsLogout } = useContext(AuthContext);
   const navigate = useNavigate();
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
+  const [user, setUser] = useState({
+    serviceNo: "",
+    name: "",
+    image: "",
+  });
 
-  // {
-  //   id: 1,
-  //   type: "New Feedback",
-  //   data: "added Anuradhapura resort by samitha",
-  //   senderId: "18964v",
-  //   time: "2021-10-10T10:10:10",
-  // },
-  // {
-  //   id: 2,
-  //   type: "Authorization Successful",
-  //   data: "added Anuradhapura resort by samitha",
-  //   senderId: "18964v",
-  //   time: "2021-10-10T10:10:10",
-  // },
-  // {
-  //   id: 3,
-  //   type: "Authorization Denied",
-  //   data: "added Anuradhapura resort by samitha",
-  //   senderId: "18964v",
-  //   time: "2021-10-10T10:10:10",
-  // },
+  useEffect(() => {
+    AxiosClient.get("/user/auth/details")
+      .then((res) => {
+        if (res) {
+          setUser({
+            ...user,
+            serviceNo: res.data.serviceNo,
+            name: res.data.name,
+            image: res.data.image,
+          });
+        }
+      })
+      .catch(() => {});
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -100,11 +99,7 @@ const NavBar = ({ refContactUS, position }) => {
   const handleLogout = () => {
     handleCloseUserMenu();
     setIsLogout(true);
-    localStorage.removeItem("token");
-    localStorage.removeItem("userId");
-    localStorage.removeItem("image");
-    localStorage.removeItem("selectedTab");
-    localStorage.setItem("isLogged", false);
+    sessionStorage.clear();
     navigate("/");
   };
 
@@ -255,7 +250,7 @@ const NavBar = ({ refContactUS, position }) => {
                   <MenuItem
                     onClick={() => {
                       handleCloseUserMenu();
-                      localStorage.removeItem("selectedTab");
+                      sessionStorage.removeItem("selectedTab");
                     }}
                     component={Link}
                     to="/myProfile"

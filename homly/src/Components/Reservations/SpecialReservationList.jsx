@@ -1,21 +1,16 @@
 import { useEffect, useState } from "react";
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
-import holidayhome from '../../Assets/images/holidayHome.jpg';
-import './Reservation.css';
-import ViewPopUp from './ViewPopup';
-import SpecialReservationCard from './SpecialReservationCard';
-import axios from "axios";
+import Box from "@mui/material/Box";
+import "./Reservation.css";
+import ViewReservationCard from "./ViewReservationCard";
+import AxiosClient from "../../services/AxiosClient";
 
-const SpecialReservationList = (props) => {
-  const [reservations, setReservations] = useState([])
-  const fetchadmins = () => {
-    axios
-      .get("http://localhost:8080/admin/auth/locationadmin/reservations")
+const SpeicalReservationList = (props) => {
+  const [reservations, setReservations] = useState([]);
+  const fetchreservations = () => {
+    AxiosClient.get("/admin/auth/reservation/special")
       .then((res) => {
-        console.log(res.data);
-        //reverse array to keep new ones first 
+        console.log("fbnh fjnygfvfrvegbh", res.data);
+        //reverse array to keep new ones first
         setReservations(res.data.reverse());
       })
       .catch((err) => {
@@ -24,23 +19,23 @@ const SpecialReservationList = (props) => {
   };
 
   useEffect(() => {
-    fetchadmins();
+    fetchreservations();
   }, []);
-
   return (
-    <Box className="home">
-      {reservations.filter((reservations) => {
-        return props.search.toLowerCase() === ""
-          ? reservations
-          : reservations.holidayhomename.toLowerCase().startsWith(
-            props.search.toLocaleLowerCase()
-          );
-      })
-        .map(reservation => (
-          (<SpecialReservationCard reservation={reservation} />)
+    <>
+      <Box className="home">
+        {reservations.map((reservation) => (
+          <ViewReservationCard
+            holidayHome={reservation.holidayHome[0]}
+            reservation={reservation.reservation}
+            reservedRoom={reservation.reservedrooms}
+            reservedHall={reservation.reservedhalls}
+            employeeName={reservation.employeeName[0]}
+          />
         ))}
-    </Box>
+      </Box>
+    </>
   );
-}
+};
 
-export default SpecialReservationList;
+export default SpeicalReservationList;

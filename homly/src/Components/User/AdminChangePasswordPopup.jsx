@@ -29,10 +29,6 @@ export default function AdminChangePasswordPopup({
     e.preventDefault();
     if (!errorConfirmPassword) {
       const formData = { adminId: adminId, password: password };
-      // axios
-      //   .put(`${global.API_BASE_URL}/admin/`, formData, {
-      //     withCredentials: true,
-      //   })
       AxiosClient.put("/admin", formData).then((res) => {
         if (res.data.success) {
           setErrorStatus({

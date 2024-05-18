@@ -33,7 +33,8 @@ const Img = styled("img")({
 });
 
 const UserLogin = () => {
-  const { setIsLogged, setAuthServiceNumber } = useContext(AuthContext);
+  const { setIsLogged, setAuthServiceNumber } =
+    useContext(AuthContext);
   const [serviceNo, setServiceNo] = useState("");
   const [password, setPassword] = useState("");
   const [open, setOpen] = useState(false);
@@ -59,11 +60,12 @@ const UserLogin = () => {
             message: res.data.message,
           });
           setIsLogged(true);
-          localStorage.setItem("isLogged", true);
           setAuthServiceNumber(serviceNo);
-          localStorage.setItem("userId", serviceNo);
-          localStorage.setItem("token", res.data.token);
-          localStorage.removeItem("selectedTab");
+          sessionStorage.setItem("role", "User");
+          sessionStorage.setItem("userId", serviceNo);
+          sessionStorage.setItem("token", res.data.token);
+          sessionStorage.setItem("isLogged", true);
+          sessionStorage.removeItem("selectedTab");
           Navigate("/Home");
         } else {
           setServiceNo("");
