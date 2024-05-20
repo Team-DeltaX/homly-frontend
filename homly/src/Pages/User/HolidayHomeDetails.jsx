@@ -19,6 +19,7 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import SimpleMap from "../../Components/Common/MapContainer";
+import GoogleMap from "../../Components/Common/GoogleMapSample";
 import LinearProgress, {
   linearProgressClasses,
 } from "@mui/material/LinearProgress";

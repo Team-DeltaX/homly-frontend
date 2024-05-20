@@ -11,7 +11,6 @@ import AxiosClient from "../../services/AxiosClient";
 import SearchNew from "../../Components/PrimaryAdmin/SearchNew";
 
 const OngoingReservationList = (props) => {
-  const [search, setSearch] = useState("");
   const [reservations, setReservations] = useState([])
   const fetchreservations = () => {
     AxiosClient.get("/admin/auth/reservation/ongoing")
@@ -34,10 +33,13 @@ const OngoingReservationList = (props) => {
         {/* {console.log("Searchhihhhhh", reservation.ServiceNo)} */}
         {console.log("resssssssss",reservations)}
         {reservations
-          .filter((reservations) => {
-            return props.search.toLowerCase() === "" ||
-              reservations.holidayHome[0].name.toLowerCase().includes(search.toLowerCase()) ||
-              reservations.reservation.reservationId.toLowerCase().includes(search.toLowerCase());
+          .filter((reservation) => {
+            return props.search.toLowerCase() === "" ? reservation
+              : (reservation.holidayHome[0].Name.toLowerCase().startsWith(props.search.toLowerCase()) ||
+                 reservation.employeeName[0].name.toLowerCase().startsWith(props.search.toLowerCase()) ||
+                 reservation.reservation.ReservationId.toLowerCase().includes(props.search.toLowerCase())
+                ) 
+              ? reservation : null;
           })
           .map((reservation) => (
             <ViewReservationCard
