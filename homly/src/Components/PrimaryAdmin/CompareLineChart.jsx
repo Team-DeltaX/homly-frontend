@@ -9,7 +9,6 @@ import { Box, Typography } from "@mui/material";
 import { CancelOutlined } from "@mui/icons-material";
 import AxiosClient from "../../services/AxiosClient";
 
-
 export default function CompareLineChart() {
   const [h1data, setH1data] = React.useState([]);
   const [h2data, setH2data] = React.useState([]);
@@ -38,10 +37,7 @@ export default function CompareLineChart() {
 
   const setearning_HH1 = (HolidayHome1) => {
     const promises = getLastSevenDays().map((date) => {
-      return AxiosClient
-        .get(
-          `/admin/auth/dayincome/${date}/${HolidayHome1}`
-        )
+      return AxiosClient.get(`/admin/auth/dayincome/${date}/${HolidayHome1}`)
         .then((res) => {
           return res.data.sumForDate;
         })
@@ -63,10 +59,7 @@ export default function CompareLineChart() {
   };
   const setearning_HH2 = (HolidayHome2) => {
     const promises = getLastSevenDays().map((date) => {
-      return AxiosClient
-        .get(
-          `/admin/auth/dayincome/${date}/${HolidayHome2}`
-        )
+      return AxiosClient.get(`/admin/auth/dayincome/${date}/${HolidayHome2}`)
         .then((res) => {
           return res.data.sumForDate;
         })
@@ -88,10 +81,7 @@ export default function CompareLineChart() {
 
   const setearning_HH3 = (HolidayHome3) => {
     const promises = getLastSevenDays().map((date) => {
-      return AxiosClient
-        .get(
-          `/admin/auth/dayincome/${date}/${HolidayHome3}`
-        )
+      return AxiosClient.get(`/admin/auth/dayincome/${date}/${HolidayHome3}`)
         .then((res) => {
           return res.data.sumForDate;
         })
@@ -109,53 +99,30 @@ export default function CompareLineChart() {
         console.log(err);
       });
   };
-  const getHolidayHome1Rating=(HolidayHome1)=>{
+  const getHolidayHome1Rating = (HolidayHome1) => {
     AxiosClient.get(`/admin/auth/holidayhomerating/${HolidayHome1}`)
-    .then((res)=>{
-      SetHolidayHome1Rating(res.data.rating[0].overall_rating)
-
-      })
-    .catch((error)=>{
-      console.log(error)
-    })
-  }
-
-  const getHolidayHome2Rating=(HolidayHome2)=>{
-    AxiosClient.get(`/admin/auth/holidayhomerating/${HolidayHome2}`)
-    .then((res)=>{
-      SetHolidayHome2Rating(res.data.rating[0].overall_rating)
-    }}
-
-  const getHolidayHome2Rating = (HolidayHome2) => {
-    axios
-      .get(
-        `${global.API_BASE_URL}/admin/auth/holidayhomerating/${HolidayHome2}`
-      )
       .then((res) => {
-        SetHolidayHome2Rating(res.data.rating[0].overall_rating);
-      })
-    .catch((error)=>{
-      console.log(error)
-    })
-  }
-
-  const getHolidayHome3Rating=(HolidayHome3)=>{
-    AxiosClient.get(`/admin/auth/holidayhomerating/${HolidayHome3}`)
-    .then((res)=>{
-      SetHolidayHome3Rating(res.data.rating[0].overall_rating)
-    })
-
-  const getHolidayHome3Rating = (HolidayHome3) => {
-    axios
-      .get(
-        `${global.API_BASE_URL}/admin/auth/holidayhomerating/${HolidayHome3}`
-      )
-      .then((res) => {
-        SetHolidayHome3Rating(res.data.rating[0].overall_rating);
+        SetHolidayHome1Rating(res.data.rating[0].overall_rating);
       })
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  const getHolidayHome2Rating = (HolidayHome2) => {
+    AxiosClient.get(`/admin/auth/holidayhomerating/${HolidayHome2}`).then(
+      (res) => {
+        SetHolidayHome2Rating(res.data.rating[0].overall_rating);
+      }
+    );
+  };
+
+  const getHolidayHome3Rating = (HolidayHome3) => {
+    AxiosClient.get(`/admin/auth/holidayhomerating/${HolidayHome3}`).then(
+      (res) => {
+        SetHolidayHome3Rating(res.data.rating[0].overall_rating);
+      }
+    );
   };
 
   const handleChangehh1 = (event) => {
@@ -188,8 +155,7 @@ export default function CompareLineChart() {
     return dates;
   };
   const getHHnames = () => {
-    AxiosClient
-      .get(`/admin/auth/holidayhomenames`)
+    AxiosClient.get(`/admin/auth/holidayhomenames`)
       .then((res) => {
         // setHolidayHomes1(res.data.HH)
         // console.log('---------holiday homes-------')

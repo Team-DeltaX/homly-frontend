@@ -9,38 +9,37 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import AxiosClient from "../../../../services/AxiosClient";
 
 const HomeDetailsViewOnly = () => {
   const { homeId } = useParams();
 
   useEffect(() => {
-    axios
-      .get(
-        `http://localhost:8080/admin/auth/locationadmin/holidayhome/${homeId}`
-      )
-      .then((res) => {
-        if (Response) {
-          const homeDetails = res.data.homeDetails[0];
+    AxiosClient.get(
+      `http://localhost:8080/admin/auth/locationadmin/holidayhome/${homeId}`
+    ).then((res) => {
+      if (Response) {
+        const homeDetails = res.data.homeDetails[0];
 
-          const contactNo = res.data.contactNo;
+        const contactNo = res.data.contactNo;
 
-          // Extract relevant data from response and set to 'value' state
-          setValue({
-            name: homeDetails.Name || "",
-            address: homeDetails.Address || "",
-            district: homeDetails.District || "", // Add the logic to get district if available
-            description: homeDetails.Description || "",
-            contactNo1:
-              contactNo && contactNo.length > 0 ? contactNo[0].ContactNo : "",
-            contactNo2:
-              contactNo && contactNo.length > 1 ? contactNo[1].ContactNo : "",
-            category: homeDetails.Category || "",
-            status: homeDetails.Status || "",
-          });
-        } else {
-          console.log("No data found");
-        }
-      });
+        // Extract relevant data from response and set to 'value' state
+        setValue({
+          name: homeDetails.Name || "",
+          address: homeDetails.Address || "",
+          district: homeDetails.District || "", // Add the logic to get district if available
+          description: homeDetails.Description || "",
+          contactNo1:
+            contactNo && contactNo.length > 0 ? contactNo[0].ContactNo : "",
+          contactNo2:
+            contactNo && contactNo.length > 1 ? contactNo[1].ContactNo : "",
+          category: homeDetails.Category || "",
+          status: homeDetails.Status || "",
+        });
+      } else {
+        console.log("No data found");
+      }
+    });
   }, []);
 
   const [value, setValue] = useState({

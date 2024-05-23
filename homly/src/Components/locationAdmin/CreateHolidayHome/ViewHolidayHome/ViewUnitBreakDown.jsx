@@ -456,7 +456,7 @@ const ViewUnitBreakDown = ({
                       </Box>
                     ) : (
                       selectedRooms.map((item, index) => {
-                        console.log("item", item.room[0]);
+                        // console.log("item", item.room[0]);
 
                         return (
                           <Paper

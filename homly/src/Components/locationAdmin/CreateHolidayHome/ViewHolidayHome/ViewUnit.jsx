@@ -21,7 +21,7 @@ import ViewUnitBreakDown from "./ViewUnitBreakDown";
 import AxiosClient from "../../../../services/AxiosClient";
 const ViewUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
   const { homeId } = useParams();
-  const [selectedRoomDetails, setSelectedRoomDetails] = useState([{}]);
+  const [selectedRoomDetails, setSelectedRoomDetails] = useState([]);
 
   const [openUnit, setOpenUnit] = useState(false);
   const [fullWidth, setFullWidth] = useState(true);
@@ -320,39 +320,24 @@ const ViewUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
         ) : (
           unitArray.map((item, index) => {
             item.selectedRooms = [];
+            console.log(homeId, item.unitCode);
 
             // axios.get(`http://localhost:8080/admin/auth/locationadmin/holidayhome/${homeId}/${item.unitCode}`)
             AxiosClient.get(
               `admin/auth/locationadmin/holidayhome/${homeId}/${item.unitCode}`
-            ).then((res) => {
-              if (res.data) {
-                const srDetails = res.data.selectedRoom;
-                console.log("sr", srDetails);
-                const promises = srDetails.map((sr) => {
-                  //   return axios
-                  //     .get(
-                  //       `http://localhost:8080/admin/auth/locationadmin/holidayhome/room/${homeId}/${sr.roomCode}`
-                  //     )
-                  return AxiosClient.get(
-                    `admin/auth/locationadmin/holidayhome/room/${homeId}/${sr.roomCode}`
-                  ).then((res) => {
-                    const room = res.data;
-                    console.log("room", room);
-
-                    item.selectedRooms.push(room);
-                  });
-                });
-                Promise.all(promises)
-                  .then(() => {
-                    console.log("in promis", item.selectedRooms);
-                  })
-                  .catch((error) => {
-                    console.log("Error:", error);
-                  });
-              } else {
-                console.log("No data found");
-              }
-            });
+            )
+              .then((res) => {
+                console.log(
+                  "unit code",
+                  item.unitCode,
+                  "data got",
+                  res.data.selectedRooms
+                );
+                item.selectedRooms = res.data.selectedRooms;
+              })
+              .catch((err) => {
+                console.log(err);
+              });
 
             return (
               // <UnitBreakDown key={index} unitCode={item.unitCode} unitAc={item.unitAc} floorLevel={item.floorLevel} unitNoOfAdults={item.unitNoOfAdults} unitNoOfChildren={item.unitNoOfChildren} unitRemarks={item.unitRemarks} unitRental={item.unitRental} roomArray={roomArray} setRoomArray={setRoomArray} selectedRooms={item.selectedRooms} handleUnitDelete={handleUnitDelete} handleUnitEdit={handleUnitEdit} index={index} />
