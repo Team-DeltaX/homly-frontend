@@ -305,6 +305,18 @@ const ViewUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
     setOpenHallExistAlert(false);
   };
 
+  const getSelectedRoom = (unitCode) => {
+    AxiosClient.get(
+      `admin/auth/locationadmin/holidayhome/${homeId}/${unitCode}`
+    )
+      .then((res) => {
+        console.log("res", res.data.selectedRooms);
+      })
+      .catch((err) => {
+        console.log("error", err);
+      });
+  };
+
   return (
     <Box>
       <fieldset style={{ borderRadius: "8px" }}>
@@ -319,26 +331,9 @@ const ViewUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
           </Box>
         ) : (
           unitArray.map((item, index) => {
-            item.selectedRooms = [];
-            console.log(homeId, item.unitCode);
-
-            // axios.get(`http://localhost:8080/admin/auth/locationadmin/holidayhome/${homeId}/${item.unitCode}`)
-            AxiosClient.get(
-              `admin/auth/locationadmin/holidayhome/${homeId}/${item.unitCode}`
-            )
-              .then((res) => {
-                console.log(
-                  "unit code",
-                  item.unitCode,
-                  "data got",
-                  res.data.selectedRooms
-                );
-                item.selectedRooms = res.data.selectedRooms;
-              })
-              .catch((err) => {
-                console.log(err);
-              });
-
+            let val = getSelectedRoom(item.unitCode);
+            console.log("return val", val);
+            console.log("now", selectedRoomDetails);
             return (
               // <UnitBreakDown key={index} unitCode={item.unitCode} unitAc={item.unitAc} floorLevel={item.floorLevel} unitNoOfAdults={item.unitNoOfAdults} unitNoOfChildren={item.unitNoOfChildren} unitRemarks={item.unitRemarks} unitRental={item.unitRental} roomArray={roomArray} setRoomArray={setRoomArray} selectedRooms={item.selectedRooms} handleUnitDelete={handleUnitDelete} handleUnitEdit={handleUnitEdit} index={index} />
               <ViewUnitBreakDown
@@ -350,7 +345,7 @@ const ViewUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
                 unitRental={item.unitRental}
                 roomArray={roomArray}
                 setRoomArray={setRoomArray}
-                selectedRooms={item.selectedRooms}
+                selectedRooms={console.log(selectedRoomDetails)}
                 handleUnitDelete={handleUnitDelete}
                 handleUnitEdit={handleUnitEdit}
                 index={index}

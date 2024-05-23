@@ -80,7 +80,7 @@ const DashboardContent = () => {
             <Box>
               <Grid container sx={{ overflow: "auto", maxHeight: "100vh" }}>
                 <Grid
-                  item
+                  item    
                   md={8}
                   sx={{
                     backgroundColor: "white",

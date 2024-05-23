@@ -481,7 +481,7 @@ const ViewUnitBreakDown = ({
                                   variant="p"
                                   className="attach_card_item_value"
                                 >
-                                  {item.room[index].roomCode}
+                                  {item.roomCode}
                                 </Typography>
                               </Box>
                               <Box className="card_item">
@@ -495,7 +495,7 @@ const ViewUnitBreakDown = ({
                                   variant="p"
                                   className="attach_card_item_value"
                                 >
-                                  {item.room[index].roomAc}
+                                  {item.roomAc}
                                 </Typography>
                               </Box>
                               <Box className="card_item">
@@ -509,7 +509,7 @@ const ViewUnitBreakDown = ({
                                   variant="p"
                                   className="attach_card_item_value"
                                 >
-                                  {item.room[index].RoomType}
+                                  {item.RoomType}
                                 </Typography>
                               </Box>
                               <Box className="card_item">
@@ -523,7 +523,7 @@ const ViewUnitBreakDown = ({
                                   variant="p"
                                   className="attach_card_item_value"
                                 >
-                                  {item.room[index].NoOfAdults}
+                                  {item.NoOfAdults}
                                 </Typography>
                               </Box>
                               <Box className="card_item">
@@ -537,7 +537,7 @@ const ViewUnitBreakDown = ({
                                   variant="p"
                                   className="attach_card_item_value"
                                 >
-                                  {item.room[index].NoOfChildren}
+                                  {item.NoOfChildren}
                                 </Typography>
                               </Box>
                             </Box>
