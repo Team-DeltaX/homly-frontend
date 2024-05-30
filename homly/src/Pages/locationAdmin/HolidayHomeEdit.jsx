@@ -116,6 +116,7 @@ const HolidayHomeEdit = () => {
 
   const [adultsCount, setAdultsCount] = useState(0);
   const [childCount, setChildCount] = useState(0);
+  const [selectedRoomDetails, setSelectedRoomDetails] = useState({});
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -208,6 +209,15 @@ const HolidayHomeEdit = () => {
   console.log("caretaker", valueCaretaker);
 
   const handleApproval = (e) => {
+    const updatedUnitArray = unitArray.map((unit) => {
+      return {
+        ...unit,
+        selectedRooms: selectedRoomDetails[unit.unitCode] || [],
+        roomAttached:
+          selectedRoomDetails[unit.unitCode].length > 0 ? true : false,
+      };
+    });
+
     let updatedData = {
       holidayHomeId: homeId,
       caretaker1Id: caretaker1Id,
@@ -218,7 +228,7 @@ const HolidayHomeEdit = () => {
       caretaker2: valueSecond,
       homeBreakDown: { bdValue, adultsCount, childCount },
       roomArray: roomArray,
-      unitArray: unitArray,
+      unitArray: updatedUnitArray,
       hallArray: hallArray,
       roomTypeArray: roomTypeArray,
       settingRoomRentalArray: settingRoomRentalArray,
@@ -226,11 +236,6 @@ const HolidayHomeEdit = () => {
     e.preventDefault();
     setApprovedClicked(true);
     console.log("allvalues", updatedData);
-    // axios
-    //   .post(
-    //     "http://localhost:8080/admin/auth/locationadmin/holidayhome/update",
-    //     updatedData
-    //   )
     AxiosClient.post("admin/auth/locationadmin/holidayhome/update", updatedData)
       .then((res) => {
         console.log(res);
@@ -240,6 +245,27 @@ const HolidayHomeEdit = () => {
         console.log(err);
       });
   };
+
+  useEffect(() => {
+    const fetchSelectedRooms = async () => {
+      for (const unit of unitArray) {
+        try {
+          const response = await AxiosClient.get(
+            `admin/auth/locationadmin/holidayhome/${homeId}/${unit.unitCode}`
+          );
+          console.log("res", response.data.selectedRooms);
+          setSelectedRoomDetails((prev) => ({
+            ...prev,
+            [unit.unitCode]: response.data.selectedRooms,
+          }));
+        } catch (error) {
+          console.log("error", error);
+        }
+      }
+    };
+
+    fetchSelectedRooms();
+  }, [unitArray, homeId]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -328,6 +354,8 @@ const HolidayHomeEdit = () => {
                       setRoomTypeArray={setRoomTypeArray}
                       settingRoomRentalArray={settingRoomRentalArray}
                       setSettingRoomRentalArray={setSettingRoomRentalArray}
+                      selectedRoomDetails={selectedRoomDetails}
+                      setSelectedRoomDetails={setSelectedRoomDetails}
                     />
                     <Box
                       sx={{

@@ -10,11 +10,17 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-import axios from "axios";
 import { useParams } from "react-router-dom";
-import UnitBreakDown from "../UnitBreakDown";
+import EditUnitBreakDown from "./EditUnitBreakDown";
 import AxiosClient from "../../../../services/AxiosClient";
-const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
+const EditUnit = ({
+  roomArray,
+  setRoomArray,
+  unitArray,
+  setUnitArray,
+  selectedRoomDetails,
+  setSelectedRoomDetails,
+}) => {
   const { homeId } = useParams();
   const [openUnit, setOpenUnit] = useState(false);
   const [fullWidth, setFullWidth] = useState(true);
@@ -53,7 +59,38 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
     }
   }, [isEditMode, editIndex, roomArray, unitArray]);
 
-  //dropdowns
+  console.log("selectedroomdetailsobject", selectedRoomDetails);
+
+  // const handleUnitRemake = (unitCode) => {
+  //   //roomArray update
+
+  //   setRoomArray((prevRoomArray) => {
+  //     const updatedRoomArray = prevRoomArray.map((room) => {
+  //       if (
+  //         selectedRoomDetails[unitCode].some(
+  //           (item) => item.roomCode === room.roomCode
+  //         )
+  //       ) {
+  //         return { ...room, groupByUnit: true };
+  //       }
+  //       return room;
+  //     });
+
+  //     return updatedRoomArray;
+  //   });
+
+  //   const updatedUnitArray = unitArray.map((unit) => {
+  //     return {
+  //       ...unit,
+  //       selectedRooms: selectedRoomDetails[unit.unitCode] || [],
+  //       roomAttached: selectedRoomDetails[unit.unitCode] ? true : false,
+  //     };
+  //   });
+
+  //   setUnitArray(updatedUnitArray);
+  // };
+
+  // //dropdowns
 
   //AC room
   const [value, setValue] = useState(0);
@@ -94,6 +131,7 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
     selectedRooms: [],
   });
   const [unitExist, setUnitExist] = useState(false);
+
   const handleUnitCodeChange = (e) => {
     const unitCodeExists = unitArray.some(
       (unit) => unit.unitCode === e.target.value
@@ -116,10 +154,6 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
 
   const handleUnitRemarkChange = (e) => {
     setUnitValues({ ...unitValues, unitRemark: e.target.value });
-  };
-
-  const handleUnitRentalChange = (e) => {
-    setUnitValues({ ...unitValues, unitRental: e.target.value });
   };
 
   const handleSaveUnit = () => {
@@ -181,9 +215,6 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
           console.log(rental[i].Month);
           setUnitRentalArray(rental); // Use functional update
         }
-        setOpenUnit(true);
-        setEditIndex(index);
-        setIsEditMode(true);
       })
       .catch((err) => {
         console.log(err);
@@ -210,174 +241,6 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
       );
       return newUnitArray;
     });
-
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [unitValues, setUnitValues] = useState({
-      unitCode: "",
-      unitAc: "",
-      floorLevel: "",
-      unitRemark: "",
-      unitRental: "",
-      roomAttached: false,
-      selectedRooms: [],
-    });
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [unitExist, setUnitExist] = useState(false);
-    const handleUnitCodeChange = (e) => {
-      const unitCodeExists = unitArray.some(
-        (unit) => unit.unitCode === e.target.value
-      );
-      if (unitCodeExists) {
-        setUnitExist(true);
-      } else {
-        setUnitExist(false);
-      }
-      setUnitValues({ ...unitValues, unitCode: e.target.value });
-    };
-
-    const handleUnitAcChange = (e) => {
-      setUnitValues({ ...unitValues, unitAc: e.target.value });
-    };
-
-    const handleFloorLevelChange = (e) => {
-      setUnitValues({ ...unitValues, floorLevel: e.target.value });
-    };
-
-    const handleUnitRemarkChange = (e) => {
-      setUnitValues({ ...unitValues, unitRemark: e.target.value });
-    };
-
-    const handleUnitRentalChange = (e) => {
-      setUnitValues({ ...unitValues, unitRental: e.target.value });
-    };
-
-    const handleSaveUnit = () => {
-      if (
-        unitValues.unitCode === "" ||
-        unitValues.unitAc === "" ||
-        unitValues.floorLevel === "" ||
-        unitValues.unitRemark === "" ||
-        unitValues.unitRental === ""
-      ) {
-        setOpenUnitFillAlert(true);
-        return;
-      }
-
-      // if (unitExist) {
-      //     setOpenUnitExistAlert(true);
-      //     return;
-      // }
-
-      if (isEditMode && editIndex !== null) {
-        // Editing an existing room
-        const updatedUnitArray = [...unitArray];
-        updatedUnitArray[editIndex] = {
-          ...updatedUnitArray[editIndex],
-          ...unitValues,
-          unitRentalArray: [...unitRentalArray], // Copy the rentalArray as well
-        };
-        setUnitArray(updatedUnitArray);
-      } else {
-        // Adding a new room
-        // const updatedValues = { ...unitValues, unitRentalArray };
-        // setUnitArray([...unitArray, updatedValues]);
-
-        const newUnit = {
-          ...unitValues,
-          selectedRooms: [],
-          unitRentalArray,
-        };
-        setUnitArray([...unitArray, newUnit]);
-      }
-
-      setUnitRentalArray([]);
-      setOpenUnit(false);
-      setIsEditMode(false);
-      setEditIndex(null);
-
-      console.log(unitArray);
-    };
-
-    console.log(unitArray);
-
-    const handleUnitEdit = (index) => {
-      const editedUnit = unitArray[index];
-
-      setUnitValues({
-        unitCode: editedUnit.unitCode,
-        unitAC: editedUnit.unitAc,
-        floorLevel: editedUnit.floorLevel,
-        unitRemark: editedUnit.unitRemark,
-        unitRental: editedUnit.unitRental,
-        roomAttached: editedUnit.roomAttached,
-        selectedRooms: editedUnit.selectedRooms,
-      });
-
-      // axios
-      //   .get(
-      //     `http://localhost:8080/admin/auth/locationadmin/holidayhome/rental/${homeId}/${editedUnit.unitCode}`
-      //   )
-      AxiosClient.get(
-        `/admin/auth/locationadmin/holidayhome/rental/${homeId}/${editedUnit.unitCode}`
-      )
-        .then((res) => {
-          console.log("get");
-          const rental = res.data.roomRental;
-          console.log(rental);
-          for (let i = 0; i < rental.length; i++) {
-            console.log("in");
-            console.log(rental[i].Month);
-            setUnitRental({
-              district: rental[i].Month,
-              weekDays: rental[i].WeekRental,
-              weekEnds: rental[i].WeekEndRental,
-            });
-
-            console.log("rental", rental);
-
-            setUnitRentalArray(rental); // Use functional update
-            console.log("rental array", unitRentalArray);
-          }
-
-          setOpenUnit(true);
-          setEditIndex(index);
-          setIsEditMode(true);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
-
-    const handleUnitDelete = (unitCode, selectedRooms) => {
-      setRoomArray((prevRoomArray) => {
-        const updatedRoomArray = prevRoomArray.map((room) => {
-          if (selectedRooms.some((item) => item.roomCode === room.roomCode)) {
-            return { ...room, groupByUnit: false };
-          }
-          return room;
-        });
-
-        return updatedRoomArray;
-      });
-
-      selectedRooms.length = 0;
-
-      setUnitArray((prevUnitArray) => {
-        const newUnitArray = prevUnitArray.filter(
-          (item) => item.unitCode !== unitCode
-        );
-        return newUnitArray;
-      });
-      return null;
-    };
-
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [unitRental, setUnitRental] = useState({
-      district: "",
-      weekDays: "",
-      weekEnds: "",
-    });
-    return null;
   };
 
   const [unitRentalArray, setUnitRentalArray] = useState([]);
@@ -403,13 +266,9 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
   };
   //unit - same unit no exist warning
   const [openHallExistAlert, setOpenHallExistAlert] = useState(false);
-  const handleCloseHallExistAlert = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setOpenHallExistAlert(false);
-  };
-  console.log(unitArray);
+
+  console.log("unit array in editunit", unitArray);
+
   return (
     <Box>
       <Box
@@ -441,46 +300,8 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
           </Box>
         ) : (
           unitArray.map((item, index) => {
-            item.selectedRooms = [];
-            // axios
-            //   .get(
-            //     `http://localhost:8080/admin/auth/locationadmin/holidayhome/${homeId}/${item.unitCode}`
-            //   )
-            AxiosClient.get(
-              `/admin/auth/locationadmin/holidayhome/${homeId}/${item.unitCode}`
-            ).then((res) => {
-              if (Response) {
-                const srDetails = res.data.selectedRoom;
-                console.log(srDetails);
-                for (let i = 0; i < srDetails.length; i++) {
-                  // axios
-                  //   .get(
-                  //     `http://localhost:8080/admin/auth/locationadmin/holidayhome/room/${homeId}/${srDetails[i].roomCode}`
-                  //   )
-                  AxiosClient.get(
-                    `/admin/auth/locationadmin/holidayhome/room/${homeId}/${srDetails[i].roomCode}`
-                  ).then((res) => {
-                    const room = res.data;
-                    // Check if 'room' already exists in 'selectedRooms' array
-                    const existingRoomIndex = item.selectedRooms.findIndex(
-                      (existingRoom) => existingRoom.roomCode === room.roomCode
-                    );
-                    if (existingRoomIndex === -1) {
-                      // If not found, push 'room' into 'selectedRooms'
-                      item.selectedRooms.push(room);
-                    } else {
-                      // If found, update the existing item with the new data
-                      item.selectedRooms[existingRoomIndex] = room;
-                    }
-                  });
-                }
-              } else {
-                console.log("No data found");
-              }
-            });
-
             return (
-              <UnitBreakDown
+              <EditUnitBreakDown
                 key={index}
                 unitCode={item.unitCode}
                 unitAc={item.unitAc}
@@ -491,10 +312,12 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
                 unitRental={item.unitRental}
                 roomArray={roomArray}
                 setRoomArray={setRoomArray}
-                selectedRooms={item.selectedRooms}
+                selectedRooms={selectedRoomDetails[item.unitCode] || []}
                 handleUnitDelete={handleUnitDelete}
                 handleUnitEdit={handleUnitEdit}
                 index={index}
+                setSelectedRoomDetails={setSelectedRoomDetails}
+                // handleUnitRemake={handleUnitRemake}
               />
             );
           })

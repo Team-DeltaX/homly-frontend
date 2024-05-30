@@ -13,14 +13,10 @@ import Select from "@mui/material/Select";
 
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-import axios from "axios";
-import { useParams } from "react-router";
-
 import UnitBreakDown from "../UnitBreakDown";
 import ViewUnitBreakDown from "./ViewUnitBreakDown";
-import AxiosClient from "../../../../services/AxiosClient";
+
 const ViewUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
-  const { homeId } = useParams();
   const [selectedRoomDetails, setSelectedRoomDetails] = useState([]);
 
   const [openUnit, setOpenUnit] = useState(false);
@@ -305,18 +301,6 @@ const ViewUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
     setOpenHallExistAlert(false);
   };
 
-  const getSelectedRoom = (unitCode) => {
-    AxiosClient.get(
-      `admin/auth/locationadmin/holidayhome/${homeId}/${unitCode}`
-    )
-      .then((res) => {
-        console.log("res", res.data.selectedRooms);
-      })
-      .catch((err) => {
-        console.log("error", err);
-      });
-  };
-
   return (
     <Box>
       <fieldset style={{ borderRadius: "8px" }}>
@@ -331,9 +315,13 @@ const ViewUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
           </Box>
         ) : (
           unitArray.map((item, index) => {
-            let val = getSelectedRoom(item.unitCode);
-            console.log("return val", val);
+            // let val = getSelectedRoom(item.unitCode);
+            // selectedRoomDetails[0] = val;
+
+            // getSelectedRoom(item.unitCode);
+
             console.log("now", selectedRoomDetails);
+
             return (
               // <UnitBreakDown key={index} unitCode={item.unitCode} unitAc={item.unitAc} floorLevel={item.floorLevel} unitNoOfAdults={item.unitNoOfAdults} unitNoOfChildren={item.unitNoOfChildren} unitRemarks={item.unitRemarks} unitRental={item.unitRental} roomArray={roomArray} setRoomArray={setRoomArray} selectedRooms={item.selectedRooms} handleUnitDelete={handleUnitDelete} handleUnitEdit={handleUnitEdit} index={index} />
               <ViewUnitBreakDown
@@ -345,10 +333,11 @@ const ViewUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
                 unitRental={item.unitRental}
                 roomArray={roomArray}
                 setRoomArray={setRoomArray}
-                selectedRooms={console.log(selectedRoomDetails)}
+                selectedRooms={selectedRoomDetails}
                 handleUnitDelete={handleUnitDelete}
                 handleUnitEdit={handleUnitEdit}
                 index={index}
+                setSelectedRoomDetails={setSelectedRoomDetails}
               />
             );
           })

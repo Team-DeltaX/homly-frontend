@@ -20,6 +20,9 @@ import InputLabel from "@mui/material/InputLabel";
 import EditRoom from "./EditRoom";
 import EditUnit from "./EditUnit";
 import EditHall from "./EditHall";
+import AxiosClient from "../../../../services/AxiosClient";
+import { useParams } from "react-router-dom";
+
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -70,6 +73,8 @@ const EditHolidayHomeBreakdown = ({
   setSettingRoomRentalArray,
   roomTypeArray,
   setRoomTypeArray,
+  selectedRoomDetails,
+  setSelectedRoomDetails,
 }) => {
   console.log("editholiday home breakdwon", bdValue);
   const [value, setValue] = useState(0);
@@ -95,6 +100,8 @@ const EditHolidayHomeBreakdown = ({
     oCharges: false,
     sCharges: false,
   });
+
+  const { homeId } = useParams();
 
   const handleTotalRentalChange = (e) => {
     const positive_regex = /^\d*\.?\d+$/;
@@ -251,6 +258,11 @@ const EditHolidayHomeBreakdown = ({
     }
     setTypeExistAlert(false);
   };
+
+  console.log(
+    "selectedRoomDetails in home breakdown page",
+    selectedRoomDetails
+  );
 
   return (
     <Box>
@@ -772,6 +784,8 @@ const EditHolidayHomeBreakdown = ({
                 setRoomArray={setRoomArray}
                 unitArray={unitArray}
                 setUnitArray={setUnitArray}
+                selectedRoomDetails={selectedRoomDetails}
+                setSelectedRoomDetails={setSelectedRoomDetails}
               />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={2}>
