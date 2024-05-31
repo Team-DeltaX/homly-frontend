@@ -74,14 +74,6 @@ export default function AddComplainPopUp(props) {
           message: "complaint add failed",
         });
       });
-
-    // setadminno("");
-    // setUsername("");
-    // setContactno("");
-    // SetEmail("");
-    // SetWorklocation("");
-    // setPassword("");
-    // SetSubstitute("");
   };
   return (
     <React.Fragment>

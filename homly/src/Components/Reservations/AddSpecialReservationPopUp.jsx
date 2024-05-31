@@ -31,9 +31,14 @@ export default function AddSpecialReservationPopUp() {
   const [ServiceNo, setServiceNo] = useState("");
   const [employeeName, setEmployeeName] = useState("");
   const [maxAdults, setMaxAdults] = useState(0);
+  const [NoofRooms, setNoofRooms] = useState(0);
+  const [NoofHalls, setNoofHalls] = useState(0);
   const [maxChildren, setMaxChildren] = useState(0);
   const [roomRental, setRoomRental] = useState(0);
   const [hallRental, setHallRental] = useState(0);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
   const [errorStatus, setErrorStatus] = useState({
     isOpen: false,
     type: "",
@@ -41,7 +46,9 @@ export default function AddSpecialReservationPopUp() {
   });
   const [CheckinDate, setCheckinDate] = useState(dayjs().add(6, "day"));
   const [CheckoutDate, setCheckoutDate] = useState(dayjs().add(7, "day")); 
-
+  const handleClose = () => {
+    setOpen(false);
+  };
   const handlesubmit = (e) => {
     const data = {
       ServiceNO: ServiceNo,
@@ -50,27 +57,26 @@ export default function AddSpecialReservationPopUp() {
       CheckoutDate: CheckoutDate,
       NoOfAdults: maxAdults,
       NoOfChildren: maxChildren,
-      // NoOfRooms: NoOfRooms,
-      // NoOfHalls: NoOfHalls,
+      NoOfRooms: NoofRooms,
+      NoOfHalls: NoofHalls,
       RoomPrice: roomRental,
       HallPrice: hallRental,
       Price: roomRental + hallRental,
       IsPaid: false,
     };
     console.log("aruna", data);
-    // axios
-    //   .post("http://localhost:8080/user/specialreservation", data)
     AxiosClient.post("/admin/auth/specialreservation", data)
       .then((res) => {
         console.log("add special reservation successfully");
+        setOpen(false);
+        setOpened(false);
         setErrorStatus({
           ...errorStatus,
           isOpen: true,
           type: "success",
           message: "Reservation added successfully",
         });
-        setOpen(false);
-        setOpened(false);
+        
       })
       .catch((error) => {
         console.log(`error is  nm ${error}`);
@@ -82,14 +88,6 @@ export default function AddSpecialReservationPopUp() {
         });
         setOpen(false);
       });
-
-    // setadminno("");
-    // setUsername("");
-    // setContactno("");
-    // SetEmail("");
-    // SetWorklocation("");
-    // setPassword("");
-    // SetSubstitute("");
   };
 
   const handleCheckinDateChange = (newDate) => {
@@ -152,6 +150,8 @@ export default function AddSpecialReservationPopUp() {
       //   )
       AxiosClient.get(`/user/reservation/getTotalRoomRental/${HolidayHomeName}`)
         .then((response) => {
+          setNoofRooms(response.data.NoofRooms);
+          setNoofHalls(response.data.NoofHalls);
           setMaxAdults(response.data.maxAdults);
           setMaxChildren(response.data.maxChildren);
           setRoomRental(response.data.totalRoomRental);
@@ -164,13 +164,9 @@ export default function AddSpecialReservationPopUp() {
     }
   }, [HolidayHomeName]);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+
+  
   useEffect(() => {
     axios
       .get("http://localhost:8080/user/reservation/holidayhomes")
@@ -198,7 +194,7 @@ export default function AddSpecialReservationPopUp() {
           {"Add Special Reservation"}
         </DialogTitle>
 
-        <form onSubmit={() => console.log("sumbited")}>
+        <form onSubmit={(e) => e.preventDefault()}>
           <DialogContent sx={{ width: { sm: "auto", md: "411px" } }}>
             <TextField
               autoFocus
@@ -265,7 +261,7 @@ export default function AddSpecialReservationPopUp() {
               name="maxAdults"
               label="Maximum Adults"
               title="Maximum Adults"
-              type="text"
+              type="number"
               fullWidth
               variant="outlined"
             />
@@ -279,7 +275,35 @@ export default function AddSpecialReservationPopUp() {
               name="maxChildren"
               label="Maximum Children"
               title="Maximum Children"
-              type="text"
+              type="number"
+              fullWidth
+              variant="outlined"
+            />
+            <TextField
+              autoFocus
+              required
+              disabled
+              value={NoofRooms}
+              margin="dense"
+              id="NoofRooms"
+              name="NoofRooms"
+              label="Room Count"
+              title="Room Count"
+              type="number"
+              fullWidth
+              variant="outlined"
+            />
+            <TextField
+              autoFocus
+              required
+              disabled
+              value={NoofHalls}
+              margin="dense"
+              id="NoofHalls"
+              name="NoofHalls"
+              label="Hall Count"
+              title="Hall Count"
+              type="number"
               fullWidth
               variant="outlined"
             />
@@ -293,7 +317,7 @@ export default function AddSpecialReservationPopUp() {
               name="totalroomrental"
               label="Total Room Rental"
               title="Total Room Rental"
-              type="text"
+              type="number"
               fullWidth
               variant="outlined"
             />
@@ -307,7 +331,7 @@ export default function AddSpecialReservationPopUp() {
               name="totalhallrental"
               label="Total Hall Rental"
               title="Total Hall Rental"
-              type="text"
+              type="number"
               fullWidth
               variant="outlined"
             />
@@ -358,7 +382,9 @@ export default function AddSpecialReservationPopUp() {
               type="submit"
               autoFocus
               disabled={reserveDisabled === true}
-              onClick={handlesubmit}
+              onClick={() => {
+                setOpened(true);
+              }}
             >
               Submit
             </Button>

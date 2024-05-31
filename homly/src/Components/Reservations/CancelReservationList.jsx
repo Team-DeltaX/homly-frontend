@@ -3,7 +3,6 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import holidayhome from '../../Assets/images/holidayHome.jpg';
-import './Reservation.css';
 import ViewPopUp from './ViewPopup';
 import ViewReservationCard from './ViewReservationCard';
 import axios from "axios";
@@ -28,7 +27,8 @@ const CancelledReservationList = (props) => {
   }, []);
   return (
     <>
-    <Box className="home">
+    <Box className="home"
+    sx={{height: '60vh',overflow: 'hidden', overflowY: 'scroll'}}>
       {reservations.map(reservation => (
          <ViewReservationCard holidayHome={reservation.holidayHome[0]} reservation={reservation.reservation} reservedRoom={reservation.reservedrooms} reservedHall={reservation.reservedhalls} employeeName={reservation.employeeName[0]} employeeDetails={reservation.employeeDetails[0]}/>
       ))}
