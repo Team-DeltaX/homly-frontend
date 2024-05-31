@@ -9,8 +9,11 @@ const SpeicalReservationList = (props) => {
   const fetchreservations = () => {
     AxiosClient.get("/admin/auth/reservation/special")
       .then((res) => {
+<<<<<<< Updated upstream
         console.log("fbnh fjnygfvfrvegbh", res.data);
         //reverse array to keep new ones first
+=======
+>>>>>>> Stashed changes
         setReservations(res.data.reverse());
       })
       .catch((err) => {
@@ -23,6 +26,7 @@ const SpeicalReservationList = (props) => {
   }, []);
   return (
     <>
+<<<<<<< Updated upstream
       <Box className="home">
         {reservations
           .filter((reservation) => {
@@ -51,6 +55,13 @@ const SpeicalReservationList = (props) => {
             />
           ))}
       </Box>
+=======
+    <Box className="home">
+      {reservations.map(reservation => (
+         <ViewReservationCard holidayHome={reservation.holidayHome[0]} reservation={reservation.reservation} reservedRoom={reservation.reservedrooms} reservedHall={reservation.reservedhalls} employeeName={reservation.employeeName[0]} employeeDetails={reservation.employeeDetails[0]}/>
+      ))}
+    </Box>
+>>>>>>> Stashed changes
     </>
   );
 };

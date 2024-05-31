@@ -1,142 +1,96 @@
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
 import holidayhome from "../../Assets/images/holidayHome.jpg";
 import "./Reservation.css";
 import ViewPopUp from "./ViewPopup";
-import dayjs, { Dayjs } from "dayjs";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import dayjs from "dayjs";
+import { useState } from "react";
 import Typography from "@mui/material/Typography";
-import AxiosClient from "../../services/AxiosClient";
 import AddComplainPopUp from "../Reservations/AddComplainPopUp";
 
-
 const PastReservationCard = (props) => {
-//  const [Employee, SetEmployee] = useState({});
   const [isSpecial, setIsSpecial] = useState(props.reservation.IsSpecial);
   const [isCancelled, setIsCancelled] = useState(props.reservation.IsCancelled);
-  // const fetchfromemployee = () => {
-  //   AxiosClient.get(
-  //     `/admin/auth/locationadmin/employee/${props.reservation.ServiceNO}`
-  //   )
-  //     .then((res) => {
-  //       SetEmployee(res.data[0]);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
-  // useEffect(() => {
-  //   fetchfromemployee();
-  // }, []);
-  // const [value, setValue] = useState({
-  //   id: "",
-  //   name: "",
-  // });
 
-  // useEffect(() => {
-  //   AxiosClient.get(
-  //     `/admin/auth/locationadmin/holidayhome/${props.reservation.HolidayHome}`
-  //   )
-  //     .then((res) => {
-  //       console.log("response", res.data.room);
-  //       if (Response) {
-  //         const homeDetails = res.data.homeDetails[0];
-  //         const contactNo = res.data.contactNo;
-  //         setValue({
-  //           id: homeDetails.HolidayHomeId || "",
-  //           name: homeDetails.Name || "",
-  //         });
-  //       } else {
-  //         console.log("No data found");
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching holiday homes:", error);
-  //     });
-  // }, []);
   return (
-    <Grid
-      container
-      spacing={2}
-      className="reservation-preview"
-      key={props.reservation.id}
-    >
+    <Grid container spacing={2} className="reservation-preview" key={props.reservation.id}>
       <Grid container className="columnData" sx={{ width: "100%" }}>
         <Grid
-          Item
-          xs={3}
-          md={3}
+          item
+          xs={12}
+          sm={3}
           sx={{
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            marginBottom: { xs: 2, sm: 0 },
           }}
         >
           <img
             className="reservation-photo"
             src={props.holidayHome.MainImage}
             alt=""
+            style={{ maxWidth: '100%', height: 'auto' }}
           />
         </Grid>
         <Grid
-          Item
-          xs={4}
-          md={4}
-          sx={{ justifyContent: "center", alignItems: "center" }}
-        >
-          <h4>{props.employeeName.name}</h4>
-          <p>Service number : {props.reservation.ServiceNO}</p>
-          <p>Reservation Number {props.reservation.ReservationId}</p>
-          <p>Amount {props.reservation.Price}</p>
-        </Grid>
-        <Grid
-          xs={5}
-          md={5}
-          className="section2"
+          item
+          xs={12}
+          sm={4}
           sx={{
             display: "flex",
-            justifyContent: "flex-end",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: { xs: "center", sm: "flex-start" },
+            textAlign: { xs: "center", sm: "left" },
+          }}
+        >
+          <Typography variant="h6">{props.employeeName.name}</Typography>
+          <Typography variant="body2">Service number: {props.reservation.ServiceNO}</Typography>
+          <Typography variant="body2">Reservation Number: {props.reservation.ReservationId}</Typography>
+          <Typography variant="body2">Amount: {props.reservation.Price}</Typography>
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          sm={5}
+          sx={{
+            display: "flex",
+            justifyContent: { xs: "center", sm: "flex-end" },
             alignItems: "center",
+            textAlign: { xs: "center", sm: "right" },
           }}
         >
           <Stack
             direction="column"
             justifyContent="flex-end"
-            alignItems="flex-end"
+            alignItems={{ xs: "center", sm: "flex-end" }}
             spacing={0.5}
           >
-            <h2>{props.holidayHome.Name.toUpperCase()}</h2>
-            {/* <h2>{ props.reservation.HolidayHome }</h2> */}
-            <p>
-              Check In :{" "}
-              {dayjs(props.reservation.CheckinDate).format("DD/MM/YYYY")}
-            </p>
-            <p>
-              Check Out :{" "}
-              {dayjs(props.reservation.CheckoutDate).format("DD/MM/YYYY")}
-            </p>
+            <Typography variant="h5">{props.holidayHome.Name.toUpperCase()}</Typography>
+            <Typography variant="body2">
+              Check In: {dayjs(props.reservation.CheckinDate).format("DD/MM/YYYY")}
+            </Typography>
+            <Typography variant="body2">
+              Check Out: {dayjs(props.reservation.CheckoutDate).format("DD/MM/YYYY")}
+            </Typography>
             <ViewPopUp
               reservation={props.reservation}
               reservedRoom={props.reservedRoom}
               reservedHall={props.reservedHall}
-              //name={props.employeeName.name}
               holidayhome={props.holidayHome}
             />
             <AddComplainPopUp reservation={props.reservation} />
-            {/* if reservation is special pass special */}
-            {isSpecial ? (
+            {isSpecial && (
               <Typography variant="button" color="green">
                 Special
               </Typography>
-            ) : null}
-            {isCancelled ? (
+            )}
+            {isCancelled && (
               <Typography variant="button" color="red">
                 Cancelled
               </Typography>
-            ) : null}
+            )}
           </Stack>
         </Grid>
       </Grid>
