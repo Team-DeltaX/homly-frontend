@@ -7,6 +7,9 @@ const AuthContextProvider = ({ children }) => {
   const [authServiceNumber, setAuthServiceNumber] = useState(null);
   const [isLogout, setIsLogout] = useState(false);
 
+  const [isOngoingReservationChange, setIsOngoingReservationChange] =
+    useState(false);
+
   return (
     <AuthContext.Provider
       value={{
@@ -16,6 +19,8 @@ const AuthContextProvider = ({ children }) => {
         setAuthServiceNumber,
         isLogout,
         setIsLogout,
+        isOngoingReservationChange,
+        setIsOngoingReservationChange,
       }}
     >
       {children}

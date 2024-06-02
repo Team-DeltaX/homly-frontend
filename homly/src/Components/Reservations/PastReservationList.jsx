@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
-import holidayhome from "../../Assets/images/holidayHome.jpg";
-import "./Reservation.css";
-import ViewPopUp from "./ViewPopup";
-import PastReservationCard from "./PastReservationCard";
+import { useEffect,useState } from "react";
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
+import holidayhome from '../../Assets/images/holidayHome.jpg';
+import ViewPopUp from './ViewPopup';
+import PastReservationCard from './PastReservationCard';
 import axios from "axios";
 import AxiosClient from "../../services/AxiosClient";
 
@@ -28,7 +27,7 @@ const PastReservationList = (props) => {
   }, []);
   return (
     <>
-      <Box className="home">
+      <Box className="home" sx={{height: '60vh',overflow: 'hidden', overflowY: 'scroll'}}>
         {reservations
           .filter((reservation) => {
             return props.search.toLowerCase() === ""

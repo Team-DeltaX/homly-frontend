@@ -81,7 +81,8 @@ export default function AvailableRoomsPopUp({
         {/* middle List */}
         <List>
           {console.log("room",room)}
-            { room.map((room) => (
+          {room.length > 0 ? (
+             room.map((room) => (
               console.log("room",room),
               room.HolidayHomeId === holidayId && (// TODO: remove this hard-coded room code
                 <AccordionUsage
@@ -99,8 +100,10 @@ export default function AvailableRoomsPopUp({
                   setRoomPrice={ setRoomPrice}
                 />
               )
-            ))}
-          
+            ))
+          ) : (
+            <Typography variant="h6">No Available Rooms</Typography>
+          )}
         </List>
         {/* botom app bar */}
         <AppBar

@@ -32,19 +32,24 @@ export default function AddSpecialReservationPopUp() {
   const [ServiceNo, setServiceNo] = useState("");
   const [employeeName, setEmployeeName] = useState("");
   const [maxAdults, setMaxAdults] = useState(0);
-  const [NoOfRooms, setNoOfRooms] = useState(0);
-  const [NoOfHalls, setNoOfHalls] = useState(0);
+  const [NoofRooms, setNoofRooms] = useState(0);
+  const [NoofHalls, setNoofHalls] = useState(0);
   const [maxChildren, setMaxChildren] = useState(0);
   const [roomRental, setRoomRental] = useState(0);
   const [hallRental, setHallRental] = useState(0);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
   const [errorStatus, setErrorStatus] = useState({
     isOpen: false,
     type: "",
     message: "",
   });
   const [CheckinDate, setCheckinDate] = useState(dayjs().add(6, "day"));
-  const [CheckoutDate, setCheckoutDate] = useState(dayjs().add(7, "day"));
-
+  const [CheckoutDate, setCheckoutDate] = useState(dayjs().add(7, "day")); 
+  const handleClose = () => {
+    setOpen(false);
+  };
   const handlesubmit = (e) => {
     if (CheckinDate.isAfter(CheckoutDate)) {
       setErrorStatus({
@@ -61,8 +66,8 @@ export default function AddSpecialReservationPopUp() {
       CheckoutDate: CheckoutDate,
       NoOfAdults: maxAdults,
       NoOfChildren: maxChildren,
-      NoOfRooms: NoOfRooms,
-      NoOfHalls: NoOfHalls,
+      NoOfRooms: NoofRooms,
+      NoOfHalls: NoofHalls,
       RoomPrice: roomRental,
       HallPrice: hallRental,
       Price: roomRental + hallRental,
@@ -194,6 +199,8 @@ export default function AddSpecialReservationPopUp() {
     if (HolidayHomeName) {
       AxiosClient.get(`/user/reservation/getTotalRoomRental/${HolidayHomeName}`)
         .then((response) => {
+          setNoofRooms(response.data.NoofRooms);
+          setNoofHalls(response.data.NoofHalls);
           setMaxAdults(response.data.maxAdults);
           setMaxChildren(response.data.maxChildren);
           setNoOfRooms(response.data.noOfRooms);
@@ -207,13 +214,9 @@ export default function AddSpecialReservationPopUp() {
     }
   }, [HolidayHomeName]);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+
+  
   useEffect(() => {
     axios
       .get("http://localhost:8080/user/reservation/holidayhomes")
@@ -308,7 +311,7 @@ export default function AddSpecialReservationPopUp() {
               name="maxAdults"
               label="Maximum Adults"
               title="Maximum Adults"
-              type="text"
+              type="number"
               fullWidth
               variant="outlined"
             />
@@ -322,7 +325,35 @@ export default function AddSpecialReservationPopUp() {
               name="maxChildren"
               label="Maximum Children"
               title="Maximum Children"
-              type="text"
+              type="number"
+              fullWidth
+              variant="outlined"
+            />
+            <TextField
+              autoFocus
+              required
+              disabled
+              value={NoofRooms}
+              margin="dense"
+              id="NoofRooms"
+              name="NoofRooms"
+              label="Room Count"
+              title="Room Count"
+              type="number"
+              fullWidth
+              variant="outlined"
+            />
+            <TextField
+              autoFocus
+              required
+              disabled
+              value={NoofHalls}
+              margin="dense"
+              id="NoofHalls"
+              name="NoofHalls"
+              label="Hall Count"
+              title="Hall Count"
+              type="number"
               fullWidth
               variant="outlined"
             />
@@ -336,7 +367,7 @@ export default function AddSpecialReservationPopUp() {
               name="totalroomrental"
               label="Total Room Rental"
               title="Total Room Rental"
-              type="text"
+              type="number"
               fullWidth
               variant="outlined"
             />
@@ -350,7 +381,7 @@ export default function AddSpecialReservationPopUp() {
               name="totalhallrental"
               label="Total Hall Rental"
               title="Total Hall Rental"
-              type="text"
+              type="number"
               fullWidth
               variant="outlined"
             />

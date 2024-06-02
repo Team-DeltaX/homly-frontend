@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   Box,
   ThemeProvider,
@@ -8,12 +8,15 @@ import {
   Card,
   CardContent,
 } from "@mui/material";
+import { AuthContext } from "../../../Contexts/AuthContext";
 import OngoingReservation from "./OngoingReservation";
 import PastReservation from "./PastReservation";
 import theme from "../../../HomlyTheme";
 import AxiosClient from "../../../services/AxiosClient";
 
 const MyReservation = () => {
+  const { setIsOngoingReservationChange, isOngoingReservationChange } =
+    useContext(AuthContext);
   const [value, setValue] = useState(0);
   const [ongoingReservation, setOngoingReservation] = useState([]);
   const [pastReservation, setPastReservation] = useState([]);
@@ -39,6 +42,7 @@ const MyReservation = () => {
       .then((response) => {
         setOngoingReservation(response.data);
         setShowOngoingSkeleton(false);
+        setIsOngoingReservationChange(false);
       })
       .catch(() => {
         setOngoingReservation([]);
@@ -56,7 +60,7 @@ const MyReservation = () => {
         setShowPastSkeleton(false);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAddReview]);
+  }, [isAddReview, isOngoingReservationChange]);
 
   const handleTabChange = (event, newValue) => {
     event.preventDefault();

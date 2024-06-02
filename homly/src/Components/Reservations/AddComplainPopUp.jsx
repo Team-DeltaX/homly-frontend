@@ -31,7 +31,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 export default function AddComplainPopUp(props) {
   const [open, setOpen] = React.useState(false);
   const [opened, setOpened] = React.useState(false);
-  const [reason, setReason] = React.useState("enter the reason here");
+  const [reason, setReason] = React.useState("");
   const [selectedDate, setSelectedDate] = useState(new Date());
   const handleClickOpen = () => {
     setOpen(true);
@@ -74,14 +74,6 @@ export default function AddComplainPopUp(props) {
           message: "complaint add failed",
         });
       });
-
-    // setadminno("");
-    // setUsername("");
-    // setContactno("");
-    // SetEmail("");
-    // SetWorklocation("");
-    // setPassword("");
-    // SetSubstitute("");
   };
   return (
     <React.Fragment>
@@ -159,8 +151,10 @@ export default function AddComplainPopUp(props) {
           <TextField
             margin="dense"
             label="Reason"
+            required
             multiline
             fullWidth
+            placeholder="Reason"
             value={reason}
             onChange={(e) => {
               setReason(e.target.value);
@@ -173,13 +167,17 @@ export default function AddComplainPopUp(props) {
         <ConfirmPopup
             open={opened}
             setOpen={setOpened}
-            title={"Reservation Confirmation"}
-            text={"Are you sure you want to confirm this Reservation?"}
+            title={" Are you sure you want to confirm this Complain?"}
+            text={["Reason :  ", reason]}
             controlfunction={handlesubmit}
           />
-          <Button autoFocus onClick={() => {
-                setOpened(true);
-              }} type="submit"
+          <Button 
+            autoFocus
+            disabled={reason === ""} 
+            onClick={() => {
+              setOpened(true);
+            }}
+            type="submit"
           >
             Add Complain
           </Button>
