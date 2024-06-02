@@ -52,9 +52,6 @@ export default function AccordionUsage({room,NoOfRooms,setNoOfRooms,roomCodes,se
               per day
             </Typography>
           </Stack>
-          {/* <Typography variant="h6" sx={{ ml:20, flexShrink: 0 }}>
-          <Checkbox />
-          </Typography> */}
           {reserve?<Typography variant="button"
           sx={{color:'green',ml: "20%", flexShrink: 0 }}>Reserved</Typography>:" "}
           

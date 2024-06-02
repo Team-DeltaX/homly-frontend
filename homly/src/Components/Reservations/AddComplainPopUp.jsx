@@ -17,7 +17,7 @@ import { useState, useEffect } from "react";
 import ErrorSnackbar from '../User/ErrorSnackbar';
 import ConfirmPopup from "../PrimaryAdmin/ConfirmPopup";
 import AxiosClient from '../../services/AxiosClient';
-
+import { SocketioContext } from "../../Contexts/SocketioContext";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -32,6 +32,7 @@ export default function AddComplainPopUp(props) {
   const [open, setOpen] = React.useState(false);
   const [opened, setOpened] = React.useState(false);
   const [reason, setReason] = React.useState("");
+  const { socket } = React.useContext(SocketioContext);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const handleClickOpen = () => {
     setOpen(true);
@@ -46,8 +47,9 @@ export default function AddComplainPopUp(props) {
   };
   const handlesubmit = (e) => {
     const data = {
-      ServiceNo: props.reservation.ServiceNO,
-      ReservationNo: props.reservation.ReservationId,
+      ServiceNo: props.reservation.reservation.ServiceNO,
+      ReservationNo: props.reservation.reservation.ReservationId,
+      AdminNo: props.reservation.holidayHome.AdminNo,
       Reason: reason
     };
     console.log("aruna", data);
@@ -55,7 +57,7 @@ export default function AddComplainPopUp(props) {
     //   .post("http://localhost:8080/user/reservation/AddComplaint", data)
     AxiosClient.post(`/admin/auth/reservation/AddComplaint`,data)
       .then((res) => {
-        console.log("add complaint successfully");
+        console.log(res.data, "resssssss complainnn");
         setOpen(false);
         setOpened(false);
         setErrorStatus({
@@ -63,6 +65,13 @@ export default function AddComplainPopUp(props) {
           isOpen: true,
           type: "success",
           message: "complaint added successfully",
+        });
+        socket.emit("newNotification", {
+          senderId: res.data.adminNo,
+          receiverId: "HomlyPriAdmin",
+          data: `New Complain against ${props.reservation.reservation.ServiceNO} about his/her reservation (${props.reservation.reservation.ReservationId}). Please check it out.`,
+          type: "New Complain",
+          time: new Date(),
         });
       })
       .catch((error) => {
@@ -111,7 +120,7 @@ export default function AddComplainPopUp(props) {
           <TextField
             autoFocus
             disabled={true}
-            value={props.reservation.ServiceNO}
+            value={props.reservation.reservation.ServiceNO}
             required
             margin="dense"
             id="serviceno"
@@ -124,12 +133,25 @@ export default function AddComplainPopUp(props) {
           <TextField
             autoFocus
             disabled={true}
-            value={props.reservation.ReservationId}
+            value={props.reservation.reservation.ReservationId}
             required
             margin="dense"
             id="reservationno"
             name="reservationno"
             label="Reservation No"
+            type="text"
+            fullWidth
+            variant="outlined"
+          />
+          <TextField
+            autoFocus
+            disabled={true}
+            value={props.reservation.holidayHome.Name}
+            required
+            margin="dense"
+            id="holidayhome"
+            name="holidayhome"
+            label="Holiday Home"
             type="text"
             fullWidth
             variant="outlined"

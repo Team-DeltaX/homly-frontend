@@ -142,7 +142,18 @@ export default function ScrollDialog({ name, id }) {
           message: "Reservation added successfully",
         });
         socket.emit("newNotification", {
-          senderId:res.data.reservationId, receiverId: "HomlyPriAdmin", data:'New Reservation has added.', type:"New Reservation Added", time: new Date()
+          senderId:res.data.empName, 
+          receiverId: "HomlyPriAdmin", 
+          data:`New Reservation has added by ${res.data.empName} for ${res.data.holidayHomeName}`, 
+          type:"New Reservation Added", 
+          time: new Date()
+        });
+        socket.emit("newNotification", {
+          senderId:res.data.empName, 
+          receiverId: res.data.adminNumber, 
+          data:`New Reservation has added by ${res.data.empName} for ${res.data.holidayHomeName}`, 
+          type:"New Reservation Added", 
+          time: new Date()
         });
         setReservationId(res.data.reservationId);
         setCheckinDate(dayjs().add(6, "day"));

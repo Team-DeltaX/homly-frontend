@@ -81,7 +81,7 @@ export default function AddSpecialReservationPopUp() {
         console.log("add special reservation successfully", ServiceNo);
         socket.emit("newNotification", {
           senderId: "HomlyPriAdmin",
-          receiverId: ServiceNo,
+          receiverId: res.data.empName,
           data: "Your request about special reservation is accepted.Please find email for more details.",
           type: "Authorization Successful",
           time: new Date(),
@@ -90,7 +90,7 @@ export default function AddSpecialReservationPopUp() {
         socket.emit("newNotification", {
           senderId: "HomlyPriAdmin",
           receiverId: res.data.adminNumber,
-          data: "New Special Reservation is allocated for one of your Holiday home.check it out",
+          data: `New Special Reservation is allocated for ${res.data.holidayHomeName}.check it out`,
           type: "New Reservation Added",
           time: new Date(),
         });
@@ -119,8 +119,8 @@ export default function AddSpecialReservationPopUp() {
         SetHolidayHomeName("");
         setMaxAdults(0);
         setMaxChildren(0);
-        setNoOfRooms(0);
-        setNoOfHalls(0);
+        setNoofRooms(0);
+        setNoofHalls(0);
         setRoomRental(0);
         setHallRental(0);
         setCheckinDate(dayjs().add(6, "day"));

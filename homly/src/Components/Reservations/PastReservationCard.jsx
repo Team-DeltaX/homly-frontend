@@ -197,7 +197,8 @@ const PastReservationCard = (props) => {
                 reservedHall={props.reservedHall}
                 holidayhome={props.holidayHome}
               />
-              <AddComplainPopUp reservation={props.reservation}/>
+              <AddComplainPopUp reservation={props}/>
+              
             </Stack>
           </Grid>
         </Grid>
