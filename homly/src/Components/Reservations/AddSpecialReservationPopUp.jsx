@@ -182,7 +182,6 @@ export default function AddSpecialReservationPopUp() {
       });
     }
   };
-  
   useEffect(() => {
     if (ServiceNo) {
       AxiosClient.get(`/admin/auth/locationadmin/employee/${ServiceNo}`)
@@ -203,20 +202,15 @@ export default function AddSpecialReservationPopUp() {
           setNoofHalls(response.data.NoofHalls);
           setMaxAdults(response.data.maxAdults);
           setMaxChildren(response.data.maxChildren);
-          setNoOfRooms(response.data.noOfRooms);
-          setNoOfHalls(response.data.noOfHalls);
           setRoomRental(response.data.totalRoomRental);
           setHallRental(response.data.totalHallRental); //
+          
         })
         .catch((error) => {
           console.log(error);
         });
     }
   }, [HolidayHomeName]);
-
-
-
-  
   useEffect(() => {
     axios
       .get("http://localhost:8080/user/reservation/holidayhomes")
