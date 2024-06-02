@@ -7,7 +7,7 @@ import Box from "@mui/material/Box";
 
 import { Grid } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
-import axios from "axios";
+import AxiosClient from "../../../services/AxiosClient";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -51,8 +51,7 @@ export default function StatisticsDetails() {
   const [hallrevenue, setHallrevenue] = React.useState(0);
 
   const getRoomCount = () => {
-    axios
-      .get("http://localhost:8080/locationadmin/auth/room")
+    AxiosClient.get("admin/auth/locationadmin/room")
       .then((res) => {
         setRoomcount(res.data.count);
       })
@@ -62,13 +61,12 @@ export default function StatisticsDetails() {
   };
 
   const getHallCount = () => {
-    axios.get("http://localhost:8080/locationadmin/auth/hall").then((res) => {
+    AxiosClient.get("admin/auth/locationadmin/hall").then((res) => {
       setHallcount(res.data.count);
     });
   };
   const getHallincome = () => {
-    axios
-      .get("http://localhost:8080/locationadmin/auth/hallincome")
+    AxiosClient.get("admin/auth/locationadmin/hallincome")
       .then((res) => {
         setHallrevenue(res.data.hallincome);
       })
@@ -77,8 +75,7 @@ export default function StatisticsDetails() {
       });
   };
   const getRoomincome = () => {
-    axios
-      .get("http://localhost:8080/locationadmin/auth/roomincome")
+    AxiosClient.get("admin/auth/locationadmin/roomincome")
       .then((res) => {
         setRoomrevenue(res.data.roomincome);
       })

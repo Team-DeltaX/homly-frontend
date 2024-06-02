@@ -1,69 +1,17 @@
 import React, { useEffect, useState } from "react";
-import SideNavbar from "../../Components/PrimaryAdmin/SideNavbar";
 import Box from "@mui/material/Box";
-import {
-  Avatar,
-  Button,
-  Container,
-  Grid,
-  ThemeProvider,
-  Typography,
-} from "@mui/material";
+import { Container, Grid, ThemeProvider } from "@mui/material";
 import theme from "../../HomlyTheme";
-import Pagetop from "../../Components/PrimaryAdmin/PageTop";
-import DashViewAdminBox from "../../Components/PrimaryAdmin/DashViewAdminBox";
-import { Link } from "react-router-dom";
 import { PieChart } from "@mui/x-charts/PieChart";
 import Income from "../../Components/PrimaryAdmin/Income";
 import PDashboardboxes from "./Dashboard/PDashboardboxes";
-import CompareLineChart from "./Dashboard/CompareLineChart";
-import axios from "axios";
-import AxiosClient from "../../services/AxiosClient";
+
+import HomeRating from "./Dashboard/HomeRatings";
 
 const DashboardContent = () => {
   const [activecount, SetActivecount] = useState(0);
   const [inactivecount, setInactivecount] = useState(0);
-  const [latestFourAdmins, setlatestFourAdmins] = useState([]);
-  const [NotApprovedCount, SetNotApprovedCount] = useState(0);
 
-  const getNotApprovedCount = () => {
-    // axios
-    //   .get("http://localhost:8080/admin/auth/notapprovedcount")
-    AxiosClient.get("admin/auth/notapprovedcount")
-      .then((res) => {
-        SetNotApprovedCount(res.data.notapprovedcount);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const getadmins = () => {
-    // axios
-    //   .get(`http://localhost:8080/admin/auth/locationadmin/all`)
-    AxiosClient.get("admin/auth/locationadmin/all").then((res) => {
-      setlatestFourAdmins(res.data.reverse());
-    });
-  };
-
-  const getstatus = () => {
-    // axios
-    //   .get(`http://localhost:8080/admin/auth/holidayhomehstatus`)
-    AxiosClient.get("admin/auth/holidayhomehstatus")
-      .then((res) => {
-        SetActivecount(res.data.Active);
-        setInactivecount(res.data.Inactive);
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-  useEffect(() => {
-    getstatus();
-    getadmins();
-    getNotApprovedCount();
-  }, []);
   return (
     <ThemeProvider theme={theme}>
       <Container maxWidth="xl" style={{ padding: "0px" }}>
@@ -80,7 +28,7 @@ const DashboardContent = () => {
             <Box>
               <Grid container sx={{ overflow: "auto", maxHeight: "100vh" }}>
                 <Grid
-                  item    
+                  item
                   md={8}
                   sx={{
                     backgroundColor: "white",
@@ -139,8 +87,6 @@ const DashboardContent = () => {
                         />
                       </Box>
                     </Box>
-
-                    <CompareLineChart />
                   </Box>
                 </Grid>
                 <Grid
@@ -150,7 +96,9 @@ const DashboardContent = () => {
                     height: "100vh",
                     marginLeft: { xs: "40px", md: "0px" },
                   }}
-                ></Grid>
+                >
+                  <HomeRating />
+                </Grid>
               </Grid>
             </Box>
           </Grid>

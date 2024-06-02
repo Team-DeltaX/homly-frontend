@@ -117,6 +117,10 @@ const HolidayHomeEdit = () => {
   const [adultsCount, setAdultsCount] = useState(0);
   const [childCount, setChildCount] = useState(0);
   const [selectedRoomDetails, setSelectedRoomDetails] = useState({});
+  const [mainImage, setMainImage] = useState(null);
+  const [image1, setImage1] = useState(null);
+  const [image2, setImage2] = useState(null);
+  const [image3, setImage3] = useState(null);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -197,6 +201,11 @@ const HolidayHomeEdit = () => {
             status: homeDetails.Status || "",
           });
 
+          setMainImage(homeDetails.MainImage || "");
+          setImage1(homeDetails.Image1 || "");
+          setImage2(homeDetails.Image2 || "");
+          setImage3(homeDetails.Image3 || "");
+
           setRoomTypeArray(roomTypeSettings);
           setSettingRoomRentalArray(settingRoomRental);
         } else {
@@ -232,6 +241,10 @@ const HolidayHomeEdit = () => {
       hallArray: hallArray,
       roomTypeArray: roomTypeArray,
       settingRoomRentalArray: settingRoomRentalArray,
+      mainImage: mainImage,
+      image1: image1,
+      image2: image2,
+      image3: image3,
     };
     e.preventDefault();
     setApprovedClicked(true);
@@ -319,6 +332,14 @@ const HolidayHomeEdit = () => {
                     <EditHolidayHomeDetails
                       value={detailsValue}
                       setValue={setDetailsValue}
+                      mainImage={mainImage}
+                      setMainImage={setMainImage}
+                      image1={image1}
+                      setImage1={setImage1}
+                      image2={image2}
+                      setImage2={setImage2}
+                      image3={image3}
+                      setImage3={setImage3}
                     />
                     <Box
                       sx={{

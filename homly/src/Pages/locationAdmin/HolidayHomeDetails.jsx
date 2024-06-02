@@ -9,6 +9,8 @@ import {
   Typography,
   Button,
 } from "@mui/material";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 import theme from "../../HomlyTheme";
 import SideNavbar from "../../Components/locationAdmin/SideNavbar";
 import PageTitle from "../../Components/locationAdmin/PageTitle";
@@ -17,7 +19,8 @@ import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import Select from "react-select";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import axios, { Axios } from "axios";
@@ -92,7 +95,8 @@ const HolidayHomeDetails = () => {
   }, []);
 
   const handleSearch = () => {
-    const homeName = selectedHolidayHome.value;
+    console.log("selectedHolidayHome", selectedHolidayHome);
+    const homeName = selectedHolidayHome.target.value || selectedHolidayHome;
     console.log("homeName", homeName);
     let id;
 
@@ -267,25 +271,29 @@ const HolidayHomeDetails = () => {
                     marginBottom: "2em",
                   }}
                 >
-                  <Box>
-                    <Select
-                      sx={{
-                        backgroundColor: "white",
-                        opacity: "1",
-                        zIndex: "1000",
-                        width: "200px",
-                      }}
-                      className="basic-single"
-                      classNames="select_editholidayhome"
-                      classNamePrefix={"Holiday Home"}
-                      isSearchable={true}
-                      name="color"
-                      options={names.map((item) => {
-                        return { value: item, label: item.toUpperCase() };
-                      })}
-                      value={selectedHolidayHome}
-                      onChange={(value) => setSelectedHolidayHome(value)}
-                    />
+                  <Box sx={{ minWidth: 200 }}>
+                    <FormControl fullWidth>
+                      <InputLabel id="demo-simple-select-label">
+                        Select HolidayHome
+                      </InputLabel>
+                      <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={
+                          selectedHolidayHome !== ""
+                            ? selectedHolidayHome.target.value
+                            : ""
+                        }
+                        label="Age"
+                        size="small"
+                        onChange={(value) => setSelectedHolidayHome(value)}
+                        // onChange={(value) => setSelectedHolidayHome(value)}
+                      >
+                        {names.map((item) => {
+                          return <MenuItem value={item}>{item}</MenuItem>;
+                        })}
+                      </Select>
+                    </FormControl>
                   </Box>
 
                   <Box sx={{ display: "flex", gap: "1em" }}>

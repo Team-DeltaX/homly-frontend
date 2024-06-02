@@ -1,5 +1,5 @@
 import { Grid, Box, Button } from "@mui/material";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import HomeDetailsView from "./HomeDetailsView";
 import CareTakerDetailsView from "./CareTakerDetailsView";
 import CreatePageHomeBreakDownView from "./HolidayHomeCreate/CreatePageHomeBreakDownView";
@@ -8,9 +8,11 @@ import { useNavigate } from "react-router-dom";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import AxiosClient from "../../../services/AxiosClient";
+import { SocketioContext } from "../../../Contexts/SocketioContext";
 
 const CreateHolidayHomeContent = () => {
   const navigate = useNavigate();
+  const { socket } = useContext(SocketioContext);
 
   const [value, setValue] = useState({
     name: "",
@@ -77,6 +79,8 @@ const CreateHolidayHomeContent = () => {
     setOpen(false);
   };
 
+  console.log("Holidayhome details", value.name);
+
   const handleSubmit = (e) => {
     let formData = {
       holidayHomeDetails: value,
@@ -98,20 +102,21 @@ const CreateHolidayHomeContent = () => {
     e.preventDefault();
     setSubmitClicked(true);
     console.log("allvalues", formData);
-    // axios
-    //   .post(
-    //     "http://localhost:8080/admin/auth/locationadmin/holidayhome/",
-    //     formData
-    //   )
     AxiosClient.post("/admin/auth/locationadmin/holidayhome/", formData)
       .then((res) => {
-        // window.location.href("/locationadmin/manage");
         console.log(res);
         navigate("/locationadmin/manage");
       })
       .catch((err) => {
         console.log(err);
       });
+    socket.emit("newNotification", {
+      senderId: sessionStorage.getItem("userId"),
+      receiverId: "HomlyPriAdmin",
+      data: `${value.name} - Holiday Home has been added successfully`,
+      type: "Authorization Denied",
+      time: new Date(),
+    });
     setOpen(true);
   };
 
