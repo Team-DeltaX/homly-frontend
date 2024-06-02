@@ -1,4 +1,5 @@
 import Stack from "@mui/material/Stack";
+import { Box } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
 import holidayhome from "../../Assets/images/holidayHome.jpg";
 import ViewPopUp from "./ViewPopup";

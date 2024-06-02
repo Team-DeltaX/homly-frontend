@@ -28,14 +28,7 @@ const OngoingReservationList = (props) => {
   }, []);
   return (
     <>
-    <Box className="home"
-    sx={{weight: "100%" ,height: '60vh',overflow: 'hidden', overflowY: 'scroll'}}>
-      {reservations.map(reservation => (
-         <ViewReservationCard holidayHome={reservation.holidayHome[0]} reservation={reservation.reservation} reservedRoom={reservation.reservedrooms} reservedHall={reservation.reservedhalls} employeeName={reservation.employeeName[0]} employeeDetails={reservation.employeeDetails[0]}/>
-      ))}
-    </Box>
-      <Box className="home">
-        {/* {console.log("Searchhihhhhh", reservation.ServiceNo)} */}
+      <Box className="home" sx={{weight: "100%" ,height: '70vh',overflow: 'hidden', overflowY: 'scroll'}}>
         {console.log("resssssssss",reservations)}
         {reservations
           .filter((reservation) => {

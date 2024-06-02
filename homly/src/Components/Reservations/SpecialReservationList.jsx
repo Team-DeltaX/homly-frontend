@@ -16,16 +16,11 @@ const SpeicalReservationList = (props) => {
         console.log(err);
       });
   };
-
   useEffect(() => {
     fetchreservations();
   }, []);
   return (
-    <>
-    <Box className="home"
-    sx={{height: '60vh',overflow: 'hidden', overflowY: 'scroll'}}>
-
-      <Box className="home">
+      <Box className="home" sx={{height: '70vh',overflow: 'hidden', overflowY: 'scroll'}}>
         {reservations
           .filter((reservation) => {
             return props.search.toLowerCase() === ""
@@ -53,9 +48,6 @@ const SpeicalReservationList = (props) => {
             />
           ))}
       </Box>
-
-
-    </>
   );
 }
  

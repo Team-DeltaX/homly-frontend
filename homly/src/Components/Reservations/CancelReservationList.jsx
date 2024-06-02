@@ -27,7 +27,7 @@ const CancelledReservationList = (props) => {
   }, []);
   return (
     <>
-    <Box className="home" sx={{height: '60vh',overflow: 'hidden', overflowY: 'scroll'}}>
+    <Box className="home" sx={{height: '70vh',overflow: 'hidden', overflowY: 'scroll'}}>
       {reservations
       .filter((reservation) => {
         return props.search.toLowerCase() === "" ? reservation

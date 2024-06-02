@@ -27,7 +27,7 @@ const PastReservationList = (props) => {
   }, []);
   return (
     <>
-      <Box className="home" sx={{height: '60vh',overflow: 'hidden', overflowY: 'scroll'}}>
+      <Box className="home" sx={{height: '70vh',overflow: 'hidden', overflowY: 'scroll'}}>
         {reservations
           .filter((reservation) => {
             return props.search.toLowerCase() === ""
@@ -51,6 +51,7 @@ const PastReservationList = (props) => {
               reservedRoom={reservation.reservedrooms}
               reservedHall={reservation.reservedhalls}
               employeeName={reservation.employeeName[0]}
+              employeeDetails={reservation.employeeDetails[0]}
             />
           ))}
       </Box>
