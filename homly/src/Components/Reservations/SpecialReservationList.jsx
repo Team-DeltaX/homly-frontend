@@ -16,19 +16,38 @@ const SpeicalReservationList = (props) => {
         console.log(err);
       });
   };
-
   useEffect(() => {
     fetchreservations();
   }, []);
   return (
-    <>
-    <Box className="home"
-    sx={{height: '60vh',overflow: 'hidden', overflowY: 'scroll'}}>
-      {reservations.map(reservation => (
-         <ViewReservationCard holidayHome={reservation.holidayHome[0]} reservation={reservation.reservation} reservedRoom={reservation.reservedrooms} reservedHall={reservation.reservedhalls} employeeName={reservation.employeeName[0]} employeeDetails={reservation.employeeDetails[0]}/>
-      ))}
-    </Box>
-    </>
+      <Box className="home" sx={{height: '70vh',overflow: 'hidden', overflowY: 'scroll'}}>
+        {reservations
+          .filter((reservation) => {
+            return props.search.toLowerCase() === ""
+              ? reservation
+              : reservation.holidayHome[0].Name.toLowerCase().startsWith(
+                  props.search.toLowerCase()
+                ) ||
+                reservation.employeeName[0].name
+                  .toLowerCase()
+                  .startsWith(props.search.toLowerCase()) ||
+                reservation.reservation.ReservationId.toLowerCase().includes(
+                  props.search.toLowerCase()
+                )
+              ? reservation
+              : null;
+          })
+          .map((reservation) => (
+            <ViewReservationCard
+              holidayHome={reservation.holidayHome[0]}
+              reservation={reservation.reservation}
+              reservedRoom={reservation.reservedrooms}
+              reservedHall={reservation.reservedhalls}
+              employeeName={reservation.employeeName[0]}
+              employeeDetails={reservation.employeeDetails[0]}
+            />
+          ))}
+      </Box>
   );
 }
  

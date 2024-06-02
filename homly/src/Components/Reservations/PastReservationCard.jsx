@@ -1,14 +1,11 @@
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
+import { Box } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
 import holidayhome from "../../Assets/images/holidayHome.jpg";
 import ViewPopUp from "./ViewPopup";
-import dayjs, { Dayjs } from "dayjs";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import dayjs from "dayjs";
+import { useState } from "react";
 import Typography from "@mui/material/Typography";
-import AxiosClient from "../../services/AxiosClient";
 import AddComplainPopUp from "../Reservations/AddComplainPopUp";
 
 const PastReservationCard = (props) => {

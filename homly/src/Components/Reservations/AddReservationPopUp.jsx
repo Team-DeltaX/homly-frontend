@@ -20,10 +20,12 @@ import Autocomplete from "@mui/material/Autocomplete";
 import Stack from "@mui/material/Stack";
 import ConfirmPopup from "../PrimaryAdmin/ConfirmPopup";
 import AxiosClient from "../../services/AxiosClient";
+import { SocketioContext } from "../../Contexts/SocketioContext";
 
 export default function ScrollDialog({ name, id }) {
   const [open, setOpen] = React.useState(false);
   const [opened, setOpened] = React.useState(false);
+  const { socket } = React.useContext(SocketioContext);
   const [scroll, setScroll] = React.useState("paper");
   const [reservationId, setReservationId] = React.useState("");
   const [HolidayHomeName, setHolidayHomeName] = useState("");
@@ -139,8 +141,9 @@ export default function ScrollDialog({ name, id }) {
           type: "success",
           message: "Reservation added successfully",
         });
-        console.log("anujjaasda"+res.data.message);
-        console.log("anujjaasdsdsda"+res.data.reservationId);
+        socket.emit("newNotification", {
+          senderId:res.data.reservationId, receiverId: "HomlyPriAdmin", data:'New Reservation has added.', type:"New Reservation Added", time: new Date()
+        });
         setReservationId(res.data.reservationId);
         setCheckinDate(dayjs().add(6, "day"));
         setCheckoutDate(dayjs().add(7, "day"));

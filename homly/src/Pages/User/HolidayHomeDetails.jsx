@@ -22,6 +22,7 @@ import Rating from "@mui/material/Rating";
 import Divider from "@mui/material/Divider";
 import StarIcon from "@mui/icons-material/Star";
 import SimpleMap from "../../Components/Common/MapContainer";
+import GoogleMap from "../../Components/Common/GoogleMapSample";
 import LinearProgress, {
   linearProgressClasses,
 } from "@mui/material/LinearProgress";

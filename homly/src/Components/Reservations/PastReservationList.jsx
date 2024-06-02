@@ -9,12 +9,12 @@ import axios from "axios";
 import AxiosClient from "../../services/AxiosClient";
 
 const PastReservationList = (props) => {
-  const [reservations, setReservations] = useState([])
+  const [reservations, setReservations] = useState([]);
   const fetchreservations = () => {
     AxiosClient.get("/admin/auth/reservation/past")
       .then((res) => {
-        console.log("fbnh fjnygfvfrvegbh",res.data);
-         //reverse array to keep new ones first 
+        console.log("fbnh fjnygfvfrvegbh", res.data);
+        //reverse array to keep new ones first
         setReservations(res.data.reverse());
       })
       .catch((err) => {
@@ -27,14 +27,36 @@ const PastReservationList = (props) => {
   }, []);
   return (
     <>
-    <Box className="home"
-    sx={{height: '60vh',overflow: 'hidden', overflowY: 'scroll'}}>
-      {reservations.map(reservation => (
-         <PastReservationCard holidayHome={reservation.holidayHome[0]} reservation={reservation.reservation} reservedRoom={reservation.reservedrooms} reservedHall={reservation.reservedhalls} employeeName={reservation.employeeName[0]} employeeDetails={reservation.employeeDetails[0]}/>
-      ))}
-    </Box>
+      <Box className="home" sx={{height: '70vh',overflow: 'hidden', overflowY: 'scroll'}}>
+        {reservations
+          .filter((reservation) => {
+            return props.search.toLowerCase() === ""
+              ? reservation
+              : reservation.holidayHome[0].Name.toLowerCase().startsWith(
+                  props.search.toLowerCase()
+                ) ||
+                reservation.employeeName[0].name
+                  .toLowerCase()
+                  .startsWith(props.search.toLowerCase()) ||
+                reservation.reservation.ReservationId.toLowerCase().includes(
+                  props.search.toLowerCase()
+                )
+              ? reservation
+              : null;
+          })
+          .map((reservation) => (
+            <PastReservationCard
+              holidayHome={reservation.holidayHome[0]}
+              reservation={reservation.reservation}
+              reservedRoom={reservation.reservedrooms}
+              reservedHall={reservation.reservedhalls}
+              employeeName={reservation.employeeName[0]}
+              employeeDetails={reservation.employeeDetails[0]}
+            />
+          ))}
+      </Box>
     </>
   );
-}
- 
+};
+
 export default PastReservationList;
