@@ -102,6 +102,7 @@ export default function PayNowPopup({ isOpen, setIsOpen, reservationId, price })
   };
 
   const pay = () => {
+    setIsOpen(false);
     console.log("Paying");
     window.payhere.startPayment(payment);
     // Event listeners for payment completion, dismissal, and error

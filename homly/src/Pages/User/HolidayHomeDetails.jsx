@@ -18,6 +18,9 @@ import Grid from "@mui/material/Unstable_Grid2";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import Rating from "@mui/material/Rating";
+import Divider from "@mui/material/Divider";
+import StarIcon from "@mui/icons-material/Star";
 import SimpleMap from "../../Components/Common/MapContainer";
 import LinearProgress, {
   linearProgressClasses,
@@ -30,7 +33,7 @@ import HolidayHomeGrid from "../../Components/User/HolidayHomeDetailsGrid/Holida
 import AddReservationPopUp from "../../Components/Reservations/AddReservationPopUp";
 import Review from "../../Components/User/Review/Review";
 import AxiosClient from "../../services/AxiosClient";
-import noImage from '../../Assets/images/no image.jpg'
+import noImage from "../../Assets/images/no image.jpg";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -87,21 +90,17 @@ export default function HolidayHomeDetails() {
   });
   const { homeId } = useParams();
   useEffect(() => {
-      AxiosClient.get(`/user/auth/locationadmin/holidayhome/${homeId}`)
+    AxiosClient.get(`/user/auth/locationadmin/holidayhome/${homeId}`)
       .then((res) => {
         console.log("response", res.data);
         if (Response) {
           const homeDetails = res.data.homeDetails[0];
           const contactNo = res.data.contactNo;
-          console.log(homeDetails.MainImage,"imageeeeeeeeeeeeeeeeeee")
-          //setRoom(res.data.room);
-
-          // Extract relevant data from response and set to 'value' state
           setValue({
             id: homeDetails.HolidayHomeId || "",
             name: homeDetails.Name || "",
             address: homeDetails.Address || "",
-            district: "Kegalle", // Add the logic to get district if available
+            district: "Kegalle",
             description: homeDetails.Description || "",
             contactNo1:
               contactNo && contactNo.length > 0 ? contactNo[0].ContactNo : "",
@@ -110,22 +109,22 @@ export default function HolidayHomeDetails() {
             category: homeDetails.Category || "",
             status: homeDetails.Status || "",
             Gym: homeDetails.Gym === "0" ? false : true,
-            Kitchen: homeDetails.Kitchen  === "0" ? false : true,
+            Kitchen: homeDetails.Kitchen === "0" ? false : true,
             Park: homeDetails.Park === "0" ? false : true,
             Wifi: homeDetails.Wifi === "0" ? false : true,
             Pool: homeDetails.Pool === "0" ? false : true,
             Bar: homeDetails.Bar === "0" ? false : true,
             Facilities: homeDetails.Facilities || "",
-            food_rating: homeDetails.FoodRating || 0,
-            value_for_money_rating: homeDetails.ValueForMoneyRating || 0,
-            staff_rating: homeDetails.StaffRating || 0,
-            location_rating: homeDetails.LocationRating || 0,
-            furniture_rating: homeDetails.FurnitureRating || 0,
-            wifi_rating: homeDetails.WifiRating || 0,
-            overall_rating: homeDetails.OverallRating || 0,
+            food_rating: homeDetails.food_rating || 0,
+            value_for_money_rating: homeDetails.value_for_money_rating || 0.0,
+            staff_rating: homeDetails.staff_rating || 0.0,
+            location_rating: homeDetails.location_rating || 0,
+            furniture_rating: homeDetails.furniture_rating || 0,
+            wifi_rating: homeDetails.wifi_rating || 0,
+            overall_rating: homeDetails.overall_rating || 0,
             MainImage: homeDetails.MainImage,
-            Image1: homeDetails.Image1 ,
-            Image2: homeDetails.Image2 ,
+            Image1: homeDetails.Image1,
+            Image2: homeDetails.Image2,
           });
         } else {
           console.log("No data found");
@@ -155,20 +154,43 @@ export default function HolidayHomeDetails() {
           >
             <Grid container spacing={2}>
               <Grid xs={6} sx={6} md={8}>
-                <Typography variant="h4" 
-                sx={{
-                  fontWeight: { xs: '550', sm: '550', md: '550' },
-                  textTransform: 'uppercase',
-                  fontSize: { xs: '1.25rem', sm: '1.5rem', md: '2rem' },  // Adjust the font sizes as needed
-                }}>
-                  {value.name} 
+                <Typography
+                  variant="h4"
+                  sx={{
+                    fontWeight: { xs: "550", sm: "550", md: "550" },
+                    textTransform: "uppercase",
+                    fontSize: { xs: "1.25rem", sm: "1.5rem", md: "2rem" }, // Adjust the font sizes as needed
+                  }}
+                >
+                  {value.name}
                 </Typography>
-                <Typography variant="button" sx={{color:'#823', ml:'1%', fontSize:'1rem'}}>
+                <Typography
+                  variant="button"
+                  sx={{ color: "#823", ml: "1%", fontSize: "1rem" }}
+                >
                   {value.category}
-                </Typography> 
+                </Typography>
+                <Stack direction="row" spacing={1}>
+                  <Rating
+                    name="text-feedback"
+                    value={value.overall_rating / 2}
+                    size="small"
+                    readOnly
+                    precision={0.1}
+                    emptyIcon={
+                      <StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />
+                    }
+                  />
+                  <Typography
+                    variant="button"
+                    sx={{ color: "#823", ml: "1%", fontSize: "0.75rem" }}
+                  >
+                    {6} Reviews
+                  </Typography>
+                </Stack>
               </Grid>
               <Grid xs={6} sx={6} md={4}>
-                <AddReservationPopUp name={value.name} id={value.id}/>
+                <AddReservationPopUp name={value.name} id={value.id} />
               </Grid>
               <Grid xs={12} sx={12} md={8}>
                 <Box
@@ -180,95 +202,190 @@ export default function HolidayHomeDetails() {
                     width: "100%",
                     height: "50vh",
                     borderRadius: 8,
-                    border: "1px solid #E7E7E7",
                   }}
                 >
-                  <img src={value.MainImage || noImage} alt="HH PHOTO 1" style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: '3%' }}/>
+                  <img
+                    src={value.MainImage}
+                    alt="HH PHOTO 1"
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                      borderRadius: 16,
+                    }}
+                  />
                 </Box>
               </Grid>
               <Grid xs={12} sx={12} md={4}>
-              <Stack direction={{ xs: 'row', sm: 'row', md: 'column' }} spacing={2}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    bgcolor: "#FFFFFF",
-                    width: "100%",
-                    height: "24vh",
-                    borderRadius: 3,
-                    border: "1px solid #E7E7E7",
-                  }}
+                <Stack
+                  direction={{ xs: "row", sm: "row", md: "column" }}
+                  spacing={2}
                 >
-                  <img src={value.Image1 || noImage} alt="HH PHOTO 2" style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: '8%' }}/>
-                </Box>
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    bgcolor: "#FFFFFF",
-                    width: "100%",
-                    height: "24vh",
-                    borderRadius: 3,
-                    border: "1px solid #E7E7E7",
-                  }}
-                >
-                  <img src={value.Image2 || noImage} alt="HH PHOTO 3" style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: '8%' }}/>
-                </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      bgcolor: "#FFFFFF",
+                      width: "100%",
+                      height: "24vh",
+                      borderRadius: 3,
+                    }}
+                  >
+                    <img
+                      src={value.Image1 || noImage}
+                      alt="HH PHOTO 2"
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                        borderRadius: 12,
+                      }}
+                    />
+                  </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      bgcolor: "#FFFFFF",
+                      width: "100%",
+                      height: "24vh",
+                      borderRadius: 3,
+                    }}
+                  >
+                    <img
+                      src={value.Image2 || noImage}
+                      alt="HH PHOTO 3"
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                        borderRadius: 12,
+                      }}
+                    />
+                  </Box>
                 </Stack>
               </Grid>
               <Grid xs={12} sm={12} md={8}>
                 <Stack>
-                  <Stack spacing={2} direction={{ xs: 'column', sm: 'row', md: 'row' }}>
-                    <Stack spacing={{ xs: 1, sm: 1, md: 2 }} direction="row" flexGrow={1}>
-                      <Box width={{ xs:1/3, sm: 1/3, md: 1/3 }}>
-                        <Button variant="outlined" fullWidth disabled={!value.Gym}>
+                  <Stack
+                    spacing={2}
+                    direction={{ xs: "column", sm: "row", md: "row" }}
+                  >
+                    <Stack
+                      spacing={{ xs: 1, sm: 1, md: 2 }}
+                      direction="row"
+                      flexGrow={1}
+                    >
+                      <Box width={{ xs: 1 / 3, sm: 1 / 3, md: 1 / 3 }}>
+                        <Button
+                          variant="outlined"
+                          fullWidth
+                          disabled={!value.Gym}
+                          sx={{
+                            cursor: "default",
+                          }}
+                        >
                           Gym
                         </Button>
                       </Box>
-                      <Box width={{ xs:1/3, sm: 1/3, md: 1/3 }}>
-                        <Button variant="outlined" fullWidth disabled={!value.Kitchen}>
+                      <Box width={{ xs: 1 / 3, sm: 1 / 3, md: 1 / 3 }}>
+                        <Button
+                          variant="outlined"
+                          fullWidth
+                          disabled={!value.Kitchen}
+                          sx={{
+                            cursor: "default",
+                          }}
+                        >
                           Kitchen
                         </Button>
                       </Box>
-                      <Box width={{ xs:1/3, sm: 1/3, md: 1/3 }}>
-                        <Button variant="outlined" fullWidth disabled={!value.Park}>
+                      <Box width={{ xs: 1 / 3, sm: 1 / 3, md: 1 / 3 }}>
+                        <Button
+                          variant="outlined"
+                          fullWidth
+                          disabled={!value.Park}
+                          sx={{
+                            cursor: "default",
+                          }}
+                        >
                           Park
                         </Button>
                       </Box>
                     </Stack>
-                    <Stack spacing={{ xs: 1, sm: 1, md: 2 }} direction="row" flexGrow={1}>
-                      <Box width={{ xs:1/3, sm: 1/3, md: 1/3 }}>
-                        <Button variant="outlined" fullWidth disabled={!value.Wifi}>
+                    <Stack
+                      spacing={{ xs: 1, sm: 1, md: 2 }}
+                      direction="row"
+                      flexGrow={1}
+                    >
+                      <Box width={{ xs: 1 / 3, sm: 1 / 3, md: 1 / 3 }}>
+                        <Button
+                          variant="outlined"
+                          fullWidth
+                          disabled={!value.Wifi}
+                          sx={{
+                            cursor: "default",
+                          }}
+                        >
                           Wi-fi
                         </Button>
                       </Box>
-                      <Box width={{ xs:1/3, sm: 1/3, md: 1/3 }}>
-                        <Button variant="outlined" fullWidth disabled={!value.Bar}>
+                      <Box width={{ xs: 1 / 3, sm: 1 / 3, md: 1 / 3 }}>
+                        <Button
+                          variant="outlined"
+                          fullWidth
+                          disabled={!value.Bar}
+                          sx={{
+                            cursor: "default",
+                          }}
+                        >
                           Bar
                         </Button>
                       </Box>
-                      <Box width={{ xs:1/3, sm: 1/3, md: 1/3 }}>
-                        <Button variant="outlined" fullWidth disabled={!value.Pool}>
+                      <Box width={{ xs: 1 / 3, sm: 1 / 3, md: 1 / 3 }}>
+                        <Button
+                          variant="outlined"
+                          fullWidth
+                          disabled={!value.Pool}
+                          sx={{
+                            cursor: "default",
+                          }}
+                        >
                           Pool
                         </Button>
                       </Box>
                     </Stack>
                   </Stack>
-                    <Typography variant="subtitle1" align="justify" gutterBottom>
-                      {value.description}
-                    </Typography>
-                  </Stack>
+                  <Typography variant="subtitle1" align="justify" gutterBottom>
+                    {value.description}
+                  </Typography>
+                  <Typography
+                    variant="h4"
+                    sx={{
+                      fontWeight: { xs: "350", sm: "400", md: "450" },
+                      fontSize: { xs: "0.25rem", sm: "0.5rem", md: "1rem" }, // Adjust the font sizes as needed
+                    }}
+                    gutterBottom
+                  >
+                    Other Facilities
+                  </Typography>
+                  <Typography variant="subtitle1" align="justify" gutterBottom>
+                    {value.Facilities}
+                  </Typography>
+                </Stack>
               </Grid>
               <Grid xs={12} sm={12} md={4}>
                 <SimpleMap />
               </Grid>
               <Stack spacing={4} width={"100%"}>
-                <Typography variant="h4"
+                <Divider />
+                <Typography
+                  variant="h4"
                   sx={{
-                    fontWeight: { xs: '350', sm: '400', md: '450' },
-                    fontSize: { xs: '1.25rem', sm: '1.5rem', md: '1.5rem' },  // Adjust the font sizes as needed
+                    fontWeight: { xs: "350", sm: "400", md: "450" },
+                    fontSize: { xs: "1.25rem", sm: "1.5rem", md: "1.5rem" }, // Adjust the font sizes as needed
                   }}
                   gutterBottom
                 >
@@ -281,91 +398,237 @@ export default function HolidayHomeDetails() {
                     columnSpacing={{ xs: 1, sm: 2, md: 3 }}
                   >
                     <Grid item xs={12} sm={6} md={4}>
-                      <Stack direction='column' spacing={1}>
-                        <Stack 
-                            direction="row"
-                            justifyContent="space-between"
-                            alignItems="baseline">
+                      <Stack direction="column" spacing={1}>
+                        <Stack
+                          direction="row"
+                          justifyContent="space-between"
+                          alignItems="baseline"
+                        >
                           <Typography>Staff</Typography>
-                          <Button size="small" variant="contained">5.0</Button>
+                          <Button
+                            size="small"
+                            variant="contained"
+                            sx={{
+                              cursor: "default",
+                            }}
+                          >
+                            {value.staff_rating}
+                          </Button>
                         </Stack>
-                        <BorderLinearProgress variant="determinate" value={(value.staff_rating)*10} />
+                        <BorderLinearProgress
+                          variant="determinate"
+                          value={value.staff_rating * 10}
+                        />
                       </Stack>
                     </Grid>
-
                     <Grid item xs={12} sm={6} md={4}>
-                      <Stack direction='column' spacing={1}>
-                        <Stack 
-                            direction="row"
-                            justifyContent="space-between"
-                            alignItems="baseline">
+                      <Stack direction="column" spacing={1}>
+                        <Stack
+                          direction="row"
+                          justifyContent="space-between"
+                          alignItems="baseline"
+                        >
                           <Typography>Value for Money</Typography>
-                          <Button size="small" variant="contained">5.0</Button>
+                          <Button
+                            size="small"
+                            variant="contained"
+                            sx={{
+                              cursor: "default",
+                            }}
+                          >
+                            {value.value_for_money_rating}
+                          </Button>
                         </Stack>
-                        <BorderLinearProgress variant="determinate" value={(value.value_for_money_rating)*10} />
+                        <BorderLinearProgress
+                          variant="determinate"
+                          value={value.value_for_money_rating * 10}
+                        />
                       </Stack>
                     </Grid>
-
                     <Grid item xs={12} sm={6} md={4}>
-                      <Stack direction='column' spacing={1}>
-                        <Stack 
-                            direction="row"
-                            justifyContent="space-between"
-                            alignItems="baseline">
+                      <Stack direction="column" spacing={1}>
+                        <Stack
+                          direction="row"
+                          justifyContent="space-between"
+                          alignItems="baseline"
+                        >
                           <Typography>Food</Typography>
-                          <Button size="small" variant="contained">5.0</Button>
+                          <Button
+                            size="small"
+                            variant="contained"
+                            sx={{
+                              cursor: "default",
+                            }}
+                          >
+                            {value.food_rating}
+                          </Button>
                         </Stack>
-                        <BorderLinearProgress variant="determinate" value={(value.food_rating)*10} />
+                        <BorderLinearProgress
+                          variant="determinate"
+                          value={value.food_rating * 10}
+                        />
                       </Stack>
                     </Grid>
-
                     <Grid item xs={12} sm={6} md={4}>
-                      <Stack direction='column' spacing={1}>
-                        <Stack 
-                            direction="row"
-                            justifyContent="space-between"
-                            alignItems="baseline">
+                      <Stack direction="column" spacing={1}>
+                        <Stack
+                          direction="row"
+                          justifyContent="space-between"
+                          alignItems="baseline"
+                        >
                           <Typography>Location</Typography>
-                          <Button size="small" variant="contained">5.0</Button>
+                          <Button
+                            size="small"
+                            variant="contained"
+                            sx={{
+                              cursor: "default",
+                            }}
+                          >
+                            {value.location_rating}
+                          </Button>
                         </Stack>
-                        <BorderLinearProgress variant="determinate" value={(value.location_rating)*10} />
+                        <BorderLinearProgress
+                          variant="determinate"
+                          value={value.location_rating * 10}
+                        />
                       </Stack>
                     </Grid>
-                    
                     <Grid item xs={12} sm={6} md={4}>
-                      <Stack direction='column' spacing={1}>
-                        <Stack 
-                            direction="row"
-                            justifyContent="space-between"
-                            alignItems="baseline">
+                      <Stack direction="column" spacing={1}>
+                        <Stack
+                          direction="row"
+                          justifyContent="space-between"
+                          alignItems="baseline"
+                        >
                           <Typography>Wi-Fi</Typography>
-                          <Button size="small" variant="contained">5.0</Button>
+                          <Button
+                            size="small"
+                            variant="contained"
+                            sx={{
+                              cursor: "default",
+                            }}
+                          >
+                            {value.wifi_rating}
+                          </Button>
                         </Stack>
-                        <BorderLinearProgress variant="determinate" value={(value.wifi_rating)*10} />
+                        <BorderLinearProgress
+                          variant="determinate"
+                          value={value.wifi_rating * 10}
+                        />
                       </Stack>
                     </Grid>
-
                     <Grid item xs={12} sm={6} md={4}>
-                      <Stack direction='column' spacing={1}>
-                        <Stack 
-                            direction="row"
-                            justifyContent="space-between"
-                            alignItems="baseline">
+                      <Stack direction="column" spacing={1}>
+                        <Stack
+                          direction="row"
+                          justifyContent="space-between"
+                          alignItems="baseline"
+                        >
                           <Typography>Furnitures</Typography>
-                          <Button size="small" variant="contained">5.0</Button>
+                          <Button
+                            size="small"
+                            variant="contained"
+                            sx={{
+                              cursor: "default",
+                            }}
+                          >
+                            {value.furniture_rating}
+                          </Button>
                         </Stack>
-                        <BorderLinearProgress variant="determinate" value={(value.furniture_rating)*10} />
+                        <BorderLinearProgress
+                          variant="determinate"
+                          value={value.furniture_rating * 10}
+                        />
                       </Stack>
                     </Grid>
-
                   </Grid>
                 </Box>
-
+                <Divider />
                 {/* user review */}
                 <Box>
-                  <Review/>
+                  <Review />
                 </Box>
+                <Divider />
               </Stack>
+              <Grid container rowSpacing={1} columnSpacing={4}>
+                <Grid md={12} mt={4}>
+                  <Typography
+                    variant="h4"
+                    sx={{
+                      fontWeight: { xs: "350", sm: "400", md: "450" },
+                      fontSize: { xs: "1.25rem", sm: "1.5rem", md: "1.5rem" }, // Adjust the font sizes as needed
+                    }}
+                    gutterBottom
+                  >
+                    Other Informations
+                  </Typography>
+                </Grid>
+                <Grid md={4}>
+                  <Typography
+                    variant="h4"
+                    sx={{
+                      fontWeight: { xs: "350", sm: "400", md: "450" },
+                      fontSize: { xs: "1rem", sm: "1.25rem", md: "1.25rem" },
+                      marginBottom: "1rem",
+                    }}
+                    gutterBottom
+                  >
+                    House Rules
+                  </Typography>
+                  <Box ml={1} alignItems="center">
+                    <Typography gutterBottom>Flexible Check-in</Typography>
+                    <Typography gutterBottom>
+                      Check-out before 10:00 PM
+                    </Typography>
+                    <Typography gutterBottom>Pets allowed</Typography>
+                    <Typography gutterBottom>Smoking is allowed</Typography>
+                  </Box>
+                </Grid>
+                <Grid md={4}>
+                  <Typography
+                    variant="h4"
+                    sx={{
+                      fontWeight: { xs: "350", sm: "400", md: "450" },
+                      fontSize: { xs: "1rem", sm: "1.25rem", md: "1.25rem" },
+                      marginBottom: "1rem",
+                    }}
+                    gutterBottom
+                  >
+                    Cancellation Policy
+                  </Typography>
+                  <Box ml={1} alignItems="center">
+                    <Typography gutterBottom>
+                      Non-Refundable for customer cancellations
+                    </Typography>
+                    <Typography gutterBottom>
+                      If a reservation is cancelled due to "special reservation
+                      allocating", we refund your money back.
+                    </Typography>
+                    <Typography gutterBottom>
+                      In such cases please contact welfare division.
+                    </Typography>
+                  </Box>
+                </Grid>
+                <Grid md={4}>
+                  <Typography
+                    variant="h4"
+                    sx={{
+                      fontWeight: { xs: "350", sm: "400", md: "450" },
+                      fontSize: { xs: "1rem", sm: "1.25rem", md: "1.25rem" },
+                      marginBottom: "1rem",
+                    }}
+                    gutterBottom
+                  >
+                    Contact Details
+                  </Typography>
+                  <Box ml={1} alignItems="center">
+                    <Typography gutterBottom>{value.address}</Typography>
+                    <Typography gutterBottom>
+                      TEL: {value.contactNo1} / {value.contactNo2}
+                    </Typography>
+                  </Box>
+                </Grid>
+              </Grid>
             </Grid>
           </Container>
           <Box>

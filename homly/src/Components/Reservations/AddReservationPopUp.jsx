@@ -61,7 +61,6 @@ export default function ScrollDialog({ name, id }) {
     });
   }, [id, CheckinDate, CheckoutDate]);
 
-  //get available halls
   useEffect(() => {
     AxiosClient.get("/user/reservation/availableHalls", {
       params: {
