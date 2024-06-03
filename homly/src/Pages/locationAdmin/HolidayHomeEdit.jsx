@@ -93,6 +93,8 @@ const HolidayHomeEdit = () => {
     caretakerDescription: "",
   });
 
+  const [careTakerImage1, setCareTakerImage1] = useState("");
+
   const [valueSecond, setValueSecond] = useState({
     caretakerName: "",
     caretakerContactNo: "",
@@ -100,6 +102,8 @@ const HolidayHomeEdit = () => {
     caretakerAddress: "",
     caretakerDescription: "",
   });
+
+  const [careTakerImage2, setCareTakerImage2] = useState("");
 
   const [bdValue, setBdValue] = useState({
     otherCharges: "",
@@ -161,6 +165,7 @@ const HolidayHomeEdit = () => {
             caretakerAddress: caretakerDetails[0].Address,
             caretakerDescription: caretakerDetails[0].Description,
           });
+          setCareTakerImage1(caretakerDetails[0].Image);
 
           if (caretakerDetails[1]) {
             setCaretaker2Id(caretakerDetails[1].CareTakerId);
@@ -171,6 +176,7 @@ const HolidayHomeEdit = () => {
               caretakerAddress: caretakerDetails[1].Address || "",
               caretakerDescription: caretakerDetails[1].Description || "",
             });
+            setCareTakerImage2(caretakerDetails[1].Image || "");
           }
           setAdultsCount(homeDetails.MaxNoOfAdults);
           setChildCount(homeDetails.MaxNoOfChildren);
@@ -215,7 +221,8 @@ const HolidayHomeEdit = () => {
     );
   }, [homeId]);
 
-  console.log("caretaker", valueCaretaker);
+  console.log("caretakerimage1", careTakerImage1);
+  console.log("caretakerimage2", careTakerImage2);
 
   const handleApproval = (e) => {
     const updatedUnitArray = unitArray.map((unit) => {
@@ -245,6 +252,8 @@ const HolidayHomeEdit = () => {
       image1: image1,
       image2: image2,
       image3: image3,
+      careTakerImage1: careTakerImage1,
+      careTakerImage2: careTakerImage2,
     };
     e.preventDefault();
     setApprovedClicked(true);
@@ -400,6 +409,10 @@ const HolidayHomeEdit = () => {
                       setValue={setValueCareTaker}
                       valueSecond={valueSecond}
                       setValueSecond={setValueSecond}
+                      image1={careTakerImage1}
+                      image2={careTakerImage2}
+                      setImage1={setCareTakerImage1}
+                      setImage2={setCareTakerImage2}
                     />
                     <Box
                       sx={{
