@@ -29,7 +29,7 @@ const Report = () => {
                         </Grid>
                         <Grid className='container_grid' xs={9} sx={{backgroundColor:'white',borderTopLeftRadius:'20px',padding:'10px 30px',height:'100vh',position:'relative'}}>
                             <Box sx={{height:"100%"}}>
-                                <PageTitle setShowNav={setShowNav} title={'Reservations'} bell={false}/>
+                                <PageTitle setShowNav={setShowNav} title={'Reservations'} bell={true}/>
                                 <SearchNew setSearch={setSearch} search={search} />
                                 <BasicTabs setSearch={setSearch} search={search} />
                             </Box>
