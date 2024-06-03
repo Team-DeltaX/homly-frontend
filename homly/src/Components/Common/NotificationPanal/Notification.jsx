@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography, IconButton } from "@mui/material";
 import dayjs from "dayjs";
 
 import FeedbackIcon from "@mui/icons-material/Feedback";
@@ -11,6 +11,7 @@ import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
 import BlockIcon from '@mui/icons-material/Block';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import ErrorIcon from '@mui/icons-material/Error';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 const Notification = ({
   type,
@@ -51,7 +52,7 @@ const Notification = ({
     } else {
       setShowtime(`${Math.floor(diff / 525600)} years ago`);
     }
-  }, [showtime, time]);
+  }, [time]);
 
   const removeNotification = () => {
     setIsRemoving(true);
@@ -63,11 +64,12 @@ const Notification = ({
   return (
     <Box
       sx={{
-        backgroundColor: "#ececec",
-        borderRadius: "10px",
-        marginBottom: "15px",
+        backgroundColor: "#f9f9f9",
+        borderRadius: "12px",
+        marginBottom: "20px",
         transition: "transform 0.3s ease",
         transform: isRemoving ? "translateX(100%)" : "translateX(0%)",
+        boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
       }}
       className="notification"
     >
@@ -76,59 +78,45 @@ const Notification = ({
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          padding: "5px 15px",
+          padding: "10px 20px",
+          backgroundColor: "#fff",
+          borderBottom: "1px solid #e0e0e0",
         }}
       >
-        <Box display={"flex"} gap={"10px"}>
-          {chooseIcon[type] ? chooseIcon[type] : <NotificationsActiveIcon sx={{ color: "grey6" }} />}
-          <Typography variant="p" sx={{ fontWeight: "bold" }}>
+        <Box display="flex" alignItems="center" gap="10px">
+          {chooseIcon[type] ? chooseIcon[type] : <NotificationsActiveIcon sx={{ color: "grey.600" }} />}
+          <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
             {type}
           </Typography>
         </Box>
-        <Box>
-          <CancelIcon
-            sx={{ color: "primary.main", cursor: "pointer" }}
-            onClick={removeNotification}
-          />
-        </Box>
+        <IconButton onClick={removeNotification} sx={{ color: "primary.main" }}>
+          <CancelIcon />
+        </IconButton>
       </Box>
-      <hr
-        style={{
-          width: "180px",
-          margin: "5px 0 5px 20px",
-          color: "lightgray",
-          opacity: "0.7",
-        }}
-      />
-      <Grid container sx={{ padding: "5px 15px" }} alignItems={"center"}>
-        <Grid container>
-          <Grid item xs={12} sx={{ display: "flex", flexDirection: "column" }}>
-            <Typography variant="p" sx={{ fontSize: "16px", color: "grey6" }} gutterBottom>
+      <Box sx={{ padding: "15px 20px" }}>
+        <Grid container spacing={1}>
+          <Grid item xs={12}>
+            <Typography variant="body2" sx={{ fontWeight: "bold", fontSize: "14px", color: "text.primary" }}>
+              {senderId}
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography variant="body1" sx={{ fontSize: "16px", color: "text.secondary" }} gutterBottom>
               {data}
             </Typography>
           </Grid>
-          <Grid item xs={12} sx={{ display: "flex", flexDirection: "column" }}>
-            <Typography
-              variant="p"
-              sx={{ fontWeight: "bold", fontSize: "14px", color: "#4E4E4E" }}
-            >
-              {/* Send by : {senderId} - {id} */}
-              Send by : {senderId}
-            </Typography>
-          </Grid>
         </Grid>
-      </Grid>
+      </Box>
       <Box
         sx={{
           display: "flex",
           justifyContent: "flex-end",
-          marginBottom: "5px",
+          padding: "10px 20px",
+          backgroundColor: "#f5f5f5",
+          borderTop: "1px solid #e0e0e0",
         }}
       >
-        <Typography
-          variant="p"
-          sx={{ padding: "0 15px", color: "grey6", fontSize: "12px" }}
-        >
+        <Typography variant="caption" sx={{ color: "grey.600" }}>
           {showtime}
         </Typography>
       </Box>

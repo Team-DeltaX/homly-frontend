@@ -81,7 +81,7 @@ export default function AddSpecialReservationPopUp() {
         console.log("add special reservation successfully", ServiceNo);
         socket.emit("newNotification", {
           senderId: "HomlyPriAdmin",
-          receiverId: res.data.empName,
+          receiverId: ServiceNo,
           data: "Your request about special reservation is accepted.Please find email for more details.",
           type: "Authorization Successful",
           time: new Date(),
