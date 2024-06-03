@@ -1,12 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import {
-  Box,
-  Button,
-  Typography,
-  ThemeProvider,
-} from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { Box, Button, Typography, ThemeProvider } from "@mui/material";
 import theme from "../../HomlyTheme";
-import Skeleton from '@mui/material/Skeleton';
+import Skeleton from "@mui/material/Skeleton";
 import AxiosClient from "../../services/AxiosClient";
 
 const BlacklistHistoryCard = (props) => {
@@ -15,8 +10,7 @@ const BlacklistHistoryCard = (props) => {
   const [loading, setLoading] = useState(true);
 
   const fetchUserData = () => {
-    AxiosClient
-      .get(`/admin/auth/locationadmin/user/${props.data.ServiceNo}`)
+    AxiosClient.get(`/admin/auth/locationadmin/user/${props.data.ServiceNo}`)
       .then((res) => {
         setUser(res.data[0]);
       })
@@ -26,8 +20,9 @@ const BlacklistHistoryCard = (props) => {
   };
 
   const fetchEmployeeData = () => {
-    AxiosClient
-      .get(`/admin/auth/locationadmin/employee/${props.data.ServiceNo}`)
+    AxiosClient.get(
+      `/admin/auth/locationadmin/employee/${props.data.ServiceNo}`
+    )
       .then((res) => {
         setEmployee(res.data[0]);
       })
@@ -114,9 +109,7 @@ const BlacklistHistoryCard = (props) => {
               </Typography>
             </Box>
             <Box sx={{ width: { md: "16%" } }}>
-              <Typography sx={{ textAlign: "center" }}>
-                Removed Date
-              </Typography>
+              <Typography sx={{ textAlign: "center" }}>Removed Date</Typography>
               <Typography sx={{ fontWeight: "light", textAlign: "center" }}>
                 {props.data.RemovedDate.slice(0, 10)}
               </Typography>

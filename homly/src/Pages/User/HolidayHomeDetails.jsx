@@ -96,11 +96,15 @@ export default function HolidayHomeDetails() {
         if (Response) {
           const homeDetails = res.data.homeDetails[0];
           const contactNo = res.data.contactNo;
+
+
           setValue({
             id: homeDetails.HolidayHomeId || "",
             name: homeDetails.Name || "",
             address: homeDetails.Address || "",
-            district: "Kegalle",
+
+            district: homeDetails.district || "", // Add the logic to get district if available
+
             description: homeDetails.Description || "",
             contactNo1:
               contactNo && contactNo.length > 0 ? contactNo[0].ContactNo : "",
@@ -153,14 +157,12 @@ export default function HolidayHomeDetails() {
             }}
           >
             <Grid container spacing={2}>
-              <Grid xs={6} sx={6} md={8}>
+
+              <Grid md={8}>
                 <Typography
                   variant="h4"
-                  sx={{
-                    fontWeight: { xs: "550", sm: "550", md: "550" },
-                    textTransform: "uppercase",
-                    fontSize: { xs: "1.25rem", sm: "1.5rem", md: "2rem" }, // Adjust the font sizes as needed
-                  }}
+                  sx={{ fontWeight: "550", textTransform: "uppercase" }}
+
                 >
                   {value.name}
                 </Typography>
@@ -170,193 +172,79 @@ export default function HolidayHomeDetails() {
                 >
                   {value.category}
                 </Typography>
-                <Stack direction="row" spacing={1}>
-                  <Rating
-                    name="text-feedback"
-                    value={value.overall_rating / 2}
-                    size="small"
-                    readOnly
-                    precision={0.1}
-                    emptyIcon={
-                      <StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />
-                    }
-                  />
-                  <Typography
-                    variant="button"
-                    sx={{ color: "#823", ml: "1%", fontSize: "0.75rem" }}
-                  >
-                    {6} Reviews
-                  </Typography>
-                </Stack>
+
               </Grid>
-              <Grid xs={6} sx={6} md={4}>
+              <Grid md={4}>
                 <AddReservationPopUp name={value.name} id={value.id} />
+                {/* <AddReservationPopUp name={value.name} id={value.id} room={room}/> */}
               </Grid>
-              <Grid xs={12} sx={12} md={8}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    bgcolor: "#FFFFFF",
-                    width: "100%",
-                    height: "50vh",
-                    borderRadius: 8,
-                  }}
-                >
-                  <img
-                    src={value.MainImage}
-                    alt="HH PHOTO 1"
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                      borderRadius: 16,
-                    }}
-                  />
-                </Box>
+              <Grid md={12}>
+                <HolidayHomeGrid
+                  MainImage={value.MainImage}
+                  Image1={value.Image1}
+                  Image2={value.Image2}
+                />
               </Grid>
-              <Grid xs={12} sx={12} md={4}>
-                <Stack
-                  direction={{ xs: "row", sm: "row", md: "column" }}
-                  spacing={2}
-                >
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      bgcolor: "#FFFFFF",
-                      width: "100%",
-                      height: "24vh",
-                      borderRadius: 3,
-                    }}
-                  >
-                    <img
-                      src={value.Image1 || noImage}
-                      alt="HH PHOTO 2"
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "cover",
-                        borderRadius: 12,
-                      }}
-                    />
-                  </Box>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      bgcolor: "#FFFFFF",
-                      width: "100%",
-                      height: "24vh",
-                      borderRadius: 3,
-                    }}
-                  >
-                    <img
-                      src={value.Image2 || noImage}
-                      alt="HH PHOTO 3"
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "cover",
-                        borderRadius: 12,
-                      }}
-                    />
-                  </Box>
-                </Stack>
-              </Grid>
-              <Grid xs={12} sm={12} md={8}>
-                <Stack>
-                  <Stack
-                    spacing={2}
-                    direction={{ xs: "column", sm: "row", md: "row" }}
-                  >
-                    <Stack
-                      spacing={{ xs: 1, sm: 1, md: 2 }}
-                      direction="row"
-                      flexGrow={1}
-                    >
-                      <Box width={{ xs: 1 / 3, sm: 1 / 3, md: 1 / 3 }}>
-                        <Button
-                          variant="outlined"
-                          fullWidth
-                          disabled={!value.Gym}
-                          sx={{
-                            cursor: "default",
-                          }}
-                        >
-                          Gym
-                        </Button>
-                      </Box>
-                      <Box width={{ xs: 1 / 3, sm: 1 / 3, md: 1 / 3 }}>
-                        <Button
-                          variant="outlined"
-                          fullWidth
-                          disabled={!value.Kitchen}
-                          sx={{
-                            cursor: "default",
-                          }}
-                        >
-                          Kitchen
-                        </Button>
-                      </Box>
-                      <Box width={{ xs: 1 / 3, sm: 1 / 3, md: 1 / 3 }}>
-                        <Button
-                          variant="outlined"
-                          fullWidth
-                          disabled={!value.Park}
-                          sx={{
-                            cursor: "default",
-                          }}
-                        >
-                          Park
-                        </Button>
-                      </Box>
-                    </Stack>
-                    <Stack
-                      spacing={{ xs: 1, sm: 1, md: 2 }}
-                      direction="row"
-                      flexGrow={1}
-                    >
-                      <Box width={{ xs: 1 / 3, sm: 1 / 3, md: 1 / 3 }}>
-                        <Button
-                          variant="outlined"
-                          fullWidth
-                          disabled={!value.Wifi}
-                          sx={{
-                            cursor: "default",
-                          }}
-                        >
-                          Wi-fi
-                        </Button>
-                      </Box>
-                      <Box width={{ xs: 1 / 3, sm: 1 / 3, md: 1 / 3 }}>
-                        <Button
-                          variant="outlined"
-                          fullWidth
-                          disabled={!value.Bar}
-                          sx={{
-                            cursor: "default",
-                          }}
-                        >
-                          Bar
-                        </Button>
-                      </Box>
-                      <Box width={{ xs: 1 / 3, sm: 1 / 3, md: 1 / 3 }}>
-                        <Button
-                          variant="outlined"
-                          fullWidth
-                          disabled={!value.Pool}
-                          sx={{
-                            cursor: "default",
-                          }}
-                        >
-                          Pool
-                        </Button>
-                      </Box>
-                    </Stack>
+
+              <Grid md={8}>
+                <Stack spacing={2}>
+                  <Stack spacing={2} direction="row">
+                    <Box sx={{ width: 1 / 6 }}>
+                      <Button
+                        variant="outlined"
+                        fullWidth
+                        disabled={!value.Gym}
+                      >
+                        Gym
+                      </Button>
+                    </Box>
+                    <Box sx={{ width: 1 / 6 }}>
+                      <Button
+                        variant="outlined"
+                        fullWidth
+                        disabled={!value.Kitchen}
+                      >
+                        Kitchen
+                      </Button>
+                    </Box>
+                    <Box sx={{ width: 1 / 6 }}>
+                      <Button
+                        variant="outlined"
+                        fullWidth
+                        disabled={!value.Park}
+                      >
+                        Park
+                      </Button>
+                    </Box>
+                    <Box sx={{ width: 1 / 6 }}>
+                      <Button
+                        variant="outlined"
+                        fullWidth
+                        disabled={!value.Wifi}
+                      >
+                        Wi-fi
+                      </Button>
+                    </Box>
+                    <Box sx={{ width: 1 / 6 }}>
+                      <Button
+                        variant="outlined"
+                        fullWidth
+                        disabled={!value.Bar}
+                      >
+                        Bar
+                      </Button>
+                    </Box>
+                    <Box sx={{ width: 1 / 6 }}>
+                      <Button
+                        variant="outlined"
+                        fullWidth
+                        disabled={!value.Pool}
+                      >
+                        Pool
+                      </Button>
+                    </Box>
+
+               
                   </Stack>
                   <Typography variant="subtitle1" align="justify" gutterBottom>
                     {value.description}

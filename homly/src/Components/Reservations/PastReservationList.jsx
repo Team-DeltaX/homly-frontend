@@ -1,3 +1,4 @@
+
 import { useEffect,useState } from "react";
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -5,6 +6,7 @@ import Stack from '@mui/material/Stack';
 import holidayhome from '../../Assets/images/holidayHome.jpg';
 import ViewPopUp from './ViewPopup';
 import PastReservationCard from './PastReservationCard';
+
 import axios from "axios";
 import AxiosClient from "../../services/AxiosClient";
 
@@ -27,6 +29,7 @@ const PastReservationList = (props) => {
   }, []);
   return (
     <>
+
       <Box className="home" sx={{height: '70vh',overflow: 'hidden', overflowY: 'scroll'}}>
         {reservations
           .filter((reservation) => {
@@ -54,6 +57,7 @@ const PastReservationList = (props) => {
               employeeDetails={reservation.employeeDetails[0]}
             />
           ))}
+
       </Box>
     </>
   );

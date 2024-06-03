@@ -50,7 +50,6 @@ export default function ScrollDialog({ name, id }) {
   const [hall, setHall] = useState([]);
 
   useEffect(() => {
-
     AxiosClient.get("/user/reservation/availableRooms", {
       params: {
         holidayHomeId: id,

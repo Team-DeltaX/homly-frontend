@@ -1,29 +1,31 @@
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import Button from '@mui/material/Button';
-import Alert from '@mui/material/Alert';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import { Input } from '@mui/base/Input';
-import TextArea from '../Common/TextArea';
+import * as React from "react";
+import { styled } from "@mui/material/styles";
+import Button from "@mui/material/Button";
+import Alert from "@mui/material/Alert";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+import TextField from "@mui/material/TextField";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import { Input } from "@mui/base/Input";
+import TextArea from "../Common/TextArea";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import ErrorSnackbar from '../User/ErrorSnackbar';
+import ErrorSnackbar from "../User/ErrorSnackbar";
 import ConfirmPopup from "../PrimaryAdmin/ConfirmPopup";
 import AxiosClient from '../../services/AxiosClient';
+
 import { SocketioContext } from "../../Contexts/SocketioContext";
 
+
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-  '& .MuiDialogContent-root': {
+  "& .MuiDialogContent-root": {
     padding: theme.spacing(2),
   },
-  '& .MuiDialogActions-root': {
+  "& .MuiDialogActions-root": {
     padding: theme.spacing(1),
   },
 }));
@@ -47,10 +49,12 @@ export default function AddComplainPopUp(props) {
   };
   const handlesubmit = (e) => {
     const data = {
+
       ServiceNo: props.reservation.reservation.ServiceNO,
       ReservationNo: props.reservation.reservation.ReservationId,
       AdminNo: props.reservation.holidayHome.AdminNo,
       Reason: reason
+
     };
     console.log("aruna", data);
     // axios
@@ -93,7 +97,7 @@ export default function AddComplainPopUp(props) {
         open={open}
         onClose={handleClose}
         PaperProps={{
-          component: 'form',
+          component: "form",
           onSubmit: (event) => {
             event.preventDefault();
             const formData = new FormData(event.currentTarget);
@@ -103,12 +107,14 @@ export default function AddComplainPopUp(props) {
           },
         }}
       >
-        <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">Add Complain</DialogTitle>
+        <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+          Add Complain
+        </DialogTitle>
         <IconButton
           aria-label="close"
           onClick={handleClose}
           sx={{
-            position: 'absolute',
+            position: "absolute",
             right: 8,
             top: 8,
             color: (theme) => theme.palette.grey[500],
@@ -181,21 +187,22 @@ export default function AddComplainPopUp(props) {
             onChange={(e) => {
               setReason(e.target.value);
             }}
-            
             maxLength="parent.maxLength"
           />
         </DialogContent>
         <DialogActions>
-        <ConfirmPopup
+          <ConfirmPopup
             open={opened}
             setOpen={setOpened}
             title={" Are you sure you want to confirm this Complain?"}
             text={["Reason :  ", reason]}
             controlfunction={handlesubmit}
           />
+
           <Button 
             autoFocus
             disabled={reason === ""} 
+
             onClick={() => {
               setOpened(true);
             }}

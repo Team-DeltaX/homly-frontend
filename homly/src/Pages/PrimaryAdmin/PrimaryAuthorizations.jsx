@@ -14,15 +14,12 @@ const PrimaryAuthorizations = () => {
   const [opensn, SetOpensn] = React.useState(false);
   const [opensnE, SetOpensnE] = React.useState(false);
   const get_pending = () => {
-    AxiosClient
-      .get(
-        `/admin/auth/locationadmin/holidayhome/pending`
-      )
+    AxiosClient.get(`/admin/auth/locationadmin/holidayhome/pending`)
       .then((res) => {
         SetPending(res.data);
       })
       .catch((error) => {
-        SetOpensnE(true)
+        SetOpensnE(true);
       });
   };
 

@@ -12,6 +12,7 @@ import Typography from "@mui/material/Typography";
 import AxiosClient from "../../services/AxiosClient";
 
 const SpeicalReservationCard = (props) => {
+
 const [isCancelled, setIsCancelled] = useState(props.reservation.IsCancelled);
 return (
   <Grid
@@ -64,40 +65,74 @@ return (
           justifyContent="flex-end"
           alignItems="flex-end"
           spacing={0.5}
+
         >
-          <h2>{props.holidayHome.Name.toUpperCase()}</h2>
-          {/* <h2>{ props.reservation.HolidayHome }</h2> */}
-          <p>
-            Check In :{" "}
-            {dayjs(props.reservation.CheckinDate).format("DD/MM/YYYY")}
-          </p>
-          <p>
-            Check Out :{" "}
-            {dayjs(props.reservation.CheckoutDate).format("DD/MM/YYYY")}
-          </p>
-          <ViewPopUp
-            reservation={props.reservation}
-            reservedRoom={props.reservedRoom}
-            reservedHall={props.reservedHall}
-            //name={props.employeeName.name}
-            holidayhome={props.holidayHome}
+          <img
+            className="reservation-photo"
+            src={props.holidayHome.MainImage}
+            alt=""
           />
-          {/* if reservation is special pass special */}
+        </Grid>
+        <Grid
+          Item
+          xs={4}
+          md={4}
+          sx={{ justifyContent: "center", alignItems: "center" }}
+        >
+          <h4>{props.employeeName.name}</h4>
+          {/* <p>Service number : {props.reservation.ServiceNO}</p> */}
+          <p>Reservation Number {props.reservation.ReservationId}</p>
+          {/* <p>Contact Number : {Employee.contactNumber}</p> */}
+          <p>Amount {props.reservation.Price}</p>
+        </Grid>
+        <Grid
+          xs={5}
+          md={5}
+          className="section2"
+          sx={{
+            display: "flex",
+            justifyContent: "flex-end",
+            alignItems: "center",
+          }}
+        >
+          <Stack
+            direction="column"
+            justifyContent="flex-end"
+            alignItems="flex-end"
+            spacing={0.5}
+          >
+            <h2>{props.holidayHome.Name.toUpperCase()}</h2>
+            {/* <h2>{ props.reservation.HolidayHome }</h2> */}
+            <p>
+              Check In :{" "}
+              {dayjs(props.reservation.CheckinDate).format("DD/MM/YYYY")}
+            </p>
+            <p>
+              Check Out :{" "}
+              {dayjs(props.reservation.CheckoutDate).format("DD/MM/YYYY")}
+            </p>
+            <ViewPopUp
+              reservation={props.reservation}
+              reservedRoom={props.reservedRoom}
+              reservedHall={props.reservedHall}
+              //name={props.employeeName.name}
+              holidayhome={props.holidayHome}
+            />
+            {/* if reservation is special pass special */}
             <Typography variant="button" color="green">
               Special
             </Typography>
-          
-          {isCancelled ? (
-            <Typography variant="button" color="red">
-              Cancelled
-            </Typography>
-          ) : null}
-        </Stack>
+
+            {isCancelled ? (
+              <Typography variant="button" color="red">
+                Cancelled
+              </Typography>
+            ) : null}
+          </Stack>
+        </Grid>
       </Grid>
     </Grid>
-  </Grid>
-);
+  );
 };
-
 
 export default SpeicalReservationCard;

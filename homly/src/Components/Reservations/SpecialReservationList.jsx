@@ -1,15 +1,16 @@
+
 import { useEffect,useState } from "react";
 import Box from '@mui/material/Box';
 import ViewReservationCard from "./ViewReservationCard";
 import AxiosClient from "../../services/AxiosClient";
 
 const SpeicalReservationList = (props) => {
-  const [reservations, setReservations] = useState([])
+  const [reservations, setReservations] = useState([]);
   const fetchreservations = () => {
     AxiosClient.get("/admin/auth/reservation/special")
       .then((res) => {
-        console.log("fbnh fjnygfvfrvegbh",res.data);
-         //reverse array to keep new ones first 
+        console.log("fbnh fjnygfvfrvegbh", res.data);
+        //reverse array to keep new ones first
         setReservations(res.data.reverse());
       })
       .catch((err) => {
@@ -20,6 +21,7 @@ const SpeicalReservationList = (props) => {
     fetchreservations();
   }, []);
   return (
+
       <Box className="home" sx={{height: '70vh',overflow: 'hidden', overflowY: 'scroll'}}>
         {reservations
           .filter((reservation) => {
@@ -48,7 +50,8 @@ const SpeicalReservationList = (props) => {
             />
           ))}
       </Box>
+
   );
-}
- 
+};
+
 export default SpeicalReservationList;

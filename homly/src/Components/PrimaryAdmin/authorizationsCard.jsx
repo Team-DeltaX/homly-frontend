@@ -20,15 +20,13 @@ const AuthorizationsCard = (props) => {
   const { socket } = useContext(SocketioContext);
 
   const approve = () => {
-  AxiosClient
-      .put(
-        `/admin/auth/locationadmin/holidayhome/accept`,
-        {
-          id: props.data.HolidayHomeId,
-        },
-        { withCredentials: true }
-      )
-      
+    AxiosClient.put(
+      `/admin/auth/locationadmin/holidayhome/accept`,
+      {
+        id: props.data.HolidayHomeId,
+      },
+      { withCredentials: true }
+    )
       .then((res) => {
         props.get_pending();
         props.Setopensn(true);
@@ -42,23 +40,22 @@ const AuthorizationsCard = (props) => {
         });
       })
       .catch((error) => {
-        props.opensnE(true);
+        console.log("error in updating as approved");
       });
   };
 
   const rejectHH = () => {
     console.log("reject called ");
     console.log(props.data.HolidayHomeId);
-    AxiosClient
-      .delete(
-        `/admin/auth/locationadmin/holidayhome/reject`,
-        {
-          data: {
-            id: props.data.HolidayHomeId,
-          },
+    AxiosClient.delete(
+      `/admin/auth/locationadmin/holidayhome/reject`,
+      {
+        data: {
+          id: props.data.HolidayHomeId,
         },
-        { withCredentials: true }
-      )
+      },
+      { withCredentials: true }
+    )
       .then((res) => {
         console.log("rejection done");
         props.get_pending();
@@ -72,7 +69,7 @@ const AuthorizationsCard = (props) => {
         });
       })
       .catch((error) => {
-        props.opensnE(true);
+        console.log("error in reject");
       });
   };
   return (
@@ -86,7 +83,7 @@ const AuthorizationsCard = (props) => {
       />
       <Stack
         sx={{
-          width:{md:'350px',xs:'300px'},
+          width: { md: "350px", xs: "300px" },
           background: "#E9E9E9",
           padding: "20px",
           borderRadius: "20px",
@@ -96,27 +93,46 @@ const AuthorizationsCard = (props) => {
         <Box></Box>
         <Box>
           {" "}
-          <Grid container  >
+          <Grid container>
             <Grid md={9} xs={12}>
-              <Grid md={12} sx={{display:"flex",flexDirection:{xs:'row',md:'column'},justifyContent:'center'}}>
+              <Grid
+                md={12}
+                sx={{
+                  display: "flex",
+                  flexDirection: { xs: "row", md: "column" },
+                  justifyContent: "center",
+                }}
+              >
                 <Grid md={12}>
                   <Typography sx={{ fontWeight: "light" }}>District</Typography>
                 </Grid>
-                <Grid md={12} sx={{marginLeft:{md:'0px',xs:'10px'}}}>{props.data.District}</Grid>
+                <Grid md={12} sx={{ marginLeft: { md: "0px", xs: "10px" } }}>
+                  {props.data.District}
+                </Grid>
               </Grid>
 
-              <Grid md={12} sx={{ marginTop: "5%",display:"flex",flexDirection:{xs:'row',md:'column'},justifyContent:'center' }} >
+              <Grid
+                md={12}
+                sx={{
+                  marginTop: "5%",
+                  display: "flex",
+                  flexDirection: { xs: "row", md: "column" },
+                  justifyContent: "center",
+                }}
+              >
                 <Grid md={12}>
                   <Typography sx={{ fontWeight: "light" }}>
                     Holiday Home
                   </Typography>
                 </Grid>
-                <Grid md={12} sx={{marginLeft:{md:'0px',xs:'10px'}}}>{props.data.Name}</Grid>
+                <Grid md={12} sx={{ marginLeft: { md: "0px", xs: "10px" } }}>
+                  {props.data.Name}
+                </Grid>
               </Grid>
             </Grid>
 
             <Grid md={3} xs={12}>
-              <Grid md={12} >
+              <Grid md={12}>
                 <Button
                   type="submit"
                   variant="contained"
@@ -131,11 +147,20 @@ const AuthorizationsCard = (props) => {
                   <Typography>View</Typography>
                 </Button>
               </Grid>
-              <Grid md={12}  sx={{display:"flex",flexDirection:{xs:'row',md:'column'},justifyContent:'center'}}>
-                <Grid md={12} sx={{ marginTop: {md:'25px',xs:'0'}}}>
+              <Grid
+                md={12}
+                sx={{
+                  display: "flex",
+                  flexDirection: { xs: "row", md: "column" },
+                  justifyContent: "center",
+                }}
+              >
+                <Grid md={12} sx={{ marginTop: { md: "25px", xs: "0" } }}>
                   <Typography sx={{ fontWeight: "light" }}>Admin</Typography>{" "}
                 </Grid>
-                <Grid md={12} sx={{marginLeft:{md:'8px',xs:'10px'}}} >{props.data.AdminNo}</Grid>
+                <Grid md={12} sx={{ marginLeft: { md: "8px", xs: "10px" } }}>
+                  {props.data.AdminNo}
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
@@ -158,7 +183,9 @@ const AuthorizationsCard = (props) => {
               background: "#39e75f",
               color: "black",
             }}
-            startIcon={<CheckIcon sx={{display:{xs:'none',md:'block'}}}/>}
+            startIcon={
+              <CheckIcon sx={{ display: { xs: "none", md: "block" } }} />
+            }
             onClick={() => {
               approve();
             }}
@@ -179,7 +206,9 @@ const AuthorizationsCard = (props) => {
             onClick={() => {
               Setopen(true);
             }}
-            startIcon={<CloseIcon sx={{display:{xs:'none',md:'block'}}}/>}
+            startIcon={
+              <CloseIcon sx={{ display: { xs: "none", md: "block" } }} />
+            }
           >
             <Typography>Decline</Typography>
           </Button>
@@ -193,7 +222,9 @@ const AuthorizationsCard = (props) => {
               borderRadius: "15px",
               display: { xs: "flex", md: "none" },
             }}
-            startIcon={<PreviewIcon  sx={{display:{xs:'none',md:'block'}}}/>}
+            startIcon={
+              <PreviewIcon sx={{ display: { xs: "none", md: "block" } }} />
+            }
             onClick={() => {}}
           >
             <Typography>View</Typography>

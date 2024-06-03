@@ -4,10 +4,10 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+
 import { Grid } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
-import axios from "axios";
-import AxiosClient from "../../services/AxiosClient";
+import AxiosClient from "../../../services/AxiosClient";
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -51,9 +51,7 @@ export default function StatisticsDetails() {
   const [hallrevenue, setHallrevenue] = React.useState(0);
 
   const getRoomCount = () => {
-    // axios
-    //   .get(`${global.API_BASE_URL}/admin/auth/room`)
-    AxiosClient.get("/admin/auth/room")
+    AxiosClient.get("admin/auth/locationadmin/room")
       .then((res) => {
         setRoomcount(res.data.count);
       })
@@ -63,13 +61,12 @@ export default function StatisticsDetails() {
   };
 
   const getHallCount = () => {
-    // axios.get(`${global.API_BASE_URL}/admin/auth/hall`)
-    AxiosClient.get("/admin/auth/hall").then((res) => {
+    AxiosClient.get("admin/auth/locationadmin/hall").then((res) => {
       setHallcount(res.data.count);
     });
   };
   const getHallincome = () => {
-    AxiosClient.get(`/admin/auth/hallincome`)
+    AxiosClient.get("admin/auth/locationadmin/hallincome")
       .then((res) => {
         setHallrevenue(res.data.hallincome);
       })
@@ -78,9 +75,7 @@ export default function StatisticsDetails() {
       });
   };
   const getRoomincome = () => {
-    // axios
-    //   .get(`${global.API_BASE_URL}/admin/auth/roomincome`)
-    AxiosClient.get("/admin/auth/roomincome")
+    AxiosClient.get("admin/auth/locationadmin/roomincome")
       .then((res) => {
         setRoomrevenue(res.data.roomincome);
       })
@@ -147,9 +142,9 @@ export default function StatisticsDetails() {
                     Total number of Rooms
                   </Typography>
                 </Box>
-                {/* <Box>
+                <Box>
                   <CircularProgress variant="determinate" value={roomcount} />
-                </Box> */}
+                </Box>
               </Box>
             </Grid>
             <Grid item md={6}>
@@ -176,11 +171,11 @@ export default function StatisticsDetails() {
                   </Typography>
                 </Box>
                 <Box>
-                  {/* <CircularProgress
+                  <CircularProgress
                     sx={{ color: "#11BA40" }}
                     variant="determinate"
                     value={75}
-                  /> */}
+                  />
                 </Box>
               </Box>
             </Grid>
@@ -211,9 +206,9 @@ export default function StatisticsDetails() {
                     Total number of Halls
                   </Typography>
                 </Box>
-                {/* <Box>
+                <Box>
                   <CircularProgress variant="determinate" value={100} />
-                </Box> */}
+                </Box>
               </Box>
             </Grid>
             <Grid item md={6}>
@@ -240,11 +235,11 @@ export default function StatisticsDetails() {
                   </Typography>
                 </Box>
                 <Box>
-                  {/* <CircularProgress
+                  <CircularProgress
                     sx={{ color: "#11BA40", zIndex: "100" }}
                     variant="determinate"
                     value={50}
-                  /> */}
+                  />
                 </Box>
               </Box>
             </Grid>

@@ -9,6 +9,7 @@ import Typography from "@mui/material/Typography";
 import AddComplainPopUp from "../Reservations/AddComplainPopUp";
 
 const PastReservationCard = (props) => {
+
   const [isSpecial, setIsSpecial] = useState(props.reservation.IsSpecial);
   const [isCancelled, setIsCancelled] = useState(props.reservation.IsCancelled);
 

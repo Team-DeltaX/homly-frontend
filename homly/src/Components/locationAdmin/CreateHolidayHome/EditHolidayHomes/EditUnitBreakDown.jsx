@@ -1,16 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Button, Typography, Paper } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
+import CancelIcon from "@mui/icons-material/Cancel";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 import AxiosClient from "../../../../services/AxiosClient";
 import { useParams } from "react-router";
 
-const ViewUnitBreakDown = ({
+const EditUnitBreakDown = ({
   unitCode,
   unitAc,
   floorLevel,
@@ -23,6 +27,7 @@ const ViewUnitBreakDown = ({
   handleUnitEdit,
   index,
   setSelectedRoomDetails,
+  // handleUnitRemake,
 }) => {
   const [open, setOpen] = useState(false);
   const [fullWidth, setFullWidth] = useState(true);
@@ -33,22 +38,11 @@ const ViewUnitBreakDown = ({
   const [unitRoomCount, setUnitRoomCount] = useState(0);
   const { homeId } = useParams();
 
-  console.log("selectedrooms", selectedRooms);
+  console.log("selectedrooms top", selectedRooms);
 
-  const getSelectedRoom = async (unitCode) => {
-    try {
-      const response = await AxiosClient.get(
-        `admin/auth/locationadmin/holidayhome/${homeId}/${unitCode}`
-      );
-      console.log("res", response.data.selectedRooms);
-      setSelectedRoomDetails(response.data.selectedRooms);
-    } catch (error) {
-      console.log("error", error);
-    }
-  };
+  console.log("unitcode", unitCode);
 
   const handleClickOpen = () => {
-    getSelectedRoom(unitCode);
     setOpen(true);
   };
 
@@ -63,6 +57,8 @@ const ViewUnitBreakDown = ({
     setUnitChildCount(children);
     setUnitRoomCount(selectedRooms.length);
     setOpen(false);
+
+    // handleUnitRemake(unitCode);
   };
 
   const handleRoomAddToUnit = (roomCode, roomAc, unitAc) => {
@@ -85,6 +81,8 @@ const ViewUnitBreakDown = ({
         }
       })
     );
+
+    console.log("selected room ", selectedRooms);
   };
 
   const handleCancelSelectedRoom = (roomCode) => {
@@ -107,27 +105,6 @@ const ViewUnitBreakDown = ({
   };
 
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
-
-  // //ADD ac nonac room alert
-  // const [openAlert, setOpenAlert] = useState(false);
-
-  // const handleCloseAlert = (event, reason) => {
-  //     if (reason === 'clickaway') {
-  //         return;
-  //     }
-
-  //     setOpenAlert(false);
-  // };
-
-  // // Sure dialog for remove unit
-
-  // const theme = useTheme();
-  // const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
-  // const [openUnitRemove, setOpenUnitRemove] = useState(false);//unit remove state pop up
-
-  // const handleOpenUnitRemove = () => {
-  //     setOpenUnitRemove(true);
-  // };
 
   //ADD ac nonac room alert
   const [openAlert, setOpenAlert] = useState(false);
@@ -230,7 +207,15 @@ const ViewUnitBreakDown = ({
           sx={{ backgroundColor: "primary.main" }}
           onClick={handleClickOpen}
         >
-          View Attach Rooms
+          Attach Rooms
+        </Button>
+        <Button
+          size="small"
+          variant="contained"
+          sx={{ backgroundColor: "primary.main" }}
+          onClick={() => handleUnitEdit(index)}
+        >
+          Edit Row
         </Button>
         <Box sx={{ display: "flex", flexDirection: "column" }}>
           <Typography variant="p">Room Attached?</Typography>
@@ -238,6 +223,12 @@ const ViewUnitBreakDown = ({
             {...label}
             disabled={selectedRooms.length === 0 ? true : false}
             checked={selectedRooms.length === 0 ? false : true}
+          />
+        </Box>
+        <Box>
+          <CancelIcon
+            sx={{ cursor: "pointer" }}
+            onClick={handleOpenUnitRemove}
           />
         </Box>
       </Box>
@@ -346,7 +337,6 @@ const ViewUnitBreakDown = ({
                 <Box sx={{ marginBottom: "1.5em" }}>
                   <fieldset style={{ borderRadius: "10px" }}>
                     <legend>Rooms</legend>
-                    {console.log("unitbreakdown", roomArray)}
                     {roomArray.length === 0 ? (
                       <Box
                         sx={{
@@ -374,7 +364,6 @@ const ViewUnitBreakDown = ({
                                 marginBottom: "10px",
                               }}
                             >
-                              {console.log("in")}
                               <Box sx={{ display: "flex", gap: "1em" }}>
                                 <Box className="card_item">
                                   <Typography
@@ -387,7 +376,7 @@ const ViewUnitBreakDown = ({
                                     variant="p"
                                     className="attach_card_item_value"
                                   >
-                                    {"item.roomCode"}
+                                    {item.roomCode}
                                   </Typography>
                                 </Box>
                                 <Box className="card_item">
@@ -447,6 +436,28 @@ const ViewUnitBreakDown = ({
                                   </Typography>
                                 </Box>
                               </Box>
+                              <Box
+                                sx={{
+                                  display: "flex",
+                                  alignItems: "center",
+                                  gap: "1em",
+                                }}
+                              >
+                                <Button
+                                  size="small"
+                                  variant="contained"
+                                  sx={{ backgroundColor: "primary.main" }}
+                                  onClick={() =>
+                                    handleRoomAddToUnit(
+                                      item.roomCode,
+                                      item.roomAc,
+                                      unitAc
+                                    )
+                                  }
+                                >
+                                  Add
+                                </Button>
+                              </Box>
                             </Paper>
                           );
                         })
@@ -471,8 +482,6 @@ const ViewUnitBreakDown = ({
                       </Box>
                     ) : (
                       selectedRooms.map((item, index) => {
-                        // console.log("item", item.room[0]);
-
                         return (
                           <Paper
                             elevation={8}
@@ -556,6 +565,20 @@ const ViewUnitBreakDown = ({
                                 </Typography>
                               </Box>
                             </Box>
+                            <Box
+                              sx={{
+                                display: "flex",
+                                alignItems: "center",
+                                gap: "1em",
+                              }}
+                            >
+                              <CancelIcon
+                                sx={{ cursor: "pointer" }}
+                                onClick={() =>
+                                  handleCancelSelectedRoom(item.roomCode)
+                                }
+                              />
+                            </Box>
                           </Paper>
                         );
                       })
@@ -573,8 +596,93 @@ const ViewUnitBreakDown = ({
           </form>
         </Dialog>
       </React.Fragment>
+
+      {/* alert Add ac nonac rooms */}
+      <div>
+        <Snackbar
+          open={openAlert}
+          autoHideDuration={4000}
+          onClose={handleCloseAlert}
+        >
+          <Alert
+            onClose={handleCloseAlert}
+            severity="error"
+            variant="filled"
+            sx={{ width: "100%" }}
+          >
+            Can't Add | Not compatible with Unit
+          </Alert>
+        </Snackbar>
+      </div>
+
+      {/* Dialog for remove unit which already has rooms */}
+      <Dialog
+        fullScreen={fullScreen}
+        open={openUnitRemove}
+        onClose={handleCloseUnitRemove}
+        aria-labelledby="responsive-dialog-title"
+      >
+        <DialogTitle id="responsive-dialog-title">
+          {"Are You Sure?"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            <Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: "0.5em",
+                  flexWrap: "wrap",
+                  justifyContent: "center",
+                  marginBottom: "20px",
+                }}
+              >
+                {selectedRooms.map((item, index) => {
+                  return (
+                    <Typography
+                      sx={{
+                        boxShadow:
+                          "rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;",
+                        padding: "5px 10px",
+                        backgroundColor: "rgb(220, 220, 220)",
+                        borderRadius: "10px",
+                        fontWeight: "550",
+                        letterSpacing: "1.2px",
+                      }}
+                      variant="p"
+                    >
+                      {item.roomCode}
+                    </Typography>
+                  );
+                })}
+              </Box>
+              {selectedRooms.length > 0 ? (
+                <Typography variant="p">
+                  Rooms will be seperated from the Unit.
+                </Typography>
+              ) : (
+                <Typography variant="p">{unitCode} will be removed</Typography>
+              )}
+            </Box>
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            autoFocus
+            onClick={() => {
+              handleCloseUnitRemove();
+              handleUnitDelete(unitCode, selectedRooms);
+            }}
+          >
+            Yes
+          </Button>
+          <Button onClick={handleCloseUnitRemove} autoFocus>
+            No
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Paper>
   );
 };
 
-export default ViewUnitBreakDown;
+export default EditUnitBreakDown;

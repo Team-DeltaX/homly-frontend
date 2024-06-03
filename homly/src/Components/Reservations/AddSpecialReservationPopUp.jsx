@@ -204,7 +204,6 @@ export default function AddSpecialReservationPopUp() {
           setMaxChildren(response.data.maxChildren);
           setRoomRental(response.data.totalRoomRental);
           setHallRental(response.data.totalHallRental); //
-          
         })
         .catch((error) => {
           console.log(error);
