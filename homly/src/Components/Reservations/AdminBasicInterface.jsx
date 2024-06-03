@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import { Container, Grid, ThemeProvider } from "@mui/material";
-import theme from "../../HomlyTheme";
 import SideNavbar from "../../Components/PrimaryAdmin/SideNavbar";
+import theme from "../../HomlyTheme";
 import Pagetop from "../../Components/PrimaryAdmin/PageTop";
 import PrimaryAdminBasicTabs from "../../Components/PrimaryAdmin/Reservations/PrimaryAdminBasicTabs";
 import SearchNew from "../../Components/PrimaryAdmin/SearchNew";
 
-const PrimaryReservations = () => {
+const AdminInterface = () => {
   const [showNav, setShowNav] = useState("nav_grid_deactive");
   const [search, setSearch] = useState("");
   const role = "PrimaryAdmin";
@@ -51,4 +51,4 @@ const PrimaryReservations = () => {
   );
 };
 
-export default PrimaryReservations;
+export default AdminInterface;

@@ -2,8 +2,14 @@ import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import PastReservationCard from "./PastReservationCard";
 import AxiosClient from "../../services/AxiosClient";
+import ErrorSnackbar from "../User/ErrorSnackbar";
 
 const CancelledReservationList = (props) => {
+  const [errorStatus, setErrorStatus] = useState({
+    isOpen: false,
+    type: "",
+    message: "",
+  });
   const [reservations, setReservations] = useState([]);
   const reservationType = "cancelled";
   const fetchreservations = () => {
@@ -11,8 +17,12 @@ const CancelledReservationList = (props) => {
       .then((res) => {
         setReservations(res.data.reverse());
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
+        setErrorStatus({
+          isOpen: true,
+          type: "warning",
+          message: "Failed to fetch reservations",
+        });
       });
   };
   useEffect(() => {
@@ -51,6 +61,12 @@ const CancelledReservationList = (props) => {
               type={reservationType}
             />
           ))}
+        <ErrorSnackbar
+          isOpen={errorStatus.isOpen}
+          type={errorStatus.type}
+          message={errorStatus.message}
+          setIsOpen={(val) => setErrorStatus({ ...errorStatus, isOpen: val })}
+        />
       </Box>
     </>
   );

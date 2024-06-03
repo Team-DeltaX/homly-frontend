@@ -24,7 +24,6 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     padding: theme.spacing(1),
   },
 }));
-
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
   ...theme.typography.body2,
@@ -36,7 +35,6 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function ViewPopUp(props) {
   const [open, setOpen] = React.useState(false);
-
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -255,7 +253,7 @@ export default function ViewPopUp(props) {
                       >
                         Reserved Room ID
                       </Typography>
-                      {props.reservedRoom ? (
+                      {(props.reservedRoom && props.reservedRoom.length > 0) ? (
                         props.reservedRoom.map((room) => (
                           <Typography
                             variant="body1"
@@ -276,7 +274,7 @@ export default function ViewPopUp(props) {
                           fontWeight="bold"
                           gutterBottom
                         >
-                          N/A
+                          -None-
                         </Typography>
                       )}
                     </Item>
@@ -289,7 +287,7 @@ export default function ViewPopUp(props) {
                       >
                         Reserved Hall ID
                       </Typography>
-                      {props.reservedHall ? (
+                      {(props.reservedHall  && props.reservedHall.length > 0 )?(
                         props.reservedHall.map((hall) => (
                           <Typography
                             variant="body1"
@@ -310,7 +308,7 @@ export default function ViewPopUp(props) {
                           fontWeight="bold"
                           gutterBottom
                         >
-                          N/A
+                          -None-
                         </Typography>
                       )}
                     </Item>

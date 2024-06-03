@@ -1,6 +1,6 @@
 import Stack from "@mui/material/Stack";
 import { Box } from "@mui/material";
-import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
+import Grid from "@mui/material/Unstable_Grid2";
 import ViewPopUp from "./ViewPopup";
 import dayjs from "dayjs";
 import { useState } from "react";
@@ -8,18 +8,17 @@ import Typography from "@mui/material/Typography";
 import AddComplainPopUp from "../Reservations/AddComplainPopUp";
 
 const PastReservationCard = (props) => {
-
   const [isSpecial, setIsSpecial] = useState(props.reservation.IsSpecial);
   const [isCancelled, setIsCancelled] = useState(props.reservation.IsCancelled);
-  const isComplainTrue = ((props.type === "past") && (props.adminNumber != "HomlyPriAdmin"));
+  const isComplainTrue = (props.type === "past" && props.adminNumber != "HomlyPriAdmin");
   return (
     <Grid
       container
       spacing={2}
       key={props.reservation.id}
       sx={{
-        padding: {xs: "2px 1px", sm:"5px 1px" ,md:"10px 3px"},
-        margin: {xs: "2px 1px", sm:"5px 1px" ,md:"10px 5px"},
+        padding: { xs: "2px 1px", sm: "5px 1px", md: "10px 3px" },
+        margin: { xs: "2px 1px", sm: "5px 1px", md: "10px 5px" },
         borderBottom: "1px solid #fafafa",
         borderRadius: "20px",
         boxShadow: "3px 1px 3px 3px rgba(0,0,0,0.1)",
@@ -29,7 +28,12 @@ const PastReservationCard = (props) => {
         },
       }}
     >
-      <Grid container sx={{ width: "100%" }} rowSpacing={0} columnSpacing={{ xs: 1, sm: 1, md: 1 }}>
+      <Grid
+        container
+        sx={{ width: "100%" }}
+        rowSpacing={0}
+        columnSpacing={{ xs: 1, sm: 1, md: 1 }}
+      >
         <Grid
           item
           xs={6}
@@ -177,10 +181,10 @@ const PastReservationCard = (props) => {
           </Stack>
         </Grid>
         <Grid container columnSpacing={1} sx={{ flexGrow: 1 }}>
-          <Grid 
-          smOffset={1}
-          xsOffset={3}
-          mdOffset={9}
+          <Grid
+            smOffset={1}
+            xsOffset={3}
+            mdOffset={9}
             xs={12}
             sm={12}
             md={6}
@@ -197,8 +201,8 @@ const PastReservationCard = (props) => {
                 reservedHall={props.reservedHall}
                 holidayhome={props.holidayHome}
               />
-              <Box sx={{display: (isComplainTrue) ? "block" : "none",}}>
-                <AddComplainPopUp reservation={props}/>
+              <Box sx={{ display: isComplainTrue ? "block" : "none" }}>
+                <AddComplainPopUp reservation={props} />
               </Box>
             </Stack>
           </Grid>

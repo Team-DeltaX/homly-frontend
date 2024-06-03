@@ -1,34 +1,42 @@
-
-import { useEffect,useState } from "react";
-import Box from '@mui/material/Box';
-import PastReservationCard from './PastReservationCard';
+import { useEffect, useState } from "react";
+import Box from "@mui/material/Box";
+import PastReservationCard from "./PastReservationCard";
 import AxiosClient from "../../services/AxiosClient";
+import ErrorSnackbar from "../User/ErrorSnackbar";
 
 const PastReservationList = (props) => {
+  const [errorStatus, setErrorStatus] = useState({
+    isOpen: false,
+    type: "",
+    message: "",
+  });
   const [reservations, setReservations] = useState([]);
   const [adminNo, setAdminNo] = useState("");
   const reservationType = "past";
   const fetchreservations = () => {
     AxiosClient.get("/admin/auth/reservation/past")
       .then((res) => {
-        console.log("fbnh fjnygfvfrvegbh", res.data);
-        console.log("admin number ",res.data.adminNo);
-        //reverse array to keep new ones first
         setReservations(res.data.reservationDetails.reverse());
         setAdminNo(res.data.adminNo);
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
+        setErrorStatus({
+          isOpen: true,
+          type: "warning",
+          message: "Failed to fetch reservations",
+        });
       });
   };
-
   useEffect(() => {
     fetchreservations();
   }, []);
+
   return (
     <>
-
-      <Box className="home" sx={{height: '70vh',overflow: 'hidden', overflowY: 'scroll'}}>
+      <Box
+        className="home"
+        sx={{ height: "70vh", overflow: "hidden", overflowY: "scroll" }}
+      >
         {reservations
           .filter((reservation) => {
             return props.search.toLowerCase() === ""
@@ -57,7 +65,12 @@ const PastReservationList = (props) => {
               type={reservationType}
             />
           ))}
-
+        <ErrorSnackbar
+          isOpen={errorStatus.isOpen}
+          type={errorStatus.type}
+          message={errorStatus.message}
+          setIsOpen={(val) => setErrorStatus({ ...errorStatus, isOpen: val })}
+        />
       </Box>
     </>
   );

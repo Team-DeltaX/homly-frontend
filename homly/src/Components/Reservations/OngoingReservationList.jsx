@@ -1,10 +1,15 @@
-
-import { useEffect,useState } from "react";
-import Box from '@mui/material/Box';
-import PastReservationCard from './PastReservationCard';
+import { useEffect, useState } from "react";
+import Box from "@mui/material/Box";
+import PastReservationCard from "./PastReservationCard";
 import AxiosClient from "../../services/AxiosClient";
+import ErrorSnackbar from "../User/ErrorSnackbar";
 
 const OngoingReservationList = (props) => {
+  const [errorStatus, setErrorStatus] = useState({
+    isOpen: false,
+    type: "",
+    message: "",
+  });
   const [reservations, setReservations] = useState([]);
   const reservationType = "ongoing";
   const fetchreservations = () => {
@@ -12,26 +17,43 @@ const OngoingReservationList = (props) => {
       .then((res) => {
         setReservations(res.data.reverse());
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
+        setErrorStatus({
+          isOpen: true,
+          type: "warning",
+          message: "Failed to fetch reservations",
+        });
       });
   };
-
   useEffect(() => {
     fetchreservations();
   }, []);
   return (
     <>
-      <Box className="home" sx={{weight: "100%" ,height: '70vh',overflow: 'hidden', overflowY: 'scroll'}}>
-        {console.log("resssssssss",reservations)}
+      <Box
+        className="home"
+        sx={{
+          weight: "100%",
+          height: "70vh",
+          overflow: "hidden",
+          overflowY: "scroll",
+        }}
+      >
         {reservations
           .filter((reservation) => {
-            return props.search.toLowerCase() === "" ? reservation
-              : (reservation.holidayHome[0].Name.toLowerCase().startsWith(props.search.toLowerCase()) ||
-                 reservation.employeeName[0].name.toLowerCase().startsWith(props.search.toLowerCase()) ||
-                 reservation.reservation.ReservationId.toLowerCase().includes(props.search.toLowerCase())
-                ) 
-              ? reservation : null;
+            return props.search.toLowerCase() === ""
+              ? reservation
+              : reservation.holidayHome[0].Name.toLowerCase().startsWith(
+                  props.search.toLowerCase()
+                ) ||
+                reservation.employeeName[0].name
+                  .toLowerCase()
+                  .startsWith(props.search.toLowerCase()) ||
+                reservation.reservation.ReservationId.toLowerCase().includes(
+                  props.search.toLowerCase()
+                )
+              ? reservation
+              : null;
           })
           .map((reservation) => (
             <PastReservationCard
@@ -44,6 +66,12 @@ const OngoingReservationList = (props) => {
               type={reservationType}
             />
           ))}
+        <ErrorSnackbar
+          isOpen={errorStatus.isOpen}
+          type={errorStatus.type}
+          message={errorStatus.message}
+          setIsOpen={(val) => setErrorStatus({ ...errorStatus, isOpen: val })}
+        />
       </Box>
     </>
   );

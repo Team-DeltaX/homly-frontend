@@ -73,12 +73,10 @@ export default function AddSpecialReservationPopUp() {
       Price: roomRental + hallRental,
       IsPaid: false,
     };
-    console.log("aruna", data);
     AxiosClient.post("/admin/auth/specialreservation", data, {
       withCredentials: true,
     })
       .then((res) => {
-        console.log("add special reservation successfully", ServiceNo);
         socket.emit("newNotification", {
           senderId: "HomlyPriAdmin",
           receiverId: ServiceNo,
@@ -86,7 +84,6 @@ export default function AddSpecialReservationPopUp() {
           type: "Authorization Successful",
           time: new Date(),
         });
-        console.log("Victim Admin NO : ",res.data.adminNumber);
         socket.emit("newNotification", {
           senderId: "HomlyPriAdmin",
           receiverId: res.data.adminNumber,
@@ -104,7 +101,6 @@ export default function AddSpecialReservationPopUp() {
         setOpened(false);
         let serviceNos = res.data.cancelServiceNo;
         for (let serviceNo of serviceNos) {
-          console.log("victim service no : ", serviceNo);
           socket.emit("newNotification", {
             senderId: "HomlyPriAdmin",
             receiverId: serviceNo,
@@ -127,7 +123,6 @@ export default function AddSpecialReservationPopUp() {
         setCheckoutDate(dayjs().add(7, "day"));
       })
       .catch((error) => {
-        console.log(`error is  nm ${error}`);
         setErrorStatus({
           ...errorStatus,
           isOpen: true,
@@ -137,32 +132,27 @@ export default function AddSpecialReservationPopUp() {
         setOpen(false);
       });
   };
-
   const handleCheckinDateChange = (newDate) => {
     setCheckinDate(newDate);
     const nextDay = newDate.add(1, "day");
     setCheckoutDate(nextDay);
-    // Check if CheckinDate is after CheckoutDate
     const today = dayjs();
     if (newDate.isBefore(today)) {
-      setReserveDisabled(true); // Disable reserve button
+      setReserveDisabled(true);
       setErrorStatus({
         isOpen: true,
         type: "warning",
         message: "Check-in date cannot be in the past",
       });
     } else {
-      setReserveDisabled(false); // Enable reserve button
+      setReserveDisabled(false);
       setErrorStatus({
         isOpen: false,
         type: "",
         message: "",
       });
     }
-
-    //setCheckoutDate(newDate.add(1, "day")); // Add one day to CheckinDate
   };
-
   const handleCheckoutDateChange = (newDate) => {
     setCheckoutDate(newDate);
     // Check if CheckinDate is after CheckoutDate
@@ -189,8 +179,12 @@ export default function AddSpecialReservationPopUp() {
           const employeeData = res.data[0];
           setEmployeeName(employeeData.name);
         })
-        .catch((error) => {
-          console.log(error);
+        .catch(() => {
+          setErrorStatus({
+            isOpen: true,
+            type: "warning",
+            message: "Can't find employee with that service number",
+          });
         });
     }
   }, [ServiceNo]);
@@ -205,8 +199,12 @@ export default function AddSpecialReservationPopUp() {
           setRoomRental(response.data.totalRoomRental);
           setHallRental(response.data.totalHallRental); //
         })
-        .catch((error) => {
-          console.log(error);
+        .catch(() => {
+          setErrorStatus({
+            isOpen: true,
+            type: "warning",
+            message: "Can't find holiday home with that name.Check your network & try again.",
+          });
         });
     }
   }, [HolidayHomeName]);
@@ -217,7 +215,11 @@ export default function AddSpecialReservationPopUp() {
         if (Response) {
           setHolidayHomes(res.data);
         } else {
-          console.log("No data found");
+          setErrorStatus({
+            isOpen: true,
+            type: "warning",
+            message: "Can't find holiday homes.Check your network & try again.",
+          });
         }
       });
   }, []);
@@ -236,7 +238,6 @@ export default function AddSpecialReservationPopUp() {
         <DialogTitle id="responsive-dialog-title">
           {"Add Special Reservation"}
         </DialogTitle>
-
         <form onSubmit={(e) => e.preventDefault()}>
           <DialogContent sx={{ width: { sm: "auto", md: "411px" } }}>
             <TextField
@@ -269,7 +270,6 @@ export default function AddSpecialReservationPopUp() {
               fullWidth
               variant="outlined"
             />
-
             <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label">
                 Select Holiday Home*
