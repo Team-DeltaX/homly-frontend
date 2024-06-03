@@ -7,7 +7,10 @@ import CloudDoneIcon from "@mui/icons-material/CloudDone";
 import DangerousIcon from "@mui/icons-material/Dangerous";
 import CancelIcon from "@mui/icons-material/Cancel";
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
+import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
+import BlockIcon from '@mui/icons-material/Block';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
+import ErrorIcon from '@mui/icons-material/Error';
 
 const Notification = ({
   type,
@@ -20,10 +23,13 @@ const Notification = ({
   const [isRemoving, setIsRemoving] = useState(false);
   const [showtime, setShowtime] = useState("");
   const chooseIcon = {
-    "New Feedback": <FeedbackIcon sx={{ color: "grey6" }} />,
-    "Authorization Successful": <CloudDoneIcon sx={{ color: "grey6" }} />,
-    "Authorization Denied": <DangerousIcon sx={{ color: "grey6" }} />,
-    "Warning": <WarningAmberIcon sx={{ color: "grey6" }} />, 
+    "New Feedback": <FeedbackIcon sx={{ color: "#823" }} />,
+    "Authorization Successful": <CloudDoneIcon sx={{ color: "green" }} />,
+    "Authorization Denied": <DangerousIcon sx={{ color: "red" }} />,
+    "Warning": <WarningAmberIcon sx={{ color: "red" }} />, 
+    "New Reservation Added": <AddToPhotosIcon sx={{ color: "#823" }} />,	
+    "Cancel Reservation": <BlockIcon sx={{ color: "#823" }} />,
+    "New Complain": <ErrorIcon sx={{ color: "#823" }} />,
   };
 
   useEffect(() => {
@@ -97,7 +103,7 @@ const Notification = ({
       <Grid container sx={{ padding: "5px 15px" }} alignItems={"center"}>
         <Grid container>
           <Grid item xs={12} sx={{ display: "flex", flexDirection: "column" }}>
-            <Typography variant="p" sx={{ fontSize: "16px", color: "grey6" }}>
+            <Typography variant="p" sx={{ fontSize: "16px", color: "grey6" }} gutterBottom>
               {data}
             </Typography>
           </Grid>
@@ -106,7 +112,8 @@ const Notification = ({
               variant="p"
               sx={{ fontWeight: "bold", fontSize: "14px", color: "#4E4E4E" }}
             >
-              Sender ID : {senderId} - {id}
+              {/* Send by : {senderId} - {id} */}
+              Send by : {senderId}
             </Typography>
           </Grid>
         </Grid>

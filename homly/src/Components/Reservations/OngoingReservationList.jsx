@@ -3,11 +3,11 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import holidayhome from '../../Assets/images/holidayHome.jpg';
-import './Reservation.css';
 import ViewPopUp from './ViewPopup';
 import ViewReservationCard from './ViewReservationCard';
 import axios from "axios";
 import AxiosClient from "../../services/AxiosClient";
+import SearchNew from "../../Components/PrimaryAdmin/SearchNew";
 
 const OngoingReservationList = (props) => {
   const [reservations, setReservations] = useState([])
@@ -28,11 +28,28 @@ const OngoingReservationList = (props) => {
   }, []);
   return (
     <>
-    <Box className="home">
-      {reservations.map(reservation => (
-         <ViewReservationCard holidayHome={reservation.holidayHome[0]} reservation={reservation.reservation} reservedRoom={reservation.reservedrooms} reservedHall={reservation.reservedhalls} employeeName={reservation.employeeName[0]} employeeDetails={reservation.employeeDetails[0]}/>
-      ))}
-    </Box>
+      <Box className="home" sx={{weight: "100%" ,height: '70vh',overflow: 'hidden', overflowY: 'scroll'}}>
+        {console.log("resssssssss",reservations)}
+        {reservations
+          .filter((reservation) => {
+            return props.search.toLowerCase() === "" ? reservation
+              : (reservation.holidayHome[0].Name.toLowerCase().startsWith(props.search.toLowerCase()) ||
+                 reservation.employeeName[0].name.toLowerCase().startsWith(props.search.toLowerCase()) ||
+                 reservation.reservation.ReservationId.toLowerCase().includes(props.search.toLowerCase())
+                ) 
+              ? reservation : null;
+          })
+          .map((reservation) => (
+            <ViewReservationCard
+              holidayHome={reservation.holidayHome[0]}
+              reservation={reservation.reservation}
+              reservedRoom={reservation.reservedrooms}
+              reservedHall={reservation.reservedhalls}
+              employeeName={reservation.employeeName[0]}
+              employeeDetails={reservation.employeeDetails[0]}
+            />
+          ))}
+      </Box>
     </>
   );
 }

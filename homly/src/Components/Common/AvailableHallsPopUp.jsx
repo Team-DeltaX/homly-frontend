@@ -81,7 +81,8 @@ export default function AvailableHallsPopUp({
         {/* middle List */}
         <List>
         {console.log("hall",hall)}
-            { hall.map((hall) => (
+        {hall.length > 0 ? (
+             hall.map((hall) => (
               console.log("hall",hall),
               hall.HolidayHomeId === holidayId && (// TODO: remove this hard-coded hall code
                 <AccordionUsage
@@ -99,7 +100,10 @@ export default function AvailableHallsPopUp({
                   setHallPrice={ setHallPrice}
                 />
               )
-            ))}
+            ))
+          ) : (
+            <Typography variant="h6">No Available Halls</Typography>
+          )}
           
         </List>
         {/* botom app bar */}

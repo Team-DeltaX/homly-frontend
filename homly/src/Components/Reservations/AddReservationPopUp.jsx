@@ -20,10 +20,12 @@ import Autocomplete from "@mui/material/Autocomplete";
 import Stack from "@mui/material/Stack";
 import ConfirmPopup from "../PrimaryAdmin/ConfirmPopup";
 import AxiosClient from "../../services/AxiosClient";
+import { SocketioContext } from "../../Contexts/SocketioContext";
 
 export default function ScrollDialog({ name, id }) {
   const [open, setOpen] = React.useState(false);
   const [opened, setOpened] = React.useState(false);
+  const { socket } = React.useContext(SocketioContext);
   const [scroll, setScroll] = React.useState("paper");
   const [reservationId, setReservationId] = React.useState("");
   const [HolidayHomeName, setHolidayHomeName] = useState("");
@@ -61,7 +63,6 @@ export default function ScrollDialog({ name, id }) {
     });
   }, [id, CheckinDate, CheckoutDate]);
 
-  //get available halls
   useEffect(() => {
     AxiosClient.get("/user/reservation/availableHalls", {
       params: {
@@ -140,8 +141,20 @@ export default function ScrollDialog({ name, id }) {
           type: "success",
           message: "Reservation added successfully",
         });
-        console.log("anujjaasda"+res.data.message);
-        console.log("anujjaasdsdsda"+res.data.reservationId);
+        socket.emit("newNotification", {
+          senderId:res.data.empName, 
+          receiverId: "HomlyPriAdmin", 
+          data:`New Reservation has added by ${res.data.empName} for ${res.data.holidayHomeName}`, 
+          type:"New Reservation Added", 
+          time: new Date()
+        });
+        socket.emit("newNotification", {
+          senderId:res.data.empName, 
+          receiverId: res.data.adminNumber, 
+          data:`New Reservation has added by ${res.data.empName} for ${res.data.holidayHomeName}`, 
+          type:"New Reservation Added", 
+          time: new Date()
+        });
         setReservationId(res.data.reservationId);
         setCheckinDate(dayjs().add(6, "day"));
         setCheckoutDate(dayjs().add(7, "day"));

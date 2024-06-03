@@ -9,6 +9,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
@@ -81,7 +82,8 @@ export default function AvailableRoomsPopUp({
         {/* middle List */}
         <List>
           {console.log("room",room)}
-            { room.map((room) => (
+          {room.length > 0 ? (
+             room.map((room) => (
               console.log("room",room),
               room.HolidayHomeId === holidayId && (// TODO: remove this hard-coded room code
                 <AccordionUsage
@@ -99,8 +101,10 @@ export default function AvailableRoomsPopUp({
                   setRoomPrice={ setRoomPrice}
                 />
               )
-            ))}
-          
+            ))
+          ) : (
+            <Typography variant="h6">No Available Rooms</Typography>
+          )}
         </List>
         {/* botom app bar */}
         <AppBar
@@ -109,59 +113,77 @@ export default function AvailableRoomsPopUp({
           sx={{ top: "auto", bottom: 0 }}
         >
           <Toolbar>
-            <Typography sx={{ width: "20%", flexShrink: 0 }}>
-              NO of Rooms : { NoOfRooms}
-            </Typography>
-            <Typography
-              variant="h6"
-              sx={{ width: "fit-content", flexShrink: 0 }}
+            <Box 
+              sx={{ 
+                display: { xs: 'flex', sm: 'flex', md: 'flex' },
+                width: {xs:'30%', sm:'30%',  md:"15%"},
+                
+                flexShrink: 0
+              }}
             >
-              <Stack direction="column" spacing={0}>
-                <Typography>Maximum Adults </Typography>
-                <Typography>for this reservation </Typography>
-              </Stack>
-            </Typography>
-            <Typography
-              variant="h6"
-              sx={{ marginLeft: "2%", width: "5%", flexShrink: 0 }}
-            >
-              { NoOfAdults}
-            </Typography>
-            <Typography
-              variant="h6"
-              sx={{ width: "fit-content", flexShrink: 0 }}
-            >
-              <Stack direction="column" spacing={0}>
-                <Typography>Maximum Children </Typography>
-                <Typography>for this reservation </Typography>
-              </Stack>
-            </Typography>
-            <Typography
-              variant="h6"
-              sx={{ marginLeft: "2%", width: "5%", flexShrink: 0 }}
-            >
-              { NoOfChildren}
-            </Typography>
-            <Typography
-              variant="h6"
-              sx={{ marginLeft: "2%", width: "5%", flexShrink: 0 }}
-            >
-              reserved rooms : { roomCodes}
-            </Typography>
-            <Typography
-              variant="h6"
-              sx={{ marginLeft: "10%", width: "20%", flexShrink: 0 }}
-            >
-              Total Rental : { roomPrice}
-            </Typography>
-            <Button
-              autoFocus
-              color="inherit"
-              onClick={handleClose}
-              sx={{ marginLeft: "auto" }}
-            >
-              Confirm
-            </Button>
+              <Typography 
+                sx={{ 
+                  width: "100%", 
+                  flexShrink: 0, 
+                  fontSize: '1rem',
+                }}>
+                NO of Rooms : { NoOfRooms}
+              </Typography>
+            </Box>
+            <Box sx={{ display: { xs: 'none', sm: 'none', md: 'flex' },width: "60%", flexShrink: 0}}>  
+              <Typography
+                variant="h6"
+                sx={{ width: "20%", flexShrink: 0 }}
+              >
+                <Stack direction="column" spacing={0}>
+                  <Typography >Maximum Adults </Typography>
+                  <Typography>for this reservation </Typography>
+                </Stack>
+              </Typography>
+              <Typography
+                variant="h6"
+                sx={{ marginLeft: "2%", width: "5%", flexShrink: 0 }}
+              >
+                { NoOfAdults}
+              </Typography>
+              <Typography
+                variant="h6"
+                sx={{ width: "20%", flexShrink: 0 }}
+              >
+                <Stack direction="column" spacing={0}>
+                  <Typography sx={{fontSize: '1rem'}}>Maximum Children </Typography>
+                  <Typography sx={{fontSize: '1rem'}}>for this reservation </Typography>
+                </Stack>
+              </Typography>
+              <Typography
+                variant="h6"
+                sx={{ marginLeft: "2%", width: "5%", flexShrink: 0 }}
+              >
+                { NoOfChildren}
+              </Typography>
+              <Typography
+                variant="h6"
+                sx={{ marginLeft: "2%", width: "25%", flexShrink: 0 }}
+              >
+                reserved rooms : { roomCodes}
+              </Typography>
+            </Box>
+            <Box sx={{ display: { xs: 'flex', sm: 'flex', md: 'flex' },width: {xs:'60%', sm:'60%',  md:"25%"}, flexShrink: 0}}>
+              <Typography
+                variant="h6"
+                sx={{ marginLeft: "10%", width: "70%", flexShrink: 0 }}
+              >
+                Total Rental : { roomPrice}
+              </Typography>
+              <Button
+                autoFocus
+                color="inherit"
+                onClick={handleClose}
+                sx={{ marginLeft: "auto" }}
+              >
+                Confirm
+              </Button>
+            </Box>   
           </Toolbar>
         </AppBar>
       </Dialog>
