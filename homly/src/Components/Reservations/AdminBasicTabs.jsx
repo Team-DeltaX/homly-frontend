@@ -6,11 +6,11 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import OngoingReservationList from '../../Reservations/OngoingReservationList';
-import PastReservationList from '../../Reservations/PastReservationList';
-import SpecialReservationList from '../../Reservations/SpecialReservationList';
-import CancelledReservationList from '../../Reservations/CancelReservationList';
-import AddSpecialReservationPopUp from '../../Reservations/AddSpecialReservationPopUp';
+import OngoingReservationList from './OngoingReservationList';
+import PastReservationList from './PastReservationList';
+import SpecialReservationList from './SpecialReservationList';
+import CancelledReservationList from './CancelReservationList';
+import AddSpecialReservationPopUp from './AddSpecialReservationPopUp';
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -49,14 +49,14 @@ export default function PrimaryAdminBasicTabs(props) {
   const [value, setValue] = React.useState(0);
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
-
+  const adminRole = props.adminRole;
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
   return (
     <Box sx={{ width: '100%' }}>
-      <Box><AddSpecialReservationPopUp /></Box>
+      {adminRole === "PrimaryAdmin" && <Box><AddSpecialReservationPopUp /></Box>}
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
           <Tab label={isSmallScreen ? "Ongoing" : "Ongoing Reservations"} {...a11yProps(0)} />
@@ -66,19 +66,15 @@ export default function PrimaryAdminBasicTabs(props) {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        {/* <OngoingReservationList search={props.search} setSearch={props.setSearch}/> */}
         <OngoingReservationList search={props.search} setSearch={props.setSearch}/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        {/* <PastReservationList search={props.search} setSearch={props.setSearch}/> */}
         <PastReservationList search={props.search} setSearch={props.setSearch}/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        {/* <PastReservationList search={props.search} setSearch={props.setSearch}/> */}
         <SpecialReservationList search={props.search} setSearch={props.setSearch}/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={3}>
-        {/* <PastReservationList search={props.search} setSearch={props.setSearch}/> */}
         <CancelledReservationList search={props.search} setSearch={props.setSearch}/>
       </CustomTabPanel>
     </Box>
