@@ -18,6 +18,9 @@ import Grid from "@mui/material/Unstable_Grid2";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import Rating from "@mui/material/Rating";
+import Divider from "@mui/material/Divider";
+import StarIcon from "@mui/icons-material/Star";
 import SimpleMap from "../../Components/Common/MapContainer";
 import LinearProgress, {
   linearProgressClasses,
@@ -30,6 +33,7 @@ import HolidayHomeGrid from "../../Components/User/HolidayHomeDetailsGrid/Holida
 import AddReservationPopUp from "../../Components/Reservations/AddReservationPopUp";
 import Review from "../../Components/User/Review/Review";
 import AxiosClient from "../../services/AxiosClient";
+import noImage from "../../Assets/images/no image.jpg";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -48,35 +52,14 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   },
   [`& .${linearProgressClasses.bar}`]: {
     borderRadius: 5,
-    backgroundColor: theme.palette.mode === "light" ? "#1a90ff" : "#308fe8",
+    backgroundColor: theme.palette.mode === "light" ? "#823" : "#823",
   },
 }));
-
-// useEffect(() => {
-//   axios
-//     .get("http://localhost:8080/admin/auth/locationadmin/holidayhome/1709530965098")
-//     .then((res) => {
-//       if (res.data) {
-//         setHolidayHomes(res.data);
-//         if (res.data.length > 0) {
-//           // Set default values to the first holiday home
-//           setHolidayHomeName(res.data[0].name);
-//           setHolidayHomeId(res.data[0].id);
-//         }
-//       } else {
-//         console.log("No data found");
-//       }
-//     })
-//     .catch(error => {
-//       console.error('Error fetching holiday homes:', error);
-//     });
-// }, []);
 export default function HolidayHomeDetails() {
   const refContactUS = useRef(null);
   useEffect(() => {
     AOS.init();
   }, []);
-  // const [room,setRoom] = useState([]);
   const [value, setValue] = useState({
     id: "",
     name: "",
@@ -105,7 +88,6 @@ export default function HolidayHomeDetails() {
     Image1: "",
     Image2: "",
   });
-  // const homeId = "1710334919911";
   const { homeId } = useParams();
   useEffect(() => {
     AxiosClient.get(`/user/auth/locationadmin/holidayhome/${homeId}`)
@@ -114,15 +96,15 @@ export default function HolidayHomeDetails() {
         if (Response) {
           const homeDetails = res.data.homeDetails[0];
           const contactNo = res.data.contactNo;
-          console.log(homeDetails.MainImage, "imageeeeeeeeeeeeeeeeeee");
-          //setRoom(res.data.room);
 
-          // Extract relevant data from response and set to 'value' state
+
           setValue({
             id: homeDetails.HolidayHomeId || "",
             name: homeDetails.Name || "",
             address: homeDetails.Address || "",
+
             district: homeDetails.district || "", // Add the logic to get district if available
+
             description: homeDetails.Description || "",
             contactNo1:
               contactNo && contactNo.length > 0 ? contactNo[0].ContactNo : "",
@@ -137,13 +119,13 @@ export default function HolidayHomeDetails() {
             Pool: homeDetails.Pool === "0" ? false : true,
             Bar: homeDetails.Bar === "0" ? false : true,
             Facilities: homeDetails.Facilities || "",
-            food_rating: homeDetails.FoodRating || 0,
-            value_for_money_rating: homeDetails.ValueForMoneyRating || 0,
-            staff_rating: homeDetails.StaffRating || 0,
-            location_rating: homeDetails.LocationRating || 0,
-            furniture_rating: homeDetails.FurnitureRating || 0,
-            wifi_rating: homeDetails.WifiRating || 0,
-            overall_rating: homeDetails.OverallRating || 0,
+            food_rating: homeDetails.food_rating || 0,
+            value_for_money_rating: homeDetails.value_for_money_rating || 0.0,
+            staff_rating: homeDetails.staff_rating || 0.0,
+            location_rating: homeDetails.location_rating || 0,
+            furniture_rating: homeDetails.furniture_rating || 0,
+            wifi_rating: homeDetails.wifi_rating || 0,
+            overall_rating: homeDetails.overall_rating || 0,
             MainImage: homeDetails.MainImage,
             Image1: homeDetails.Image1,
             Image2: homeDetails.Image2,
@@ -171,14 +153,16 @@ export default function HolidayHomeDetails() {
             maxWidth="lg"
             sx={{
               bgcolor: "white",
-              marginTop: { xs: "20px", sm: "10px", ms: "0" },
+              marginTop: { xs: "80px", sm: "80px", md: "10px" },
             }}
           >
             <Grid container spacing={2}>
+
               <Grid md={8}>
                 <Typography
                   variant="h4"
                   sx={{ fontWeight: "550", textTransform: "uppercase" }}
+
                 >
                   {value.name}
                 </Typography>
@@ -188,6 +172,7 @@ export default function HolidayHomeDetails() {
                 >
                   {value.category}
                 </Typography>
+
               </Grid>
               <Grid md={4}>
                 <AddReservationPopUp name={value.name} id={value.id} />
@@ -258,74 +243,280 @@ export default function HolidayHomeDetails() {
                         Pool
                       </Button>
                     </Box>
-                  </Stack>
 
-                  <Typography variant="subtitle1" gutterBottom>
+               
+                  </Stack>
+                  <Typography variant="subtitle1" align="justify" gutterBottom>
                     {value.description}
+                  </Typography>
+                  <Typography
+                    variant="h4"
+                    sx={{
+                      fontWeight: { xs: "350", sm: "400", md: "450" },
+                      fontSize: { xs: "0.25rem", sm: "0.5rem", md: "1rem" }, // Adjust the font sizes as needed
+                    }}
+                    gutterBottom
+                  >
+                    Other Facilities
+                  </Typography>
+                  <Typography variant="subtitle1" align="justify" gutterBottom>
+                    {value.Facilities}
                   </Typography>
                 </Stack>
               </Grid>
-              <Grid md={4}>
+              <Grid xs={12} sm={12} md={4}>
                 <SimpleMap />
               </Grid>
               <Stack spacing={4} width={"100%"}>
-                <Typography variant="h5" gutterBottom>
+                <Divider />
+                <Typography
+                  variant="h4"
+                  sx={{
+                    fontWeight: { xs: "350", sm: "400", md: "450" },
+                    fontSize: { xs: "1.25rem", sm: "1.5rem", md: "1.5rem" }, // Adjust the font sizes as needed
+                  }}
+                  gutterBottom
+                >
                   Guest Feedbacks
                 </Typography>
                 <Box sx={{ width: "100%" }}>
                   <Grid
                     container
-                    rowSpacing={2}
+                    rowSpacing={3}
                     columnSpacing={{ xs: 1, sm: 2, md: 3 }}
                   >
-                    <Grid item md={4}>
-                      <Grid item md={8}>
-                        Staff
-                      </Grid>
-                      <Grid item md={4}>
-                        <Button variant="contained" style={{ float: "right" }}>
-                          5.0
-                        </Button>
-                      </Grid>
-                      <Grid>
+                    <Grid item xs={12} sm={6} md={4}>
+                      <Stack direction="column" spacing={1}>
+                        <Stack
+                          direction="row"
+                          justifyContent="space-between"
+                          alignItems="baseline"
+                        >
+                          <Typography>Staff</Typography>
+                          <Button
+                            size="small"
+                            variant="contained"
+                            sx={{
+                              cursor: "default",
+                            }}
+                          >
+                            {value.staff_rating}
+                          </Button>
+                        </Stack>
                         <BorderLinearProgress
                           variant="determinate"
-                          value={50}
+                          value={value.staff_rating * 10}
                         />
-                      </Grid>
+                      </Stack>
                     </Grid>
-                    <Grid item md={4}>
-                      Accomodation
-                      <BorderLinearProgress variant="determinate" value={50} />
+                    <Grid item xs={12} sm={6} md={4}>
+                      <Stack direction="column" spacing={1}>
+                        <Stack
+                          direction="row"
+                          justifyContent="space-between"
+                          alignItems="baseline"
+                        >
+                          <Typography>Value for Money</Typography>
+                          <Button
+                            size="small"
+                            variant="contained"
+                            sx={{
+                              cursor: "default",
+                            }}
+                          >
+                            {value.value_for_money_rating}
+                          </Button>
+                        </Stack>
+                        <BorderLinearProgress
+                          variant="determinate"
+                          value={value.value_for_money_rating * 10}
+                        />
+                      </Stack>
                     </Grid>
-
-                    <Grid item md={4}>
-                      Food
-                      <BorderLinearProgress variant="determinate" value={50} />
+                    <Grid item xs={12} sm={6} md={4}>
+                      <Stack direction="column" spacing={1}>
+                        <Stack
+                          direction="row"
+                          justifyContent="space-between"
+                          alignItems="baseline"
+                        >
+                          <Typography>Food</Typography>
+                          <Button
+                            size="small"
+                            variant="contained"
+                            sx={{
+                              cursor: "default",
+                            }}
+                          >
+                            {value.food_rating}
+                          </Button>
+                        </Stack>
+                        <BorderLinearProgress
+                          variant="determinate"
+                          value={value.food_rating * 10}
+                        />
+                      </Stack>
                     </Grid>
-
-                    <Grid item xs={4}>
-                      Location
-                      <BorderLinearProgress variant="determinate" value={50} />
+                    <Grid item xs={12} sm={6} md={4}>
+                      <Stack direction="column" spacing={1}>
+                        <Stack
+                          direction="row"
+                          justifyContent="space-between"
+                          alignItems="baseline"
+                        >
+                          <Typography>Location</Typography>
+                          <Button
+                            size="small"
+                            variant="contained"
+                            sx={{
+                              cursor: "default",
+                            }}
+                          >
+                            {value.location_rating}
+                          </Button>
+                        </Stack>
+                        <BorderLinearProgress
+                          variant="determinate"
+                          value={value.location_rating * 10}
+                        />
+                      </Stack>
                     </Grid>
-
-                    <Grid item xs={4}>
-                      Electric Items
-                      <BorderLinearProgress variant="determinate" value={50} />
+                    <Grid item xs={12} sm={6} md={4}>
+                      <Stack direction="column" spacing={1}>
+                        <Stack
+                          direction="row"
+                          justifyContent="space-between"
+                          alignItems="baseline"
+                        >
+                          <Typography>Wi-Fi</Typography>
+                          <Button
+                            size="small"
+                            variant="contained"
+                            sx={{
+                              cursor: "default",
+                            }}
+                          >
+                            {value.wifi_rating}
+                          </Button>
+                        </Stack>
+                        <BorderLinearProgress
+                          variant="determinate"
+                          value={value.wifi_rating * 10}
+                        />
+                      </Stack>
                     </Grid>
-
-                    <Grid item xs={4}>
-                      Furnitures
-                      <BorderLinearProgress variant="determinate" value={50} />
+                    <Grid item xs={12} sm={6} md={4}>
+                      <Stack direction="column" spacing={1}>
+                        <Stack
+                          direction="row"
+                          justifyContent="space-between"
+                          alignItems="baseline"
+                        >
+                          <Typography>Furnitures</Typography>
+                          <Button
+                            size="small"
+                            variant="contained"
+                            sx={{
+                              cursor: "default",
+                            }}
+                          >
+                            {value.furniture_rating}
+                          </Button>
+                        </Stack>
+                        <BorderLinearProgress
+                          variant="determinate"
+                          value={value.furniture_rating * 10}
+                        />
+                      </Stack>
                     </Grid>
                   </Grid>
                 </Box>
-
+                <Divider />
                 {/* user review */}
                 <Box>
                   <Review />
                 </Box>
+                <Divider />
               </Stack>
+              <Grid container rowSpacing={1} columnSpacing={4}>
+                <Grid md={12} mt={4}>
+                  <Typography
+                    variant="h4"
+                    sx={{
+                      fontWeight: { xs: "350", sm: "400", md: "450" },
+                      fontSize: { xs: "1.25rem", sm: "1.5rem", md: "1.5rem" }, // Adjust the font sizes as needed
+                    }}
+                    gutterBottom
+                  >
+                    Other Informations
+                  </Typography>
+                </Grid>
+                <Grid md={4}>
+                  <Typography
+                    variant="h4"
+                    sx={{
+                      fontWeight: { xs: "350", sm: "400", md: "450" },
+                      fontSize: { xs: "1rem", sm: "1.25rem", md: "1.25rem" },
+                      marginBottom: "1rem",
+                    }}
+                    gutterBottom
+                  >
+                    House Rules
+                  </Typography>
+                  <Box ml={1} alignItems="center">
+                    <Typography gutterBottom>Flexible Check-in</Typography>
+                    <Typography gutterBottom>
+                      Check-out before 10:00 PM
+                    </Typography>
+                    <Typography gutterBottom>Pets allowed</Typography>
+                    <Typography gutterBottom>Smoking is allowed</Typography>
+                  </Box>
+                </Grid>
+                <Grid md={4}>
+                  <Typography
+                    variant="h4"
+                    sx={{
+                      fontWeight: { xs: "350", sm: "400", md: "450" },
+                      fontSize: { xs: "1rem", sm: "1.25rem", md: "1.25rem" },
+                      marginBottom: "1rem",
+                    }}
+                    gutterBottom
+                  >
+                    Cancellation Policy
+                  </Typography>
+                  <Box ml={1} alignItems="center">
+                    <Typography gutterBottom>
+                      Non-Refundable for customer cancellations
+                    </Typography>
+                    <Typography gutterBottom>
+                      If a reservation is cancelled due to "special reservation
+                      allocating", we refund your money back.
+                    </Typography>
+                    <Typography gutterBottom>
+                      In such cases please contact welfare division.
+                    </Typography>
+                  </Box>
+                </Grid>
+                <Grid md={4}>
+                  <Typography
+                    variant="h4"
+                    sx={{
+                      fontWeight: { xs: "350", sm: "400", md: "450" },
+                      fontSize: { xs: "1rem", sm: "1.25rem", md: "1.25rem" },
+                      marginBottom: "1rem",
+                    }}
+                    gutterBottom
+                  >
+                    Contact Details
+                  </Typography>
+                  <Box ml={1} alignItems="center">
+                    <Typography gutterBottom>{value.address}</Typography>
+                    <Typography gutterBottom>
+                      TEL: {value.contactNo1} / {value.contactNo2}
+                    </Typography>
+                  </Box>
+                </Grid>
+              </Grid>
             </Grid>
           </Container>
           <Box>

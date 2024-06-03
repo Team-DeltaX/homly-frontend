@@ -12,8 +12,8 @@ export default function OngoingReservation({ reservation, showSkeleton }) {
     >
       {showSkeleton
         ? [1, 2].map((index) => {
-          return <ReservationCardSkeleton key={index} />;
-        })
+            return <ReservationCardSkeleton key={index} />;
+          })
         : reservation.length > 0
         ? reservation.map((reserv, index) => {
             return (
@@ -35,6 +35,7 @@ export default function OngoingReservation({ reservation, showSkeleton }) {
                   HHHalls={reserv.reservation.NoOfHalls}
                   ExpireIn={dayjs(reserv.expireDate).diff(dayjs(), "day") + 1}
                   HHImage={reserv.holidayHome[0].MainImage}
+                  ReservationId={reserv.reservation.ReservationId}
                 />
               </Box>
             );

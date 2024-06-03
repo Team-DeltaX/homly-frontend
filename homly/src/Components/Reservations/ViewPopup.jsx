@@ -12,11 +12,9 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Unstable_Grid2";
 import Paper from "@mui/material/Paper";
-import holidayhome from "../../Assets/images/holidayHome.jpg";
 import Stack from "@mui/material/Stack";
 import Divider from "@mui/material/Divider";
-import { alignProperty } from "@mui/material/styles/cssUtils";
-import dayjs, { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -26,13 +24,16 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     padding: theme.spacing(1),
   },
 }));
+
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
   ...theme.typography.body2,
   padding: theme.spacing(1),
   textAlign: "center",
   color: theme.palette.text.secondary,
+  boxShadow: "none",
 }));
+
 export default function ViewPopUp(props) {
   const [open, setOpen] = React.useState(false);
 
@@ -55,52 +56,49 @@ export default function ViewPopUp(props) {
       >
         <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
           Reservation Details
+          <IconButton
+            aria-label="close"
+            onClick={handleClose}
+            sx={{
+              position: "absolute",
+              right: 8,
+              top: 8,
+              color: (theme) => theme.palette.grey[500],
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
         </DialogTitle>
-        <IconButton
-          aria-label="close"
-          onClick={handleClose}
-          sx={{
-            position: "absolute",
-            right: 8,
-            top: 8,
-            color: (theme) => theme.palette.grey[500],
-          }}
-        >
-          <CloseIcon />
-        </IconButton>
         <DialogContent dividers>
-          {/* <Typography gutterBottom>
-            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-            consectetur ac, vestibulum at eros.
-          </Typography>
-          <Typography gutterBottom>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-            Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
-          </Typography>
-          <Typography gutterBottom>
-            Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus
-            magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec
-            ullamcorper nulla non metus auctor fringilla.
-          </Typography> */}
-          <Box sx={{ width: "100%" }} elevation={0}>
-            <Grid
-              container
-              rowSpacing={1}
-              columnSpacing={{ xs: 1, sm: 2, md: 2 }}
-              elevation={0}
-            >
-              <Grid xs={4}>
-                <Item sx={{ boxShadow: "none" }}>
-                  <img
-                    className="reservation-photo"
+          <Box sx={{ width: "100%" }}>
+            <Grid container spacing={1}>
+              <Grid
+                xs={6}
+                sm={3}
+                sx={{
+                  display: {
+                    xs: "flex",
+                    sm: "flex",
+                  },
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Item>
+                  <Box
+                    component="img"
                     src={props.holidayhome.MainImage}
                     alt=""
+                    sx={{
+                      width: { xs: "6rem", sm: "7rem", md: "8rem" },
+                      height: { xs: "6rem", sm: "7rem", md: "8rem" },
+                      borderRadius: "50%",
+                    }}
                   />
                 </Item>
               </Grid>
-              <Grid xs={4}>
-                <Item sx={{ boxShadow: "none" }}>
+              <Grid xs={6} sm={5}>
+                <Item>
                   <Typography
                     variant="button"
                     align="left"
@@ -111,25 +109,41 @@ export default function ViewPopUp(props) {
                     {props.holidayhome.Name.toUpperCase()}
                   </Typography>
                   <Typography
+                    sx={{
+                      display: { xs: "block", sm: "block" },
+                      "::before": {
+                        content: { sm: '"Reservation Number "', xs: '""' },
+                        fontWeight: "normal",
+                      },
+                      fontWeight: "bold",
+                    }}
                     variant="body2"
                     align="left"
                     display="block"
                     gutterBottom
                   >
-                    Reservation Number {props.reservation.ReservationId}
+                    {props.reservation.ReservationId}
                   </Typography>
                   <Typography
+                    sx={{
+                      display: { xs: "block", sm: "block" },
+                      "::before": {
+                        content: { sm: '"Amount : LKR "', xs: '"LKR "' },
+                        fontWeight: "normal",
+                      },
+                      fontWeight: "bold",
+                    }}
                     variant="body2"
                     align="left"
                     display="block"
                     gutterBottom
                   >
-                    Amount {props.reservation.Price}
+                    {props.reservation.Price}
                   </Typography>
                 </Item>
               </Grid>
-              <Grid xs={4}>
-                <Item sx={{ boxShadow: "none" }}>
+              <Grid xs={6} sm={4}>
+                <Item>
                   <Typography
                     variant="button"
                     align="right"
@@ -140,119 +154,135 @@ export default function ViewPopUp(props) {
                     {props.holidayName}
                   </Typography>
                   <Typography
+                    sx={{
+                      display: { xs: "block", sm: "block" },
+                      "::before": {
+                        content: { sm: '"Check In : "', xs: '"From : "' },
+                        fontWeight: "normal",
+                      },
+                      fontWeight: "bold",
+                    }}
                     variant="body2"
                     align="right"
                     display="block"
                     gutterBottom
                   >
-                    Check In :{" "}
                     {dayjs(props.reservation.CheckinDate).format("DD/MM/YYYY")}
                   </Typography>
                   <Typography
+                    sx={{
+                      display: { xs: "block", sm: "block" },
+                      "::before": {
+                        content: { sm: '"Check out : "', xs: '"To : "' },
+                        fontWeight: "normal",
+                      },
+                      fontWeight: "bold",
+                    }}
                     variant="body2"
                     align="right"
                     display="block"
                     gutterBottom
                   >
-                    Check Out :{" "}
                     {dayjs(props.reservation.CheckoutDate).format("DD/MM/YYYY")}
                   </Typography>
                 </Item>
               </Grid>
-              <Grid xs={5}>
-                <Item sx={{ boxShadow: "none" }}>
-                  <Stack
-                    direction="column"
-                    spacing={1}
-                    sx={{ width: "100%", maxWidth: 500 }}
-                  >
-                    <item>
-                      <Typography
-                        variant="body2"
-                        align="left"
-                        display="block"
-                        gutterBottom
-                      >
-                        No. of Rooms : {props.reservation.NoOfRooms}
-                      </Typography>
-                      <Typography
-                        variant="body3"
-                        align="left"
-                        display="block"
-                        gutterBottom
-                      >
-                        No. of Halls : {props.reservation.NoOfHalls}
-                      </Typography>
-                    </item>
-                    <item>
-                      <Typography
-                        variant="body3"
-                        align="left"
-                        display="block"
-                        gutterBottom
-                      >
-                        Reserved date :{" "}
-                        {dayjs(props.reservation.createdAt).format(
-                          "DD/MM/YYYY"
-                        )}
-                      </Typography>
-                    </item>
+              <Grid xs={6} sm={5}>
+                <Item>
+                  <Stack direction="column" spacing={1} sx={{ width: "100%" }}>
+                    <Typography
+                      sx={{
+                        "::before": {
+                          content: "'No. of Rooms : '",
+                          fontWeight: "normal",
+                        },
+                        fontWeight: "bold",
+                      }}
+                      variant="body2"
+                      align="left"
+                      display="block"
+                      gutterBottom
+                    >
+                      {props.reservation.NoOfRooms}
+                    </Typography>
+                    <Typography
+                      sx={{
+                        "::before": {
+                          content: "'No. of Halls : '",
+                          fontWeight: "normal",
+                        },
+                        fontWeight: "bold",
+                      }}
+                      variant="body2"
+                      align="left"
+                      display="block"
+                      gutterBottom
+                    >
+                      {props.reservation.NoOfHalls}
+                    </Typography>
+                    <Typography
+                      sx={{
+                        display: { xs: "none", sm: "block", md: "block" },
+                        "::before": {
+                          content: "'Reserved date : '",
+                          fontWeight: "normal",
+                        },
+                        fontWeight: "bold",
+                      }}
+                      variant="body2"
+                      align="left"
+                      display="block"
+                      gutterBottom
+                    >
+                      {dayjs(props.reservation.createdAt).format("DD/MM/YYYY")}
+                    </Typography>
                   </Stack>
                 </Item>
               </Grid>
-              <Grid xs={7}>
-                <Item sx={{ boxShadow: "none" }}>
+              <Grid xs={12} sm={7}>
+                <Item>
                   <Stack
-                    direction="row"
+                    direction={{ xs: "row", sm: "row" }}
                     spacing={3}
                     divider={<Divider orientation="vertical" flexItem />}
                   >
-                    <Item sx={{ boxShadow: "none" }}>
+                    <Item>
                       <Typography
-                        variant="body3"
+                        variant="body2"
                         align="center"
                         display="block"
                         gutterBottom
                       >
                         Reserved Room ID
                       </Typography>
-                      {/* <Typography variant="body3" align="center" display="block" gutterBottom>{ props.reservedRoom }</Typography> */}
-                      {
-                        // props.reservedRoom.map((room) => {
-                        //   return (
-                        //     <Typography variant="body3" align="center" display="block" gutterBottom>{ room }</Typography>
-                        //   )
-                        // })
-                        // console.log("roomsss",props.reservedRoom)
-                        props.reservedRoom  ? (
-                          props.reservedRoom.map((room) => {
-                            return (
-                              <Typography
-                                variant="body3"
-                                align="center"
-                                display="block"
-                                gutterBottom
-                              >
-                                {room.roomCode}
-                              </Typography>
-                            );
-                          })
-                        ) : (
+                      {props.reservedRoom ? (
+                        props.reservedRoom.map((room) => (
                           <Typography
-                            variant="body3"
+                            variant="body1"
                             align="center"
                             display="block"
                             fontWeight="bold"
                             gutterBottom
+                            key={room.roomCode}
                           >
-                            aaaaaaaaaaaa
+                            {room.roomCode}
                           </Typography>
-                        )
-                      }
+                        ))
+                      ) : (
+                        <Typography
+                          variant="body1"
+                          align="center"
+                          display="block"
+                          fontWeight="bold"
+                          gutterBottom
+                        >
+                          N/A
+                        </Typography>
+                      )}
                     </Item>
-                    <Item sx={{ boxShadow: "none" }}>
+                    <Item>
                       <Typography
-                        variant="body3"
+                        variant="body2"
                         align="center"
                         display="block"
                         gutterBottom
@@ -260,41 +290,53 @@ export default function ViewPopUp(props) {
                         Reserved Hall ID
                       </Typography>
                       {props.reservedHall ? (
-                        props.reservedHall.map((hall) => {
-                          return (
-                            <Typography
-                              variant="body3"
-                              align="center"
-                              display="block"
-                              gutterBottom
-                            >
-                              {hall.hallCode}
-                            </Typography>
-                          );
-                        })
+                        props.reservedHall.map((hall) => (
+                          <Typography
+                            variant="body1"
+                            align="center"
+                            display="block"
+                            fontWeight="bold"
+                            gutterBottom
+                            key={hall.hallCode}
+                          >
+                            {hall.hallCode}
+                          </Typography>
+                        ))
                       ) : (
                         <Typography
-                          variant="body3"
+                          variant="body1"
                           align="center"
                           display="block"
                           fontWeight="bold"
                           gutterBottom
                         >
-                          aaaaaaaaaa
+                          N/A
                         </Typography>
                       )}
                     </Item>
                   </Stack>
                 </Item>
               </Grid>
+              <Grid xs={12}>
+                <Typography
+                  sx={{
+                    display: { xs: "block", sm: "none", md: "none" },
+                    "::before": {
+                      content: "'Reserved on : '",
+                      fontWeight: "normal",
+                    },
+                    fontWeight: "bold",
+                  }}
+                  variant="body2"
+                  align="left"
+                  display="block"
+                >
+                  {dayjs(props.reservation.createdAt).format("DD/MM/YYYY")}
+                </Typography>
+              </Grid>
             </Grid>
           </Box>
         </DialogContent>
-        {/* <DialogActions>
-          <Button autoFocus onClick={handleClose}>
-            Close
-          </Button>
-        </DialogActions> */}
       </BootstrapDialog>
     </React.Fragment>
   );

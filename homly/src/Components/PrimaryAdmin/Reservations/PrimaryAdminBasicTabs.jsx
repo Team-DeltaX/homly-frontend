@@ -2,6 +2,8 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import OngoingReservationList from '../../Reservations/OngoingReservationList';
@@ -22,7 +24,7 @@ function CustomTabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
+        <Box sx={{ p: 1 }}>
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -45,6 +47,8 @@ function a11yProps(index) {
 
 export default function PrimaryAdminBasicTabs(props) {
   const [value, setValue] = React.useState(0);
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -55,10 +59,10 @@ export default function PrimaryAdminBasicTabs(props) {
       <Box><AddSpecialReservationPopUp /></Box>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="Ongoing Reservations" {...a11yProps(0)} />
-          <Tab label="Past Reservations" {...a11yProps(1)} />
-          <Tab label="Special Reservations" {...a11yProps(2)} />
-          <Tab label="Cancelled Reservations" {...a11yProps(3)} />
+          <Tab label={isSmallScreen ? "Ongoing" : "Ongoing Reservations"} {...a11yProps(0)} />
+          <Tab label={isSmallScreen ? "Past" : "Past Reservations"} {...a11yProps(1)} />
+          <Tab label={isSmallScreen ? "Special" : "Special Reservations"} {...a11yProps(2)} />
+          <Tab label={isSmallScreen ? "Cancelled" : "Cancelled Reservations"} {...a11yProps(3)} />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>

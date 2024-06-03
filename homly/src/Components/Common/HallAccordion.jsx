@@ -15,7 +15,7 @@ import { useState, useEffect } from "react";
 
 
 
-export default function AccordionUsage({hall,NoOfHalls,setNoOfHalls,hallCodes,setHallCodes,hallNoOfAdults,setHallNoOfAdults,hallNoOfChildren,setHallNoOfChildren,hallPrice,setHallPrice}) {
+export default function AccordionUsage({index,hall,NoOfHalls,setNoOfHalls,hallCodes,setHallCodes,hallNoOfAdults,setHallNoOfAdults,hallNoOfChildren,setHallNoOfChildren,hallPrice,setHallPrice}) {
   const [reserve,setReserve] = useState(false);
 
   // check hall id is in hall codes
@@ -24,11 +24,11 @@ export default function AccordionUsage({hall,NoOfHalls,setNoOfHalls,hallCodes,se
       setReserve(true)
     }
   },[])
+  const isOdd = index % 2 === 1;
 
-  
   return (
     <div>
-      <Accordion key={hall.id}>
+      <Accordion key={hall.id} sx={{backgroundColor: isOdd? '#f0f0f0' : 'inherit'}} defaultExpanded={index === 0}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel3-content"

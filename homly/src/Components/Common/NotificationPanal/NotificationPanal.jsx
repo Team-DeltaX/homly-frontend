@@ -20,7 +20,7 @@ const NotificationPanal = ({ bell }) => {
   useEffect(() => {
     AxiosClient.get("/common/auth/notifications")
       .then((res) => {
-        console.log(res.data,'notifications')
+        console.log(res.data, 'notifications');
         SetNotifications(res.data);
         SetMessagecount(res.data.length);
       })
@@ -89,6 +89,7 @@ const NotificationPanal = ({ bell }) => {
         console.log(err, "delete notification");
       });
   };
+
   return (
     <Box>
       <Box
@@ -116,6 +117,20 @@ const NotificationPanal = ({ bell }) => {
           ""
         )}
       </Box>
+      {showNotifications && (
+        <Box
+          sx={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            zIndex: 999,
+          }}
+          onClick={handleBellClick}
+        />
+      )}
       <Paper
         ref={notificationsContainerRef}
         className="notifications_container"
@@ -125,7 +140,7 @@ const NotificationPanal = ({ bell }) => {
           backgroundColor: "rgba(255,255,255,0.8)",
           position: "absolute",
           borderRadius: "15px",
-          zIndex: "1000",
+          zIndex: 1000,
           padding: "10px",
           right: 0,
           display: showNotifications ? "block" : "none",

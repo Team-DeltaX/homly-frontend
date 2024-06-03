@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   Box,
   ThemeProvider,
@@ -7,7 +7,7 @@ import {
   Typography,
   Button,
 } from "@mui/material";
-
+import { AuthContext } from "../../../Contexts/AuthContext";
 import dayjs from "dayjs";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import AddReviewPopup from "../Review/AddReviewPopup";
@@ -37,6 +37,7 @@ export default function ReservationCard({
   IsCancelled,
   setIsAddReview,
 }) {
+  const { setIsOngoingReservationChange } = useContext(AuthContext);
   const [openReview, setOpenReview] = useState(false);
   const [openConfirm, setOpenConfirm] = useState(false);
   const [openPay, setOpenPay] = useState(false);
@@ -47,7 +48,6 @@ export default function ReservationCard({
   });
 
   const handleCancelReservation = () => {
-    console.log("Cancel Reservation");
     AxiosClient.put("/user/auth/userReservation", {
       reservationId: ReservationId,
       isPaid: HHpayment,
@@ -60,6 +60,7 @@ export default function ReservationCard({
             type: "success",
             message: res.data.message,
           });
+          setIsOngoingReservationChange(true);
         } else {
           setErrorStatus({
             ...errorStatus,
@@ -185,9 +186,14 @@ export default function ReservationCard({
             }}
           >
             <Stack direction="column">
-              <Typography sx={{ fontWeight: "bold", fontSize: "1.3rem" }}>
-                {HHName.toUpperCase()}
-              </Typography>
+              <Stack direction="row">
+                <Typography sx={{ fontWeight: "bold", fontSize: "1.3rem" }}>
+                  {HHName.toUpperCase()}
+                </Typography>
+                <Typography sx={{ fontWeight: "light", fontSize: "0.8rem" }}>
+                  {ReservationId}
+                </Typography>
+              </Stack>
               <Typography sx={{ fontWeight: "light", fontSize: "0.8rem" }}>
                 {HHAddress}
               </Typography>
