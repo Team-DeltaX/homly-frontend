@@ -186,9 +186,14 @@ export default function ReservationCard({
             }}
           >
             <Stack direction="column">
-              <Typography sx={{ fontWeight: "bold", fontSize: "1.3rem" }}>
-                {HHName.toUpperCase()}
-              </Typography>
+              <Stack direction="row">
+                <Typography sx={{ fontWeight: "bold", fontSize: "1.3rem" }}>
+                  {HHName.toUpperCase()}
+                </Typography>
+                <Typography sx={{ fontWeight: "light", fontSize: "0.8rem" }}>
+                  {ReservationId}
+                </Typography>
+              </Stack>
               <Typography sx={{ fontWeight: "light", fontSize: "0.8rem" }}>
                 {HHAddress}
               </Typography>
