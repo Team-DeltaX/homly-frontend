@@ -1,7 +1,6 @@
 import Stack from "@mui/material/Stack";
 import { Box } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
-import holidayhome from "../../Assets/images/holidayHome.jpg";
 import ViewPopUp from "./ViewPopup";
 import dayjs from "dayjs";
 import { useState } from "react";
@@ -12,7 +11,7 @@ const PastReservationCard = (props) => {
 
   const [isSpecial, setIsSpecial] = useState(props.reservation.IsSpecial);
   const [isCancelled, setIsCancelled] = useState(props.reservation.IsCancelled);
-
+  const isComplainTrue = ((props.type === "past") && (props.adminNumber != "HomlyPriAdmin"));
   return (
     <Grid
       container
@@ -198,8 +197,9 @@ const PastReservationCard = (props) => {
                 reservedHall={props.reservedHall}
                 holidayhome={props.holidayHome}
               />
-              <AddComplainPopUp reservation={props}/>
-              
+              <Box sx={{display: (isComplainTrue) ? "block" : "none",}}>
+                <AddComplainPopUp reservation={props}/>
+              </Box>
             </Stack>
           </Grid>
         </Grid>

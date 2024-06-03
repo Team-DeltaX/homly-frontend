@@ -16,19 +16,8 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import ErrorSnackbar from "../User/ErrorSnackbar";
 import ConfirmPopup from "../PrimaryAdmin/ConfirmPopup";
-import AxiosClient from '../../services/AxiosClient';
-
+import AxiosClient from "../../services/AxiosClient";
 import { SocketioContext } from "../../Contexts/SocketioContext";
-
-
-const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-  "& .MuiDialogContent-root": {
-    padding: theme.spacing(2),
-  },
-  "& .MuiDialogActions-root": {
-    padding: theme.spacing(1),
-  },
-}));
 
 export default function AddComplainPopUp(props) {
   const [open, setOpen] = React.useState(false);
@@ -49,19 +38,13 @@ export default function AddComplainPopUp(props) {
   };
   const handlesubmit = (e) => {
     const data = {
-
       ServiceNo: props.reservation.reservation.ServiceNO,
       ReservationNo: props.reservation.reservation.ReservationId,
       AdminNo: props.reservation.holidayHome.AdminNo,
-      Reason: reason
-
+      Reason: reason,
     };
-    console.log("aruna", data);
-    // axios
-    //   .post("http://localhost:8080/user/reservation/AddComplaint", data)
-    AxiosClient.post(`/admin/auth/reservation/AddComplaint`,data)
+    AxiosClient.post(`/admin/auth/reservation/AddComplaint`, data)
       .then((res) => {
-        console.log(res.data, "resssssss complainnn");
         setOpen(false);
         setOpened(false);
         setErrorStatus({
@@ -79,7 +62,6 @@ export default function AddComplainPopUp(props) {
         });
       })
       .catch((error) => {
-        console.log(`error is  nm ${error}`);
         setErrorStatus({
           ...errorStatus,
           isOpen: true,
@@ -198,11 +180,9 @@ export default function AddComplainPopUp(props) {
             text={["Reason :  ", reason]}
             controlfunction={handlesubmit}
           />
-
-          <Button 
+          <Button
             autoFocus
-            disabled={reason === ""} 
-
+            disabled={reason === ""}
             onClick={() => {
               setOpened(true);
             }}

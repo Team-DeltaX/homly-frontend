@@ -1,23 +1,21 @@
 
 import { useEffect,useState } from "react";
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
-import holidayhome from '../../Assets/images/holidayHome.jpg';
-import ViewPopUp from './ViewPopup';
 import PastReservationCard from './PastReservationCard';
-
-import axios from "axios";
 import AxiosClient from "../../services/AxiosClient";
 
 const PastReservationList = (props) => {
   const [reservations, setReservations] = useState([]);
+  const [adminNo, setAdminNo] = useState("");
+  const reservationType = "past";
   const fetchreservations = () => {
     AxiosClient.get("/admin/auth/reservation/past")
       .then((res) => {
         console.log("fbnh fjnygfvfrvegbh", res.data);
+        console.log("admin number ",res.data.adminNo);
         //reverse array to keep new ones first
-        setReservations(res.data.reverse());
+        setReservations(res.data.reservationDetails.reverse());
+        setAdminNo(res.data.adminNo);
       })
       .catch((err) => {
         console.log(err);
@@ -55,6 +53,8 @@ const PastReservationList = (props) => {
               reservedHall={reservation.reservedhalls}
               employeeName={reservation.employeeName[0]}
               employeeDetails={reservation.employeeDetails[0]}
+              adminNumber={adminNo}
+              type={reservationType}
             />
           ))}
 

@@ -1,11 +1,12 @@
 
 import { useEffect,useState } from "react";
 import Box from '@mui/material/Box';
-import ViewReservationCard from "./ViewReservationCard";
+import PastReservationCard from './PastReservationCard';
 import AxiosClient from "../../services/AxiosClient";
 
 const SpeicalReservationList = (props) => {
   const [reservations, setReservations] = useState([]);
+  const reservationType = "special";
   const fetchreservations = () => {
     AxiosClient.get("/admin/auth/reservation/special")
       .then((res) => {
@@ -40,13 +41,14 @@ const SpeicalReservationList = (props) => {
               : null;
           })
           .map((reservation) => (
-            <ViewReservationCard
+            <PastReservationCard
               holidayHome={reservation.holidayHome[0]}
               reservation={reservation.reservation}
               reservedRoom={reservation.reservedrooms}
               reservedHall={reservation.reservedhalls}
               employeeName={reservation.employeeName[0]}
               employeeDetails={reservation.employeeDetails[0]}
+              type={reservationType}
             />
           ))}
       </Box>
