@@ -9,14 +9,12 @@ import DialogTitle from "@mui/material/DialogTitle";
 import TextField from "@mui/material/TextField";
 import BasicDatePicker from "../Common/BasicDatePicker";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import dayjs, { Dayjs } from "dayjs";
 import Typography from "@mui/material/Typography";
 import ErrorSnackbar from "../User/ErrorSnackbar";
 import PayNowPopup from "../Common/PayNowPopup";
 import AvailableRoomsPopUp from "../Common/AvailableRoomsPopUp";
 import AvailableHallsPopUp from "../Common/AvailableHallsPopUp";
-import Autocomplete from "@mui/material/Autocomplete";
 import Stack from "@mui/material/Stack";
 import ConfirmPopup from "../PrimaryAdmin/ConfirmPopup";
 import AxiosClient from "../../services/AxiosClient";
@@ -28,9 +26,9 @@ export default function ScrollDialog({ name, id }) {
   const { socket } = React.useContext(SocketioContext);
   const [scroll, setScroll] = React.useState("paper");
   const [reservationId, setReservationId] = React.useState("");
-  const [HolidayHomeName, setHolidayHomeName] = useState("");
-  const [HolidayHomeId, setHolidayHomeId] = useState("");
-  const [holidayHomes, setHolidayHomes] = React.useState([]);
+  const [employeeDetails, setEmployeeDetails] = React.useState([]);
+  const [userDetails, setUserDetails] = React.useState([]);
+  const [employeeName, setEmployeeName] = React.useState("");	
   const [roomPrice, setRoomPrice] = useState(0);
   const [hallPrice, setHallPrice] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -113,6 +111,9 @@ export default function ScrollDialog({ name, id }) {
       withCredentials: true,
     })
       .then((res) => {
+        setEmployeeDetails(res.data.employeeDetails[0]);
+        setUserDetails(res.data.userDetails[0]);
+        setEmployeeName(res.data.empName);
         setErrorStatus({
           ...errorStatus,
           isOpen: true,
@@ -154,7 +155,7 @@ export default function ScrollDialog({ name, id }) {
         setRoom([]);
         setHall([]);
       })
-      .catch((error) => {
+      .catch(() => {
         setErrorStatus({
           ...errorStatus,
           isOpen: true,
@@ -708,6 +709,8 @@ export default function ScrollDialog({ name, id }) {
         setIsOpen={setPayNow}
         reservationId={reservationId}
         price={totalPrice}
+        employeeDetails={employeeDetails}
+        userDetails={userDetails}
       />
     </React.Fragment>
   );

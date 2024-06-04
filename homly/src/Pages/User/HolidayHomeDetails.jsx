@@ -22,26 +22,12 @@ import Rating from "@mui/material/Rating";
 import Divider from "@mui/material/Divider";
 import StarIcon from "@mui/icons-material/Star";
 import SimpleMap from "../../Components/Common/MapContainer";
-import LinearProgress, {
-  linearProgressClasses,
-} from "@mui/material/LinearProgress";
+import LinearProgress, {linearProgressClasses} from "@mui/material/LinearProgress";
 import { useParams } from "react-router-dom";
-import MainHolidayHomePhoto from "../../Components/User/HolidayHomeDetailsGrid/MainHolidayHomePhoto";
-
-// import MainHolidayHomePhoto from '../../Components/User/HolidayHomeDetailsGrid/MainHolidayHomePhoto';
-import HolidayHomeGrid from "../../Components/User/HolidayHomeDetailsGrid/HolidayHomeGrid";
 import AddReservationPopUp from "../../Components/Reservations/AddReservationPopUp";
 import Review from "../../Components/User/Review/Review";
 import AxiosClient from "../../services/AxiosClient";
 import noImage from "../../Assets/images/no image.jpg";
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-}));
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 10,

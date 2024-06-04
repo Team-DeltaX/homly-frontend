@@ -96,10 +96,9 @@ export default function ViewPopUp(props) {
                 </Item>
               </Grid>
               <Grid xs={6} sm={5}>
-                <Item>
+                <Item sx={{textAlign: 'left'}}>
                   <Typography
                     variant="button"
-                    align="left"
                     display="block"
                     gutterBottom
                     sx={{ fontWeight: "bold" }}
@@ -116,7 +115,6 @@ export default function ViewPopUp(props) {
                       fontWeight: "bold",
                     }}
                     variant="body2"
-                    align="left"
                     display="block"
                     gutterBottom
                   >
@@ -132,12 +130,32 @@ export default function ViewPopUp(props) {
                       fontWeight: "bold",
                     }}
                     variant="body2"
-                    align="left"
                     display="block"
                     gutterBottom
                   >
                     {props.reservation.Price}
                   </Typography>
+                  {props.reservation.isPaid ? (
+                    <Typography
+                      variant="button"
+                      sx={{
+                        color: "green",
+                        fontSize: { xs: "13px", sm: "14px", md: "15px" },
+                      }}
+                    >
+                      PAID
+                    </Typography>
+                  ) : (
+                    <Typography
+                      variant="button"
+                      sx={{
+                        color: "red",
+                        fontSize: { xs: "13px", sm: "14px", md: "15px" },
+                      }}
+                    >
+                      NOT PAID
+                    </Typography>
+                  )}
                 </Item>
               </Grid>
               <Grid xs={6} sm={4}>

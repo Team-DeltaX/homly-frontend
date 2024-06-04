@@ -5,11 +5,12 @@ import ViewPopUp from "./ViewPopup";
 import dayjs from "dayjs";
 import { useState } from "react";
 import Typography from "@mui/material/Typography";
-import AddComplainPopUp from "../Reservations/AddComplainPopUp";
+import AddComplainPopUp from "./AddComplainPopUp";
 
-const PastReservationCard = (props) => {
+const ReservationCard = (props) => {
   const [isSpecial, setIsSpecial] = useState(props.reservation.IsSpecial);
   const [isCancelled, setIsCancelled] = useState(props.reservation.IsCancelled);
+  const [isPaid, setIsPaid] = useState(props.reservation.IsPaid);
   const isComplainTrue = (props.type === "past" && props.adminNumber != "HomlyPriAdmin");
   return (
     <Grid
@@ -47,7 +48,7 @@ const PastReservationCard = (props) => {
         >
           <Box
             component="img"
-            src={props.holidayHome.MainImage}
+            src={props.employeeDetails.image}
             alt=""
             sx={{
               width: { xs: "5rem", sm: "6rem", md: "7rem" },
@@ -112,6 +113,27 @@ const PastReservationCard = (props) => {
           >
             Amount: {props.reservation.Price}
           </Typography>
+          {isPaid ? (
+        <Typography
+          variant="button"
+          sx={{
+            color: "green",
+            fontSize: { xs: "13px", sm: "14px", md: "15px" },
+          }}
+        >
+          PAID
+        </Typography>
+      ) : (
+        <Typography
+          variant="button"
+          sx={{
+            color: "red",
+            fontSize: { xs: "13px", sm: "14px", md: "15px" },
+          }}
+        >
+          NOT PAID
+        </Typography>
+      )}
         </Grid>
         <Grid
           item
@@ -212,4 +234,4 @@ const PastReservationCard = (props) => {
   );
 };
 
-export default PastReservationCard;
+export default ReservationCard;
