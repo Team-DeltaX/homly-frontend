@@ -5,7 +5,7 @@ import { Grid,ThemeProvider,Container} from '@mui/material';
 import theme from '../../HomlyTheme';
 import SideNavbar from '../../Components/locationAdmin/SideNavbar'
 import PageTitle from '../../Components/locationAdmin/PageTitle';
-import PrimaryAdminBasicTabs from '../../Components/Reservations/AdminBasicTabs';
+import AdminBasicTabs from '../../Components/Reservations/AdminBasicTabs';
 import SearchNew from '../../Components/PrimaryAdmin/SearchNew'
 
 const Report = () => {
@@ -24,7 +24,7 @@ const Report = () => {
                                 <Box sx={{height:"100%"}}>
                                     <PageTitle setShowNav={setShowNav} title={'Reservations'} bell={true}/>
                                     <SearchNew setSearch={setSearch} search={search} />
-                                    <PrimaryAdminBasicTabs setSearch={setSearch} search={search} adminRole={role}/>
+                                    <AdminBasicTabs setSearch={setSearch} search={search} adminRole={role}/>
                                 </Box>
                             </Grid>  
                         </Grid>

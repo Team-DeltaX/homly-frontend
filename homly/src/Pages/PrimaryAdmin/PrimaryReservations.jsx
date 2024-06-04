@@ -4,7 +4,7 @@ import { Container, Grid, ThemeProvider } from "@mui/material";
 import theme from "../../HomlyTheme";
 import SideNavbar from "../../Components/PrimaryAdmin/SideNavbar";
 import Pagetop from "../../Components/PrimaryAdmin/PageTop";
-import PrimaryAdminBasicTabs from "../../Components/Reservations/AdminBasicTabs";
+import AdminBasicTabs from "../../Components/Reservations/AdminBasicTabs";
 import SearchNew from "../../Components/PrimaryAdmin/SearchNew";
 
 const PrimaryReservations = () => {
@@ -42,7 +42,7 @@ const PrimaryReservations = () => {
             >
               <Pagetop setShowNav={setShowNav} heading={"Reservations"} />
               <SearchNew setSearch={setSearch} search={search} />
-              <PrimaryAdminBasicTabs setSearch={setSearch} search={search} role={role}/>
+              <AdminBasicTabs setSearch={setSearch} search={search} adminRole={role}/>
             </Grid>
           </Grid>
         </Container>
