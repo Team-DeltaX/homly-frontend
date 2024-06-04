@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
-import PastReservationCard from "./PastReservationCard";
+import ReservationCard from "./ReservationCard";
 import AxiosClient from "../../services/AxiosClient";
 import ErrorSnackbar from "../User/ErrorSnackbar";
 
@@ -51,7 +51,7 @@ const CancelledReservationList = (props) => {
               : null;
           })
           .map((reservation) => (
-            <PastReservationCard
+            <ReservationCard
               holidayHome={reservation.holidayHome[0]}
               reservation={reservation.reservation}
               reservedRoom={reservation.reservedrooms}
