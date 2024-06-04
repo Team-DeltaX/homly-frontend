@@ -34,7 +34,7 @@ const AuthorizationsCard = (props) => {
         props.Setopensn(true);
         //sent approvel notification to location admin
         socket.emit("newNotification", {
-          senderId: localStorage.getItem("userId"),
+          senderId: sessionStorage.getItem("userId"),
           receiverId: props.data.AdminNo,
           data: `${props.data.Name} Holiday Home has been approved`,
           type: "Authorization Denied",
