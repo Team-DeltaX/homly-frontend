@@ -45,7 +45,7 @@ function a11yProps(index) {
   };
 }
 
-export default function PrimaryAdminBasicTabs(props) {
+export default function AdminBasicTabs(props) {
   const [value, setValue] = React.useState(0);
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
@@ -56,7 +56,7 @@ export default function PrimaryAdminBasicTabs(props) {
 
   return (
     <Box sx={{ width: '100%' }}>
-      {adminRole === "PrimaryAdmin" && <Box><AddSpecialReservationPopUp /></Box>}
+      {(adminRole === "PrimaryAdmin") && <Box><AddSpecialReservationPopUp /></Box>}
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
           <Tab label={isSmallScreen ? "Ongoing" : "Ongoing Reservations"} {...a11yProps(0)} />
