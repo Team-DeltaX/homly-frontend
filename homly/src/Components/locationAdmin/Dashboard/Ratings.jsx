@@ -47,9 +47,15 @@ const Ratings = ({ ratingCatogeries }) => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
+              border: "3px dashed darkgrey",
+              borderRadius: "10px",
             }}
           >
-            <Typography>Select A Holiday Home</Typography>
+            <Typography
+              sx={{ textAlign: "center", fontSize: "12px", padding: "10px" }}
+            >
+              Select A Holiday Home<br></br> From HolidayHome Ratings
+            </Typography>
           </Box>
         ) : (
           <>

@@ -135,7 +135,9 @@ const HomeRating = (props) => {
                   </Typography>
                   <Box sx={{ display: "flex", alignItems: "center" }}>
                     <Typography>{item[0].overall_rating.toFixed(2)}</Typography>
-                    <StarIcon sx={{ fontSize: "18px", color: "#e5de00" }} />
+                    <StarIcon
+                      sx={{ fontSize: "18px", color: "primary.main" }}
+                    />
                   </Box>
                 </Box>
               );
