@@ -1,22 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+import React, { useState, useEffect } from "react";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 import md5 from "crypto-js/md5";
-import AxiosClient from '../../services/AxiosClient';
+import AxiosClient from "../../services/AxiosClient";
 import ErrorSnackbar from "../User/ErrorSnackbar";
 
-export default function PayNowPopup({ isOpen, setIsOpen, reservationId, price, employeeDetails, userDetails}) {
-  
+export default function PayNowPopup({
+  isOpen,
+  setIsOpen,
+  reservationId,
+  price,
+  employeeDetails,
+  userDetails,
+}) {
   const orderId = reservationId;
   const name = reservationId;
   const amount = parseInt(price);
   const merchantId = "1226126";
-  const merchantSecret =
-    "MzQxNTg0NDg5Mzk5NzMxOTMxNTE0NDI3NDI0MTIxNTA5ODc0NTM3";
+  const merchantSecret = "MzQxNTg0NDg5Mzk5NzMxOTMxNTE0NDI3NDI0MTIxNTA5ODc0NTM3";
 
   const hashedSecret = md5(merchantSecret).toString().toUpperCase();
   const amountFormatted = parseFloat(amount)
@@ -31,8 +36,8 @@ export default function PayNowPopup({ isOpen, setIsOpen, reservationId, price, e
     .toUpperCase();
 
   const payment = {
-    sandbox: true, 
-    merchant_id: "1226126", 
+    sandbox: true,
+    merchant_id: "1226126",
     return_url: "http://sample.com/return",
     cancel_url: "http://sample.com/cancel",
     notify_url: "http://sample.com/notify",
@@ -41,7 +46,7 @@ export default function PayNowPopup({ isOpen, setIsOpen, reservationId, price, e
     amount: amount,
     currency: currency,
     status_code: 2,
-    md5sig: '',
+    md5sig: "",
     first_name: employeeDetails.name,
     last_name: "",
     email: userDetails.email,
@@ -57,8 +62,8 @@ export default function PayNowPopup({ isOpen, setIsOpen, reservationId, price, e
     message: "",
   });
   useEffect(() => {
-    const script = document.createElement('script');
-    script.src = 'https://www.payhere.lk/lib/payhere.js';
+    const script = document.createElement("script");
+    script.src = "https://www.payhere.lk/lib/payhere.js";
     document.body.appendChild(script);
     return () => {
       document.body.removeChild(script);
@@ -67,7 +72,10 @@ export default function PayNowPopup({ isOpen, setIsOpen, reservationId, price, e
 
   const handlePaymentCompleted = (orderId) => {
     if (orderId) {
-      AxiosClient.put(`/user/auth/reservation/completePayment`,{reservationId,status:true})
+      AxiosClient.put(`/user/auth/reservation/completePayment`, {
+        reservationId,
+        status: true,
+      })
         .then((response) => {
           setErrorStatus({
             isOpen: true,
@@ -92,21 +100,24 @@ export default function PayNowPopup({ isOpen, setIsOpen, reservationId, price, e
   };
 
   const handlePaymentDismissed = () => {
-    AxiosClient.put(`/user/auth/reservation/completePayment`,{reservationId, status:false})
-        .then(() => {
-          setErrorStatus({
-            isOpen: true,
-            type: "error",
-            message: "Payment dismissed! Please try again.",
-          });
-        })
-        .catch(() => {
-          setErrorStatus({
-            isOpen: true,
-            type: "success",
-            message: "Payment completed successfully!",
-          });
+    AxiosClient.put(`/user/auth/reservation/completePayment`, {
+      reservationId,
+      status: false,
+    })
+      .then(() => {
+        setErrorStatus({
+          isOpen: true,
+          type: "error",
+          message: "Payment dismissed! Please try again.",
         });
+      })
+      .catch(() => {
+        setErrorStatus({
+          isOpen: true,
+          type: "success",
+          message: "Payment completed successfully!",
+        });
+      });
   };
 
   const handlePaymentError = () => {
@@ -146,7 +157,7 @@ export default function PayNowPopup({ isOpen, setIsOpen, reservationId, price, e
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleAlertClose} >Pay Later</Button>
+          <Button onClick={handleAlertClose}>Pay Later</Button>
           <Button onClick={pay} autoFocus>
             Pay Now
           </Button>
@@ -159,5 +170,5 @@ export default function PayNowPopup({ isOpen, setIsOpen, reservationId, price, e
         setIsOpen={(val) => setErrorStatus({ ...errorStatus, isOpen: val })}
       />
     </React.Fragment>
-  ); 
+  );
 }

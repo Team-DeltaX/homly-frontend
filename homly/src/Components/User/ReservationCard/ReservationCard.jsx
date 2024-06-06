@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   Box,
   ThemeProvider,
@@ -16,6 +16,7 @@ import PayNowPopup from "../../Common/PayNowPopup";
 import ConfirmPopup from "../../PrimaryAdmin/ConfirmPopup";
 import AxiosClient from "../../../services/AxiosClient";
 import ErrorSnackbar from "../ErrorSnackbar";
+import NoImage from "../../../Assets/images/noImage.webp";
 
 export default function ReservationCard({
   HHreservation,
@@ -46,6 +47,25 @@ export default function ReservationCard({
     type: "",
     message: "",
   });
+  const [employeeDetails, setEmployeeDetails] = useState({
+    name: "",
+    address: "",
+    email: "",
+    contact_number: "",
+  });
+
+  useEffect(() => {
+    AxiosClient.get("/user/auth/details")
+      .then((res) => {
+        setEmployeeDetails({
+          name: res.data.name,
+          address: res.data.address,
+          email: res.data.email,
+          contact_number: res.data.contactNo,
+        });
+      })
+      .catch(() => {});
+  }, []);
 
   const handleCancelReservation = () => {
     AxiosClient.put("/user/auth/userReservation", {
@@ -171,7 +191,7 @@ export default function ReservationCard({
         <Grid item xs={12} sm={3} sx={{ alignItems: "center" }}>
           <Box
             component="img"
-            src={HHImage}
+            src={HHImage ? HHImage : NoImage}
             alt=""
             sx={{ height: "100%", width: "100%", borderRadius: "10px" }}
           />
@@ -186,11 +206,20 @@ export default function ReservationCard({
             }}
           >
             <Stack direction="column">
-              <Stack direction="row">
+              <Stack
+                direction="row"
+                sx={{ display: "flex", alignItems: "baseline" }}
+              >
                 <Typography sx={{ fontWeight: "bold", fontSize: "1.3rem" }}>
                   {HHName.toUpperCase()}
                 </Typography>
-                <Typography sx={{ fontWeight: "light", fontSize: "0.8rem" }}>
+                <Typography
+                  sx={{
+                    fontWeight: "bold",
+                    fontSize: "0.8rem",
+                    marginLeft: "10px",
+                  }}
+                >
                   {ReservationId}
                 </Typography>
               </Stack>
@@ -421,6 +450,8 @@ export default function ReservationCard({
         setIsOpen={setOpenPay}
         reservationId={ReservationId}
         price={HHPrice}
+        employeeDetails={employeeDetails}
+        userDetails={employeeDetails}
       />
       <ErrorSnackbar
         isOpen={errorStatus.isOpen}
