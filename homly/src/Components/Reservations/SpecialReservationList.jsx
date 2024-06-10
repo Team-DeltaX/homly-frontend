@@ -1,6 +1,5 @@
 import { useEffect,useState } from "react";
 import Box from '@mui/material/Box';
-import './Reservation.css';
 import ViewReservationCard from "./ViewReservationCard";
 import AxiosClient from "../../services/AxiosClient";
 
@@ -23,9 +22,10 @@ const SpeicalReservationList = (props) => {
   }, []);
   return (
     <>
-    <Box className="home">
+    <Box className="home"
+    sx={{height: '60vh',overflow: 'hidden', overflowY: 'scroll'}}>
       {reservations.map(reservation => (
-         <ViewReservationCard holidayHome={reservation.holidayHome[0]} reservation={reservation.reservation} reservedRoom={reservation.reservedrooms} reservedHall={reservation.reservedhalls} employeeName={reservation.employeeName[0]}/>
+         <ViewReservationCard holidayHome={reservation.holidayHome[0]} reservation={reservation.reservation} reservedRoom={reservation.reservedrooms} reservedHall={reservation.reservedhalls} employeeName={reservation.employeeName[0]} employeeDetails={reservation.employeeDetails[0]}/>
       ))}
     </Box>
     </>
