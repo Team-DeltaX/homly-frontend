@@ -40,6 +40,7 @@ const MyReservation = () => {
   useEffect(() => {
     AxiosClient.get("/user/auth/userOngoingReservation")
       .then((response) => {
+        console.log("respone", response.data);
         setOngoingReservation(response.data);
         setShowOngoingSkeleton(false);
         setIsOngoingReservationChange(false);
