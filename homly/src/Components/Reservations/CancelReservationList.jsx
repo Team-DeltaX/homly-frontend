@@ -15,7 +15,7 @@ const CancelledReservationList = (props) => {
   const fetchreservations = () => {
     AxiosClient.get("/admin/auth/reservation/cancelled")
       .then((res) => {
-        setReservations(res.data.reverse());
+        setReservations(res.data);
       })
       .catch(() => {
         setErrorStatus({

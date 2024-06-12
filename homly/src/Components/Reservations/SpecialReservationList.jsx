@@ -15,7 +15,7 @@ const SpeicalReservationList = (props) => {
   const fetchreservations = () => {
     AxiosClient.get("/admin/auth/reservation/special")
       .then((res) => {
-        setReservations(res.data.reverse());
+        setReservations(res.data);
       })
       .catch(() => {
         setErrorStatus({
