@@ -40,6 +40,7 @@ export default function ReservationCard({
 }) {
   const { setIsOngoingReservationChange } = useContext(AuthContext);
   const [openReview, setOpenReview] = useState(false);
+  const [isReviewEdit, setIsReviewEdit] = useState(false);
   const [openConfirm, setOpenConfirm] = useState(false);
   const [openPay, setOpenPay] = useState(false);
   const [errorStatus, setErrorStatus] = useState({
@@ -162,14 +163,27 @@ export default function ReservationCard({
             >
               Cancelled
             </Typography>
+          ) : IsReviewed ? (
+            <Button
+              variant="outlined"
+              onClick={() => {
+                setOpenReview(true);
+                setIsReviewEdit(true);
+              }}
+              sx={{ cursor: "pointer" }}
+            >
+              Edit Review
+            </Button>
           ) : (
             <Button
               variant="contained"
-              disabled={IsReviewed}
-              onClick={() => setOpenReview(true)}
+              onClick={() => {
+                setOpenReview(true);
+                setIsReviewEdit(false);
+              }}
               sx={{ cursor: "pointer" }}
             >
-              {IsReviewed ? "Reviewed" : "Add Review"}
+              Add Review
             </Button>
           )}
         </Stack>
@@ -435,6 +449,8 @@ export default function ReservationCard({
       <AddReviewPopup
         open={openReview}
         setOpen={setOpenReview}
+        isEdit={isReviewEdit}
+        setIsEdit={setIsReviewEdit}
         reservationId={ReservationId}
         setIsAddReview={setIsAddReview}
       />
