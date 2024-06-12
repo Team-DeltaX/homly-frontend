@@ -36,7 +36,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-const PreviewPopup = ({ open, setOpen, previewData, toDate, fromDate }) => {
+const PreviewPopupIncomeReport = ({ open, setOpen, previewData, toDate, fromDate }) => {
   const [isDownolad, setIsDownload] = useState(false);
 
   const handleClose = () => {
@@ -147,4 +147,4 @@ const PreviewPopup = ({ open, setOpen, previewData, toDate, fromDate }) => {
   );
 };
 
-export default PreviewPopup;
+export default PreviewPopupIncomeReport;
