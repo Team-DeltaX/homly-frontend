@@ -1,5 +1,5 @@
 import React from "react";
-import GoogleMapReact,{Marker} from 'google-map-react';
+import GoogleMapReact from 'google-map-react';
 import { AdvancedMarker } from "@vis.gl/react-google-maps";
 
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
