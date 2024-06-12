@@ -23,7 +23,7 @@ const PrimaryReservations = () => {
         }}
       >
         <Container maxWidth="xl" style={{ padding: "0px" }}>
-          <Grid container sx={{ position: "relative" }}>
+          <Grid container>
             <Grid
               className={showNav}
               xs={3}
@@ -37,7 +37,7 @@ const PrimaryReservations = () => {
               sx={{
                 backgroundColor: "white",
                 borderTopLeftRadius: "20px",
-                padding: "0 10px",
+                padding: "0 20px",
               }}
             >
               <Pagetop setShowNav={setShowNav} heading={"Reservations"} />
@@ -52,3 +52,4 @@ const PrimaryReservations = () => {
 };
 
 export default PrimaryReservations;
+
