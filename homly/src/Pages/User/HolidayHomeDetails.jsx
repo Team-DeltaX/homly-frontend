@@ -145,7 +145,7 @@ export default function HolidayHomeDetails() {
                   sx={{
                     fontWeight: { xs: "550", sm: "550", md: "550" },
                     textTransform: "uppercase",
-                    fontSize: { xs: "1.25rem", sm: "1.5rem", md: "2rem" }, // Adjust the font sizes as needed
+                    fontSize: { xs: "1.25rem", sm: "1.5rem", md: "2rem" }, 
                   }}
                 >
                   {value.name}
@@ -351,7 +351,7 @@ export default function HolidayHomeDetails() {
                     variant="h4"
                     sx={{
                       fontWeight: { xs: "350", sm: "400", md: "450" },
-                      fontSize: { xs: "0.25rem", sm: "0.5rem", md: "1rem" }, // Adjust the font sizes as needed
+                      fontSize: { xs: "0.25rem", sm: "0.5rem", md: "1rem" },
                     }}
                     gutterBottom
                   >
@@ -363,7 +363,7 @@ export default function HolidayHomeDetails() {
                 </Stack>
               </Grid>
               <Grid xs={12} sm={12} md={4}>
-                <SimpleMap />
+                <SimpleMap name={value.name} address={value.address} photo={value.MainImage}/>
               </Grid>
               <Stack spacing={4} width={"100%"}>
                 <Divider />
@@ -371,7 +371,7 @@ export default function HolidayHomeDetails() {
                   variant="h4"
                   sx={{
                     fontWeight: { xs: "350", sm: "400", md: "450" },
-                    fontSize: { xs: "1.25rem", sm: "1.5rem", md: "1.5rem" }, // Adjust the font sizes as needed
+                    fontSize: { xs: "1.25rem", sm: "1.5rem", md: "1.5rem" }, 
                   }}
                   gutterBottom
                 >
@@ -530,7 +530,6 @@ export default function HolidayHomeDetails() {
                   </Grid>
                 </Box>
                 <Divider />
-                {/* user review */}
                 <Box>
                   <Review />
                 </Box>
@@ -542,7 +541,7 @@ export default function HolidayHomeDetails() {
                     variant="h4"
                     sx={{
                       fontWeight: { xs: "350", sm: "400", md: "450" },
-                      fontSize: { xs: "1.25rem", sm: "1.5rem", md: "1.5rem" }, // Adjust the font sizes as needed
+                      fontSize: { xs: "1.25rem", sm: "1.5rem", md: "1.5rem" }, 
                     }}
                     gutterBottom
                   >

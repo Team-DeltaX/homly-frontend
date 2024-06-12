@@ -20,8 +20,8 @@ export default function PayNowPopup({
   const orderId = reservationId;
   const name = reservationId;
   const amount = parseInt(price);
-  const merchantId = "1226126";
-  const merchantSecret = "MzQxNTg0NDg5Mzk5NzMxOTMxNTE0NDI3NDI0MTIxNTA5ODc0NTM3";
+  const merchantId = process.env.REACT_APP_PAYHERE_MERCHANT_ID;
+  const merchantSecret = process.env.REACT_APP_PAYHERE_MERCHANT_SECRET;
 
   const hashedSecret = md5(merchantSecret).toString().toUpperCase();
   const amountFormatted = parseFloat(amount)
@@ -37,7 +37,7 @@ export default function PayNowPopup({
 
   const payment = {
     sandbox: true,
-    merchant_id: "1226126",
+    merchant_id: merchantId,
     return_url: "http://sample.com/return",
     cancel_url: "http://sample.com/cancel",
     notify_url: "http://sample.com/notify",
