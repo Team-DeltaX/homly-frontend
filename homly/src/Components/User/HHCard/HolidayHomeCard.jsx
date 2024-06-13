@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import theme from "../../../HomlyTheme";
 import AxiosClient from "../../../services/AxiosClient";
 import ConfirmationBox from "../../Common/ConfirmationBox";
+import NoImage from "../../../Assets/images/noImage.webp";
 
 export default function HolidayHomeCard({
   HHID,
@@ -42,7 +43,7 @@ export default function HolidayHomeCard({
           setIsFavorite(true);
         });
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOK]);
   const handleFavorite = (e) => {
     e.preventDefault();
@@ -110,7 +111,7 @@ export default function HolidayHomeCard({
             </Box>
             <Box
               component="img"
-              src={HHImage}
+              src={HHImage ? HHImage : NoImage}
               alt="Holiday Home Image"
               sx={{
                 height: "219px",

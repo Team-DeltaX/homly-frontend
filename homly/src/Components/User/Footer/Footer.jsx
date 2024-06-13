@@ -23,14 +23,8 @@ import "./Footer.css";
 export default function Footer({refContactUS}) {
   return (
     <ThemeProvider theme={theme}>
-      <Box
-        sx={{
-          width: "100%",
-          bgcolor: "white",
-        }}
-      ><div data-aos="fade-up" data-aos-duration="600">
-        
-          <Box
+      <div data-aos="fade-up" data-aos-duration="600">       
+          {/* <Box
             sx={{
               width: "100%",
               height: { xs: "20vh", sm: "25vh", lg: "50vh" },
@@ -43,8 +37,8 @@ export default function Footer({refContactUS}) {
               alt="footer wave"
               sx={{ width: "100%", bottom: "0",left:'0', position: "absolute" }}
             />
-          </Box>
-          <Box sx={{ width: "100%", bgcolor: "#313131" }}>
+          </Box> */}
+          <Box sx={{ width: "100%", bgcolor: "#aaaaaa" }}>
             <Grid container sx={{ width: "100%" }}>
               <Grid item container>
                 <Grid item xs={12} sm={7} lg={8} ref={refContactUS}>
@@ -53,11 +47,11 @@ export default function Footer({refContactUS}) {
                     sx={{
                       width: "100%",
                       height: "100%",
-                      padding: {xs:'5% 10%',sm:"0 10%"},
+                      padding: {xs:'5% 10%',sm:"5% 10%"},
                     }}
                   >
                     <Typography
-                      sx={{ color: "white", fontSize:{xs:'1rem',sm:"2rem"}, fontWeight: "bold" }}
+                      sx={{ color: "#5E5E5E", fontSize:{xs:'1rem',sm:"2rem"}, fontWeight: "bold" }}
                     >
                       Contact Us
                     </Typography>
@@ -78,7 +72,7 @@ export default function Footer({refContactUS}) {
                       >
                         {/* location icon */}
                         <LocationOnIcon
-                          sx={{ color: "white", fontSize: "4rem" }}
+                          sx={{ color: "#5E5E5E", fontSize: "4rem" }}
                         />
                         {/* location */}
                         <Stack direction="column">
@@ -99,7 +93,7 @@ export default function Footer({refContactUS}) {
                       >
                         <Stack direction="row" sx={{ alignItems: "center" }}>
                           {/* icon */}
-                          <EmailIcon sx={{ color: "white", fontSize: "2rem" }} />
+                          <EmailIcon sx={{ color: "#5E5E5E", fontSize: "2rem" }} />
                           {/*  email*/}
                           <Typography
                             component="a"
@@ -116,7 +110,7 @@ export default function Footer({refContactUS}) {
                         <Stack direction="row" sx={{ alignItems: "center" }}>
                           {/* icon */}
                           <LocalPhoneIcon
-                            sx={{ color: "white", fontSize: "2rem" }}
+                            sx={{ color: "#5E5E5E", fontSize: "2rem" }}
                           />
                           {/*  phone*/}
                           <Typography
@@ -139,10 +133,10 @@ export default function Footer({refContactUS}) {
                   <Stack direction="column" sx={{
                       width: "100%",
                       height: "100%",
-                      padding: {xs:"5% 10%",sm:"0 5%"},
+                      padding: {xs:"5% 10%",sm:"10% 5%"},
                     }}>
                     <Typography
-                      sx={{ color: "white", fontSize:{xs:'1rem',sm:"2rem"}, fontWeight: "bold" }}
+                      sx={{ color: "#5E5E5E", fontSize:{xs:'1rem',sm:"2rem"}, fontWeight: "bold" }}
                     >
                       Usefull Link
                     </Typography>
@@ -157,14 +151,14 @@ export default function Footer({refContactUS}) {
                       <Typography
                         component={Link}
                         to="/Home"
-                        sx={{ color: "white", textDecoration: "none" }}
+                        sx={{ color: "#5E5E5E", textDecoration: "none" }}
                       >
                         Home
                       </Typography>
                       <Typography
                         component={Link}
                         to="/HolidayHomes"
-                        sx={{ color: "white", textDecoration: "none" }}
+                        sx={{ color: "#5E5E5E", textDecoration: "none" }}
                       >
                         Holiday Homes
                       </Typography>
@@ -216,19 +210,20 @@ export default function Footer({refContactUS}) {
                   }}
                 />
                 <Stack
-                  direction="row"
-                  sx={{ alignItems: "center", padding: "0.5% 0 1% 0" }}
+                  direction="column"
+                  sx={{ alignItems: "center", padding: "1% 1% 1% 1%" }}
                 >
-                  <Typography sx={{ color: "white",fontSize:{xs:'0.7rem',sm:'1rem'} }}>
-                    Copyright © 2023-{new Date().getFullYear()} Homly. All Rights
-                    Reserved.
+                  <Typography sx={{ color: "white", fontSize: { xs: '0.7rem', sm: '1rem' } }}>
+                    Homly.com is part of Inova IT Systems (PVT) LTD, the world leader in online travel and related services.
+                  </Typography>
+                  <Typography sx={{ color: "white", fontSize: { xs: '0.7rem', sm: '1rem' } }}>
+                    Copyright © 2023-{new Date().getFullYear()} Homly. All rights reserved.
                   </Typography>
                 </Stack>
               </Grid>
             </Grid>
           </Box>
       </div>
-      </Box>
     </ThemeProvider>
   );
 }

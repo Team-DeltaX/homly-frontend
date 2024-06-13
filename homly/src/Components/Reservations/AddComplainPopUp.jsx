@@ -1,37 +1,29 @@
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import Button from '@mui/material/Button';
-import Alert from '@mui/material/Alert';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import { Input } from '@mui/base/Input';
-import TextArea from '../Common/TextArea';
+import * as React from "react";
+import { styled } from "@mui/material/styles";
+import Button from "@mui/material/Button";
+import Alert from "@mui/material/Alert";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+import TextField from "@mui/material/TextField";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import { Input } from "@mui/base/Input";
+import TextArea from "../Common/TextArea";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import ErrorSnackbar from '../User/ErrorSnackbar';
+import ErrorSnackbar from "../User/ErrorSnackbar";
 import ConfirmPopup from "../PrimaryAdmin/ConfirmPopup";
-import AxiosClient from '../../services/AxiosClient';
-
-
-const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-  '& .MuiDialogContent-root': {
-    padding: theme.spacing(2),
-  },
-  '& .MuiDialogActions-root': {
-    padding: theme.spacing(1),
-  },
-}));
+import AxiosClient from "../../services/AxiosClient";
+import { SocketioContext } from "../../Contexts/SocketioContext";
 
 export default function AddComplainPopUp(props) {
   const [open, setOpen] = React.useState(false);
   const [opened, setOpened] = React.useState(false);
-  const [reason, setReason] = React.useState("enter the reason here");
+  const [reason, setReason] = React.useState("");
+  const { socket } = React.useContext(SocketioContext);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const handleClickOpen = () => {
     setOpen(true);
@@ -46,16 +38,13 @@ export default function AddComplainPopUp(props) {
   };
   const handlesubmit = (e) => {
     const data = {
-      ServiceNo: props.reservation.ServiceNO,
-      ReservationNo: props.reservation.ReservationId,
-      Reason: reason
+      ServiceNo: props.reservation.reservation.ServiceNO,
+      ReservationNo: props.reservation.reservation.ReservationId,
+      AdminNo: props.reservation.holidayHome.AdminNo,
+      Reason: reason,
     };
-    console.log("aruna", data);
-    // axios
-    //   .post("http://localhost:8080/user/reservation/AddComplaint", data)
-    AxiosClient.post(`/admin/auth/reservation/AddComplaint`,data)
+    AxiosClient.post(`/admin/auth/reservation/AddComplaint`, data)
       .then((res) => {
-        console.log("add complaint successfully");
         setOpen(false);
         setOpened(false);
         setErrorStatus({
@@ -64,9 +53,15 @@ export default function AddComplainPopUp(props) {
           type: "success",
           message: "complaint added successfully",
         });
+        socket.emit("newNotification", {
+          senderId: res.data.adminNo,
+          receiverId: "HomlyPriAdmin",
+          data: `New Complain against ${props.reservation.reservation.ServiceNO} about his/her reservation (${props.reservation.reservation.ReservationId}). Please check it out.`,
+          type: "New Complain",
+          time: new Date(),
+        });
       })
       .catch((error) => {
-        console.log(`error is  nm ${error}`);
         setErrorStatus({
           ...errorStatus,
           isOpen: true,
@@ -84,7 +79,7 @@ export default function AddComplainPopUp(props) {
         open={open}
         onClose={handleClose}
         PaperProps={{
-          component: 'form',
+          component: "form",
           onSubmit: (event) => {
             event.preventDefault();
             const formData = new FormData(event.currentTarget);
@@ -94,12 +89,14 @@ export default function AddComplainPopUp(props) {
           },
         }}
       >
-        <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">Add Complain</DialogTitle>
+        <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+          Add Complain
+        </DialogTitle>
         <IconButton
           aria-label="close"
           onClick={handleClose}
           sx={{
-            position: 'absolute',
+            position: "absolute",
             right: 8,
             top: 8,
             color: (theme) => theme.palette.grey[500],
@@ -111,7 +108,7 @@ export default function AddComplainPopUp(props) {
           <TextField
             autoFocus
             disabled={true}
-            value={props.reservation.ServiceNO}
+            value={props.reservation.reservation.ServiceNO}
             required
             margin="dense"
             id="serviceno"
@@ -124,12 +121,25 @@ export default function AddComplainPopUp(props) {
           <TextField
             autoFocus
             disabled={true}
-            value={props.reservation.ReservationId}
+            value={props.reservation.reservation.ReservationId}
             required
             margin="dense"
             id="reservationno"
             name="reservationno"
             label="Reservation No"
+            type="text"
+            fullWidth
+            variant="outlined"
+          />
+          <TextField
+            autoFocus
+            disabled={true}
+            value={props.reservation.holidayHome.Name}
+            required
+            margin="dense"
+            id="holidayhome"
+            name="holidayhome"
+            label="Holiday Home"
             type="text"
             fullWidth
             variant="outlined"
@@ -151,27 +161,32 @@ export default function AddComplainPopUp(props) {
           <TextField
             margin="dense"
             label="Reason"
+            required
             multiline
             fullWidth
+            placeholder="Reason"
             value={reason}
             onChange={(e) => {
               setReason(e.target.value);
             }}
-            
             maxLength="parent.maxLength"
           />
         </DialogContent>
         <DialogActions>
-        <ConfirmPopup
+          <ConfirmPopup
             open={opened}
             setOpen={setOpened}
-            title={"Reservation Confirmation"}
-            text={"Are you sure you want to confirm this Reservation?"}
+            title={" Are you sure you want to confirm this Complain?"}
+            text={["Reason :  ", reason]}
             controlfunction={handlesubmit}
           />
-          <Button autoFocus onClick={() => {
-                setOpened(true);
-              }} type="submit"
+          <Button
+            autoFocus
+            disabled={reason === ""}
+            onClick={() => {
+              setOpened(true);
+            }}
+            type="submit"
           >
             Add Complain
           </Button>

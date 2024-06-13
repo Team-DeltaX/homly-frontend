@@ -1,24 +1,25 @@
-import { Box } from "@mui/material";
 import Stack from "@mui/material/Stack";
-import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
+import { Box } from "@mui/material";
+import Grid from "@mui/material/Unstable_Grid2";
 import ViewPopUp from "./ViewPopup";
 import dayjs from "dayjs";
 import { useState } from "react";
 import Typography from "@mui/material/Typography";
-import AxiosClient from "../../services/AxiosClient";
+import AddComplainPopUp from "./AddComplainPopUp";
 
-const ViewReservationCard = (props) => {
+const ReservationCard = (props) => {
   const [isSpecial, setIsSpecial] = useState(props.reservation.IsSpecial);
   const [isCancelled, setIsCancelled] = useState(props.reservation.IsCancelled);
-
+  const [isPaid, setIsPaid] = useState(props.reservation.IsPaid);
+  const isComplainTrue = (props.type === "past" && props.adminNumber != "HomlyPriAdmin");
   return (
     <Grid
       container
       spacing={2}
       key={props.reservation.id}
       sx={{
-        padding: {xs: "2px 1px", sm:"5px 1px" ,md:"10px 3px"},
-        margin: {xs: "2px 1px", sm:"5px 1px" ,md:"10px 5px"},
+        padding: { xs: "2px 1px", sm: "5px 1px", md: "10px 3px" },
+        margin: { xs: "2px 1px", sm: "5px 1px", md: "10px 5px" },
         borderBottom: "1px solid #fafafa",
         borderRadius: "20px",
         boxShadow: "3px 1px 3px 3px rgba(0,0,0,0.1)",
@@ -28,7 +29,12 @@ const ViewReservationCard = (props) => {
         },
       }}
     >
-      <Grid container sx={{ width: "100%" }} rowSpacing={0} columnSpacing={{ xs: 1, sm: 1, md: 1 }}>
+      <Grid
+        container
+        sx={{ width: "100%" }}
+        rowSpacing={0}
+        columnSpacing={{ xs: 1, sm: 1, md: 1 }}
+      >
         <Grid
           item
           xs={6}
@@ -42,7 +48,7 @@ const ViewReservationCard = (props) => {
         >
           <Box
             component="img"
-            src={props.holidayHome.MainImage}
+            src={props.employeeDetails.image}
             alt=""
             sx={{
               width: { xs: "5rem", sm: "6rem", md: "7rem" },
@@ -107,6 +113,27 @@ const ViewReservationCard = (props) => {
           >
             Amount: {props.reservation.Price}
           </Typography>
+          {isPaid ? (
+        <Typography
+          variant="button"
+          sx={{
+            color: "green",
+            fontSize: { xs: "13px", sm: "14px", md: "15px" },
+          }}
+        >
+          PAID
+        </Typography>
+      ) : (
+        <Typography
+          variant="button"
+          sx={{
+            color: "red",
+            fontSize: { xs: "13px", sm: "14px", md: "15px" },
+          }}
+        >
+          NOT PAID
+        </Typography>
+      )}
         </Grid>
         <Grid
           item
@@ -176,10 +203,10 @@ const ViewReservationCard = (props) => {
           </Stack>
         </Grid>
         <Grid container columnSpacing={1} sx={{ flexGrow: 1 }}>
-          <Grid 
-          smOffset={1}
-          xsOffset={3}
-          mdOffset={9}
+          <Grid
+            smOffset={1}
+            xsOffset={3}
+            mdOffset={9}
             xs={12}
             sm={12}
             md={6}
@@ -196,6 +223,9 @@ const ViewReservationCard = (props) => {
                 reservedHall={props.reservedHall}
                 holidayhome={props.holidayHome}
               />
+              <Box sx={{ display: isComplainTrue ? "block" : "none" }}>
+                <AddComplainPopUp reservation={props} />
+              </Box>
             </Stack>
           </Grid>
         </Grid>
@@ -204,4 +234,4 @@ const ViewReservationCard = (props) => {
   );
 };
 
-export default ViewReservationCard;
+export default ReservationCard;

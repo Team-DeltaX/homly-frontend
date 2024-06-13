@@ -371,9 +371,9 @@ const ViewPopupComplaints = (props) => {
                     });
 
                     //close popup after send notification
-                    
+
                     props.handlepopup();
-                    props.SetopenNotifySncak(true)
+                    props.SetopenNotifySncak(true);
                   }}
                 >
                   <Typography sx={{ fontSize: "10px" }}>

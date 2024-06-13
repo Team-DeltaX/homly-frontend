@@ -18,10 +18,6 @@ import SearchNew from "../../Components/PrimaryAdmin/SearchNew";
 import Snackbarp from "../../Components/PrimaryAdmin/snackbar/Snackbarp";
 import AxiosClient from "../../services/AxiosClient";
 
-
-
-
-
 const PrimaryBlacklistHistory = () => {
   const [search, setSearch] = useState("");
   const [popup, setpopup] = useState(false);
@@ -29,7 +25,6 @@ const PrimaryBlacklistHistory = () => {
   const [SelectEmp, SetSelectEmp] = useState({});
   const [SelectUser, SetSelectUser] = useState({});
   const [opensnE, SetOpensnE] = React.useState(false);
-
 
   const handlepopup = () => {
     setpopup(!popup);
@@ -66,8 +61,7 @@ const PrimaryBlacklistHistory = () => {
   };
 
   const getblacklisthistory = () => {
-    AxiosClient
-      .get(`/admin/auth/blacklisthistory`)
+    AxiosClient.get(`/admin/auth/blacklisthistory`)
       .then((res) => {
         const sortedData = res.data.sort(
           (a, b) => -(a.BlackListHistoryId - b.BlackListHistoryId)
@@ -78,7 +72,7 @@ const PrimaryBlacklistHistory = () => {
         console.log("blacklist history fetched");
       })
       .catch(() => {
-       SetOpensnE(true)
+        console.log("error in getting blacklist history");
       });
   };
 

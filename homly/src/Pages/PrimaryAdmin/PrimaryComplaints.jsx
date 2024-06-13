@@ -17,7 +17,7 @@ const PrimaryComplaints = () => {
   const [prevcomplaints, setPrevcomplaints] = useState([]);
   const [opensn, SetOpensn] = useState(false);
   const [opensnE, SetOpensnE] = useState(false);
-  const [openNotifySnack,SetopenNotifySncak]=useState(false);
+  const [openNotifySnack, SetopenNotifySncak] = useState(false);
 
   const handlepopup = () => {
     setpopup(!popup);
@@ -25,22 +25,20 @@ const PrimaryComplaints = () => {
 
   const fetchprevcomplaints = () => {
     console.log("start");
-    AxiosClient
-      .get(
-        `/admin/auth/locationadmin/complaint/${selecteduser.ServiceNo}`
-      )
+    AxiosClient.get(
+      `/admin/auth/locationadmin/complaint/${selecteduser.ServiceNo}`
+    )
       .then((res) => {
         setPrevcomplaints(res.data);
         console.log(res.data);
       })
       .catch((err) => {
-       SetOpensnE(true)
+        SetOpensnE(true);
       });
   };
 
   const fetchcomplaints = () => {
-    AxiosClient
-      .get(`/admin/auth/locationadmin/complaints`)
+    AxiosClient.get(`/admin/auth/locationadmin/complaints`)
       .then((res) => {
         setcomplaints(res.data);
       })

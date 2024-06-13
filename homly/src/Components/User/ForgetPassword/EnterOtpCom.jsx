@@ -88,7 +88,7 @@ export default function EnterDetailCom({
   const handleNewOTP = () => {
     const formData = { serviceNo: value.serviceNo, email: value.email };
     axios
-      .post(`${global.API_BASE_URL}/user/forgetPassword`, formData, {
+      .post("http://localhost:8080/users/forgetPassword", formData, {
         withCredentials: true,
       })
       .then((res) => {

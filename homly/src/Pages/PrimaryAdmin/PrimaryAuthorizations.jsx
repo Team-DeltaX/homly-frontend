@@ -14,6 +14,7 @@ const PrimaryAuthorizations = () => {
   const [Pendinghomes, SetPendinghomes] = useState([]);
   const [opensn, SetOpensn] = React.useState(false);
   const [opensnE, SetOpensnE] = React.useState(false);
+
   const [open, setOpen] = React.useState(false);
   const [selectedtoview,setSelectedtoview]=useState({})
 
@@ -32,11 +33,12 @@ const PrimaryAuthorizations = () => {
       .get(
         `/admin/auth/locationadmin/holidayhome/pending`
       )
+
       .then((res) => {
         SetPendinghomes(res.data);
       })
       .catch((error) => {
-        SetOpensnE(true)
+        SetOpensnE(true);
       });
   };
 
