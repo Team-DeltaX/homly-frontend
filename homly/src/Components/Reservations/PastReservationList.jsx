@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
-import PastReservationCard from "./PastReservationCard";
+import ReservationCard from "./ReservationCard";
 import AxiosClient from "../../services/AxiosClient";
 import ErrorSnackbar from "../User/ErrorSnackbar";
 
@@ -16,7 +16,7 @@ const PastReservationList = (props) => {
   const fetchreservations = () => {
     AxiosClient.get("/admin/auth/reservation/past")
       .then((res) => {
-        setReservations(res.data.reservationDetails.reverse());
+        setReservations(res.data.reservationDetails);
         setAdminNo(res.data.adminNo);
       })
       .catch(() => {
@@ -54,7 +54,7 @@ const PastReservationList = (props) => {
               : null;
           })
           .map((reservation) => (
-            <PastReservationCard
+            <ReservationCard
               holidayHome={reservation.holidayHome[0]}
               reservation={reservation.reservation}
               reservedRoom={reservation.reservedrooms}

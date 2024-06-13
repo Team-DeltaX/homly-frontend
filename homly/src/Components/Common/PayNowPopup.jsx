@@ -1,22 +1,36 @@
-import React, { useEffect } from 'react';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+import React, { useState, useEffect } from "react";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 import md5 from "crypto-js/md5";
-import AxiosClient from '../../services/AxiosClient';
+import AxiosClient from "../../services/AxiosClient";
+import ErrorSnackbar from "../User/ErrorSnackbar";
 
-export default function PayNowPopup({ isOpen, setIsOpen, reservationId, price }) {
-  
+export default function PayNowPopup({
+  isOpen,
+  setIsOpen,
+  reservationId,
+  price,
+  employeeDetails,
+  userDetails,
+}) {
+  const [city, setCity] = useState("");
+  useEffect(() => {
+    const ExtractCityFromAddress = (address) => {
+      return address.split(",").pop().trim();
+    };
+    if (employeeDetails.address) {
+      setCity(ExtractCityFromAddress(employeeDetails.address));
+    }
+  }, [employeeDetails.address]);
   const orderId = reservationId;
-  const name = "Reservation";
-  //const amount = parseInt(price);
-  const amount = 2456;
-  const merchantId = "1226126";
-  const merchantSecret =
-    "MzQxNTg0NDg5Mzk5NzMxOTMxNTE0NDI3NDI0MTIxNTA5ODc0NTM3";
+  const name = reservationId;
+  const amount = parseInt(price);
+  const merchantId = process.env.REACT_APP_PAYHERE_MERCHANT_ID;
+  const merchantSecret = process.env.REACT_APP_PAYHERE_MERCHANT_SECRET;
 
   const hashedSecret = md5(merchantSecret).toString().toUpperCase();
   const amountFormatted = parseFloat(amount)
@@ -31,8 +45,8 @@ export default function PayNowPopup({ isOpen, setIsOpen, reservationId, price })
     .toUpperCase();
 
   const payment = {
-    sandbox: true, // if the account is sandbox or real
-    merchant_id: "1226126", // Replace your Merchant ID
+    sandbox: true,
+    merchant_id: merchantId,
     return_url: "http://sample.com/return",
     cancel_url: "http://sample.com/cancel",
     notify_url: "http://sample.com/notify",
@@ -41,71 +55,94 @@ export default function PayNowPopup({ isOpen, setIsOpen, reservationId, price })
     amount: amount,
     currency: currency,
     status_code: 2,
-    md5sig: '',
-    first_name: "Saman",
-    last_name: "Perera",
-    email: "samanp@gmail.com",
-    phone: "0771234567",
-    address: "No.1, Galle Road",
-    city: "Colombo",
+    md5sig: "",
+    first_name: employeeDetails.name,
+    last_name: "",
+    email: userDetails.email,
+    phone: userDetails.contact_number,
+    work_location: employeeDetails.workLocation,
+    address: employeeDetails.address,
+    city: city,
     country: "Sri Lanka",
     hash: hash,
   };
+  
+  const [errorStatus, setErrorStatus] = useState({
+    isOpen: false,
+    type: "",
+    message: "",
+  });
 
   useEffect(() => {
-    // Load PayHere script dynamically
-    const script = document.createElement('script');
-    script.src = 'https://www.payhere.lk/lib/payhere.js';
+    const script = document.createElement("script");
+    script.src = "https://www.payhere.lk/lib/payhere.js";
     document.body.appendChild(script);
-
-    // Cleanup function to remove the script when component unmounts
     return () => {
       document.body.removeChild(script);
     };
   }, []);
 
   const handlePaymentCompleted = (orderId) => {
-    //setIsOpen(false);
     if (orderId) {
-      console.log("Payment successful");
-      // Update UI or perform actions for successful payment
-      AxiosClient.put(`/user/auth/reservation/completePayment`,{reservationId,status:true})
+      AxiosClient.put(`/user/auth/reservation/completePayment`, {
+        reservationId,
+        status: true,
+      })
         .then((response) => {
-          console.log(reservationId);
-          console.log(response);
+          setErrorStatus({
+            isOpen: true,
+            type: "warning",
+            message: "Payment is ongoing. Do not refresh the page.",
+          });
         })
         .catch((error) => {
-          console.log(error);
+          setErrorStatus({
+            isOpen: true,
+            type: "error",
+            message: "Payment failed! Please try again.",
+          });
         });
     } else {
-      console.log("Payment failed");
-      // Handle failure scenario
+      setErrorStatus({
+        isOpen: true,
+        type: "error",
+        message: "Payment failed! Please try again.",
+      });
     }
   };
 
   const handlePaymentDismissed = () => {
-    console.log("Payment dismissed");
-    // Handle payment dismissal
-    AxiosClient.put(`/user/auth/reservation/completePayment`,{reservationId, status:false})
-        .then((response) => {
-          console.log(reservationId);
-          console.log(response);
-        })
-        .catch((error) => {
-          console.log(error);
+    AxiosClient.put(`/user/auth/reservation/completePayment`, {
+      reservationId,
+      status: false,
+    })
+      .then(() => {
+        setErrorStatus({
+          isOpen: true,
+          type: "error",
+          message: "Payment dismissed! Please try again.",
         });
+      })
+      .catch(() => {
+        setErrorStatus({
+          isOpen: true,
+          type: "success",
+          message: "Payment completed successfully!",
+        });
+      });
   };
 
-  const handlePaymentError = (error) => {
-    console.log("Error:", error);
-    // Handle payment error
+  const handlePaymentError = () => {
+    setErrorStatus({
+      isOpen: true,
+      type: "error",
+      message: "Payment failed! Please try again",
+    });
   };
 
   const pay = () => {
     setIsOpen(false);
-    console.log("Paying");
     window.payhere.startPayment(payment);
-    // Event listeners for payment completion, dismissal, and error
     window.payhere.onCompleted = handlePaymentCompleted(orderId);
     window.payhere.onDismissed = handlePaymentDismissed;
     window.payhere.onError = handlePaymentError;
@@ -132,12 +169,18 @@ export default function PayNowPopup({ isOpen, setIsOpen, reservationId, price })
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleAlertClose} >Pay Later</Button>
+          <Button onClick={handleAlertClose}>Pay Later</Button>
           <Button onClick={pay} autoFocus>
             Pay Now
           </Button>
         </DialogActions>
       </Dialog>
+      <ErrorSnackbar
+        isOpen={errorStatus.isOpen}
+        type={errorStatus.type}
+        message={errorStatus.message}
+        setIsOpen={(val) => setErrorStatus({ ...errorStatus, isOpen: val })}
+      />
     </React.Fragment>
-  ); 
+  );
 }

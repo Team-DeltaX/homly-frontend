@@ -1,17 +1,17 @@
-// import './style.css';
+import './style.css';
 import React,{ useState} from 'react'
 import Box from '@mui/material/Box';
 import { Grid,ThemeProvider,Container} from '@mui/material';
 import theme from '../../HomlyTheme';
 import SideNavbar from '../../Components/locationAdmin/SideNavbar'
 import PageTitle from '../../Components/locationAdmin/PageTitle';
-import BasicTabs from '../../Components/locationAdmin/Reservations/LocationAdminBasicTab';
+import AdminBasicTabs from '../../Components/Reservations/AdminBasicTabs';
 import SearchNew from '../../Components/PrimaryAdmin/SearchNew'
 
 const Report = () => {
     const [showNav,setShowNav] = useState('nav_grid_deactive');
     const [search, setSearch] = useState("");
-
+    const role = "LocationAdmin";
     return (
         <ThemeProvider theme={theme}>
             <Box className="main_container" sx={{width:"100%",backgroundColor:'primary.main',overflow:'hidden'}}>
@@ -24,7 +24,7 @@ const Report = () => {
                                 <Box sx={{height:"100%"}}>
                                     <PageTitle setShowNav={setShowNav} title={'Reservations'} bell={true}/>
                                     <SearchNew setSearch={setSearch} search={search} />
-                                    <BasicTabs setSearch={setSearch} search={search} />
+                                    <AdminBasicTabs setSearch={setSearch} search={search} adminRole={role}/>
                                 </Box>
                             </Grid>  
                         </Grid>

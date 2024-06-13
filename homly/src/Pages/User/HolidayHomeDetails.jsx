@@ -22,26 +22,12 @@ import Rating from "@mui/material/Rating";
 import Divider from "@mui/material/Divider";
 import StarIcon from "@mui/icons-material/Star";
 import SimpleMap from "../../Components/Common/MapContainer";
-import LinearProgress, {
-  linearProgressClasses,
-} from "@mui/material/LinearProgress";
+import LinearProgress, {linearProgressClasses} from "@mui/material/LinearProgress";
 import { useParams } from "react-router-dom";
-import MainHolidayHomePhoto from "../../Components/User/HolidayHomeDetailsGrid/MainHolidayHomePhoto";
-
-// import MainHolidayHomePhoto from '../../Components/User/HolidayHomeDetailsGrid/MainHolidayHomePhoto';
-import HolidayHomeGrid from "../../Components/User/HolidayHomeDetailsGrid/HolidayHomeGrid";
 import AddReservationPopUp from "../../Components/Reservations/AddReservationPopUp";
 import Review from "../../Components/User/Review/Review";
 import AxiosClient from "../../services/AxiosClient";
 import noImage from "../../Assets/images/no image.jpg";
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-}));
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 10,
@@ -100,7 +86,7 @@ export default function HolidayHomeDetails() {
             id: homeDetails.HolidayHomeId || "",
             name: homeDetails.Name || "",
             address: homeDetails.Address || "",
-            district: "Kegalle",
+            district: homeDetails.District || "",
             description: homeDetails.Description || "",
             contactNo1:
               contactNo && contactNo.length > 0 ? contactNo[0].ContactNo : "",
@@ -159,7 +145,7 @@ export default function HolidayHomeDetails() {
                   sx={{
                     fontWeight: { xs: "550", sm: "550", md: "550" },
                     textTransform: "uppercase",
-                    fontSize: { xs: "1.25rem", sm: "1.5rem", md: "2rem" }, // Adjust the font sizes as needed
+                    fontSize: { xs: "1.25rem", sm: "1.5rem", md: "2rem" }, 
                   }}
                 >
                   {value.name}
@@ -205,13 +191,13 @@ export default function HolidayHomeDetails() {
                   }}
                 >
                   <img
-                    src={value.MainImage}
+                    src={value.MainImage || noImage}
                     alt="HH PHOTO 1"
                     style={{
                       width: "100%",
                       height: "100%",
                       objectFit: "cover",
-                      borderRadius: 16,
+                      borderRadius: 10,
                     }}
                   />
                 </Box>
@@ -239,7 +225,7 @@ export default function HolidayHomeDetails() {
                         width: "100%",
                         height: "100%",
                         objectFit: "cover",
-                        borderRadius: 12,
+                        borderRadius: 8,
                       }}
                     />
                   </Box>
@@ -261,7 +247,7 @@ export default function HolidayHomeDetails() {
                         width: "100%",
                         height: "100%",
                         objectFit: "cover",
-                        borderRadius: 12,
+                        borderRadius: 8,
                       }}
                     />
                   </Box>
@@ -365,7 +351,7 @@ export default function HolidayHomeDetails() {
                     variant="h4"
                     sx={{
                       fontWeight: { xs: "350", sm: "400", md: "450" },
-                      fontSize: { xs: "0.25rem", sm: "0.5rem", md: "1rem" }, // Adjust the font sizes as needed
+                      fontSize: { xs: "0.25rem", sm: "0.5rem", md: "1rem" },
                     }}
                     gutterBottom
                   >
@@ -377,7 +363,7 @@ export default function HolidayHomeDetails() {
                 </Stack>
               </Grid>
               <Grid xs={12} sm={12} md={4}>
-                <SimpleMap />
+                <SimpleMap name={value.name} address={value.address} photo={value.MainImage || noImage}/>
               </Grid>
               <Stack spacing={4} width={"100%"}>
                 <Divider />
@@ -385,7 +371,7 @@ export default function HolidayHomeDetails() {
                   variant="h4"
                   sx={{
                     fontWeight: { xs: "350", sm: "400", md: "450" },
-                    fontSize: { xs: "1.25rem", sm: "1.5rem", md: "1.5rem" }, // Adjust the font sizes as needed
+                    fontSize: { xs: "1.25rem", sm: "1.5rem", md: "1.5rem" }, 
                   }}
                   gutterBottom
                 >
@@ -544,7 +530,6 @@ export default function HolidayHomeDetails() {
                   </Grid>
                 </Box>
                 <Divider />
-                {/* user review */}
                 <Box>
                   <Review />
                 </Box>
@@ -556,7 +541,7 @@ export default function HolidayHomeDetails() {
                     variant="h4"
                     sx={{
                       fontWeight: { xs: "350", sm: "400", md: "450" },
-                      fontSize: { xs: "1.25rem", sm: "1.5rem", md: "1.5rem" }, // Adjust the font sizes as needed
+                      fontSize: { xs: "1.25rem", sm: "1.5rem", md: "1.5rem" }, 
                     }}
                     gutterBottom
                   >

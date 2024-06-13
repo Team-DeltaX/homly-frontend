@@ -23,7 +23,12 @@ export default function InputTextWithIcon({
     <ThemeProvider theme={theme}>
       <TextField
         autoComplete="off"
-        sx={{ marginBottom: marginBottom ? marginBottom : {xs:'7%',sm:'6%',md:'5%'}, width: "90%" }}
+        sx={{
+          marginBottom: marginBottom
+            ? marginBottom
+            : { xs: "7%", sm: "6%", md: "5%" },
+          width: "90%",
+        }}
         id={lable}
         label={lable}
         required={required}
@@ -31,10 +36,7 @@ export default function InputTextWithIcon({
         error={error}
         InputProps={{
           startAdornment: (
-            <InputAdornment position="start">
-              {/* <BadgeIcon /> */}
-              {icon}
-            </InputAdornment>
+            <InputAdornment position="start">{icon}</InputAdornment>
           ),
         }}
         InputLabelProps={{

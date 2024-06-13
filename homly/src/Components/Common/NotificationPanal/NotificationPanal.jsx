@@ -20,7 +20,6 @@ const NotificationPanal = ({ bell }) => {
   useEffect(() => {
     AxiosClient.get("/common/auth/notifications")
       .then((res) => {
-        console.log(res.data, 'notifications');
         SetNotifications(res.data);
         SetMessagecount(res.data.length);
       })
@@ -43,7 +42,6 @@ const NotificationPanal = ({ bell }) => {
   }, []);
 
   useEffect(() => {
-    console.log("socket", socket);
     if (socket) {
       socket.on("notification", (notification) => {
         SetNotifications((prevNotifications) => [
@@ -76,8 +74,7 @@ const NotificationPanal = ({ bell }) => {
     AxiosClient.delete("/common/auth/notifications", {
       data: { notificationIds: removedNotificationId },
     })
-      .then((res) => {
-        console.log(res, "delete notification");
+      .then(() => {
         SetNotifications((prevNotifications) =>
           prevNotifications.filter(
             (notification) => notification.id !== removedNotificationId
@@ -85,9 +82,7 @@ const NotificationPanal = ({ bell }) => {
         );
         SetMessagecount((prevCount) => prevCount - 1);
       })
-      .catch((err) => {
-        console.log(err, "delete notification");
-      });
+      .catch(() => {});
   };
 
   return (
