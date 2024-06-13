@@ -45,15 +45,15 @@ export default function SimpleMap({ name, address, photo }) {
 
   return (
     <APIProvider apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}> 
-      <div style={{ height: "30vh", width: "100%" }}>
+      <div style={{ height: "35vh", width: "100%" }}>
         <Map
-          defaultZoom={13}
+          defaultZoom={10}
           center={position}
           mapId={process.env.REACT_APP_GOOGLE_MAP_ID}
           options={{
             zoomControl: true,
             streetViewControl: false,
-            mapTypeControl: false,
+            mapTypeControl: true,
             fullscreenControl: true,
           }}
         >
@@ -68,7 +68,7 @@ export default function SimpleMap({ name, address, photo }) {
           {open && (
             <InfoWindow position={position} onCloseClick={() => setOpen(false)}>
               <div style={{ display: "flex", alignItems: "center", gap: "1rem", paddingBottom: '1rem', paddingRight:'1rem', paddingLeft:'1rem' }}>
-                <img style={{ height: "10vh", width: "10vh", borderRadius: "50%" }} src={photo} alt="Holiday Home" />
+                <img style={{ height: "8vh", width: "8vh", borderRadius: "50%" }} src={photo} alt="Holiday Home" />
                 <div style={{ justifyContent: "space-between", alignItems: "center", marginBottom: '0.5rem' }}>
                   <h3 style={{ margin: 0 }}>{name}</h3>
                   <p>{address}</p>

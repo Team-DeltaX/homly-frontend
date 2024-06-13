@@ -17,6 +17,15 @@ export default function PayNowPopup({
   employeeDetails,
   userDetails,
 }) {
+  const [city, setCity] = useState("");
+  useEffect(() => {
+    const ExtractCityFromAddress = (address) => {
+      return address.split(",").pop().trim();
+    };
+    if (employeeDetails.address) {
+      setCity(ExtractCityFromAddress(employeeDetails.address));
+    }
+  }, [employeeDetails.address]);
   const orderId = reservationId;
   const name = reservationId;
   const amount = parseInt(price);
@@ -51,16 +60,19 @@ export default function PayNowPopup({
     last_name: "",
     email: userDetails.email,
     phone: userDetails.contact_number,
+    work_location: employeeDetails.workLocation,
     address: employeeDetails.address,
-    city: "Colombo",
+    city: city,
     country: "Sri Lanka",
     hash: hash,
   };
+  
   const [errorStatus, setErrorStatus] = useState({
     isOpen: false,
     type: "",
     message: "",
   });
+
   useEffect(() => {
     const script = document.createElement("script");
     script.src = "https://www.payhere.lk/lib/payhere.js";

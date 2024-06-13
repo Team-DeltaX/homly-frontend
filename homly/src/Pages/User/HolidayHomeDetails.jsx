@@ -86,7 +86,7 @@ export default function HolidayHomeDetails() {
             id: homeDetails.HolidayHomeId || "",
             name: homeDetails.Name || "",
             address: homeDetails.Address || "",
-            district: "Kegalle",
+            district: homeDetails.District || "",
             description: homeDetails.Description || "",
             contactNo1:
               contactNo && contactNo.length > 0 ? contactNo[0].ContactNo : "",
@@ -191,7 +191,7 @@ export default function HolidayHomeDetails() {
                   }}
                 >
                   <img
-                    src={value.MainImage}
+                    src={value.MainImage || noImage}
                     alt="HH PHOTO 1"
                     style={{
                       width: "100%",
@@ -363,7 +363,7 @@ export default function HolidayHomeDetails() {
                 </Stack>
               </Grid>
               <Grid xs={12} sm={12} md={4}>
-                <SimpleMap name={value.name} address={value.address} photo={value.MainImage}/>
+                <SimpleMap name={value.name} address={value.address} photo={value.MainImage || noImage}/>
               </Grid>
               <Stack spacing={4} width={"100%"}>
                 <Divider />
