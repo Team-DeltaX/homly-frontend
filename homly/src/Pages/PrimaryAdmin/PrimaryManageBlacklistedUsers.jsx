@@ -64,11 +64,13 @@ const PrimaryManageBlacklistedUsers = () => {
       })
       .catch((err) => {
         console.log(err);
-      });
+      });}
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
       fetch_current_blacklist();
+
+
     }, []);
 
     return (
@@ -183,6 +185,6 @@ const PrimaryManageBlacklistedUsers = () => {
       </ThemeProvider>
     );
   };
-};
+
 
 export default PrimaryManageBlacklistedUsers;
