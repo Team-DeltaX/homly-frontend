@@ -267,7 +267,7 @@ export default function Footer({ refContactUS }) {
                     textAlign: "center",
                   }}
                 >
-                  Copyright © 2023-{new Date().getFullYear()} Homly. All rights
+                  Copyright © 2023-{new Date().getFullYear()} DeltaX. All rights
                   reserved.
                 </Typography>
               </Stack>
