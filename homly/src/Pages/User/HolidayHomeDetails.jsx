@@ -197,7 +197,7 @@ export default function HolidayHomeDetails() {
                       width: "100%",
                       height: "100%",
                       objectFit: "cover",
-                      borderRadius: 16,
+                      borderRadius: 10,
                     }}
                   />
                 </Box>
@@ -225,7 +225,7 @@ export default function HolidayHomeDetails() {
                         width: "100%",
                         height: "100%",
                         objectFit: "cover",
-                        borderRadius: 12,
+                        borderRadius: 8,
                       }}
                     />
                   </Box>
@@ -247,7 +247,7 @@ export default function HolidayHomeDetails() {
                         width: "100%",
                         height: "100%",
                         objectFit: "cover",
-                        borderRadius: 12,
+                        borderRadius: 8,
                       }}
                     />
                   </Box>

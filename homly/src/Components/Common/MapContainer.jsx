@@ -22,8 +22,6 @@ export default function SimpleMap({ name, address, photo }) {
             key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
           },
         });
-        console.log("mappppp",process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
-        console.log("mapppppidddddd",process.env.REACT_APP_GOOGLE_MAP_ID);
         const location = response.data.results[0].geometry.location;
         setLat(location.lat);
         setLng(location.lng);
@@ -45,7 +43,6 @@ export default function SimpleMap({ name, address, photo }) {
 
   return (
     <APIProvider apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}> 
-      <div style={{ height: "35vh", width: "100%" }}>
         <Map
           defaultZoom={10}
           center={position}
@@ -78,7 +75,6 @@ export default function SimpleMap({ name, address, photo }) {
             </InfoWindow>
           )}
         </Map>
-      </div>
     </APIProvider>
   );
 }
