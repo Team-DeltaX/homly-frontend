@@ -32,7 +32,7 @@ const AuthorizationsCard = (props) => {
         props.Setopensn(true);
         //sent approvel notification to location admin
         socket.emit("newNotification", {
-          senderId: localStorage.getItem("userId"),
+          senderId: sessionStorage.getItem("userId"),
           receiverId: props.data.AdminNo,
           data: `${props.data.Name} Holiday Home has been approved`,
           type: "Authorization Denied",
@@ -45,7 +45,7 @@ const AuthorizationsCard = (props) => {
   };
 
   const rejectHH = () => {
-    console.log("reject called ");
+    
     console.log(props.data.HolidayHomeId);
     AxiosClient.delete(
       `/admin/auth/locationadmin/holidayhome/reject`,
@@ -69,7 +69,12 @@ const AuthorizationsCard = (props) => {
         });
       })
       .catch((error) => {
+
+        props.opensnE(true);
+        
+
         console.log("error in reject");
+
       });
   };
   return (
@@ -93,16 +98,11 @@ const AuthorizationsCard = (props) => {
         <Box></Box>
         <Box>
           {" "}
-          <Grid container>
-            <Grid md={9} xs={12}>
-              <Grid
-                md={12}
-                sx={{
-                  display: "flex",
-                  flexDirection: { xs: "row", md: "column" },
-                  justifyContent: "center",
-                }}
-              >
+
+          <Grid container  >
+            <Grid md={7} xs={12}>
+              <Grid md={12} sx={{display:"flex",flexDirection:{xs:'row',md:'column'},justifyContent:'center'}}>
+
                 <Grid md={12}>
                   <Typography sx={{ fontWeight: "light" }}>District</Typography>
                 </Grid>
@@ -131,8 +131,10 @@ const AuthorizationsCard = (props) => {
               </Grid>
             </Grid>
 
-            <Grid md={3} xs={12}>
-              <Grid md={12}>
+
+            <Grid md={5} xs={12}>
+              <Grid md={12} >
+
                 <Button
                   type="submit"
                   variant="contained"
@@ -143,6 +145,10 @@ const AuthorizationsCard = (props) => {
                     display: { xs: "none", md: "flex" },
                   }}
                   startIcon={<PreviewIcon />}
+                  onClick={()=>{
+                    props.handleClickOpen()
+                    props.setSelectedtoview(props.data)
+                  }}
                 >
                   <Typography>View</Typography>
                 </Button>
@@ -158,9 +164,9 @@ const AuthorizationsCard = (props) => {
                 <Grid md={12} sx={{ marginTop: { md: "25px", xs: "0" } }}>
                   <Typography sx={{ fontWeight: "light" }}>Admin</Typography>{" "}
                 </Grid>
-                <Grid md={12} sx={{ marginLeft: { md: "8px", xs: "10px" } }}>
-                  {props.data.AdminNo}
-                </Grid>
+
+                <Grid md={12} sx={{marginLeft:{md:'0px',xs:'10px'}}} >{props.data.AdminNo}</Grid>
+
               </Grid>
             </Grid>
           </Grid>

@@ -7,16 +7,35 @@ import Pagetop from "../../Components/PrimaryAdmin/PageTop";
 import AuthorizationsCard from "../../Components/PrimaryAdmin/authorizationsCard";
 import Snackbarp from "../../Components/PrimaryAdmin/snackbar/Snackbarp";
 import AxiosClient from "../../services/AxiosClient";
+import ViewHomeDetailsPop from "../../Components/PrimaryAdmin/ViewHomeDetailsPop";
 
 const PrimaryAuthorizations = () => {
   const [popup, setpopup] = useState(false);
-  const [Pending, SetPending] = useState([]);
+  const [Pendinghomes, SetPendinghomes] = useState([]);
   const [opensn, SetOpensn] = React.useState(false);
   const [opensnE, SetOpensnE] = React.useState(false);
-  const get_pending = () => {
-    AxiosClient.get(`/admin/auth/locationadmin/holidayhome/pending`)
+
+  const [open, setOpen] = React.useState(false);
+  const [selectedtoview,setSelectedtoview]=useState({})
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (value) => {
+    setOpen(false);
+   
+  };
+
+  const get_pending_homes = () => {
+   
+    AxiosClient
+      .get(
+        `/admin/auth/locationadmin/holidayhome/pending`
+      )
+
       .then((res) => {
-        SetPending(res.data);
+        SetPendinghomes(res.data);
       })
       .catch((error) => {
         SetOpensnE(true);
@@ -25,11 +44,18 @@ const PrimaryAuthorizations = () => {
 
   const [showNav, setShowNav] = useState("nav_grid_deactive");
   useEffect(() => {
-    get_pending();
+    get_pending_homes();
+    console.log('pen',Pendinghomes)
   }, []);
 
   return (
     <ThemeProvider theme={theme}>
+       <ViewHomeDetailsPop
+        
+        open={open}
+        onClose={handleClose}
+        selectedtoview={selectedtoview}
+      />
       <Box
         className="main_continer"
         sx={{
@@ -80,15 +106,17 @@ const PrimaryAuthorizations = () => {
                 }}
               >
                 <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-                  {Pending.map((item) => {
+                  {Pendinghomes.map((item) => {
                     return (
                       <AuthorizationsCard
                         setpopup={setpopup}
                         popup={popup}
                         data={item}
-                        get_pending={get_pending}
+                        get_pending={get_pending_homes}
                         Setopensn={SetOpensn}
                         SetopensnE={SetOpensnE}
+                        handleClickOpen={handleClickOpen}
+                        setSelectedtoview={setSelectedtoview}
                       />
                     );
                   })}

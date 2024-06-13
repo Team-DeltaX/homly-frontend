@@ -68,7 +68,7 @@ const PDashboardboxes = () => {
           <Grid
             container
             justifyContent={"space-between"}
-            sx={{ marginBottom: "25px", width: "100%", }}
+            sx={{ marginBottom: "25px", width: "100%",}}
             spacing={1}
             
           >
@@ -80,6 +80,9 @@ const PDashboardboxes = () => {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
+                marginLeft:{xs:'20px',md:'0px'}
+                
+               
               }}
             >
               <Box sx={{ width: "350px", height: "150px" }}>
@@ -152,6 +155,7 @@ const PDashboardboxes = () => {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
+                marginLeft:{xs:'0px',md:'0px'}
               }}
             >
               <Box sx={{ width: "350px", height: "150px" }}>
@@ -170,6 +174,7 @@ const PDashboardboxes = () => {
                     borderRadius: "20px",
                     alignItems: "center",
                     textAlign: "center",
+                    marginLeft:{xs:'20px',md:'0px'}
                   }}
                 >
                   <Box>
