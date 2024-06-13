@@ -32,7 +32,7 @@ const DashboardContent = () => {
                   md={8}
                   sx={{
                     backgroundColor: "white",
-                    overflow: "auto",
+                    overflow: "scroll",
                     maxHeight: { md: "645px", xs: "auto" },
                   }}
                 >
