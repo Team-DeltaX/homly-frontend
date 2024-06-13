@@ -254,6 +254,7 @@ const HolidayHomeEdit = () => {
       image3: image3,
       careTakerImage1: careTakerImage1,
       careTakerImage2: careTakerImage2,
+      selectedRoomDetails: selectedRoomDetails,
     };
     e.preventDefault();
     setApprovedClicked(true);
