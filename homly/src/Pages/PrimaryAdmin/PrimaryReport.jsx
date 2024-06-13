@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Container, Grid, ThemeProvider, Box, Tab } from "@mui/material";
-import { TabContext, TabList, TabPanel } from '@mui/lab';
+import { TabContext, TabList, TabPanel } from "@mui/lab";
 import SideNavbar from "../../Components/PrimaryAdmin/SideNavbar";
 import theme from "../../HomlyTheme";
 import Pagetop from "../../Components/PrimaryAdmin/PageTop";
 import IncomeReport from "../../Components/Common/Report/IncomeReport";
-import ReservationReport from "../../Components/Common/Report/ReservationReport"
+import ReservationReport from "../../Components/Common/Report/ReservationReport";
+import BlacklistUserReport from "../../Components/Common/Report/blacklistUserReport";
 
 const PrimaryReport = () => {
   const [showNav, setShowNav] = useState("nav_grid_deactive");
@@ -45,23 +46,29 @@ const PrimaryReport = () => {
               }}
             >
               <Pagetop setShowNav={setShowNav} heading="Generate Report" />
-              
+
               <Box sx={{ width: "100%", bgcolor: "background.paper" }}>
                 <TabContext value={value}>
-                  <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                    <TabList onChange={handleChange} aria-label="lab API tabs example">
+                  <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+                    <TabList
+                      onChange={handleChange}
+                      aria-label="lab API tabs example"
+                    >
                       <Tab label="Income Report" value="1" />
                       <Tab label="Reservation Report" value="2" />
                       <Tab label="Blacklist User Report" value="3" />
                     </TabList>
                   </Box>
                   <TabPanel value="1">
-                  <IncomeReport />
+                    <IncomeReport />
                   </TabPanel>
                   <TabPanel value="2">
-                  <ReservationReport/>
+                    <ReservationReport />
                   </TabPanel>
-                  <TabPanel value="3">Item Three</TabPanel>
+                  <TabPanel value="3">
+                    Select the Specific Time period
+                    <BlacklistUserReport />
+                  </TabPanel>
                 </TabContext>
               </Box>
             </Grid>

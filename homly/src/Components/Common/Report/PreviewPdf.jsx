@@ -1,5 +1,4 @@
 // import React from "react";
-// import {Page, Text, Image, Document, Stylesheet} from '@react-pdf/renderer';
 // import logo from "../../../Assets/images/logo.png";
 // import Box from "@mui/material/Box";
 // import Paper from "@mui/material/Paper";
@@ -143,5 +142,6 @@
 //     </React.Fragment>
 //   );
 // };
+
 
 // export default PreviewPdf;

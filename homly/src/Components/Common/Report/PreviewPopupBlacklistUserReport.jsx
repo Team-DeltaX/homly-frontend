@@ -106,11 +106,15 @@ const PreviewPopupIncomeReport = ({ open, setOpen, previewData, toDate, fromDate
                 <TableRow>
                   <TableCell style={{ fontWeight: "bold" }}>
                     {" "}
-                    Holiday Home{" "}
+                    Service Number{" "}
+                  </TableCell>
+                  <TableCell style={{ fontWeight: "bold" }}>
+                    {" "}
+                    Employee Name{" "}
                   </TableCell>
                   <TableCell align="right" style={{ fontWeight: "bold" }}>
                     {" "}
-                    Income per Holiday Home(lkr){" "}
+                    Reason{" "}
                   </TableCell>
                 </TableRow>
               </TableHead>

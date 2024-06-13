@@ -36,7 +36,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-const PreviewPopupIncomeReport = ({ open, setOpen, previewData, toDate, fromDate }) => {
+const PreviewPopupReservationReport = ({ open, setOpen, previewData, toDate, fromDate }) => {
   const [isDownolad, setIsDownload] = useState(false);
 
   const handleClose = () => {
@@ -52,6 +52,8 @@ const PreviewPopupIncomeReport = ({ open, setOpen, previewData, toDate, fromDate
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
         open={open}
+        maxWidth="md" // Set the desired maxWidth (xs, sm, md, lg, xl)
+        fullWidth={true} // Set to true to make the dialog take up the full width
       >
         <div>
           <div>
@@ -70,7 +72,7 @@ const PreviewPopupIncomeReport = ({ open, setOpen, previewData, toDate, fromDate
               style={{ fontWeight: "bold" }}
             >
               Inova IT Systems - Welfare Department <br />
-              Income Details
+              Reservation Details
             </DialogTitle>
           </div>
         </div>
@@ -106,18 +108,44 @@ const PreviewPopupIncomeReport = ({ open, setOpen, previewData, toDate, fromDate
                 <TableRow>
                   <TableCell style={{ fontWeight: "bold" }}>
                     {" "}
-                    Holiday Home{" "}
+                    Reservation ID{" "}
+                  </TableCell>
+                  <TableCell style={{ fontWeight: "bold" }}>
+                    {" "}
+                    Holiday Home name{" "}
+                  </TableCell>
+                 
+                  <TableCell style={{ fontWeight: "bold" }}>
+                    {" "}
+                    Recipient Name{" "}
+                  </TableCell>
+                  <TableCell style={{ fontWeight: "bold" }}>
+                    {" "}
+                    Contact No{" "}
+                  </TableCell>
+                  <TableCell style={{ fontWeight: "bold" }}>
+                    {" "}
+                    Checking Date{" "}
+                  </TableCell>
+                  <TableCell style={{ fontWeight: "bold" }}>
+                    {" "}
+                    Checkout Date {" "}
+                  </TableCell>
+                  <TableCell style={{ fontWeight: "bold" }}>
+                    {" "}
+                    No. of rooms{" "}
+                  </TableCell>
+                  <TableCell style={{ fontWeight: "bold" }}>
+                    {" "}
+                    No. of halls{" "}
                   </TableCell>
                   <TableCell align="right" style={{ fontWeight: "bold" }}>
                     {" "}
-                    Income per Holiday Home(lkr){" "}
+                    Payment amount(lkr){" "}
                   </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-
-                {/* holidayHome name and income */}
-                
                 {previewData.TotalPerHH &&
                   previewData.TotalPerHH.map((row) => (
                     <TableRow
@@ -150,4 +178,4 @@ const PreviewPopupIncomeReport = ({ open, setOpen, previewData, toDate, fromDate
   );
 };
 
-export default PreviewPopupIncomeReport;
+export default PreviewPopupReservationReport;

@@ -15,7 +15,7 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import PreviewPopupIncomeReport from "./PreviewPopupIncomeReport";
+import PreviewPopupReservationReport from "./PreviewPopupReservationReport";
 import { useState } from "react";
 import AxiosClient from "../../../services/AxiosClient";
 import { useEffect } from "react";
@@ -28,7 +28,7 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-export default function IncomeReport() {
+export default function ReservationReport() {
   const [open, setOpen] = React.useState(false);
   const [holidayHome, setHolidayHome] = useState("all");
   const [fromDate, setFromDate] = useState(dayjs().subtract(1, "day"));
@@ -190,7 +190,7 @@ export default function IncomeReport() {
           </Button>
         </Stack>
       </Stack>
-      <PreviewPopupIncomeReport
+      <PreviewPopupReservationReport
         open={open}
         setOpen={setOpen}
         previewData={previewData}
