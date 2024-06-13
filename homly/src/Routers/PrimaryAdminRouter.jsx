@@ -1,6 +1,7 @@
 import React, { lazy } from "react";
 import { Routes, Route } from "react-router-dom";
 import PrivateRoutes from "./PrivateRoutes";
+import ViewHolidayHome from "../Pages/PrimaryAdmin/ViewHolidayHome";
 
 const PrimaryDashboard = lazy(() =>
   import("../Pages/PrimaryAdmin/PrimaryDashboard")
@@ -55,6 +56,11 @@ const PrimaryAdminRouter = () => {
         <Route path="/addadmin" element={<PrimaryAddAdmin />} />
         <Route path="/viewadmin" element={<PrimaryViewAdmin />} />
         <Route path="/authorizations" element={<PrimaryAuthorizations />} />
+
+        <Route
+          path="/holidayhomes/viewholidayhome/:homeId"
+          element={<ViewHolidayHome/>}
+        />
       </Route>
     </Routes>
   );

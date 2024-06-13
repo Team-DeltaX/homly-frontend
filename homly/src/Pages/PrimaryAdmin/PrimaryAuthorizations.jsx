@@ -50,12 +50,12 @@ const PrimaryAuthorizations = () => {
 
   return (
     <ThemeProvider theme={theme}>
-       <ViewHomeDetailsPop
+       {/* <ViewHomeDetailsPop
         
         open={open}
         onClose={handleClose}
         selectedtoview={selectedtoview}
-      />
+      /> */}
       <Box
         className="main_continer"
         sx={{

@@ -14,6 +14,7 @@ import { useContext, useState } from "react";
 import ConfirmPopup from "./ConfirmPopup";
 import AxiosClient from "../../services/AxiosClient";
 import { SocketioContext } from "../../Contexts/SocketioContext";
+import { Link } from "react-router-dom";
 
 const AuthorizationsCard = (props) => {
   const [open, Setopen] = useState(false);
@@ -146,8 +147,11 @@ const AuthorizationsCard = (props) => {
                   }}
                   startIcon={<PreviewIcon />}
                   onClick={()=>{
-                    props.handleClickOpen()
-                    props.setSelectedtoview(props.data)
+                    // props.handleClickOpen()
+                    // props.setSelectedtoview(props.data)
+                    <Link to={`primaryadmin/holidayhomes/viewholidayhome/${props.data.HolidayHomeId}`} />
+
+                    
                   }}
                 >
                   <Typography>View</Typography>
