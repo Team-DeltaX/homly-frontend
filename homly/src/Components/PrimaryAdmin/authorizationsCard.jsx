@@ -135,7 +135,7 @@ const AuthorizationsCard = (props) => {
 
             <Grid md={5} xs={12}>
               <Grid md={12} >
-
+              <Link to={`/primaryadmin/holidayhomes/viewholidayhome/${props.data.HolidayHomeId}`} >
                 <Button
                   type="submit"
                   variant="contained"
@@ -149,13 +149,14 @@ const AuthorizationsCard = (props) => {
                   onClick={()=>{
                     // props.handleClickOpen()
                     // props.setSelectedtoview(props.data)
-                    <Link to={`primaryadmin/holidayhomes/viewholidayhome/${props.data.HolidayHomeId}`} />
+                    
 
                     
                   }}
                 >
                   <Typography>View</Typography>
                 </Button>
+                </Link>
               </Grid>
               <Grid
                 md={12}
