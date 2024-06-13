@@ -114,7 +114,6 @@ const PreviewPopupReservationReport = ({ open, setOpen, previewData, toDate, fro
                     {" "}
                     Holiday Home name{" "}
                   </TableCell>
-                 
                   <TableCell style={{ fontWeight: "bold" }}>
                     {" "}
                     Recipient Name{" "}
@@ -145,6 +144,8 @@ const PreviewPopupReservationReport = ({ open, setOpen, previewData, toDate, fro
                   </TableCell>
                 </TableRow>
               </TableHead>
+
+
               <TableBody>
                 {previewData.TotalPerHH &&
                   previewData.TotalPerHH.map((row) => (
@@ -161,6 +162,9 @@ const PreviewPopupReservationReport = ({ open, setOpen, previewData, toDate, fro
                     </TableRow>
                   ))}
               </TableBody>
+
+
+
             </Table>
           </TableContainer>
           <Typography gutterBottom align="right" style={{ fontWeight: "bold" }}>

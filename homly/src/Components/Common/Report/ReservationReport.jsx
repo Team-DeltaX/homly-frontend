@@ -38,13 +38,13 @@ export default function ReservationReport() {
 
   const maxDate = dayjs().subtract(1, "day");
   const handleClickOpen = () => {
-    AxiosClient.get("admin//report/income", {
+    AxiosClient.get("admin//report/reservation", {
       params: {
-        HHName: holidayHome,
         fromDate: fromDate,
         toDate: toDate,
       },
     }).then((res) => {
+      console.log("aaaaaaadddd",res.data);
       setPreviewData(res.data);
       setOpen(true);
     });

@@ -114,10 +114,9 @@ const PreviewPopupIncomeReport = ({ open, setOpen, previewData, toDate, fromDate
                   </TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody>
 
                 {/* holidayHome name and income */}
-                
+                <TableBody>
                 {previewData.TotalPerHH &&
                   previewData.TotalPerHH.map((row) => (
                     <TableRow

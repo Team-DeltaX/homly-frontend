@@ -45,6 +45,7 @@ export default function IncomeReport() {
         toDate: toDate,
       },
     }).then((res) => {
+      console.log("aaaaadddd",res.data);
       setPreviewData(res.data);
       setOpen(true);
     });

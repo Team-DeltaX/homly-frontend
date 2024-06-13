@@ -139,9 +139,9 @@ const PreviewPopupIncomeReport = ({ open, setOpen, previewData, toDate, fromDate
               </TableBody>
             </Table>
           </TableContainer>
-          <Typography gutterBottom align="right" style={{ fontWeight: "bold" }}>
+          {/* <Typography gutterBottom align="right" style={{ fontWeight: "bold" }}>
             Total Income (LKR) : {previewData && previewData.TotalPrice}
-          </Typography>
+          </Typography> */}
         </DialogContent>
         
         <DialogActions>
