@@ -135,7 +135,8 @@ export default function HolidayHomeDetails() {
             maxWidth="lg"
             sx={{
               bgcolor: "white",
-              marginTop: { xs: "80px", sm: "80px", md: "10px" },
+              marginTop: { xs: "60px", sm: "70px", md: "10px" },
+              marginBottom: { xs: "20px", sm: "30px", md: "40px" },
             }}
           >
             <Grid container spacing={2}>
@@ -351,13 +352,17 @@ export default function HolidayHomeDetails() {
                     variant="h4"
                     sx={{
                       fontWeight: { xs: "350", sm: "400", md: "450" },
-                      fontSize: { xs: "0.25rem", sm: "0.5rem", md: "1rem" },
+                      fontSize: { xs: "1rem", sm: "1rem", md: "1rem" },
                     }}
                     gutterBottom
                   >
                     Other Facilities
                   </Typography>
-                  <Typography variant="subtitle1" align="justify" gutterBottom>
+                  <Typography variant="subtitle1" 
+                  sx={{
+                      fontWeight: { xs: "350", sm: "400", md: "450" },
+                      fontSize: { xs: "0.75rem", sm: "0.75rem", md: "0.8rem" },
+                    }} align="justify" gutterBottom>
                     {value.Facilities}
                   </Typography>
                 </Stack>
