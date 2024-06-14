@@ -69,8 +69,7 @@ export default function StatisticsDetails() {
     });
   };
   const getHallincome = () => {
-    AxiosClient
-      .get(`/admin/auth/hallincome`)
+    AxiosClient.get(`/admin/auth/hallincome`)
       .then((res) => {
         setHallrevenue(res.data.hallincome);
       })

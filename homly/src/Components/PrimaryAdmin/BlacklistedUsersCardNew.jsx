@@ -3,15 +3,13 @@ import theme from "../../HomlyTheme";
 import { useEffect, useState } from "react";
 import AxiosClient from "../../services/AxiosClient";
 
-
 const BlacklistedUsersCardNew = (props) => {
   const [User, SetUser] = useState({});
   const [Employee, SetEmployee] = useState({});
   const fetchfromemployee = () => {
-    AxiosClient
-      .get(
-        `/admin/auth/locationadmin/employee/${props.data.ServiceNo}`
-      )
+    AxiosClient.get(
+      `/admin/auth/locationadmin/employee/${props.data.ServiceNo}`
+    )
       .then((res) => {
         SetEmployee(res.data[0]);
       })
@@ -21,10 +19,7 @@ const BlacklistedUsersCardNew = (props) => {
   };
 
   const fetchfromuser = () => {
-    AxiosClient
-      .get(
-        `/admin/auth/locationadmin/user/${props.data.ServiceNo}`
-      )
+    AxiosClient.get(`/admin/auth/locationadmin/user/${props.data.ServiceNo}`)
       .then((res) => {
         SetUser(res.data[0]);
       })

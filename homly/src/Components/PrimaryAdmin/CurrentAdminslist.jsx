@@ -6,7 +6,6 @@ import { CustomTabContext } from "../../Contexts/primryadmin/CustomTabContext";
 import { SearchContext } from "../../Contexts/primryadmin/Searchcontext";
 import AxiosClient from "../../services/AxiosClient";
 
-
 const CurrentAdminslist = () => {
   const [admins, setAdmins] = useState([]);
   const [open, setOpen] = useState(false);
@@ -28,13 +27,10 @@ const CurrentAdminslist = () => {
 
   const fetchadmins = () => {
     SetLoad(true);
-    AxiosClient
-      .get(`/admin/auth/locationadmin/all`)
-      .then((res) => {
-        SetLoad(false);
-        setAdmins(res.data.reverse());
-      })
-      
+    AxiosClient.get(`/admin/auth/locationadmin/all`).then((res) => {
+      SetLoad(false);
+      setAdmins(res.data.reverse());
+    });
   };
 
   useEffect(() => {

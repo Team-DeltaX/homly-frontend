@@ -2,7 +2,6 @@ import * as React from "react";
 import { LineChart } from "@mui/x-charts/LineChart";
 import AxiosClient from "../../services/AxiosClient";
 
-
 const Income = () => {
   const pData = [];
   const [incomes, setIncomes] = React.useState([]);
@@ -21,8 +20,7 @@ const Income = () => {
   };
   const setearning = () => {
     const promises = getLastSevenDays().map((date) => {
-      return AxiosClient
-        .get(`/admin/auth/dayincome/${date}`)
+      return AxiosClient.get(`/admin/auth/dayincome/${date}`)
         .then((res) => res.data.sumForDate)
         .catch((err) => {
           console.log(err);

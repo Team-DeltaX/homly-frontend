@@ -11,11 +11,12 @@ import { Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
+import Divider from '@mui/material/Divider';
 import { useState, useEffect } from "react";
 
 
 
-export default function AccordionUsage({room,NoOfRooms,setNoOfRooms,roomCodes,setRoomCodes,NoOfAdults,setNoOfAdults,NoOfChildren,setNoOfChildren,roomPrice,setRoomPrice}) {
+export default function AccordionUsage({index,key,room,NoOfRooms,setNoOfRooms,roomCodes,setRoomCodes,NoOfAdults,setNoOfAdults,NoOfChildren,setNoOfChildren,roomPrice,setRoomPrice}) {
   const [reserve,setReserve] = useState(false);
 
   // check room id is in room codes
@@ -24,11 +25,12 @@ export default function AccordionUsage({room,NoOfRooms,setNoOfRooms,roomCodes,se
       setReserve(true)
     }
   },[])
-
+  console.log(index)
+  const isOdd = index % 2 === 1;
   
   return (
-    <div>
-      <Accordion key={room.id}>
+    <Box>
+      <Accordion key={room.id} sx={{backgroundColor: isOdd? '#f0f0f0' : 'inherit'}} defaultExpanded={index === 0}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel3-content"
@@ -52,9 +54,6 @@ export default function AccordionUsage({room,NoOfRooms,setNoOfRooms,roomCodes,se
               per day
             </Typography>
           </Stack>
-          {/* <Typography variant="h6" sx={{ ml:20, flexShrink: 0 }}>
-          <Checkbox />
-          </Typography> */}
           {reserve?<Typography variant="button"
           sx={{color:'green',ml: "20%", flexShrink: 0 }}>Reserved</Typography>:" "}
           
@@ -95,8 +94,8 @@ export default function AccordionUsage({room,NoOfRooms,setNoOfRooms,roomCodes,se
           console.log("roooooms",roomCodes)
           }}>Reserve</Button>
         </AccordionActions>
-
-        </Accordion>
-    </div>
+        <Divider />
+      </Accordion>
+    </Box>
   );
 }

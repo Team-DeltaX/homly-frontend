@@ -1,11 +1,9 @@
 
 import './style.css';
 import React, { useState } from 'react'
-
 import Box from '@mui/material/Box';
 import { Grid, ThemeProvider, Container } from '@mui/material';
 import theme from '../../HomlyTheme';
-
 import SideNavbar from '../../Components/locationAdmin/SideNavbar'
 import PageTitle from '../../Components/locationAdmin/PageTitle';
 import CreateHolidayHomeContent from '../../Components/locationAdmin/CreateHolidayHome/CreateHolidayHomeContent';

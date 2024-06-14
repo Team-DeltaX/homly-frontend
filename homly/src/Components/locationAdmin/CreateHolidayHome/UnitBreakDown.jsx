@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { Box, Button, Typography, Paper } from '@mui/material'
 import Checkbox from '@mui/material/Checkbox';
 import CancelIcon from '@mui/icons-material/Cancel';
-
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -91,32 +90,6 @@ const UnitBreakDown = ({ unitCode, unitAc, floorLevel, unitRemarks, unitRental, 
 
 
     const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
-
-
-
-    // //ADD ac nonac room alert
-    // const [openAlert, setOpenAlert] = useState(false);
-
-    // const handleCloseAlert = (event, reason) => {
-    //     if (reason === 'clickaway') {
-    //         return;
-    //     }
-
-    //     setOpenAlert(false);
-    // };
-
-    // // Sure dialog for remove unit
-
-    // const theme = useTheme();
-    // const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
-    // const [openUnitRemove, setOpenUnitRemove] = useState(false);//unit remove state pop up
-
-    // const handleOpenUnitRemove = () => {
-    //     setOpenUnitRemove(true);
-    // };
-
-
-
 
 
 

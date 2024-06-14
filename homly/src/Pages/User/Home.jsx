@@ -72,7 +72,6 @@ export default function Home() {
         setIsDisplayInterest(false);
       });
   }, [interestsIsSubmited]);
-  
 
   return (
     <ThemeProvider theme={theme}>
@@ -146,8 +145,8 @@ export default function Home() {
                       with beautiful views
                     </Typography>
                   </Stack>
-                  
-                    <SearchBarHome />
+
+                  <SearchBarHome />
                 </Stack>
               </Box>
               <Box>

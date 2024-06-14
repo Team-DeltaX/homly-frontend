@@ -82,10 +82,11 @@ export default function AvailableHallsPopUp({
         <List>
         {console.log("hall",hall)}
         {hall.length > 0 ? (
-             hall.map((hall) => (
+             hall.map((hall, index) => (
               console.log("hall",hall),
               hall.HolidayHomeId === holidayId && (// TODO: remove this hard-coded hall code
                 <AccordionUsage
+                  index= {index}
                   key={hall.id}
                   hall={hall}
                   NoOfHalls={ NoOfHalls}
