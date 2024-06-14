@@ -135,26 +135,30 @@ const AuthorizationsCard = (props) => {
 
             <Grid md={5} xs={12}>
               <Grid md={12}>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  sx={{
-                    width: "80px",
-                    height: "30px",
-                    borderRadius: "15px",
-                    display: { xs: "none", md: "flex" },
-                  }}
-                  startIcon={<PreviewIcon />}
-                  onClick={() => {
-                    // props.handleClickOpen()
-                    // props.setSelectedtoview(props.data)
-                    <Link
-                      to={`primaryadmin/holidayhomes/viewholidayhome/${props.data.HolidayHomeId}`}
-                    />;
-                  }}
+                <Link
+                  to={`/primaryadmin/holidayhomes/viewholidayhome/${props.data.HolidayHomeId}`}
                 >
-                  <Typography>View</Typography>
-                </Button>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    sx={{
+                      width: "80px",
+                      height: "30px",
+                      borderRadius: "15px",
+                      display: { xs: "none", md: "flex" },
+                    }}
+                    startIcon={<PreviewIcon />}
+                    onClick={() => {
+                      // props.handleClickOpen()
+                      // props.setSelectedtoview(props.data)
+                      <Link
+                        to={`primaryadmin/holidayhomes/viewholidayhome/${props.data.HolidayHomeId}`}
+                      />;
+                    }}
+                  >
+                    <Typography>View</Typography>
+                  </Button>
+                </Link>
               </Grid>
               <Grid
                 md={12}

@@ -200,6 +200,22 @@ export default function AddReviewPopup({
                 setValue={setwifiRating}
                 lable={"Wifi"}
               />
+              <Box sx={{ mt: "7px" }}>
+                <Typography>
+                  {" "}
+                  {isEdit
+                    ? "Edit your review about Holiday Home"
+                    : "Review about Holiday Home"}{" "}
+                </Typography>
+                <TextField
+                  id="outlined-multiline-flexible"
+                  multiline
+                  maxRows={4}
+                  value={review}
+                  fullWidth
+                  onChange={(e) => setReview(e.target.value)}
+                />
+              </Box>
             </>
           ) : (
             <Box sx={{ mt: "7px" }}>
