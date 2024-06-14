@@ -20,7 +20,6 @@ const NotificationPanal = ({ bell }) => {
   useEffect(() => {
     AxiosClient.get("/common/auth/notifications")
       .then((res) => {
-        console.log(res.data,'notifications')
         SetNotifications(res.data);
         SetMessagecount(res.data.length);
       })
@@ -43,7 +42,6 @@ const NotificationPanal = ({ bell }) => {
   }, []);
 
   useEffect(() => {
-    console.log("socket", socket);
     if (socket) {
       socket.on("notification", (notification) => {
         SetNotifications((prevNotifications) => [
@@ -76,8 +74,7 @@ const NotificationPanal = ({ bell }) => {
     AxiosClient.delete("/common/auth/notifications", {
       data: { notificationIds: removedNotificationId },
     })
-      .then((res) => {
-        console.log(res, "delete notification");
+      .then(() => {
         SetNotifications((prevNotifications) =>
           prevNotifications.filter(
             (notification) => notification.id !== removedNotificationId
@@ -85,10 +82,9 @@ const NotificationPanal = ({ bell }) => {
         );
         SetMessagecount((prevCount) => prevCount - 1);
       })
-      .catch((err) => {
-        console.log(err, "delete notification");
-      });
+      .catch(() => {});
   };
+
   return (
     <Box>
       <Box
@@ -116,6 +112,20 @@ const NotificationPanal = ({ bell }) => {
           ""
         )}
       </Box>
+      {showNotifications && (
+        <Box
+          sx={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            zIndex: 999,
+          }}
+          onClick={handleBellClick}
+        />
+      )}
       <Paper
         ref={notificationsContainerRef}
         className="notifications_container"
@@ -125,7 +135,7 @@ const NotificationPanal = ({ bell }) => {
           backgroundColor: "rgba(255,255,255,0.8)",
           position: "absolute",
           borderRadius: "15px",
-          zIndex: "1000",
+          zIndex: 1000,
           padding: "10px",
           right: 0,
           display: showNotifications ? "block" : "none",

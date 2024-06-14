@@ -1,65 +1,111 @@
-import { Grid,Box } from '@mui/material'
-import React from 'react'
+import React, { useEffect, useState } from "react";
+import Box from "@mui/material/Box";
+import { Container, Grid, ThemeProvider } from "@mui/material";
+import theme from "../../HomlyTheme";
+import { PieChart } from "@mui/x-charts/PieChart";
+import Income from "../../Components/PrimaryAdmin/Income";
+import PDashboardboxes from "./Dashboard/PDashboardboxes";
 
-import Summary from './Summary'
-import StatisticsDetails from './StatisticsDetails';
-
-
-import DirectionsWalkIcon from '@mui/icons-material/DirectionsWalk';
-import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
-import PaidIcon from '@mui/icons-material/Paid';
+import HomeRating from "./Dashboard/HomeRatings";
 
 const DashboardContent = () => {
-    const summaries = [
-        {
-          color:'#8CB7A3',
-          summaryTitle: 'Travellers',
-          count: 1546,
-          iconComponent: <DirectionsWalkIcon sx={{fontSize:'2.8rem'}}/>,
-        },
-        {
-          color:'#4D4E8E',
-          summaryTitle: 'Bookings',
-          count: 879,
-          iconComponent: <LibraryBooksIcon sx={{fontSize:'2.8rem'}}/>,
-        },
-        {
-            color:'#FF5F51',
-            summaryTitle: 'Earnings',
-            count: 879,
-            iconComponent: <PaidIcon sx={{fontSize:'2.8rem'}}/>,
-          },
-          {
-            color:'#FF5F51',
-            summaryTitle: 'Holiday Homes',
-            count: 879,
-            iconComponent: <PaidIcon sx={{fontSize:'2.8rem'}}/>,
-          }
+  const [activecount, SetActivecount] = useState(0);
+  const [inactivecount, setInactivecount] = useState(0);
 
-      ];
   return (
-    <Grid container sx={{padding:'10px 30px'}}>
-        <Grid md={8} xs={12}>
-            <Grid container justifyContent={'space-between'}sx={{marginBottom:'25px'}} spacing={2}>
-                {summaries.map((sum)=>(
-                     <Grid item md={2} xs={6} sm={3} lg={4} xl={4} sx={{display:'flex',alignItems:'center',justifyContent:'center'}}>
-                        <Box sx={{width:'150px',height:'150px'}}>
-                            <Summary summaryTitle={sum.summaryTitle} iconUse={sum.iconComponent} count={sum.count} color={sum.color}/>
-                        </Box>
-                     </Grid>
-                ))}
-            </Grid>
-            <Grid container spacing={2}>
-                <Grid item xs={12}>
-                    <StatisticsDetails/>
+    <ThemeProvider theme={theme}>
+      <Container maxWidth="xl" style={{ padding: "0px" }}>
+        <Grid container sx={{ position: "relative" }}>
+          <Grid
+            className="container_grid"
+            xs={12}
+            sx={{
+              backgroundColor: "white",
+              borderTopLeftRadius: "20px",
+              padding: "0 20px",
+            }}
+          >
+            <Box>
+              <Grid container sx={{ overflow: "auto", maxHeight: "100vh" }}>
+                <Grid
+                  item
+                  md={8}
+                  sx={{
+                    backgroundColor: "white",
+                    overflow: "scroll",
+                    maxHeight: { md: "645px", xs: "auto" },
+                  }}
+                >
+                  <Box>
+                    <PDashboardboxes />
+                  </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: { sm: "row", xs: "column" },
+                      }}
+                    >
+                      <Income />
+                      <Box sx={{ paddingTop: { xs: "5px", sm: "130px" } }}>
+                        <PieChart
+                          series={[
+                            {
+                              data: [
+                                {
+                                  id: 0,
+                                  value: activecount,
+                                  label: "Active",
+                                  color: "#FF5003",
+                                },
+                                {
+                                  id: 1,
+                                  value: inactivecount,
+                                  label: "Inactive",
+                                  color: "#002347",
+                                },
+                              ],
+                              innerRadius: 30,
+                              outerRadius: 100,
+                              paddingAngle: 5,
+                              cornerRadius: 5,
+                              startAngle: -90,
+                              endAngle: +90,
+                              cx: 150,
+                              cy: 150,
+                            },
+                          ]}
+                          width={370}
+                          height={200}
+                        />
+                      </Box>
+                    </Box>
+                  </Box>
                 </Grid>
-            </Grid>
+                <Grid
+                  item
+                  md={4}
+                  sx={{
+                    height: "100vh",
+                    marginLeft: { xs: "40px", md: "0px" },
+                  }}
+                >
+                  <HomeRating />
+                </Grid>
+              </Grid>
+            </Box>
+          </Grid>
         </Grid>
-        <Grid md={4} xs={12}>
-        </Grid>
-    </Grid>
-    
-  )
-}
+      </Container>
+    </ThemeProvider>
+  );
+};
 
-export default DashboardContent
+export default DashboardContent;

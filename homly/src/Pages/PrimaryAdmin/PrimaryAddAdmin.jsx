@@ -83,8 +83,7 @@ const PrimaryAddAdmin = () => {
       Disabled: false,
       Sub: substitute,
     };
-    AxiosClient
-      .post(`/admin/auth/locationadmin/add`, data)
+    AxiosClient.post(`/admin/auth/locationadmin/add`, data)
       .then((res) => {
         setnacktext("Admin Added Sucessfully!");
         handleClick();
@@ -94,7 +93,6 @@ const PrimaryAddAdmin = () => {
           "Somthing Went Wrong,May be admin no duplicaion,Please Try Again!"
         );
         handleClick();
-        
       });
 
     setadminno("");

@@ -6,13 +6,9 @@ import Tab from '@mui/material/Tab';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-
-
 import EditRoom from './EditHolidayHomes/EditRoom';
 import EditUnit from './EditHolidayHomes/EditUnit';
 import EditHall from './EditHolidayHomes/EditHall';
-
-
 
 
 function CustomTabPanel(props) {
@@ -56,7 +52,6 @@ const HomeBreakDownView = ({ setSubmit, setAllValues, submitClicked }) => {
   const [roomArray, setRoomArray] = useState([]);
   const [unitArray, setUnitArray] = useState([]);
   const [hallArray, setHallArray] = useState([]);
-
   const [adultsCount, setAdultsCount] = useState(0);
   const [childCount, setChildCount] = useState(0);
   const [otherCharges, setOtherCharges] = useState();

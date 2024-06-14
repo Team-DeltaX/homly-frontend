@@ -9,7 +9,6 @@ import { Box, Typography } from "@mui/material";
 import { CancelOutlined } from "@mui/icons-material";
 import AxiosClient from "../../services/AxiosClient";
 
-
 export default function CompareLineChart() {
   const [h1data, setH1data] = React.useState([]);
   const [h2data, setH2data] = React.useState([]);
@@ -19,11 +18,9 @@ export default function CompareLineChart() {
   const [HolidayHome1, SetHolidayHome1] = React.useState("");
   const [HolidayHome2, SetHolidayHome2] = React.useState("");
   const [HolidayHome3, SetHolidayHome3] = React.useState("");
-  const [HolidayHome1Rating,SetHolidayHome1Rating]=React.useState(0)
-  const [HolidayHome2Rating,SetHolidayHome2Rating]=React.useState(0)
-  const [HolidayHome3Rating,SetHolidayHome3Rating]=React.useState(0)
-
-
+  const [HolidayHome1Rating, SetHolidayHome1Rating] = React.useState(0);
+  const [HolidayHome2Rating, SetHolidayHome2Rating] = React.useState(0);
+  const [HolidayHome3Rating, SetHolidayHome3Rating] = React.useState(0);
 
   const Home1 = h1data;
   const Home2 = h2data;
@@ -38,14 +35,9 @@ export default function CompareLineChart() {
     xaxisd[6],
   ];
 
-
-
   const setearning_HH1 = (HolidayHome1) => {
     const promises = getLastSevenDays().map((date) => {
-      return AxiosClient
-        .get(
-          `/admin/auth/dayincome/${date}/${HolidayHome1}`
-        )
+      return AxiosClient.get(`/admin/auth/dayincome/${date}/${HolidayHome1}`)
         .then((res) => {
           return res.data.sumForDate;
         })
@@ -67,10 +59,7 @@ export default function CompareLineChart() {
   };
   const setearning_HH2 = (HolidayHome2) => {
     const promises = getLastSevenDays().map((date) => {
-      return AxiosClient
-        .get(
-          `/admin/auth/dayincome/${date}/${HolidayHome2}`
-        )
+      return AxiosClient.get(`/admin/auth/dayincome/${date}/${HolidayHome2}`)
         .then((res) => {
           return res.data.sumForDate;
         })
@@ -92,10 +81,7 @@ export default function CompareLineChart() {
 
   const setearning_HH3 = (HolidayHome3) => {
     const promises = getLastSevenDays().map((date) => {
-      return AxiosClient
-        .get(
-          `/admin/auth/dayincome/${date}/${HolidayHome3}`
-        )
+      return AxiosClient.get(`/admin/auth/dayincome/${date}/${HolidayHome3}`)
         .then((res) => {
           return res.data.sumForDate;
         })
@@ -113,44 +99,36 @@ export default function CompareLineChart() {
         console.log(err);
       });
   };
-  const getHolidayHome1Rating=(HolidayHome1)=>{
+  const getHolidayHome1Rating = (HolidayHome1) => {
     AxiosClient.get(`/admin/auth/holidayhomerating/${HolidayHome1}`)
-    .then((res)=>{
-      SetHolidayHome1Rating(res.data.rating[0].overall_rating)
-
+      .then((res) => {
+        SetHolidayHome1Rating(res.data.rating[0].overall_rating);
       })
-    .catch((error)=>{
-      console.log(error)
-    })
-  }
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
-  const getHolidayHome2Rating=(HolidayHome2)=>{
-    AxiosClient.get(`/admin/auth/holidayhomerating/${HolidayHome2}`)
-    .then((res)=>{
-      SetHolidayHome2Rating(res.data.rating[0].overall_rating)
+  const getHolidayHome2Rating = (HolidayHome2) => {
+    AxiosClient.get(`/admin/auth/holidayhomerating/${HolidayHome2}`).then(
+      (res) => {
+        SetHolidayHome2Rating(res.data.rating[0].overall_rating);
+      }
+    );
+  };
 
-      })
-    .catch((error)=>{
-      console.log(error)
-    })
-  }
-
-  const getHolidayHome3Rating=(HolidayHome3)=>{
-    AxiosClient.get(`/admin/auth/holidayhomerating/${HolidayHome3}`)
-    .then((res)=>{
-      SetHolidayHome3Rating(res.data.rating[0].overall_rating)
-
-      })
-    .catch((error)=>{
-      console.log(error)
-    })
-  }
-
+  const getHolidayHome3Rating = (HolidayHome3) => {
+    AxiosClient.get(`/admin/auth/holidayhomerating/${HolidayHome3}`).then(
+      (res) => {
+        SetHolidayHome3Rating(res.data.rating[0].overall_rating);
+      }
+    );
+  };
 
   const handleChangehh1 = (event) => {
     SetHolidayHome1(event.target.value);
     setearning_HH1(event.target.value);
-    getHolidayHome1Rating(event.target.value)
+    getHolidayHome1Rating(event.target.value);
   };
 
   const handleChangehh2 = (event) => {
@@ -162,7 +140,7 @@ export default function CompareLineChart() {
   const handleChangehh3 = (event) => {
     SetHolidayHome3(event.target.value);
     setearning_HH3(event.target.value);
-    getHolidayHome3Rating(event.target.value)
+    getHolidayHome3Rating(event.target.value);
   };
   const getLastSevenDays = () => {
     const dates = [];
@@ -177,9 +155,11 @@ export default function CompareLineChart() {
     return dates;
   };
   const getHHnames = () => {
-    AxiosClient
-      .get(`/admin/auth/holidayhomenames`)
+    AxiosClient.get(`/admin/auth/holidayhomenames`)
       .then((res) => {
+        // setHolidayHomes1(res.data.HH)
+        // console.log('---------holiday homes-------')
+        // console.log(res.data.HH)
         setHolidayHomes(res.data.HH);
       })
       .catch((err) => {
@@ -234,8 +214,10 @@ export default function CompareLineChart() {
               {HolidayHome1 === "" ? (
                 "select Home one to analyse"
               ) : (
-                <Typography sx={{ color: (HolidayHome1Rating<5?"red":"green") }}>
-                 {HolidayHome1Rating} Total Ratings
+                <Typography
+                  sx={{ color: HolidayHome1Rating < 5 ? "red" : "green" }}
+                >
+                  {HolidayHome1Rating} Total Ratings
                 </Typography>
               )}
             </FormHelperText>
@@ -282,8 +264,10 @@ export default function CompareLineChart() {
               {HolidayHome2 === "" ? (
                 "select Home two to analyse"
               ) : (
-                <Typography sx={{ color: (HolidayHome1Rating<5?"red":"green") }}>
-                 {HolidayHome2Rating} Total Ratings
+                <Typography
+                  sx={{ color: HolidayHome1Rating < 5 ? "red" : "green" }}
+                >
+                  {HolidayHome2Rating} Total Ratings
                 </Typography>
               )}
             </FormHelperText>
@@ -332,7 +316,9 @@ export default function CompareLineChart() {
               {HolidayHome3 === "" ? (
                 "select Home three to analyse"
               ) : (
-                <Typography sx={{ color: (HolidayHome1Rating<5?"red":"green")}}>
+                <Typography
+                  sx={{ color: HolidayHome1Rating < 5 ? "red" : "green" }}
+                >
                   {HolidayHome3Rating} Total Ratings
                 </Typography>
               )}{" "}

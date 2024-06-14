@@ -1,31 +1,80 @@
-import React from "react";
-import GoogleMapReact from 'google-map-react';
+import React, { useState, useEffect } from "react";
+import axios from 'axios';
+import {
+  APIProvider,
+  Map,
+  AdvancedMarker,
+  Pin,
+  InfoWindow,
+} from "@vis.gl/react-google-maps";
 
-const AnyReactComponent = ({ text }) => <div>{text}</div>;
+export default function SimpleMap({ name, address, photo }) {
+  const [lat, setLat] = useState(null);
+  const [lng, setLng] = useState(null);
+  const [open, setOpen] = useState(false);
 
-export default function SimpleMap(){
-  const defaultProps = {
-    center: {
-      lat: 10.99835602,
-      lng: 77.01502627
-    },
-    zoom: 11
-  };
+  useEffect(() => {
+    const getCoordinates = async () => {
+      try {
+        const response = await axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
+          params: {
+            address: address,
+            key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+          },
+        });
+        const location = response.data.results[0].geometry.location;
+        setLat(location.lat);
+        setLng(location.lng);
+      } catch (error) {
+        console.error("Error fetching the coordinates: ", error);
+      }
+    };
+
+    if (address) {
+      getCoordinates();
+    }
+  }, [address]);
+
+  const position = { lat: lat, lng: lng };
+
+  if (lat === null || lng === null) {
+    return <div>Loading map...</div>;
+  }
 
   return (
-    // Important! Always set the container height explicitly
-    <div style={{ height: '30vh', width: '100%' }}>
-      <GoogleMapReact
-        bootstrapURLKeys={{ key: "" }}
-        defaultCenter={defaultProps.center}
-        defaultZoom={defaultProps.zoom}
-      >
-        <AnyReactComponent
-          lat={59.955413}
-          lng={30.337844}
-          text="My Marker"
-        />
-      </GoogleMapReact>
-    </div>
+    <APIProvider apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}> 
+        <Map
+          defaultZoom={10}
+          center={position}
+          mapId={process.env.REACT_APP_GOOGLE_MAP_ID}
+          options={{
+            zoomControl: true,
+            streetViewControl: false,
+            mapTypeControl: true,
+            fullscreenControl: true,
+          }}
+        >
+          <AdvancedMarker position={position} onClick={() => setOpen(true)}>
+            <Pin
+              background={"red"}
+              borderColor={"white"}
+              glyphColor={"white"}
+            />
+          </AdvancedMarker>
+
+          {open && (
+            <InfoWindow position={position} onCloseClick={() => setOpen(false)}>
+              <div style={{ display: "flex", alignItems: "center", gap: "1rem", paddingBottom: '1rem', paddingRight:'1rem', paddingLeft:'1rem' }}>
+                <img style={{ height: "8vh", width: "8vh", borderRadius: "50%" }} src={photo} alt="Holiday Home" />
+                <div style={{ justifyContent: "space-between", alignItems: "center", marginBottom: '0.5rem' }}>
+                  <h3 style={{ margin: 0 }}>{name}</h3>
+                  <p>{address}</p>
+                </div>
+                
+              </div>
+            </InfoWindow>
+          )}
+        </Map>
+    </APIProvider>
   );
 }

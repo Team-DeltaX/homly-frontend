@@ -24,7 +24,6 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     padding: theme.spacing(1),
   },
 }));
-
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
   ...theme.typography.body2,
@@ -36,7 +35,6 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function ViewPopUp(props) {
   const [open, setOpen] = React.useState(false);
-
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -98,10 +96,9 @@ export default function ViewPopUp(props) {
                 </Item>
               </Grid>
               <Grid xs={6} sm={5}>
-                <Item>
+                <Item sx={{textAlign: 'left'}}>
                   <Typography
                     variant="button"
-                    align="left"
                     display="block"
                     gutterBottom
                     sx={{ fontWeight: "bold" }}
@@ -118,7 +115,6 @@ export default function ViewPopUp(props) {
                       fontWeight: "bold",
                     }}
                     variant="body2"
-                    align="left"
                     display="block"
                     gutterBottom
                   >
@@ -134,12 +130,32 @@ export default function ViewPopUp(props) {
                       fontWeight: "bold",
                     }}
                     variant="body2"
-                    align="left"
                     display="block"
                     gutterBottom
                   >
                     {props.reservation.Price}
                   </Typography>
+                  {props.reservation.isPaid ? (
+                    <Typography
+                      variant="button"
+                      sx={{
+                        color: "green",
+                        fontSize: { xs: "13px", sm: "14px", md: "15px" },
+                      }}
+                    >
+                      PAID
+                    </Typography>
+                  ) : (
+                    <Typography
+                      variant="button"
+                      sx={{
+                        color: "red",
+                        fontSize: { xs: "13px", sm: "14px", md: "15px" },
+                      }}
+                    >
+                      NOT PAID
+                    </Typography>
+                  )}
                 </Item>
               </Grid>
               <Grid xs={6} sm={4}>
@@ -255,7 +271,7 @@ export default function ViewPopUp(props) {
                       >
                         Reserved Room ID
                       </Typography>
-                      {props.reservedRoom ? (
+                      {(props.reservedRoom && props.reservedRoom.length > 0) ? (
                         props.reservedRoom.map((room) => (
                           <Typography
                             variant="body1"
@@ -276,7 +292,7 @@ export default function ViewPopUp(props) {
                           fontWeight="bold"
                           gutterBottom
                         >
-                          N/A
+                          -None-
                         </Typography>
                       )}
                     </Item>
@@ -289,7 +305,7 @@ export default function ViewPopUp(props) {
                       >
                         Reserved Hall ID
                       </Typography>
-                      {props.reservedHall ? (
+                      {(props.reservedHall  && props.reservedHall.length > 0 )?(
                         props.reservedHall.map((hall) => (
                           <Typography
                             variant="body1"
@@ -310,7 +326,7 @@ export default function ViewPopUp(props) {
                           fontWeight="bold"
                           gutterBottom
                         >
-                          N/A
+                          -None-
                         </Typography>
                       )}
                     </Item>

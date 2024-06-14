@@ -48,7 +48,6 @@ export default function UserInterestedPopup({
   const [interests, setInterests] = useState([]);
   const [error, setError] = useState("");
 
-
   const handleClose = () => {
     setOpen(false);
   };

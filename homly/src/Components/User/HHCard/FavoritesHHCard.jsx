@@ -7,6 +7,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import AxiosClient from "../../../services/AxiosClient";
 import theme from "../../../HomlyTheme";
 import ConfirmPopup from "../../PrimaryAdmin/ConfirmPopup";
+import NoImage from "../../../Assets/images/noImage.webp";
 const FavoritesHHCard = ({
   HHID,
   HHImage,
@@ -170,7 +171,7 @@ const FavoritesHHCard = ({
             </Box>
             <Box
               component="img"
-              src={HHImage}
+              src={HHImage ? HHImage : NoImage}
               alt="Holiday Home Image"
               sx={{
                 height: "219px",

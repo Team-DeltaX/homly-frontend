@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -15,6 +15,8 @@ import AxiosClient from "../../../services/AxiosClient";
 export default function AddReviewPopup({
   open,
   setOpen,
+  isEdit,
+  setIsEdit,
   reservationId,
   setIsAddReview,
 }) {
@@ -26,9 +28,35 @@ export default function AddReviewPopup({
   const [wifiRating, setwifiRating] = useState(0);
 
   const [review, setReview] = useState("");
+  const [tempReview, setTempReview] = useState("");
+
+  useEffect(() => {
+    if (isEdit) {
+      AxiosClient.get(`/user/auth/review/`, {
+        params: {
+          reservationId: reservationId,
+        },
+      })
+        .then((res) => {
+          if (res) {
+            setReview(res.data.review[0].UserReview);
+            setTempReview(res.data.review[0].UserReview);
+          }
+        })
+        .catch((err) => {
+          setErrorStatus({
+            ...errorStatus,
+            isOpen: true,
+            type: "error",
+            message: err.message,
+          });
+        });
+    }
+  }, [isEdit]);
 
   const handleClose = () => {
     setOpen(false);
+    setReview(tempReview);
   };
 
   const [errorStatus, setErrorStatus] = useState({
@@ -48,35 +76,64 @@ export default function AddReviewPopup({
       wifi_rating: wifiRating,
       review: review,
     };
-    
-    AxiosClient.post(`/user/auth/review`, formData)
-      .then((res) => {
-        if (res.data.success) {
+
+    if (isEdit) {
+      AxiosClient.put(`/user/auth/review`, {
+        reservationID: reservationId,
+        review: review,
+      })
+        .then((res) => {
+          if (res.data.success) {
+            setErrorStatus({
+              ...errorStatus,
+              isOpen: true,
+              type: "success",
+              message: res.data.message,
+            });
+            setIsAddReview(true);
+            setIsEdit(false);
+            setReview("");
+            handleClose();
+          }
+        })
+        .catch((err) => {
           setErrorStatus({
             ...errorStatus,
             isOpen: true,
-            type: "success",
-            message: res.data.message,
+            type: "error",
+            message: err.message,
           });
-          setIsAddReview(true);
-          setFoodRating(0);
-          setwifiRating(0);
-          setvalueForMoneyRating(0);
-          setstaffRating(0);
-          setlocationRating(0);
-          setfurnitureRating(0);
-          setReview("");
-          handleClose();
-        }
-      })
-      .catch((err) => {
-        setErrorStatus({
-          ...errorStatus,
-          isOpen: true,
-          type: "error",
-          message: err.message,
         });
-      });
+    } else {
+      AxiosClient.post(`/user/auth/review`, formData)
+        .then((res) => {
+          if (res.data.success) {
+            setErrorStatus({
+              ...errorStatus,
+              isOpen: true,
+              type: "success",
+              message: res.data.message,
+            });
+            setIsAddReview(true);
+            setFoodRating(0);
+            setwifiRating(0);
+            setvalueForMoneyRating(0);
+            setstaffRating(0);
+            setlocationRating(0);
+            setfurnitureRating(0);
+            setReview("");
+            handleClose();
+          }
+        })
+        .catch((err) => {
+          setErrorStatus({
+            ...errorStatus,
+            isOpen: true,
+            type: "error",
+            message: err.message,
+          });
+        });
+    }
   };
 
   return (
@@ -108,55 +165,64 @@ export default function AddReviewPopup({
           <CloseIcon />
         </IconButton>
         <DialogContent dividers>
-          {/* ratings */}
-          <RatingComponent
-            value={foodRating}
-            setValue={setFoodRating}
-            lable={"Food"}
-          />
+          {!isEdit ? (
+            <>
+              <RatingComponent
+                value={foodRating}
+                setValue={setFoodRating}
+                lable={"Food"}
+              />
 
-          <RatingComponent
-            value={valueForMoneyRating}
-            setValue={setvalueForMoneyRating}
-            lable={"Value For Money"}
-          />
+              <RatingComponent
+                value={valueForMoneyRating}
+                setValue={setvalueForMoneyRating}
+                lable={"Value For Money"}
+              />
 
-          <RatingComponent
-            value={staffRating}
-            setValue={setstaffRating}
-            lable={"Staff"}
-          />
+              <RatingComponent
+                value={staffRating}
+                setValue={setstaffRating}
+                lable={"Staff"}
+              />
 
-          <RatingComponent
-            value={locationRating}
-            setValue={setlocationRating}
-            lable={"Location"}
-          />
-          <RatingComponent
-            value={furnitureRating}
-            setValue={setfurnitureRating}
-            lable={"Furniture"}
-          />
-          <RatingComponent
-            value={wifiRating}
-            setValue={setwifiRating}
-            lable={"Wifi"}
-          />
-
-          <Box sx={{ mt: "7px" }}>
-            <Typography> Review about Holiday Home </Typography>
-            <TextField
-              id="outlined-multiline-flexible"
-              multiline
-              maxRows={4}
-              fullWidth
-              onChange={(e) => setReview(e.target.value)}
-            />
-          </Box>
+              <RatingComponent
+                value={locationRating}
+                setValue={setlocationRating}
+                lable={"Location"}
+              />
+              <RatingComponent
+                value={furnitureRating}
+                setValue={setfurnitureRating}
+                lable={"Furniture"}
+              />
+              <RatingComponent
+                value={wifiRating}
+                setValue={setwifiRating}
+                lable={"Wifi"}
+              />
+            </>
+          ) : (
+            <Box sx={{ mt: "7px" }}>
+              <Typography>
+                {" "}
+                {isEdit
+                  ? "Edit your review about Holiday Home"
+                  : "Review about Holiday Home"}{" "}
+              </Typography>
+              <TextField
+                id="outlined-multiline-flexible"
+                multiline
+                maxRows={4}
+                value={review}
+                fullWidth
+                onChange={(e) => setReview(e.target.value)}
+              />
+            </Box>
+          )}
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleSubmit}>
-            Rate Now
+            {isEdit ? "Edit Review" : "Add Review"}
           </Button>
         </DialogActions>
       </Dialog>
