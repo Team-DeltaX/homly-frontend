@@ -49,7 +49,7 @@ export default function PayNowPopup({
     merchant_id: merchantId,
     return_url: "http://sample.com/return",
     cancel_url: "http://sample.com/cancel",
-    notify_url: "http://localhost:8080/user/auth/reservation/notifyPayment",
+    notify_url: "http://localhost:8080/user/auth/reservation/notifyPayment/:payment_id",
     order_id: orderId,
     items: name,
     amount: amount,
