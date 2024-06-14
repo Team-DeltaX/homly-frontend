@@ -38,16 +38,17 @@ export default function ReservationReport() {
 
   const maxDate = dayjs().subtract(1, "day");
   const handleClickOpen = () => {
-    AxiosClient.get("admin//report/reservation", {
+    AxiosClient.get("/admin/report/reservation", {
       params: {
+        HHName: holidayHome,
         fromDate: fromDate,
         toDate: toDate,
       },
-    }).then((res) => {
-      console.log("aaaaaaadddd",res.data);
-      setPreviewData(res.data);
-      setOpen(true);
-    });
+    })
+      .then((res) => {
+        setPreviewData(res.data);
+        setOpen(true);
+      }).catch(() => {});
   };
 
   useEffect(() => {
@@ -67,33 +68,6 @@ export default function ReservationReport() {
   return (
     <Box sx={{ width: "70%", align: "center", flexGrow: 1 }}>
       <Stack spacing={2}>
-        {/* <Item>
-          <Grid container spacing={2}>
-            <Grid item xs={5}>
-              <FormControl sx={{ m: 3, minWidth: 120 }} size="small">
-                Report Type
-              </FormControl>
-            </Grid>
-            <Grid item xs={7}>
-              <FormControl sx={{ m: 2, minWidth: 200 }} size="small">
-                <InputLabel id="demo-select-small-label1">
-                  Select Report Type
-                </InputLabel>
-                <Select
-                  labelId="demo-select-small-label1"
-                  id="demo-select-small"
-                  label="Select Report type"
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={1}>Reservation Details</MenuItem>
-                  <MenuItem value={2}>Income Details</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-          </Grid>
-        </Item> */}
         <Item>
           <Grid container spacing={2}>
             <Grid item xs={5}>

@@ -36,7 +36,13 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-const PreviewPopupReservationReport = ({ open, setOpen, previewData, toDate, fromDate }) => {
+const PreviewPopupReservationReport = ({
+  open,
+  setOpen,
+  previewData,
+  toDate,
+  fromDate,
+}) => {
   const [isDownolad, setIsDownload] = useState(false);
 
   const handleClose = () => {
@@ -114,13 +120,10 @@ const PreviewPopupReservationReport = ({ open, setOpen, previewData, toDate, fro
                     {" "}
                     Holiday Home name{" "}
                   </TableCell>
+
                   <TableCell style={{ fontWeight: "bold" }}>
                     {" "}
                     Recipient Name{" "}
-                  </TableCell>
-                  <TableCell style={{ fontWeight: "bold" }}>
-                    {" "}
-                    Contact No{" "}
                   </TableCell>
                   <TableCell style={{ fontWeight: "bold" }}>
                     {" "}
@@ -128,7 +131,7 @@ const PreviewPopupReservationReport = ({ open, setOpen, previewData, toDate, fro
                   </TableCell>
                   <TableCell style={{ fontWeight: "bold" }}>
                     {" "}
-                    Checkout Date {" "}
+                    Checkout Date{" "}
                   </TableCell>
                   <TableCell style={{ fontWeight: "bold" }}>
                     {" "}
@@ -144,11 +147,9 @@ const PreviewPopupReservationReport = ({ open, setOpen, previewData, toDate, fro
                   </TableCell>
                 </TableRow>
               </TableHead>
-
-
               <TableBody>
-                {previewData.TotalPerHH &&
-                  previewData.TotalPerHH.map((row) => (
+                {previewData &&
+                  previewData.map((row) => (
                     <TableRow
                       key={row.name}
                       sx={{
@@ -156,22 +157,27 @@ const PreviewPopupReservationReport = ({ open, setOpen, previewData, toDate, fro
                       }}
                     >
                       <TableCell component="th" scope="row">
-                        {row.HHName}
+                        {row.reservations.ReservationId}
                       </TableCell>
-                      <TableCell align="right">{row.TotalPrice}</TableCell>
+                      <TableCell>{row.hhName}</TableCell>
+                      <TableCell>{row.empName}</TableCell>
+                      <TableCell>{row.reservations.CheckinDate}</TableCell>
+                      <TableCell>{row.reservations.CheckoutDate}</TableCell>
+                      <TableCell>{row.reservations.NoOfRooms}</TableCell>
+                      <TableCell>{row.reservations.NoOfHalls}</TableCell>
+                      <TableCell align="right">
+                        {row.reservations.Price}
+                      </TableCell>
                     </TableRow>
                   ))}
               </TableBody>
-
-
-
             </Table>
           </TableContainer>
-          <Typography gutterBottom align="right" style={{ fontWeight: "bold" }}>
+          {/* <Typography gutterBottom align="right" style={{ fontWeight: "bold" }}>
             Total Income (LKR) : {previewData && previewData.TotalPrice}
-          </Typography>
+          </Typography> */}
         </DialogContent>
-        
+
         <DialogActions>
           <Button autoFocus onClick={() => setIsDownload(true)}>
             Download

@@ -1,3 +1,4 @@
+// IncomeReport.js
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
@@ -10,15 +11,15 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Button from "@mui/material/Button";
 import dayjs from "dayjs";
-
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import PreviewPopupIncomeReport from "./PreviewPopupIncomeReport";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AxiosClient from "../../../services/AxiosClient";
-import { useEffect } from "react";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import PDFDocument from "./PDFDocument"; // Import the PDFDocument component
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -29,7 +30,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function IncomeReport() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const [holidayHome, setHolidayHome] = useState("all");
   const [fromDate, setFromDate] = useState(dayjs().subtract(1, "day"));
   const [toDate, setToDate] = useState(dayjs().subtract(1, "day"));
@@ -38,14 +39,13 @@ export default function IncomeReport() {
 
   const maxDate = dayjs().subtract(1, "day");
   const handleClickOpen = () => {
-    AxiosClient.get("admin//report/income", {
+    AxiosClient.get("admin/report/income", {
       params: {
         HHName: holidayHome,
         fromDate: fromDate,
         toDate: toDate,
       },
     }).then((res) => {
-      console.log("aaaaadddd",res.data);
       setPreviewData(res.data);
       setOpen(true);
     });
@@ -68,33 +68,6 @@ export default function IncomeReport() {
   return (
     <Box sx={{ width: "70%", align: "center", flexGrow: 1 }}>
       <Stack spacing={2}>
-        {/* <Item>
-          <Grid container spacing={2}>
-            <Grid item xs={5}>
-              <FormControl sx={{ m: 3, minWidth: 120 }} size="small">
-                Report Type
-              </FormControl>
-            </Grid>
-            <Grid item xs={7}>
-              <FormControl sx={{ m: 2, minWidth: 200 }} size="small">
-                <InputLabel id="demo-select-small-label1">
-                  Select Report Type
-                </InputLabel>
-                <Select
-                  labelId="demo-select-small-label1"
-                  id="demo-select-small"
-                  label="Select Report type"
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={1}>Reservation Details</MenuItem>
-                  <MenuItem value={2}>Income Details</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-          </Grid>
-        </Item> */}
         <Item>
           <Grid container spacing={2}>
             <Grid item xs={5}>
@@ -114,10 +87,8 @@ export default function IncomeReport() {
                   label="Select Holiday Home"
                   onChange={(e) => setHolidayHome(e.target.value)}
                   defaultValue="all"
-                  
                 >
                   <MenuItem value={"all"}>All</MenuItem>
-                  
                   {HHNames &&
                     HHNames.map((hh) => (
                       <MenuItem key={hh.HolidayHomeId} value={hh.HolidayHomeId}>
@@ -129,7 +100,6 @@ export default function IncomeReport() {
             </Grid>
           </Grid>
         </Item>
-
         <Item>
           <Grid container spacing={2}>
             <Grid item xs={5}>
@@ -155,7 +125,6 @@ export default function IncomeReport() {
             </Grid>
           </Grid>
         </Item>
-
         <Item>
           <Grid container spacing={2}>
             <Grid item xs={5}>
@@ -181,7 +150,6 @@ export default function IncomeReport() {
             </Grid>
           </Grid>
         </Item>
-
         <Stack spacing={4} direction="row" justifyContent="center">
           <Button variant="contained" onClick={handleReset}>
             Reset
@@ -189,6 +157,29 @@ export default function IncomeReport() {
           <Button variant="contained" onClick={handleClickOpen}>
             Preview
           </Button>
+          {/* Add download button for downloading PDF */}
+          {previewData && (
+            <PDFDownloadLink
+              document={
+                <PDFDocument
+                  previewData={previewData}
+                  fromDate={fromDate}
+                  toDate={toDate}
+                />
+              }
+              fileName="Income_Report.pdf"
+            >
+              {({ loading }) =>
+                loading ? (
+                  <Button variant="contained" disabled>
+                    Loading...
+                  </Button>
+                ) : (
+                  <Button variant="contained">Download</Button>
+                )
+              }
+            </PDFDownloadLink>
+          )}
         </Stack>
       </Stack>
       <PreviewPopupIncomeReport
