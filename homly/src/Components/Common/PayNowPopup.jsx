@@ -5,19 +5,13 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import md5 from "crypto-js/md5";
 import AxiosClient from "../../services/AxiosClient";
 import ErrorSnackbar from "../User/ErrorSnackbar";
+import md5 from "crypto-js/md5";
 
-export default function PayNowPopup({
-  isOpen,
-  setIsOpen,
-  reservationId,
-  price,
-  employeeDetails,
-  userDetails,
-}) {
+export default function PayNowPopup({ isOpen, setIsOpen, reservationId, price, employeeDetails, userDetails }) {
   const [city, setCity] = useState("");
+  
   useEffect(() => {
     const ExtractCityFromAddress = (address) => {
       return address.split(",").pop().trim();
@@ -26,6 +20,7 @@ export default function PayNowPopup({
       setCity(ExtractCityFromAddress(employeeDetails.address));
     }
   }, [employeeDetails.address]);
+
   const orderId = reservationId;
   const name = reservationId;
   const amount = parseInt(price);
@@ -66,7 +61,7 @@ export default function PayNowPopup({
     country: "Sri Lanka",
     hash: hash,
   };
-  
+
   const [errorStatus, setErrorStatus] = useState({
     isOpen: false,
     type: "",
@@ -82,11 +77,12 @@ export default function PayNowPopup({
     };
   }, []);
 
-  const handlePaymentCompleted = (orderId) => {
-    if (orderId) {
+  const handlePaymentCompleted = (orderId, paymentId) => {
+    if (orderId && paymentId) {
       AxiosClient.put(`/user/auth/reservation/completePayment`, {
         reservationId,
         status: true,
+        paymentId,
       })
         .then((response) => {
           setErrorStatus({
@@ -143,7 +139,11 @@ export default function PayNowPopup({
   const pay = () => {
     setIsOpen(false);
     window.payhere.startPayment(payment);
-    window.payhere.onCompleted = handlePaymentCompleted(orderId);
+
+    window.payhere.onCompleted = function onCompleted(orderId, paymentId) {
+      handlePaymentCompleted(orderId, paymentId);
+    };
+
     window.payhere.onDismissed = handlePaymentDismissed;
     window.payhere.onError = handlePaymentError;
   };
