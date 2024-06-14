@@ -10,7 +10,6 @@ import {
   Button,
 } from "@mui/material";
 import theme from "../../HomlyTheme";
-
 import SideNavbar from "../../Components/locationAdmin/SideNavbar";
 import PageTitle from "../../Components/locationAdmin/PageTitle";
 import PropTypes from "prop-types";
@@ -19,11 +18,11 @@ import Tab from "@mui/material/Tab";
 import EditHolidayHomeDetails from "../../Components/locationAdmin/CreateHolidayHome/EditHolidayHomes/EditHolidayHomeDetails";
 import EditCaretakerDetails from "../../Components/locationAdmin/CreateHolidayHome/EditHolidayHomes/EditCaretakerDetails";
 import EditHolidayHomeBreakdown from "../../Components/locationAdmin/CreateHolidayHome/EditHolidayHomes/EditHolidayHomeBreakdown";
-
-import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import AxiosClient from "../../services/AxiosClient";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -67,6 +66,15 @@ const HolidayHomeEdit = () => {
 
   const [caretaker1Id, setCaretaker1Id] = useState("");
   const [caretaker2Id, setCaretaker2Id] = useState("");
+
+  const [EditSuccessfullAlert, setEditSuccessfullAlert] = useState(false);
+  const handleEditSuccessfullAlert = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setEditSuccessfullAlert(false);
+  };
 
   const [detailsValue, setDetailsValue] = useState({
     name: "",
@@ -262,6 +270,7 @@ const HolidayHomeEdit = () => {
     AxiosClient.post("admin/auth/locationadmin/holidayhome/update", updatedData)
       .then((res) => {
         console.log(res);
+        setEditSuccessfullAlert(true);
         // navigate("/locationadmin/manage");
       })
       .catch((err) => {
@@ -437,6 +446,24 @@ const HolidayHomeEdit = () => {
           </Grid>
         </Container>
       </Box>
+
+      {/* alert type already exist*/}
+      <div>
+        <Snackbar
+          open={EditSuccessfullAlert}
+          autoHideDuration={4000}
+          onClose={handleEditSuccessfullAlert}
+        >
+          <Alert
+            onClose={handleEditSuccessfullAlert}
+            severity="success"
+            variant="filled"
+            sx={{ width: "100%" }}
+          >
+            HolidayHome Successfully Updated
+          </Alert>
+        </Snackbar>
+      </div>
     </ThemeProvider>
   );
 };
