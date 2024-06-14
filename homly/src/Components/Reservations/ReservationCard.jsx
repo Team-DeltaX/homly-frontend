@@ -226,6 +226,9 @@ const ReservationCard = (props) => {
               <Box sx={{ display: isComplainTrue ? "block" : "none" }}>
                 <AddComplainPopUp reservation={props} />
               </Box>
+              <Box sx={{ display: isComplainTrue ? "block" : "none" }}>
+                <AddComplainPopUp reservation={props} />
+              </Box>
             </Stack>
           </Grid>
         </Grid>

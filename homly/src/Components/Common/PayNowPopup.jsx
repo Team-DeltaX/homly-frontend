@@ -5,13 +5,19 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import md5 from "crypto-js/md5";
 import AxiosClient from "../../services/AxiosClient";
 import ErrorSnackbar from "../User/ErrorSnackbar";
-import md5 from "crypto-js/md5";
 
-export default function PayNowPopup({ isOpen, setIsOpen, reservationId, price, employeeDetails, userDetails }) {
+export default function PayNowPopup({
+  isOpen,
+  setIsOpen,
+  reservationId,
+  price,
+  employeeDetails,
+  userDetails,
+}) {
   const [city, setCity] = useState("");
-  
   useEffect(() => {
     const ExtractCityFromAddress = (address) => {
       return address.split(",").pop().trim();
@@ -20,7 +26,6 @@ export default function PayNowPopup({ isOpen, setIsOpen, reservationId, price, e
       setCity(ExtractCityFromAddress(employeeDetails.address));
     }
   }, [employeeDetails.address]);
-
   const orderId = reservationId;
   const name = reservationId;
   const amount = parseInt(price);
@@ -44,7 +49,7 @@ export default function PayNowPopup({ isOpen, setIsOpen, reservationId, price, e
     merchant_id: merchantId,
     return_url: "http://sample.com/return",
     cancel_url: "http://sample.com/cancel",
-    notify_url: "http://sample.com/notify",
+    notify_url: "http://localhost:8080/user/auth/reservation/notifyPayment",
     order_id: orderId,
     items: name,
     amount: amount,
@@ -61,7 +66,7 @@ export default function PayNowPopup({ isOpen, setIsOpen, reservationId, price, e
     country: "Sri Lanka",
     hash: hash,
   };
-
+  
   const [errorStatus, setErrorStatus] = useState({
     isOpen: false,
     type: "",
@@ -77,12 +82,11 @@ export default function PayNowPopup({ isOpen, setIsOpen, reservationId, price, e
     };
   }, []);
 
-  const handlePaymentCompleted = (orderId, paymentId) => {
-    if (orderId && paymentId) {
+  const handlePaymentCompleted = (orderId) => {
+    if (orderId) {
       AxiosClient.put(`/user/auth/reservation/completePayment`, {
         reservationId,
         status: true,
-        paymentId,
       })
         .then((response) => {
           setErrorStatus({
@@ -139,11 +143,7 @@ export default function PayNowPopup({ isOpen, setIsOpen, reservationId, price, e
   const pay = () => {
     setIsOpen(false);
     window.payhere.startPayment(payment);
-
-    window.payhere.onCompleted = function onCompleted(orderId, paymentId) {
-      handlePaymentCompleted(orderId, paymentId);
-    };
-
+    window.payhere.onCompleted = handlePaymentCompleted(orderId);
     window.payhere.onDismissed = handlePaymentDismissed;
     window.payhere.onError = handlePaymentError;
   };
