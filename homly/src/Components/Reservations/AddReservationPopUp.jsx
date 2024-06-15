@@ -182,16 +182,22 @@ export default function ScrollDialog({ name, id }) {
     setHall([]);
     if (CheckoutDate.isBefore(newDate) || CheckoutDate.isSame(newDate)) {
       setReserveDisabled(true);
-      setErrorStatus({
-        isOpen: true,
-        type: "warning",
-        message: "Check-in date cannot be same or after Check-out date",
-      });
+      if (CheckoutDate.isBefore(newDate)) {
+        setErrorStatus({
+          isOpen: true,
+          type: "error",
+          message: "Check-in date cannot be after Check-out date",
+        });
+      } else {
+          setErrorStatus({
+            isOpen: true,
+            type: "error",
+            message: "Check-in date & Check-out date cannot be same",
+          });
+      }  
       const nextDay = newDate.add(1, "day");
       setCheckinDate(newDate);
       setCheckoutDate(nextDay);
-      console.log("Check in ",CheckinDate);
-      console.log("checkout date",CheckoutDate);
       setReserveDisabled(false);
     } else {
       setReserveDisabled(false);
@@ -202,10 +208,8 @@ export default function ScrollDialog({ name, id }) {
       });
     }
 
-  };
+  };  
   const handleCheckoutDateChange = (newDate) => {
-    setCheckoutDate(newDate);
-    console.log("new date",newDate);
     setNoOfAdults(0);
     setHallNoOfAdults(0);
     setHallNoOfChildren(0);
@@ -219,30 +223,38 @@ export default function ScrollDialog({ name, id }) {
     setHallCodes([]);
     setRoom([]);
     setHall([]);
-    const nextDay = newDate.add(1, "day");
-    if (CheckinDate.isAfter(newDate) || CheckinDate.isSame(newDate)) {
-      setReserveDisabled(true);
-      setErrorStatus({
-        isOpen: true,
-        type: "warning",
-        message: "Check-out date cannot be same or before Check-in date",
-      });
-      
-      setCheckinDate(newDate);
-      setCheckoutDate(nextDay);
-      console.log("next date ",nextDay);
-      setReserveDisabled(false);
-    } else {
-      setReserveDisabled(false);
-      setErrorStatus({
+    setCheckoutDate(newDate);
+    setReserveDisabled(false);
+    setErrorStatus({
         isOpen: false,
         type: "",
         message: "",
       });
-    }
+    
     console.log("checkout date",CheckoutDate);
   };
-
+  useEffect(() => {
+    if (CheckinDate.isAfter(CheckoutDate) || CheckinDate.isSame(CheckoutDate)) {
+      setReserveDisabled(true);
+      if(CheckinDate.isAfter(CheckoutDate)){
+        setErrorStatus({
+          isOpen: true,
+          type: "error",
+          message: "Check-in date cannot be after Check-out date",
+        });
+      } else{
+          setErrorStatus({
+            isOpen: true,
+            type: "eroor",
+            message: "Check-in date & Check-out date cannot be same",
+          });
+      }
+      const nextDay = CheckoutDate.add(1, "day");
+      setCheckinDate(CheckoutDate);
+      setCheckoutDate(nextDay);
+      setReserveDisabled(false);
+    } 
+  }, [CheckinDate, CheckoutDate]);
   return (
     <React.Fragment>
       <Button
