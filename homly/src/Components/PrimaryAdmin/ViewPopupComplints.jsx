@@ -248,6 +248,7 @@ const ViewPopupComplaints = (props) => {
                   <TextField
                     value={reson}
                     size="small"
+                   
                     sx={{ width: "85%", margin: "5px" }}
                     onChange={(e) => {
                       setReson(e.target.value);
@@ -396,7 +397,7 @@ const ViewPopupComplaints = (props) => {
                       setOpen(true);
                     }
                   }}
-                  disabled={disable}
+                  disabled={disable ||(reson.trim().length===0)}
                 >
                   <Typography sx={{ fontSize: "10px" }}>
                     Add To Blacklist
