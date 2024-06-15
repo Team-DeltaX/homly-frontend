@@ -318,6 +318,22 @@ export default function AddSpecialReservationPopUp() {
                 ))}
               </Select>
             </FormControl>
+            <BasicDatePicker
+              required
+              margin="dense"
+              date={CheckinDate}
+              setDate={handleCheckinDateChange}
+              title="Check in Date"
+              value={CheckinDate}
+            />
+            <BasicDatePicker
+              required
+              margin="normal"
+              date={CheckoutDate}
+              setDate={handleCheckoutDateChange}
+              title="Check Out Date"
+              value={CheckoutDate}
+            />
             <TextField
               autoFocus
               required
@@ -415,22 +431,6 @@ export default function AddSpecialReservationPopUp() {
               type="text"
               fullWidth
               variant="outlined"
-            />
-            <BasicDatePicker
-              required
-              margin="dense"
-              date={CheckinDate}
-              setDate={handleCheckinDateChange}
-              title="Check in Date"
-              value={CheckinDate}
-            />
-            <BasicDatePicker
-              required
-              margin="normal"
-              date={CheckoutDate}
-              setDate={handleCheckoutDateChange}
-              title="Check Out Date"
-              value={CheckoutDate}
             />
           </DialogContent>
           <DialogActions>
