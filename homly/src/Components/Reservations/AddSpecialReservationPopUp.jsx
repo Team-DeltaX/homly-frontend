@@ -142,7 +142,7 @@ export default function AddSpecialReservationPopUp() {
       setErrorStatus({
         isOpen: true,
         type: "warning",
-        message: "Check-in date cannot be in the past",
+        message: "Check-in date cannot be same or after Check-out date",
       });
     } else {
       setReserveDisabled(false);
@@ -155,13 +155,12 @@ export default function AddSpecialReservationPopUp() {
   };
   const handleCheckoutDateChange = (newDate) => {
     setCheckoutDate(newDate);
-    // Check if CheckinDate is after CheckoutDate
     if ((CheckinDate.isAfter(newDate)) || (CheckinDate.isSame(newDate))) {
-      setReserveDisabled(true); // Disable reserve button
+      setReserveDisabled(true); 
       setErrorStatus({
         isOpen: true,
         type: "warning",
-        message: "Check-in date cannot be same or after Check-out date",
+        message: "Check-out date cannot be same or before Check-in date",
       });
     } else {
       setReserveDisabled(false); // Enable reserve button
