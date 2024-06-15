@@ -190,6 +190,8 @@ export default function ScrollDialog({ name, id }) {
       const nextDay = newDate.add(1, "day");
       setCheckinDate(newDate);
       setCheckoutDate(nextDay);
+      console.log("Check in ",CheckinDate);
+      console.log("checkout date",CheckoutDate);
       setReserveDisabled(false);
     } else {
       setReserveDisabled(false);
@@ -203,6 +205,7 @@ export default function ScrollDialog({ name, id }) {
   };
   const handleCheckoutDateChange = (newDate) => {
     setCheckoutDate(newDate);
+    console.log("new date",newDate);
     setNoOfAdults(0);
     setHallNoOfAdults(0);
     setHallNoOfChildren(0);
@@ -216,16 +219,18 @@ export default function ScrollDialog({ name, id }) {
     setHallCodes([]);
     setRoom([]);
     setHall([]);
+    const nextDay = newDate.add(1, "day");
     if (CheckinDate.isAfter(newDate) || CheckinDate.isSame(newDate)) {
       setReserveDisabled(true);
       setErrorStatus({
         isOpen: true,
         type: "warning",
-        message: "Check-in date cannot be same or after Check-out date",
+        message: "Check-out date cannot be same or before Check-in date",
       });
-      const nextDay = newDate.add(1, "day");
+      
       setCheckinDate(newDate);
       setCheckoutDate(nextDay);
+      console.log("next date ",nextDay);
       setReserveDisabled(false);
     } else {
       setReserveDisabled(false);
@@ -235,6 +240,7 @@ export default function ScrollDialog({ name, id }) {
         message: "",
       });
     }
+    console.log("checkout date",CheckoutDate);
   };
 
   return (
