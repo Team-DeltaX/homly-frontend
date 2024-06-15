@@ -3,7 +3,7 @@ import { ThemeProvider, Box, Typography } from "@mui/material";
 import theme from "../../../HomlyTheme";
 import ReviewCard from "./ReviewCard";
 
-const Review = () => {
+const Review = (hhid) => {
   return (
     <ThemeProvider theme={theme}>
         <Typography variant="h4"
@@ -15,7 +15,7 @@ const Review = () => {
         >
           Review
         </Typography>
-        <ReviewCard />
+        <ReviewCard HolidayHomeId={hhid}/>
     </ThemeProvider>
   );
 };

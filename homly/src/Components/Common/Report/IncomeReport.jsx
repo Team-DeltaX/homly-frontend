@@ -19,7 +19,8 @@ import PreviewPopupIncomeReport from "./PreviewPopupIncomeReport";
 import { useState, useEffect } from "react";
 import AxiosClient from "../../../services/AxiosClient";
 import { PDFDownloadLink } from "@react-pdf/renderer";
-import PDFDocument from "./PDFDocument"; // Import the PDFDocument component
+
+import PDFDocument from "./ReportPDF/PDFDocument"; // Import the PDFDocument component
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",

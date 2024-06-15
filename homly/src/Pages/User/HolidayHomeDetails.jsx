@@ -536,7 +536,7 @@ export default function HolidayHomeDetails() {
                 </Box>
                 <Divider />
                 <Box>
-                  <Review />
+                  <Review hhid={value.id} />
                 </Box>
                 <Divider />
               </Stack>
