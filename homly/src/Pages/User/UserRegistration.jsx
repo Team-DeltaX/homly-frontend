@@ -36,7 +36,7 @@ const Img = styled("img")({
 
 const UserRegistration = () => {
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-  const phoneRegex = /^[0-9]{10}$/;
+  const phoneRegex = /^(0|\+94)[0-9]{9}$/;
 
   const [ServiceNo, setServiceNo] = useState("");
   const [Email, setEmail] = useState("");
@@ -154,7 +154,7 @@ const UserRegistration = () => {
           overflow: "hidden",
         }}
       >
-        <Container maxWidth="xl" style={{ padding: 0, height: "95vh" }}>
+        <Container maxWidth="xl" style={{ padding: 0 }}>
           <ErrorSnackbar
             isOpen={errorStatus.isOpen}
             type={errorStatus.type}
@@ -346,7 +346,7 @@ const UserRegistration = () => {
                       lable={"Confirm Password"}
                       icon={<PasswordIcon sx={{ p: 0.25, ml: -0.5, mr: 1 }} />}
                       helperText={
-                        errorConfirmPassword ? "Password not match" : ""
+                        errorConfirmPassword ? "Password does not match" : ""
                       }
                       error={errorConfirmPassword}
                       Password={ConfirmPassword}
