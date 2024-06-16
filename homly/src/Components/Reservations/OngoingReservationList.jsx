@@ -11,14 +11,11 @@ const OngoingReservationList = (props) => {
     message: "",
   });
   const [reservations, setReservations] = useState([]);
-  const [rese, setRese] = useState({});
   const reservationType = "ongoing";
   const fetchreservations = () => {
     AxiosClient.get("/admin/auth/reservation/ongoing")
       .then((res) => {
-        console.log("cdcdcdcdcd",res.data);
         setReservations(res.data);
-        setRese(res.data[0]);
       })
       .catch(() => {
         setErrorStatus({
@@ -30,10 +27,7 @@ const OngoingReservationList = (props) => {
   };
   useEffect(() => {
     fetchreservations();
-  }, [reservations]);
-  useEffect(() => {
-    console.log("cococococ",rese);
-  },{});
+  }, []);
   return (
     <>
       <Box
