@@ -14,6 +14,7 @@ import {
 import theme from "../../HomlyTheme";
 import Pagetop from "../../Components/PrimaryAdmin/PageTop";
 import AutohideSnackbar from "../../Components/PrimaryAdmin/AutohideSnackbar";
+import Snackbarp from "../../Components/PrimaryAdmin/snackbar/Snackbarp";
 import { Validator } from "react";
 
 const PrimaryAddAdmin = () => {
@@ -177,12 +178,12 @@ const PrimaryAddAdmin = () => {
                 }}
               >
                 <Pagetop setShowNav={setShowNav} heading={"Add Admin"} />
-                <AutohideSnackbar
-                  handleClick={handleClick}
-                  handleClose={handleClose}
-                  snacktext={snacktext}
-                  open={open}
-                  setOpen={setOpen}
+           
+                   <Snackbarp
+                  isOpen={open}
+                  setIsOpen={handleClick}
+                  type="success"
+                  message={"Admin Added Sucessfully"}
                 />
                 <Box
                   sx={{
