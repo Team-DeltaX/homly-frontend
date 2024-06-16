@@ -161,7 +161,7 @@ export default function ScrollDialog({ name, id }) {
           ...errorStatus,
           isOpen: true,
           type: "error",
-          message: error.message,
+          message: error.response.data.text,
         });
         setPayNow(false);
       });
