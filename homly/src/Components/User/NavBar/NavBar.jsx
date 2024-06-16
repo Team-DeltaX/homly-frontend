@@ -39,7 +39,7 @@ const respSidePages = [
 ];
 
 const NavBar = ({ refContactUS, position }) => {
-  const { setIsLogout } = useContext(AuthContext);
+  const { setIsLogout, isUpdate, setIsUpdate } = useContext(AuthContext);
   const navigate = useNavigate();
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -60,11 +60,12 @@ const NavBar = ({ refContactUS, position }) => {
             name: res.data.name,
             image: res.data.image,
           });
+          setIsUpdate(false);
         }
       })
       .catch(() => {});
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isUpdate]);
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -220,7 +221,24 @@ const NavBar = ({ refContactUS, position }) => {
                 <NotificationPanal bell={true} />
               </Box>
             </Box>
-            <Stack direction="row">
+            <Stack
+              direction="row"
+              sx={{ justifyContent: "center", alignItems: "center" }}
+            >
+              <Box>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    color: "text.primary",
+                    padding: 1,
+                    fontFamily: "Ubuntu Mono",
+                    fontWeight: "bold",
+                  }}
+                >
+                  <span style={{ fontWeight: "500" }}>👋Hi, </span>
+                  {user.name.split(" ")[0]}
+                </Typography>
+              </Box>
               <Box sx={{ flexGrow: 0 }}>
                 <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
