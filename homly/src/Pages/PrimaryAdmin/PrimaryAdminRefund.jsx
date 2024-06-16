@@ -4,6 +4,7 @@ import { Container, Grid, ThemeProvider } from "@mui/material";
 import theme from "../../HomlyTheme";
 import Pagetop from "../../Components/PrimaryAdmin/PageTop";
 import { useState } from "react";
+import RefundListTable from "../../Components/Reservations/RefundList";
 
 const PrimaryAdminRefund = () => {
   const [showNav, setShowNav] = useState("nav_grid_deactive");
@@ -38,7 +39,7 @@ const PrimaryAdminRefund = () => {
               }}
             >
               <Pagetop setShowNav={setShowNav} heading={"Refund"} />
-
+              <RefundListTable />
             </Grid>
           </Grid>
         </Container>
