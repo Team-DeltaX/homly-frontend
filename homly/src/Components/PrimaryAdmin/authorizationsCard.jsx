@@ -135,7 +135,7 @@ const AuthorizationsCard = (props) => {
 
             <Grid md={5} xs={12}>
               <Grid md={12} >
-              <Link to={`/primaryadmin/holidayhomes/viewholidayhome/${props.data.HolidayHomeId}`} >
+              <Link to={`/primaryadmin/holidayhomes/viewholidayhome/${props.data.HolidayHomeId}`} style={{textDecoration:"none"}} >
                 <Button
                   type="submit"
                   variant="contained"
