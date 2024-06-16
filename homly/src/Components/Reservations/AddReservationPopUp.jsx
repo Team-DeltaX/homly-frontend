@@ -155,12 +155,13 @@ export default function ScrollDialog({ name, id }) {
         setRoom([]);
         setHall([]);
       })
-      .catch(() => {
+      .catch((error) => {
+        console.log("error", error);
         setErrorStatus({
           ...errorStatus,
           isOpen: true,
           type: "error",
-          message: "Reservation failed",
+          message: error.message,
         });
         setPayNow(false);
       });
