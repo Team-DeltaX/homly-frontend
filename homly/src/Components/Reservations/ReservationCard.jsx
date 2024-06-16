@@ -6,6 +6,7 @@ import dayjs from "dayjs";
 import { useState } from "react";
 import Typography from "@mui/material/Typography";
 import AddComplainPopUp from "./AddComplainPopUp";
+import ViewComplaintPopup from "./ViewComplainPopup";
 
 const ReservationCard = (props) => {
   const [isSpecial, setIsSpecial] = useState(props.reservation.IsSpecial);
@@ -235,7 +236,7 @@ const ReservationCard = (props) => {
                 <AddComplainPopUp reservation={props} />
               </Box>
               <Box sx={{ display: isViewComplainTrue ? "block" : "none" }}>
-                {/* <ViewComplaintPopup complain={props.isComplaint} /> */}
+                <ViewComplaintPopup complain={props.isComplaint} />
               </Box>
             </Stack>
           </Grid>

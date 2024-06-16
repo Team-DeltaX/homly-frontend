@@ -22,7 +22,7 @@ export default function ViewComplaintPopup( props ) {
   return (
     <React.Fragment>
       <Button variant="outlined" onClick={handleClickOpen}>
-        View Complaint
+        View Complain
       </Button>
       <Dialog
         open={open}
@@ -51,7 +51,7 @@ export default function ViewComplaintPopup( props ) {
           <CloseIcon />
         </IconButton>
         <DialogContent>
-          {/* <TextField
+          <TextField
             autoFocus
             disabled
             value={props.complain.ComplaintID}
@@ -85,7 +85,7 @@ export default function ViewComplaintPopup( props ) {
             fullWidth
             value={props.complain.Reason}
             variant="outlined"
-          /> */}
+          />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
