@@ -201,7 +201,7 @@ const ViewPopupComplaints = (props) => {
                 </Box>
                 <Box sx={{ flex: 1 }}>
                   <TextField
-                    value={props.selecteduser.created_at}
+                    value={props.selecteduser.created_at.slice(0, 10)}
                     disabled
                     size="small"
                     sx={{ width: "85%", margin: "5px" }}
