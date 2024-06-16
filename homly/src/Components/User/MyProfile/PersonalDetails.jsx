@@ -361,7 +361,7 @@ const PersonalDetails = () => {
                   <Box
                     sx={{
                       display: "flex",
-                      justifyContent: "end",
+                      justifyContent: { xs: "center", sm: "end" },
                       padding: "10px",
                     }}
                   >
@@ -394,28 +394,30 @@ const PersonalDetails = () => {
               </Stack>
             </CardContent>
             <CardActions sx={{ justifyContent: "flex-end" }}>
-              <Button
-                variant="outlined"
-                size="small"
-                onClick={handleCancel}
-                sx={{ width: "70px" }}
-              >
-                Cancel
-              </Button>
               {isEnable ? (
-                <Button
-                  variant="contained"
-                  size="small"
-                  sx={{
-                    backgroundColor: "primary.main",
-                    marginLeft: "2%",
-                    width: "70px",
-                  }}
-                  onClick={handleUpdate}
-                  disabled={buttonDisable}
-                >
-                  Update
-                </Button>
+                <Stack direction="row">
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    onClick={handleCancel}
+                    sx={{ width: "70px" }}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    variant="contained"
+                    size="small"
+                    sx={{
+                      backgroundColor: "primary.main",
+                      marginLeft: "2%",
+                      width: "70px",
+                    }}
+                    onClick={handleUpdate}
+                    disabled={buttonDisable}
+                  >
+                    Update
+                  </Button>
+                </Stack>
               ) : (
                 <Button
                   variant="contained"

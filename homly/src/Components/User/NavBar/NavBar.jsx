@@ -26,6 +26,7 @@ import "./NavBar.css";
 import NotificationPanal from "../../Common/NotificationPanal/NotificationPanal";
 import { AuthContext } from "../../../Contexts/AuthContext";
 import AxiosClient from "../../../services/AxiosClient";
+import logo from "../../../Assets/images/logo.png";
 const drawerWidth = 240;
 const pages = [
   { name: "Home", path: "/Home" },
@@ -153,6 +154,9 @@ const NavBar = ({ refContactUS, position }) => {
             >
               <MenuIcon />
             </IconButton>
+            <Box component={Link} to="/home">
+              <img src={logo} alt="logo" style={{ height: "30px" }} />
+            </Box>
           </Toolbar>
           <Stack
             direction="row"
@@ -225,7 +229,7 @@ const NavBar = ({ refContactUS, position }) => {
               direction="row"
               sx={{ justifyContent: "center", alignItems: "center" }}
             >
-              <Box>
+              <Box sx={{ display: { xs: "none", sm: "flex" } }}>
                 <Typography
                   variant="h6"
                   sx={{
