@@ -54,7 +54,7 @@ export default function ViewComplaintPopup( props ) {
           <TextField
             autoFocus
             disabled
-            value={props.complain.ComplaintID}
+            value={props.complain[0].ComplaintID}
             required
             margin="dense"
             id="complainID"
@@ -67,7 +67,7 @@ export default function ViewComplaintPopup( props ) {
           <TextField
             autoFocus
             disabled
-            value={props.complain.ReservationNo}
+            value={props.complain[0].ReservationNo}
             required
             margin="dense"
             id="reservationno"
@@ -80,7 +80,7 @@ export default function ViewComplaintPopup( props ) {
           <TextField
             autoFocus
             disabled
-            value={props.complain.ReservationNo}
+            value={props.complain[0].ServiceNo}
             required
             margin="dense"
             id="serviceNo"
@@ -97,7 +97,7 @@ export default function ViewComplaintPopup( props ) {
             required
             multiline
             fullWidth
-            value={props.complain.Reason}
+            value={props.complain[0].Reason}
             variant="outlined"
           />
           <TextField
@@ -107,7 +107,7 @@ export default function ViewComplaintPopup( props ) {
             required
             multiline
             fullWidth
-            value={props.complain.Reason}
+            value={props.complain[0].Marked ? props.complain[0].IsWarned ? "Warned" : "viewed" : "Not Viewed"}
             variant="outlined"
           />
         </DialogContent>
