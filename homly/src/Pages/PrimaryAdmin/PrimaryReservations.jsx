@@ -23,7 +23,7 @@ const PrimaryReservations = () => {
         }}
       >
         <Container maxWidth="xl" style={{ padding: "0px" }}>
-          <Grid container>
+          <Grid container sx={{ position: "relative" }}>
             <Grid
               className={showNav}
               xs={3}
