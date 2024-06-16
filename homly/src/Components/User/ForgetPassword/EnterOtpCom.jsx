@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import {
   ThemeProvider,
   DialogActions,
@@ -28,17 +27,11 @@ export default function EnterDetailCom({
 
   useEffect(() => {
     if (btnDisabled) {
-      setTimeout(() => {
-        setBtnDisabled(false);
-      }, 30000);
-    }
-  }, [btnDisabled]);
-
-  useEffect(() => {
-    if (btnDisabled) {
       if (!time) return;
       const intervalId = setInterval(() => {
-        setTime(time - 1);
+        const newTime = time - 1;
+        setTime(newTime);
+        if (newTime === 0) setBtnDisabled(false);
       }, 1000);
       return () => clearInterval(intervalId);
     }
@@ -87,27 +80,23 @@ export default function EnterDetailCom({
 
   const handleNewOTP = () => {
     const formData = { serviceNo: value.serviceNo, email: value.email };
-    axios
-      .post("http://localhost:8080/users/forgetPassword", formData, {
-        withCredentials: true,
-      })
-      .then((res) => {
-        if (res.data.success) {
-          setErrorStatus({
-            ...errorStatus,
-            isOpen: true,
-            type: "success",
-            message: res.data.message,
-          });
-        } else {
-          setErrorStatus({
-            ...errorStatus,
-            isOpen: true,
-            type: "error",
-            message: res.data.message,
-          });
-        }
-      });
+    AxiosClient.post("/user/forgetPassword/", formData).then((res) => {
+      if (res.data.success) {
+        setErrorStatus({
+          ...errorStatus,
+          isOpen: true,
+          type: "success",
+          message: res.data.message,
+        });
+      } else {
+        setErrorStatus({
+          ...errorStatus,
+          isOpen: true,
+          type: "error",
+          message: res.data.message,
+        });
+      }
+    });
     setBtnDisabled(true);
     setTime(29);
   };

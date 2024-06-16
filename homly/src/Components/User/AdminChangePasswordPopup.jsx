@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useEffect, useState } from "react";
 import {
   ThemeProvider,
   DialogActions,
@@ -8,9 +7,12 @@ import {
   DialogContentText,
   Button,
   Dialog,
+  Box,
+  Stack,
 } from "@mui/material";
 import theme from "../../HomlyTheme";
 import InputPassword from "./TextField/InputPassword";
+import PasswordStrength from "./PasswordStrength";
 import AxiosClient from "../../services/AxiosClient";
 
 export default function AdminChangePasswordPopup({
@@ -22,12 +24,25 @@ export default function AdminChangePasswordPopup({
 }) {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
+  const [passwordStrength, setPasswordStrength] = useState(0);
   const [errorConfirmPassword, setErrorConfirmPassword] = useState(false);
+  const [disabled, setDisabled] = useState(true);
+
+  useEffect(() => {
+    if (
+      !errorConfirmPassword &&
+      passwordStrength > 1 &&
+      confirmPassword.length > 0
+    ) {
+      setDisabled(false);
+    } else {
+      setDisabled(true);
+    }
+  }, [errorConfirmPassword, passwordStrength, confirmPassword]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!errorConfirmPassword) {
+    if (!errorConfirmPassword && passwordStrength > 1) {
       const formData = { adminId: adminId, password: password };
       AxiosClient.put("/admin", formData).then((res) => {
         if (res.data.success) {
@@ -65,16 +80,25 @@ export default function AdminChangePasswordPopup({
               For your account's security, it is mandatory to change your
               password. Please add new password
             </DialogContentText>
-            <InputPassword
-              lable={"Password"}
-              helperText={""}
-              error={false}
-              password={password}
-              setPassword={setPassword}
-              confirmPassword={confirmPassword}
-              isCheck={true}
-              setErrorConfirmPassword={setErrorConfirmPassword}
-            />
+            <Stack direction="column">
+              <InputPassword
+                lable={"Password"}
+                helperText={""}
+                error={false}
+                password={password}
+                setPassword={setPassword}
+                confirmPassword={confirmPassword}
+                isCheck={true}
+                setErrorConfirmPassword={setErrorConfirmPassword}
+                mbottom={"2%"}
+              />
+              <Box sx={{ width: "90%" }}>
+                <PasswordStrength
+                  password={password}
+                  setPasswordStrength={setPasswordStrength}
+                />
+              </Box>
+            </Stack>
             <InputPassword
               lable={"Confirm Password"}
               helperText={errorConfirmPassword ? "Password not match" : ""}
@@ -88,7 +112,9 @@ export default function AdminChangePasswordPopup({
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose}>Cancel</Button>
-            <Button type="submit">Confirm</Button>
+            <Button type="submit" disabled={disabled}>
+              Confirm
+            </Button>
           </DialogActions>
         </form>
       </Dialog>

@@ -46,7 +46,6 @@ export default function UserInterestedPopup({
   });
 
   const [interests, setInterests] = useState([]);
-  const [error, setError] = useState("");
 
   const handleClose = () => {
     setOpen(false);
@@ -56,6 +55,13 @@ export default function UserInterestedPopup({
     // select maximum 3 interests
     if (newInterest.length <= 3) {
       setInterests(newInterest);
+    } else if (newInterest.length > 3) {
+      setErrorStatus({
+        ...errorStatus,
+        isOpen: true,
+        type: "warning",
+        message: "You can select maximum 3 interests",
+      });
     }
   };
 
@@ -63,7 +69,12 @@ export default function UserInterestedPopup({
     let formData = {};
 
     if (interests.length < 3 && interests.length > 0) {
-      setError("Select 3 interests to continue.");
+      setErrorStatus({
+        ...errorStatus,
+        isOpen: true,
+        type: "warning",
+        message: "Please select 3 interests",
+      });
     } else {
       if (interests.length === 3) {
         console.log("submitted", interests);
@@ -104,17 +115,29 @@ export default function UserInterestedPopup({
   return (
     <ThemeProvider theme={theme}>
       <Dialog open={open} keepMounted onClose={handleClose}>
-        <DialogTitle>Choose Your Interest</DialogTitle>
+        <DialogTitle>
+          Customize Your Experience: Select Your Top 3 Preferred Facilities
+        </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Hello there! Let's customize your experience. Pick your top 3
-            interests in order
+            Welcome! We're here to tailor your experience to best suit your
+            preferences. Please choose your{" "}
+            <span style={{ fontWeight: "bold" }}>
+              top 3 favorite facilities
+            </span>{" "}
+            from the options below,{" "}
+            <span style={{ fontWeight: "bold" }}>in order of preference.</span>
           </DialogContentText>
           <Stack direction="column">
             <Box>
-              <ToggleButtonGroup sx={{ flexWrap: "wrap" }}>
-                {interests.map((interest, index) => {
-                  return (
+              <ToggleButtonGroup sx={{ flexWrap: "wrap", pt: 1 }}>
+                {interests.map((interest, index) => (
+                  <Stack direction="row" key={index}>
+                    <Typography
+                      sx={{ fontWeight: "bold", ml: 1, color: "#872341" }}
+                    >
+                      {index + 1}.
+                    </Typography>
                     <ToggleButton
                       value={interest}
                       aria-label={interest}
@@ -123,8 +146,8 @@ export default function UserInterestedPopup({
                     >
                       {interest}
                     </ToggleButton>
-                  );
-                })}
+                  </Stack>
+                ))}
               </ToggleButtonGroup>
               <Divider
                 sx={{
@@ -179,7 +202,6 @@ export default function UserInterestedPopup({
                 </ToggleButton>
               </ToggleButtonGroup>
             </Box>
-            <Typography color="error">{error}</Typography>
           </Stack>
         </DialogContent>
         <DialogActions>
