@@ -63,7 +63,7 @@ const NavBar = ({ refContactUS, position }) => {
         }
       })
       .catch(() => {});
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleOpenUserMenu = (event) => {
@@ -220,7 +220,24 @@ const NavBar = ({ refContactUS, position }) => {
                 <NotificationPanal bell={true} />
               </Box>
             </Box>
-            <Stack direction="row">
+            <Stack
+              direction="row"
+              sx={{ justifyContent: "center", alignItems: "center" }}
+            >
+              <Box>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    color: "text.primary",
+                    padding: 1,
+                    fontFamily: "Ubuntu Mono",
+                    fontWeight: "bold",
+                  }}
+                >
+                  <span style={{ fontWeight: "500" }}>👋Hi, </span>
+                  {user.name.split(" ")[0]}
+                </Typography>
+              </Box>
               <Box sx={{ flexGrow: 0 }}>
                 <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
