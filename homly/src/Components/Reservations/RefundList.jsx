@@ -317,7 +317,7 @@ export default function RefundListTable() {
                     rowCount={rows.length}
                     />
                     <TableBody sx={{justifyContent: "center", alignItems: "center", height: "50vh", overflowY: "scroll" }}>
-                    {visibleRows.map((row, index) => {
+                    {refunds.map((row, index) => {
                         const isItemSelected = isSelected(row.id);
                         const labelId = `enhanced-table-checkbox-${index}`;
 
@@ -340,9 +340,9 @@ export default function RefundListTable() {
                             scope="row"
                             padding="none"
                             >
-                            {row.name}
+                            {row.refundId}
                             </TableCell>
-                            <TableCell align="right">{row.cancelledby}</TableCell>
+                            <TableCell align="right">{row.cancelledBy}</TableCell>
                             <TableCell align="right">{row.status}</TableCell>
                             <TableCell align="right">{row.button}</TableCell>
                         </TableRow>
