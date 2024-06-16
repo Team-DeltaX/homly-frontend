@@ -216,16 +216,16 @@ EnhancedTableToolbar.propTypes = {
 
 export default function RefundListTable() {
     const [refunds, setRefunds] = useState([]);
-useEffect(() => {
-    AxiosClient.get("/admin/auth/reservation/refund")
-        .then((res) => {
-            console.log("refundsssss",res.data)
-            setRefunds(res.data);
-        })
-        .catch(() => {
-        }
-    );
-}, []);
+    useEffect(() => {
+        AxiosClient.get("/admin/auth/reservation/refund")
+            .then((res) => {
+                console.log("refundsssss",res.data)
+                setRefunds(res.data);
+            })
+            .catch(() => {
+            }
+        );
+    }, []);
 
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
