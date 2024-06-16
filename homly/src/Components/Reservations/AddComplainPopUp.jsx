@@ -128,7 +128,10 @@ export default function AddComplainPopUp(props) {
           <TextField
             autoFocus
             disabled={true}
-            value={props.reservation.holidayHome.Name}
+            value={
+              props.reservation.holidayHome &&
+              props.reservation.holidayHome.Name
+            }
             required
             margin="dense"
             id="holidayhome"

@@ -12,9 +12,15 @@ const ReservationCard = (props) => {
   const [isSpecial, setIsSpecial] = useState(props.reservation.IsSpecial);
   const [isCancelled, setIsCancelled] = useState(props.reservation.IsCancelled);
   const [isPaid, setIsPaid] = useState(props.reservation.IsPaid);
-  const isComplainTrue = (props.type === "past" && props.adminNumber != "HomlyPriAdmin" && props.isComplaint.length === 0) ? true : false;
+  const isComplainTrue =
+    props.type === "past" &&
+    props.adminNumber != "HomlyPriAdmin" &&
+    props.isComplaint.length === 0
+      ? true
+      : false;
   console.log("is view complain popup", props.isComplaint);
-  const isViewComplainTrue = ( props.isComplaint && props.isComplaint.length > 0) ? true : false;
+  const isViewComplainTrue =
+    props.isComplaint && props.isComplaint.length > 0 ? true : false;
   return (
     <Grid
       container
@@ -117,26 +123,26 @@ const ReservationCard = (props) => {
             Amount: {props.reservation.Price}
           </Typography>
           {isPaid ? (
-        <Typography
-          variant="button"
-          sx={{
-            color: "green",
-            fontSize: { xs: "13px", sm: "14px", md: "15px" },
-          }}
-        >
-          PAID
-        </Typography>
-      ) : (
-        <Typography
-          variant="button"
-          sx={{
-            color: "red",
-            fontSize: { xs: "13px", sm: "14px", md: "15px" },
-          }}
-        >
-          NOT PAID
-        </Typography>
-      )}
+            <Typography
+              variant="button"
+              sx={{
+                color: "green",
+                fontSize: { xs: "13px", sm: "14px", md: "15px" },
+              }}
+            >
+              PAID
+            </Typography>
+          ) : (
+            <Typography
+              variant="button"
+              sx={{
+                color: "red",
+                fontSize: { xs: "13px", sm: "14px", md: "15px" },
+              }}
+            >
+              NOT PAID
+            </Typography>
+          )}
         </Grid>
         <Grid
           item
@@ -163,7 +169,7 @@ const ReservationCard = (props) => {
                 marginBottom: "8px",
               }}
             >
-              {props.holidayHome.Name.toUpperCase()}
+              {props.holidayHome && props.holidayHome.Name.toUpperCase()}
             </Typography>
             <Typography
               sx={{
@@ -230,7 +236,7 @@ const ReservationCard = (props) => {
                 <AddComplainPopUp reservation={props} />
               </Box>
               <Box sx={{ display: isViewComplainTrue ? "block" : "none" }}>
-                <ViewComplaintPopup complain={props.isComplaint}/>
+                <ViewComplaintPopup complain={props.isComplaint} />
               </Box>
             </Stack>
           </Grid>
