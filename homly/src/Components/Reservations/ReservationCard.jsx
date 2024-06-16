@@ -232,12 +232,16 @@ const ReservationCard = (props) => {
                 reservedHall={props.reservedHall}
                 holidayhome={props.holidayHome}
               />
-              <Box sx={{ display: isComplainTrue ? "block" : "none" }}>
-                <AddComplainPopUp reservation={props} />
-              </Box>
-              <Box sx={{ display: isViewComplainTrue ? "block" : "none" }}>
+              {/* <Box sx={{ display: isComplainTrue ? "block" : "none" }}> */}
+              {/* <AddComplainPopUp reservation={props} /> */}
+              {/* </Box> */}
+              {/* <Box sx={{ display: isViewComplainTrue ? "block" : "none" }}> */}
+              {/* <ViewComplaintPopup complain={props.isComplaint} /> */}
+              {/* </Box> */}
+              {isComplainTrue && <AddComplainPopUp reservation={props} />}
+              {isViewComplainTrue && (
                 <ViewComplaintPopup complain={props.isComplaint} />
-              </Box>
+              )}
             </Stack>
           </Grid>
         </Grid>
