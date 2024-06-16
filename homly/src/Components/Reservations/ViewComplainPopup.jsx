@@ -57,9 +57,9 @@ export default function ViewComplaintPopup( props ) {
             value={props.complain.ComplaintID}
             required
             margin="dense"
-            id="serviceno"
-            name="serviceno"
-            label="Employee's Service No"
+            id="complainID"
+            name="complainID"
+            label="Complain ID"
             type="text"
             fullWidth
             variant="outlined"
@@ -78,8 +78,32 @@ export default function ViewComplaintPopup( props ) {
             variant="outlined"
           />
           <TextField
+            autoFocus
+            disabled
+            value={props.complain.ReservationNo}
+            required
+            margin="dense"
+            id="serviceNo"
+            name="serviceNo"
+            label="Employee Service No"
+            type="text"
+            fullWidth
+            variant="outlined"
+          />
+          <TextField
             margin="dense"
             label="Reason"
+            disabled
+            required
+            multiline
+            fullWidth
+            value={props.complain.Reason}
+            variant="outlined"
+          />
+          <TextField
+            margin="dense"
+            label="Complain Status"
+            disabled
             required
             multiline
             fullWidth

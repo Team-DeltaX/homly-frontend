@@ -14,11 +14,11 @@ const ReservationCard = (props) => {
   const [isPaid, setIsPaid] = useState(props.reservation.IsPaid);
   const isComplainTrue =
     props.type === "past" &&
-    props.adminNumber != "HomlyPriAdmin" &&
+    props.adminNumber !== "HomlyPriAdmin" &&
     props.isComplaint.length === 0
       ? true
       : false;
-  console.log("is view complain popup", props.isComplaint);
+
   const isViewComplainTrue =
     props.isComplaint && props.isComplaint.length > 0 ? true : false;
   return (
