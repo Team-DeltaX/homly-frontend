@@ -62,6 +62,7 @@ const PastReservationList = (props) => {
               reservedHall={reservation.reservedhalls}
               employeeName={reservation.employeeName[0]}
               employeeDetails={reservation.employeeDetails[0]}
+              isComplaint={reservation.Complaints[0]}
               adminNumber={adminNo}
               type={reservationType}
             />
