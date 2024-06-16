@@ -6,15 +6,12 @@ import dayjs from "dayjs";
 import { useState } from "react";
 import Typography from "@mui/material/Typography";
 import AddComplainPopUp from "./AddComplainPopUp";
-import ViewComplaintPopup from "./ViewComplainPopup";
 
 const ReservationCard = (props) => {
   const [isSpecial, setIsSpecial] = useState(props.reservation.IsSpecial);
   const [isCancelled, setIsCancelled] = useState(props.reservation.IsCancelled);
   const [isPaid, setIsPaid] = useState(props.reservation.IsPaid);
-  const isComplainTrue = (props.type === "past" && props.adminNumber != "HomlyPriAdmin" && props.isComplaint.length === 0) ? true : false;
-  console.log("is view complain popup", props.isComplaint);
-  const isViewComplainTrue = ( props.isComplaint && props.isComplaint.length > 0) ? true : false;
+  const isComplainTrue = (props.type === "past" && props.adminNumber != "HomlyPriAdmin");
   return (
     <Grid
       container
@@ -228,9 +225,6 @@ const ReservationCard = (props) => {
               />
               <Box sx={{ display: isComplainTrue ? "block" : "none" }}>
                 <AddComplainPopUp reservation={props} />
-              </Box>
-              <Box sx={{ display: isViewComplainTrue ? "block" : "none" }}>
-                <ViewComplaintPopup complain={props.isComplaint}/>
               </Box>
             </Stack>
           </Grid>
