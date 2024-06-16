@@ -9,6 +9,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
+import Stack from '@mui/material/Stack';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -43,7 +44,7 @@ const rows = [
   createData(7, 'Ice cream sandwich', 237, 9.0, 37, 4.3),
   createData(8, 'Jelly Bean', 375, 0.0, 94, 0.0),
   createData(9, 'KitKat', 518, 26.0, 65, 7.0),
-  createData(10, 'Lollipop', 392, 0.2, 98, 0.0),
+  createData(10, 'Lollipophhhhhhhhhhhhhhhhhhhhh', 392, 0.2, 98, 0.0),
   createData(11, 'Marshmallow', 318, 0, 81, 2.0),
   createData(12, 'Nougat', 360, 19.0, 9, 37.0),
   createData(13, 'Oreo', 437, 18.0, 63, 4.0),
@@ -86,31 +87,25 @@ const headCells = [
     id: 'name',
     numeric: false,
     disablePadding: true,
-    label: 'Dessert (100g serving)',
+    label: 'Employee Name',
   },
   {
-    id: 'calories',
+    id: 'cancelledby',
     numeric: true,
     disablePadding: false,
-    label: 'Calories',
+    label: 'Cancelled by',
   },
   {
-    id: 'fat',
+    id: 'status',
     numeric: true,
     disablePadding: false,
-    label: 'Fat (g)',
+    label: 'Status',
   },
   {
-    id: 'carbs',
+    id: 'button',
     numeric: true,
     disablePadding: false,
-    label: 'Carbs (g)',
-  },
-  {
-    id: 'protein',
-    numeric: true,
-    disablePadding: false,
-    label: 'Protein (g)',
+    label: '',
   },
 ];
 
@@ -125,15 +120,6 @@ function EnhancedTableHead(props) {
     <TableHead>
       <TableRow>
         <TableCell padding="checkbox">
-          <Checkbox
-            color="primary"
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{
-              'aria-label': 'select all desserts',
-            }}
-          />
         </TableCell>
         {headCells.map((headCell) => (
           <TableCell
@@ -296,89 +282,88 @@ export default function RefundListTable() {
   );
 
   return (
-    <Box sx={{ width: '90%', justifyContent: "center", alignItems: "center" }}>
-      <Paper sx={{ width: '100%', mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} />
-        <TableContainer>
-          <Table
-            sx={{ minWidth: 750 }}
-            aria-labelledby="tableTitle"
-            size={dense ? 'small' : 'medium'}
-          >
-            <EnhancedTableHead
-              numSelected={selected.length}
-              order={order}
-              orderBy={orderBy}
-              onSelectAllClick={handleSelectAllClick}
-              onRequestSort={handleRequestSort}
-              rowCount={rows.length}
-            />
-            <TableBody>
-              {visibleRows.map((row, index) => {
-                const isItemSelected = isSelected(row.id);
-                const labelId = `enhanced-table-checkbox-${index}`;
-
-                return (
-                  <TableRow
-                    hover
-                    onClick={(event) => handleClick(event, row.id)}
-                    role="checkbox"
-                    aria-checked={isItemSelected}
-                    tabIndex={-1}
-                    key={row.id}
-                    selected={isItemSelected}
-                    sx={{ cursor: 'pointer' }}
-                  >
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        color="primary"
-                        checked={isItemSelected}
-                        inputProps={{
-                          'aria-labelledby': labelId,
-                        }}
-                      />
-                    </TableCell>
-                    <TableCell
-                      component="th"
-                      id={labelId}
-                      scope="row"
-                      padding="none"
-                    >
-                      {row.name}
-                    </TableCell>
-                    <TableCell align="right">{row.calories}</TableCell>
-                    <TableCell align="right">{row.fat}</TableCell>
-                    <TableCell align="right">{row.carbs}</TableCell>
-                    <TableCell align="right">{row.protein}</TableCell>
-                  </TableRow>
-                );
-              })}
-              {emptyRows > 0 && (
-                <TableRow
-                  style={{
-                    height: (dense ? 33 : 53) * emptyRows,
-                  }}
+    <Box sx={{ width: '100%',display: "flex", justifyContent: "center", alignItems: "center", height: "90vh", overflowY: "scroll" }}>
+        <Box sx={{ width: '90%'}}>
+            <Paper sx={{ width: '100%', m: 1 }}>
+                <EnhancedTableToolbar numSelected={selected.length} />
+                <TableContainer sx={{ maxHeight: 440 }}>
+                <Table
+                    sx={{ minWidth: 750 }}
+                    aria-labelledby="tableTitle"
+                    stickyHeader aria-label="sticky table"
+                    size={dense ? 'small' : 'medium'}
                 >
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-      </Paper>
-      <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Dense padding"
-      />
+                    <EnhancedTableHead
+                    numSelected={selected.length}
+                    order={order}
+                    orderBy={orderBy}
+                    onSelectAllClick={handleSelectAllClick}
+                    onRequestSort={handleRequestSort}
+                    rowCount={rows.length}
+                    />
+                    <TableBody sx={{justifyContent: "center", alignItems: "center", height: "50vh", overflowY: "scroll" }}>
+                    {visibleRows.map((row, index) => {
+                        const isItemSelected = isSelected(row.id);
+                        const labelId = `enhanced-table-checkbox-${index}`;
+
+                        return (
+                        <TableRow
+                            hover
+                            onClick={(event) => handleClick(event, row.id)}
+                            role="checkbox"
+                            aria-checked={isItemSelected}
+                            tabIndex={-1}
+                            key={row.id}
+                            selected={isItemSelected}
+                            sx={{ cursor: 'pointer', maxHeight: "60vh" }}
+                        >
+                            <TableCell padding="checkbox">
+                            </TableCell>
+                            <TableCell
+                            component="th"
+                            id={labelId}
+                            scope="row"
+                            padding="none"
+                            >
+                            {row.name}
+                            </TableCell>
+                            <TableCell align="right">{row.cancelledby}</TableCell>
+                            <TableCell align="right">{row.status}</TableCell>
+                            <TableCell align="right">{row.button}</TableCell>
+                        </TableRow>
+                        );
+                    })}
+                    {emptyRows > 0 && (
+                        <TableRow
+                        style={{
+                            height: (dense ? 33 : 53) * emptyRows,
+                        }}
+                        >
+                        <TableCell colSpan={6} />
+                        </TableRow>
+                    )}
+                    </TableBody>
+                </Table>
+                </TableContainer>
+                <Stack direction="row" justifyContent="space-between">
+                    <FormControlLabel
+                    control={<Switch checked={dense} onChange={handleChangeDense} />}
+                    label="Dense padding"
+                    />
+                    <TablePagination
+                    rowsPerPageOptions={[5, 10, 25]}
+                    component="div"
+                    count={rows.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                    />
+                </Stack>
+                
+            </Paper>
+            
+            </Box>
     </Box>
   );
 }
