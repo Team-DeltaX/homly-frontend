@@ -204,7 +204,7 @@ export default function AddSpecialReservationPopUp() {
 
   useEffect(() => {
     if (ServiceNo.length === 6) {
-      AxiosClient.get(`/admin/auth/locationadmin/employee/${ServiceNo}`)
+      AxiosClient.get(`/user/auth/reservation/employee/${ServiceNo}`)
         .then((res) => {
           const employeeData = res.data[0];
           setEmployeeName(employeeData.name);
