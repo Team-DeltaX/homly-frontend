@@ -11,7 +11,6 @@ import { useState } from "react";
 
 export default function ViewComplaintPopup({ props }) {
   const [open, setOpen] = React.useState(false);
-    console.log("complain", props.complain);
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -52,7 +51,7 @@ export default function ViewComplaintPopup({ props }) {
           <CloseIcon />
         </IconButton>
         <DialogContent>
-          <TextField
+          {/* <TextField
             autoFocus
             disabled
             value={props.complain.ComplaintID}
@@ -86,7 +85,7 @@ export default function ViewComplaintPopup({ props }) {
             fullWidth
             value={props.complain.Reason}
             variant="outlined"
-          />
+          /> */}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">

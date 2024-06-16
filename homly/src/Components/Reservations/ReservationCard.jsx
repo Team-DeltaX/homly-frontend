@@ -230,7 +230,7 @@ const ReservationCard = (props) => {
                 <AddComplainPopUp reservation={props} />
               </Box>
               <Box sx={{ display: isViewComplainTrue ? "block" : "none" }}>
-                <ViewComplaintPopup complain={props.isComplaint[0]}/>
+                <ViewComplaintPopup complain={props.isComplaint}/>
               </Box>
             </Stack>
           </Grid>
