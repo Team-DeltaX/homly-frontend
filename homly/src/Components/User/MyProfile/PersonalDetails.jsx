@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   Box,
   ThemeProvider,
@@ -16,6 +16,7 @@ import theme from "../../../HomlyTheme";
 import UploadImageCloudinary from "../../Common/UploadImageCloudinary";
 import ErrorSnackbar from "../ErrorSnackbar";
 import UserInterestedPopupProfile from "./UserInterestedPopupProfile";
+import { AuthContext } from "../../../Contexts/AuthContext";
 import AxiosClient from "../../../services/AxiosClient";
 
 const styleSelected = {
@@ -27,6 +28,7 @@ const styleSelected = {
 };
 
 const PersonalDetails = () => {
+  const { setIsUpdate } = useContext(AuthContext);
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
   const phoneRegex = /^(0|\+94)[0-9]{9}$/;
 
@@ -178,6 +180,7 @@ const PersonalDetails = () => {
                     ? "Check your email,We will send you a verification link"
                     : "Updated Successfully",
                 });
+                setIsUpdate(true);
               } else {
                 setErrorStatus({
                   ...errorStatus,

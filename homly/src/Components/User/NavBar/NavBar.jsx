@@ -39,7 +39,7 @@ const respSidePages = [
 ];
 
 const NavBar = ({ refContactUS, position }) => {
-  const { setIsLogout } = useContext(AuthContext);
+  const { setIsLogout, isUpdate, setIsUpdate } = useContext(AuthContext);
   const navigate = useNavigate();
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -60,11 +60,12 @@ const NavBar = ({ refContactUS, position }) => {
             name: res.data.name,
             image: res.data.image,
           });
+          setIsUpdate(false);
         }
       })
       .catch(() => {});
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isUpdate]);
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
