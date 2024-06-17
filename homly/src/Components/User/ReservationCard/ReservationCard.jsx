@@ -35,6 +35,7 @@ export default function ReservationCard({
   HHHalls,
   ExpireIn,
   ReservationId,
+  Amount,
   IsReviewed,
   IsCancelled,
   CancelledBy,
@@ -485,6 +486,8 @@ export default function ReservationCard({
         reservationId={ReservationId}
         CancelledBy={CancelledBy}
         ServiceNo={ServiceNo}
+        EmpName={employeeDetails.name}
+        Amount={Amount}
       />
       <PayNowPopup
         isOpen={openPay}

@@ -20,6 +20,7 @@ import {
   Grid,
   Divider,
   Collapse,
+  Typography,
 } from "@mui/material";
 
 const VisuallyHiddenInput = styled("input")({
@@ -38,14 +39,20 @@ const PrimaryAdminRefundForm = ({
   open,
   setOpen,
   reservationId,
+  serviceNo,
   CancelledBy,
+  accountHolderName,
+  accountNumber,
+  bankName,
+  branchName,
+  payment,
+  contactNo,
 }) => {
   const [banks, setBanks] = useState([]);
   const [selectedBank, setSelectedBank] = useState(null);
   const [branches, setBranches] = useState([]);
   const [selectedBranch, setSelectedBranch] = useState(null);
-  const [branchAutocompleteDisabled, setBranchAutocompleteDisabled] =
-    useState(true);
+  const [branchAutocompleteDisabled, setBranchAutocompleteDisabled] = useState(true);
   const [isGridCollapsed, setIsGridCollapsed] = useState(false);
   const [uploadedFile, setUploadedFile] = useState(null);
 
@@ -92,19 +99,20 @@ const PrimaryAdminRefundForm = ({
     }
   }, [selectedBank]);
 
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = {
       reservationNo: reservationId,
-      serviceNo: 214092,
+      serviceNo: serviceNo,
       contactNumber: event.target.contactNo.value,
       cancelledBy: CancelledBy,
-      status: "pending",
+      status: "Refunded",
       accountHolder: event.target.accountHolderName.value,
       accountNumber: event.target.accountNo.value,
       bank: selectedBank.name,
       branch: selectedBranch.name,
-      file: uploadedFile, // Include uploaded file in form data
+      file: uploadedFile,
     };
 
     // Simulate upload or handle file data here with AxiosClient
@@ -157,32 +165,7 @@ const PrimaryAdminRefundForm = ({
       </IconButton>
       <DialogContent>
         <Grid container spacing={2} justifyContent="flex-end" mb={1}>
-          <Grid item xs={11}>
-            <TextField
-              fullWidth
-              label="Refund ID"
-              name="refundId"
-              variant="filled"
-              size="small"
-              defaultValue="refundId"
-              InputProps={{
-                readOnly: true,
-              }}
-            />
-          </Grid>
-          <Grid item xs={1}>
-            <IconButton onClick={toggleGrid} sx={{ mb: 2 }}>
-              {isGridCollapsed ? <ExpandMoreIcon sx={{"&:hover": {
-            color: "#823",
-          },}} /> : <ExpandLessIcon sx={{"&:hover": {
-            color: "#823",
-          },}} />}
-            </IconButton>
-          </Grid>
-        </Grid>
-        <Collapse in={!isGridCollapsed}>
-          <Grid container spacing={2}>
-            <Grid item xs={6}>
+            <Grid item xs={11}>
               <TextField
                 fullWidth
                 label="Reservation ID"
@@ -195,6 +178,18 @@ const PrimaryAdminRefundForm = ({
                 }}
               />
             </Grid>
+          <Grid item xs={1}>
+            <IconButton onClick={toggleGrid} sx={{ mb: 2 }}>
+              {isGridCollapsed ? <ExpandMoreIcon sx={{"&:hover": {
+            color: "#823",
+          },}} /> : <ExpandLessIcon sx={{"&:hover": {
+            color: "#823",
+          },}} />}
+            </IconButton>
+          </Grid>
+        </Grid>
+        <Collapse in={!isGridCollapsed}>
+          <Grid container spacing={2}>
             <Grid item xs={6}>
               <TextField
                 fullWidth
@@ -224,11 +219,24 @@ const PrimaryAdminRefundForm = ({
             <Grid item xs={6}>
               <TextField
                 fullWidth
+                label="Payment Amount"
+                name="payment"
+                variant="filled"
+                size="small"
+                defaultValue={payment}
+                InputProps={{
+                  readOnly: true,
+                }}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
                 variant="filled"
                 size="small"
                 label="Cancelled By"
                 name="cancelledBy"
-                defaultValue={CancelledBy}
+                defaultValue={CancelledBy === "User" ? "You" : "Primary Admin"}
                 InputProps={{
                   readOnly: true,
                 }}
@@ -242,7 +250,7 @@ const PrimaryAdminRefundForm = ({
                 size="small"
                 label="Account Holder Name"
                 name="accountHolderName"
-                defaultValue="account holder name"
+                defaultValue={accountHolderName}
                 InputProps={{
                   readOnly: true,
                 }}
@@ -254,7 +262,7 @@ const PrimaryAdminRefundForm = ({
                 required
                 variant="filled"
                 size="small"
-                defaultValue="account no"
+                defaultValue={accountNumber}
                 InputProps={{
                   readOnly: true,
                 }}
@@ -268,7 +276,7 @@ const PrimaryAdminRefundForm = ({
                 required
                 variant="filled"
                 size="small"
-                defaultValue="bank"
+                defaultValue={bankName}
                 InputProps={{
                   readOnly: true,
                 }}
@@ -282,7 +290,7 @@ const PrimaryAdminRefundForm = ({
                 required
                 variant="filled"
                 size="small"
-                defaultValue="branch"
+                defaultValue={branchName}
                 InputProps={{
                   readOnly: true,
                 }}
@@ -299,37 +307,34 @@ const PrimaryAdminRefundForm = ({
                 type="number"
                 label="Contact No"
                 name="contactNo"
-                defaultValue="contact no"
+                defaultValue={contactNo}
                 InputProps={{
                   readOnly: true,
                 }}
               />
             </Grid>
-            <Grid item xs={6}>
+          </Grid>
+          <Divider sx={{ my: 3 }} />
+        </Collapse>
+        <Grid container spacing={2}>
+        <Grid item xs={6}>
               <TextField
                 fullWidth
                 required
-                variant="filled"
-                size="small"
+                variant="outlined"
+                size="normal"
                 type="number"
-                label="Amount"
+                label="Refund Amount"
                 name="Amount"
-                defaultValue="amount"
-                InputProps={{
-                  readOnly: true,
-                }}
+                defaultValue={0}                
               />
             </Grid>
-          </Grid>
-          <Divider sx={{ my: 2 }} />
-        </Collapse>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <DialogContentText sx={{ m: 1 }}>
-              Attach the bank slip evidence in here.
-            </DialogContentText>
-          </Grid>
-          <Grid item xs={12}>
+            
+
+          <Grid item xs={6} justifyContent="flex-end">
+            <Typography variant="caption" display="block" gutterBottom>
+                Attach the bank slip evidence in here.*
+            </Typography>
             {uploadedFile ? (
               <Chip
                 label={uploadedFile.name}
@@ -358,10 +363,20 @@ const PrimaryAdminRefundForm = ({
               </Button>
             )}
           </Grid>
+          <Grid item xs={12}>
+              <TextField
+                fullWidth
+                variant="outlined"
+                size="normal"
+                placeholder="Reason if any"
+                label="Reason"
+                name="reason"
+              />
+            </Grid>
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button type="submit">Request Refund</Button>
+        <Button type="submit">Confirm Refund</Button>
       </DialogActions>
     </Dialog>
   );

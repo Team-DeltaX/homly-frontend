@@ -15,7 +15,7 @@ import {
   Autocomplete,
 } from '@mui/material';
 
-const RequestRefundPopup = ({ open, setOpen, reservationId, ServiceNo, CancelledBy }) => {
+const RequestRefundPopup = ({ open, setOpen, reservationId, ServiceNo, EmpName, Amount, CancelledBy }) => {
   const [banks, setBanks] = useState([]);
   const [selectedBank, setSelectedBank] = useState(null);
   const [branches, setBranches] = useState([]);
@@ -61,9 +61,10 @@ const RequestRefundPopup = ({ open, setOpen, reservationId, ServiceNo, Cancelled
     event.preventDefault();    
     const formData = {
       reservationNo: reservationId,
-      serviceNo: 214092, 
+      serviceNo: ServiceNo, 
       contactNumber: event.target.contactNo.value,
       cancelledBy: CancelledBy,
+      payment: Amount,
       status: 'pending', 
       accountHolder: event.target.accountHolderName.value,
       accountNumber: event.target.accountNo.value,
@@ -125,9 +126,9 @@ const RequestRefundPopup = ({ open, setOpen, reservationId, ServiceNo, Cancelled
               fullWidth
               variant="filled"
               size="small"
-              label="Service No"
-              name="serviceNo"
-              defaultValue={ServiceNo}
+              label="Employee Name"
+              name="employeeName"
+              defaultValue={EmpName}
               InputProps={{
                 readOnly: true,
               }}
@@ -138,9 +139,9 @@ const RequestRefundPopup = ({ open, setOpen, reservationId, ServiceNo, Cancelled
               fullWidth
               variant="filled"
               size="small"
-              label="Employee Name"
-              name="employeeName"
-              defaultValue="John Doe"
+              label="Payment Amount"
+              name="payment"
+              defaultValue={Amount}
               InputProps={{
                 readOnly: true,
               }}

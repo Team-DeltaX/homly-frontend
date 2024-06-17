@@ -354,7 +354,7 @@ export default function RefundListTable() {
                                                 scope="row"
                                                 padding="none"
                                             >
-                                                {row.refundId}
+                                                {row.serviceNo}
                                             </TableCell>
                                             <TableCell align="right">{row.cancelledBy}</TableCell>
                                             <TableCell align="right">{row.status}</TableCell>
@@ -400,8 +400,15 @@ export default function RefundListTable() {
                 <PrimaryAdminRefundForm
                     open={openPopup}
                     setOpen={setOpenPopup} 
-                    reservationId={selectedRefund.refundId} 
-                    CancelledBy={selectedRefund.cancelledBy} 
+                    reservationId={selectedRefund.reservationNo} 
+                    serviceNo={selectedRefund.serviceNo}
+                    CancelledBy={selectedRefund.cancelledBy}
+                    accountHolderName={selectedRefund.accountHolder}
+                    accountNumber={selectedRefund.accountNumber}
+                    bankName={selectedRefund.bank}
+                    branchName={selectedRefund.branch}
+                    payment={selectedRefund.payment}
+                    contactNo={selectedRefund.contactNumber} 
                 />
             )}
         </Box>

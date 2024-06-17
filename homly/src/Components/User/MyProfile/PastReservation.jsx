@@ -95,6 +95,7 @@ export default function PastReservation({
                     IsCancelled={reserv.reservation.IsCancelled}
                     CancelledBy={reserv.reservation.CancelledBy}
                     ServiceNo={reserv.reservation.ServiceNO}
+                    Amount={reserv.reservation.Price}
                   />
                 </Box>
               );
