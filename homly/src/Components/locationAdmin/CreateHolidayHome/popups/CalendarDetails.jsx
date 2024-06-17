@@ -14,7 +14,9 @@ export default function CalendarDetails({
   pendingRooms,
   selectedHolidayHome,
 }) {
-  console.log("rooms in the components", pendingRooms);
+  console.log("rooms in the components pending", pendingRooms);
+  console.log("rooms in the components paid", paidRooms);
+
   let dateString = date.toString();
   return (
     <div>
@@ -100,12 +102,11 @@ export default function CalendarDetails({
                 {pendingRooms.length === 0 ? (
                   <Typography sx={{ color: "grey" }}>Not Yet</Typography>
                 ) : (
-                  //   pendingRooms.map((room) => (
-                  //     <Typography key={room} sx={{ color: "grey" }}>
-                  //       {room.toUpperCase()}
-                  //     </Typography>
-                  //   ))
-                  console.log("yes")
+                  pendingRooms.map((room) => (
+                    <Typography key={room} sx={{ color: "grey" }}>
+                      {room.toUpperCase()}
+                    </Typography>
+                  ))
                 )}
               </Box>
             </Box>
