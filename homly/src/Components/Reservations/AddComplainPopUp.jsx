@@ -12,6 +12,7 @@ import ErrorSnackbar from "../User/ErrorSnackbar";
 import ConfirmPopup from "../PrimaryAdmin/ConfirmPopup";
 import AxiosClient from "../../services/AxiosClient";
 import { SocketioContext } from "../../Contexts/SocketioContext";
+import { Grid }  from '@mui/material';
 
 export default function AddComplainPopUp(props) {
   const [open, setOpen] = React.useState(false);
@@ -99,75 +100,91 @@ export default function AddComplainPopUp(props) {
           <CloseIcon />
         </IconButton>
         <DialogContent>
-          <TextField
-            autoFocus
-            disabled={true}
-            value={props.reservation.reservation.ServiceNO}
-            required
-            margin="dense"
-            id="serviceno"
-            name="serviceno"
-            label="Employees Service No"
-            type="text"
-            fullWidth
-            variant="outlined"
-          />
-          <TextField
-            autoFocus
-            disabled={true}
-            value={props.reservation.reservation.ReservationId}
-            required
-            margin="dense"
-            id="reservationno"
-            name="reservationno"
-            label="Reservation No"
-            type="text"
-            fullWidth
-            variant="outlined"
-          />
-          <TextField
-            autoFocus
-            disabled={true}
-            value={
-              props.reservation.holidayHome &&
-              props.reservation.holidayHome.Name
-            }
-            required
-            margin="dense"
-            id="holidayhome"
-            name="holidayhome"
-            label="Holiday Home"
-            type="text"
-            fullWidth
-            variant="outlined"
-          />
-          <TextField
-            autoFocus
-            required
-            margin="dense"
-            id="date"
-            name="date"
-            label=""
-            disabled
-            type="date"
-            fullWidth
-            variant="outlined"
-            value={selectedDate.toISOString().split("T")[0]}
-            onChange={(e) => setSelectedDate(new Date(e.target.value))}
-          />
-          <TextField
-            margin="dense"
-            label="Reason"
-            required
-            multiline
-            fullWidth
-            placeholder="Reason"
-            value={reason}
-            onChange={(e) => {
-              setReason(e.target.value);
-            }}
-            maxLength="parent.maxLength"
-          />
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <TextField
+                autoFocus
+                disabled={true}
+                value={props.reservation.reservation.ServiceNO}
+                required
+                margin="dense"
+                id="serviceno"
+                name="serviceno"
+                label="Employees Service No"
+                type="text"
+                fullWidth
+                variant="filled"
+                size="small"
+              />
+            </Grid>
+            <Grid item xs={6}>          
+              <TextField
+                autoFocus
+                disabled={true}
+                value={props.reservation.reservation.ReservationId}
+                required
+                margin="dense"
+                id="reservationno"
+                name="reservationno"
+                label="Reservation No"
+                type="text"
+                fullWidth
+                variant="filled"
+                size="small"
+              />
+            </Grid>
+            <Grid item xs={6}>   
+              <TextField
+                autoFocus
+                disabled={true}
+                value={
+                  props.reservation.holidayHome &&
+                  props.reservation.holidayHome.Name
+                }
+                required
+                margin="dense"
+                id="holidayhome"
+                name="holidayhome"
+                label="Holiday Home"
+                type="text"
+                fullWidth
+                variant="filled"
+                size="small"
+              />
+            </Grid>
+            <Grid item xs={6}>   
+              <TextField
+                autoFocus
+                required
+                margin="dense"
+                id="date"
+                name="date"
+                label="Today's Date"
+                disabled
+                type="date"
+                fullWidth
+                variant="filled"
+                size="small"
+                value={selectedDate.toISOString().split("T")[0]}
+                onChange={(e) => setSelectedDate(new Date(e.target.value))}
+              />
+            </Grid>
+            <Grid item xs={12}>   
+              <TextField
+                margin="dense"
+                label="Reason"
+                required
+                multiline
+                fullWidth
+                placeholder="Reason"
+                value={reason}
+                onChange={(e) => {
+                  setReason(e.target.value);
+                }}
+                maxLength="parent.maxLength"
+              />
+            </Grid>
+          </Grid>
         </DialogContent>
         <DialogActions>
           <ConfirmPopup

@@ -20,6 +20,7 @@ export default function PastReservation({
   const [filter, setFilter] = useState("all");
 
   useEffect(() => {
+    console.log("first", reservation);
     if (filter === "cancelled") {
       setTempReservation(
         reservation.filter((reserv) => reserv.reservation.IsCancelled)
