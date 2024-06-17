@@ -174,37 +174,42 @@ const HolidayHomeDetails = () => {
   useEffect(() => {
     console.log("reservationids array", reservationIds);
     if (reservationIds.length > 0) {
-      if (reservationIds[0].paid === true) {
-        for (let i = 0; i < reservationIds.length; i++) {
-          console.log("reservation id", reservationIds[i].id);
-          let reservationId = { id: reservationIds[i].id };
-          AxiosClient.get(
-            `http://localhost:8080/admin/auth/locationadmin/holidayhome/reserved/`,
-            { params: reservationId }
-          )
-            .then((response) => {
-              const data = response.data;
-              setPaidRooms(data);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        }
-      } else {
-        for (let i = 0; i < reservationIds.length; i++) {
-          console.log("reservation id", reservationIds[i].id);
-          let reservationId = { id: reservationIds[i].id };
-          AxiosClient.get(
-            `http://localhost:8080/admin/auth/locationadmin/holidayhome/reserved/`,
-            { params: reservationId }
-          )
-            .then((response) => {
-              const data = response.data;
-              setPendingRooms(data);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
+      for (let k = 0; k < reservationIds.length; k++) {
+        console.log("reservation id", reservationIds[k].id);
+        console.log("reservation paid", reservationIds[k].paid);
+        if (reservationIds[k].paid === true) {
+          console.log("in the true");
+          for (let i = 0; i < reservationIds.length; i++) {
+            console.log("reservation id", reservationIds[i].id);
+            let reservationId = { id: reservationIds[i].id };
+            AxiosClient.get(
+              `http://localhost:8080/admin/auth/locationadmin/holidayhome/reserved/`,
+              { params: reservationId }
+            )
+              .then((response) => {
+                const data = response.data;
+                setPaidRooms(data);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          }
+        } else {
+          console.log("in the false");
+          for (let i = 0; i < reservationIds.length; i++) {
+            let reservationId = { id: reservationIds[i].id };
+            AxiosClient.get(
+              `http://localhost:8080/admin/auth/locationadmin/holidayhome/reserved/`,
+              { params: reservationId }
+            )
+              .then((response) => {
+                const data = response.data;
+                setPendingRooms(data);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          }
         }
       }
     }
