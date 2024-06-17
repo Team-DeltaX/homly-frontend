@@ -60,8 +60,8 @@ const Pagetop = ({ heading, setShowNav }) => {
           background: "white",
         }}
       >
-        <Box sx={{ fontSize: "30px", fontFamily: "Roboto Flex" }}>
-          <Typography variant="h4"> {heading}</Typography>
+        <Box sx={{ fontSize: "30px", fontFamily: "Roboto Flex"}}>
+          <Typography variant="h4"  sx={{ fontWeight: "bold",marginLeft:'5%' }}> {heading}</Typography>
         </Box>
         <Box sx={{ display: "flex", alignItems: "center" }}>
           {/* <Box>
