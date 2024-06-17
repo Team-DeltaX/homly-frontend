@@ -118,7 +118,7 @@ const PrimaryDashboard = () => {
                           </Link>
                           <Link to="/primaryadmin/authorizations">
                             <Button  variant="contained">
-                              <Typography>Authorizations</Typography>
+                              <Typography> Holiday Home Approvals</Typography>
                             </Button>
                           </Link>
                         </Box>
@@ -272,7 +272,7 @@ const PrimaryDashboard = () => {
                                 </Avatar>
                               </Box>
                               <Box>|</Box>
-                              <Box>Requested Authorizations</Box>
+                              <Box>Holiday Home Approvals</Box>
                             </Box>
                             <Box>
                               {" "}

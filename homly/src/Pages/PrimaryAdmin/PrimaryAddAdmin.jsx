@@ -14,6 +14,8 @@ import {
 import theme from "../../HomlyTheme";
 import Pagetop from "../../Components/PrimaryAdmin/PageTop";
 import AutohideSnackbar from "../../Components/PrimaryAdmin/AutohideSnackbar";
+import Snackbarp from "../../Components/PrimaryAdmin/snackbar/Snackbarp";
+import { Validator } from "react";
 
 const PrimaryAddAdmin = () => {
   const [adminno, setadminno] = useState("");
@@ -54,14 +56,16 @@ const PrimaryAddAdmin = () => {
   };
 
   const validusername = (username) => {
-    if (username.length < 2) {
+    const isAllNumbers = /^\d+$/.test(username);
+    if ((username.length < 2 ) || (username.trim().length === 0)||isAllNumbers) {
       setUsernameerror(true);
     } else {
       setUsernameerror(false);
     }
   };
   const validlocation = (location) => {
-    if (location.length < 2) {
+    const isAllNumbers = /^\d+$/.test(location);
+    if ((location.length < 2)||(location.trim().length === 0)||isAllNumbers) {
       setWorklocationerror(true);
     } else {
       setWorklocationerror(false);
@@ -174,12 +178,12 @@ const PrimaryAddAdmin = () => {
                 }}
               >
                 <Pagetop setShowNav={setShowNav} heading={"Add Admin"} />
-                <AutohideSnackbar
-                  handleClick={handleClick}
-                  handleClose={handleClose}
-                  snacktext={snacktext}
-                  open={open}
-                  setOpen={setOpen}
+           
+                   <Snackbarp
+                  isOpen={open}
+                  setIsOpen={handleClick}
+                  type="success"
+                  message={"Admin Added Sucessfully"}
                 />
                 <Box
                   sx={{

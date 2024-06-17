@@ -201,7 +201,7 @@ const ViewPopupComplaints = (props) => {
                 </Box>
                 <Box sx={{ flex: 1 }}>
                   <TextField
-                    value={props.selecteduser.created_at}
+                    value={props.selecteduser.created_at.slice(0, 10)}
                     disabled
                     size="small"
                     sx={{ width: "85%", margin: "5px" }}
@@ -248,6 +248,7 @@ const ViewPopupComplaints = (props) => {
                   <TextField
                     value={reson}
                     size="small"
+                   
                     sx={{ width: "85%", margin: "5px" }}
                     onChange={(e) => {
                       setReson(e.target.value);
@@ -266,6 +267,7 @@ const ViewPopupComplaints = (props) => {
                 }}
               >
                 <div>
+                  
                   {props.prevcomplaints.length > 0 &&
                   props.selecteduser.ComplaintID !==
                     props.prevcomplaints[props.prevcomplaints.length - 1]
@@ -286,7 +288,7 @@ const ViewPopupComplaints = (props) => {
                         id="panel2-header"
                       >
                         <Typography>
-                          <Box>Complaint on</Box>
+                          <Box>Previous Complaint on{" "}</Box>
                         </Typography>
                         <Typography>
                           <Box>
@@ -328,7 +330,7 @@ const ViewPopupComplaints = (props) => {
                         id="panel2-header"
                       >
                         <Typography>
-                          Complaint on{" "}
+                          Previous Complaint onc
                           {getonlydate(props.prevcomplaints.length - 2)}
                         </Typography>
                       </AccordionSummary>
@@ -396,7 +398,7 @@ const ViewPopupComplaints = (props) => {
                       setOpen(true);
                     }
                   }}
-                  disabled={disable}
+                  disabled={disable ||(reson.trim().length===0)}
                 >
                   <Typography sx={{ fontSize: "10px" }}>
                     Add To Blacklist
