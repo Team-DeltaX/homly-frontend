@@ -11,7 +11,7 @@ import { SocketioContext } from "../../../Contexts/SocketioContext";
 
 const SearchBarHome = () => {
   const { socket } = useContext(SocketioContext);
-  const [dateValue, setDateValue] = useState([dayjs(), dayjs()]);
+  const [dateValue, setDateValue] = useState([dayjs(), dayjs().add(1, "day")]);
   const [district, setDistrict] = useState("");
   const [openDrawer, setOpenDrawer] = useState(false);
   const [searchedHH, setSearchedHH] = useState([]);
@@ -38,9 +38,12 @@ const SearchBarHome = () => {
       });
 
     socket.emit("newNotification", {
-      senderId:'214028', receiverId:'214029', data:'test message', type:"Authorization Denied", time: new Date()
+      senderId: "214028",
+      receiverId: "214029",
+      data: "test message",
+      type: "Authorization Denied",
+      time: new Date(),
     });
-
   };
   return (
     <ThemeProvider theme={theme}>
