@@ -18,6 +18,7 @@ import AxiosClient from "../../../services/AxiosClient";
 import ErrorSnackbar from "../ErrorSnackbar";
 import NoImage from "../../../Assets/images/noImage.webp";
 import RequestRefundPopup from "../../Reservations/RequestRefundPopup";
+import { SocketioContext } from "../../../Contexts/SocketioContext";
 
 export default function ReservationCard({
   HHreservation,
@@ -41,6 +42,7 @@ export default function ReservationCard({
   ServiceNo,
   setIsAddReview,
 }) {
+  const { socket } = useContext(SocketioContext);
   const { setIsOngoingReservationChange } = useContext(AuthContext);
   const [openReview, setOpenReview] = useState(false);
   const [openRefund, setOpenRefund] = useState(false);
@@ -58,7 +60,6 @@ export default function ReservationCard({
     email: "",
     contact_number: "",
   });
-  console.log("consolesss", employeeDetails.name);
 
   useEffect(() => {
     AxiosClient.get("/user/auth/details")
@@ -85,6 +86,13 @@ export default function ReservationCard({
             isOpen: true,
             type: "success",
             message: res.data.message,
+          });
+          socket.emit("newNotification", {
+            senderId: ServiceNo,
+            receiverId: res.data.adminNo,
+            data: `New Special Reservation is allocated for ${HHName}. Check it out.`,
+            type: "New Reservation Added",
+            time: new Date(),
           });
           setIsOngoingReservationChange(true);
         } else {
@@ -470,7 +478,6 @@ export default function ReservationCard({
         text={"Are you sure to cancel this reservation?"}
         controlfunction={handleCancelReservation}
       />
-      {console.log("manaaa", CancelledBy)}
       <RequestRefundPopup
         open={openRefund}
         setOpen={setOpenRefund}
