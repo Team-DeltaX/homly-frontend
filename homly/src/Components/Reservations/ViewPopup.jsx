@@ -85,7 +85,7 @@ export default function ViewPopUp(props) {
                 <Item>
                   <Box
                     component="img"
-                    src={props.holidayhome.MainImage}
+                    src={props.holidayhome && props.holidayhome.MainImage}
                     alt=""
                     sx={{
                       width: { xs: "6rem", sm: "7rem", md: "8rem" },
@@ -96,14 +96,14 @@ export default function ViewPopUp(props) {
                 </Item>
               </Grid>
               <Grid xs={6} sm={5}>
-                <Item sx={{textAlign: 'left'}}>
+                <Item sx={{ textAlign: "left" }}>
                   <Typography
                     variant="button"
                     display="block"
                     gutterBottom
                     sx={{ fontWeight: "bold" }}
                   >
-                    {props.holidayhome.Name.toUpperCase()}
+                    {props.holidayhome && props.holidayhome.Name.toUpperCase()}
                   </Typography>
                   <Typography
                     sx={{
@@ -271,7 +271,7 @@ export default function ViewPopUp(props) {
                       >
                         Reserved Room ID
                       </Typography>
-                      {(props.reservedRoom && props.reservedRoom.length > 0) ? (
+                      {props.reservedRoom && props.reservedRoom.length > 0 ? (
                         props.reservedRoom.map((room) => (
                           <Typography
                             variant="body1"
@@ -305,7 +305,7 @@ export default function ViewPopUp(props) {
                       >
                         Reserved Hall ID
                       </Typography>
-                      {(props.reservedHall  && props.reservedHall.length > 0 )?(
+                      {props.reservedHall && props.reservedHall.length > 0 ? (
                         props.reservedHall.map((hall) => (
                           <Typography
                             variant="body1"

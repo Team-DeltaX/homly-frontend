@@ -27,17 +27,17 @@ const Security = () => {
   });
 
   const [isEnable, setIsEnable] = useState(false);
-
-  const handleCancel = () => {
-    setPassword({ currentPass: "", newPass: "", confirmPass: "" });
-    setError({ currentPass: false, newPass: false, confirmPass: false });
-  };
   const [errorStatus, setErrorStatus] = useState({
     isOpen: false,
     type: "",
     message: "",
   });
   const [passwordStrength, setPasswordStrength] = useState(0);
+
+  const handleCancel = () => {
+    setPassword({ currentPass: "", newPass: "", confirmPass: "" });
+    setError({ currentPass: false, newPass: false, confirmPass: false });
+  };
 
   const handleUpdateData = () => {
     if (passwordStrength > 1) {
@@ -81,9 +81,10 @@ const Security = () => {
         password.newPass.length > 0 &&
         password.confirmPass.length > 0 &&
         !error.confirmPass &&
-        !error.password
+        !error.password &&
+        passwordStrength > 1
     );
-  }, [password, error]);
+  }, [password, error, passwordStrength]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -168,7 +169,6 @@ const Security = () => {
                       marginRight: "10px",
                     }}
                     onClick={handleCancel}
-                    disabled={!isEnable}
                   >
                     Cancel
                   </Button>

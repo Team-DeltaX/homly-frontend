@@ -16,6 +16,7 @@ const PastReservationList = (props) => {
   const fetchreservations = () => {
     AxiosClient.get("/admin/auth/reservation/past")
       .then((res) => {
+        console.log("res deetails", res.data.reservationDetails);
         setReservations(res.data.reservationDetails);
         setAdminNo(res.data.adminNo);
       })
@@ -46,7 +47,7 @@ const PastReservationList = (props) => {
                 ) ||
                 reservation.employeeName[0].name
                   .toLowerCase()
-                  .startsWith(props.search.toLowerCase()) ||
+                  .includes(props.search.toLowerCase()) ||
                 reservation.reservation.ReservationId.toLowerCase().includes(
                   props.search.toLowerCase()
                 )
@@ -61,6 +62,7 @@ const PastReservationList = (props) => {
               reservedHall={reservation.reservedhalls}
               employeeName={reservation.employeeName[0]}
               employeeDetails={reservation.employeeDetails[0]}
+              isComplaint={reservation.Complaints}
               adminNumber={adminNo}
               type={reservationType}
             />

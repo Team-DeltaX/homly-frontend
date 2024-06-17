@@ -39,16 +39,17 @@ export default function ConfirmPopup({
         <DialogContentText>{text}</DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>
-          <Typography>Cancel</Typography>
+        <Button onClick={handleClose} sx={{ textTransform: 'capitalize' }}>
+          <Typography>Decline</Typography>
         </Button>
         <Button
           onClick={() => {
             
             controlfunction();
           }}
+          sx={{ textTransform: 'capitalize' }}
         >
-          <Typography>Ok</Typography>
+          <Typography>Confirm</Typography>
         </Button>
       </DialogActions>
     </Dialog>

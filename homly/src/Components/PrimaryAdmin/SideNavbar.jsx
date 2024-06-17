@@ -150,7 +150,7 @@ export default function SideNavbar({ setShowNav }) {
                 <DoNotDisturbAltIcon
                   sx={{
                     color:
-                      selectedMenuItem === "blacklistedusers"
+                      selectedMenuItem === "blacklisted users"
                         ? "black"
                         : "white",
                   }}
@@ -171,7 +171,7 @@ export default function SideNavbar({ setShowNav }) {
                       fontWeight: "bold",
                     }}
                   >
-                    BlacklistedUsers
+                    Blacklisted Users
                   </Typography>
                 </Link>
               </Box>
@@ -336,6 +336,37 @@ export default function SideNavbar({ setShowNav }) {
                     }}
                   >
                     Reservations
+                  </Typography>
+                </Link>
+              </Box>
+            </Grid>
+            <Grid
+              container
+              justifyContent={"flex-start"}
+              alignItems={"center"}
+              xs={12}
+              sx={{
+                backgroundColor:
+                  selectedMenuItem === "refund" ? "white" : "primary.main",
+              }}
+              className="sidenav_item"
+            >
+              <Box justifyContent={"center"}>
+                <QueryStatsOutlinedIcon
+                  sx={{
+                    color: selectedMenuItem === "refund" ? "black" : "white",
+                  }}
+                />
+              </Box>
+              <Box alignItems={"center"}>
+                <Link to="/primaryadmin/refund" className="sidenav_link">
+                  <Typography
+                    variant="p"
+                    sx={{
+                      color: selectedMenuItem === "refund" ? "black" : "white",
+                    }}
+                  >
+                    Refund
                   </Typography>
                 </Link>
               </Box>

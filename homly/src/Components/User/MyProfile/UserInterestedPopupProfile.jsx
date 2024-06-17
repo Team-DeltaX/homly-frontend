@@ -35,8 +35,9 @@ const styleSelected = {
 export default function UserInterestedPopupProfile({
   open,
   setOpen,
-  interests, 
+  interests,
   setInterests,
+  oldInterests,
 }) {
   const [errorStatus, setErrorStatus] = useState({
     isOpen: false,
@@ -45,30 +46,40 @@ export default function UserInterestedPopupProfile({
   });
 
   const [addInterest, setAddInterest] = useState([]);
-  const [error, setError] = useState("");
 
   useEffect(() => {
-    if(interests.length > 0){
+    if (interests.length > 0) {
       setAddInterest(interests);
     }
-  },[interests])
+  }, [interests]);
 
   const handleClose = () => {
     setOpen(false);
+    setInterests(oldInterests);
   };
 
   const handleFormat = (event, newInterest) => {
     if (newInterest.length <= 3) {
-      setAddInterest(newInterest);
+      setInterests(newInterest);
+    } else if (newInterest.length > 3) {
+      setErrorStatus({
+        ...errorStatus,
+        isOpen: true,
+        type: "warning",
+        message: "You can select maximum 3 interests",
+      });
     }
-    console.log("interests", interests);
   };
 
   const handleSubmit = () => {
     if (addInterest.length < 3 && addInterest.length > 0) {
-      setError("Select 3 or 0 interests to continue.");
+      setErrorStatus({
+        ...errorStatus,
+        isOpen: true,
+        type: "warning",
+        message: "Please select 3 interests",
+      });
     } else if (addInterest.length === 3 || addInterest.length === 0) {
-      console.log("submitted", addInterest);
       setInterests(addInterest);
       setOpen(false);
     }
@@ -77,19 +88,29 @@ export default function UserInterestedPopupProfile({
   return (
     <ThemeProvider theme={theme}>
       <Dialog open={open} keepMounted onClose={handleClose}>
-        <DialogTitle>Change Your Interest</DialogTitle>
+        <DialogTitle>
+          Update Your Preferences: Edit Your Top 3 Preferred Facilities
+        </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Hello there! Let's customize your experience. Pick your top 3
-            interests in order
+            Need to make changes? No problem! Update your{" "}
+            <span style={{ fontWeight: "bold" }}>
+              top 3 favorite facilities
+            </span>{" "}
+            from the options below to ensure we continue to provide the best
+            experience tailored to your needs.
           </DialogContentText>
           <Stack direction="column">
             <Box>
-              <ToggleButtonGroup sx={{ flexWrap: "wrap" }}>
-                {addInterest.map((interest, index) => {
-                  return (
+              <ToggleButtonGroup sx={{ flexWrap: "wrap", pt: 1 }}>
+                {interests.map((interest, index) => (
+                  <Stack direction="row" key={index}>
+                    <Typography
+                      sx={{ fontWeight: "bold", ml: 1, color: "#872341" }}
+                    >
+                      {index + 1}.
+                    </Typography>
                     <ToggleButton
-                      key={index}
                       value={interest}
                       aria-label={interest}
                       style={styleSelected}
@@ -97,8 +118,8 @@ export default function UserInterestedPopupProfile({
                     >
                       {interest}
                     </ToggleButton>
-                  );
-                })}
+                  </Stack>
+                ))}
               </ToggleButtonGroup>
               <Divider
                 sx={{
@@ -109,7 +130,7 @@ export default function UserInterestedPopupProfile({
             </Box>
             <Box sx={{ margin: "7px 0" }}>
               <ToggleButtonGroup
-                value={addInterest}
+                value={interests}
                 onChange={handleFormat}
                 aria-label="interests facilities"
                 sx={{
@@ -153,14 +174,11 @@ export default function UserInterestedPopupProfile({
                 </ToggleButton>
               </ToggleButtonGroup>
             </Box>
-            <Typography color="error">{error}</Typography>
           </Stack>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>close</Button>
-          <Button onClick={handleSubmit}>
-            Confirm
-          </Button>
+          <Button onClick={handleSubmit}>Confirm</Button>
         </DialogActions>
       </Dialog>
       {/* error snack bar */}

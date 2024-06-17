@@ -43,7 +43,6 @@ export default function HolidayHomes() {
       .then((res) => {
         console.log("res", res);
         if (res) {
-          console.log("dataaaaa", res);
           setPagination(Math.ceil(res.data.HHcount / 9));
           setHolidayHomes(res.data.holidayHomes);
         } else {
@@ -52,7 +51,6 @@ export default function HolidayHomes() {
         setShowSkeleton(false);
       })
       .catch(() => {
-        console.log("error");
         setShowSkeleton(false);
       });
   };
@@ -62,11 +60,18 @@ export default function HolidayHomes() {
     fetchData();
   }, [selectedPage]);
 
-  const handleSearch = () => {
+  useEffect(() => {
+    if (searchValue.length === 0) {
+      setShowSkeleton(true);
+      fetchData();
+    }
+  }, [searchValue]);
+
+  const handleSearch = (e) => {
+    e.preventDefault();
     setShowSkeleton(true);
     fetchData();
   };
-
   return (
     <ThemeProvider theme={theme}>
       <Box
@@ -101,27 +106,29 @@ export default function HolidayHomes() {
                     marginBottom: "10px",
                   }}
                 >
-                  <TextField
-                    id="search"
-                    placeholder="Search"
-                    size="small"
-                    value={searchValue}
-                    onChange={(e) => setSearchValue(e.target.value)}
-                    sx={{
-                      marginRight: "10px",
-                    }}
-                  />
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleSearch}
-                    size="small"
-                    sx={{
-                      padding: "7px 10px",
-                    }}
-                  >
-                    Search
-                  </Button>
+                  <form action="" onSubmit={handleSearch}>
+                    <TextField
+                      id="search"
+                      placeholder="Search"
+                      size="small"
+                      value={searchValue}
+                      onChange={(e) => setSearchValue(e.target.value)}
+                      sx={{
+                        marginRight: "10px",
+                      }}
+                    />
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      type="submit"
+                      size="small"
+                      sx={{
+                        padding: "7px 10px",
+                      }}
+                    >
+                      Search
+                    </Button>
+                  </form>
                 </Stack>
 
                 <Box

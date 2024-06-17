@@ -6,6 +6,7 @@ const AuthContextProvider = ({ children }) => {
   const [isLogged, setIsLogged] = useState(false);
   const [authServiceNumber, setAuthServiceNumber] = useState(null);
   const [isLogout, setIsLogout] = useState(false);
+  const [isUpdate, setIsUpdate] = useState(false);
 
   const [isOngoingReservationChange, setIsOngoingReservationChange] =
     useState(false);
@@ -21,6 +22,8 @@ const AuthContextProvider = ({ children }) => {
         setIsLogout,
         isOngoingReservationChange,
         setIsOngoingReservationChange,
+        isUpdate,
+        setIsUpdate,
       }}
     >
       {children}

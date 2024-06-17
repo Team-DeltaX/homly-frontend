@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   Box,
   ThemeProvider,
@@ -9,17 +9,28 @@ import {
   Button,
   Stack,
   Avatar,
+  ToggleButton,
 } from "@mui/material";
 import PersonalDetailsGrid from "../PersonalDetailsGrid/PersonalDetailsGrid";
 import theme from "../../../HomlyTheme";
 import UploadImageCloudinary from "../../Common/UploadImageCloudinary";
 import ErrorSnackbar from "../ErrorSnackbar";
 import UserInterestedPopupProfile from "./UserInterestedPopupProfile";
+import { AuthContext } from "../../../Contexts/AuthContext";
 import AxiosClient from "../../../services/AxiosClient";
 
+const styleSelected = {
+  margin: "2px",
+  border: "1px solid #872341",
+  borderRadius: "50px",
+  padding: "5px 30px",
+  backgroundColor: "#f8abc3",
+};
+
 const PersonalDetails = () => {
+  const { setIsUpdate } = useContext(AuthContext);
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-  const phoneRegex = /^[0-9]{10}$/;
+  const phoneRegex = /^(0|\+94)[0-9]{9}$/;
 
   const [data, setData] = useState({
     serviceNo: "",
@@ -31,6 +42,9 @@ const PersonalDetails = () => {
     email: "",
   });
   const [oldEmail, setOldEmail] = useState("");
+  const [oldContactNo, setOldContactNo] = useState("");
+  const [oldInterests, setOldInterests] = useState([]);
+  const [oldImage, setOldImage] = useState("");
   const [image, setImage] = useState("");
   const [interests, setInterests] = useState([]);
   const [isHaveInterests, setIsHaveInterests] = useState(false);
@@ -41,6 +55,7 @@ const PersonalDetails = () => {
     message: "",
   });
   const [isEnable, setIsEnable] = useState(false);
+  const [buttonDisable, setButtonDisable] = useState(false);
 
   const checkEmail = (email) => {
     if (email) {
@@ -65,6 +80,15 @@ const PersonalDetails = () => {
   };
 
   useEffect(() => {
+    if (checkEmail(data.email) || checkContactNo(data.contactNo)) {
+      setButtonDisable(true);
+    } else {
+      setButtonDisable(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data.email, data.contactNo, oldEmail]);
+
+  useEffect(() => {
     AxiosClient.get("/user/auth/details")
       .then((res) => {
         if (Response) {
@@ -78,8 +102,10 @@ const PersonalDetails = () => {
             email: res.data.email,
             contactNo: res.data.contactNo,
           });
-          setOldEmail(res.data.email);
           setImage(res.data.image);
+          setOldEmail(res.data.email);
+          setOldContactNo(res.data.contactNo);
+          setOldImage(res.data.image);
         } else {
           setErrorStatus({
             ...errorStatus,
@@ -103,6 +129,7 @@ const PersonalDetails = () => {
         if (res.data) {
           if (res.data.userInterested.interested[0] !== null) {
             setInterests(res.data.userInterested.interested);
+            setOldInterests(res.data.userInterested.interested);
           }
         } else {
           setErrorStatus({
@@ -153,6 +180,7 @@ const PersonalDetails = () => {
                     ? "Check your email,We will send you a verification link"
                     : "Updated Successfully",
                 });
+                setIsUpdate(true);
               } else {
                 setErrorStatus({
                   ...errorStatus,
@@ -181,11 +209,15 @@ const PersonalDetails = () => {
         });
       setData({ ...data, email: oldEmail });
       setIsEnable(false);
+      setData({ ...data, email: oldEmail });
     }
   };
 
   const handleCancel = () => {
     setIsEnable(false);
+    setData({ ...data, email: oldEmail, contactNo: oldContactNo });
+    setImage(oldImage);
+    setInterests(oldInterests);
   };
 
   return (
@@ -268,6 +300,7 @@ const PersonalDetails = () => {
                   setOpen={setInsterestedPopup}
                   interests={interests}
                   setInterests={setInterests}
+                  oldInterests={oldInterests}
                 />
                 <Stack
                   direction="column"
@@ -325,31 +358,66 @@ const PersonalDetails = () => {
                       Change Interests
                     </Typography>
                   </Button>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: { xs: "center", sm: "end" },
+                      padding: "10px",
+                    }}
+                  >
+                    <Stack direction="column">
+                      {interests &&
+                        interests.map((interest, index) => (
+                          <Stack direction="row" key={index}>
+                            <Typography
+                              sx={{
+                                fontWeight: "bold",
+                                ml: 1,
+                                color: "#872341",
+                              }}
+                            >
+                              {index + 1}.
+                            </Typography>
+                            <ToggleButton
+                              value={interest}
+                              aria-label={interest}
+                              style={styleSelected}
+                              disabled
+                            >
+                              {interest}
+                            </ToggleButton>
+                          </Stack>
+                        ))}
+                    </Stack>
+                  </Box>
                 </Stack>
               </Stack>
             </CardContent>
             <CardActions sx={{ justifyContent: "flex-end" }}>
-              <Button
-                variant="outlined"
-                size="small"
-                onClick={handleCancel}
-                sx={{ width: "70px" }}
-              >
-                Cancel
-              </Button>
               {isEnable ? (
-                <Button
-                  variant="contained"
-                  size="small"
-                  sx={{
-                    backgroundColor: "primary.main",
-                    marginLeft: "2%",
-                    width: "70px",
-                  }}
-                  onClick={handleUpdate}
-                >
-                  Update
-                </Button>
+                <Stack direction="row">
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    onClick={handleCancel}
+                    sx={{ width: "70px" }}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    variant="contained"
+                    size="small"
+                    sx={{
+                      backgroundColor: "primary.main",
+                      marginLeft: "2%",
+                      width: "70px",
+                    }}
+                    onClick={handleUpdate}
+                    disabled={buttonDisable}
+                  >
+                    Update
+                  </Button>
+                </Stack>
               ) : (
                 <Button
                   variant="contained"
