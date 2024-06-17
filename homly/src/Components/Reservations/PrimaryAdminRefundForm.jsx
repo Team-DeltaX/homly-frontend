@@ -112,8 +112,22 @@ const PrimaryAdminRefundForm = ({
       accountNumber: event.target.accountNo.value,
       bank: selectedBank.name,
       branch: selectedBranch.name,
-      file: uploadedFile,
+    //   file: uploadedFile,
     };
+
+    //store to db with backend use AxiosClient
+    AxiosClient.put("/admin/auth/reservation/updateRefundByAdmin", formData, {
+        withCredentials: true,
+        })
+        .then((response) => {
+            console.log(response.data);
+            handleClose();
+        })
+        .catch((error) => {
+            console.error("Error adding refund:", error);
+        });
+
+
 
     // Simulate upload or handle file data here with AxiosClient
 
@@ -197,13 +211,13 @@ const PrimaryAdminRefundForm = ({
                 size="small"
                 label="Service No"
                 name="serviceNo"
-                defaultValue={214092}
+                defaultValue={serviceNo}
                 InputProps={{
                   readOnly: true,
                 }}
               />
             </Grid>
-            <Grid item xs={6}>
+            {/* <Grid item xs={6}>
               <TextField
                 fullWidth
                 variant="filled"
@@ -211,6 +225,21 @@ const PrimaryAdminRefundForm = ({
                 label="Employee Name"
                 name="employeeName"
                 defaultValue="John Doe"
+                InputProps={{
+                  readOnly: true,
+                }}
+              />
+            </Grid> */}
+            <Grid item xs={6}>
+              <TextField
+                fullWidth
+                required
+                variant="filled"
+                size="small"
+                type="number"
+                label="Contact No"
+                name="contactNo"
+                defaultValue={contactNo}
                 InputProps={{
                   readOnly: true,
                 }}
@@ -296,21 +325,6 @@ const PrimaryAdminRefundForm = ({
                 }}
                 label="Branch"
                 name="branch"
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                fullWidth
-                required
-                variant="filled"
-                size="small"
-                type="number"
-                label="Contact No"
-                name="contactNo"
-                defaultValue={contactNo}
-                InputProps={{
-                  readOnly: true,
-                }}
               />
             </Grid>
           </Grid>
