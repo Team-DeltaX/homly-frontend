@@ -290,7 +290,7 @@
 }
 
 .home_image img {
-  width: 80px;
+
   border-radius: 12px;
   background-position: center;
   background-repeat: no-repeat;
@@ -385,7 +385,7 @@
   }
 
   .home_image img {
-    width: 140px;
+    /* width: 140px; */
   }
 
 }

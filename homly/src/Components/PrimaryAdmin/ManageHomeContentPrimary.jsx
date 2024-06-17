@@ -7,8 +7,8 @@ import Tab from "@mui/material/Tab";
 import axios from "axios";
 
 import ControlPointIcon from "@mui/icons-material/ControlPoint";
-import Input from "./Input";
-import SearchIcon from "@mui/icons-material/Search";
+// import Input from "./Input";
+// import SearchIcon from "@mui/icons-material/Search";
 
 import HolidayHomeCard from "./HolidayHomeCard";
 import AxiosClient from "../../services/AxiosClient";
@@ -46,7 +46,7 @@ function a11yProps(index) {
   };
 }
 
-const ManageHomeContent = () => {
+const ManageHomeContentPrimary = () => {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -59,7 +59,7 @@ const ManageHomeContent = () => {
 
   useEffect(() => {
     // axios.get('http://localhost:8080/admin/auth/locationadmin/holidayhome/')
-    AxiosClient.get("/admin/auth/locationadmin/holidayhome/").then((res) => {
+    AxiosClient.get("/admin/auth/locationadmin/holidayhome/all").then((res) => {
       if (Response) {
         setPending(res.data.pending);
         setActive(res.data.active);
@@ -83,22 +83,6 @@ const ManageHomeContent = () => {
           gap: "1em",
         }}
       >
-        <Link to="/locationadmin/holidayhomes/createholidayhome">
-          <Button
-            variant="contained"
-            sx={{
-              backgroundColor: "primary.main",
-              textTransform: "capitalize",
-              fontWeight: "bold",
-              color: "white",
-            }}
-            startIcon={<ControlPointIcon />}
-          >
-            <Typography sx={{ fontFamily: "sans-serif" }} variant="p">
-              Create New
-            </Typography>{" "}
-          </Button>
-        </Link>
         {/* <Input label={"Search"} icon={<SearchIcon />} /> */}
       </Box>
       <Container maxWidth={"md"}>
@@ -202,4 +186,4 @@ const ManageHomeContent = () => {
   );
 };
 
-export default ManageHomeContent;
+export default ManageHomeContentPrimary;

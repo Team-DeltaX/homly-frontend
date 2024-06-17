@@ -4,6 +4,7 @@ import { Container, Grid, ThemeProvider } from "@mui/material";
 import theme from "../../HomlyTheme";
 import Pagetop from "../../Components/PrimaryAdmin/PageTop";
 import { useState } from "react";
+import ManageHomeContentPrimary from "../../Components/PrimaryAdmin/ManageHomeContentPrimary";
 
 const PrimaryHolidayHomes = () => {
   const [showNav, setShowNav] = useState("nav_grid_deactive");
@@ -38,6 +39,7 @@ const PrimaryHolidayHomes = () => {
               }}
             >
               <Pagetop setShowNav={setShowNav} heading={"HolidayHomes"} />
+              <ManageHomeContentPrimary />
             </Grid>
           </Grid>
         </Container>
