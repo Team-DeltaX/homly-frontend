@@ -107,7 +107,7 @@ export default function ViewComplaintPopup( props ) {
             required
             multiline
             fullWidth
-            value={props.complain[0].Marked ? props.complain[0].IsWarned ? "Primary Admin send a WARNING to user!" : "viewed" : "Not Viewed"}
+            value={props.complain[0].Marked ? props.complain[0].IsWarned ? "Primary Admin send a WARNING to user!" : "Primary Admin has viewed your complain" : "Primary Admin has Not Viewed your complain yet"}
             variant="outlined"
           />
         </DialogContent>

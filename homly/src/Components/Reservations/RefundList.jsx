@@ -24,7 +24,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 import AxiosClient from "../../services/AxiosClient";
-
+import PrimaryAdminRefundForm from './PrimaryAdminRefundForm';
+import Button from '@mui/material/Button';
 
 function createData(id, name, calories, fat, carbs, protein) {
   return {
@@ -216,169 +217,193 @@ EnhancedTableToolbar.propTypes = {
 
 export default function RefundListTable() {
     const [refunds, setRefunds] = useState([]);
+    const [openPopup, setOpenPopup] = useState(false);
+    const [selectedRefund, setSelectedRefund] = useState(null);
+
     useEffect(() => {
         AxiosClient.get("/admin/auth/reservation/refund")
             .then((res) => {
-                console.log("refundsssss",res.data)
+                console.log("refundsssss", res.data)
                 setRefunds(res.data);
             })
             .catch(() => {
             }
-        );
+            );
     }, []);
 
-  const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('calories');
-  const [selected, setSelected] = React.useState([]);
-  const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const handleOpenPopup = (refund) => {
+        setSelectedRefund(refund);
+        setOpenPopup(true);
+    };
 
-  const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
-    setOrderBy(property);
-  };
+    const handleClosePopup = () => {
+        setOpenPopup(false);
+        setSelectedRefund(null);
+    };
 
-  const handleSelectAllClick = (event) => {
-    if (event.target.checked) {
-      const newSelected = rows.map((n) => n.id);
-      setSelected(newSelected);
-      return;
-    }
-    setSelected([]);
-  };
+    const [order, setOrder] = React.useState('asc');
+    const [orderBy, setOrderBy] = React.useState('calories');
+    const [selected, setSelected] = React.useState([]);
+    const [page, setPage] = React.useState(0);
+    const [dense, setDense] = React.useState(false);
+    const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-  const handleClick = (event, id) => {
-    const selectedIndex = selected.indexOf(id);
-    let newSelected = [];
+    const handleRequestSort = (event, property) => {
+        const isAsc = orderBy === property && order === 'asc';
+        setOrder(isAsc ? 'desc' : 'asc');
+        setOrderBy(property);
+    };
 
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1),
-      );
-    }
-    setSelected(newSelected);
-  };
+    const handleSelectAllClick = (event) => {
+        if (event.target.checked) {
+            const newSelected = rows.map((n) => n.id);
+            setSelected(newSelected);
+            return;
+        }
+        setSelected([]);
+    };
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
+    const handleClick = (event, id) => {
+        const selectedIndex = selected.indexOf(id);
+        let newSelected = [];
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
+        if (selectedIndex === -1) {
+            newSelected = newSelected.concat(selected, id);
+        } else if (selectedIndex === 0) {
+            newSelected = newSelected.concat(selected.slice(1));
+        } else if (selectedIndex === selected.length - 1) {
+            newSelected = newSelected.concat(selected.slice(0, -1));
+        } else if (selectedIndex > 0) {
+            newSelected = newSelected.concat(
+                selected.slice(0, selectedIndex),
+                selected.slice(selectedIndex + 1),
+            );
+        }
+        setSelected(newSelected);
+    };
 
-  const handleChangeDense = (event) => {
-    setDense(event.target.checked);
-  };
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+    };
 
-  const isSelected = (id) => selected.indexOf(id) !== -1;
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(parseInt(event.target.value, 10));
+        setPage(0);
+    };
 
-  // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+    const handleChangeDense = (event) => {
+        setDense(event.target.checked);
+    };
 
-  const visibleRows = React.useMemo(
-    () =>
-      stableSort(rows, getComparator(order, orderBy)).slice(
-        page * rowsPerPage,
-        page * rowsPerPage + rowsPerPage,
-      ),
-    [order, orderBy, page, rowsPerPage],
-  );
+    const isSelected = (id) => selected.indexOf(id) !== -1;
 
-  return (
-    <Box sx={{ width: '100%',display: "flex", justifyContent: "center", alignItems: "center", height: "90vh", overflowY: "scroll" }}>
-        <Box sx={{ width: '90%'}}>
-            <Paper sx={{ width: '100%', m: 1 }}>
-                <EnhancedTableToolbar numSelected={selected.length} />
-                <TableContainer sx={{ maxHeight: 440 }}>
-                <Table
-                    sx={{ minWidth: 750 }}
-                    aria-labelledby="tableTitle"
-                    stickyHeader aria-label="sticky table"
-                    size={dense ? 'small' : 'medium'}
-                >
-                    <EnhancedTableHead
-                    numSelected={selected.length}
-                    order={order}
-                    orderBy={orderBy}
-                    onSelectAllClick={handleSelectAllClick}
-                    onRequestSort={handleRequestSort}
-                    rowCount={rows.length}
-                    />
-                    <TableBody sx={{justifyContent: "center", alignItems: "center", height: "50vh", overflowY: "scroll" }}>
-                    {refunds.map((row, index) => {
-                        const isItemSelected = isSelected(row.id);
-                        const labelId = `enhanced-table-checkbox-${index}`;
+    // Avoid a layout jump when reaching the last page with empty rows.
+    const emptyRows =
+        page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
-                        return (
-                        <TableRow
-                            hover
-                            onClick={(event) => handleClick(event, row.id)}
-                            role="checkbox"
-                            aria-checked={isItemSelected}
-                            tabIndex={-1}
-                            key={row.id}
-                            selected={isItemSelected}
-                            sx={{ cursor: 'pointer', maxHeight: "60vh" }}
+    const visibleRows = React.useMemo(
+        () =>
+            stableSort(rows, getComparator(order, orderBy)).slice(
+                page * rowsPerPage,
+                page * rowsPerPage + rowsPerPage,
+            ),
+        [order, orderBy, page, rowsPerPage],
+    );
+
+    return (
+        <Box sx={{ width: '100%', display: "flex", justifyContent: "center", alignItems: "center", height: "90vh", overflowY: "scroll" }}>
+            <Box sx={{ width: '90%' }}>
+                <Paper sx={{ width: '100%', m: 1 }}>
+                    <EnhancedTableToolbar numSelected={selected.length} />
+                    <TableContainer sx={{ maxHeight: 440 }}>
+                        <Table
+                            sx={{ minWidth: 750 }}
+                            aria-labelledby="tableTitle"
+                            stickyHeader aria-label="sticky table"
+                            size={dense ? 'small' : 'medium'}
                         >
-                            <TableCell padding="checkbox">
-                            </TableCell>
-                            <TableCell
-                            component="th"
-                            id={labelId}
-                            scope="row"
-                            padding="none"
-                            >
-                            {row.refundId}
-                            </TableCell>
-                            <TableCell align="right">{row.cancelledBy}</TableCell>
-                            <TableCell align="right">{row.status}</TableCell>
-                            <TableCell align="right">{row.button}</TableCell>
-                        </TableRow>
-                        );
-                    })}
-                    {emptyRows > 0 && (
-                        <TableRow
-                        style={{
-                            height: (dense ? 33 : 53) * emptyRows,
-                        }}
-                        >
-                        <TableCell colSpan={6} />
-                        </TableRow>
-                    )}
-                    </TableBody>
-                </Table>
-                </TableContainer>
-                <Stack direction="row" justifyContent="space-between">
-                    <FormControlLabel
-                    control={<Switch checked={dense} onChange={handleChangeDense} />}
-                    label="Dense padding"
-                    />
-                    <TablePagination
-                    rowsPerPageOptions={[5, 10, 25]}
-                    component="div"
-                    count={rows.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                    />
-                </Stack>
-                
-            </Paper>
-            
+                            <EnhancedTableHead
+                                numSelected={selected.length}
+                                order={order}
+                                orderBy={orderBy}
+                                onSelectAllClick={handleSelectAllClick}
+                                onRequestSort={handleRequestSort}
+                                rowCount={rows.length}
+                            />
+                            <TableBody sx={{ justifyContent: "center", alignItems: "center", height: "50vh", overflowY: "scroll" }}>
+                                {refunds.map((row, index) => {
+                                    const isItemSelected = isSelected(row.id);
+                                    const labelId = `enhanced-table-checkbox-${index}`;
+
+                                    return (
+                                        <TableRow
+                                            hover
+                                            onClick={(event) => handleClick(event, row.id)}
+                                            role="checkbox"
+                                            aria-checked={isItemSelected}
+                                            tabIndex={-1}
+                                            key={row.id}
+                                            selected={isItemSelected}
+                                            sx={{ cursor: 'pointer', maxHeight: "60vh" }}
+                                        >
+                                            <TableCell padding="checkbox">
+                                            </TableCell>
+                                            <TableCell
+                                                component="th"
+                                                id={labelId}
+                                                scope="row"
+                                                padding="none"
+                                            >
+                                                {row.refundId}
+                                            </TableCell>
+                                            <TableCell align="right">{row.cancelledBy}</TableCell>
+                                            <TableCell align="right">{row.status}</TableCell>
+                                            <TableCell align="right">
+                                                <Button variant="contained" color="primary" onClick={() => handleOpenPopup(row)}>
+                                                    View Details
+                                                </Button>
+                                            </TableCell>
+                                        </TableRow>
+                                    );
+                                })}
+                                {emptyRows > 0 && (
+                                    <TableRow
+                                        style={{
+                                            height: (dense ? 33 : 53) * emptyRows,
+                                        }}
+                                    >
+                                        <TableCell colSpan={6} />
+                                    </TableRow>
+                                )}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                    <Stack direction="row" justifyContent="space-between">
+                        <FormControlLabel
+                            control={<Switch checked={dense} onChange={handleChangeDense} />}
+                            label="Dense padding"
+                        />
+                        <TablePagination
+                            rowsPerPageOptions={[5, 10, 25]}
+                            component="div"
+                            count={rows.length}
+                            rowsPerPage={rowsPerPage}
+                            page={page}
+                            onPageChange={handleChangePage}
+                            onRowsPerPageChange={handleChangeRowsPerPage}
+                        />
+                    </Stack>
+                </Paper>
             </Box>
-    </Box>
-  );
+
+            {selectedRefund && (
+                <PrimaryAdminRefundForm
+                    open={openPopup}
+                    setOpen={setOpenPopup} 
+                    reservationId={selectedRefund.refundId} 
+                    CancelledBy={selectedRefund.cancelledBy} 
+                />
+            )}
+        </Box>
+    );
 }

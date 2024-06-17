@@ -17,7 +17,7 @@ import ConfirmPopup from "../../PrimaryAdmin/ConfirmPopup";
 import AxiosClient from "../../../services/AxiosClient";
 import ErrorSnackbar from "../ErrorSnackbar";
 import NoImage from "../../../Assets/images/noImage.webp";
-import RefundPopup from "../../Reservations/RefundPopup";
+import RequestRefundPopup from "../../Reservations/RequestRefundPopup";
 
 export default function ReservationCard({
   HHreservation,
@@ -476,10 +476,11 @@ export default function ReservationCard({
         text={"Are you sure to cancel this reservation?"}
         controlfunction={handleCancelReservation}
       />
-      <RefundPopup
+      <RequestRefundPopup
         open={openRefund}
         setOpen={setOpenRefund}
         reservationId={ReservationId}
+        CancelledBy={CancelledBy}
       />
       <PayNowPopup
         isOpen={openPay}
