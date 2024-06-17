@@ -15,7 +15,7 @@ import {
   Autocomplete,
 } from '@mui/material';
 
-const RequestRefundPopup = ({ open, setOpen, reservationId, CancelledBy }) => {
+const RequestRefundPopup = ({ open, setOpen, reservationId, ServiceNo, CancelledBy }) => {
   const [banks, setBanks] = useState([]);
   const [selectedBank, setSelectedBank] = useState(null);
   const [branches, setBranches] = useState([]);
@@ -127,7 +127,7 @@ const RequestRefundPopup = ({ open, setOpen, reservationId, CancelledBy }) => {
               size="small"
               label="Service No"
               name="serviceNo"
-              defaultValue={214092}
+              defaultValue={ServiceNo}
               InputProps={{
                 readOnly: true,
               }}

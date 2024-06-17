@@ -38,6 +38,7 @@ export default function ReservationCard({
   IsReviewed,
   IsCancelled,
   CancelledBy,
+  ServiceNo,
   setIsAddReview,
 }) {
   const { setIsOngoingReservationChange } = useContext(AuthContext);
@@ -57,6 +58,7 @@ export default function ReservationCard({
     email: "",
     contact_number: "",
   });
+  console.log("consolesss",employeeDetails.name);
 
   useEffect(() => {
     AxiosClient.get("/user/auth/details")
@@ -161,7 +163,7 @@ export default function ReservationCard({
       return (
         <Stack direction="row" sx={{ marginTop: { xs: "10px", sm: "0" } }}>
           {IsCancelled ? (
-            (CancelledBy = "PriAdmin" ? (
+            // (CancelledBy === "PriAdmin" ? (
               <Button
                 variant="outlined"
                 onClick={() => {
@@ -171,13 +173,13 @@ export default function ReservationCard({
               >
                 Refund
               </Button>
-            ) : (
-              <Typography
-                sx={{ color: "red", fontSize: "1.2rem", fontWeight: "medium" }}
-              >
-                Cancelled
-              </Typography>
-            ))
+            // ) : (
+            //   <Typography
+            //     sx={{ color: "red", fontSize: "1.2rem", fontWeight: "medium" }}
+            //   >
+            //     Cancelled
+            //   </Typography>
+            // ))
           ) : IsReviewed ? (
             <Button
               variant="outlined"
@@ -476,11 +478,13 @@ export default function ReservationCard({
         text={"Are you sure to cancel this reservation?"}
         controlfunction={handleCancelReservation}
       />
+      {console.log("manaaa",CancelledBy)}
       <RequestRefundPopup
         open={openRefund}
         setOpen={setOpenRefund}
         reservationId={ReservationId}
         CancelledBy={CancelledBy}
+        ServiceNo={ServiceNo}
       />
       <PayNowPopup
         isOpen={openPay}
