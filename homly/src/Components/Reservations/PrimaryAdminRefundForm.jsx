@@ -53,12 +53,15 @@ const PrimaryAdminRefundForm = ({
   const [isGridCollapsed, setIsGridCollapsed] = useState(false);
   const [reason, setReason] = useState("");
   const [refundAmount, setRefundAmount] = useState(0);
-  const [slip, setSlip] = useState("string");
+  const [slip, setSlip] = useState(""); // State to hold the uploaded slip file name
 
   const handleClose = () => {
     setOpen(false);
   };
 
+  const handleDeleteSlip = () => {
+    setSlip("");
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -79,15 +82,15 @@ const PrimaryAdminRefundForm = ({
     };
 
     AxiosClient.put("/admin/auth/reservation/updateRefundByAdmin", formData, {
-        withCredentials: true,
-        })
-        .then((response) => {
-            console.log(response.data);
-            handleClose();
-        })
-        .catch((error) => {
-            console.error("Error adding refund:", error);
-        });
+      withCredentials: true,
+    })
+      .then((response) => {
+        console.log(response.data);
+        handleClose();
+      })
+      .catch((error) => {
+        console.error("Error adding refund:", error);
+      });
 
     handleClose();
   };
@@ -96,6 +99,9 @@ const PrimaryAdminRefundForm = ({
     setIsGridCollapsed(!isGridCollapsed);
   };
 
+  const handleSlipUpload = (fileName) => {
+    setSlip(fileName); // Set the uploaded file name to state
+  };
 
   return (
     <Dialog
@@ -124,26 +130,26 @@ const PrimaryAdminRefundForm = ({
       </IconButton>
       <DialogContent>
         <Grid container spacing={2} justifyContent="flex-end" mb={1}>
-            <Grid item xs={11}>
-              <TextField
-                fullWidth
-                label="Reservation ID"
-                name="reservationId"
-                variant="filled"
-                size="small"
-                defaultValue={reservationId}
-                InputProps={{
-                  readOnly: true,
-                }}
-              />
-            </Grid>
+          <Grid item xs={11}>
+            <TextField
+              fullWidth
+              label="Reservation ID"
+              name="reservationId"
+              variant="filled"
+              size="small"
+              defaultValue={reservationId}
+              InputProps={{
+                readOnly: true,
+              }}
+            />
+          </Grid>
           <Grid item xs={1}>
             <IconButton onClick={toggleGrid} sx={{ mb: 2 }}>
-              {isGridCollapsed ? <ExpandMoreIcon sx={{"&:hover": {
-            color: "#823",
-          },}} /> : <ExpandLessIcon sx={{"&:hover": {
-            color: "#823",
-          },}} />}
+              {isGridCollapsed ? (
+                <ExpandMoreIcon sx={{ "&:hover": { color: "#823" } }} />
+              ) : (
+                <ExpandLessIcon sx={{ "&:hover": { color: "#823" } }} />
+              )}
             </IconButton>
           </Grid>
         </Grid>
@@ -162,19 +168,6 @@ const PrimaryAdminRefundForm = ({
                 }}
               />
             </Grid>
-            {/* <Grid item xs={6}>
-              <TextField
-                fullWidth
-                variant="filled"
-                size="small"
-                label="Employee Name"
-                name="employeeName"
-                defaultValue="John Doe"
-                InputProps={{
-                  readOnly: true,
-                }}
-              />
-            </Grid> */}
             <Grid item xs={6}>
               <TextField
                 fullWidth
@@ -276,49 +269,62 @@ const PrimaryAdminRefundForm = ({
           <Divider sx={{ my: 3 }} />
         </Collapse>
         <Grid container spacing={2}>
-        <Grid item xs={6}>
-              <TextField
-                fullWidth
-                required
-                variant="outlined"
-                size="normal"
-                type="number"
-                label="Refund Amount"
-                name="Amount"
-                defaultValue={0}
-                onChange={(e) => setRefundAmount(e.target.value)}                
-              />
-            </Grid>
-            
-
-          <Grid item xs={6} justifyContent="flex-end">
+          <Grid item xs={6}>
+            <TextField
+              fullWidth
+              required
+              variant="outlined"
+              size="normal"
+              type="number"
+              label="Refund Amount"
+              name="Amount"
+              defaultValue={0}
+              onChange={(e) => setRefundAmount(e.target.value)}
+            />
+          </Grid>
+          <Grid item xs={6} alignItems="flex-end">
             <Typography variant="caption" display="block" gutterBottom>
                 Attach the bank slip evidence in here.*
             </Typography>
-
-                <UploadImageCloudinary
-                          folderName="bank-slips"
-                          setImage={setSlip}
-                          isMultiple={false}
-                          limit={1}
-                          buttonName="Upload bank slip"
-                          buttonVariant="outlined"
-                          isDisplayImageName={false}
-                          isDisabled={false}
-                />
+            {slip ? (
+              <Chip
+                label={slip}
+                onDelete={handleDeleteSlip}
+                deleteIcon={<DeleteIcon 
+                    sx={{
+                        "&:hover": {
+                          color: "primary", 
+                        },
+                      }}/>}
+                variant="outlined"
+                sx={{ mr: 1, mb: 1 }}
+              />
+            ) : (
+                
+              <UploadImageCloudinary
+                folderName="bank-slips"
+                setImage={handleSlipUpload}
+                isMultiple={false}
+                limit={1}
+                buttonName="Upload bank slip"
+                buttonVariant="outlined"
+                isDisplayImageName={false}
+                isDisabled={false}
+              />
+            )}
           </Grid>
           <Grid item xs={12}>
-              <TextField
-                fullWidth
-                variant="outlined"
-                size="normal"
-                placeholder="Reason if any"
-                label="Reason"
-                name="reason"
-                multiline
-                onChange={(e) => setReason(e.target.value)}
-              />
-            </Grid>
+            <TextField
+              fullWidth
+              variant="outlined"
+              size="normal"
+              placeholder="Reason if any"
+              label="Reason"
+              name="reason"
+              multiline
+              onChange={(e) => setReason(e.target.value)}
+            />
+          </Grid>
         </Grid>
       </DialogContent>
       <DialogActions>
