@@ -267,6 +267,7 @@ const ViewPopupComplaints = (props) => {
                 }}
               >
                 <div>
+                  
                   {props.prevcomplaints.length > 0 &&
                   props.selecteduser.ComplaintID !==
                     props.prevcomplaints[props.prevcomplaints.length - 1]
@@ -287,7 +288,7 @@ const ViewPopupComplaints = (props) => {
                         id="panel2-header"
                       >
                         <Typography>
-                          <Box>Complaint on</Box>
+                          <Box>Previous Complaint on{" "}</Box>
                         </Typography>
                         <Typography>
                           <Box>
@@ -329,7 +330,7 @@ const ViewPopupComplaints = (props) => {
                         id="panel2-header"
                       >
                         <Typography>
-                          Complaint on{" "}
+                          Previous Complaint onc
                           {getonlydate(props.prevcomplaints.length - 2)}
                         </Typography>
                       </AccordionSummary>
