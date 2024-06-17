@@ -43,7 +43,7 @@ const SpeicalReservationList = (props) => {
               ) ||
               reservation.employeeName[0].name
                 .toLowerCase()
-                .startsWith(props.search.toLowerCase()) ||
+                .includes(props.search.toLowerCase()) ||
               reservation.reservation.ReservationId.toLowerCase().includes(
                 props.search.toLowerCase()
               )

@@ -134,16 +134,25 @@ export default function AddSpecialReservationPopUp() {
   };
   const handleCheckinDateChange = (newDate) => {
     setCheckinDate(newDate);
-    const nextDay = newDate.add(1, "day");
-    setCheckoutDate(nextDay);
-    const today = dayjs();
-    if (newDate.isBefore(today)) {
+    if (CheckoutDate.isBefore(newDate) || CheckoutDate.isSame(newDate)) {
       setReserveDisabled(true);
-      setErrorStatus({
-        isOpen: true,
-        type: "warning",
-        message: "Check-in date cannot be in the past",
-      });
+      if (CheckoutDate.isBefore(newDate)) {
+        setErrorStatus({
+          isOpen: true,
+          type: "error",
+          message: "Check-in date cannot be after Check-out date",
+        });
+      } else {
+          setErrorStatus({
+            isOpen: true,
+            type: "error",
+            message: "Check-in date & Check-out date cannot be same",
+          });
+      }      
+      const nextDay = newDate.add(1, "day");
+      setCheckinDate(newDate);
+      setCheckoutDate(nextDay);
+      setReserveDisabled(false);
     } else {
       setReserveDisabled(false);
       setErrorStatus({
@@ -152,26 +161,41 @@ export default function AddSpecialReservationPopUp() {
         message: "",
       });
     }
-  };
+
+  };  
   const handleCheckoutDateChange = (newDate) => {
     setCheckoutDate(newDate);
-    // Check if CheckinDate is after CheckoutDate
-    if ((CheckinDate.isAfter(newDate)) || (CheckinDate.isSame(newDate))) {
-      setReserveDisabled(true); // Disable reserve button
-      setErrorStatus({
-        isOpen: true,
-        type: "warning",
-        message: "Check-in date cannot be same or after Check-out date",
-      });
-    } else {
-      setReserveDisabled(false); // Enable reserve button
-      setErrorStatus({
+    setReserveDisabled(false);
+    setErrorStatus({
         isOpen: false,
         type: "",
         message: "",
       });
-    }
+    
+    console.log("checkout date",CheckoutDate);
   };
+  useEffect(() => {
+    if (CheckinDate.isAfter(CheckoutDate) || CheckinDate.isSame(CheckoutDate)) {
+      setReserveDisabled(true);
+      if(CheckinDate.isAfter(CheckoutDate)){
+        setErrorStatus({
+          isOpen: true,
+          type: "error",
+          message: "Check-out date cannot be before Check-in date",
+        });
+      } else{
+          setErrorStatus({
+            isOpen: true,
+            type: "eroor",
+            message: "Check-in date & Check-out date cannot be same",
+          });
+      }
+      const nextDay = CheckoutDate.add(1, "day");
+      setCheckinDate(CheckoutDate);
+      setCheckoutDate(nextDay);
+      setReserveDisabled(false);
+    } 
+  }, [CheckinDate, CheckoutDate]);
   useEffect(() => {
     if (ServiceNo) {
       AxiosClient.get(`/admin/auth/locationadmin/employee/${ServiceNo}`)
@@ -294,6 +318,22 @@ export default function AddSpecialReservationPopUp() {
                 ))}
               </Select>
             </FormControl>
+            <BasicDatePicker
+              required
+              margin="dense"
+              date={CheckinDate}
+              setDate={handleCheckinDateChange}
+              title="Check in Date"
+              value={CheckinDate}
+            />
+            <BasicDatePicker
+              required
+              margin="normal"
+              date={CheckoutDate}
+              setDate={handleCheckoutDateChange}
+              title="Check Out Date"
+              value={CheckoutDate}
+            />
             <TextField
               autoFocus
               required
@@ -391,22 +431,6 @@ export default function AddSpecialReservationPopUp() {
               type="text"
               fullWidth
               variant="outlined"
-            />
-            <BasicDatePicker
-              required
-              margin="dense"
-              date={CheckinDate}
-              setDate={handleCheckinDateChange}
-              title="Check in Date"
-              value={CheckinDate}
-            />
-            <BasicDatePicker
-              required
-              margin="normal"
-              date={CheckoutDate}
-              setDate={handleCheckoutDateChange}
-              title="Check Out Date"
-              value={CheckoutDate}
             />
           </DialogContent>
           <DialogActions>
