@@ -293,7 +293,7 @@ const ViewPopupManage = (props) => {
                       disabled
                       size="small"
                       sx={{ width: "85%", margin: "5px" }}
-                      value={props.selecteduser.Date}
+                      value={props.selecteduser.Date.slice(0, 10)}
                     ></TextField>
                   </Box>
                 </Box>

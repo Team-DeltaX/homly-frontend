@@ -236,7 +236,7 @@ const ViewPopupManage = (props) => {
               </Box>
               <Box>
                 <TextField
-                  value={props.selecteduser.BlacklistedDate}
+                  value={props.selecteduser.BlacklistedDate.slice(0, 10)}
                   disabled
                   size="small"
                   sx={{ width: "85%", margin: "5px" }}

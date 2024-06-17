@@ -22,6 +22,7 @@ const BlacklistedUsersCardNew = (props) => {
     AxiosClient.get(`/admin/auth/locationadmin/user/${props.data.ServiceNo}`)
       .then((res) => {
         SetUser(res.data[0]);
+        
       })
       .catch((error) => {
         console.log(error);
@@ -52,8 +53,9 @@ const BlacklistedUsersCardNew = (props) => {
             width: { md: "10%" },
           }}
         >
+        
           <img
-            src="https://img.nbc.com/files/images/2023/2/08/Blacklist_S10-Logo-1920x1080.jpg"
+            src={User.image ?User.image:"https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_640.png"}
             height="50px"
             width="50px"
             style={{ borderRadius: "50%" }}
