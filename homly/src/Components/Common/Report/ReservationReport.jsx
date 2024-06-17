@@ -10,15 +10,15 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Button from "@mui/material/Button";
 import dayjs from "dayjs";
-
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import PreviewPopupReservationReport from "./PreviewPopupReservationReport";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AxiosClient from "../../../services/AxiosClient";
-import { useEffect } from "react";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import ReservationReportPDF from "./ReportPDF/ReservationReportPdf";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -29,7 +29,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function ReservationReport() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const [holidayHome, setHolidayHome] = useState("all");
   const [fromDate, setFromDate] = useState(dayjs().subtract(1, "day"));
   const [toDate, setToDate] = useState(dayjs().subtract(1, "day"));
@@ -37,6 +37,7 @@ export default function ReservationReport() {
   const [previewData, setPreviewData] = useState([]);
 
   const maxDate = dayjs().subtract(1, "day");
+
   const handleClickOpen = () => {
     AxiosClient.get("/admin/report/reservation", {
       params: {
@@ -44,11 +45,10 @@ export default function ReservationReport() {
         fromDate: fromDate,
         toDate: toDate,
       },
-    })
-      .then((res) => {
-        setPreviewData(res.data);
-        setOpen(true);
-      }).catch(() => {});
+    }).then((res) => {
+      setPreviewData(res.data);
+      setOpen(true);
+    });
   };
 
   useEffect(() => {
@@ -63,6 +63,7 @@ export default function ReservationReport() {
     setFromDate("");
     setToDate("");
     setHolidayHome("");
+    setPreviewData([]);
   };
 
   return (
@@ -87,10 +88,8 @@ export default function ReservationReport() {
                   label="Select Holiday Home"
                   onChange={(e) => setHolidayHome(e.target.value)}
                   defaultValue="all"
-                  
                 >
                   <MenuItem value={"all"}>All</MenuItem>
-                  
                   {HHNames &&
                     HHNames.map((hh) => (
                       <MenuItem key={hh.HolidayHomeId} value={hh.HolidayHomeId}>
@@ -102,7 +101,6 @@ export default function ReservationReport() {
             </Grid>
           </Grid>
         </Item>
-
         <Item>
           <Grid container spacing={2}>
             <Grid item xs={5}>
@@ -128,7 +126,6 @@ export default function ReservationReport() {
             </Grid>
           </Grid>
         </Item>
-
         <Item>
           <Grid container spacing={2}>
             <Grid item xs={5}>
@@ -154,7 +151,6 @@ export default function ReservationReport() {
             </Grid>
           </Grid>
         </Item>
-
         <Stack spacing={4} direction="row" justifyContent="center">
           <Button variant="contained" onClick={handleReset}>
             Reset
@@ -162,6 +158,29 @@ export default function ReservationReport() {
           <Button variant="contained" onClick={handleClickOpen}>
             Preview
           </Button>
+          {/* Add download button for downloading PDF */}
+          {previewData && (
+            <PDFDownloadLink
+              document={
+                <ReservationReportPDF
+                  previewData={previewData}
+                  fromDate={fromDate}
+                  toDate={toDate}
+                />
+              }
+              fileName="ReservationReport.pdf"
+            >
+              {({ loading }) =>
+                loading ? (
+                  <Button variant="contained" disabled>
+                    Loading...
+                  </Button>
+                ) : (
+                  <Button variant="contained">Download</Button>
+                )
+              }
+            </PDFDownloadLink>
+          )}
         </Stack>
       </Stack>
       <PreviewPopupReservationReport

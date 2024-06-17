@@ -1,16 +1,13 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
-import Button from "@mui/material/Button";
 import Grid from "@mui/material/Unstable_Grid2";
 import { styled } from "@mui/material/styles";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
-import DialogActions from "@mui/material/DialogActions";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
-import Typography from "@mui/material/Typography";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -173,16 +170,7 @@ const PreviewPopupReservationReport = ({
               </TableBody>
             </Table>
           </TableContainer>
-          {/* <Typography gutterBottom align="right" style={{ fontWeight: "bold" }}>
-            Total Income (LKR) : {previewData && previewData.TotalPrice}
-          </Typography> */}
         </DialogContent>
-
-        <DialogActions>
-          <Button autoFocus onClick={() => setIsDownload(true)}>
-            Download
-          </Button>
-        </DialogActions>
       </BootstrapDialog>
     </React.Fragment>
   );

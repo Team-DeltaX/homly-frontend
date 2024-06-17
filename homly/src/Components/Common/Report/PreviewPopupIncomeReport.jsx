@@ -21,7 +21,6 @@ import logo from "../../../Assets/images/logo.png";
 import dayjs from "dayjs";
 import { useState } from "react";
 
-
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
   ...theme.typography.body2,
@@ -38,7 +37,13 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-const PreviewPopupIncomeReport = ({ open, setOpen, previewData, toDate, fromDate }) => {
+const PreviewPopupIncomeReport = ({
+  open,
+  setOpen,
+  previewData,
+  toDate,
+  fromDate,
+}) => {
   const [isDownolad, setIsDownload] = useState(false);
 
   const handleClose = () => {
@@ -117,8 +122,8 @@ const PreviewPopupIncomeReport = ({ open, setOpen, previewData, toDate, fromDate
                 </TableRow>
               </TableHead>
 
-                {/* holidayHome name and income */}
-                <TableBody>
+              {/* holidayHome name and income */}
+              <TableBody>
                 {previewData.TotalPerHH &&
                   previewData.TotalPerHH.map((row) => (
                     <TableRow
@@ -140,8 +145,6 @@ const PreviewPopupIncomeReport = ({ open, setOpen, previewData, toDate, fromDate
             Total Income (LKR) : {previewData && previewData.TotalPrice}
           </Typography>
         </DialogContent>
-        
-        
       </BootstrapDialog>
     </React.Fragment>
   );
