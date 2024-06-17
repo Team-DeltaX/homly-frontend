@@ -60,7 +60,6 @@ export default function ReservationCard({
     email: "",
     contact_number: "",
   });
-  console.log("consolesss", employeeDetails.name);
 
   useEffect(() => {
     AxiosClient.get("/user/auth/details")
@@ -81,7 +80,6 @@ export default function ReservationCard({
       isPaid: HHpayment,
     })
       .then((res) => {
-        console.log(res.data, "resssssssssssssss");
         if (res.data.success) {
           setErrorStatus({
             ...errorStatus,
@@ -480,7 +478,6 @@ export default function ReservationCard({
         text={"Are you sure to cancel this reservation?"}
         controlfunction={handleCancelReservation}
       />
-      {console.log("manaaa", CancelledBy)}
       <RequestRefundPopup
         open={openRefund}
         setOpen={setOpenRefund}
