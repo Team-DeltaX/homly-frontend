@@ -395,6 +395,7 @@ export default function RefundListTable() {
                 <PrimaryAdminRefundForm
                     open={openPopup}
                     setOpen={setOpenPopup} 
+                    refundId={selectedRefund.refundId}
                     reservationId={selectedRefund.reservationNo} 
                     serviceNo={selectedRefund.serviceNo}
                     CancelledBy={selectedRefund.cancelledBy}
