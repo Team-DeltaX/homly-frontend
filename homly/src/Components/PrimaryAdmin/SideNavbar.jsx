@@ -177,7 +177,9 @@ export default function SideNavbar({ setShowNav }) {
               </Box>
             </Grid>
             <Grid container xs={12} className="submenu_item">
-              <Grid container>
+              <Grid container
+              
+              >
                 <Grid
                   xs={12}
                   sx={{
@@ -185,19 +187,24 @@ export default function SideNavbar({ setShowNav }) {
                     justifyContent: "flex-start",
                     padding: "3px",
                     marginTop: "5px",
+                    marginBottom: "5px",
+                   
                   }}
                 >
                   <Link
                     to="/primaryadmin/blacklistedusers/manage"
                     className="sidenav_submenulink"
+                    style={{display:'flex',alignItems:'center'}}
                   >
-                    <ManageAccountsOutlinedIcon
+                  
+                  <ManageAccountsOutlinedIcon
                       sx={{
                         color: "white",
                         marginRight: "20px",
                         fontSize: "1.2rem",
                       }}
                     />
+                  
                     <Typography variant="p" sx={{ color: "white" }}>
                       {" "}
                       Manage
@@ -216,6 +223,7 @@ export default function SideNavbar({ setShowNav }) {
                   <Link
                     to="/primaryadmin/blacklistedusers/history"
                     className="sidenav_submenulink"
+                    style={{display:'flex',alignItems:'center'}}
                   >
                     <HistoryOutlinedIcon
                       sx={{
@@ -236,17 +244,21 @@ export default function SideNavbar({ setShowNav }) {
                     justifyContent: "flex-start",
                     padding: "3px",
                     marginBottom: "5px",
+                    
                   }}
                 >
                   <Link
                     to="/primaryadmin/blacklistedusers/complaints"
                     className="sidenav_submenulink"
+                    style={{display:'flex',alignItems:'center'}}
                   >
                     <SpeakerNotesIcon
                       sx={{
                         color: "white",
                         marginRight: "20px",
                         fontSize: "1.2rem",
+                        
+                       
                       }}
                     />
                     <Typography variant="p" sx={{ color: "white" }}>
