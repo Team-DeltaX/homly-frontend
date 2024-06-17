@@ -136,9 +136,9 @@ const PrimaryComplaints = () => {
                   inputProps={{ "aria-label": "controlled" }}
                 />
                 {!checked ? (
-                  <Typography sx={{ color: "green" }}>Viewd</Typography>
+                  <Typography sx={{ color: "green" }}>Seen</Typography>
                 ) : (
-                  <Typography sx={{ color: "grey" }}>Not Viewd</Typography>
+                  <Typography sx={{ color: "grey" }}>UnSeen</Typography>
                 )}
               </Box>
               <Box
