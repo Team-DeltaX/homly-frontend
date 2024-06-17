@@ -19,6 +19,7 @@ export default function PastReservation({
   const [filter, setFilter] = useState("all");
 
   useEffect(() => {
+    console.log("first",reservation);
     if (filter === "cancelled") {
       setTempReservation(
         reservation.filter((reserv) => reserv.reservation.IsCancelled)
@@ -69,6 +70,7 @@ export default function PastReservation({
             })
           : tempReservation.length > 0
           ? tempReservation.map((reserv, index) => {
+            console.log("first",reserv.reservation.ServiceNO);
               return (
                 <Box sx={{ marginTop: "10px" }} key={index}>
                   <ReservationCard
@@ -91,6 +93,8 @@ export default function PastReservation({
                     IsReviewed={reserv.IsReviewed}
                     setIsAddReview={setIsAddReview}
                     IsCancelled={reserv.reservation.IsCancelled}
+                    CancelledBy={reserv.reservation.CancelledBy}
+                    ServiceNo={reserv.reservation.ServiceNO}
                   />
                 </Box>
               );

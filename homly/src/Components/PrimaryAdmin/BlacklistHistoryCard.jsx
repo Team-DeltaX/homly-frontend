@@ -13,6 +13,8 @@ const BlacklistHistoryCard = (props) => {
     AxiosClient.get(`/admin/auth/locationadmin/user/${props.data.ServiceNo}`)
       .then((res) => {
         setUser(res.data[0]);
+        
+        
       })
       .catch((error) => {
         props.SetOpensnE(true);
@@ -72,8 +74,10 @@ const BlacklistHistoryCard = (props) => {
           // Render actual content once data is loaded
           <>
             <Box sx={{ width: { md: "10%" } }}>
+              {/* <div>{user.service_number && user.service_number}</div> */}
               <img
-                src="http://dummyimage.com/130x100.png/cc0000/ffffff"
+                src={(user && user.image) ?user.image:"https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_640.png"}
+
                 height="50px"
                 width="50px"
                 style={{ borderRadius: "50%" }}
