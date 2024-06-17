@@ -1,16 +1,14 @@
-import React, { useState } from "react";
+import SideNavbar from "../../Components/PrimaryAdmin/SideNavbar";
 import Box from "@mui/material/Box";
 import { Container, Grid, ThemeProvider } from "@mui/material";
 import theme from "../../HomlyTheme";
-import SideNavbar from "../../Components/PrimaryAdmin/SideNavbar";
 import Pagetop from "../../Components/PrimaryAdmin/PageTop";
-import AdminBasicTabs from "../../Components/Reservations/AdminBasicTabs";
-import SearchNew from "../../Components/PrimaryAdmin/SearchNew";
+import { useState } from "react";
+import RefundListTable from "../../Components/Reservations/RefundList";
 
-const PrimaryReservations = () => {
+const PrimaryAdminRefund = () => {
   const [showNav, setShowNav] = useState("nav_grid_deactive");
-  const [search, setSearch] = useState("");
-  const role = "PrimaryAdmin";
+
   return (
     <ThemeProvider theme={theme}>
       <Box
@@ -40,9 +38,8 @@ const PrimaryReservations = () => {
                 padding: "0 20px",
               }}
             >
-              <Pagetop setShowNav={setShowNav} heading={"Reservations"} />
-              <SearchNew setSearch={setSearch} search={search} />
-              <AdminBasicTabs setSearch={setSearch} search={search} adminRole={role}/>
+              <Pagetop setShowNav={setShowNav} heading={"Refund"} />
+              <RefundListTable />
             </Grid>
           </Grid>
         </Container>
@@ -51,5 +48,4 @@ const PrimaryReservations = () => {
   );
 };
 
-export default PrimaryReservations;
-
+export default PrimaryAdminRefund;

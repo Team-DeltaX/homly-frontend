@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import {
   ThemeProvider,
   DialogActions,
@@ -63,7 +62,7 @@ export default function ChangePasswordCom({
           });
         }
       })
-      .catch((err) => {
+      .catch(() => {
         setErrorStatus({
           ...errorStatus,
           isOpen: true,
