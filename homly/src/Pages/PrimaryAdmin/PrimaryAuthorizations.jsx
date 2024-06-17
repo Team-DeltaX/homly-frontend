@@ -95,7 +95,7 @@ const PrimaryAuthorizations = () => {
                 padding: "0 20px",
               }}
             >
-              <Pagetop setShowNav={setShowNav} heading={"Home Approvals"} />
+              <Pagetop setShowNav={setShowNav} heading={"Approvals"} />
 
               <Box
                 sx={{
