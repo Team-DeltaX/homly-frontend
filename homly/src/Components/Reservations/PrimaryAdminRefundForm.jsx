@@ -7,6 +7,7 @@ import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import DeleteIcon from '@mui/icons-material/Delete';
 import UploadImageCloudinary from "../Common/UploadImageCloudinary";
 import Chip from "@mui/material/Chip";
+import Tooltip from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import {
   Dialog,
@@ -57,6 +58,7 @@ const PrimaryAdminRefundForm = ({
   const [slip, setSlip] = useState("");
   const [isFilled, setIsFilled] = useState(false);
   const [status, setStatus] = useState("Pending");
+  const [imgName, setImgName] = useState("");
 
   useEffect(() => {
     const fetchRefund = async () => {
@@ -134,8 +136,12 @@ const PrimaryAdminRefundForm = ({
     if (value <= payment) {
       setRefundAmount(value);
     } else {
-      setRefundAmount(payment);
+      setRefundAmount("");
     }
+  };
+
+  const handleChipClick = (url) => {
+    window.open(url, "_blank");
   };
 
   return (
@@ -325,13 +331,20 @@ const PrimaryAdminRefundForm = ({
               Attach the bank slip evidence in here.*
             </Typography>
             {slip ? (
+              <Tooltip
+              title={<img src={slip} alt="Bank Slip" style={{ maxWidth: "20vw", maxHeight: "20vh" }} />}
+              placement="top"
+              >
               <Chip
                 label={slip}
-                onDelete={handleDeleteSlip}
-                deleteIcon={<DeleteIcon sx={{ "&:hover": { color: "primary" } }} />}
+                onClick={() => handleChipClick(slip)}
+                onDelete={status !== "Refunded" ? handleDeleteSlip : undefined}
+                deleteIcon={status !== "Refunded" ? <DeleteIcon sx={{ "&:hover": { color: "primary" } }} /> : null}
                 variant="outlined"
                 sx={{ mr: 1, mb: 1 }}
               />
+              </Tooltip>
+
             ) : (
               <UploadImageCloudinary
                 folderName="bank-slips"
@@ -342,6 +355,7 @@ const PrimaryAdminRefundForm = ({
                 buttonVariant="outlined"
                 isDisplayImageName={false}
                 isDisabled={false}
+                setImageName={setImgName}
               />
             )}
           </Grid>

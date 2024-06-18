@@ -5,14 +5,16 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { TextField, Typography } from "@mui/material";
+import { Box, TextField, Typography } from "@mui/material";
 
-export default function ConfirmPopup({
+export default function ConfirmPopupWithInput({
   open,
   setOpen,
   title,
   text,
   controlfunction,
+  rejectreason,
+  setRejectreason,
 }) {
   const handleClose = () => {
     setOpen(false);
@@ -36,22 +38,36 @@ export default function ConfirmPopup({
     >
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>
-        <DialogContentText>{text}
-        
-        
+        <DialogContentText>
+          <Box>
+            <Box sx={{ margin: "10px" }}>{text}</Box>
+            <TextField
+              id="outlined-basic"
+              label="Please Add Rejecting Reason before confirm"
+              fullWidth
+              onChange={(e)=>{
+                setRejectreason(e.target.value)
+
+              }}    
+            />
+          </Box>
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose} sx={{ textTransform: 'capitalize' }}>
+        <Button onClick={handleClose} sx={{ textTransform: "capitalize" }} >
           <Typography>Decline</Typography>
         </Button>
         <Button
+        
           onClick={() => {
-            
             controlfunction();
           }}
-          sx={{ textTransform: 'capitalize' }}
+          sx={{ textTransform: "capitalize" }}
+          //reason should greater than 5 characters
+          disabled={(rejectreason.length<5)||(rejectreason.trim().length===0)}
+          
         >
+            
           <Typography>Confirm</Typography>
         </Button>
       </DialogActions>

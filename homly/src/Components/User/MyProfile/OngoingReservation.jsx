@@ -90,6 +90,7 @@ export default function OngoingReservation({ reservation, showSkeleton }) {
                   ExpireIn={dayjs(reserv.expireDate).diff(dayjs(), "day") + 1}
                   HHImage={reserv.holidayHome[0].MainImage}
                   ReservationId={reserv.reservation.ReservationId}
+                  ServiceNo={reserv.reservation.ServiceNO}
                 />
               </Box>
             );

@@ -15,10 +15,12 @@ import ConfirmPopup from "./ConfirmPopup";
 import AxiosClient from "../../services/AxiosClient";
 import { SocketioContext } from "../../Contexts/SocketioContext";
 import { Link } from "react-router-dom";
+import ConfirmPopupWithInput from "./ConfirmPopupWithInput";
 
 const AuthorizationsCard = (props) => {
   const [open, Setopen] = useState(false);
   const { socket } = useContext(SocketioContext);
+  const [rejectreason,setRejectreason]=useState("")
 
   const approve = () => {
     AxiosClient.put(
@@ -47,12 +49,14 @@ const AuthorizationsCard = (props) => {
 
   const rejectHH = () => {
     console.log(props.data.HolidayHomeId);
-    AxiosClient.delete(
+    console.log('reejct reason',rejectreason)
+    AxiosClient.put(
       `/admin/auth/locationadmin/holidayhome/reject`,
       {
-        data: {
+        
           id: props.data.HolidayHomeId,
-        },
+          reject_reason: rejectreason
+        
       },
       { withCredentials: true }
     )
@@ -69,19 +73,21 @@ const AuthorizationsCard = (props) => {
         });
       })
       .catch((error) => {
-        props.opensnE(true);
+        // props.opensnE(true);
 
         console.log("error in reject");
       });
   };
   return (
     <ThemeProvider theme={theme}>
-      <ConfirmPopup
+      <ConfirmPopupWithInput
         open={open}
         setOpen={Setopen}
         title={"Holiday Home Rejection"}
-        text={"Are you sure you want to Decline this HolidayHome"}
+        text={"Are you sure you want to Decline this HolidayHome ?"}
         controlfunction={rejectHH}
+        setRejectreason={setRejectreason}
+        rejectreason={rejectreason}
       />
       <Stack
         sx={{
