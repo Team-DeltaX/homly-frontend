@@ -7,6 +7,7 @@ import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import DeleteIcon from '@mui/icons-material/Delete';
 import UploadImageCloudinary from "../Common/UploadImageCloudinary";
 import Chip from "@mui/material/Chip";
+import Tooltip from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import {
   Dialog,
@@ -330,6 +331,10 @@ const PrimaryAdminRefundForm = ({
               Attach the bank slip evidence in here.*
             </Typography>
             {slip ? (
+              <Tooltip
+              title={<img src={slip} alt="Bank Slip" style={{ maxWidth: "20vw", maxHeight: "20vh" }} />}
+              placement="top"
+              >
               <Chip
                 label={slip}
                 onClick={() => handleChipClick(slip)}
@@ -338,6 +343,8 @@ const PrimaryAdminRefundForm = ({
                 variant="outlined"
                 sx={{ mr: 1, mb: 1 }}
               />
+              </Tooltip>
+
             ) : (
               <UploadImageCloudinary
                 folderName="bank-slips"
