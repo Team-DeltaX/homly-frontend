@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Typography, TextField, Grid } from "@mui/material";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -6,6 +6,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import UploadImageCloudinary from "../../../Common/UploadImageCloudinary";
 
 const EditCaretakerDetails = ({
+  setSubmit,
   value,
   setValue,
   valueSecond,
@@ -98,6 +99,40 @@ const EditCaretakerDetails = ({
   const handlestatusChangeSecond = (e) => {
     setValueSecond({ ...valueSecond, caretakerStatus: e.target.value });
   };
+
+  const [secondCaretaker, setSecondCaretaker] = useState(false);
+
+  useEffect(() => {
+    const isFirstCaretakerComplete =
+      value.caretakerName !== "" &&
+      value.caretakerContactNo !== "" &&
+      value.caretakerStatus !== "" &&
+      value.caretakerAddress !== "";
+
+    const isSecondCaretakerComplete =
+      valueSecond.caretakerName !== "" &&
+      valueSecond.caretakerContactNo !== "" &&
+      valueSecond.caretakerStatus !== "" &&
+      valueSecond.caretakerAddress !== "";
+
+    const areErrorsEmpty =
+      !error.ctname &&
+      !error.sctname &&
+      !error.ctContactNo &&
+      !error.sctContactNo;
+
+    if (areErrorsEmpty) {
+      // setcaretakerError(true);
+    }
+
+    if (secondCaretaker) {
+      setSubmit(
+        isFirstCaretakerComplete && isSecondCaretakerComplete && areErrorsEmpty
+      );
+    } else {
+      setSubmit(isFirstCaretakerComplete && areErrorsEmpty);
+    }
+  }, [value, valueSecond, secondCaretaker, setSubmit]);
 
   return (
     <Box>

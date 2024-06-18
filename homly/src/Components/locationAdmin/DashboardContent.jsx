@@ -26,7 +26,14 @@ const DashboardContent = () => {
             }}
           >
             <Box>
-              <Grid container sx={{ overflow: "auto", maxHeight: "100vh" }}>
+              <Grid
+                container
+                sx={{
+                  overflow: "scroll",
+                  maxHeight: "100vh",
+                  paddingBottom: "10rem",
+                }}
+              >
                 <Grid
                   item
                   md={8}
@@ -48,14 +55,16 @@ const DashboardContent = () => {
                     }}
                   >
                     <Box
-                      sx={{
-                        display: "flex",
-                        flexDirection: { sm: "row", xs: "column" },
-                      }}
+                      sx={
+                        {
+                          // display: "flex",
+                          // flexDirection: { sm: "row", xs: "column" },
+                        }
+                      }
                     >
                       <Income />
-                      <Box sx={{ paddingTop: { xs: "5px", sm: "130px" } }}>
-                        <PieChart
+                      <Box sx={{}}>
+                        {/* <PieChart
                           series={[
                             {
                               data: [
@@ -84,7 +93,7 @@ const DashboardContent = () => {
                           ]}
                           width={370}
                           height={200}
-                        />
+                        /> */}
                       </Box>
                     </Box>
                   </Box>

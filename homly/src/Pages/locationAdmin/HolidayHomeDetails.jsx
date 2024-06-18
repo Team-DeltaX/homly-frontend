@@ -16,17 +16,17 @@ import SideNavbar from "../../Components/locationAdmin/SideNavbar";
 import PageTitle from "../../Components/locationAdmin/PageTitle";
 import CalendarDetails from "../../Components/locationAdmin/CreateHolidayHome/popups/CalendarDetails";
 import { Calendar, momentLocalizer } from "react-big-calendar";
+import Alert from "@mui/material/Alert";
 import moment from "moment";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import Snackbar from "@mui/material/Snackbar";
-import Alert from "@mui/material/Alert";
-import axios, { Axios } from "axios";
 import dayjs from "dayjs";
-import Popup from "../../Components/Common/Popup";
+
 import AxiosClient from "../../services/AxiosClient";
+
 var isBetween = require("dayjs/plugin/isBetween");
 dayjs.extend(isBetween);
 
@@ -39,6 +39,7 @@ const HolidayHomeDetails = () => {
   const [names, setNames] = useState([]);
   const [myEventsList, setMyEventsList] = useState([]);
   const [openPopup, setOpenPopup] = React.useState(false);
+  const [reservations, setReservations] = useState(0);
 
   const handleOpen = () => setOpenPopup(true);
   const handleClosePopUp = () => setOpenPopup(false);
@@ -113,7 +114,8 @@ const HolidayHomeDetails = () => {
     )
       .then((res) => {
         const data = res.data.reservations;
-        console.log("get", data);
+        setReservations(data.length);
+        setReservationCount(true);
         const events = data.map((item) => {
           return {
             start: dayjs(item.CheckinDate).format("YYYY-MM-DD"),
@@ -132,8 +134,6 @@ const HolidayHomeDetails = () => {
       .catch((err) => {
         console.log(err);
       });
-
-    console.log("myEventlist", myEventsList);
   };
 
   const handleClear = () => {
@@ -174,37 +174,42 @@ const HolidayHomeDetails = () => {
   useEffect(() => {
     console.log("reservationids array", reservationIds);
     if (reservationIds.length > 0) {
-      if (reservationIds[0].paid === true) {
-        for (let i = 0; i < reservationIds.length; i++) {
-          console.log("reservation id", reservationIds[i].id);
-          let reservationId = { id: reservationIds[i].id };
-          AxiosClient.get(
-            `http://localhost:8080/admin/auth/locationadmin/holidayhome/reserved/`,
-            { params: reservationId }
-          )
-            .then((response) => {
-              const data = response.data;
-              setPaidRooms(data);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        }
-      } else {
-        for (let i = 0; i < reservationIds.length; i++) {
-          console.log("reservation id", reservationIds[i].id);
-          let reservationId = { id: reservationIds[i].id };
-          AxiosClient.get(
-            `http://localhost:8080/admin/auth/locationadmin/holidayhome/reserved/`,
-            { params: reservationId }
-          )
-            .then((response) => {
-              const data = response.data;
-              setPendingRooms(data);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
+      for (let k = 0; k < reservationIds.length; k++) {
+        console.log("reservation id", reservationIds[k].id);
+        console.log("reservation paid", reservationIds[k].paid);
+        if (reservationIds[k].paid === true) {
+          console.log("in the true");
+          for (let i = 0; i < reservationIds.length; i++) {
+            console.log("reservation id", reservationIds[i].id);
+            let reservationId = { id: reservationIds[i].id };
+            AxiosClient.get(
+              `http://localhost:8080/admin/auth/locationadmin/holidayhome/reserved/`,
+              { params: reservationId }
+            )
+              .then((response) => {
+                const data = response.data;
+                setPaidRooms(data);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          }
+        } else {
+          console.log("in the false");
+          for (let i = 0; i < reservationIds.length; i++) {
+            let reservationId = { id: reservationIds[i].id };
+            AxiosClient.get(
+              `http://localhost:8080/admin/auth/locationadmin/holidayhome/reserved/`,
+              { params: reservationId }
+            )
+              .then((response) => {
+                const data = response.data;
+                setPendingRooms(data);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          }
         }
       }
     }
@@ -224,6 +229,16 @@ const HolidayHomeDetails = () => {
     }
 
     setOpenAlert(false);
+  };
+
+  const [reservationCount, setReservationCount] = useState(false);
+
+  const handleCloseReservationCount = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setReservationCount(false);
   };
 
   return (
@@ -370,6 +385,22 @@ const HolidayHomeDetails = () => {
                       sx={{ width: "100%" }}
                     >
                       Can't View | Please Select a Holiday Home
+                    </Alert>
+                  </Snackbar>
+                </div>
+                <div>
+                  <Snackbar
+                    open={reservationCount}
+                    autoHideDuration={4000}
+                    onClose={handleCloseReservationCount}
+                  >
+                    <Alert
+                      onClose={handleCloseReservationCount}
+                      severity="error"
+                      variant="filled"
+                      sx={{ width: "100%" }}
+                    >
+                      {reservations} Reservations Found
                     </Alert>
                   </Snackbar>
                 </div>

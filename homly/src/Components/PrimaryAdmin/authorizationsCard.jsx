@@ -46,7 +46,6 @@ const AuthorizationsCard = (props) => {
   };
 
   const rejectHH = () => {
-    
     console.log(props.data.HolidayHomeId);
     AxiosClient.delete(
       `/admin/auth/locationadmin/holidayhome/reject`,
@@ -70,12 +69,9 @@ const AuthorizationsCard = (props) => {
         });
       })
       .catch((error) => {
-
         props.opensnE(true);
-        
 
         console.log("error in reject");
-
       });
   };
   return (
@@ -99,11 +95,16 @@ const AuthorizationsCard = (props) => {
         <Box></Box>
         <Box>
           {" "}
-
-          <Grid container  >
+          <Grid container>
             <Grid md={7} xs={12}>
-              <Grid md={12} sx={{display:"flex",flexDirection:{xs:'row',md:'column'},justifyContent:'center'}}>
-
+              <Grid
+                md={12}
+                sx={{
+                  display: "flex",
+                  flexDirection: { xs: "row", md: "column" },
+                  justifyContent: "center",
+                }}
+              >
                 <Grid md={12}>
                   <Typography sx={{ fontWeight: "light" }}>District</Typography>
                 </Grid>
@@ -132,30 +133,29 @@ const AuthorizationsCard = (props) => {
               </Grid>
             </Grid>
 
-
             <Grid md={5} xs={12}>
-              <Grid md={12} >
-              <Link to={`/primaryadmin/holidayhomes/viewholidayhome/${props.data.HolidayHomeId}`} style={{textDecoration:"none"}} >
-                <Button
-                  type="submit"
-                  variant="contained"
-                  sx={{
-                    width: "80px",
-                    height: "30px",
-                    borderRadius: "15px",
-                    display: { xs: "none", md: "flex" },
-                  }}
-                  startIcon={<PreviewIcon />}
-                  onClick={()=>{
-                    // props.handleClickOpen()
-                    // props.setSelectedtoview(props.data)
-                    
-
-                    
-                  }}
+              <Grid md={12}>
+                <Link
+                  to={`/primaryadmin/holidayhomes/viewholidayhome/${props.data.HolidayHomeId}`}
+                  style={{ textDecoration: "none" }}
                 >
-                  <Typography>View</Typography>
-                </Button>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    sx={{
+                      width: "80px",
+                      height: "30px",
+                      borderRadius: "15px",
+                      display: { xs: "none", md: "flex" },
+                    }}
+                    startIcon={<PreviewIcon />}
+                    onClick={() => {
+                      // props.handleClickOpen()
+                      // props.setSelectedtoview(props.data)
+                    }}
+                  >
+                    <Typography>View</Typography>
+                  </Button>
                 </Link>
               </Grid>
               <Grid
@@ -170,8 +170,9 @@ const AuthorizationsCard = (props) => {
                   <Typography sx={{ fontWeight: "light" }}>Admin</Typography>{" "}
                 </Grid>
 
-                <Grid md={12} sx={{marginLeft:{md:'0px',xs:'10px'}}} >{props.data.AdminNo}</Grid>
-
+                <Grid md={12} sx={{ marginLeft: { md: "0px", xs: "10px" } }}>
+                  {props.data.AdminNo}
+                </Grid>
               </Grid>
             </Grid>
           </Grid>

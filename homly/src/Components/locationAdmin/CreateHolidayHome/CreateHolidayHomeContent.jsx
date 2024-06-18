@@ -3,7 +3,6 @@ import React, { useState, useEffect, useContext } from "react";
 import HomeDetailsView from "./HomeDetailsView";
 import CareTakerDetailsView from "./CareTakerDetailsView";
 import CreatePageHomeBreakDownView from "./HolidayHomeCreate/CreatePageHomeBreakDownView";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";

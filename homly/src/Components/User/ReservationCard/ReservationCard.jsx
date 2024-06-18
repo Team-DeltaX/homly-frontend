@@ -17,7 +17,8 @@ import ConfirmPopup from "../../PrimaryAdmin/ConfirmPopup";
 import AxiosClient from "../../../services/AxiosClient";
 import ErrorSnackbar from "../ErrorSnackbar";
 import NoImage from "../../../Assets/images/noImage.webp";
-import RefundPopup from "../../Reservations/RefundPopup";
+import RequestRefundPopup from "../../Reservations/RequestRefundPopup";
+import { SocketioContext } from "../../../Contexts/SocketioContext";
 
 export default function ReservationCard({
   HHreservation,
@@ -38,8 +39,10 @@ export default function ReservationCard({
   IsReviewed,
   IsCancelled,
   CancelledBy,
+  ServiceNo,
   setIsAddReview,
 }) {
+  const { socket } = useContext(SocketioContext);
   const { setIsOngoingReservationChange } = useContext(AuthContext);
   const [openReview, setOpenReview] = useState(false);
   const [openRefund, setOpenRefund] = useState(false);
@@ -83,6 +86,13 @@ export default function ReservationCard({
             isOpen: true,
             type: "success",
             message: res.data.message,
+          });
+          socket.emit("newNotification", {
+            senderId: ServiceNo,
+            receiverId: res.data.adminNo,
+            data: `New Special Reservation is allocated for ${HHName}. Check it out.`,
+            type: "New Reservation Added",
+            time: new Date(),
           });
           setIsOngoingReservationChange(true);
         } else {
@@ -161,23 +171,15 @@ export default function ReservationCard({
       return (
         <Stack direction="row" sx={{ marginTop: { xs: "10px", sm: "0" } }}>
           {IsCancelled ? (
-            (CancelledBy = "PriAdmin" ? (
-              <Button
-                variant="outlined"
-                onClick={() => {
-                  setOpenRefund(true);
-                }}
-                sx={{ cursor: "pointer" }}
-              >
-                Refund
-              </Button>
-            ) : (
-              <Typography
-                sx={{ color: "red", fontSize: "1.2rem", fontWeight: "medium" }}
-              >
-                Cancelled
-              </Typography>
-            ))
+            <Button
+              variant="outlined"
+              onClick={() => {
+                setOpenRefund(true);
+              }}
+              sx={{ cursor: "pointer" }}
+            >
+              Refund
+            </Button>
           ) : IsReviewed ? (
             <Button
               variant="outlined"
@@ -476,10 +478,14 @@ export default function ReservationCard({
         text={"Are you sure to cancel this reservation?"}
         controlfunction={handleCancelReservation}
       />
-      <RefundPopup
+      <RequestRefundPopup
         open={openRefund}
         setOpen={setOpenRefund}
         reservationId={ReservationId}
+        CancelledBy={CancelledBy}
+        ServiceNo={ServiceNo}
+        EmpName={employeeDetails.name}
+        Amount={HHPrice}
       />
       <PayNowPopup
         isOpen={openPay}
