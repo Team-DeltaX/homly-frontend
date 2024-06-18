@@ -87,6 +87,7 @@ export default function ReservationCard({
             type: "success",
             message: res.data.message,
           });
+          console.log(res.data.adminNo, ServiceNo);
           socket.emit("newNotification", {
             senderId: ServiceNo,
             receiverId: res.data.adminNo,
