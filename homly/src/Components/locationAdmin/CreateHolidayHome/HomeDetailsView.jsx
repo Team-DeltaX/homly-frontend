@@ -8,6 +8,9 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import UploadImageCloudinary from "../../Common/UploadImageCloudinary";
+import AxiosClient from "../../../services/AxiosClient";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
 const HomeDetailsView = ({
   setSubmit,
@@ -24,6 +27,31 @@ const HomeDetailsView = ({
     description: false,
     contactNo1: false,
     contactNo2: false,
+  });
+
+  const [names, setNames] = useState([]);
+
+  const [openNameExistAlert, setOpenNameExistAlert] = useState(false);
+
+  const handleCloseNameExistAlert = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenNameExistAlert(false);
+  };
+  useEffect(() => {
+    AxiosClient.get(
+      "http://localhost:8080/admin/auth/locationadmin/holidayhome/allnames"
+    )
+      .then((res) => {
+        const namesList = res.data.names;
+        namesList.forEach((item) => {
+          names.push(item.name);
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   });
 
   useEffect(() => {
@@ -43,15 +71,24 @@ const HomeDetailsView = ({
       !error.contactNo1 &&
       !error.contactNo2;
 
-    if (isDetailsComplete && areErrorsEmpty) {
+    if (isDetailsComplete && areErrorsEmpty && !openNameExistAlert) {
       setSubmit(true);
     } else {
       setSubmit(false);
     }
-  }, [value, error, setSubmit]);
+  }, [value, error, setSubmit, openNameExistAlert]);
 
   const handleNameChange = (e) => {
     setValue({ ...value, name: e.target.value });
+
+    const isNameDuplicate = names.includes(e.target.value);
+    console.log("nameExist", isNameDuplicate);
+    if (isNameDuplicate) {
+      setOpenNameExistAlert(true);
+    } else {
+      setOpenNameExistAlert(false);
+    }
+
     const name_regex = /^[a-zA-Z0-9\s-]+$/;
     if (e.target.value.length > 0) {
       if (!name_regex.test(e.target.value)) {
@@ -148,7 +185,7 @@ const HomeDetailsView = ({
             fullWidth
             size="small"
             onChange={handleNameChange}
-            helperText={error.name ? "Invalid Input" : ""}
+            helperText={error.name ? "Invalid Name" : ""}
           />
         </Box>
         <Box
@@ -535,6 +572,19 @@ const HomeDetailsView = ({
           </Box>
         </Box>
       </fieldset>
+      {/* alert same hall exist add hall popup*/}
+      <div>
+        <Snackbar open={openNameExistAlert} onClose={handleCloseNameExistAlert}>
+          <Alert
+            onClose={handleCloseNameExistAlert}
+            severity="error"
+            variant="filled"
+            sx={{ width: "100%" }}
+          >
+            {value.name} Already Exist
+          </Alert>
+        </Snackbar>
+      </div>
     </Box>
   );
 };
