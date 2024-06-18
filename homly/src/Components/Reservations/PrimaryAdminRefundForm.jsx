@@ -57,6 +57,7 @@ const PrimaryAdminRefundForm = ({
   const [slip, setSlip] = useState("");
   const [isFilled, setIsFilled] = useState(false);
   const [status, setStatus] = useState("Pending");
+  const [imgName, setImgName] = useState("");
 
   useEffect(() => {
     const fetchRefund = async () => {
@@ -342,6 +343,7 @@ const PrimaryAdminRefundForm = ({
                 buttonVariant="outlined"
                 isDisplayImageName={false}
                 isDisabled={false}
+                setImageName={setImgName}
               />
             )}
           </Grid>
