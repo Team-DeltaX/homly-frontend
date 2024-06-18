@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import AxiosClient from "../../services/AxiosClient";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import DeleteIcon from '@mui/icons-material/Delete';
 import UploadImageCloudinary from "../Common/UploadImageCloudinary";
 import Chip from "@mui/material/Chip";
@@ -14,7 +12,6 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogContentText,
   DialogActions,
   Button,
   TextField,
@@ -22,6 +19,10 @@ import {
   Divider,
   Collapse,
   Typography,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
 } from "@mui/material";
 
 const VisuallyHiddenInput = styled("input")({
@@ -53,7 +54,35 @@ const PrimaryAdminRefundForm = ({
   const [isGridCollapsed, setIsGridCollapsed] = useState(false);
   const [reason, setReason] = useState("");
   const [refundAmount, setRefundAmount] = useState(0);
-  const [slip, setSlip] = useState(""); // State to hold the uploaded slip file name
+  const [slip, setSlip] = useState("");
+  const [isFilled, setIsFilled] = useState(false);
+  const [status, setStatus] = useState("Pending");
+
+  useEffect(() => {
+    const fetchRefund = async () => {
+      setIsFilled(false);
+      setReason("");
+      setRefundAmount(0);
+      setSlip("");
+
+      try {
+        const response = await AxiosClient.get(`/admin/auth/reservation/getRefundById/${reservationId}`);
+        if (response.data.length > 0 && response.data[0].bankSlip !== null) {
+          setIsFilled(true);
+          setReason(response.data[0].reason);
+          setRefundAmount(response.data[0].refundAmount);
+          setSlip(response.data[0].bankSlip);
+          setStatus(response.data[0].status || "Pending");
+        } else {
+          setIsFilled(false);
+        }
+      } catch (error) {
+        console.error("Error fetching refund:", error);
+      }
+    };
+
+    fetchRefund();
+  }, [reservationId]);
 
   const handleClose = () => {
     setOpen(false);
@@ -71,28 +100,25 @@ const PrimaryAdminRefundForm = ({
       serviceNo: serviceNo,
       contactNumber: contactNo,
       cancelledBy: CancelledBy,
-      status: "Refunded",
+      status: status,
       accountHolder: accountHolderName,
       accountNumber: accountNumber,
       bank: bankName,
       branch: branchName,
-      reason: reason,
+      reason: reason || "no special reason",
       refundAmount: refundAmount,
       bankSlip: slip,
     };
 
-    AxiosClient.put("/admin/auth/reservation/updateRefundByAdmin", formData, {
-      withCredentials: true,
-    })
-      .then((response) => {
-        console.log(response.data);
-        handleClose();
-      })
-      .catch((error) => {
-        console.error("Error adding refund:", error);
+    try {
+      const response = await AxiosClient.put("/admin/auth/reservation/updateRefundByAdmin", formData, {
+        withCredentials: true,
       });
-
-    handleClose();
+      console.log(response.data);
+      handleClose();
+    } catch (error) {
+      console.error("Error adding refund:", error);
+    }
   };
 
   const toggleGrid = () => {
@@ -101,6 +127,15 @@ const PrimaryAdminRefundForm = ({
 
   const handleSlipUpload = (fileName) => {
     setSlip(fileName); // Set the uploaded file name to state
+  };
+
+  const handleRefundAmountChange = (e) => {
+    const value = parseFloat(e.target.value);
+    if (value <= payment) {
+      setRefundAmount(value);
+    } else {
+      setRefundAmount(payment);
+    }
   };
 
   return (
@@ -278,29 +313,26 @@ const PrimaryAdminRefundForm = ({
               type="number"
               label="Refund Amount"
               name="Amount"
-              defaultValue={0}
-              onChange={(e) => setRefundAmount(e.target.value)}
+              value={refundAmount}
+              onChange={handleRefundAmountChange}
+              InputProps={{
+                readOnly: isFilled,
+              }}
             />
           </Grid>
           <Grid item xs={6} alignItems="flex-end">
             <Typography variant="caption" display="block" gutterBottom>
-                Attach the bank slip evidence in here.*
+              Attach the bank slip evidence in here.*
             </Typography>
             {slip ? (
               <Chip
                 label={slip}
                 onDelete={handleDeleteSlip}
-                deleteIcon={<DeleteIcon 
-                    sx={{
-                        "&:hover": {
-                          color: "primary", 
-                        },
-                      }}/>}
+                deleteIcon={<DeleteIcon sx={{ "&:hover": { color: "primary" } }} />}
                 variant="outlined"
                 sx={{ mr: 1, mb: 1 }}
               />
             ) : (
-                
               <UploadImageCloudinary
                 folderName="bank-slips"
                 setImage={handleSlipUpload}
@@ -314,21 +346,39 @@ const PrimaryAdminRefundForm = ({
             )}
           </Grid>
           <Grid item xs={12}>
+            <FormControl fullWidth variant="outlined" size="normal">
+              <InputLabel>Status</InputLabel>
+              <Select
+                label="Status"
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+                disabled={isFilled}
+              >
+                <MenuItem value="Pending">Pending</MenuItem>
+                <MenuItem value="Refunded">Refunded</MenuItem>
+                <MenuItem value="Rejected">Rejected</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item xs={12}>
             <TextField
               fullWidth
               variant="outlined"
               size="normal"
-              placeholder="Reason if any"
-              label="Reason"
-              name="reason"
+              placeholder="refund half of the payment because..."
+              label="Reason if any"
               multiline
+              value={reason}
               onChange={(e) => setReason(e.target.value)}
+              InputProps={{
+                readOnly: isFilled,
+              }}
             />
           </Grid>
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button type="submit">Confirm Refund</Button>
+        <Button disabled={isFilled} type="submit">Confirm Refund</Button>
       </DialogActions>
     </Dialog>
   );

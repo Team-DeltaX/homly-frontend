@@ -37,6 +37,7 @@ const RequestRefundPopup = ({
   const [bank, setBank] = useState("");
   const [branch, setBranch] = useState("");
   const [status, setStatus] = useState("");
+  const [date, setDate] = useState(new Date());
   const [isFilled, setIsFilled] = useState(false);
   const handleClose = () => {
     setOpen(false);
@@ -54,6 +55,7 @@ const RequestRefundPopup = ({
           setBranch(response.data[0].branch);
           setContactNumber(response.data[0].contactNumber);
           setStatus(response.data[0].status);
+          setDate(response.data[0].refundDate);
         })
         .catch((error) => {
           console.error("Error fetching refund:", error);
@@ -309,16 +311,48 @@ const RequestRefundPopup = ({
             <TextField
               fullWidth
               required
-              type="number"
+              type="text"
               label="Contact No"
               name="contactNo"
               value={contactNumber}
+              onChange={(e) => {setContactNumber(e.target.value)}}
               placeholder="07XXXXXXXX"
               InputProps={{
                 readOnly: isFilled,
               }}
             />
           </Grid>
+          <Grid item xs={6}>   
+              <TextField
+                autoFocus
+                required
+                margin="dense"
+                id="date"
+                name="date"
+                label="Refund Date"
+                disabled
+                type="date"
+                fullWidth
+                variant="filled"
+                size="small"
+                value={date}
+                onChange={(e) => setDate(new Date(e.target.value))}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+                autoFocus
+                fullWidth
+                required
+                margin="dense"
+                variant="filled"
+                size="small"
+                label="Status"
+                name="status"
+                value={status}
+                
+              />
+            </Grid>
         </Grid>
       </DialogContent>
       <DialogActions>
@@ -327,11 +361,25 @@ const RequestRefundPopup = ({
             variant="h6"
             textTransform="capitalize"
             textAlign="center"
-            color={status === "pending" ? "red" : "green"}
+            color={
+              status === "pending" 
+              ? "black" 
+              : status === "Refunded"
+              ? "green"
+              : status === "Rejected"
+              ? "red"
+              : "black"
+            }
           >
-            {status === "pending"
-              ? "Your Refund Request is ongoing.Primary admin will let you soon."
-              : "Your Refund is done!"}
+            {
+              status === "Pending"
+                ? "Your Refund Request is ongoing. The primary admin will get back to you soon."
+                : status === "Rejected"
+                ? "Your Refund Request is rejected!"
+                : status === "Refunded"
+                ? "Your Refund is done! Any clarification contact welfare department."
+                : ""
+            }
           </Typography>
         ) : (
           <Button type="submit">Request Refund</Button>

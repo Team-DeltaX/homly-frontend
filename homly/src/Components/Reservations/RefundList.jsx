@@ -74,7 +74,11 @@ export default function RefundListTable() {
                     bankName={selectedRefund.bank}
                     branchName={selectedRefund.branch}
                     payment={selectedRefund.payment}
-                    contactNo={selectedRefund.contactNumber} 
+                    contactNo={selectedRefund.contactNumber}
+                    status={selectedRefund.status} 
+                    refundAmount={selectedRefund.refundAmount}
+                    reason={selectedRefund.reason}
+                    slip={selectedRefund.bankSlip}
                 />
             )}
         </div>
