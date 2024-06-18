@@ -15,10 +15,12 @@ import ConfirmPopup from "./ConfirmPopup";
 import AxiosClient from "../../services/AxiosClient";
 import { SocketioContext } from "../../Contexts/SocketioContext";
 import { Link } from "react-router-dom";
+import ConfirmPopupWithInput from "./ConfirmPopupWithInput";
 
 const AuthorizationsCard = (props) => {
   const [open, Setopen] = useState(false);
   const { socket } = useContext(SocketioContext);
+  const [rejectreason,setRejectreason]=useState("")
 
   const approve = () => {
     AxiosClient.put(
@@ -76,12 +78,14 @@ const AuthorizationsCard = (props) => {
   };
   return (
     <ThemeProvider theme={theme}>
-      <ConfirmPopup
+      <ConfirmPopupWithInput
         open={open}
         setOpen={Setopen}
         title={"Holiday Home Rejection"}
-        text={"Are you sure you want to Decline this HolidayHome"}
+        text={"Are you sure you want to Decline this HolidayHome ?"}
         controlfunction={rejectHH}
+        setRejectreason={setRejectreason}
+        rejectreason={rejectreason}
       />
       <Stack
         sx={{
