@@ -135,8 +135,12 @@ const PrimaryAdminRefundForm = ({
     if (value <= payment) {
       setRefundAmount(value);
     } else {
-      setRefundAmount(payment);
+      setRefundAmount("");
     }
+  };
+
+  const handleChipClick = (url) => {
+    window.open(url, "_blank");
   };
 
   return (
@@ -328,6 +332,7 @@ const PrimaryAdminRefundForm = ({
             {slip ? (
               <Chip
                 label={slip}
+                onClick={() => handleChipClick(slip)}
                 onDelete={status !== "Refunded" ? handleDeleteSlip : undefined}
                 deleteIcon={status !== "Refunded" ? <DeleteIcon sx={{ "&:hover": { color: "primary" } }} /> : null}
                 variant="outlined"
