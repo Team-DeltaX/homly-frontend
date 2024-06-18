@@ -351,7 +351,7 @@ const RequestRefundPopup = ({
                   value={status}
                 />
               </Grid>
-              {isFilled === "Refunded" && isFilled === "Rejected" ? (
+              {status === "Refunded" && status === "Rejected" ? (
                 <Grid item xs={6}>
                   <TextField
                     autoFocus
