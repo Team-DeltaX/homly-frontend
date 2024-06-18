@@ -327,8 +327,8 @@ const PrimaryAdminRefundForm = ({
             {slip ? (
               <Chip
                 label={slip}
-                onDelete={handleDeleteSlip}
-                deleteIcon={<DeleteIcon sx={{ "&:hover": { color: "primary" } }} />}
+                onDelete={status !== "Refunded" ? handleDeleteSlip : undefined}
+                deleteIcon={status !== "Refunded" ? <DeleteIcon sx={{ "&:hover": { color: "primary" } }} /> : null}
                 variant="outlined"
                 sx={{ mr: 1, mb: 1 }}
               />
