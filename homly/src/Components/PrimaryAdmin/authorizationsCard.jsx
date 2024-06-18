@@ -49,12 +49,14 @@ const AuthorizationsCard = (props) => {
 
   const rejectHH = () => {
     console.log(props.data.HolidayHomeId);
-    AxiosClient.delete(
+    console.log('reejct reason',rejectreason)
+    AxiosClient.put(
       `/admin/auth/locationadmin/holidayhome/reject`,
       {
-        data: {
+        
           id: props.data.HolidayHomeId,
-        },
+          reject_reason: rejectreason
+        
       },
       { withCredentials: true }
     )
@@ -71,7 +73,7 @@ const AuthorizationsCard = (props) => {
         });
       })
       .catch((error) => {
-        props.opensnE(true);
+        // props.opensnE(true);
 
         console.log("error in reject");
       });
