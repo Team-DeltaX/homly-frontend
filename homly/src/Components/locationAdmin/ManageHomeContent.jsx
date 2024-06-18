@@ -70,7 +70,7 @@ const ManageHomeContent = () => {
     });
   }, []);
 
-  console.log(pending);
+  console.log("active homes", active);
 
   return (
     <Box>
@@ -139,6 +139,7 @@ const ManageHomeContent = () => {
                         Category={item.Category}
                         HolidayHomeId={item.HolidayHomeId}
                         image={item.Image1}
+                        status={item.Status}
                       />
                     );
                   })}
