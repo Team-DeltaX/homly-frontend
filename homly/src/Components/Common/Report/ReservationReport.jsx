@@ -1,4 +1,3 @@
-// IncomeReport.js
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
@@ -15,12 +14,11 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import PreviewPopupIncomeReport from "./PreviewPopupIncomeReport";
+import PreviewPopupReservationReport from "./PreviewPopupReservationReport";
 import { useState, useEffect } from "react";
 import AxiosClient from "../../../services/AxiosClient";
 import { PDFDownloadLink } from "@react-pdf/renderer";
-
-import PDFDocument from "./ReportPDF/PDFDocument"; // Import the PDFDocument component
+import ReservationReportPDF from "./ReportPDF/ReservationReportPdf";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -30,7 +28,7 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-export default function IncomeReport() {
+export default function ReservationReport() {
   const [open, setOpen] = useState(false);
   const [holidayHome, setHolidayHome] = useState("all");
   const [fromDate, setFromDate] = useState(dayjs().subtract(1, "day"));
@@ -39,8 +37,9 @@ export default function IncomeReport() {
   const [previewData, setPreviewData] = useState([]);
 
   const maxDate = dayjs().subtract(1, "day");
+
   const handleClickOpen = () => {
-    AxiosClient.get("admin/report/income", {
+    AxiosClient.get("/admin/report/reservation", {
       params: {
         HHName: holidayHome,
         fromDate: fromDate,
@@ -64,6 +63,7 @@ export default function IncomeReport() {
     setFromDate("");
     setToDate("");
     setHolidayHome("");
+    setPreviewData([]);
   };
 
   return (
@@ -162,13 +162,13 @@ export default function IncomeReport() {
           {previewData && (
             <PDFDownloadLink
               document={
-                <PDFDocument
+                <ReservationReportPDF
                   previewData={previewData}
                   fromDate={fromDate}
                   toDate={toDate}
                 />
               }
-              fileName="Income_Report.pdf"
+              fileName="ReservationReport.pdf"
             >
               {({ loading }) =>
                 loading ? (
@@ -183,7 +183,7 @@ export default function IncomeReport() {
           )}
         </Stack>
       </Stack>
-      <PreviewPopupIncomeReport
+      <PreviewPopupReservationReport
         open={open}
         setOpen={setOpen}
         previewData={previewData}
