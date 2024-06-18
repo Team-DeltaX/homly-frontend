@@ -90,8 +90,8 @@ export default function ReservationCard({
           socket.emit("newNotification", {
             senderId: ServiceNo,
             receiverId: res.data.adminNo,
-            data: `New Special Reservation is allocated for ${HHName}. Check it out.`,
-            type: "New Reservation Added",
+            data: `${ServiceNo} has cancelled their reservation at ${HHName} holiday home.`,
+            type: "Cancel Reservation",
             time: new Date(),
           });
           setIsOngoingReservationChange(true);
