@@ -10,7 +10,6 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
-// import Typography from "@mui/material/Typography";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -36,7 +35,13 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-const PreviewPopupIncomeReport = ({ open, setOpen, previewData, toDate, fromDate }) => {
+const PreviewPopupIncomeReport = ({
+  open,
+  setOpen,
+  previewData,
+  toDate,
+  fromDate,
+}) => {
   const [isDownolad, setIsDownload] = useState(false);
 
   const handleClose = () => {
@@ -119,9 +124,8 @@ const PreviewPopupIncomeReport = ({ open, setOpen, previewData, toDate, fromDate
                 </TableRow>
               </TableHead>
               <TableBody>
-
                 {/* holidayHome name and income */}
-                
+
                 {previewData.TotalPerHH &&
                   previewData.TotalPerHH.map((row) => (
                     <TableRow
@@ -139,11 +143,8 @@ const PreviewPopupIncomeReport = ({ open, setOpen, previewData, toDate, fromDate
               </TableBody>
             </Table>
           </TableContainer>
-          {/* <Typography gutterBottom align="right" style={{ fontWeight: "bold" }}>
-            Total Income (LKR) : {previewData && previewData.TotalPrice}
-          </Typography> */}
         </DialogContent>
-        
+
         <DialogActions>
           <Button autoFocus onClick={() => setIsDownload(true)}>
             Download

@@ -4,13 +4,9 @@ import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
 import Grid from "@mui/material/Unstable_Grid2";
-// import InputLabel from "@mui/material/InputLabel";
-// import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-// import Select from "@mui/material/Select";
 import Button from "@mui/material/Button";
 import dayjs from "dayjs";
-
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -67,68 +63,6 @@ export default function IncomeReport() {
   return (
     <Box sx={{ width: "70%", align: "center", flexGrow: 1 }}>
       <Stack spacing={2}>
-        {/* <Item>
-          <Grid container spacing={2}>
-            <Grid item xs={5}>
-              <FormControl sx={{ m: 3, minWidth: 120 }} size="small">
-                Report Type
-              </FormControl>
-            </Grid>
-            <Grid item xs={7}>
-              <FormControl sx={{ m: 2, minWidth: 200 }} size="small">
-                <InputLabel id="demo-select-small-label1">
-                  Select Report Type
-                </InputLabel>
-                <Select
-                  labelId="demo-select-small-label1"
-                  id="demo-select-small"
-                  label="Select Report type"
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={1}>Reservation Details</MenuItem>
-                  <MenuItem value={2}>Income Details</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-          </Grid>
-        </Item> */}
-        {/* <Item>
-          <Grid container spacing={2}>
-            <Grid item xs={5}>
-              <FormControl sx={{ m: 3, minWidth: 120 }} size="small">
-                Holiday Home
-              </FormControl>
-            </Grid>
-            <Grid item xs={7}>
-              <FormControl sx={{ m: 2, minWidth: 200 }} size="small">
-                <InputLabel id="demo-select-small-label2">
-                  Select Holiday Home
-                </InputLabel>
-                <Select
-                  labelId="demo-select-small-label2"
-                  id="demo-select-small"
-                  value={holidayHome}
-                  label="Select Holiday Home"
-                  onChange={(e) => setHolidayHome(e.target.value)}
-                  defaultValue="all"
-                  
-                >
-                  <MenuItem value={"all"}>All</MenuItem>
-                  
-                  {HHNames &&
-                    HHNames.map((hh) => (
-                      <MenuItem key={hh.HolidayHomeId} value={hh.HolidayHomeId}>
-                        {hh.Name}
-                      </MenuItem>
-                    ))}
-                </Select>
-              </FormControl>
-            </Grid>
-          </Grid>
-        </Item> */}
-
         <Item>
           <Grid container spacing={2}>
             <Grid item xs={5}>
