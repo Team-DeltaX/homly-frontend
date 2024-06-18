@@ -57,6 +57,7 @@ function a11yProps(index) {
 }
 
 const EditHolidayHomeBreakdown = ({
+  setSubmit,
   roomArray,
   setRoomArray,
   unitArray,
@@ -259,10 +260,19 @@ const EditHolidayHomeBreakdown = ({
     setTypeExistAlert(false);
   };
 
-  console.log(
-    "selectedRoomDetails in home breakdown page",
-    selectedRoomDetails
-  );
+  useEffect(() => {
+    const areErrorsEmpty = !error.oCharges && !error.sCharges && !error.tRental;
+
+    if (areErrorsEmpty) {
+      // setHomeBreakDownError(true)
+    }
+
+    if (roomArray.length > 0 && unitArray.length > 0 && areErrorsEmpty) {
+      setSubmit(true);
+    } else {
+      setSubmit(false);
+    }
+  }, [roomArray, unitArray, setSubmit, error]);
 
   return (
     <Box>

@@ -60,7 +60,7 @@ const HolidayHomeEdit = () => {
   const navigate = useNavigate();
 
   const [approvedClicked, setApprovedClicked] = useState(false);
-
+  const [submitDisable, setSubmitDisable] = useState(false);
   const [showNav, setShowNav] = useState("nav_grid_deactive");
   const [value, setValue] = useState(0);
 
@@ -232,6 +232,18 @@ const HolidayHomeEdit = () => {
   console.log("caretakerimage1", careTakerImage1);
   console.log("caretakerimage2", careTakerImage2);
 
+  const [holidayHomeSubmit, setHolidayHomeSubmit] = useState(false);
+  const [caretakerSubmit, setCaretakerSubmit] = useState(false);
+  const [homeBreakdownSubmit, setHomeBreakdownSubmit] = useState(false);
+
+  useEffect(() => {
+    if (holidayHomeSubmit && caretakerSubmit && homeBreakdownSubmit) {
+      setSubmitDisable(false);
+    } else {
+      setSubmitDisable(true); // Make sure to set to false or true explicitly
+    }
+  }, [holidayHomeSubmit, caretakerSubmit, homeBreakdownSubmit]);
+
   const handleApproval = (e) => {
     const updatedUnitArray = unitArray.map((unit) => {
       return {
@@ -349,6 +361,7 @@ const HolidayHomeEdit = () => {
                   </Box>
                   <CustomTabPanel value={value} index={0}>
                     <EditHolidayHomeDetails
+                      setSubmit={setHolidayHomeSubmit}
                       value={detailsValue}
                       setValue={setDetailsValue}
                       mainImage={mainImage}
@@ -378,6 +391,7 @@ const HolidayHomeEdit = () => {
                   </CustomTabPanel>
                   <CustomTabPanel value={value} index={1}>
                     <EditHolidayHomeBreakdown
+                      setSubmit={setHomeBreakdownSubmit}
                       roomArray={roomArray}
                       setRoomArray={setRoomArray}
                       unitArray={unitArray}
@@ -415,6 +429,7 @@ const HolidayHomeEdit = () => {
                   </CustomTabPanel>
                   <CustomTabPanel value={value} index={2}>
                     <EditCaretakerDetails
+                      setSubmit={setCaretakerSubmit}
                       value={valueCaretaker}
                       setValue={setValueCareTaker}
                       valueSecond={valueSecond}
@@ -434,6 +449,7 @@ const HolidayHomeEdit = () => {
                       <Button
                         variant="contained"
                         sx={{ marginTop: "1em" }}
+                        disabled={submitDisable}
                         onClick={handleApproval}
                       >
                         Update
