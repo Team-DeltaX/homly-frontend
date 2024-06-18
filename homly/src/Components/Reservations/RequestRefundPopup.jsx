@@ -64,6 +64,9 @@ const RequestRefundPopup = ({
           setBranch(response.data[0].branch);
           setContactNumber(response.data[0].contactNumber);
           setStatus(response.data[0].status);
+          setRefundDate(
+            dayjs(response.data[0].refundDate).format("DD-MM-YYYY")
+          );
         })
         .catch((error) => {
           console.error("Error fetching refund:", error);
@@ -351,7 +354,7 @@ const RequestRefundPopup = ({
                   value={status}
                 />
               </Grid>
-              {isFilled === "Refunded" && isFilled === "Rejected" ? (
+              {status === "Refunded" || status === "Rejected" ? (
                 <Grid item xs={6}>
                   <TextField
                     autoFocus
@@ -360,8 +363,10 @@ const RequestRefundPopup = ({
                     margin="dense"
                     variant="filled"
                     size="small"
-                    label="Status"
-                    name="status"
+                    label={
+                      status === "Refunded" ? "Refunded Date" : "Rejected Date"
+                    }
+                    name="date"
                     value={refundDate}
                   />
                 </Grid>
