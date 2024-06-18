@@ -118,7 +118,7 @@ const RequestRefundPopup = ({
       contactNumber: event.target.contactNo.value,
       cancelledBy: CancelledBy,
       payment: Amount,
-      status: "pending",
+      status: "Pending",
       accountHolder: event.target.accountHolderName.value,
       accountNumber: event.target.accountNo.value,
       bank: selectedBank.name,
@@ -351,7 +351,7 @@ const RequestRefundPopup = ({
                   value={status}
                 />
               </Grid>
-              {isFilled === "refunded" && isFilled === "rejected" ? (
+              {isFilled === "Refunded" && isFilled === "Rejected" ? (
                 <Grid item xs={6}>
                   <TextField
                     autoFocus
@@ -379,18 +379,18 @@ const RequestRefundPopup = ({
             textTransform="capitalize"
             textAlign="center"
             color={
-              status === "refunded"
+              status === "Refunded"
                 ? "green"
-                : status === "rejected"
+                : status === "Rejected"
                 ? "red"
                 : "black"
             }
           >
-            {status === "pending"
+            {status === "Pending"
               ? "Your Refund Request is ongoing. The primary admin will get back to you soon."
-              : status === "rejected"
+              : status === "Rejected"
               ? "Your Refund Request is rejected!"
-              : status === "refunded"
+              : status === "Refunded"
               ? "Your Refund is done! Any clarification contact welfare department."
               : ""}
           </Typography>
