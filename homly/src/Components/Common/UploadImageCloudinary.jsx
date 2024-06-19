@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import { Stack, ThemeProvider, Button, Typography } from "@mui/material";
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import theme from "../../HomlyTheme";
 
 const UploadImageCloudinary = ({
@@ -58,6 +59,7 @@ const UploadImageCloudinary = ({
         <Button
           variant={buttonVariant ? buttonVariant : "outlined"}
           size={buttonSize ? buttonSize : "small"}
+          startIcon={<CloudUploadIcon />}
           disabled={isDisabled ? isDisabled : false}
           onClick={() => widgetRef.current.open()}
         >
