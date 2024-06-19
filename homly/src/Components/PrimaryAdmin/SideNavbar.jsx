@@ -26,7 +26,8 @@ import "./Css/navbar.css";
 export default function SideNavbar({ setShowNav }) {
   const [selectedMenuItem, setSelectedMenuItem] = useState("");
   const [selectedSubMenuItem, setSelectedSubMenuItem] = useState("");
-  const [isBlacklistedUsersExpanded, setIsBlacklistedUsersExpanded] = useState(false);
+  const [isBlacklistedUsersExpanded, setIsBlacklistedUsersExpanded] =
+    useState(true);
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
@@ -56,7 +57,9 @@ export default function SideNavbar({ setShowNav }) {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ width: "100%", paddingTop: "20px", fontFamily: theme.fontFamily }}>
+      <Box
+        sx={{ width: "100%", paddingTop: "20px", fontFamily: theme.fontFamily }}
+      >
         <CloseIcon
           className="close_icon"
           sx={{
@@ -154,7 +157,7 @@ export default function SideNavbar({ setShowNav }) {
                     : "primary.main",
               }}
               className="sidenav_item"
-              style={{ cursor: 'pointer' }}
+              style={{ cursor: "pointer" }}
             >
               <Box justifyContent={"center"} onClick={toggleBlacklistedUsers}>
                 <DoNotDisturbAltIcon
@@ -182,13 +185,23 @@ export default function SideNavbar({ setShowNav }) {
               </Box>
               <Box onClick={toggleBlacklistedUsers}>
                 {isBlacklistedUsersExpanded ? (
-                  <ExpandLessIcon sx={{
-                    color: selectedMenuItem === "blacklistedusers" ? "black" : "white",
-                  }} />
+                  <ExpandLessIcon
+                    sx={{
+                      color:
+                        selectedMenuItem === "blacklistedusers"
+                          ? "black"
+                          : "white",
+                    }}
+                  />
                 ) : (
-                  <ExpandMoreIcon sx={{
-                    color: selectedMenuItem === "blacklistedusers" ? "black" : "white",
-                  }} />
+                  <ExpandMoreIcon
+                    sx={{
+                      color:
+                        selectedMenuItem === "blacklistedusers"
+                          ? "black"
+                          : "white",
+                    }}
+                  />
                 )}
               </Box>
             </Grid>
@@ -204,24 +217,37 @@ export default function SideNavbar({ setShowNav }) {
                       marginTop: "5px",
                       marginBottom: "5px",
                       backgroundColor:
-                        selectedSubMenuItem === "manage" ? "white" : "primary.main",
-                      cursor: 'pointer',
+                        selectedSubMenuItem === "manage"
+                          ? "white"
+                          : "primary.main",
+                      cursor: "pointer",
                     }}
                     onClick={() => handleSubMenuClick("manage")}
                   >
                     <Link
                       to="/primaryadmin/blacklistedusers/manage"
                       className="sidenav_submenulink"
-                      style={{ display: 'flex', alignItems: 'center' }}
+                      style={{ display: "flex", alignItems: "center" }}
                     >
                       <ManageAccountsOutlinedIcon
                         sx={{
-                          color: selectedSubMenuItem === "manage" ? "black" : "white",
+                          color:
+                            selectedSubMenuItem === "manage"
+                              ? "black"
+                              : "white",
                           marginRight: "20px",
                           fontSize: "1.2rem",
                         }}
                       />
-                      <Typography variant="p" sx={{ color: selectedSubMenuItem === "manage" ? "black" : "white" }}>
+                      <Typography
+                        variant="p"
+                        sx={{
+                          color:
+                            selectedSubMenuItem === "manage"
+                              ? "black"
+                              : "white",
+                        }}
+                      >
                         Manage
                       </Typography>
                     </Link>
@@ -234,24 +260,37 @@ export default function SideNavbar({ setShowNav }) {
                       padding: "3px",
                       marginBottom: "5px",
                       backgroundColor:
-                        selectedSubMenuItem === "history" ? "white" : "primary.main",
-                      cursor: 'pointer',
+                        selectedSubMenuItem === "history"
+                          ? "white"
+                          : "primary.main",
+                      cursor: "pointer",
                     }}
                     onClick={() => handleSubMenuClick("history")}
                   >
                     <Link
                       to="/primaryadmin/blacklistedusers/history"
                       className="sidenav_submenulink"
-                      style={{ display: 'flex', alignItems: 'center' }}
+                      style={{ display: "flex", alignItems: "center" }}
                     >
                       <HistoryOutlinedIcon
                         sx={{
-                          color: selectedSubMenuItem === "history" ? "black" : "white",
+                          color:
+                            selectedSubMenuItem === "history"
+                              ? "black"
+                              : "white",
                           marginRight: "20px",
                           fontSize: "1.2rem",
                         }}
                       />
-                      <Typography variant="p" sx={{ color: selectedSubMenuItem === "history" ? "black" : "white" }}>
+                      <Typography
+                        variant="p"
+                        sx={{
+                          color:
+                            selectedSubMenuItem === "history"
+                              ? "black"
+                              : "white",
+                        }}
+                      >
                         History
                       </Typography>
                     </Link>
@@ -264,24 +303,37 @@ export default function SideNavbar({ setShowNav }) {
                       padding: "3px",
                       marginBottom: "5px",
                       backgroundColor:
-                        selectedSubMenuItem === "complaints" ? "white" : "primary.main",
-                      cursor: 'pointer',
+                        selectedSubMenuItem === "complaints"
+                          ? "white"
+                          : "primary.main",
+                      cursor: "pointer",
                     }}
                     onClick={() => handleSubMenuClick("complaints")}
                   >
                     <Link
                       to="/primaryadmin/blacklistedusers/complaints"
                       className="sidenav_submenulink"
-                      style={{ display: 'flex', alignItems: 'center' }}
+                      style={{ display: "flex", alignItems: "center" }}
                     >
                       <SpeakerNotesIcon
                         sx={{
-                          color: selectedSubMenuItem === "complaints" ? "black" : "white",
+                          color:
+                            selectedSubMenuItem === "complaints"
+                              ? "black"
+                              : "white",
                           marginRight: "20px",
                           fontSize: "1.2rem",
                         }}
                       />
-                      <Typography variant="p" sx={{ color: selectedSubMenuItem === "complaints" ? "black" : "white" }}>
+                      <Typography
+                        variant="p"
+                        sx={{
+                          color:
+                            selectedSubMenuItem === "complaints"
+                              ? "black"
+                              : "white",
+                        }}
+                      >
                         Complaints
                       </Typography>
                     </Link>
@@ -305,7 +357,8 @@ export default function SideNavbar({ setShowNav }) {
               <Box justifyContent={"center"}>
                 <HomeOutlinedIcon
                   sx={{
-                    color: selectedMenuItem === "holidayhomes" ? "black" : "white",
+                    color:
+                      selectedMenuItem === "holidayhomes" ? "black" : "white",
                   }}
                 />
               </Box>
@@ -314,7 +367,8 @@ export default function SideNavbar({ setShowNav }) {
                   <Typography
                     variant="p"
                     sx={{
-                      color: selectedMenuItem === "holidayhomes" ? "black" : "white",
+                      color:
+                        selectedMenuItem === "holidayhomes" ? "black" : "white",
                     }}
                   >
                     Holiday Homes
@@ -338,7 +392,8 @@ export default function SideNavbar({ setShowNav }) {
               <Box justifyContent={"center"}>
                 <ListAltOutlinedIcon
                   sx={{
-                    color: selectedMenuItem === "reservations" ? "black" : "white",
+                    color:
+                      selectedMenuItem === "reservations" ? "black" : "white",
                   }}
                 />
               </Box>
@@ -347,7 +402,8 @@ export default function SideNavbar({ setShowNav }) {
                   <Typography
                     variant="p"
                     sx={{
-                      color: selectedMenuItem === "reservations" ? "black" : "white",
+                      color:
+                        selectedMenuItem === "reservations" ? "black" : "white",
                     }}
                   >
                     Reservations
@@ -452,7 +508,10 @@ export default function SideNavbar({ setShowNav }) {
                 sx={{ color: "grey5", textShadow: "unset", cursor: "pointer" }}
                 cursor="pointer"
               />
-              <Typography variant="p" sx={{ color: "grey1", cursor: "pointer" }}>
+              <Typography
+                variant="p"
+                sx={{ color: "grey1", cursor: "pointer" }}
+              >
                 Log Out
               </Typography>
             </Box>

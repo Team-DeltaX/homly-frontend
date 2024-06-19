@@ -5,7 +5,7 @@ import theme from "../../HomlyTheme";
 import SideNavbar from "../../Components/PrimaryAdmin/SideNavbar";
 import Pagetop from "../../Components/PrimaryAdmin/PageTop";
 import RefundListTable from "../../Components/Reservations/RefundList";
-
+import "./style.css";
 const PrimaryAdminRefund = () => {
   const [showNav, setShowNav] = useState("nav_grid_deactive");
 
