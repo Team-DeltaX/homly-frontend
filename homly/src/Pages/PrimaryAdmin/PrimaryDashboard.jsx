@@ -194,7 +194,7 @@ const PrimaryDashboard = () => {
                           flexDirection: "column",
                           alignItems: "center",
                           backgroundColor: "#E9E9E9",
-                          padding: "1px",
+                          // padding: "1px",
                           margin: "10px",
                           borderRadius: "20px",
                           display:{xs:'none',md:'flex'}
