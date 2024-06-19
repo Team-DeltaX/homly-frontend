@@ -3,6 +3,17 @@ import { Box, Paper, Typography, Button } from "@mui/material";
 import imag from "../../Assets/images/H.png";
 import { Link } from "react-router-dom";
 import Switch from "@mui/material/Switch";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import Slide from "@mui/material/Slide";
+import AxiosClient from "../../services/AxiosClient";
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const HolidayHomeCard = ({
   HolidayHomeId,
@@ -11,16 +22,35 @@ const HolidayHomeCard = ({
   image,
   status,
 }) => {
-  console.log(status);
-  const label = { inputProps: { "aria-label": "Switch demo" } };
-  const [state, setState] = React.useState("");
-  const handleStatusChange = () => {
-    console.log("status changed");
+  const [open, setOpen] = React.useState(false);
+
+  const handleClose = () => {
+    setOpen(false);
+    setState(!state);
   };
 
-  useEffect(() => {
-    setState(status);
-  }, []);
+  const handleApprove = () => {
+    setOpen(false);
+    const statusValue = state === true ? "Active" : "Inactive";
+    AxiosClient.post("/admin/auth/locationadmin/holidayhome/status", {
+      HolidayHomeId: HolidayHomeId,
+      Status: statusValue,
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log("error in update status", err);
+      });
+  };
+
+  let val = status === "Active" ? true : false;
+  const [state, setState] = React.useState(val);
+  const handleStatusChange = (event) => {
+    setState(event.target.checked);
+    setOpen(true);
+  };
+
   return (
     <Paper
       elevation={3}
@@ -104,14 +134,35 @@ const HolidayHomeCard = ({
         }}
       >
         <Switch
-          {...label}
-          checked={state === "Active" ? true : false}
+          inputProps={{ "aria-label": "controlled" }}
+          checked={state}
+          onChange={handleStatusChange}
           sx={{ color: "primary.main" }}
         />
         <Typography variant="p" sx={{ fontWeight: "bold" }}>
-          {state === "Active" ? "Set Inactive" : "set Active"}
+          {state === true ? "Set Inactive" : "set Active"}
         </Typography>
       </Box>
+
+      <Dialog
+        open={open}
+        TransitionComponent={Transition}
+        keepMounted
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle>{"Change Status"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description">
+            <Typography variant="p">
+              Are you sure you want to change the status of {HolidayHomeName}
+            </Typography>
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleApprove}>Yes</Button>
+          <Button onClick={handleClose}>No</Button>
+        </DialogActions>
+      </Dialog>
     </Paper>
   );
 };
