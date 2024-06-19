@@ -7,6 +7,7 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import "../../../Pages/locationAdmin/style.css";
 import { SocketioContext } from "../../../Contexts/SocketioContext";
 import AxiosClient from "../../../services/AxiosClient";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 const NotificationPanal = ({ bell }) => {
   const { socket } = useContext(SocketioContext);
@@ -83,6 +84,10 @@ const NotificationPanal = ({ bell }) => {
         SetMessagecount((prevCount) => prevCount - 1);
       })
       .catch(() => {});
+  };
+
+  const handleClickPanelClose = () => {
+    setShowNotifications(false);
   };
 
   return (
@@ -179,6 +184,15 @@ const NotificationPanal = ({ bell }) => {
               />
             ))
           )}
+        </Box>
+        <Box
+          sx={{ display: "none", zIndex: "1000" }}
+          className="notification_panel_close"
+        >
+          <CancelIcon
+            sx={{ color: "primary.main", fontSize: "2rem", cursor: "pointer" }}
+            onClick={handleClickPanelClose}
+          />
         </Box>
       </Paper>
       <NotificationSnackBar

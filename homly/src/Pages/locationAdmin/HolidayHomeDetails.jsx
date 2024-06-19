@@ -396,7 +396,7 @@ const HolidayHomeDetails = () => {
                   >
                     <Alert
                       onClose={handleCloseReservationCount}
-                      severity="error"
+                      severity="success"
                       variant="filled"
                       sx={{ width: "100%" }}
                     >
