@@ -1,10 +1,10 @@
+import { useState } from "react";
 import Stack from "@mui/material/Stack";
 import { Box } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
-import ViewPopUp from "./ViewPopup";
-import dayjs from "dayjs";
-import { useState } from "react";
 import Typography from "@mui/material/Typography";
+import dayjs from "dayjs";
+import ViewPopUp from "./ViewPopup";
 import AddComplainPopUp from "./AddComplainPopUp";
 import ViewComplaintPopup from "./ViewComplainPopup";
 
@@ -18,7 +18,6 @@ const ReservationCard = (props) => {
     props.isComplaint.length === 0
       ? true
       : false;
-
   const isViewComplainTrue =
     props.isComplaint && props.isComplaint.length > 0 ? true : false;
   return (

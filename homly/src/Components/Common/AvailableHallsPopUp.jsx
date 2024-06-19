@@ -1,22 +1,15 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
-import axios from "axios";
+import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
-import ListItemText from "@mui/material/ListItemText";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
 import List from "@mui/material/List";
-import Divider from "@mui/material/Divider";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import CloseIcon from "@mui/icons-material/Close";
 import Slide from "@mui/material/Slide";
-import Checkbox from "@mui/material/Checkbox";
 import AccordionUsage from "./HallAccordion";
-import Stack from "@mui/material/Stack";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -40,9 +33,6 @@ export default function AvailableHallsPopUp({
 }) {
   const [open, setOpen] = React.useState(false);
   const [halls, setHalls] = React.useState([]);
-  //const [holidayId, setHolidayId] = React.useState( holidayHomeId);
-  console.log("holidayhomeId",holidayHomeId)
-  console.log("hallCodessss",hallCodes);
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -62,7 +52,6 @@ export default function AvailableHallsPopUp({
         onClose={handleClose}
         TransitionComponent={Transition}
       >
-        {/* Top App Bar */}
         <AppBar sx={{ position: "relative" }}>
           <Toolbar>
             <Typography sx={{ ml: 2, flex: 1 }} variant="h5" component="div">
@@ -78,13 +67,12 @@ export default function AvailableHallsPopUp({
             </IconButton>
           </Toolbar>
         </AppBar>
-        {/* middle List */}
         <List>
         {console.log("hall",hall)}
         {hall.length > 0 ? (
              hall.map((hall, index) => (
               console.log("hall",hall),
-              hall.HolidayHomeId === holidayId && (// TODO: remove this hard-coded hall code
+              hall.HolidayHomeId === holidayId && (
                 <AccordionUsage
                   index= {index}
                   key={hall.id}
@@ -107,7 +95,6 @@ export default function AvailableHallsPopUp({
           )}
           
         </List>
-        {/* botom app bar */}
         <AppBar
           position="fixed"
           color="primary"

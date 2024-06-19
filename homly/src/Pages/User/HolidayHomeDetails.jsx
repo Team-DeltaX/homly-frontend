@@ -1,11 +1,16 @@
 import React, { useRef, useEffect, useState } from "react";
-import { Container, Box, ThemeProvider } from "@mui/material";
+import { useParams } from "react-router-dom";
 import NavBar from "../../Components/User/NavBar/NavBar";
 import Footer from "../../Components/User/Footer/Footer";
 import theme from "../../HomlyTheme";
+import SimpleMap from "../../Components/Common/MapContainer";
+import AddReservationPopUp from "../../Components/Reservations/AddReservationPopUp";
+import Review from "../../Components/User/Review/Review";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import noImage from "../../Assets/images/no image.jpg";
 import "@fontsource/roboto/400.css";
+import { Container, Box, ThemeProvider } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Grid from "@mui/material/Unstable_Grid2";
 import Stack from "@mui/material/Stack";
@@ -14,15 +19,8 @@ import Button from "@mui/material/Button";
 import Rating from "@mui/material/Rating";
 import Divider from "@mui/material/Divider";
 import StarIcon from "@mui/icons-material/Star";
-import SimpleMap from "../../Components/Common/MapContainer";
-import LinearProgress, {
-  linearProgressClasses,
-} from "@mui/material/LinearProgress";
-import { useParams } from "react-router-dom";
-import AddReservationPopUp from "../../Components/Reservations/AddReservationPopUp";
-import Review from "../../Components/User/Review/Review";
+import LinearProgress, { linearProgressClasses } from "@mui/material/LinearProgress";
 import AxiosClient from "../../services/AxiosClient";
-import noImage from "../../Assets/images/no image.jpg";
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 10,
@@ -65,6 +63,7 @@ export default function HolidayHomeDetails() {
     furniture_rating: 0,
     wifi_rating: 0,
     overall_rating: 0,
+    review_count: 0,
     MainImage: "",
     Image1: "",
     Image2: "",

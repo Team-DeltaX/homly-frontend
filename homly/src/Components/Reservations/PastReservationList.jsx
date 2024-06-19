@@ -16,7 +16,6 @@ const PastReservationList = (props) => {
   const fetchreservations = () => {
     AxiosClient.get("/admin/auth/reservation/past")
       .then((res) => {
-        console.log("res deetails", res.data.reservationDetails);
         setReservations(res.data.reservationDetails);
         setAdminNo(res.data.adminNo);
       })

@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
-import AxiosClient from "../../services/AxiosClient";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import DeleteIcon from "@mui/icons-material/Delete";
-import UploadImageCloudinary from "../Common/UploadImageCloudinary";
 import Chip from "@mui/material/Chip";
 import Tooltip from "@mui/material/Tooltip";
-import { styled } from "@mui/material/styles";
 import {
   Dialog,
   DialogTitle,
@@ -26,6 +23,8 @@ import {
   InputLabel,
   FormHelperText,
 } from "@mui/material";
+import UploadImageCloudinary from "../Common/UploadImageCloudinary";
+import AxiosClient from "../../services/AxiosClient";
 
 const PrimaryAdminRefundForm = ({
   open,
@@ -57,9 +56,10 @@ const PrimaryAdminRefundForm = ({
       setReason("");
       setRefundAmount("");
       setSlip("");
-
       try {
-        const response = await AxiosClient.get(`/admin/auth/reservation/getRefundById/${reservationId}`);
+        const response = await AxiosClient.get(
+          `/admin/auth/reservation/getRefundById/${reservationId}`
+        );
         if (response.data.length > 0 && response.data[0].bankSlip !== null) {
           setIsFilled(true);
           setReason(response.data[0].reason);
@@ -69,25 +69,18 @@ const PrimaryAdminRefundForm = ({
         } else {
           setIsFilled(false);
         }
-      } catch (error) {
-        console.error("Error fetching refund:", error);
-      }
+      } catch (error) {}
     };
-
     fetchRefund();
   }, [reservationId]);
-
   const handleClose = () => {
     setOpen(false);
   };
-
   const handleDeleteSlip = () => {
     setSlip("");
   };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     const formData = {
       refundId: refundId,
       reservationNo: reservationId,
@@ -103,49 +96,48 @@ const PrimaryAdminRefundForm = ({
       refundAmount: parseFloat(refundAmount),
       bankSlip: slip,
     };
-
     try {
-      const response = await AxiosClient.put("/admin/auth/reservation/updateRefundByAdmin", formData, {
-        withCredentials: true,
-      });
-      console.log(response.data);
+      const response = await AxiosClient.put(
+        "/admin/auth/reservation/updateRefundByAdmin",
+        formData,
+        {
+          withCredentials: true,
+        }
+      );
       handleClose();
-    } catch (error) {
-      console.error("Error adding refund:", error);
-    }
+    } catch (error) {}
   };
-
   const toggleGrid = () => {
     setIsGridCollapsed(!isGridCollapsed);
   };
-
   const handleSlipUpload = (fileName) => {
     setSlip(fileName);
-    setSlipError(false); // Reset slip error when a new slip is uploaded
+    setSlipError(false);
   };
-
   const handleRefundAmountChange = (e) => {
     let value = e.target.value;
     value = value.replace(/[^0-9.]/g, "");
     const isValidNumber = value === "" || /^[0-9]*(\.[0-9]{0,2})?$/.test(value);
-
     if (isValidNumber && (value === "" || parseFloat(value) <= payment)) {
       setRefundAmount(value);
-      setRefundAmountError(false); // Reset refund amount error on valid input
+      setRefundAmountError(false);
     } else {
       setRefundAmountError(true);
     }
   };
-
   const handleChipClick = (url) => {
     window.open(url, "_blank");
   };
-
   const isConfirmDisabled = () => {
     return (
       isFilled ||
-      (status === "Refunded" && (slip === "" || refundAmount === "" || refundAmount <= 0)) ||
-      (status === "Rejected" && (reason === "" || reason.trim().length === 0 || slip !== "" || refundAmount !== "")) ||
+      (status === "Refunded" &&
+        (slip === "" || refundAmount === "" || refundAmount <= 0)) ||
+      (status === "Rejected" &&
+        (reason === "" ||
+          reason.trim().length === 0 ||
+          slip !== "" ||
+          refundAmount !== "")) ||
       (status === "Pending" && (slip !== "" || refundAmount !== ""))
     );
   };
@@ -334,7 +326,8 @@ const PrimaryAdminRefundForm = ({
             />
             {refundAmountError && (
               <FormHelperText error>
-                Refund amount must be a valid number less than or equal to {payment}.
+                Refund amount must be a valid number less than or equal to{" "}
+                {payment}.
               </FormHelperText>
             )}
           </Grid>
@@ -344,13 +337,21 @@ const PrimaryAdminRefundForm = ({
             </Typography>
             {slip ? (
               <Tooltip
-                title={<img src={slip} alt="Bank Slip" style={{ maxWidth: "20vw", maxHeight: "20vh" }} />}
+                title={
+                  <img
+                    src={slip}
+                    alt="Bank Slip"
+                    style={{ maxWidth: "20vw", maxHeight: "20vh" }}
+                  />
+                }
                 placement="top"
               >
                 <Chip
                   label={slip}
                   onClick={() => handleChipClick(slip)}
-                  onDelete={status !== "Refunded" ? handleDeleteSlip : undefined}
+                  onDelete={
+                    status !== "Refunded" ? handleDeleteSlip : undefined
+                  }
                   deleteIcon={
                     status !== "Refunded" ? (
                       <DeleteIcon sx={{ "&:hover": { color: "primary" } }} />

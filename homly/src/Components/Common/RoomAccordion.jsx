@@ -11,26 +11,38 @@ import { Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
-import Divider from '@mui/material/Divider';
+import Divider from "@mui/material/Divider";
 import { useState, useEffect } from "react";
 
-
-
-export default function AccordionUsage({index,key,room,NoOfRooms,setNoOfRooms,roomCodes,setRoomCodes,NoOfAdults,setNoOfAdults,NoOfChildren,setNoOfChildren,roomPrice,setRoomPrice}) {
-  const [reserve,setReserve] = useState(false);
-
-  // check room id is in room codes
+export default function AccordionUsage({
+  index,
+  room,
+  NoOfRooms,
+  setNoOfRooms,
+  roomCodes,
+  setRoomCodes,
+  NoOfAdults,
+  setNoOfAdults,
+  NoOfChildren,
+  setNoOfChildren,
+  roomPrice,
+  setRoomPrice,
+}) {
+  const [reserve, setReserve] = useState(false);
   useEffect(() => {
-    if(roomCodes.includes(room.roomCode)){
-      setReserve(true)
+    if (roomCodes.includes(room.roomCode)) {
+      setReserve(true);
     }
-  },[])
-  console.log(index)
+  }, []);
   const isOdd = index % 2 === 1;
-  
+
   return (
     <Box>
-      <Accordion key={room.id} sx={{backgroundColor: isOdd? '#f0f0f0' : 'inherit'}} defaultExpanded={index === 0}>
+      <Accordion
+        key={room.id}
+        sx={{ backgroundColor: isOdd ? "#f0f0f0" : "inherit" }}
+        defaultExpanded={index === 0}
+      >
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel3-content"
@@ -54,9 +66,16 @@ export default function AccordionUsage({index,key,room,NoOfRooms,setNoOfRooms,ro
               per day
             </Typography>
           </Stack>
-          {reserve?<Typography variant="button"
-          sx={{color:'green',ml: "20%", flexShrink: 0 }}>Reserved</Typography>:" "}
-          
+          {reserve ? (
+            <Typography
+              variant="button"
+              sx={{ color: "green", ml: "20%", flexShrink: 0 }}
+            >
+              Reserved
+            </Typography>
+          ) : (
+            " "
+          )}
         </AccordionSummary>
         <AccordionDetails>
           {room.roomRemarks}
@@ -76,23 +95,32 @@ export default function AccordionUsage({index,key,room,NoOfRooms,setNoOfRooms,ro
           </Box>
         </AccordionDetails>
         <AccordionActions>
-          <Button disabled={!reserve} onClick={() =>{setReserve(false) 
-          setNoOfRooms(NoOfRooms-1)
-          setNoOfAdults(NoOfAdults-room.NoOfAdults)
-          setNoOfChildren(NoOfChildren-room.NoOfChildren)
-          setRoomPrice(roomPrice-room.roomRental)
-          // remove room code from room code array
-          setRoomCodes(roomCodes.filter(code => code !== room.roomCode))
-          }}>Cancel</Button>
-          <Button disabled={reserve} onClick={() => {setReserve(true)
-          setNoOfRooms(NoOfRooms+1)
-          setNoOfAdults(NoOfAdults+room.NoOfAdults)
-          setNoOfChildren(NoOfChildren+room.NoOfChildren)
-          setRoomPrice(roomPrice+room.roomRental)
-          // add room code to set roomcode array
-          setRoomCodes([...roomCodes,room.roomCode])
-          console.log("roooooms",roomCodes)
-          }}>Reserve</Button>
+          <Button
+            disabled={!reserve}
+            onClick={() => {
+              setReserve(false);
+              setNoOfRooms(NoOfRooms - 1);
+              setNoOfAdults(NoOfAdults - room.NoOfAdults);
+              setNoOfChildren(NoOfChildren - room.NoOfChildren);
+              setRoomPrice(roomPrice - room.roomRental);
+              setRoomCodes(roomCodes.filter((code) => code !== room.roomCode));
+            }}
+          >
+            Cancel
+          </Button>
+          <Button
+            disabled={reserve}
+            onClick={() => {
+              setReserve(true);
+              setNoOfRooms(NoOfRooms + 1);
+              setNoOfAdults(NoOfAdults + room.NoOfAdults);
+              setNoOfChildren(NoOfChildren + room.NoOfChildren);
+              setRoomPrice(roomPrice + room.roomRental);
+              setRoomCodes([...roomCodes, room.roomCode]);
+            }}
+          >
+            Reserve
+          </Button>
         </AccordionActions>
         <Divider />
       </Accordion>
