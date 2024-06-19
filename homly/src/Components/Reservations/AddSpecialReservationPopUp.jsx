@@ -9,13 +9,12 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
-import BasicDatePicker from "../Common/BasicDatePicker";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import dayjs from "dayjs";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import axios from "axios";
+import dayjs from "dayjs";
+import BasicDatePicker from "../Common/BasicDatePicker";
 import ErrorSnackbar from "../User/ErrorSnackbar";
 import ConfirmPopup from "../PrimaryAdmin/ConfirmPopup";
 import AxiosClient from "../../services/AxiosClient";
@@ -27,33 +26,30 @@ export default function AddSpecialReservationPopUp() {
   const theme = useTheme();
   const { socket } = React.useContext(SocketioContext);
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
-  const [reserveDisabled, setReserveDisabled] = useState(false);
-  const [HolidayHomeName, SetHolidayHomeName] = useState("");
+  const [reserveDisabled, setReserveDisabled] = React.useState(false);
+  const [HolidayHomeName, SetHolidayHomeName] = React.useState("");
   const [holidayHomes, setHolidayHomes] = React.useState([]);
-  const [ServiceNo, setServiceNo] = useState("");
-  const [employeeName, setEmployeeName] = useState("");
-  const [maxAdults, setMaxAdults] = useState(0);
-  const [NoofRooms, setNoofRooms] = useState(0);
-  const [NoofHalls, setNoofHalls] = useState(0);
-  const [maxChildren, setMaxChildren] = useState(0);
-  const [roomRental, setRoomRental] = useState(0);
-  const [hallRental, setHallRental] = useState(0);
-  const [CheckinDate, setCheckinDate] = useState(dayjs().add(6, "day"));
-  const [CheckoutDate, setCheckoutDate] = useState(dayjs().add(7, "day"));
-  const [errorStatus, setErrorStatus] = useState({
+  const [ServiceNo, setServiceNo] = React.useState("");
+  const [employeeName, setEmployeeName] = React.useState("");
+  const [maxAdults, setMaxAdults] = React.useState(0);
+  const [NoofRooms, setNoofRooms] = React.useState(0);
+  const [NoofHalls, setNoofHalls] = React.useState(0);
+  const [maxChildren, setMaxChildren] = React.useState(0);
+  const [roomRental, setRoomRental] = React.useState(0);
+  const [hallRental, setHallRental] = React.useState(0);
+  const [CheckinDate, setCheckinDate] = React.useState(dayjs().add(6, "day"));
+  const [CheckoutDate, setCheckoutDate] = React.useState(dayjs().add(7, "day"));
+  const [errorStatus, setErrorStatus] = React.useState({
     isOpen: false,
     type: "",
     message: "",
   });
-
   const handleClickOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
   };
-
   const handlesubmit = (e) => {
     if (CheckinDate.isAfter(CheckoutDate)) {
       setErrorStatus({
@@ -136,7 +132,6 @@ export default function AddSpecialReservationPopUp() {
         setOpen(false);
       });
   };
-
   const handleCheckinDateChange = (newDate) => {
     setCheckinDate(newDate);
     if (CheckoutDate.isBefore(newDate) || CheckoutDate.isSame(newDate)) {
@@ -167,7 +162,6 @@ export default function AddSpecialReservationPopUp() {
       });
     }
   };
-
   const handleCheckoutDateChange = (newDate) => {
     setCheckoutDate(newDate);
     setReserveDisabled(false);
@@ -176,10 +170,8 @@ export default function AddSpecialReservationPopUp() {
       type: "",
       message: "",
     });
-    console.log("checkout date", CheckoutDate);
   };
-
-  useEffect(() => {
+  React.useEffect(() => {
     if (CheckinDate.isAfter(CheckoutDate) || CheckinDate.isSame(CheckoutDate)) {
       setReserveDisabled(true);
       if (CheckinDate.isAfter(CheckoutDate)) {
@@ -201,8 +193,7 @@ export default function AddSpecialReservationPopUp() {
       setReserveDisabled(false);
     }
   }, [CheckinDate, CheckoutDate]);
-
-  useEffect(() => {
+  React.useEffect(() => {
     if (ServiceNo.length === 6) {
       AxiosClient.get(`/admin/auth/reservation/employee/${ServiceNo}`)
         .then((res) => {
@@ -221,8 +212,7 @@ export default function AddSpecialReservationPopUp() {
       setEmployeeName("");
     }
   }, [ServiceNo]);
-
-  useEffect(() => {
+  React.useEffect(() => {
     if (HolidayHomeName) {
       AxiosClient.get(`/user/reservation/getTotalRoomRental/${HolidayHomeName}`)
         .then((response) => {
@@ -237,13 +227,13 @@ export default function AddSpecialReservationPopUp() {
           setErrorStatus({
             isOpen: true,
             type: "warning",
-            message: "Can't find holiday home with that name. Check your network & try again.",
+            message:
+              "Can't find holiday home with that name. Check your network & try again.",
           });
         });
     }
   }, [HolidayHomeName]);
-
-  useEffect(() => {
+  React.useEffect(() => {
     axios
       .get("http://localhost:8080/user/reservation/holidayhomes")
       .then((res) => {
@@ -253,7 +243,8 @@ export default function AddSpecialReservationPopUp() {
           setErrorStatus({
             isOpen: true,
             type: "warning",
-            message: "Can't find holiday homes. Check your network & try again.",
+            message:
+              "Can't find holiday homes. Check your network & try again.",
           });
         }
       });
@@ -453,7 +444,9 @@ export default function AddSpecialReservationPopUp() {
               variant="contained"
               type="submit"
               autoFocus
-              disabled={reserveDisabled || employeeName === "" || HolidayHomeName === ""}
+              disabled={
+                reserveDisabled || employeeName === "" || HolidayHomeName === ""
+              }
               onClick={() => {
                 setOpened(true);
               }}

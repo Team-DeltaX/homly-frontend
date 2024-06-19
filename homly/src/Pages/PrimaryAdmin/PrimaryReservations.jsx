@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Box from "@mui/material/Box";
 import { Container, Grid, ThemeProvider } from "@mui/material";
 import theme from "../../HomlyTheme";

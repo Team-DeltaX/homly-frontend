@@ -16,7 +16,7 @@ export default function ErrorSnackbar({ isOpen, type, message, setIsOpen }) {
       <Snackbar
         anchorOrigin={{ vertical, horizontal }}
         open={isOpen}
-        autoHideDuration={6000}
+        autoHideDuration={5000}
         onClose={handleAlertClose}
       >
         <Alert severity={type} variant="filled" onClose={handleAlertClose}>

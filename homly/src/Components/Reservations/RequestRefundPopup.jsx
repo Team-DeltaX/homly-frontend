@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import dayjs from "dayjs";
 import AxiosClient from "../../services/AxiosClient";
@@ -48,7 +48,6 @@ const RequestRefundPopup = ({
   const checkContactNo = (contactNumber) => {
     return contactNumber.length > 0 && !phoneRegex.test(contactNumber);
   };
-
   useEffect(() => {
     if (!checkContactNo(contactNumber)) {
       setIsDisabled(false);
@@ -56,7 +55,6 @@ const RequestRefundPopup = ({
       setIsDisabled(true);
     }
   }, [contactNumber]);
-
   useEffect(() => {
     setIsFilled(false);
     setAccountHolder("");
@@ -69,7 +67,6 @@ const RequestRefundPopup = ({
     const fetchRefund = async () => {
       AxiosClient.get(`/user/auth/reservation/getRefundById/${reservationId}`)
         .then((response) => {
-          console.log("responseeeeeeee", response.data);
           setIsFilled(response.data.length > 0);
           setAccountHolder(response.data[0].accountHolder);
           setAccountNumber(response.data[0].accountNumber);
@@ -81,15 +78,12 @@ const RequestRefundPopup = ({
             dayjs(response.data[0].refundDate).format("DD-MM-YYYY")
           );
         })
-        .catch((error) => {
-          console.error("Error fetching refund:", error);
-        });
+        .catch((error) => {});
     };
     if (open) {
       fetchRefund();
     }
   }, [reservationId, open]);
-
   useEffect(() => {
     const fetchBanks = async () => {
       try {
@@ -97,9 +91,7 @@ const RequestRefundPopup = ({
           "https://raw.githubusercontent.com/samma89/Sri-Lanka-Bank-and-Branch-List/master/banks.json"
         );
         setBanks(response.data);
-      } catch (error) {
-        console.error("Error fetching banks data:", error);
-      }
+      } catch (error) {}
     };
 
     fetchBanks();
@@ -115,9 +107,7 @@ const RequestRefundPopup = ({
         const branchesData = response.data[selectedBank.ID.toString()];
         setBranches(branchesData || []);
         setBranchAutocompleteDisabled(false);
-      } catch (error) {
-        console.error("Error fetching branches data:", error);
-      }
+      } catch (error) {}
     };
 
     if (!selectedBank) {
@@ -142,17 +132,13 @@ const RequestRefundPopup = ({
       bank: selectedBank.name,
       branch: selectedBranch.name,
     };
-
     AxiosClient.post("/user/auth/reservation/addRefundByUser", formData, {
       withCredentials: true,
     })
       .then((response) => {
-        console.log(response.data);
         handleClose();
       })
-      .catch((error) => {
-        console.error("Error adding refund:", error);
-      });
+      .catch((error) => {});
   };
 
   return (

@@ -1,5 +1,5 @@
 import './style.css';
-import React,{ useState} from 'react'
+import { useState } from 'react'
 import Box from '@mui/material/Box';
 import { Grid,ThemeProvider,Container} from '@mui/material';
 import theme from '../../HomlyTheme';
