@@ -26,21 +26,13 @@ export default function RefundListTable() {
       })
       .catch(() => {});
   }, []);
-
   const handleOpenPopup = (refund) => {
     setSelectedRefund(refund);
     setOpenPopup(true);
   };
-
-  const handleClosePopup = () => {
-    setOpenPopup(false);
-    setSelectedRefund(null);
-  };
-
   const handleSelectionChange = (newSelection) => {
     setSelectedRefund(newSelection.length > 0 ? newSelection[0] : null);
   };
-
   const columns = [
     { field: "serviceNo", headerName: "Service No", flex: 1 },
     { field: "reservationNo", headerName: "Reservation No", flex: 1 },
