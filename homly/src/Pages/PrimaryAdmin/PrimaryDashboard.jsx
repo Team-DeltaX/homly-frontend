@@ -241,8 +241,9 @@ const PrimaryDashboard = () => {
                           sx={{
                             backgroundColor: "#E9E9E9",
                             padding: "1px",
-                            margin: "10px",
+                            margin: "5px",
                             borderRadius: "20px",
+                           
                           }}
                         >
                           <Box
@@ -251,6 +252,7 @@ const PrimaryDashboard = () => {
                               flexDirection: "column",
                               justifyContent: "center",
                               alignItems: "center",
+                            
                             }}
                           >
                             <Box
@@ -272,7 +274,7 @@ const PrimaryDashboard = () => {
                                 </Avatar>
                               </Box>
                               <Box>|</Box>
-                              <Box>Holiday Home Approvals</Box>
+                              <Box sx={{fontSize:'14px'}}>Holiday Home Approvals</Box>
                             </Box>
                             <Box>
                               {" "}
