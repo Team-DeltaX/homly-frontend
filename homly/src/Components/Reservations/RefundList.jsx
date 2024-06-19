@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
-import { DataGrid } from "@mui/x-data-grid";
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import {
+  DataGridPremium,
+  GridToolbar,
+  useGridApiRef,
+} from "@mui/x-data-grid-premium";
 import AxiosClient from "../../services/AxiosClient";
 import PrimaryAdminRefundForm from "./PrimaryAdminRefundForm";
 
@@ -8,6 +13,7 @@ export default function RefundListTable() {
   const [refunds, setRefunds] = useState([]);
   const [openPopup, setOpenPopup] = useState(false);
   const [selectedRefund, setSelectedRefund] = useState(null);
+  const apiRef = useGridApiRef();
 
   useEffect(() => {
     AxiosClient.get("/admin/auth/reservation/refund")
@@ -37,8 +43,16 @@ export default function RefundListTable() {
 
   const columns = [
     { field: "serviceNo", headerName: "Service No", flex: 1 },
+    { field: "reservationNo", headerName: "Reservation No", flex: 1 },
+    { field: "contactNumber", headerName: "Contact No", flex: 1, hide: true },
     { field: "cancelledBy", headerName: "Cancelled by", flex: 1 },
+    { field: "payment", headerName: "Payment", flex: 1, hide: true },
     { field: "status", headerName: "Status", flex: 1 },
+    { field: "bank", headerName: "Bank", flex: 1, hide: true },
+    { field: "branch", headerName: "Branch", flex: 1, hide: true },
+    { field: "createdAt", headerName: "Request date", flex: 1 },
+    { field: "refundAmount", headerName: "Refund Amount", flex: 1, hide: true },
+    { field: "refundDate", headerName: "Refunded Date", flex: 1, hide: true },
     {
       field: "actions",
       headerName: "Actions",
@@ -54,16 +68,37 @@ export default function RefundListTable() {
       ),
     },
   ];
+  const initialState = {
+    apiRef,
+    sorting: {
+      sortModel: [{ field: "createdAt", sort: "asc" }],
+    },
+    columns: {
+      columnVisibilityModel: {
+        bank: false,
+        payment: false,
+        refundAmount: false,
+        contactNumber: false, 
+        refundDate: false,
+        branch: false,
+      },
+    },
+  };
 
   return (
-    <div style={{ height: 400, width: "100%", marginTop: 50 }}>
-      <DataGrid
+    <Box sx={{ height: 400, width: "100%", marginTop: 10 }}>
+      <DataGridPremium
         rows={refunds}
         columns={columns}
         pageSize={5}
         rowsPerPageOptions={[5, 10, 25]}
         onSelectionModelChange={handleSelectionChange}
         getRowId={(row) => row.id}
+        apiRef={apiRef}
+        disableRowSelectionOnClick
+        initialState={initialState}
+        slots={{ toolbar: GridToolbar }}
+        components={{ Toolbar: GridToolbar }}
       />
       {selectedRefund && (
         <PrimaryAdminRefundForm
@@ -85,6 +120,6 @@ export default function RefundListTable() {
           slip={selectedRefund.bankSlip}
         />
       )}
-    </div>
+    </Box>
   );
 }
