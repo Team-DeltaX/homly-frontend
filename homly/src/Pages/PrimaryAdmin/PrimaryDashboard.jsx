@@ -241,7 +241,7 @@ const PrimaryDashboard = () => {
                           sx={{
                             backgroundColor: "#E9E9E9",
                             padding: "1px",
-                            margin: "5px",
+                            margin: "10px",
                             borderRadius: "20px",
                            
                           }}
