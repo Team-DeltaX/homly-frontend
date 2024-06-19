@@ -65,7 +65,7 @@ const AuthorizationsCard = (props) => {
         props.get_pending();
         Setopen(false);
         socket.emit("newNotification", {
-          senderId: localStorage.getItem("userId"),
+          senderId: sessionStorage.getItem("userId"),
           receiverId: props.data.AdminNo,
           data: `${props.data.Name} Holiday Home has been Declined`,
           type: "Authorization Denied",
