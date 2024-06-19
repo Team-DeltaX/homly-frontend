@@ -50,14 +50,12 @@ const RequestRefundPopup = ({
   };
 
   useEffect(() => {
-    if(
-      !checkContactNo(contactNumber) 
-    ) {
+    if (!checkContactNo(contactNumber)) {
       setIsDisabled(false);
-    } else{
+    } else {
       setIsDisabled(true);
     }
-  });
+  }, [contactNumber]);
 
   useEffect(() => {
     setIsFilled(false);
@@ -87,8 +85,10 @@ const RequestRefundPopup = ({
           console.error("Error fetching refund:", error);
         });
     };
-    fetchRefund();
-  }, [reservationId]);
+    if (open) {
+      fetchRefund();
+    }
+  }, [reservationId, open]);
 
   useEffect(() => {
     const fetchBanks = async () => {
@@ -350,9 +350,7 @@ const RequestRefundPopup = ({
               }}
               error={checkContactNo(contactNumber)}
               helperText={
-                checkContactNo(contactNumber)
-                  ? "invalid contact number"
-                  : ""
+                checkContactNo(contactNumber) ? "invalid contact number" : ""
               }
               placeholder="07XXXXXXXX"
               InputProps={{
@@ -421,7 +419,9 @@ const RequestRefundPopup = ({
               : ""}
           </Typography>
         ) : (
-          <Button disabled={isDisabled} type="submit">Request Refund</Button>
+          <Button disabled={isDisabled} type="submit">
+            Request Refund
+          </Button>
         )}
       </DialogActions>
     </Dialog>
