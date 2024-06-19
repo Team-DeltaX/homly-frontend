@@ -1,32 +1,34 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ThemeProvider, styled } from "@mui/material/styles";
 import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
-import { Typography } from "@mui/material";
+import Typography from "@mui/material/Typography";
 import { Link, useNavigate } from "react-router-dom";
-import logo1 from "../../Assets/images/logo1.png";
-import "./Css/navbar.css";
+import CloseIcon from "@mui/icons-material/Close";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import ListAltOutlinedIcon from "@mui/icons-material/ListAltOutlined";
 import QueryStatsOutlinedIcon from "@mui/icons-material/QueryStatsOutlined";
 import ManageAccountsOutlinedIcon from "@mui/icons-material/ManageAccountsOutlined";
+import CurrencyExchangeIcon from "@mui/icons-material/CurrencyExchange";
 import HistoryOutlinedIcon from "@mui/icons-material/HistoryOutlined";
-import RateReviewOutlinedIcon from "@mui/icons-material/RateReviewOutlined";
+import SpeakerNotesIcon from "@mui/icons-material/SpeakerNotes";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import DoNotDisturbAltIcon from "@mui/icons-material/DoNotDisturbAlt";
-import SpeakerNotesIcon from "@mui/icons-material/SpeakerNotes";
-import CloseIcon from "@mui/icons-material/Close";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import theme from "../../HomlyTheme";
 import { AuthContext } from "../../Contexts/AuthContext";
-
-
+import logo1 from "../../Assets/images/logo1.png";
+import "./Css/navbar.css";
 
 export default function SideNavbar({ setShowNav }) {
-  const [selectedMenuItem, setSelectedMenuItem] = React.useState("");
+  const [selectedMenuItem, setSelectedMenuItem] = useState("");
+  const [selectedSubMenuItem, setSelectedSubMenuItem] = useState("");
+  const [isBlacklistedUsersExpanded, setIsBlacklistedUsersExpanded] = useState(false);
   const { user } = useContext(AuthContext);
+
   useEffect(() => {
     const currentUrl = window.location.href;
     const urlArray = currentUrl.split("/");
@@ -36,6 +38,7 @@ export default function SideNavbar({ setShowNav }) {
   const closeNav = () => {
     setShowNav("nav_grid_deactive");
   };
+
   const navigate = useNavigate();
   const handleLogout = () => {
     closeNav();
@@ -43,11 +46,17 @@ export default function SideNavbar({ setShowNav }) {
     navigate("/admin/login");
   };
 
+  const toggleBlacklistedUsers = () => {
+    setIsBlacklistedUsersExpanded(!isBlacklistedUsersExpanded);
+  };
+
+  const handleSubMenuClick = (subMenu) => {
+    setSelectedSubMenuItem(subMenu);
+  };
+
   return (
     <ThemeProvider theme={theme}>
-      <Box
-        sx={{ width: "100%", paddingTop: "20px", fontFamily: theme.fontFamily }}
-      >
+      <Box sx={{ width: "100%", paddingTop: "20px", fontFamily: theme.fontFamily }}>
         <CloseIcon
           className="close_icon"
           sx={{
@@ -145,130 +154,141 @@ export default function SideNavbar({ setShowNav }) {
                     : "primary.main",
               }}
               className="sidenav_item"
+              style={{ cursor: 'pointer' }}
             >
-              <Box justifyContent={"center"}>
+              <Box justifyContent={"center"} onClick={toggleBlacklistedUsers}>
                 <DoNotDisturbAltIcon
                   sx={{
                     color:
-                      selectedMenuItem === "blacklisted users"
+                      selectedMenuItem === "blacklistedusers"
                         ? "black"
                         : "white",
                   }}
                 />
               </Box>
-              <Box alignItems={"center"}>
-                <Link
-                  to="/primaryadmin/blacklistedusers/manage"
-                  className="sidenav_link"
+              <Box alignItems={"center"} onClick={toggleBlacklistedUsers}>
+                <Typography
+                  variant="p"
+                  sx={{
+                    color:
+                      selectedMenuItem === "blacklistedusers"
+                        ? "black"
+                        : "white",
+                    fontWeight: "bold",
+                  }}
                 >
-                  <Typography
-                    variant="p"
-                    sx={{
-                      color:
-                        selectedMenuItem === "blacklistedusers"
-                          ? "black"
-                          : "white",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    Blacklisted Users
-                  </Typography>
-                </Link>
+                  Blacklisted Users
+                </Typography>
+              </Box>
+              <Box onClick={toggleBlacklistedUsers}>
+                {isBlacklistedUsersExpanded ? (
+                  <ExpandLessIcon sx={{
+                    color: selectedMenuItem === "blacklistedusers" ? "black" : "white",
+                  }} />
+                ) : (
+                  <ExpandMoreIcon sx={{
+                    color: selectedMenuItem === "blacklistedusers" ? "black" : "white",
+                  }} />
+                )}
               </Box>
             </Grid>
-            <Grid container xs={12} className="submenu_item">
-              <Grid container
-              
-              >
-                <Grid
-                  xs={12}
-                  sx={{
-                    display: "flex",
-                    justifyContent: "flex-start",
-                    padding: "3px",
-                    marginTop: "5px",
-                    marginBottom: "5px",
-                   
-                  }}
-                >
-                  <Link
-                    to="/primaryadmin/blacklistedusers/manage"
-                    className="sidenav_submenulink"
-                    style={{display:'flex',alignItems:'center'}}
+            {isBlacklistedUsersExpanded && (
+              <Grid container xs={12} className="submenu_item">
+                <Grid container>
+                  <Grid
+                    xs={12}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "flex-start",
+                      padding: "3px",
+                      marginTop: "5px",
+                      marginBottom: "5px",
+                      backgroundColor:
+                        selectedSubMenuItem === "manage" ? "white" : "primary.main",
+                      cursor: 'pointer',
+                    }}
+                    onClick={() => handleSubMenuClick("manage")}
                   >
-                  
-                  <ManageAccountsOutlinedIcon
-                      sx={{
-                        color: "white",
-                        marginRight: "20px",
-                        fontSize: "1.2rem",
-                      }}
-                    />
-                  
-                    <Typography variant="p" sx={{ color: "white" }}>
-                      {" "}
-                      Manage
-                    </Typography>
-                  </Link>
-                </Grid>
-                <Grid
-                  xs={12}
-                  sx={{
-                    display: "flex",
-                    justifyContent: "flex-start",
-                    padding: "3px",
-                    marginBottom: "5px",
-                  }}
-                >
-                  <Link
-                    to="/primaryadmin/blacklistedusers/history"
-                    className="sidenav_submenulink"
-                    style={{display:'flex',alignItems:'center'}}
+                    <Link
+                      to="/primaryadmin/blacklistedusers/manage"
+                      className="sidenav_submenulink"
+                      style={{ display: 'flex', alignItems: 'center' }}
+                    >
+                      <ManageAccountsOutlinedIcon
+                        sx={{
+                          color: selectedSubMenuItem === "manage" ? "black" : "white",
+                          marginRight: "20px",
+                          fontSize: "1.2rem",
+                        }}
+                      />
+                      <Typography variant="p" sx={{ color: selectedSubMenuItem === "manage" ? "black" : "white" }}>
+                        Manage
+                      </Typography>
+                    </Link>
+                  </Grid>
+                  <Grid
+                    xs={12}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "flex-start",
+                      padding: "3px",
+                      marginBottom: "5px",
+                      backgroundColor:
+                        selectedSubMenuItem === "history" ? "white" : "primary.main",
+                      cursor: 'pointer',
+                    }}
+                    onClick={() => handleSubMenuClick("history")}
                   >
-                    <HistoryOutlinedIcon
-                      sx={{
-                        color: "white",
-                        marginRight: "20px",
-                        fontSize: "1.2rem",
-                      }}
-                    />
-                    <Typography variant="p" sx={{ color: "white" }}>
-                      History
-                    </Typography>
-                  </Link>
-                </Grid>
-                <Grid
-                  xs={12}
-                  sx={{
-                    display: "flex",
-                    justifyContent: "flex-start",
-                    padding: "3px",
-                    marginBottom: "5px",
-                    
-                  }}
-                >
-                  <Link
-                    to="/primaryadmin/blacklistedusers/complaints"
-                    className="sidenav_submenulink"
-                    style={{display:'flex',alignItems:'center'}}
+                    <Link
+                      to="/primaryadmin/blacklistedusers/history"
+                      className="sidenav_submenulink"
+                      style={{ display: 'flex', alignItems: 'center' }}
+                    >
+                      <HistoryOutlinedIcon
+                        sx={{
+                          color: selectedSubMenuItem === "history" ? "black" : "white",
+                          marginRight: "20px",
+                          fontSize: "1.2rem",
+                        }}
+                      />
+                      <Typography variant="p" sx={{ color: selectedSubMenuItem === "history" ? "black" : "white" }}>
+                        History
+                      </Typography>
+                    </Link>
+                  </Grid>
+                  <Grid
+                    xs={12}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "flex-start",
+                      padding: "3px",
+                      marginBottom: "5px",
+                      backgroundColor:
+                        selectedSubMenuItem === "complaints" ? "white" : "primary.main",
+                      cursor: 'pointer',
+                    }}
+                    onClick={() => handleSubMenuClick("complaints")}
                   >
-                    <SpeakerNotesIcon
-                      sx={{
-                        color: "white",
-                        marginRight: "20px",
-                        fontSize: "1.2rem",
-                        
-                       
-                      }}
-                    />
-                    <Typography variant="p" sx={{ color: "white" }}>
-                      Complaints
-                    </Typography>
-                  </Link>
+                    <Link
+                      to="/primaryadmin/blacklistedusers/complaints"
+                      className="sidenav_submenulink"
+                      style={{ display: 'flex', alignItems: 'center' }}
+                    >
+                      <SpeakerNotesIcon
+                        sx={{
+                          color: selectedSubMenuItem === "complaints" ? "black" : "white",
+                          marginRight: "20px",
+                          fontSize: "1.2rem",
+                        }}
+                      />
+                      <Typography variant="p" sx={{ color: selectedSubMenuItem === "complaints" ? "black" : "white" }}>
+                        Complaints
+                      </Typography>
+                    </Link>
+                  </Grid>
                 </Grid>
               </Grid>
-            </Grid>
-
+            )}
             <Grid
               container
               justifyContent={"flex-start"}
@@ -285,8 +305,7 @@ export default function SideNavbar({ setShowNav }) {
               <Box justifyContent={"center"}>
                 <HomeOutlinedIcon
                   sx={{
-                    color:
-                      selectedMenuItem === "holidayhomes" ? "black" : "white",
+                    color: selectedMenuItem === "holidayhomes" ? "black" : "white",
                   }}
                 />
               </Box>
@@ -295,8 +314,7 @@ export default function SideNavbar({ setShowNav }) {
                   <Typography
                     variant="p"
                     sx={{
-                      color:
-                        selectedMenuItem === "holidayhomes" ? "black" : "white",
+                      color: selectedMenuItem === "holidayhomes" ? "black" : "white",
                     }}
                   >
                     Holiday Homes
@@ -304,7 +322,6 @@ export default function SideNavbar({ setShowNav }) {
                 </Link>
               </Box>
             </Grid>
-
             <Grid
               container
               justifyContent={"flex-start"}
@@ -321,8 +338,7 @@ export default function SideNavbar({ setShowNav }) {
               <Box justifyContent={"center"}>
                 <ListAltOutlinedIcon
                   sx={{
-                    color:
-                      selectedMenuItem === "reservations" ? "black" : "white",
+                    color: selectedMenuItem === "reservations" ? "black" : "white",
                   }}
                 />
               </Box>
@@ -331,8 +347,7 @@ export default function SideNavbar({ setShowNav }) {
                   <Typography
                     variant="p"
                     sx={{
-                      color:
-                        selectedMenuItem === "reservations" ? "black" : "white",
+                      color: selectedMenuItem === "reservations" ? "black" : "white",
                     }}
                   >
                     Reservations
@@ -352,7 +367,7 @@ export default function SideNavbar({ setShowNav }) {
               className="sidenav_item"
             >
               <Box justifyContent={"center"}>
-                <QueryStatsOutlinedIcon
+                <CurrencyExchangeIcon
                   sx={{
                     color: selectedMenuItem === "refund" ? "black" : "white",
                   }}
@@ -424,7 +439,7 @@ export default function SideNavbar({ setShowNav }) {
               </Typography>
             </Box>
             <Box
-              onclick={{ handleLogout }}
+              onClick={handleLogout}
               sx={{
                 display: "flex",
                 marginBottom: "35px",
@@ -434,13 +449,10 @@ export default function SideNavbar({ setShowNav }) {
               }}
             >
               <LogoutOutlinedIcon
-                sx={{ color: "grey5", textShadow: "unset",cursor:"pointer" }}
-                onClick={handleLogout}
+                sx={{ color: "grey5", textShadow: "unset", cursor: "pointer" }}
                 cursor="pointer"
               />
-              <Typography variant="p" sx={{ color: "grey1",cursor:"pointer" }}
-              onClick={handleLogout}
-              >
+              <Typography variant="p" sx={{ color: "grey1", cursor: "pointer" }}>
                 Log Out
               </Typography>
             </Box>
