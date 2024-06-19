@@ -27,6 +27,8 @@ const RequestRefundPopup = ({
   CancelledBy,
 }) => {
   const phoneRegex = /^(0|\+94)[0-9]{9}$/;
+  const nameRegex = /^[a-zA-Z. ]+$/;
+  const accountNumberRegex = /^[0-9]+$/;
   const [banks, setBanks] = useState([]);
   const [selectedBank, setSelectedBank] = useState(null);
   const [branches, setBranches] = useState([]);
@@ -48,13 +50,26 @@ const RequestRefundPopup = ({
   const checkContactNo = (contactNumber) => {
     return contactNumber.length > 0 && !phoneRegex.test(contactNumber);
   };
+  const checkAccountHolder = (accountHolder) => {
+    return accountHolder.length > 0 && !nameRegex.test(accountHolder);
+  };
+  const checkAccountNumber = (accountNumber) => {
+    return accountNumber.length > 0 && !accountNumberRegex.test(accountNumber);
+  };
   useEffect(() => {
-    if (!checkContactNo(contactNumber)) {
+    if (
+      !checkContactNo(contactNumber) &&
+      !checkAccountNumber(accountNumber) &&
+      !checkAccountHolder(accountHolder) &&
+      contactNumber.length > 0 &&
+      accountNumber.length > 0 &&
+      accountHolder.length > 0
+    ) {
       setIsDisabled(false);
     } else {
       setIsDisabled(true);
     }
-  }, [contactNumber]);
+  }, [contactNumber, accountNumber, accountHolder]);
   useEffect(() => {
     setIsFilled(false);
     setAccountHolder("");
@@ -236,6 +251,12 @@ const RequestRefundPopup = ({
               onChange={(e) => {
                 setAccountHolder(e.target.value);
               }}
+              error={checkAccountHolder(accountHolder)}
+              helperText={
+                checkAccountHolder(accountHolder)
+                  ? "invalid account holder name"
+                  : ""
+              }
               InputProps={{
                 readOnly: isFilled,
               }}
@@ -251,6 +272,12 @@ const RequestRefundPopup = ({
               onChange={(e) => {
                 setAccountNumber(e.target.value);
               }}
+              error={checkAccountNumber(accountNumber)}
+              helperText={
+                checkAccountNumber(accountNumber)
+                  ? "invalid account number"
+                  : ""
+              }
               InputProps={{
                 readOnly: isFilled,
               }}
