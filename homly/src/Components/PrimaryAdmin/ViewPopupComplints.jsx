@@ -41,6 +41,18 @@ const ViewPopupComplaints = (props) => {
       props.fetchcomplaints();
     });
   };
+  const update_iswarned = () => {
+    AxiosClient.put(`/admin/auth/markwarning`, {
+      CompID: props.selecteduser.ComplaintID,
+    }).then(() => {
+      console.log("marked as warned");
+      
+    }).catch((err)=>{
+      console.log('error in mark as iswarned')
+    })
+    ;
+  };
+
 
   const handleaddtoblacklist = () => {
     AxiosClient.post(`/admin/auth/blacklist`, {
@@ -359,9 +371,11 @@ const ViewPopupComplaints = (props) => {
                   margin: "10px",
                 }}
               >
+                
                 <Button
                   variant="contained"
                   sx={{ marginRight: "3%" }}
+                  disabled={props.selecteduser.IsWarned}
                   onClick={() => {
                     //send notification
                     socket.emit("newNotification", {
@@ -376,6 +390,8 @@ const ViewPopupComplaints = (props) => {
 
                     props.handlepopup();
                     props.SetopenNotifySncak(true);
+                    //mark as iswarned true
+                    update_iswarned()
                   }}
                 >
                   <Typography sx={{ fontSize: "10px" }}>
@@ -418,7 +434,12 @@ const ViewPopupComplaints = (props) => {
               </Box>
               {disable && (
                 <Typography sx={{ color: "red", fontSize: "10px" }}>
-                  Note:This User Alread Blacklisted!
+                  Note:This User Already Blacklisted!
+                </Typography>
+              )}
+               {props.selecteduser.IsWarned && (
+                <Typography sx={{ color: "red", fontSize: "10px" }}>
+                  Note:This User Already warned!
                 </Typography>
               )}
             </Box>

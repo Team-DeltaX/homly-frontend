@@ -26,6 +26,7 @@ const RequestRefundPopup = ({
   Amount,
   CancelledBy,
 }) => {
+  const phoneRegex = /^(0|\+94)[0-9]{9}$/;
   const [banks, setBanks] = useState([]);
   const [selectedBank, setSelectedBank] = useState(null);
   const [branches, setBranches] = useState([]);
@@ -40,9 +41,23 @@ const RequestRefundPopup = ({
   const [status, setStatus] = useState("");
   const [refundDate, setRefundDate] = useState(dayjs());
   const [isFilled, setIsFilled] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(true);
   const handleClose = () => {
     setOpen(false);
   };
+  const checkContactNo = (contactNumber) => {
+    return contactNumber.length > 0 && !phoneRegex.test(contactNumber);
+  };
+
+  useEffect(() => {
+    if(
+      !checkContactNo(contactNumber) 
+    ) {
+      setIsDisabled(false);
+    } else{
+      setIsDisabled(true);
+    }
+  });
 
   useEffect(() => {
     setIsFilled(false);
@@ -333,6 +348,12 @@ const RequestRefundPopup = ({
               onChange={(e) => {
                 setContactNumber(e.target.value);
               }}
+              error={checkContactNo(contactNumber)}
+              helperText={
+                checkContactNo(contactNumber)
+                  ? "invalid contact number"
+                  : ""
+              }
               placeholder="07XXXXXXXX"
               InputProps={{
                 readOnly: isFilled,
@@ -400,7 +421,7 @@ const RequestRefundPopup = ({
               : ""}
           </Typography>
         ) : (
-          <Button type="submit">Request Refund</Button>
+          <Button disabled={isDisabled} type="submit">Request Refund</Button>
         )}
       </DialogActions>
     </Dialog>
