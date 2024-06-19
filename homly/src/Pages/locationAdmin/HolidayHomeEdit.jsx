@@ -1,5 +1,5 @@
 import "./style.css";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
 import {
   Grid,
@@ -23,6 +23,7 @@ import { useNavigate } from "react-router-dom";
 import AxiosClient from "../../services/AxiosClient";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
+import { SocketioContext } from "../../Contexts/SocketioContext";
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -58,12 +59,13 @@ function a11yProps(index) {
 
 const HolidayHomeEdit = () => {
   const navigate = useNavigate();
+  const { socket } = useContext(SocketioContext);
 
   const [approvedClicked, setApprovedClicked] = useState(false);
   const [submitDisable, setSubmitDisable] = useState(false);
   const [showNav, setShowNav] = useState("nav_grid_deactive");
   const [value, setValue] = useState(0);
-
+  const [declined, setDeclined] = useState(false);
   const [caretaker1Id, setCaretaker1Id] = useState("");
   const [caretaker2Id, setCaretaker2Id] = useState("");
 
@@ -161,6 +163,8 @@ const HolidayHomeEdit = () => {
           const contactNo = res.data.contactNo;
           const roomTypeSettings = res.data.roomTypeSettings;
           const settingRoomRental = res.data.roomRentalSettings;
+
+          setDeclined(homeDetails.isDiclined);
 
           setRoomArray(roomDetails);
           setUnitArray(unitDetails);
@@ -283,7 +287,19 @@ const HolidayHomeEdit = () => {
       .then((res) => {
         console.log(res);
         setEditSuccessfullAlert(true);
-        // navigate("/locationadmin/manage");
+        if (!declined) {
+          socket.emit("newNotification", {
+            senderId: sessionStorage.getItem("userId"),
+            receiverId: "HomlyPriAdmin",
+            data: `${
+              detailsValue.name
+            } - Holiday Home has edited by ${sessionStorage.getItem(
+              "userId"
+            )} `,
+            type: "Holiday Home Edited",
+            time: new Date(),
+          });
+        }
       })
       .catch((err) => {
         console.log(err);

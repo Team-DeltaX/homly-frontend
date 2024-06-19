@@ -21,6 +21,9 @@ const HolidayHomeCard = ({
   Category,
   image,
   status,
+  setReload,
+  activeToggler,
+  reason,
 }) => {
   const [open, setOpen] = React.useState(false);
 
@@ -38,6 +41,7 @@ const HolidayHomeCard = ({
     })
       .then((res) => {
         console.log(res);
+        setReload((prev) => !prev);
       })
       .catch((err) => {
         console.log("error in update status", err);
@@ -125,24 +129,48 @@ const HolidayHomeCard = ({
           </Link>
         </Box>
       </Box>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "flex-end",
-          alignItems: "center",
-          padding: "0 20px",
-        }}
-      >
-        <Switch
-          inputProps={{ "aria-label": "controlled" }}
-          checked={state}
-          onChange={handleStatusChange}
-          sx={{ color: "primary.main" }}
-        />
-        <Typography variant="p" sx={{ fontWeight: "bold" }}>
-          {state === true ? "Set Inactive" : "set Active"}
-        </Typography>
-      </Box>
+
+      {activeToggler === true ? (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "flex-end",
+            alignItems: "center",
+            padding: "0 20px",
+          }}
+        >
+          <Switch
+            inputProps={{ "aria-label": "controlled" }}
+            checked={state}
+            onChange={handleStatusChange}
+            sx={{ color: "primary.main" }}
+          />
+          <Typography variant="p" sx={{ fontWeight: "bold" }}>
+            {state === true ? "Set Inactive" : "set Active"}
+          </Typography>
+        </Box>
+      ) : reason ? (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "flex-Start",
+            alignItems: "center",
+            padding: "0 0px 20px 30px",
+          }}
+        >
+          <Typography
+            variant="p"
+            sx={{ fontWeight: "bold", marginRight: "10px" }}
+          >
+            Reason for Decline :
+          </Typography>
+          <Typography variant="p" sx={{ color: "red" }}>
+            {reason}
+          </Typography>
+        </Box>
+      ) : (
+        ""
+      )}
 
       <Dialog
         open={open}
