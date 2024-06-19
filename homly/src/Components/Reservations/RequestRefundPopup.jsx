@@ -54,7 +54,7 @@ const RequestRefundPopup = ({
     } else {
       setIsDisabled(true);
     }
-  });
+  }, [contactNumber]);
   useEffect(() => {
     setIsFilled(false);
     setAccountHolder("");
@@ -80,8 +80,10 @@ const RequestRefundPopup = ({
         })
         .catch((error) => {});
     };
-    fetchRefund();
-  }, [reservationId]);
+    if (open) {
+      fetchRefund();
+    }
+  }, [reservationId, open]);
   useEffect(() => {
     const fetchBanks = async () => {
       try {
