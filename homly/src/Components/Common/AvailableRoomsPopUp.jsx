@@ -16,7 +16,7 @@ import Typography from "@mui/material/Typography";
 import CloseIcon from "@mui/icons-material/Close";
 import Slide from "@mui/material/Slide";
 import Checkbox from "@mui/material/Checkbox";
-import AccordionUsage from "./Accordion";
+import AccordionUsage from "./RoomAccordion";
 import Stack from "@mui/material/Stack";
 
 const Transition = React.forwardRef(function Transition(props, ref) {

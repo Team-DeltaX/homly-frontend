@@ -27,18 +27,6 @@ import {
   FormHelperText,
 } from "@mui/material";
 
-const VisuallyHiddenInput = styled("input")({
-  clip: "rect(0 0 0 0)",
-  clipPath: "inset(50%)",
-  height: 1,
-  overflow: "hidden",
-  position: "absolute",
-  bottom: 0,
-  left: 0,
-  whiteSpace: "nowrap",
-  width: 1,
-});
-
 const PrimaryAdminRefundForm = ({
   open,
   setOpen,
@@ -100,25 +88,6 @@ const PrimaryAdminRefundForm = ({
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Validate form inputs
-    if (status === "Refunded" && (slip === "" || refundAmount === "" || refundAmount <= 0)) {
-      setSlipError(true);
-      setRefundAmountError(true);
-      return;
-    }
-
-    if (status === "Rejected" && (reason === "" || slip !== "" || refundAmount !== "")) {
-      setSlipError(false);
-      setRefundAmountError(false);
-      return;
-    }
-
-    if (status === "Pending" && (slip !== "" || refundAmount !== "")) {
-      setSlipError(false);
-      setRefundAmountError(false);
-      return;
-    }
-
     const formData = {
       refundId: refundId,
       reservationNo: reservationId,
@@ -158,9 +127,9 @@ const PrimaryAdminRefundForm = ({
   const handleRefundAmountChange = (e) => {
     let value = e.target.value;
     value = value.replace(/[^0-9.]/g, "");
-    const isValidNumber = /^[0-9]*(\.[0-9]{0,2})?$/.test(value);
+    const isValidNumber = value === "" || /^[0-9]*(\.[0-9]{0,2})?$/.test(value);
 
-    if (isValidNumber && parseFloat(value) <= payment) {
+    if (isValidNumber && (value === "" || parseFloat(value) <= payment)) {
       setRefundAmount(value);
       setRefundAmountError(false); // Reset refund amount error on valid input
     } else {
@@ -176,7 +145,7 @@ const PrimaryAdminRefundForm = ({
     return (
       isFilled ||
       (status === "Refunded" && (slip === "" || refundAmount === "" || refundAmount <= 0)) ||
-      (status === "Rejected" && (reason === "" || slip !== "" || refundAmount !== "")) ||
+      (status === "Rejected" && (reason === "" || reason.trim().length === 0 || slip !== "" || refundAmount !== "")) ||
       (status === "Pending" && (slip !== "" || refundAmount !== ""))
     );
   };
@@ -371,7 +340,7 @@ const PrimaryAdminRefundForm = ({
           </Grid>
           <Grid item xs={6} alignItems="flex-end">
             <Typography variant="caption" display="block" gutterBottom>
-              Attach the bank slip evidence here.*
+              Attach an image of the bank slip evidence here.*
             </Typography>
             {slip ? (
               <Tooltip
