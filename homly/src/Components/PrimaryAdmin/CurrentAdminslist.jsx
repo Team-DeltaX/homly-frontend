@@ -5,6 +5,7 @@ import AutohideSnackbar from "../../Components/PrimaryAdmin/AutohideSnackbar";
 import { CustomTabContext } from "../../Contexts/primryadmin/CustomTabContext";
 import { SearchContext } from "../../Contexts/primryadmin/Searchcontext";
 import AxiosClient from "../../services/AxiosClient";
+import Snackbarp from "./snackbar/Snackbarp";
 
 const CurrentAdminslist = () => {
   const [admins, setAdmins] = useState([]);
@@ -45,13 +46,13 @@ const CurrentAdminslist = () => {
         overflow: "scroll",
       }}
     >
-      <AutohideSnackbar
-        handleClick={handleClick}
-        handleClose={handleClose}
-        snacktext={snacktext}
-        open={open}
-        setOpen={setOpen}
-      />
+     
+       <Snackbarp
+                isOpen={open}
+                setIsOpen={setOpen}
+                type="success"
+                message={"admin disabled sucessfully"}
+              />
       {load === true ? (
         <h1>Loading...</h1>
       ) : (
