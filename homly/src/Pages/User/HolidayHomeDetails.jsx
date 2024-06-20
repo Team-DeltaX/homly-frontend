@@ -68,11 +68,13 @@ export default function HolidayHomeDetails() {
     Image1: "",
     Image2: "",
   });
+  const [review, setReview] = useState([]);
+  const [reviewCount, setReviewCount] = useState(1);
+  const [cardWidth, setCardWidth] = useState(100);
   const { homeId } = useParams();
   useEffect(() => {
     AxiosClient.get(`/user/auth/locationadmin/holidayhome/${homeId}`)
       .then((res) => {
-        console.log("response", res.data);
         if (Response) {
           const homeDetails = res.data.homeDetails[0];
           const contactNo = res.data.contactNo;
@@ -107,11 +109,21 @@ export default function HolidayHomeDetails() {
             Image2: homeDetails.Image2,
           });
         } else {
-          console.log("No data found");
+
         }
       })
       .catch((error) => {
-        console.error("Error fetching holiday homes:", error);
+      });
+      AxiosClient.get(`/user/auth/review/${homeId}`)
+      .then((response) => {
+        console.log("reviews",response.data);
+        setReviewCount(response.data.length);
+        setCardWidth(100/response.data.length);
+        console.log("cardwidth",cardWidth);
+        setReview(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching reviews:", error);
       });
   }, []);
 
@@ -166,7 +178,7 @@ export default function HolidayHomeDetails() {
                     variant="button"
                     sx={{ color: "#823", ml: "1%", fontSize: "0.75rem" }}
                   >
-                    {6} Reviews
+                    {reviewCount} Reviews
                   </Typography>
                 </Stack>
               </Grid>
@@ -538,7 +550,23 @@ export default function HolidayHomeDetails() {
                 </Box>
                 <Divider />
                 <Box>
-                  <Review />
+                <Typography
+                  variant="h4"
+                  sx={{
+                    fontWeight: { xs: "350", sm: "400", md: "450" },
+                    fontSize: { xs: "1.25rem", sm: "1.5rem", md: "1.5rem" },
+                  }}
+                  gutterBottom
+                >
+                  Reviews
+                </Typography>
+                <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: 2 }}>
+                  {review.map((review) => (
+                    <Stack direction="row" spacing={2}>
+                      <Review reviews={review} cardWidth={reviewCount}/>
+                    </Stack>                    
+                  ))}
+                  </Box>
                 </Box>
                 <Divider />
               </Stack>

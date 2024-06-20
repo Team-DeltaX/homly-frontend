@@ -1,21 +1,38 @@
-import React from "react";
-import { ThemeProvider, Box, Typography } from "@mui/material";
-import theme from "../../../HomlyTheme";
-import ReviewCard from "./ReviewCard";
 
-const Review = () => {
+import { ThemeProvider } from "@mui/material";
+import theme from "../../../HomlyTheme";
+import * as React from 'react';
+import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+import CardContent from '@mui/material/CardContent';
+import CardActions from '@mui/material/CardActions';
+import Avatar from '@mui/material/Avatar';
+import Typography from '@mui/material/Typography';
+import { red } from '@mui/material/colors';
+
+const Review = (reviews, cardWidth) => {
+  console.log("reirew222",cardWidth)
+
   return (
     <ThemeProvider theme={theme}>
-        <Typography variant="h4"
-          sx={{
-            fontWeight: { xs: '350', sm: '400', md: '450' },
-            fontSize: { xs: '1.25rem', sm: '1.5rem', md: '1.5rem' },  // Adjust the font sizes as needed
-          }}
-          gutterBottom
-        >
-          Review
-        </Typography>
-        <ReviewCard />
+      <Card sx={{ width: "100%" }}>
+        <CardHeader
+          avatar={
+            <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+              R
+            </Avatar>
+          }
+          title={reviews.reviews.ServiceNo}
+          subheader="September 14, 2016"
+        />
+        <CardContent>
+          <Typography variant="body2" color="text.secondary">
+              {reviews.reviews.UserReview}
+          </Typography>
+        </CardContent>
+        <CardActions disableSpacing>
+        </CardActions>
+    </Card>
     </ThemeProvider>
   );
 };
