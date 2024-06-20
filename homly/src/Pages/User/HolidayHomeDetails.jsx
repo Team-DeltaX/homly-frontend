@@ -70,7 +70,6 @@ export default function HolidayHomeDetails() {
   });
   const [review, setReview] = useState([]);
   const [reviewCount, setReviewCount] = useState(1);
-  const [cardWidth, setCardWidth] = useState(100);
   const { homeId } = useParams();
   useEffect(() => {
     AxiosClient.get(`/user/auth/locationadmin/holidayhome/${homeId}`)
@@ -118,8 +117,6 @@ export default function HolidayHomeDetails() {
       .then((response) => {
         console.log("reviews",response.data);
         setReviewCount(response.data.length);
-        setCardWidth(100/response.data.length);
-        console.log("cardwidth",cardWidth);
         setReview(response.data);
       })
       .catch((error) => {

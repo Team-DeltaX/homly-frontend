@@ -10,24 +10,24 @@ import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
 
-const Review = (reviews, cardWidth) => {
+const Review = ({reviews, cardWidth}) => {
   console.log("reirew222",cardWidth)
 
   return (
     <ThemeProvider theme={theme}>
-      <Card sx={{ width: "100%" }}>
+      <Card sx={{ width:1152/`${cardWidth}` }}>
         <CardHeader
           avatar={
             <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
               R
             </Avatar>
           }
-          title={reviews.reviews.ServiceNo}
+          title={reviews.ServiceNo}
           subheader="September 14, 2016"
         />
         <CardContent>
           <Typography variant="body2" color="text.secondary">
-              {reviews.reviews.UserReview}
+              {reviews.UserReview}
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
