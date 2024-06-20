@@ -1,11 +1,11 @@
-import SideNavbar from "../../Components/PrimaryAdmin/SideNavbar";
+import { useState } from "react";
 import Box from "@mui/material/Box";
 import { Container, Grid, ThemeProvider } from "@mui/material";
 import theme from "../../HomlyTheme";
+import SideNavbar from "../../Components/PrimaryAdmin/SideNavbar";
 import Pagetop from "../../Components/PrimaryAdmin/PageTop";
-import { useState } from "react";
 import RefundListTable from "../../Components/Reservations/RefundList";
-
+import "./style.css";
 const PrimaryAdminRefund = () => {
   const [showNav, setShowNav] = useState("nav_grid_deactive");
 

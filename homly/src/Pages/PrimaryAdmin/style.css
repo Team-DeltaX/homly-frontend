@@ -153,9 +153,7 @@
   
   }
   
-  .bell_container {
-    position: relative;
-  }
+
   
   .notify_count_container {
     position: absolute;
@@ -489,4 +487,6 @@
   
   /* calendar */
   
-  .css-1xc3v61-indicatorContainer:hover {}
+  #root > div > div > div > div.MuiGrid-root.MuiGrid-grid-xs-9.container_grid.css-g5uzc9-MuiGrid-root > div.MuiBox-root.css-fxn5j5 > div > div.MuiDataGrid-main.css-3eek4p-MuiDataGrid-main > div:nth-child(3){
+    display: none;
+  }

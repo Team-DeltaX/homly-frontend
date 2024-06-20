@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import { Stack, ThemeProvider, Button, Typography } from "@mui/material";
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import theme from "../../HomlyTheme";
 
 const UploadImageCloudinary = ({
@@ -12,11 +13,12 @@ const UploadImageCloudinary = ({
   buttonSize,
   isDisabled,
   isDisplayImageName,
+  setImageName,
 }) => {
   const cloudinaryRef = useRef();
   const widgetRef = useRef();
 
-  const [imageName, setImageName] = useState("");
+  const [imgName, setImgName] = useState("");
 
   useEffect(() => {
     cloudinaryRef.current = window.cloudinary;
@@ -43,7 +45,8 @@ const UploadImageCloudinary = ({
         if (!error && result && result.event === "success") {
           console.log("Done! Here is the image info: ", result);
           setImage(result.info.secure_url); // Use result.info.secure_url
-          setImageName(result.info.original_filename);
+          setImgName(result.info.original_filename);
+          setImageName && setImageName(result.info.original_filename);
         }
       }
     );
@@ -54,12 +57,13 @@ const UploadImageCloudinary = ({
     <ThemeProvider theme={theme}>
       <Stack direction="row" sx={{ justifyContent: "center" }}>
         <Button
-          variant={buttonVariant ? buttonVariant : 'outlined'}
+          variant={buttonVariant ? buttonVariant : "outlined"}
           size={buttonSize ? buttonSize : "small"}
+          startIcon={<CloudUploadIcon />}
           disabled={isDisabled ? isDisabled : false}
           onClick={() => widgetRef.current.open()}
         >
-          {buttonName?buttonName:"upload"}
+          {buttonName ? buttonName : "upload"}
         </Button>
         <Typography
           sx={{
@@ -67,7 +71,7 @@ const UploadImageCloudinary = ({
             marginLeft: "5px",
           }}
         >
-          {imageName}
+          {imgName}
         </Typography>
       </Stack>
     </ThemeProvider>

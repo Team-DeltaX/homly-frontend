@@ -28,6 +28,7 @@ const CancelledReservationList = (props) => {
   useEffect(() => {
     fetchreservations();
   }, []);
+  
   return (
     <>
       <Box

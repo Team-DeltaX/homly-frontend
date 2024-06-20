@@ -28,7 +28,7 @@ const SpeicalReservationList = (props) => {
   useEffect(() => {
     fetchreservations();
   }, []);
-  
+
   return (
     <Box
       className="home"

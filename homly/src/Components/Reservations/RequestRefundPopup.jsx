@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
+import dayjs from "dayjs";
 import AxiosClient from "../../services/AxiosClient";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
@@ -25,6 +26,9 @@ const RequestRefundPopup = ({
   Amount,
   CancelledBy,
 }) => {
+  const phoneRegex = /^(0|\+94)[0-9]{9}$/;
+  const nameRegex = /^[a-zA-Z. ]+$/;
+  const accountNumberRegex = /^[0-9]+$/;
   const [banks, setBanks] = useState([]);
   const [selectedBank, setSelectedBank] = useState(null);
   const [branches, setBranches] = useState([]);
@@ -37,17 +41,47 @@ const RequestRefundPopup = ({
   const [bank, setBank] = useState("");
   const [branch, setBranch] = useState("");
   const [status, setStatus] = useState("");
-  const [date, setDate] = useState(new Date());
+  const [refundDate, setRefundDate] = useState(dayjs());
   const [isFilled, setIsFilled] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(true);
   const handleClose = () => {
     setOpen(false);
   };
-
+  const checkContactNo = (contactNumber) => {
+    return contactNumber.length > 0 && !phoneRegex.test(contactNumber);
+  };
+  const checkAccountHolder = (accountHolder) => {
+    return accountHolder.length > 0 && !nameRegex.test(accountHolder);
+  };
+  const checkAccountNumber = (accountNumber) => {
+    return accountNumber.length > 0 && !accountNumberRegex.test(accountNumber);
+  };
   useEffect(() => {
+    if (
+      !checkContactNo(contactNumber) &&
+      !checkAccountNumber(accountNumber) &&
+      !checkAccountHolder(accountHolder) &&
+      contactNumber.length > 0 &&
+      accountNumber.length > 0 &&
+      accountHolder.length > 0
+    ) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
+  }, [contactNumber, accountNumber, accountHolder]);
+  useEffect(() => {
+    setIsFilled(false);
+    setAccountHolder("");
+    setAccountNumber("");
+    setBank("");
+    setBranch("");
+    setContactNumber("");
+    setStatus("");
+    setRefundDate(dayjs().format("DD-MM-YYYY"));
     const fetchRefund = async () => {
       AxiosClient.get(`/user/auth/reservation/getRefundById/${reservationId}`)
         .then((response) => {
-          console.log("responseeeeeeee", response.data);
           setIsFilled(response.data.length > 0);
           setAccountHolder(response.data[0].accountHolder);
           setAccountNumber(response.data[0].accountNumber);
@@ -55,15 +89,16 @@ const RequestRefundPopup = ({
           setBranch(response.data[0].branch);
           setContactNumber(response.data[0].contactNumber);
           setStatus(response.data[0].status);
-          setDate(response.data[0].refundDate);
+          setRefundDate(
+            dayjs(response.data[0].refundDate).format("DD-MM-YYYY")
+          );
         })
-        .catch((error) => {
-          console.error("Error fetching refund:", error);
-        });
+        .catch((error) => {});
     };
-    fetchRefund();
-  }, [reservationId]);
-
+    if (open) {
+      fetchRefund();
+    }
+  }, [reservationId, open]);
   useEffect(() => {
     const fetchBanks = async () => {
       try {
@@ -71,9 +106,7 @@ const RequestRefundPopup = ({
           "https://raw.githubusercontent.com/samma89/Sri-Lanka-Bank-and-Branch-List/master/banks.json"
         );
         setBanks(response.data);
-      } catch (error) {
-        console.error("Error fetching banks data:", error);
-      }
+      } catch (error) {}
     };
 
     fetchBanks();
@@ -89,9 +122,7 @@ const RequestRefundPopup = ({
         const branchesData = response.data[selectedBank.ID.toString()];
         setBranches(branchesData || []);
         setBranchAutocompleteDisabled(false);
-      } catch (error) {
-        console.error("Error fetching branches data:", error);
-      }
+      } catch (error) {}
     };
 
     if (!selectedBank) {
@@ -110,23 +141,19 @@ const RequestRefundPopup = ({
       contactNumber: event.target.contactNo.value,
       cancelledBy: CancelledBy,
       payment: Amount,
-      status: "pending",
+      status: "Pending",
       accountHolder: event.target.accountHolderName.value,
       accountNumber: event.target.accountNo.value,
       bank: selectedBank.name,
       branch: selectedBranch.name,
     };
-
     AxiosClient.post("/user/auth/reservation/addRefundByUser", formData, {
       withCredentials: true,
     })
       .then((response) => {
-        console.log(response.data);
         handleClose();
       })
-      .catch((error) => {
-        console.error("Error adding refund:", error);
-      });
+      .catch((error) => {});
   };
 
   return (
@@ -205,11 +232,15 @@ const RequestRefundPopup = ({
               }}
             />
           </Grid>
-          {isFilled ? "" : <Grid item xs={12}>
-            <DialogContentText sx={{ m: 1 }}>
-              Please fill out the form below to process your refund.
-            </DialogContentText>
-          </Grid>}
+          {isFilled ? (
+            ""
+          ) : (
+            <Grid item xs={12}>
+              <DialogContentText sx={{ m: 1 }}>
+                Please fill out the form below to process your refund.
+              </DialogContentText>
+            </Grid>
+          )}
           <Grid item xs={12}>
             <TextField
               fullWidth
@@ -220,6 +251,12 @@ const RequestRefundPopup = ({
               onChange={(e) => {
                 setAccountHolder(e.target.value);
               }}
+              error={checkAccountHolder(accountHolder)}
+              helperText={
+                checkAccountHolder(accountHolder)
+                  ? "invalid account holder name"
+                  : ""
+              }
               InputProps={{
                 readOnly: isFilled,
               }}
@@ -235,6 +272,12 @@ const RequestRefundPopup = ({
               onChange={(e) => {
                 setAccountNumber(e.target.value);
               }}
+              error={checkAccountNumber(accountNumber)}
+              helperText={
+                checkAccountNumber(accountNumber)
+                  ? "invalid account number"
+                  : ""
+              }
               InputProps={{
                 readOnly: isFilled,
               }}
@@ -315,44 +358,55 @@ const RequestRefundPopup = ({
               label="Contact No"
               name="contactNo"
               value={contactNumber}
-              onChange={(e) => {setContactNumber(e.target.value)}}
+              onChange={(e) => {
+                setContactNumber(e.target.value);
+              }}
+              error={checkContactNo(contactNumber)}
+              helperText={
+                checkContactNo(contactNumber) ? "invalid contact number" : ""
+              }
               placeholder="07XXXXXXXX"
               InputProps={{
                 readOnly: isFilled,
               }}
             />
           </Grid>
-          <Grid item xs={6}>   
-              <TextField
-                autoFocus
-                required
-                margin="dense"
-                id="date"
-                name="date"
-                label="Refund Date"
-                disabled
-                type="date"
-                fullWidth
-                variant="filled"
-                size="small"
-                value={date}
-                onChange={(e) => setDate(new Date(e.target.value))}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                autoFocus
-                fullWidth
-                required
-                margin="dense"
-                variant="filled"
-                size="small"
-                label="Status"
-                name="status"
-                value={status}
-                
-              />
-            </Grid>
+          {isFilled && (
+            <>
+              <Grid item xs={6}>
+                <TextField
+                  autoFocus
+                  fullWidth
+                  required
+                  margin="dense"
+                  variant="filled"
+                  size="small"
+                  label="Status"
+                  name="status"
+                  value={status}
+                />
+              </Grid>
+              {status === "Refunded" || status === "Rejected" ? (
+                <Grid item xs={6}>
+                  <TextField
+                    autoFocus
+                    fullWidth
+                    required
+                    margin="dense"
+                    variant="filled"
+                    size="small"
+                    label={
+                      status === "Refunded" ? "Refunded Date" : "Rejected Date"
+                    }
+                    name="date"
+                    value={refundDate}
+                  />
+                </Grid>
+              ) : (
+                ""
+              )}
+            </>
+          )}
         </Grid>
       </DialogContent>
       <DialogActions>
@@ -362,27 +416,25 @@ const RequestRefundPopup = ({
             textTransform="capitalize"
             textAlign="center"
             color={
-              status === "pending" 
-              ? "black" 
-              : status === "Refunded"
-              ? "green"
-              : status === "Rejected"
-              ? "red"
-              : "black"
+              status === "Refunded"
+                ? "green"
+                : status === "Rejected"
+                ? "red"
+                : "black"
             }
           >
-            {
-              status === "Pending"
-                ? "Your Refund Request is ongoing. The primary admin will get back to you soon."
-                : status === "Rejected"
-                ? "Your Refund Request is rejected!"
-                : status === "Refunded"
-                ? "Your Refund is done! Any clarification contact welfare department."
-                : ""
-            }
+            {status === "Pending"
+              ? "Your Refund Request is ongoing. The primary admin will get back to you soon."
+              : status === "Rejected"
+              ? "Your Refund Request is rejected!"
+              : status === "Refunded"
+              ? "Your Refund is done! Any clarification contact welfare department."
+              : ""}
           </Typography>
         ) : (
-          <Button type="submit">Request Refund</Button>
+          <Button disabled={isDisabled} type="submit">
+            Request Refund
+          </Button>
         )}
       </DialogActions>
     </Dialog>

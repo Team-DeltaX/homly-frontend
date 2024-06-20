@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
-import AxiosClient from "../../services/AxiosClient";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-import DeleteIcon from '@mui/icons-material/Delete';
-import UploadImageCloudinary from "../Common/UploadImageCloudinary";
+import DeleteIcon from "@mui/icons-material/Delete";
 import Chip from "@mui/material/Chip";
-import { styled } from "@mui/material/styles";
+import Tooltip from "@mui/material/Tooltip";
 import {
   Dialog,
   DialogTitle,
@@ -23,19 +21,10 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
+  FormHelperText,
 } from "@mui/material";
-
-const VisuallyHiddenInput = styled("input")({
-  clip: "rect(0 0 0 0)",
-  clipPath: "inset(50%)",
-  height: 1,
-  overflow: "hidden",
-  position: "absolute",
-  bottom: 0,
-  left: 0,
-  whiteSpace: "nowrap",
-  width: 1,
-});
+import UploadImageCloudinary from "../Common/UploadImageCloudinary";
+import AxiosClient from "../../services/AxiosClient";
 
 const PrimaryAdminRefundForm = ({
   open,
@@ -53,20 +42,24 @@ const PrimaryAdminRefundForm = ({
 }) => {
   const [isGridCollapsed, setIsGridCollapsed] = useState(false);
   const [reason, setReason] = useState("");
-  const [refundAmount, setRefundAmount] = useState(0);
+  const [refundAmount, setRefundAmount] = useState("");
   const [slip, setSlip] = useState("");
   const [isFilled, setIsFilled] = useState(false);
   const [status, setStatus] = useState("Pending");
+  const [imgName, setImgName] = useState("");
+  const [refundAmountError, setRefundAmountError] = useState(false);
+  const [slipError, setSlipError] = useState(false);
 
   useEffect(() => {
     const fetchRefund = async () => {
       setIsFilled(false);
       setReason("");
-      setRefundAmount(0);
+      setRefundAmount("");
       setSlip("");
-
       try {
-        const response = await AxiosClient.get(`/admin/auth/reservation/getRefundById/${reservationId}`);
+        const response = await AxiosClient.get(
+          `/admin/auth/reservation/getRefundById/${reservationId}`
+        );
         if (response.data.length > 0 && response.data[0].bankSlip !== null) {
           setIsFilled(true);
           setReason(response.data[0].reason);
@@ -76,22 +69,16 @@ const PrimaryAdminRefundForm = ({
         } else {
           setIsFilled(false);
         }
-      } catch (error) {
-        console.error("Error fetching refund:", error);
-      }
+      } catch (error) {}
     };
-
     fetchRefund();
   }, [reservationId]);
-
   const handleClose = () => {
     setOpen(false);
   };
-
   const handleDeleteSlip = () => {
     setSlip("");
   };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = {
@@ -106,36 +93,53 @@ const PrimaryAdminRefundForm = ({
       bank: bankName,
       branch: branchName,
       reason: reason || "no special reason",
-      refundAmount: refundAmount,
+      refundAmount: parseFloat(refundAmount),
       bankSlip: slip,
     };
-
     try {
-      const response = await AxiosClient.put("/admin/auth/reservation/updateRefundByAdmin", formData, {
-        withCredentials: true,
-      });
-      console.log(response.data);
+      const response = await AxiosClient.put(
+        "/admin/auth/reservation/updateRefundByAdmin",
+        formData,
+        {
+          withCredentials: true,
+        }
+      );
       handleClose();
-    } catch (error) {
-      console.error("Error adding refund:", error);
-    }
+    } catch (error) {}
   };
-
   const toggleGrid = () => {
     setIsGridCollapsed(!isGridCollapsed);
   };
-
   const handleSlipUpload = (fileName) => {
-    setSlip(fileName); // Set the uploaded file name to state
+    setSlip(fileName);
+    setSlipError(false);
   };
-
   const handleRefundAmountChange = (e) => {
-    const value = parseFloat(e.target.value);
-    if (value <= payment) {
+    let value = e.target.value;
+    value = value.replace(/[^0-9.]/g, "");
+    const isValidNumber = value === "" || /^[0-9]*(\.[0-9]{0,2})?$/.test(value);
+    if (isValidNumber && (value === "" || parseFloat(value) <= payment)) {
       setRefundAmount(value);
+      setRefundAmountError(false);
     } else {
-      setRefundAmount(payment);
+      setRefundAmountError(true);
     }
+  };
+  const handleChipClick = (url) => {
+    window.open(url, "_blank");
+  };
+  const isConfirmDisabled = () => {
+    return (
+      isFilled ||
+      (status === "Refunded" &&
+        (slip === "" || refundAmount === "" || refundAmount <= 0)) ||
+      (status === "Rejected" &&
+        (reason === "" ||
+          reason.trim().length === 0 ||
+          slip !== "" ||
+          refundAmount !== "")) ||
+      (status === "Pending" && (slip !== "" || refundAmount !== ""))
+    );
   };
 
   return (
@@ -304,48 +308,7 @@ const PrimaryAdminRefundForm = ({
           <Divider sx={{ my: 3 }} />
         </Collapse>
         <Grid container spacing={2}>
-          <Grid item xs={6}>
-            <TextField
-              fullWidth
-              required
-              variant="outlined"
-              size="normal"
-              type="number"
-              label="Refund Amount"
-              name="Amount"
-              value={refundAmount}
-              onChange={handleRefundAmountChange}
-              InputProps={{
-                readOnly: isFilled,
-              }}
-            />
-          </Grid>
-          <Grid item xs={6} alignItems="flex-end">
-            <Typography variant="caption" display="block" gutterBottom>
-              Attach the bank slip evidence in here.*
-            </Typography>
-            {slip ? (
-              <Chip
-                label={slip}
-                onDelete={handleDeleteSlip}
-                deleteIcon={<DeleteIcon sx={{ "&:hover": { color: "primary" } }} />}
-                variant="outlined"
-                sx={{ mr: 1, mb: 1 }}
-              />
-            ) : (
-              <UploadImageCloudinary
-                folderName="bank-slips"
-                setImage={handleSlipUpload}
-                isMultiple={false}
-                limit={1}
-                buttonName="Upload bank slip"
-                buttonVariant="outlined"
-                isDisplayImageName={false}
-                isDisabled={false}
-              />
-            )}
-          </Grid>
-          <Grid item xs={12}>
+        <Grid item xs={12}>
             <FormControl fullWidth variant="outlined" size="normal">
               <InputLabel>Status</InputLabel>
               <Select
@@ -360,12 +323,84 @@ const PrimaryAdminRefundForm = ({
               </Select>
             </FormControl>
           </Grid>
+          <Grid item xs={6}>
+            <TextField
+              fullWidth
+              required
+              variant="outlined"
+              size="normal"
+              type="number"
+              label="Refund Amount"
+              name="Amount"
+              value={refundAmount}
+              onChange={handleRefundAmountChange}
+              InputProps={{
+                readOnly: isFilled,
+              }}
+              error={refundAmountError}
+            />
+            {refundAmountError && (
+              <FormHelperText error>
+                Refund amount must be a valid number less than or equal to{" "}
+                {payment}.
+              </FormHelperText>
+            )}
+          </Grid>
+          <Grid item xs={6} alignItems="flex-end">
+            <Typography variant="caption" display="block" gutterBottom>
+              Attach an image of the bank slip evidence here.*
+            </Typography>
+            {slip ? (
+              <Tooltip
+                title={
+                  <img
+                    src={slip}
+                    alt="Bank Slip"
+                    style={{ maxWidth: "20vw", maxHeight: "20vh" }}
+                  />
+                }
+                placement="top"
+              >
+                <Chip
+                  label={slip}
+                  onClick={() => handleChipClick(slip)}
+                  onDelete={
+                    status !== "Refunded" ? handleDeleteSlip : undefined
+                  }
+                  deleteIcon={
+                    status !== "Refunded" ? (
+                      <DeleteIcon sx={{ "&:hover": { color: "primary" } }} />
+                    ) : null
+                  }
+                  variant="outlined"
+                  sx={{ mr: 1, mb: 1 }}
+                />
+              </Tooltip>
+            ) : (
+              <UploadImageCloudinary
+                folderName="bank-slips"
+                setImage={handleSlipUpload}
+                isMultiple={false}
+                limit={1}
+                buttonName="Upload bank slip"
+                buttonVariant="outlined"
+                isDisplayImageName={false}
+                isDisabled={false}
+                setImageName={setImgName}
+              />
+            )}
+            {slipError && (
+              <FormHelperText error>
+                Please upload the bank slip for a refund.
+              </FormHelperText>
+            )}
+          </Grid>          
           <Grid item xs={12}>
             <TextField
               fullWidth
               variant="outlined"
               size="normal"
-              placeholder="refund half of the payment because..."
+              placeholder="Reason for rejection if applicable"
               label="Reason if any"
               multiline
               value={reason}
@@ -378,7 +413,9 @@ const PrimaryAdminRefundForm = ({
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button disabled={isFilled} type="submit">Confirm Refund</Button>
+        <Button disabled={isConfirmDisabled()} type="submit">
+          Confirm Refund
+        </Button>
       </DialogActions>
     </Dialog>
   );
