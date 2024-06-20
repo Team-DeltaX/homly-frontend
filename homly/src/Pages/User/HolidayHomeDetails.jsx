@@ -414,7 +414,7 @@ export default function HolidayHomeDetails() {
                               cursor: "default",
                             }}
                           >
-                            {value.staff_rating}
+                            {value.staff_rating.toFixed(1)}
                           </Button>
                         </Stack>
                         <BorderLinearProgress
@@ -438,7 +438,7 @@ export default function HolidayHomeDetails() {
                               cursor: "default",
                             }}
                           >
-                            {value.value_for_money_rating}
+                            {value.value_for_money_rating.toFixed(1)}
                           </Button>
                         </Stack>
                         <BorderLinearProgress
@@ -462,7 +462,7 @@ export default function HolidayHomeDetails() {
                               cursor: "default",
                             }}
                           >
-                            {value.food_rating}
+                            {value.food_rating.toFixed(1)}
                           </Button>
                         </Stack>
                         <BorderLinearProgress
@@ -486,7 +486,7 @@ export default function HolidayHomeDetails() {
                               cursor: "default",
                             }}
                           >
-                            {value.location_rating}
+                            {value.location_rating.toFixed(1)}
                           </Button>
                         </Stack>
                         <BorderLinearProgress
@@ -510,7 +510,7 @@ export default function HolidayHomeDetails() {
                               cursor: "default",
                             }}
                           >
-                            {value.wifi_rating}
+                            {value.wifi_rating.toFixed(1)}
                           </Button>
                         </Stack>
                         <BorderLinearProgress
@@ -534,7 +534,7 @@ export default function HolidayHomeDetails() {
                               cursor: "default",
                             }}
                           >
-                            {value.furniture_rating}
+                            {value.furniture_rating.toFixed(1)}
                           </Button>
                         </Stack>
                         <BorderLinearProgress
