@@ -557,7 +557,7 @@ export default function HolidayHomeDetails() {
                 >
                   Reviews
                 </Typography>
-                <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: 2 }}>
+                <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: 2, flexGrow: 1 }}>
                   {review.map((review) => (
                       <Review reviews={review} cardWidth={reviewCount}/>                    
                   ))}

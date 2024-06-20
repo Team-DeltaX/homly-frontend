@@ -9,21 +9,41 @@ import CardActions from '@mui/material/CardActions';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
+import dayjs from 'dayjs';
+import AxiosClient from "../../../services/AxiosClient";
 
 const Review = ({reviews, cardWidth}) => {
-  console.log("reirew222",cardWidth)
-
+  const formattedDate = dayjs(reviews.updatedAt).format('MMMM DD, YYYY');
+  const [image, setImage] = React.useState("");
+  const [userName, setUserName] = React.useState("");
+  React.useEffect(() => {
+    AxiosClient.get(`/user/auth/review/employee/${reviews.ServiceNo}`)
+      .then((res) => {
+        setUserName(res.data[0].name);
+        // console.log(res.data[0].name);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+      AxiosClient.get(`/user/auth/review/user/${reviews.ServiceNo}`)
+      .then((res) => {
+        setImage(res.data[0].image);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    });
   return (
     <ThemeProvider theme={theme}>
-      <Card sx={{ width:1152/`${cardWidth}` }}>
+      <Card sx={{ flexGrow: 1, width: 345 }}>
         <CardHeader
           avatar={
-            <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+            <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe" src={image}>
               R
             </Avatar>
           }
-          title={reviews.ServiceNo}
-          subheader="September 14, 2016"
+          title={userName}
+          subheader={formattedDate}
         />
         <CardContent>
           <Typography variant="body2" color="text.secondary">
