@@ -559,9 +559,7 @@ export default function HolidayHomeDetails() {
                 </Typography>
                 <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: 2 }}>
                   {review.map((review) => (
-                    <Stack direction="row" spacing={2}>
-                      <Review reviews={review} cardWidth={reviewCount}/>
-                    </Stack>                    
+                      <Review reviews={review} cardWidth={reviewCount}/>                    
                   ))}
                   </Box>
                 </Box>
