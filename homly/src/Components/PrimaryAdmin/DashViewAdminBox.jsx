@@ -21,7 +21,7 @@ const DashViewAdminBox = (props) => {
     >
       <Box>
         <Avatar
-          sx={{ bgcolor: props.color, width: "50px", height: "50px" }}
+          sx={{ bgcolor: props.color, width: "40px", height: "40px" }}
           src="/broken-image.jpg"
         />
       </Box>
@@ -38,18 +38,18 @@ const DashViewAdminBox = (props) => {
       >
         <Box sx={{ display: "flex", flexDirection: "column" }}>
           <Box>
-            <Typography>User Name</Typography>
+            <Typography sx={{fontSize:'14px'}}>User Name</Typography>
           </Box>
           <Box>
-            <Typography>Work Location</Typography>
+            <Typography sx={{fontSize:'14px'}}>Work Location</Typography>
           </Box>
         </Box>
         <Box sx={{ display: "flex", flexDirection: "column" }}>
           <Box>
-            <Typography sx={{ color: "#8e918f" }}>{props.data?.UserName}</Typography>
+            <Typography sx={{ color: "#8e918f" ,fontSize:'14px'}}>{props.data?.UserName}</Typography>
           </Box>
           <Box>
-            <Typography sx={{ color: "#8e918f" }}>{props.data?.WorkLocation}</Typography>
+            <Typography sx={{ color: "#8e918f" ,fontSize:'14px'}}>{props.data?.WorkLocation}</Typography>
           </Box>
         </Box>
       </Box>

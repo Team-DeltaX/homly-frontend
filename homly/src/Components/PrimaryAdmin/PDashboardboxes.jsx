@@ -188,7 +188,7 @@ const PDashboardboxes = () => {
                       Earnings
                     </Typography>
                     <Typography variant="h6" sx={{ marginLeft: "10px" }}>
-                      {earning}
+                      {earning}{".00"}
                     </Typography>
                   </Box>
                 </Box>

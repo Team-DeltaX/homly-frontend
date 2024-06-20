@@ -3,9 +3,12 @@ import Button from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 
+
+
 export default function Snackbarp({ isOpen, type, message, setIsOpen }) {
 
-
+  const vertical= 'top';
+  const horizontal='center';
   const handleClick = () => {
     setIsOpen(true);
   };
@@ -17,11 +20,16 @@ export default function Snackbarp({ isOpen, type, message, setIsOpen }) {
 
     setIsOpen(false);
   };
+  
 
   return (
     <div>
-      
-      <Snackbar open={isOpen} autoHideDuration={4000} onClose={handleClose}>
+      <Snackbar 
+      open={isOpen}
+       autoHideDuration={4000} 
+       onClose={handleClose}
+       anchorOrigin={{ vertical,horizontal}}
+       >
         <Alert
           onClose={handleClose}
           severity={type}

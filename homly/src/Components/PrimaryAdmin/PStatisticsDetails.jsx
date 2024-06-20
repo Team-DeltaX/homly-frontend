@@ -166,7 +166,7 @@ export default function StatisticsDetails() {
               >
                 <Box>
                   <Typography variant="h5" fontWeight={"bold"}>
-                    {roomrevenue}
+                    {roomrevenue}{"LKR"}
                   </Typography>
                   <Typography
                     variant="p"
@@ -230,7 +230,7 @@ export default function StatisticsDetails() {
               >
                 <Box>
                   <Typography variant="h5" fontWeight={"bold"}>
-                    {hallrevenue}
+                    {hallrevenue}{"LKR"}
                   </Typography>
                   <Typography
                     variant="p"
