@@ -207,7 +207,7 @@ export default function CompareLineChart() {
                   HolidayHome3 !== hh.HolidayHomeId
                 );
               }).map((hh) => {
-                return <MenuItem value={hh.HolidayHomeId}>{hh.Name}</MenuItem>;
+                return <MenuItem key={hh.HolidayHomeId} value={hh.HolidayHomeId}>{hh.Name}</MenuItem>;
               })}
             </Select>
             <FormHelperText>
@@ -257,7 +257,7 @@ export default function CompareLineChart() {
                   HolidayHome3 !== hh.HolidayHomeId
                 );
               }).map((hh) => {
-                return <MenuItem value={hh.HolidayHomeId}>{hh.Name}</MenuItem>;
+                return <MenuItem key={hh.HolidayHomeId}  value={hh.HolidayHomeId}>{hh.Name}</MenuItem>;
               })}
             </Select>
             <FormHelperText>
@@ -308,7 +308,7 @@ export default function CompareLineChart() {
                   HolidayHome2 !== hh.HolidayHomeId
                 );
               }).map((hh) => {
-                return <MenuItem value={hh.HolidayHomeId}>{hh.Name}</MenuItem>;
+                return <MenuItem key={hh.HolidayHomeId}  value={hh.HolidayHomeId}>{hh.Name}</MenuItem>;
               })}
             </Select>
 
