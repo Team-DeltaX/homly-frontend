@@ -22,6 +22,7 @@ import theme from "../../HomlyTheme";
 import { AuthContext } from "../../Contexts/AuthContext";
 import logo1 from "../../Assets/images/logo1.png";
 import "./Css/navbar.css";
+import LensIcon from "@mui/icons-material/Lens";
 
 export default function SideNavbar({ setShowNav }) {
   const [selectedMenuItem, setSelectedMenuItem] = useState("");
@@ -34,6 +35,10 @@ export default function SideNavbar({ setShowNav }) {
     const currentUrl = window.location.href;
     const urlArray = currentUrl.split("/");
     setSelectedMenuItem(urlArray[4]);
+
+    if (urlArray[5]) {
+      setSelectedSubMenuItem(urlArray[5]);
+    }
   }, []);
 
   const closeNav = () => {
@@ -52,7 +57,7 @@ export default function SideNavbar({ setShowNav }) {
   };
 
   const handleSubMenuClick = (subMenu) => {
-    setSelectedSubMenuItem(subMenu);
+    // setSelectedSubMenuItem(subMenu);
   };
 
   return (
@@ -185,7 +190,7 @@ export default function SideNavbar({ setShowNav }) {
               </Box>
               <Box onClick={toggleBlacklistedUsers}>
                 {isBlacklistedUsersExpanded ? (
-                  <ExpandLessIcon
+                  <ExpandMoreIcon
                     sx={{
                       color:
                         selectedMenuItem === "blacklistedusers"
@@ -216,13 +221,9 @@ export default function SideNavbar({ setShowNav }) {
                       padding: "3px",
                       marginTop: "5px",
                       marginBottom: "5px",
-                      backgroundColor:
-                        selectedSubMenuItem === "manage"
-                          ? "white"
-                          : "primary.main",
+
                       cursor: "pointer",
                     }}
-                    onClick={() => handleSubMenuClick("manage")}
                   >
                     <Link
                       to="/primaryadmin/blacklistedusers/manage"
@@ -231,10 +232,8 @@ export default function SideNavbar({ setShowNav }) {
                     >
                       <ManageAccountsOutlinedIcon
                         sx={{
-                          color:
-                            selectedSubMenuItem === "manage"
-                              ? "black"
-                              : "white",
+                          color: "white",
+
                           marginRight: "20px",
                           fontSize: "1.2rem",
                         }}
@@ -242,14 +241,27 @@ export default function SideNavbar({ setShowNav }) {
                       <Typography
                         variant="p"
                         sx={{
-                          color:
+                          color: "white",
+                          width: "100px",
+                          textDecoration:
                             selectedSubMenuItem === "manage"
-                              ? "black"
-                              : "white",
+                              ? "underline"
+                              : "none",
                         }}
                       >
                         Manage
                       </Typography>
+                      {/* <Box sx={{ display: "flex", alignItems: "center" }}>
+                        {selectedSubMenuItem === "manage" ? (
+                          <LensIcon
+                            sx={{
+                              fontSize: "1rem",
+                              color: "white",
+                              opacity: "0.5",
+                            }}
+                          />
+                        ) : null}
+                      </Box> */}
                     </Link>
                   </Grid>
                   <Grid
@@ -259,13 +271,8 @@ export default function SideNavbar({ setShowNav }) {
                       justifyContent: "flex-start",
                       padding: "3px",
                       marginBottom: "5px",
-                      backgroundColor:
-                        selectedSubMenuItem === "history"
-                          ? "white"
-                          : "primary.main",
                       cursor: "pointer",
                     }}
-                    onClick={() => handleSubMenuClick("history")}
                   >
                     <Link
                       to="/primaryadmin/blacklistedusers/history"
@@ -274,10 +281,7 @@ export default function SideNavbar({ setShowNav }) {
                     >
                       <HistoryOutlinedIcon
                         sx={{
-                          color:
-                            selectedSubMenuItem === "history"
-                              ? "black"
-                              : "white",
+                          color: "white",
                           marginRight: "20px",
                           fontSize: "1.2rem",
                         }}
@@ -285,10 +289,11 @@ export default function SideNavbar({ setShowNav }) {
                       <Typography
                         variant="p"
                         sx={{
-                          color:
+                          color: "white",
+                          textDecoration:
                             selectedSubMenuItem === "history"
-                              ? "black"
-                              : "white",
+                              ? "underline"
+                              : "none",
                         }}
                       >
                         History
@@ -302,13 +307,8 @@ export default function SideNavbar({ setShowNav }) {
                       justifyContent: "flex-start",
                       padding: "3px",
                       marginBottom: "5px",
-                      backgroundColor:
-                        selectedSubMenuItem === "complaints"
-                          ? "white"
-                          : "primary.main",
                       cursor: "pointer",
                     }}
-                    onClick={() => handleSubMenuClick("complaints")}
                   >
                     <Link
                       to="/primaryadmin/blacklistedusers/complaints"
@@ -317,10 +317,7 @@ export default function SideNavbar({ setShowNav }) {
                     >
                       <SpeakerNotesIcon
                         sx={{
-                          color:
-                            selectedSubMenuItem === "complaints"
-                              ? "black"
-                              : "white",
+                          color: "white",
                           marginRight: "20px",
                           fontSize: "1.2rem",
                         }}
@@ -328,10 +325,11 @@ export default function SideNavbar({ setShowNav }) {
                       <Typography
                         variant="p"
                         sx={{
-                          color:
+                          color: "white",
+                          textDecoration:
                             selectedSubMenuItem === "complaints"
-                              ? "black"
-                              : "white",
+                              ? "underline"
+                              : "none",
                         }}
                       >
                         Complaints
