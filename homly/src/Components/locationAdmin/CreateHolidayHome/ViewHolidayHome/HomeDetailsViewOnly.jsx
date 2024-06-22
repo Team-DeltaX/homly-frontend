@@ -7,7 +7,6 @@ import Select from "@mui/material/Select";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import axios from "axios";
 import { useParams } from "react-router-dom";
 import AxiosClient from "../../../../services/AxiosClient";
 
@@ -306,38 +305,6 @@ const HomeDetailsViewOnly = () => {
             </RadioGroup>
           </Box>
         </Box>
-        {/* <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '1em', marginBottom: '12px' }}>
-            <Box sx={{ minWidth: '100px', maxWidth: '100px' }} className="label_container">
-              <Typography variant='p' sx={{ color: 'black' }}>Main Image</Typography>
-            </Box>
-            <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
-              <input type="file" accept="image/*" />
-            </Box>
-          </Box>
-          <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '1em', marginBottom: '12px' }}>
-            <Box sx={{ minWidth: '100px', maxWidth: '100px' }} className="label_container">
-              <Typography variant='p' sx={{ color: 'black' }}>Image 1</Typography>
-            </Box>
-            <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
-              <input type="file" accept="image/*" />
-            </Box>
-          </Box>
-          <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '1em', marginBottom: '12px' }}>
-            <Box sx={{ minWidth: '100px', maxWidth: '100px' }} className="label_container">
-              <Typography variant='p' sx={{ color: 'black' }}>Image 2</Typography>
-            </Box>
-            <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
-              <input type="file" accept="image/*" />
-            </Box>
-          </Box>
-          <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', gap: '1em', marginBottom: '12px' }}>
-            <Box sx={{ minWidth: '100px', maxWidth: '100px' }} className="label_container">
-              <Typography variant='p' sx={{ color: 'black' }}>Image 3</Typography>
-            </Box>
-            <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
-              <input type="file" accept="image/*" />
-            </Box>
-          </Box> */}
       </fieldset>
     </Box>
   );

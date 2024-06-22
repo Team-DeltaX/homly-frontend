@@ -7,19 +7,15 @@ import {
   FormGroup,
   FormControlLabel,
   Checkbox,
-  Button,
 } from "@mui/material";
 
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-
 import EditRoom from "./EditRoom";
 import EditUnit from "./EditUnit";
 import EditHall from "./EditHall";
-
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import AxiosClient from "../../../../services/AxiosClient";
 
 function CustomTabPanel(props) {
@@ -79,7 +75,6 @@ const EditHolidayHomeBreakdown = ({
   const { homeId } = useParams();
 
   useEffect(() => {
-    // axios.get(`http://localhost:8080/locationadmin/holidayhome/${homeId}`)
     AxiosClient.get(`/locationadmin/holidayhome/${homeId}`).then((res) => {
       if (Response) {
         const homeDetails = res.data.homeDetails;
@@ -110,10 +105,6 @@ const EditHolidayHomeBreakdown = ({
   const handleServiceChargesChange = (e) => {
     setServiceCharges(e.target.value);
   };
-
-  // const handleTotalRentalChange = (e) => {
-  //     setTotalRental(e.target.value);
-  // }
 
   const handlefacilityChange = (e) => {
     setFacilities(e.target.value);
@@ -265,12 +256,6 @@ const EditHolidayHomeBreakdown = ({
                 value={serviceCharges}
               />
             </Box>
-            {/* <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
-                            <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
-                                <Typography variant='p' sx={{ color: 'black' }}>Total Rental</Typography>
-                            </Box>
-                            <TextField onchange={handleTotalRentalChange} type='number' id="outlined-required" label="Total Rental" placeholder='Total Rental' fullWidth size='small' required value={totalRental} />
-                        </Box> */}
           </Grid>
         </Grid>
         <Grid container spacing={2}>

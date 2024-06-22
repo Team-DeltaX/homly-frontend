@@ -4,12 +4,7 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import axios from "axios";
-
 import ControlPointIcon from "@mui/icons-material/ControlPoint";
-import Input from "./Input";
-import SearchIcon from "@mui/icons-material/Search";
-
 import HolidayHomeCard from "./HolidayHomeCard";
 import AxiosClient from "../../services/AxiosClient";
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Box, Paper, Typography, Button } from "@mui/material";
 import imag from "../../Assets/images/H.png";
 import { Link } from "react-router-dom";

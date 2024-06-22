@@ -315,15 +315,7 @@ const ViewUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
           </Box>
         ) : (
           unitArray.map((item, index) => {
-            // let val = getSelectedRoom(item.unitCode);
-            // selectedRoomDetails[0] = val;
-
-            // getSelectedRoom(item.unitCode);
-
-            console.log("now", selectedRoomDetails);
-
             return (
-              // <UnitBreakDown key={index} unitCode={item.unitCode} unitAc={item.unitAc} floorLevel={item.floorLevel} unitNoOfAdults={item.unitNoOfAdults} unitNoOfChildren={item.unitNoOfChildren} unitRemarks={item.unitRemarks} unitRental={item.unitRental} roomArray={roomArray} setRoomArray={setRoomArray} selectedRooms={item.selectedRooms} handleUnitDelete={handleUnitDelete} handleUnitEdit={handleUnitEdit} index={index} />
               <ViewUnitBreakDown
                 key={index}
                 unitCode={item.unitCode}
