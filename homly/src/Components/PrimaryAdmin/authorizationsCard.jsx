@@ -38,7 +38,7 @@ const AuthorizationsCard = (props) => {
           senderId: sessionStorage.getItem("userId"),
           receiverId: props.data.AdminNo,
           data: `${props.data.Name} Holiday Home has been approved`,
-          type: "Authorization Denied",
+          type: "Authorization Successful",
           time: new Date(),
         });
       })
