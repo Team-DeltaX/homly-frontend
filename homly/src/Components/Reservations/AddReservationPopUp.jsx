@@ -29,7 +29,6 @@ export default function ScrollDialog({ name, id }) {
   const [reservationId, setReservationId] = React.useState("");
   const [employeeDetails, setEmployeeDetails] = React.useState([]);
   const [userDetails, setUserDetails] = React.useState([]);
-  const [employeeName, setEmployeeName] = React.useState("");
   const [roomPrice, setRoomPrice] = React.useState(0);
   const [hallPrice, setHallPrice] = React.useState(0);
   const [totalPrice, setTotalPrice] = React.useState(0);
@@ -114,7 +113,6 @@ export default function ScrollDialog({ name, id }) {
       .then((res) => {
         setEmployeeDetails(res.data.employeeDetails[0]);
         setUserDetails(res.data.userDetails[0]);
-        setEmployeeName(res.data.empName);
         setErrorStatus({
           ...errorStatus,
           isOpen: true,
