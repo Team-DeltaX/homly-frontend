@@ -94,7 +94,9 @@ export default function AddComplainPopUp(props) {
             <Grid item xs={6}>
               <TextField
                 autoFocus
-                disabled={true}
+                InputProps={{
+                  readOnly: true,
+                }}
                 value={props.reservation.reservation.ServiceNO}
                 required
                 margin="dense"
@@ -110,7 +112,9 @@ export default function AddComplainPopUp(props) {
             <Grid item xs={6}>          
               <TextField
                 autoFocus
-                disabled={true}
+                InputProps={{
+                  readOnly: true,
+                }}
                 value={props.reservation.reservation.ReservationId}
                 required
                 margin="dense"
@@ -126,7 +130,9 @@ export default function AddComplainPopUp(props) {
             <Grid item xs={6}>   
               <TextField
                 autoFocus
-                disabled={true}
+                InputProps={{
+                  readOnly: true,
+                }}
                 value={
                   props.reservation.holidayHome &&
                   props.reservation.holidayHome.Name
@@ -150,7 +156,9 @@ export default function AddComplainPopUp(props) {
                 id="date"
                 name="date"
                 label="Today's Date"
-                disabled
+                InputProps={{
+                  readOnly: true,
+                }}
                 type="date"
                 fullWidth
                 variant="filled"

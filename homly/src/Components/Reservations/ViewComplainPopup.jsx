@@ -51,7 +51,9 @@ export default function ViewComplaintPopup( props ) {
         <DialogContent>
           <TextField
             autoFocus
-            disabled
+            InputProps={{
+              readOnly: true,
+            }}
             value={props.complain[0].ComplaintID}
             required
             margin="dense"
@@ -64,7 +66,9 @@ export default function ViewComplaintPopup( props ) {
           />
           <TextField
             autoFocus
-            disabled
+            InputProps={{
+              readOnly: true,
+            }}
             value={props.complain[0].ReservationNo}
             required
             margin="dense"
@@ -77,7 +81,9 @@ export default function ViewComplaintPopup( props ) {
           />
           <TextField
             autoFocus
-            disabled
+            InputProps={{
+              readOnly: true,
+            }}
             value={props.complain[0].ServiceNo}
             required
             margin="dense"
@@ -91,7 +97,9 @@ export default function ViewComplaintPopup( props ) {
           <TextField
             margin="dense"
             label="Reason"
-            disabled
+            InputProps={{
+              readOnly: true,
+            }}
             required
             multiline
             fullWidth
@@ -101,7 +109,9 @@ export default function ViewComplaintPopup( props ) {
           <TextField
             margin="dense"
             label="Complain Status"
-            disabled
+            InputProps={{
+              readOnly: true,
+            }}
             required
             multiline
             fullWidth

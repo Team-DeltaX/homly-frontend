@@ -2,6 +2,8 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -270,7 +272,14 @@ export default function ScrollDialog({ name, id }) {
         aria-labelledby="scroll-dialog-title"
         aria-describedby="scroll-dialog-description"
       >
-        <DialogTitle id="scroll-dialog-title">Reservation Form</DialogTitle>
+        <DialogTitle id="scroll-dialog-title">
+          <Box display="flex" justifyContent="space-between" alignItems="center">
+            <Typography variant="h6">Reservation Form</Typography>
+            <IconButton onClick={handleClose}>
+              <CloseIcon />
+            </IconButton>
+          </Box>
+        </DialogTitle>
         <form onSubmit={(e) => e.preventDefault()}>
           <DialogContent
             dividers={scroll === "paper"}
@@ -696,9 +705,6 @@ export default function ScrollDialog({ name, id }) {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button variant="outlined" onClick={handleClose} autoFocus>
-              Close
-            </Button>
             <ConfirmPopup
               open={opened}
               setOpen={setOpened}
