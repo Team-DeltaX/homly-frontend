@@ -8,17 +8,15 @@ import AddComplainPopUp from "./AddComplainPopUp";
 import ViewComplaintPopup from "./ViewComplainPopup";
 
 const ReservationCard = (props) => {
-  const isSpecial = props.reservation.IsSpecial;
-  const isCancelled = props.reservation.IsCancelled;
-  const isPaid = props.reservation.IsPaid;
   const isComplainTrue =
     props.type === "past" &&
     props.adminNumber !== "HomlyPriAdmin" &&
-    props.isComplaint.length === 0
+    (props.isComplaint && props.isComplaint.length === 0)
       ? true
       : false;
   const isViewComplainTrue =
     props.isComplaint && props.isComplaint.length > 0 ? true : false;
+
   return (
     <Grid
       container

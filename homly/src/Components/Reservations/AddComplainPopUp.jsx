@@ -194,7 +194,7 @@ export default function AddComplainPopUp(props) {
           />
           <Button
             autoFocus
-            disabled={reason.trim().length === 0}
+            disabled={reason.trim().length === 0 || /^\d+$/.test(reason)}
             onClick={() => {
               setOpened(true);
             }}
