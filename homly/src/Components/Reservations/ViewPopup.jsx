@@ -33,6 +33,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function ViewPopUp(props) {
   const [open, setOpen] = React.useState(false);
+  console.log("rese details",props.reservation)
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -133,7 +134,7 @@ export default function ViewPopUp(props) {
                   >
                     {props.reservation.Price}
                   </Typography>
-                  {props.reservation.isPaid ? (
+                  {props.reservation.IsPaid ? (
                     <Typography
                       variant="button"
                       sx={{

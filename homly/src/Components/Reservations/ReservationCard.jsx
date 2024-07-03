@@ -119,7 +119,7 @@ const ReservationCard = (props) => {
           >
             Amount: {props.reservation.Price}
           </Typography>
-          {isPaid ? (
+          {props.reservation.IsPaid ? (
             <Typography
               variant="button"
               sx={{
@@ -184,7 +184,7 @@ const ReservationCard = (props) => {
               Check Out:{" "}
               {dayjs(props.reservation.CheckoutDate).format("DD/MM/YYYY")}
             </Typography>
-            {isSpecial && (
+            {props.reservation.IsSpecial && (
               <Typography
                 variant="button"
                 sx={{
@@ -195,7 +195,7 @@ const ReservationCard = (props) => {
                 Special
               </Typography>
             )}
-            {isCancelled && (
+            {props.reservation.IsCancelled && (
               <Typography
                 variant="button"
                 sx={{
