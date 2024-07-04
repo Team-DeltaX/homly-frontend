@@ -14,12 +14,13 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import PreviewPopupIncomeReport from "./PreviewPopupIncomeReport";
+import PreviewPopupReservationReport from "./PreviewPopupReservationReport";
 import { useState, useEffect } from "react";
 import AxiosClient from "../../../services/AxiosClient";
 import { PDFDownloadLink } from "@react-pdf/renderer";
-import PDFDocument from "./ReportPDF/PDFDocument"; // Import the PDFDocument component
-import ErrorSnackbar from "../../User/ErrorSnackbar";
+import ReservationReportPDF from "./ReportPDF/ReservationReportPdf";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -29,33 +30,26 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-export default function IncomeReport() {
+export default function ReservationReport() {
   const [open, setOpen] = useState(false);
   const [holidayHome, setHolidayHome] = useState("all");
   const [fromDate, setFromDate] = useState(dayjs().subtract(1, "day"));
   const [toDate, setToDate] = useState(dayjs().subtract(1, "day"));
   const [HHNames, setHHNames] = useState([]);
   const [previewData, setPreviewData] = useState([]);
-  const [errorStatus, setErrorStatus] = useState({
-    isOpen: false,
-    type: "",
-    message: "",
-  });
+  const [errorMessage, setErrorMessage] = useState("");
+  const [showError, setShowError] = useState(false);
 
   const maxDate = dayjs().subtract(1, "day");
 
   const handleClickOpen = () => {
     if (fromDate.isAfter(toDate)) {
-      setErrorStatus({
-        ...errorStatus,
-        isOpen: true,
-        type: "error",
-        message: "From Date should be before To Date",
-      });
+      setErrorMessage("Please enter the dates properly and try again");
+      setShowError(true);
       return;
     }
 
-    AxiosClient.get("admin/report/income", {
+    AxiosClient.get("/admin/report/reservation", {
       params: {
         HHName: holidayHome,
         fromDate: fromDate,
@@ -79,8 +73,12 @@ export default function IncomeReport() {
     setFromDate(dayjs().subtract(1, "day"));
     setToDate(dayjs().subtract(1, "day"));
     setHolidayHome("all");
+    setPreviewData([]);
   };
 
+  const handleCloseError = () => {
+    setShowError(false);
+  };
 
   return (
     <Box sx={{ width: "70%", align: "center", flexGrow: 1 }}>
@@ -178,13 +176,13 @@ export default function IncomeReport() {
           {previewData && (
             <PDFDownloadLink
               document={
-                <PDFDocument
+                <ReservationReportPDF
                   previewData={previewData}
                   fromDate={fromDate}
                   toDate={toDate}
                 />
               }
-              fileName="Income_Report.pdf"
+              fileName="ReservationReport.pdf"
             >
               {({ loading }) =>
                 loading ? (
@@ -199,20 +197,22 @@ export default function IncomeReport() {
           )}
         </Stack>
       </Stack>
-      <PreviewPopupIncomeReport
+      <PreviewPopupReservationReport
         open={open}
         setOpen={setOpen}
         previewData={previewData}
         fromDate={fromDate}
         toDate={toDate}
       />
-       <ErrorSnackbar
-        isOpen={errorStatus.isOpen}
-        type={errorStatus.type}
-        message={errorStatus.message}
-        setIsOpen={(value) => setErrorStatus({ ...errorStatus, isOpen: value })}
-      />
-
+      <Snackbar
+        open={showError}
+        autoHideDuration={6000}
+        onClose={handleCloseError}
+      >
+        <Alert onClose={handleCloseError} severity="error" sx={{ width: "100%" }}>
+          {errorMessage}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 }

@@ -11,7 +11,7 @@ const StyledRating = styled(Rating)({
   },
 });
 
-export const RatingComponent = ({ lable, setValue, value }) => {
+export const RatingComponent = ({ label, setValue, value }) => {
   return (
     <Box
       sx={{
@@ -22,8 +22,7 @@ export const RatingComponent = ({ lable, setValue, value }) => {
         mt: "5px",
       }}
     >
-      <Typography component="legend">{lable}</Typography>
-      {/* rating stars */}
+      <Typography component="legend">{label}</Typography>
       <StyledRating
         name="simple-controlled"
         value={value}

@@ -105,6 +105,22 @@ export default function AddReviewPopup({
           });
         });
     } else {
+      if (
+        foodRating < 0.5 ||
+        valueForMoneyRating < 0.5 ||
+        staffRating < 0.5 ||
+        locationRating < 0.5 ||
+        furnitureRating < 0.5 ||
+        wifiRating < 0.5
+      ) {
+        setErrorStatus({
+          ...errorStatus,
+          isOpen: true,
+          type: "error",
+          message: "Please Rate your experience for all the fields",
+        });
+        return;
+      }
       AxiosClient.post(`/user/auth/review`, formData)
         .then((res) => {
           if (res.data.success) {
@@ -170,35 +186,35 @@ export default function AddReviewPopup({
               <RatingComponent
                 value={foodRating}
                 setValue={setFoodRating}
-                lable={"Food"}
+                label={"Food"}
               />
 
               <RatingComponent
                 value={valueForMoneyRating}
                 setValue={setvalueForMoneyRating}
-                lable={"Value For Money"}
+                label={"Value For Money"}
               />
 
               <RatingComponent
                 value={staffRating}
                 setValue={setstaffRating}
-                lable={"Staff"}
+                label={"Staff"}
               />
 
               <RatingComponent
                 value={locationRating}
                 setValue={setlocationRating}
-                lable={"Location"}
+                label={"Location"}
               />
               <RatingComponent
                 value={furnitureRating}
                 setValue={setfurnitureRating}
-                lable={"Furniture"}
+                label={"Furniture"}
               />
               <RatingComponent
                 value={wifiRating}
                 setValue={setwifiRating}
-                lable={"Wifi"}
+                label={"Wifi"}
               />
               <Box sx={{ mt: "7px" }}>
                 <Typography>
@@ -252,3 +268,5 @@ export default function AddReviewPopup({
     </ThemeProvider>
   );
 }
+
+

@@ -8,7 +8,7 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 
-export default function ReviewCard() {
+export default function ReviewCard({hhid}) {
   const isXSmallScreen = useMediaQuery((theme) => theme.breakpoints.down('xs'));
   const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down('sm'));
   const isMediumScreen = useMediaQuery((theme) => theme.breakpoints.down('md'));

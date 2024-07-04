@@ -4,22 +4,17 @@ import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
 import Grid from "@mui/material/Unstable_Grid2";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
 import Button from "@mui/material/Button";
 import dayjs from "dayjs";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import PreviewPopupIncomeReport from "./PreviewPopupIncomeReport";
-import { useState, useEffect } from "react";
+import PreviewPopupBlacklistUserReport from "../Report/PreviewPopupBlacklistUserReport";
+import { useState } from "react";
 import AxiosClient from "../../../services/AxiosClient";
-import { PDFDownloadLink } from "@react-pdf/renderer";
-import PDFDocument from "./ReportPDF/PDFDocument"; // Import the PDFDocument component
-import ErrorSnackbar from "../../User/ErrorSnackbar";
+import { useEffect } from "react";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -30,93 +25,35 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function IncomeReport() {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = React.useState(false);
   const [holidayHome, setHolidayHome] = useState("all");
   const [fromDate, setFromDate] = useState(dayjs().subtract(1, "day"));
   const [toDate, setToDate] = useState(dayjs().subtract(1, "day"));
   const [HHNames, setHHNames] = useState([]);
   const [previewData, setPreviewData] = useState([]);
-  const [errorStatus, setErrorStatus] = useState({
-    isOpen: false,
-    type: "",
-    message: "",
-  });
 
   const maxDate = dayjs().subtract(1, "day");
-
   const handleClickOpen = () => {
-    if (fromDate.isAfter(toDate)) {
-      setErrorStatus({
-        ...errorStatus,
-        isOpen: true,
-        type: "error",
-        message: "From Date should be before To Date",
-      });
-      return;
-    }
-
-    AxiosClient.get("admin/report/income", {
+    AxiosClient.get("admin//report/blacklist", {
       params: {
-        HHName: holidayHome,
         fromDate: fromDate,
         toDate: toDate,
       },
     }).then((res) => {
+      console.log(res.data);
       setPreviewData(res.data);
       setOpen(true);
     });
   };
 
-  useEffect(() => {
-    AxiosClient.get("admin/HHnames")
-      .then((res) => {
-        setHHNames(res.data);
-      })
-      .catch(() => {});
-  }, []);
-
   const handleReset = () => {
-    setFromDate(dayjs().subtract(1, "day"));
-    setToDate(dayjs().subtract(1, "day"));
-    setHolidayHome("all");
+    setFromDate("");
+    setToDate("");
   };
-
 
   return (
     <Box sx={{ width: "70%", align: "center", flexGrow: 1 }}>
       <Stack spacing={2}>
-        <Item>
-          <Grid container spacing={2}>
-            <Grid item xs={5}>
-              <FormControl sx={{ m: 3, minWidth: 120 }} size="small">
-                Holiday Home
-              </FormControl>
-            </Grid>
-            <Grid item xs={7}>
-              <FormControl sx={{ m: 2, minWidth: 200 }} size="small">
-                <InputLabel id="demo-select-small-label2">
-                  Select Holiday Home
-                </InputLabel>
-                <Select
-                  labelId="demo-select-small-label2"
-                  id="demo-select-small"
-                  value={holidayHome}
-                  label="Select Holiday Home"
-                  onChange={(e) => setHolidayHome(e.target.value)}
-                  defaultValue="all"
-                >
-                  <MenuItem value={"all"}>All</MenuItem>
-                  {HHNames &&
-                    HHNames.map((hh) => (
-                      <MenuItem key={hh.HolidayHomeId} value={hh.HolidayHomeId}>
-                        {hh.Name}
-                      </MenuItem>
-                    ))}
-                </Select>
-              </FormControl>
-            </Grid>
-          </Grid>
-        </Item>
         <Item>
           <Grid container spacing={2}>
             <Grid item xs={5}>
@@ -130,7 +67,7 @@ export default function IncomeReport() {
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DemoContainer components={["DatePicker"]}>
                       <DatePicker
-                        label="From Date"
+                        label="Basic date picker"
                         value={fromDate}
                         onChange={(value) => setFromDate(value)}
                         maxDate={maxDate}
@@ -142,6 +79,7 @@ export default function IncomeReport() {
             </Grid>
           </Grid>
         </Item>
+
         <Item>
           <Grid container spacing={2}>
             <Grid item xs={5}>
@@ -155,7 +93,7 @@ export default function IncomeReport() {
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DemoContainer components={["DatePicker"]}>
                       <DatePicker
-                        label="To Date"
+                        label="Basic date picker"
                         value={toDate}
                         onChange={(value) => setToDate(value)}
                         maxDate={maxDate}
@@ -167,6 +105,7 @@ export default function IncomeReport() {
             </Grid>
           </Grid>
         </Item>
+
         <Stack spacing={4} direction="row" justifyContent="center">
           <Button variant="contained" onClick={handleReset}>
             Reset
@@ -174,45 +113,15 @@ export default function IncomeReport() {
           <Button variant="contained" onClick={handleClickOpen}>
             Preview
           </Button>
-          {/* Add download button for downloading PDF */}
-          {previewData && (
-            <PDFDownloadLink
-              document={
-                <PDFDocument
-                  previewData={previewData}
-                  fromDate={fromDate}
-                  toDate={toDate}
-                />
-              }
-              fileName="Income_Report.pdf"
-            >
-              {({ loading }) =>
-                loading ? (
-                  <Button variant="contained" disabled>
-                    Loading...
-                  </Button>
-                ) : (
-                  <Button variant="contained">Download</Button>
-                )
-              }
-            </PDFDownloadLink>
-          )}
         </Stack>
       </Stack>
-      <PreviewPopupIncomeReport
+      <PreviewPopupBlacklistUserReport
         open={open}
         setOpen={setOpen}
         previewData={previewData}
         fromDate={fromDate}
         toDate={toDate}
       />
-       <ErrorSnackbar
-        isOpen={errorStatus.isOpen}
-        type={errorStatus.type}
-        message={errorStatus.message}
-        setIsOpen={(value) => setErrorStatus({ ...errorStatus, isOpen: value })}
-      />
-
     </Box>
   );
 }
