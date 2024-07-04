@@ -1,4 +1,3 @@
-// IncomeReport.js
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
@@ -19,8 +18,8 @@ import PreviewPopupIncomeReport from "./PreviewPopupIncomeReport";
 import { useState, useEffect } from "react";
 import AxiosClient from "../../../services/AxiosClient";
 import { PDFDownloadLink } from "@react-pdf/renderer";
-
 import PDFDocument from "./ReportPDF/PDFDocument"; // Import the PDFDocument component
+import ErrorSnackbar from "../../User/ErrorSnackbar";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -37,9 +36,25 @@ export default function IncomeReport() {
   const [toDate, setToDate] = useState(dayjs().subtract(1, "day"));
   const [HHNames, setHHNames] = useState([]);
   const [previewData, setPreviewData] = useState([]);
+  const [errorStatus, setErrorStatus] = useState({
+    isOpen: false,
+    type: "",
+    message: "",
+  });
 
   const maxDate = dayjs().subtract(1, "day");
+
   const handleClickOpen = () => {
+    if (fromDate.isAfter(toDate)) {
+      setErrorStatus({
+        ...errorStatus,
+        isOpen: true,
+        type: "error",
+        message: "From Date should be before To Date",
+      });
+      return;
+    }
+
     AxiosClient.get("admin/report/income", {
       params: {
         HHName: holidayHome,
@@ -61,10 +76,11 @@ export default function IncomeReport() {
   }, []);
 
   const handleReset = () => {
-    setFromDate("");
-    setToDate("");
-    setHolidayHome("");
+    setFromDate(dayjs().subtract(1, "day"));
+    setToDate(dayjs().subtract(1, "day"));
+    setHolidayHome("all");
   };
+
 
   return (
     <Box sx={{ width: "70%", align: "center", flexGrow: 1 }}>
@@ -114,7 +130,7 @@ export default function IncomeReport() {
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DemoContainer components={["DatePicker"]}>
                       <DatePicker
-                        label="Basic date picker"
+                        label="From Date"
                         value={fromDate}
                         onChange={(value) => setFromDate(value)}
                         maxDate={maxDate}
@@ -139,7 +155,7 @@ export default function IncomeReport() {
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DemoContainer components={["DatePicker"]}>
                       <DatePicker
-                        label="Basic date picker"
+                        label="To Date"
                         value={toDate}
                         onChange={(value) => setToDate(value)}
                         maxDate={maxDate}
@@ -190,6 +206,13 @@ export default function IncomeReport() {
         fromDate={fromDate}
         toDate={toDate}
       />
+       <ErrorSnackbar
+        isOpen={errorStatus.isOpen}
+        type={errorStatus.type}
+        message={errorStatus.message}
+        setIsOpen={(value) => setErrorStatus({ ...errorStatus, isOpen: value })}
+      />
+
     </Box>
   );
 }

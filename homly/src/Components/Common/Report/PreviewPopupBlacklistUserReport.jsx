@@ -119,15 +119,27 @@ const PreviewPopupIncomeReport = ({
                   </TableCell>
                   <TableCell align="right" style={{ fontWeight: "bold" }}>
                     {" "}
-                    Reason{" "}
+                    Blacklisted Date{" "}
+                  </TableCell>
+                  <TableCell align="right" style={{ fontWeight: "bold" }}>
+                    {" "}
+                    Blacklisted Reason{" "}
+                  </TableCell>
+                  <TableCell align="right" style={{ fontWeight: "bold" }}>
+                    {" "}
+                    Removed Date{" "}
+                  </TableCell>
+                  <TableCell align="right" style={{ fontWeight: "bold" }}>
+                    {" "}
+                    Removed Reason{" "}
                   </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {/* holidayHome name and income */}
 
-                {previewData.TotalPerHH &&
-                  previewData.TotalPerHH.map((row) => (
+                {previewData &&
+                  previewData.map((row) => (
                     <TableRow
                       key={row.name}
                       sx={{
@@ -135,9 +147,13 @@ const PreviewPopupIncomeReport = ({
                       }}
                     >
                       <TableCell component="th" scope="row">
-                        {row.HHName}
+                        {row.ServiceNo}
                       </TableCell>
-                      <TableCell align="right">{row.TotalPrice}</TableCell>
+                      <TableCell>{row.empName}</TableCell>
+                      <TableCell>{row.BlacklistedDate}</TableCell>
+                      <TableCell>{row.Addreason}</TableCell>
+                      <TableCell>{row.RemovedDate}</TableCell>
+                      <TableCell>{row.RemoveReason}</TableCell>
                     </TableRow>
                   ))}
               </TableBody>

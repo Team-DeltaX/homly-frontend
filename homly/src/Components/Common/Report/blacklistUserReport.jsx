@@ -34,30 +34,21 @@ export default function IncomeReport() {
 
   const maxDate = dayjs().subtract(1, "day");
   const handleClickOpen = () => {
-    AxiosClient.get("admin//report/income", {
+    AxiosClient.get("admin//report/blacklist", {
       params: {
-        HHName: holidayHome,
         fromDate: fromDate,
         toDate: toDate,
       },
     }).then((res) => {
+      console.log(res.data);
       setPreviewData(res.data);
       setOpen(true);
     });
   };
 
-  useEffect(() => {
-    AxiosClient.get("admin/HHnames")
-      .then((res) => {
-        setHHNames(res.data);
-      })
-      .catch(() => {});
-  }, []);
-
   const handleReset = () => {
     setFromDate("");
     setToDate("");
-    setHolidayHome("");
   };
 
   return (
