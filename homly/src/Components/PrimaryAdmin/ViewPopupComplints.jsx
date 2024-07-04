@@ -41,6 +41,18 @@ const ViewPopupComplaints = (props) => {
       props.fetchcomplaints();
     });
   };
+  const update_iswarned = () => {
+    AxiosClient.put(`/admin/auth/markwarning`, {
+      CompID: props.selecteduser.ComplaintID,
+    }).then(() => {
+      console.log("marked as warned");
+      
+    }).catch((err)=>{
+      console.log('error in mark as iswarned')
+    })
+    ;
+  };
+
 
   const handleaddtoblacklist = () => {
     AxiosClient.post(`/admin/auth/blacklist`, {
@@ -201,7 +213,7 @@ const ViewPopupComplaints = (props) => {
                 </Box>
                 <Box sx={{ flex: 1 }}>
                   <TextField
-                    value={props.selecteduser.created_at}
+                    value={props.selecteduser.created_at.slice(0, 10)}
                     disabled
                     size="small"
                     sx={{ width: "85%", margin: "5px" }}
@@ -248,6 +260,7 @@ const ViewPopupComplaints = (props) => {
                   <TextField
                     value={reson}
                     size="small"
+                   
                     sx={{ width: "85%", margin: "5px" }}
                     onChange={(e) => {
                       setReson(e.target.value);
@@ -266,6 +279,7 @@ const ViewPopupComplaints = (props) => {
                 }}
               >
                 <div>
+                  
                   {props.prevcomplaints.length > 0 &&
                   props.selecteduser.ComplaintID !==
                     props.prevcomplaints[props.prevcomplaints.length - 1]
@@ -286,7 +300,7 @@ const ViewPopupComplaints = (props) => {
                         id="panel2-header"
                       >
                         <Typography>
-                          <Box>Complaint on</Box>
+                          <Box>Previous Complaint on{" "}</Box>
                         </Typography>
                         <Typography>
                           <Box>
@@ -328,7 +342,7 @@ const ViewPopupComplaints = (props) => {
                         id="panel2-header"
                       >
                         <Typography>
-                          Complaint on{" "}
+                          Previous Complaint onc
                           {getonlydate(props.prevcomplaints.length - 2)}
                         </Typography>
                       </AccordionSummary>
@@ -357,9 +371,11 @@ const ViewPopupComplaints = (props) => {
                   margin: "10px",
                 }}
               >
+                
                 <Button
                   variant="contained"
                   sx={{ marginRight: "3%" }}
+                  disabled={props.selecteduser.IsWarned}
                   onClick={() => {
                     //send notification
                     socket.emit("newNotification", {
@@ -374,6 +390,8 @@ const ViewPopupComplaints = (props) => {
 
                     props.handlepopup();
                     props.SetopenNotifySncak(true);
+                    //mark as iswarned true
+                    update_iswarned()
                   }}
                 >
                   <Typography sx={{ fontSize: "10px" }}>
@@ -396,7 +414,7 @@ const ViewPopupComplaints = (props) => {
                       setOpen(true);
                     }
                   }}
-                  disabled={disable}
+                  disabled={disable ||(reson.trim().length===0)}
                 >
                   <Typography sx={{ fontSize: "10px" }}>
                     Add To Blacklist
@@ -416,7 +434,12 @@ const ViewPopupComplaints = (props) => {
               </Box>
               {disable && (
                 <Typography sx={{ color: "red", fontSize: "10px" }}>
-                  Note:This User Alread Blacklisted!
+                  Note:This User Already Blacklisted!
+                </Typography>
+              )}
+               {props.selecteduser.IsWarned && (
+                <Typography sx={{ color: "red", fontSize: "10px" }}>
+                  Note:This User Already warned!
                 </Typography>
               )}
             </Box>

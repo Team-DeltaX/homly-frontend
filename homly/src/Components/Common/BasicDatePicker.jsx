@@ -11,7 +11,6 @@ export default function BasicDatePicker({ title, date, setDate }) {
     nextFiveDays.setDate(today.getDate() + 5);
     return day < nextFiveDays;
   };
-  // disable dates after 3 months
   const shouldDisableMonth = (day) => {
     const today = new Date();
     const nextThreeMonths = new Date();
@@ -26,7 +25,6 @@ export default function BasicDatePicker({ title, date, setDate }) {
           label={title}
           value={date}
           disablePast={true}
-          // disableFuture={true}
           shouldDisableDate={shouldDisableDate}
           shouldDisableMonth={shouldDisableMonth}
           onChange={(newValue) => setDate(newValue)}

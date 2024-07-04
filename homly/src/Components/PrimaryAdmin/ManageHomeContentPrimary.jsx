@@ -7,8 +7,8 @@ import Tab from "@mui/material/Tab";
 import axios from "axios";
 
 import ControlPointIcon from "@mui/icons-material/ControlPoint";
-import Input from "./Input";
-import SearchIcon from "@mui/icons-material/Search";
+// import Input from "./Input";
+// import SearchIcon from "@mui/icons-material/Search";
 
 import HolidayHomeCard from "./HolidayHomeCard";
 import AxiosClient from "../../services/AxiosClient";
@@ -46,9 +46,9 @@ function a11yProps(index) {
   };
 }
 
-const ManageHomeContent = () => {
+const ManageHomeContentPrimary = () => {
   const [value, setValue] = React.useState(0);
-  const [reload, setReload] = React.useState(false);
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -56,24 +56,21 @@ const ManageHomeContent = () => {
   const [pending, setPending] = React.useState([]);
   const [inactive, setInactive] = React.useState([]);
   const [active, setActive] = React.useState([]);
-  const [declined, setDeclined] = React.useState([]);
 
   useEffect(() => {
     // axios.get('http://localhost:8080/admin/auth/locationadmin/holidayhome/')
-    AxiosClient.get("/admin/auth/locationadmin/holidayhome/").then((res) => {
+    AxiosClient.get("/admin/auth/locationadmin/holidayhome/all").then((res) => {
       if (Response) {
         setPending(res.data.pending);
         setActive(res.data.active);
         setInactive(res.data.inactive);
-        setDeclined(res.data.declined);
       } else {
         console.log("No data found");
       }
     });
-  }, [reload]);
+  }, []);
 
-  console.log("active homes", active);
-  console.log("declined homes", declined);
+  console.log(pending);
 
   return (
     <Box>
@@ -86,22 +83,6 @@ const ManageHomeContent = () => {
           gap: "1em",
         }}
       >
-        <Link to="/locationadmin/holidayhomes/createholidayhome">
-          <Button
-            variant="contained"
-            sx={{
-              backgroundColor: "primary.main",
-              textTransform: "capitalize",
-              fontWeight: "bold",
-              color: "white",
-            }}
-            startIcon={<ControlPointIcon />}
-          >
-            <Typography sx={{ fontFamily: "sans-serif" }} variant="p">
-              Create New
-            </Typography>{" "}
-          </Button>
-        </Link>
         {/* <Input label={"Search"} icon={<SearchIcon />} /> */}
       </Box>
       <Container maxWidth={"md"}>
@@ -119,7 +100,6 @@ const ManageHomeContent = () => {
                 <Tab label="Active" {...a11yProps(0)} />
                 <Tab label="Pending" {...a11yProps(1)} />
                 <Tab label="InActive" {...a11yProps(2)} />
-                <Tab label="Declined" {...a11yProps(3)} />
               </Tabs>
             </Box>
             <CustomTabPanel value={value} index={0}>
@@ -138,14 +118,11 @@ const ManageHomeContent = () => {
                     console.log("item", item);
                     return (
                       <HolidayHomeCard
-                        setReload={setReload}
                         key={item.HolidayHomeId}
                         HolidayHomeName={item.Name}
                         Category={item.Category}
                         HolidayHomeId={item.HolidayHomeId}
                         image={item.Image1}
-                        status={item.Status}
-                        activeToggler={true}
                       />
                     );
                   })}
@@ -167,12 +144,10 @@ const ManageHomeContent = () => {
                   {inactive.map((item) => {
                     return (
                       <HolidayHomeCard
-                        setReload={setReload}
                         key={item.HolidayHomeId}
                         HolidayHomeName={item.Name}
                         Category={item.Category}
                         HolidayHomeId={item.HolidayHomeId}
-                        activeToggler={true}
                       />
                     );
                   })}
@@ -198,34 +173,6 @@ const ManageHomeContent = () => {
                         HolidayHomeName={item.Name}
                         Category={item.Category}
                         HolidayHomeId={item.HolidayHomeId}
-                        activeToggler={false}
-                      />
-                    );
-                  })}
-                </Box>
-              </Box>
-            </CustomTabPanel>
-            <CustomTabPanel value={value} index={3}>
-              <Box className="homes_container_header">
-                <Typography variant="p" className="header_title">
-                  Declined Holiday Homes
-                </Typography>
-                <hr />
-              </Box>
-              <Box
-                className="homes_container"
-                sx={{ overflowY: "scroll", maxHeight: "60vh" }}
-              >
-                <Box className="homes_container_body">
-                  {declined.map((item) => {
-                    return (
-                      <HolidayHomeCard
-                        key={item.HolidayHomeId}
-                        HolidayHomeName={item.Name}
-                        Category={item.Category}
-                        HolidayHomeId={item.HolidayHomeId}
-                        activeToggler={false}
-                        reason={item.reason}
                       />
                     );
                   })}
@@ -239,4 +186,4 @@ const ManageHomeContent = () => {
   );
 };
 
-export default ManageHomeContent;
+export default ManageHomeContentPrimary;

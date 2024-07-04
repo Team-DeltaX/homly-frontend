@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Box from "@mui/material/Box";
 import { Container, Grid, ThemeProvider } from "@mui/material";
 import theme from "../../HomlyTheme";
@@ -23,7 +23,7 @@ const PrimaryReservations = () => {
         }}
       >
         <Container maxWidth="xl" style={{ padding: "0px" }}>
-          <Grid container>
+          <Grid container sx={{ position: "relative" }}>
             <Grid
               className={showNav}
               xs={3}

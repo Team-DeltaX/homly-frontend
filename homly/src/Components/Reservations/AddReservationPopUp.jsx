@@ -1,21 +1,22 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import TextField from "@mui/material/TextField";
-import BasicDatePicker from "../Common/BasicDatePicker";
-import { useState, useEffect } from "react";
-import dayjs, { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 import Typography from "@mui/material/Typography";
 import ErrorSnackbar from "../User/ErrorSnackbar";
+import BasicDatePicker from "../Common/BasicDatePicker";
 import PayNowPopup from "../Common/PayNowPopup";
 import AvailableRoomsPopUp from "../Common/AvailableRoomsPopUp";
 import AvailableHallsPopUp from "../Common/AvailableHallsPopUp";
-import Stack from "@mui/material/Stack";
 import ConfirmPopup from "../PrimaryAdmin/ConfirmPopup";
 import AxiosClient from "../../services/AxiosClient";
 import { SocketioContext } from "../../Contexts/SocketioContext";
@@ -28,25 +29,24 @@ export default function ScrollDialog({ name, id }) {
   const [reservationId, setReservationId] = React.useState("");
   const [employeeDetails, setEmployeeDetails] = React.useState([]);
   const [userDetails, setUserDetails] = React.useState([]);
-  const [employeeName, setEmployeeName] = React.useState("");	
-  const [roomPrice, setRoomPrice] = useState(0);
-  const [hallPrice, setHallPrice] = useState(0);
-  const [totalPrice, setTotalPrice] = useState(0);
-  const [NoOfAdults, setNoOfAdults] = useState(0);
-  const [hallNoOfAdults, setHallNoOfAdults] = useState(0);
-  const [hallNoOfChildren, setHallNoOfChildren] = useState(0);
-  const [NoOfChildren, setNoOfChildren] = useState(0);
-  const [NoOfRooms, setNoOfRooms] = useState(0);
-  const [NoOfHalls, setNoOfHalls] = useState(0);
-  const [CheckinDate, setCheckinDate] = useState(dayjs().add(6, "day"));
-  const [CheckoutDate, setCheckoutDate] = useState(dayjs().add(7, "day"));
-  const [reserveDisabled, setReserveDisabled] = useState(false); // State to manage disable state of reserve button
-  const [roomCodes, setRoomCodes] = useState([]);
-  const [hallCodes, setHallCodes] = useState([]);
-  const [room, setRoom] = useState([]);
-  const [hall, setHall] = useState([]);
+  const [roomPrice, setRoomPrice] = React.useState(0);
+  const [hallPrice, setHallPrice] = React.useState(0);
+  const [totalPrice, setTotalPrice] = React.useState(0);
+  const [NoOfAdults, setNoOfAdults] = React.useState(0);
+  const [hallNoOfAdults, setHallNoOfAdults] = React.useState(0);
+  const [hallNoOfChildren, setHallNoOfChildren] = React.useState(0);
+  const [NoOfChildren, setNoOfChildren] = React.useState(0);
+  const [NoOfRooms, setNoOfRooms] = React.useState(0);
+  const [NoOfHalls, setNoOfHalls] = React.useState(0);
+  const [CheckinDate, setCheckinDate] = React.useState(dayjs().add(6, "day"));
+  const [CheckoutDate, setCheckoutDate] = React.useState(dayjs().add(7, "day"));
+  const [reserveDisabled, setReserveDisabled] = React.useState(false);
+  const [roomCodes, setRoomCodes] = React.useState([]);
+  const [hallCodes, setHallCodes] = React.useState([]);
+  const [room, setRoom] = React.useState([]);
+  const [hall, setHall] = React.useState([]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     AxiosClient.get("/user/reservation/availableRooms", {
       params: {
         holidayHomeId: id,
@@ -57,7 +57,7 @@ export default function ScrollDialog({ name, id }) {
       setRoom(res.data.availableRooms);
     });
   }, [id, CheckinDate, CheckoutDate]);
-  useEffect(() => {
+  React.useEffect(() => {
     AxiosClient.get("/user/reservation/availableHalls", {
       params: {
         holidayHomeId: id,
@@ -68,12 +68,12 @@ export default function ScrollDialog({ name, id }) {
       setHall(res.data.availableHalls);
     });
   }, [id, CheckinDate, CheckoutDate]);
-  const [errorStatus, setErrorStatus] = useState({
+  const [errorStatus, setErrorStatus] = React.useState({
     isOpen: false,
     type: "",
     message: "",
   });
-  const [PayNow, setPayNow] = useState(false);
+  const [PayNow, setPayNow] = React.useState(false);
   const handleClickOpen = (scrollType) => () => {
     setOpen(true);
     setScroll(scrollType);
@@ -113,7 +113,6 @@ export default function ScrollDialog({ name, id }) {
       .then((res) => {
         setEmployeeDetails(res.data.employeeDetails[0]);
         setUserDetails(res.data.userDetails[0]);
-        setEmployeeName(res.data.empName);
         setErrorStatus({
           ...errorStatus,
           isOpen: true,
@@ -155,12 +154,13 @@ export default function ScrollDialog({ name, id }) {
         setRoom([]);
         setHall([]);
       })
-      .catch(() => {
+      .catch((error) => {
+        console.log("error", error);
         setErrorStatus({
           ...errorStatus,
           isOpen: true,
           type: "error",
-          message: "Reservation failed",
+          message: error.response.data.text,
         });
         setPayNow(false);
       });
@@ -189,12 +189,12 @@ export default function ScrollDialog({ name, id }) {
           message: "Check-in date cannot be after Check-out date",
         });
       } else {
-          setErrorStatus({
-            isOpen: true,
-            type: "error",
-            message: "Check-in date & Check-out date cannot be same",
-          });
-      }  
+        setErrorStatus({
+          isOpen: true,
+          type: "error",
+          message: "Check-in date & Check-out date cannot be same",
+        });
+      }
       const nextDay = newDate.add(1, "day");
       setCheckinDate(newDate);
       setCheckoutDate(nextDay);
@@ -207,8 +207,7 @@ export default function ScrollDialog({ name, id }) {
         message: "",
       });
     }
-
-  };  
+  };
   const handleCheckoutDateChange = (newDate) => {
     setNoOfAdults(0);
     setHallNoOfAdults(0);
@@ -226,35 +225,36 @@ export default function ScrollDialog({ name, id }) {
     setCheckoutDate(newDate);
     setReserveDisabled(false);
     setErrorStatus({
-        isOpen: false,
-        type: "",
-        message: "",
-      });
-    
-    console.log("checkout date",CheckoutDate);
+      isOpen: false,
+      type: "",
+      message: "",
+    });
+
+    console.log("checkout date", CheckoutDate);
   };
-  useEffect(() => {
+  React.useEffect(() => {
     if (CheckinDate.isAfter(CheckoutDate) || CheckinDate.isSame(CheckoutDate)) {
       setReserveDisabled(true);
-      if(CheckinDate.isAfter(CheckoutDate)){
+      if (CheckinDate.isAfter(CheckoutDate)) {
         setErrorStatus({
           isOpen: true,
           type: "error",
           message: "Check-in date cannot be after Check-out date",
         });
-      } else{
-          setErrorStatus({
-            isOpen: true,
-            type: "eroor",
-            message: "Check-in date & Check-out date cannot be same",
-          });
+      } else {
+        setErrorStatus({
+          isOpen: true,
+          type: "eroor",
+          message: "Check-in date & Check-out date cannot be same",
+        });
       }
       const nextDay = CheckoutDate.add(1, "day");
       setCheckinDate(CheckoutDate);
       setCheckoutDate(nextDay);
       setReserveDisabled(false);
-    } 
+    }
   }, [CheckinDate, CheckoutDate]);
+
   return (
     <React.Fragment>
       <Button
@@ -270,7 +270,14 @@ export default function ScrollDialog({ name, id }) {
         aria-labelledby="scroll-dialog-title"
         aria-describedby="scroll-dialog-description"
       >
-        <DialogTitle id="scroll-dialog-title">Reservation Form</DialogTitle>
+        <DialogTitle id="scroll-dialog-title">
+          <Box display="flex" justifyContent="space-between" alignItems="center">
+            <Typography variant="h6">Reservation Form</Typography>
+            <IconButton onClick={handleClose}>
+              <CloseIcon />
+            </IconButton>
+          </Box>
+        </DialogTitle>
         <form onSubmit={(e) => e.preventDefault()}>
           <DialogContent
             dividers={scroll === "paper"}
@@ -696,9 +703,6 @@ export default function ScrollDialog({ name, id }) {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button variant="outlined" onClick={handleClose} autoFocus>
-              Close
-            </Button>
             <ConfirmPopup
               open={opened}
               setOpen={setOpened}

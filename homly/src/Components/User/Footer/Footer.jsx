@@ -9,16 +9,13 @@ import {
   Link as MuiLink,
 } from "@mui/material";
 import { Link } from "react-router-dom";
-
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import EmailIcon from "@mui/icons-material/Email";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
-
 import theme from "../../../HomlyTheme";
-import footerWave from "../../../Assets/images/footerWave.svg";
 import "./Footer.css";
 
 export default function Footer({ refContactUS }) {
@@ -194,7 +191,9 @@ export default function Footer({ refContactUS }) {
                       direction="row"
                       sx={{ alignItems: "center", marginBottom: "0.5rem" }}
                     >
-                      <EmailIcon sx={{ color: "#5E5E5E", fontSize: "1.5rem" }} />
+                      <EmailIcon
+                        sx={{ color: "#5E5E5E", fontSize: "1.5rem" }}
+                      />
                       <Typography
                         component="a"
                         href="mailto:deltaxb21@gmail.com"
@@ -202,7 +201,7 @@ export default function Footer({ refContactUS }) {
                           textDecoration: "none",
                           color: "#404040",
                           marginLeft: "0.5rem",
-                          fontSize: "0.8rem"
+                          fontSize: "0.8rem",
                         }}
                       >
                         deltaxb21@gmail.com
@@ -218,11 +217,11 @@ export default function Footer({ refContactUS }) {
                         sx={{
                           textDecoration: "none",
                           color: "#404040",
-                          marginLeft: "0.5rem", 
-                          fontSize: "0.8rem"
+                          marginLeft: "0.5rem",
+                          fontSize: "0.8rem",
                         }}
                       >
-                        0764112542
+                        011-1234567
                       </Typography>
                     </Stack>
                   </Stack>

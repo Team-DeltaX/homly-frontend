@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Box, Grid, Typography, IconButton } from "@mui/material";
 import dayjs from "dayjs";
-
 import FeedbackIcon from "@mui/icons-material/Feedback";
 import CloudDoneIcon from "@mui/icons-material/CloudDone";
 import DangerousIcon from "@mui/icons-material/Dangerous";
 import CancelIcon from "@mui/icons-material/Cancel";
-import WarningAmberIcon from '@mui/icons-material/WarningAmber';
-import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
-import BlockIcon from '@mui/icons-material/Block';
-import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
-import ErrorIcon from '@mui/icons-material/Error';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import WarningAmberIcon from "@mui/icons-material/WarningAmber";
+import AddToPhotosIcon from "@mui/icons-material/AddToPhotos";
+import BlockIcon from "@mui/icons-material/Block";
+import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
+import ErrorIcon from "@mui/icons-material/Error";
 
 const Notification = ({
   type,
@@ -27,8 +25,8 @@ const Notification = ({
     "New Feedback": <FeedbackIcon sx={{ color: "#823" }} />,
     "Authorization Successful": <CloudDoneIcon sx={{ color: "green" }} />,
     "Authorization Denied": <DangerousIcon sx={{ color: "red" }} />,
-    "Warning": <WarningAmberIcon sx={{ color: "red" }} />, 
-    "New Reservation Added": <AddToPhotosIcon sx={{ color: "#823" }} />,	
+    "Warning ": <WarningAmberIcon sx={{ color: "red" }} />,
+    "New Reservation Added": <AddToPhotosIcon sx={{ color: "#823" }} />,
     "Cancel Reservation": <BlockIcon sx={{ color: "#823" }} />,
     "New Complain": <ErrorIcon sx={{ color: "#823" }} />,
   };
@@ -84,7 +82,11 @@ const Notification = ({
         }}
       >
         <Box display="flex" alignItems="center" gap="10px">
-          {chooseIcon[type] ? chooseIcon[type] : <NotificationsActiveIcon sx={{ color: "grey.600" }} />}
+          {chooseIcon[type] ? (
+            chooseIcon[type]
+          ) : (
+            <NotificationsActiveIcon sx={{ color: "grey.600" }} />
+          )}
           <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
             {type}
           </Typography>
@@ -96,12 +98,23 @@ const Notification = ({
       <Box sx={{ padding: "15px 20px" }}>
         <Grid container spacing={1}>
           <Grid item xs={12}>
-            <Typography variant="body2" sx={{ fontWeight: "bold", fontSize: "14px", color: "text.primary" }}>
+            <Typography
+              variant="body2"
+              sx={{
+                fontWeight: "bold",
+                fontSize: "14px",
+                color: "text.primary",
+              }}
+            >
               {senderId}
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            <Typography variant="body1" sx={{ fontSize: "16px", color: "text.secondary" }} gutterBottom>
+            <Typography
+              variant="body1"
+              sx={{ fontSize: "16px", color: "text.secondary" }}
+              gutterBottom
+            >
               {data}
             </Typography>
           </Grid>

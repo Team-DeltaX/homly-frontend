@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, TextField, Typography, Grid } from "@mui/material";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -8,6 +8,9 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import UploadImageCloudinary from "../../../Common/UploadImageCloudinary";
+import AxiosClient from "../../../../services/AxiosClient";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
 const EditHolidayHomeDetails = ({
   value,
@@ -20,6 +23,7 @@ const EditHolidayHomeDetails = ({
   setImage2,
   image3,
   setImage3,
+  setSubmit,
 }) => {
   const [error, setError] = useState({
     name: false,
@@ -28,11 +32,73 @@ const EditHolidayHomeDetails = ({
     contactNo1: false,
     contactNo2: false,
   });
+  const [openNameExistAlert, setOpenNameExistAlert] = useState(false);
+  const handleCloseNameExistAlert = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenNameExistAlert(false);
+  };
+  const [names, setNames] = useState([]);
+
+  useEffect(() => {
+    AxiosClient.get(
+      "http://localhost:8080/admin/auth/locationadmin/holidayhome/allnames"
+    )
+      .then((res) => {
+        const data = res.data.names;
+        data.forEach((item) => {
+          names.push(item.name);
+        });
+        // remove duplicates in name array
+        const uniqueNames = [...new Set(names)];
+        //remove a item from array
+        uniqueNames.splice(uniqueNames.indexOf(value.name), 1);
+        setNames(uniqueNames);
+        console.log("names", names);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  useEffect(() => {
+    const isDetailsComplete =
+      value.name !== "" &&
+      value.address !== "" &&
+      value.district !== "" &&
+      value.description !== "" &&
+      value.contactNo1 !== "" &&
+      value.category !== "" &&
+      value.status !== "";
+
+    const areErrorsEmpty =
+      !error.name &&
+      !error.address &&
+      !error.description &&
+      !error.contactNo1 &&
+      !error.contactNo2;
+
+    if (isDetailsComplete && areErrorsEmpty && !openNameExistAlert) {
+      setSubmit(true);
+    } else {
+      setSubmit(false);
+    }
+  }, [value, error, setSubmit, openNameExistAlert]);
 
   console.log("edithomedetails", value);
   const handleNameChange = (e) => {
+    console.log("names", names);
+    const isNameDuplicate = names.includes(e.target.value);
+    console.log("nameExist", isNameDuplicate);
+    if (isNameDuplicate) {
+      setOpenNameExistAlert(true);
+    } else {
+      setOpenNameExistAlert(false);
+    }
+
     setValue({ ...value, name: e.target.value });
-    const name_regex = /^[a-zA-Z\s]+$/;
+    const name_regex = /^[a-zA-Z0-9\s-]+$/;
     if (e.target.value.length > 0) {
       if (!name_regex.test(e.target.value)) {
         setError({ ...error, name: true });
@@ -553,6 +619,19 @@ const EditHolidayHomeDetails = ({
           </Grid>
         </Grid>
       </fieldset>
+      {/* alert same hall exist add hall popup*/}
+      <div>
+        <Snackbar open={openNameExistAlert} onClose={handleCloseNameExistAlert}>
+          <Alert
+            onClose={handleCloseNameExistAlert}
+            severity="error"
+            variant="filled"
+            sx={{ width: "100%" }}
+          >
+            {value.name} Already Exist
+          </Alert>
+        </Snackbar>
+      </div>
     </Box>
   );
 };

@@ -153,9 +153,7 @@
 
 }
 
-.bell_container {
-  position: relative;
-}
+
 
 .notify_count_container {
   position: absolute;
@@ -202,6 +200,33 @@
 /* Handle on hover */
 .notify_container::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+
+@media screen and (max-width:768px) {
+  .notifications_container{
+    position: fixed !important;
+    width: 100vw !important;
+    height: 100vh;
+    max-height: 100vh !important;
+    top: 0%;
+    left: 0;
+  
+  }
+
+  .notify_container{
+    max-height: 100vh !important;
+  
+  
+  }
+  .notification_panel_close{
+    position: absolute;
+    bottom:35px;
+    left:50%;
+    transform:translateX(-50%);
+    display: block !important;
+  }
+  
 }
 
 
@@ -290,7 +315,7 @@
 }
 
 .home_image img {
-  width: 80px;
+
   border-radius: 12px;
   background-position: center;
   background-repeat: no-repeat;
@@ -385,7 +410,7 @@
   }
 
   .home_image img {
-    width: 140px;
+    /* width: 140px; */
   }
 
 }

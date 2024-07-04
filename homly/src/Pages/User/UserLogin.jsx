@@ -33,8 +33,7 @@ const Img = styled("img")({
 });
 
 const UserLogin = () => {
-  const { setIsLogged, setAuthServiceNumber } =
-    useContext(AuthContext);
+  const { setIsLogged, setAuthServiceNumber } = useContext(AuthContext);
   const [serviceNo, setServiceNo] = useState("");
   const [password, setPassword] = useState("");
   const [open, setOpen] = useState(false);

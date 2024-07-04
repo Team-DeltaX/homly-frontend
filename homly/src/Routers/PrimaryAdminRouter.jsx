@@ -12,6 +12,9 @@ const PrimaryReservations = lazy(() =>
 const PrimaryHolidayHomes = lazy(() =>
   import("../Pages/PrimaryAdmin/PrimaryHolidayHomes")
 );
+const PrimaryRefund = lazy(() =>
+  import("../Pages/PrimaryAdmin/PrimaryAdminRefund")
+);
 const PrimaryReport = lazy(() => import("../Pages/PrimaryAdmin/PrimaryReport"));
 const PrimaryManageBlacklistedUsers = lazy(() =>
   import("../Pages/PrimaryAdmin/PrimaryManageBlacklistedUsers")
@@ -35,11 +38,11 @@ const PrimaryAuthorizations = lazy(() =>
 const PrimaryAdminRouter = () => {
   return (
     <Routes>
-     
       <Route element={<PrivateRoutes allowedRoles={"PrimaryAdmin"} />}>
         <Route path="/dashboard" element={<PrimaryDashboard />} />
         <Route path="/reservations" element={<PrimaryReservations />} />
         <Route path="/holidayhomes" element={<PrimaryHolidayHomes />} />
+        <Route path="/refund" element={<PrimaryRefund />} />
         <Route path="/report" element={<PrimaryReport />} />
         <Route
           path="/blacklistedusers/manage"
@@ -59,7 +62,11 @@ const PrimaryAdminRouter = () => {
 
         <Route
           path="/holidayhomes/viewholidayhome/:homeId"
-          element={<ViewHolidayHome/>}
+          element={<ViewHolidayHome />}
+        />
+        <Route
+          path="/holidayhomes/viewholidayhome/:homeId/view"
+          element={<ViewHolidayHome />}
         />
       </Route>
     </Routes>

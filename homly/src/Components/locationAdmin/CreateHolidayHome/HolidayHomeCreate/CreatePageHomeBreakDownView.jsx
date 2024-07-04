@@ -104,46 +104,6 @@ const CreatePageHomeBreakDownView = ({
     setValue(newValue);
   };
 
-  // const handleOtherChargesChange = (e) => {
-  //   const positive_regex = /^\d*\.?\d+/;
-  //   if (e.target.value.length > 0) {
-  //     if (!positive_regex.test(e.target.value)) {
-  //       setError({ ...error, oCharges: true });
-  //     } else {
-  //       setBdValue({ ...bdValue, otherCharges: e.target.value });
-  //       setError({ ...error, oCharges: false });
-  //     }
-  //   }
-  // }
-
-  // const handleServiceChargesChange = (e) => {
-
-  //   const positive_regex = /^\d*\.?\d+$/;
-
-  //   if (e.target.value.length > 0) {
-  //     if (!positive_regex.test(e.target.value)) {
-  //       setError({ ...error, sCharges: true });
-  //     } else {
-  //       setBdValue({ ...bdValue, serviceCharges: e.target.value });
-  //       setError({ ...error, sCharges: false });
-  //     }
-  //   }
-  // }
-
-  // const handleTotalRentalChange = (e) => {
-
-  //   const positive_regex = /^\d*\.?\d+$/;
-
-  //   if (e.target.value.length > 0) {
-  //     if (!positive_regex.test(e.target.value)) {
-  //       setError({ ...error, tRental: true });
-  //     } else {
-  //       setBdValue({ ...bdValue, totalRental: e.target.value });
-  //       setError({ ...error, tRental: false });
-  //     }
-  //   }
-  // }
-
   const handlefacilityChange = (e) => {
     setBdValue({ ...bdValue, facilities: e.target.value });
   };

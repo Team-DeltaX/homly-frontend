@@ -1,12 +1,12 @@
-import SideNavbar from "../../Components/PrimaryAdmin/SideNavbar";
+import { useState } from "react";
 import Box from "@mui/material/Box";
 import { Container, Grid, ThemeProvider } from "@mui/material";
 import theme from "../../HomlyTheme";
+import SideNavbar from "../../Components/PrimaryAdmin/SideNavbar";
 import Pagetop from "../../Components/PrimaryAdmin/PageTop";
-import { useState } from "react";
-import ManageHomeContentPrimary from "../../Components/PrimaryAdmin/ManageHomeContentPrimary";
-
-const PrimaryHolidayHomes = () => {
+import RefundListTable from "../../Components/Reservations/RefundList";
+import "./style.css";
+const PrimaryAdminRefund = () => {
   const [showNav, setShowNav] = useState("nav_grid_deactive");
 
   return (
@@ -21,7 +21,7 @@ const PrimaryHolidayHomes = () => {
         }}
       >
         <Container maxWidth="xl" style={{ padding: "0px" }}>
-          <Grid container>
+          <Grid container sx={{ position: "relative" }}>
             <Grid
               className={showNav}
               xs={3}
@@ -38,8 +38,8 @@ const PrimaryHolidayHomes = () => {
                 padding: "0 20px",
               }}
             >
-              <Pagetop setShowNav={setShowNav} heading={"HolidayHomes"} />
-              <ManageHomeContentPrimary />
+              <Pagetop setShowNav={setShowNav} heading={"Refund"} />
+              <RefundListTable />
             </Grid>
           </Grid>
         </Container>
@@ -48,4 +48,4 @@ const PrimaryHolidayHomes = () => {
   );
 };
 
-export default PrimaryHolidayHomes;
+export default PrimaryAdminRefund;

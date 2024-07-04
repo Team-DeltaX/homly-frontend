@@ -31,14 +31,14 @@ export default function AddReviewPopup({
   const [tempReview, setTempReview] = useState("");
 
   useEffect(() => {
-    if (isEdit) {
-      AxiosClient.get(`/user/auth/review/`, {
+    if (open && isEdit) {
+      AxiosClient.get(`/user/auth/review/holidayhome`, {
         params: {
           reservationId: reservationId,
         },
       })
         .then((res) => {
-          if (res) {
+          if (res.data) {
             setReview(res.data.review[0].UserReview);
             setTempReview(res.data.review[0].UserReview);
           }
@@ -52,7 +52,7 @@ export default function AddReviewPopup({
           });
         });
     }
-  }, [isEdit]);
+  }, [isEdit, open]);
 
   const handleClose = () => {
     setOpen(false);

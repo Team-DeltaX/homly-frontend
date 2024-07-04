@@ -15,10 +15,12 @@ import ConfirmPopup from "./ConfirmPopup";
 import AxiosClient from "../../services/AxiosClient";
 import { SocketioContext } from "../../Contexts/SocketioContext";
 import { Link } from "react-router-dom";
+import ConfirmPopupWithInput from "./ConfirmPopupWithInput";
 
 const AuthorizationsCard = (props) => {
   const [open, Setopen] = useState(false);
   const { socket } = useContext(SocketioContext);
+  const [rejectreason,setRejectreason]=useState("")
 
   const approve = () => {
     AxiosClient.put(
@@ -46,14 +48,15 @@ const AuthorizationsCard = (props) => {
   };
 
   const rejectHH = () => {
-    
     console.log(props.data.HolidayHomeId);
-    AxiosClient.delete(
+    console.log('reejct reason',rejectreason)
+    AxiosClient.put(
       `/admin/auth/locationadmin/holidayhome/reject`,
       {
-        data: {
+        
           id: props.data.HolidayHomeId,
-        },
+          reject_reason: rejectreason
+        
       },
       { withCredentials: true }
     )
@@ -62,7 +65,7 @@ const AuthorizationsCard = (props) => {
         props.get_pending();
         Setopen(false);
         socket.emit("newNotification", {
-          senderId: localStorage.getItem("userId"),
+          senderId: sessionStorage.getItem("userId"),
           receiverId: props.data.AdminNo,
           data: `${props.data.Name} Holiday Home has been Declined`,
           type: "Authorization Denied",
@@ -70,22 +73,21 @@ const AuthorizationsCard = (props) => {
         });
       })
       .catch((error) => {
-
-        props.opensnE(true);
-        
+        // props.opensnE(true);
 
         console.log("error in reject");
-
       });
   };
   return (
     <ThemeProvider theme={theme}>
-      <ConfirmPopup
+      <ConfirmPopupWithInput
         open={open}
         setOpen={Setopen}
         title={"Holiday Home Rejection"}
-        text={"Are you sure you want to Decline this HolidayHome"}
+        text={"Are you sure you want to Decline this HolidayHome ?"}
         controlfunction={rejectHH}
+        setRejectreason={setRejectreason}
+        rejectreason={rejectreason}
       />
       <Stack
         sx={{
@@ -99,11 +101,16 @@ const AuthorizationsCard = (props) => {
         <Box></Box>
         <Box>
           {" "}
-
-          <Grid container  >
+          <Grid container>
             <Grid md={7} xs={12}>
-              <Grid md={12} sx={{display:"flex",flexDirection:{xs:'row',md:'column'},justifyContent:'center'}}>
-
+              <Grid
+                md={12}
+                sx={{
+                  display: "flex",
+                  flexDirection: { xs: "row", md: "column" },
+                  justifyContent: "center",
+                }}
+              >
                 <Grid md={12}>
                   <Typography sx={{ fontWeight: "light" }}>District</Typography>
                 </Grid>
@@ -132,30 +139,29 @@ const AuthorizationsCard = (props) => {
               </Grid>
             </Grid>
 
-
             <Grid md={5} xs={12}>
-              <Grid md={12} >
-              <Link to={`/primaryadmin/holidayhomes/viewholidayhome/${props.data.HolidayHomeId}`} >
-                <Button
-                  type="submit"
-                  variant="contained"
-                  sx={{
-                    width: "80px",
-                    height: "30px",
-                    borderRadius: "15px",
-                    display: { xs: "none", md: "flex" },
-                  }}
-                  startIcon={<PreviewIcon />}
-                  onClick={()=>{
-                    // props.handleClickOpen()
-                    // props.setSelectedtoview(props.data)
-                    
-
-                    
-                  }}
+              <Grid md={12}>
+                <Link
+                  to={`/primaryadmin/holidayhomes/viewholidayhome/${props.data.HolidayHomeId}`}
+                  style={{ textDecoration: "none" }}
                 >
-                  <Typography>View</Typography>
-                </Button>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    sx={{
+                      width: "80px",
+                      height: "30px",
+                      borderRadius: "15px",
+                      display: { xs: "none", md: "flex" },
+                    }}
+                    startIcon={<PreviewIcon />}
+                    onClick={() => {
+                      // props.handleClickOpen()
+                      // props.setSelectedtoview(props.data)
+                    }}
+                  >
+                    <Typography>View</Typography>
+                  </Button>
                 </Link>
               </Grid>
               <Grid
@@ -170,8 +176,9 @@ const AuthorizationsCard = (props) => {
                   <Typography sx={{ fontWeight: "light" }}>Admin</Typography>{" "}
                 </Grid>
 
-                <Grid md={12} sx={{marginLeft:{md:'0px',xs:'10px'}}} >{props.data.AdminNo}</Grid>
-
+                <Grid md={12} sx={{ marginLeft: { md: "0px", xs: "10px" } }}>
+                  {props.data.AdminNo}
+                </Grid>
               </Grid>
             </Grid>
           </Grid>

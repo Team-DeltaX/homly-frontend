@@ -3,17 +3,14 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import { Typography, ThemeProvider } from "@mui/material";
 import logo from "../../Assets/images/logo1.png";
-import user from "../../Assets/images/profile.jpeg";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import theme from "../../HomlyTheme";
-
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import ListAltOutlinedIcon from "@mui/icons-material/ListAltOutlined";
 import QueryStatsOutlinedIcon from "@mui/icons-material/QueryStatsOutlined";
-import ManageAccountsOutlinedIcon from "@mui/icons-material/ManageAccountsOutlined";
-import HistoryOutlinedIcon from "@mui/icons-material/HistoryOutlined";
 import RateReviewOutlinedIcon from "@mui/icons-material/RateReviewOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import CloseIcon from "@mui/icons-material/Close";
@@ -289,17 +286,17 @@ const SideNavbar = ({ closeNavGrid, setShowNav }) => {
             }}
           >
             <Box>
-              <img src={user} alt="profile_picture" className="user_image" />
+              <ManageAccountsIcon sx={{ color: "white", fontSize: "70px" }} />
             </Box>
             <Box sx={{ textAlign: "center" }}>
               <Typography
                 variant="h6"
                 sx={{ color: "white", marginBottom: "0" }}
               >
-                Jhon Doe
+                LocationAdmin
               </Typography>
               <Typography variant="p" sx={{ color: "grey4" }}>
-                JhonDoe@gmail.com
+                Homly
               </Typography>
             </Box>
             <Box
@@ -314,8 +311,13 @@ const SideNavbar = ({ closeNavGrid, setShowNav }) => {
             >
               <LogoutOutlinedIcon
                 sx={{ color: "grey5", textShadow: "unset" }}
+                onclick={{ handleLogout }}
               />
-              <Typography variant="p" sx={{ color: "grey1" }}>
+              <Typography
+                variant="p"
+                sx={{ color: "grey1" }}
+                onClick={handleLogout}
+              >
                 Log Out
               </Typography>
             </Box>

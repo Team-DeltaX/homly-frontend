@@ -1,5 +1,6 @@
-import * as React from "react";
+import { useState, useContext, Fragment } from "react";
 import Button from "@mui/material/Button";
+import { Grid }  from '@mui/material';
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import TextField from "@mui/material/TextField";
@@ -7,17 +8,16 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { useState } from "react";
 import ErrorSnackbar from "../User/ErrorSnackbar";
 import ConfirmPopup from "../PrimaryAdmin/ConfirmPopup";
 import AxiosClient from "../../services/AxiosClient";
 import { SocketioContext } from "../../Contexts/SocketioContext";
 
 export default function AddComplainPopUp(props) {
-  const [open, setOpen] = React.useState(false);
-  const [opened, setOpened] = React.useState(false);
-  const [reason, setReason] = React.useState("");
-  const { socket } = React.useContext(SocketioContext);
+  const [open, setOpen] = useState(false);
+  const [opened, setOpened] = useState(false);
+  const [reason, setReason] = useState("");
+  const { socket } = useContext(SocketioContext);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const handleClickOpen = () => {
     setOpen(true);
@@ -65,23 +65,14 @@ export default function AddComplainPopUp(props) {
       });
   };
   return (
-    <React.Fragment>
+    <Fragment>
       <Button variant="outlined" onClick={handleClickOpen}>
         Add Complain
       </Button>
       <Dialog
         open={open}
         onClose={handleClose}
-        PaperProps={{
-          component: "form",
-          onSubmit: (event) => {
-            event.preventDefault();
-            const formData = new FormData(event.currentTarget);
-            const formJson = Object.fromEntries(formData.entries());
-            const email = formJson.email;
-            console.log(email);
-          },
-        }}
+
       >
         <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
           Add Complain
@@ -99,72 +90,99 @@ export default function AddComplainPopUp(props) {
           <CloseIcon />
         </IconButton>
         <DialogContent>
-          <TextField
-            autoFocus
-            disabled={true}
-            value={props.reservation.reservation.ServiceNO}
-            required
-            margin="dense"
-            id="serviceno"
-            name="serviceno"
-            label="Employees Service No"
-            type="text"
-            fullWidth
-            variant="outlined"
-          />
-          <TextField
-            autoFocus
-            disabled={true}
-            value={props.reservation.reservation.ReservationId}
-            required
-            margin="dense"
-            id="reservationno"
-            name="reservationno"
-            label="Reservation No"
-            type="text"
-            fullWidth
-            variant="outlined"
-          />
-          <TextField
-            autoFocus
-            disabled={true}
-            value={props.reservation.holidayHome.Name}
-            required
-            margin="dense"
-            id="holidayhome"
-            name="holidayhome"
-            label="Holiday Home"
-            type="text"
-            fullWidth
-            variant="outlined"
-          />
-          <TextField
-            autoFocus
-            required
-            margin="dense"
-            id="date"
-            name="date"
-            label=""
-            disabled
-            type="date"
-            fullWidth
-            variant="outlined"
-            value={selectedDate.toISOString().split("T")[0]}
-            onChange={(e) => setSelectedDate(new Date(e.target.value))}
-          />
-          <TextField
-            margin="dense"
-            label="Reason"
-            required
-            multiline
-            fullWidth
-            placeholder="Reason"
-            value={reason}
-            onChange={(e) => {
-              setReason(e.target.value);
-            }}
-            maxLength="parent.maxLength"
-          />
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <TextField
+                autoFocus
+                InputProps={{
+                  readOnly: true,
+                }}
+                value={props.reservation.reservation.ServiceNO}
+                required
+                margin="dense"
+                id="serviceno"
+                name="serviceno"
+                label="Employees Service No"
+                type="text"
+                fullWidth
+                variant="filled"
+                size="small"
+              />
+            </Grid>
+            <Grid item xs={6}>          
+              <TextField
+                autoFocus
+                InputProps={{
+                  readOnly: true,
+                }}
+                value={props.reservation.reservation.ReservationId}
+                required
+                margin="dense"
+                id="reservationno"
+                name="reservationno"
+                label="Reservation No"
+                type="text"
+                fullWidth
+                variant="filled"
+                size="small"
+              />
+            </Grid>
+            <Grid item xs={6}>   
+              <TextField
+                autoFocus
+                InputProps={{
+                  readOnly: true,
+                }}
+                value={
+                  props.reservation.holidayHome &&
+                  props.reservation.holidayHome.Name
+                }
+                required
+                margin="dense"
+                id="holidayhome"
+                name="holidayhome"
+                label="Holiday Home"
+                type="text"
+                fullWidth
+                variant="filled"
+                size="small"
+              />
+            </Grid>
+            <Grid item xs={6}>   
+              <TextField
+                autoFocus
+                required
+                margin="dense"
+                id="date"
+                name="date"
+                label="Today's Date"
+                InputProps={{
+                  readOnly: true,
+                }}
+                type="date"
+                fullWidth
+                variant="filled"
+                size="small"
+                value={selectedDate.toISOString().split("T")[0]}
+                onChange={(e) => setSelectedDate(new Date(e.target.value))}
+              />
+            </Grid>
+            <Grid item xs={12}>   
+              <TextField
+                margin="dense"
+                label="Reason"
+                required
+                multiline
+                fullWidth
+                placeholder="Reason"
+                value={reason}
+                onChange={(e) => {
+                  setReason(e.target.value);
+                }}
+                maxLength="parent.maxLength"
+              />
+            </Grid>
+          </Grid>
         </DialogContent>
         <DialogActions>
           <ConfirmPopup
@@ -176,7 +194,7 @@ export default function AddComplainPopUp(props) {
           />
           <Button
             autoFocus
-            disabled={reason === ""}
+            disabled={reason.trim().length === 0 || /^\d+$/.test(reason)}
             onClick={() => {
               setOpened(true);
             }}
@@ -192,6 +210,6 @@ export default function AddComplainPopUp(props) {
         message={errorStatus.message}
         setIsOpen={(val) => setErrorStatus({ ...errorStatus, isOpen: val })}
       />
-    </React.Fragment>
+    </Fragment>
   );
 }

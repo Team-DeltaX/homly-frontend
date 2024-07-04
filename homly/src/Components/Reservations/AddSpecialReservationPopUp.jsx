@@ -3,18 +3,18 @@ import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
-import BasicDatePicker from "../Common/BasicDatePicker";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import dayjs, { Dayjs } from "dayjs";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import axios from "axios";
+import dayjs from "dayjs";
+import BasicDatePicker from "../Common/BasicDatePicker";
 import ErrorSnackbar from "../User/ErrorSnackbar";
 import ConfirmPopup from "../PrimaryAdmin/ConfirmPopup";
 import AxiosClient from "../../services/AxiosClient";
@@ -26,27 +26,27 @@ export default function AddSpecialReservationPopUp() {
   const theme = useTheme();
   const { socket } = React.useContext(SocketioContext);
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
-  const [reserveDisabled, setReserveDisabled] = useState(false);
-  const [HolidayHomeName, SetHolidayHomeName] = useState("");
+  const [reserveDisabled, setReserveDisabled] = React.useState(false);
+  const [HolidayHomeName, SetHolidayHomeName] = React.useState("");
   const [holidayHomes, setHolidayHomes] = React.useState([]);
-  const [ServiceNo, setServiceNo] = useState("");
-  const [employeeName, setEmployeeName] = useState("");
-  const [maxAdults, setMaxAdults] = useState(0);
-  const [NoofRooms, setNoofRooms] = useState(0);
-  const [NoofHalls, setNoofHalls] = useState(0);
-  const [maxChildren, setMaxChildren] = useState(0);
-  const [roomRental, setRoomRental] = useState(0);
-  const [hallRental, setHallRental] = useState(0);
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const [errorStatus, setErrorStatus] = useState({
+  const [ServiceNo, setServiceNo] = React.useState("");
+  const [employeeName, setEmployeeName] = React.useState("");
+  const [maxAdults, setMaxAdults] = React.useState(0);
+  const [NoofRooms, setNoofRooms] = React.useState(0);
+  const [NoofHalls, setNoofHalls] = React.useState(0);
+  const [maxChildren, setMaxChildren] = React.useState(0);
+  const [roomRental, setRoomRental] = React.useState(0);
+  const [hallRental, setHallRental] = React.useState(0);
+  const [CheckinDate, setCheckinDate] = React.useState(dayjs().add(6, "day"));
+  const [CheckoutDate, setCheckoutDate] = React.useState(dayjs().add(7, "day"));
+  const [errorStatus, setErrorStatus] = React.useState({
     isOpen: false,
     type: "",
     message: "",
   });
-  const [CheckinDate, setCheckinDate] = useState(dayjs().add(6, "day"));
-  const [CheckoutDate, setCheckoutDate] = useState(dayjs().add(7, "day")); 
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
   const handleClose = () => {
     setOpen(false);
   };
@@ -80,14 +80,14 @@ export default function AddSpecialReservationPopUp() {
         socket.emit("newNotification", {
           senderId: "HomlyPriAdmin",
           receiverId: ServiceNo,
-          data: "Your request about special reservation is accepted.Please find email for more details.",
+          data: "Your request about special reservation is accepted. Please find email for more details.",
           type: "Authorization Successful",
           time: new Date(),
         });
         socket.emit("newNotification", {
           senderId: "HomlyPriAdmin",
           receiverId: res.data.adminNumber,
-          data: `New Special Reservation is allocated for ${res.data.holidayHomeName}.check it out`,
+          data: `New Special Reservation is allocated for ${res.data.holidayHomeName}. Check it out.`,
           type: "New Reservation Added",
           time: new Date(),
         });
@@ -104,7 +104,7 @@ export default function AddSpecialReservationPopUp() {
           socket.emit("newNotification", {
             senderId: "HomlyPriAdmin",
             receiverId: serviceNo,
-            data: "Due to Special Reservation allocating your Reservation has cancelled by Administration.We send you an email for more details.",
+            data: "Due to Special Reservation allocating, your Reservation has been cancelled by Administration. We sent you an email for more details.",
             type: "Cancel Reservation",
             time: new Date(),
           });
@@ -143,12 +143,12 @@ export default function AddSpecialReservationPopUp() {
           message: "Check-in date cannot be after Check-out date",
         });
       } else {
-          setErrorStatus({
-            isOpen: true,
-            type: "error",
-            message: "Check-in date & Check-out date cannot be same",
-          });
-      }      
+        setErrorStatus({
+          isOpen: true,
+          type: "error",
+          message: "Check-in date & Check-out date cannot be the same",
+        });
+      }
       const nextDay = newDate.add(1, "day");
       setCheckinDate(newDate);
       setCheckoutDate(nextDay);
@@ -161,58 +161,58 @@ export default function AddSpecialReservationPopUp() {
         message: "",
       });
     }
-
-  };  
+  };
   const handleCheckoutDateChange = (newDate) => {
     setCheckoutDate(newDate);
     setReserveDisabled(false);
     setErrorStatus({
-        isOpen: false,
-        type: "",
-        message: "",
-      });
-    
-    console.log("checkout date",CheckoutDate);
+      isOpen: false,
+      type: "",
+      message: "",
+    });
   };
-  useEffect(() => {
+  React.useEffect(() => {
     if (CheckinDate.isAfter(CheckoutDate) || CheckinDate.isSame(CheckoutDate)) {
       setReserveDisabled(true);
-      if(CheckinDate.isAfter(CheckoutDate)){
+      if (CheckinDate.isAfter(CheckoutDate)) {
         setErrorStatus({
           isOpen: true,
           type: "error",
           message: "Check-out date cannot be before Check-in date",
         });
-      } else{
-          setErrorStatus({
-            isOpen: true,
-            type: "eroor",
-            message: "Check-in date & Check-out date cannot be same",
-          });
+      } else {
+        setErrorStatus({
+          isOpen: true,
+          type: "error",
+          message: "Check-in date & Check-out date cannot be the same",
+        });
       }
       const nextDay = CheckoutDate.add(1, "day");
       setCheckinDate(CheckoutDate);
       setCheckoutDate(nextDay);
       setReserveDisabled(false);
-    } 
+    }
   }, [CheckinDate, CheckoutDate]);
-  useEffect(() => {
-    if (ServiceNo) {
-      AxiosClient.get(`/admin/auth/locationadmin/employee/${ServiceNo}`)
+  React.useEffect(() => {
+    if (ServiceNo.length === 6) {
+      AxiosClient.get(`/admin/auth/reservation/employee/${ServiceNo}`)
         .then((res) => {
           const employeeData = res.data[0];
           setEmployeeName(employeeData.name);
         })
         .catch(() => {
+          setEmployeeName("");
           setErrorStatus({
             isOpen: true,
             type: "warning",
             message: "Can't find employee with that service number",
           });
         });
+    } else {
+      setEmployeeName("");
     }
   }, [ServiceNo]);
-  useEffect(() => {
+  React.useEffect(() => {
     if (HolidayHomeName) {
       AxiosClient.get(`/user/reservation/getTotalRoomRental/${HolidayHomeName}`)
         .then((response) => {
@@ -227,22 +227,24 @@ export default function AddSpecialReservationPopUp() {
           setErrorStatus({
             isOpen: true,
             type: "warning",
-            message: "Can't find holiday home with that name.Check your network & try again.",
+            message:
+              "Can't find holiday home with that name. Check your network & try again.",
           });
         });
     }
   }, [HolidayHomeName]);
-  useEffect(() => {
+  React.useEffect(() => {
     axios
       .get("http://localhost:8080/user/reservation/holidayhomes")
       .then((res) => {
-        if (Response) {
+        if (res.data) {
           setHolidayHomes(res.data);
         } else {
           setErrorStatus({
             isOpen: true,
             type: "warning",
-            message: "Can't find holiday homes.Check your network & try again.",
+            message:
+              "Can't find holiday homes. Check your network & try again.",
           });
         }
       });
@@ -257,181 +259,175 @@ export default function AddSpecialReservationPopUp() {
         fullScreen={fullScreen}
         open={open}
         onClose={handleClose}
-        aria-labelledby="responsive-dialog-title"
+        aria-labelledby="scroll-dialog-title"
+        aria-describedby="scroll-dialog-description"
       >
-        <DialogTitle id="responsive-dialog-title">
-          {"Add Special Reservation"}
+        <DialogTitle id="scroll-dialog-title">
+          Add Special Reservation
         </DialogTitle>
         <form onSubmit={(e) => e.preventDefault()}>
-          <DialogContent sx={{ width: { sm: "auto", md: "411px" } }}>
-            <TextField
-              autoFocus
-              required
-              onChange={(e) => {
-                setServiceNo(e.target.value);
-                setEmployeeName(employeeName);
-              }}
-              value={ServiceNo}
-              margin="dense"
-              id="serviceno"
-              name="serviceno"
-              label="Service Number"
-              type="text"
-              fullWidth
-              variant="outlined"
-            />
-            <TextField
-              autoFocus
-              required
-              disabled
-              value={employeeName}
-              margin="dense"
-              id="empname"
-              name="empname"
-              label="Employee Name"
-              title="Employee Name"
-              type="text"
-              fullWidth
-              variant="outlined"
-            />
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">
-                Select Holiday Home*
-              </InputLabel>
-              <Select
+          <DialogContent
+            dividers
+            sx={{ maxHeight: { xs: "600px", md: "400px" }, overflow: "scroll" }}
+          >
+            <DialogContentText id="scroll-dialog-description" tabIndex={-1}>
+              <TextField
+                autoFocus
+                required
+                onChange={(e) => setServiceNo(e.target.value)}
+                value={ServiceNo}
+                margin="dense"
+                id="serviceno"
+                name="serviceno"
+                label="Service Number"
+                type="text"
                 fullWidth
-                labelId="holiday-home-label"
-                label="Holiday Home"
-                isSearchable={true}
-                id="outlined-select-holidayhome"
-                value={HolidayHomeName}
-                onChange={(e) => {
-                  SetHolidayHomeName(e.target.value);
-                  setRoomRental(roomRental);
-                  setHallRental(hallRental);
-                }}
-              >
-                {holidayHomes.map((home) => (
-                  <MenuItem key={home.id} value={home.id}>
-                    {home.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <BasicDatePicker
-              required
-              margin="dense"
-              date={CheckinDate}
-              setDate={handleCheckinDateChange}
-              title="Check in Date"
-              value={CheckinDate}
-            />
-            <BasicDatePicker
-              required
-              margin="normal"
-              date={CheckoutDate}
-              setDate={handleCheckoutDateChange}
-              title="Check Out Date"
-              value={CheckoutDate}
-            />
-            <TextField
-              autoFocus
-              required
-              disabled
-              value={maxAdults}
-              margin="dense"
-              id="maxAdults"
-              name="maxAdults"
-              label="Maximum Adults"
-              title="Maximum Adults"
-              type="number"
-              fullWidth
-              variant="outlined"
-            />
-            <TextField
-              autoFocus
-              required
-              disabled
-              value={maxChildren}
-              margin="dense"
-              id="maxChildren"
-              name="maxChildren"
-              label="Maximum Children"
-              title="Maximum Children"
-              type="number"
-              fullWidth
-              variant="outlined"
-            />
-            <TextField
-              autoFocus
-              required
-              disabled
-              value={NoofRooms}
-              margin="dense"
-              id="NoofRooms"
-              name="NoofRooms"
-              label="Room Count"
-              title="Room Count"
-              type="number"
-              fullWidth
-              variant="outlined"
-            />
-            <TextField
-              autoFocus
-              required
-              disabled
-              value={NoofHalls}
-              margin="dense"
-              id="NoofHalls"
-              name="NoofHalls"
-              label="Hall Count"
-              title="Hall Count"
-              type="number"
-              fullWidth
-              variant="outlined"
-            />
-            <TextField
-              autoFocus
-              required
-              disabled
-              value={roomRental}
-              margin="dense"
-              id="totalroomrental"
-              name="totalroomrental"
-              label="Total Room Rental"
-              title="Total Room Rental"
-              type="number"
-              fullWidth
-              variant="outlined"
-            />
-            <TextField
-              autoFocus
-              required
-              disabled
-              value={hallRental}
-              margin="dense"
-              id="totalhallrental"
-              name="totalhallrental"
-              label="Total Hall Rental"
-              title="Total Hall Rental"
-              type="number"
-              fullWidth
-              variant="outlined"
-            />
-            <TextField
-              autoFocus
-              required
-              disabled
-              value={roomRental + hallRental}
-              margin="dense"
-              id="totalrental"
-              name="totalrental"
-              label="Total Rental"
-              title="Total Rental"
-              type="text"
-              fullWidth
-              variant="outlined"
-            />
+                variant="outlined"
+              />
+              <TextField
+                required
+                disabled
+                value={employeeName}
+                margin="dense"
+                id="empname"
+                name="empname"
+                label="Employee Name"
+                title="Employee Name"
+                type="text"
+                fullWidth
+                variant="outlined"
+              />
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">
+                  Select Holiday Home*
+                </InputLabel>
+                <Select
+                  fullWidth
+                  labelId="holiday-home-label"
+                  label="Holiday Home"
+                  id="outlined-select-holidayhome"
+                  value={HolidayHomeName}
+                  onChange={(e) => {
+                    SetHolidayHomeName(e.target.value);
+                    setRoomRental(roomRental);
+                    setHallRental(hallRental);
+                  }}
+                >
+                  {holidayHomes.map((home) => (
+                    <MenuItem key={home.id} value={home.id}>
+                      {home.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <BasicDatePicker
+                required
+                margin="dense"
+                date={CheckinDate}
+                setDate={handleCheckinDateChange}
+                title="Check in Date"
+                value={CheckinDate}
+              />
+              <BasicDatePicker
+                required
+                margin="normal"
+                date={CheckoutDate}
+                setDate={handleCheckoutDateChange}
+                title="Check Out Date"
+                value={CheckoutDate}
+              />
+              <TextField
+                required
+                disabled
+                value={maxAdults}
+                margin="dense"
+                id="maxAdults"
+                name="maxAdults"
+                label="Maximum Adults"
+                title="Maximum Adults"
+                type="number"
+                fullWidth
+                variant="outlined"
+              />
+              <TextField
+                required
+                disabled
+                value={maxChildren}
+                margin="dense"
+                id="maxChildren"
+                name="maxChildren"
+                label="Maximum Children"
+                title="Maximum Children"
+                type="number"
+                fullWidth
+                variant="outlined"
+              />
+              <TextField
+                required
+                disabled
+                value={NoofRooms}
+                margin="dense"
+                id="NoofRooms"
+                name="NoofRooms"
+                label="Room Count"
+                title="Room Count"
+                type="number"
+                fullWidth
+                variant="outlined"
+              />
+              <TextField
+                required
+                disabled
+                value={NoofHalls}
+                margin="dense"
+                id="NoofHalls"
+                name="NoofHalls"
+                label="Hall Count"
+                title="Hall Count"
+                type="number"
+                fullWidth
+                variant="outlined"
+              />
+              <TextField
+                required
+                disabled
+                value={roomRental}
+                margin="dense"
+                id="totalroomrental"
+                name="totalroomrental"
+                label="Total Room Rental"
+                title="Total Room Rental"
+                type="number"
+                fullWidth
+                variant="outlined"
+              />
+              <TextField
+                required
+                disabled
+                value={hallRental}
+                margin="dense"
+                id="totalhallrental"
+                name="totalhallrental"
+                label="Total Hall Rental"
+                title="Total Hall Rental"
+                type="number"
+                fullWidth
+                variant="outlined"
+              />
+              <TextField
+                required
+                disabled
+                value={roomRental + hallRental}
+                margin="dense"
+                id="totalrental"
+                name="totalrental"
+                label="Total Rental"
+                title="Total Rental"
+                type="text"
+                fullWidth
+                variant="outlined"
+              />
+            </DialogContentText>
           </DialogContent>
           <DialogActions>
             <Button variant="outlined" onClick={handleClose} autoFocus>
@@ -448,12 +444,14 @@ export default function AddSpecialReservationPopUp() {
               variant="contained"
               type="submit"
               autoFocus
-              disabled={reserveDisabled===0 || (ServiceNo==="" || HolidayHomeName==="")}
+              disabled={
+                reserveDisabled || employeeName === "" || HolidayHomeName === ""
+              }
               onClick={() => {
                 setOpened(true);
               }}
             >
-              Submit
+              Add Special Reservation
             </Button>
           </DialogActions>
         </form>

@@ -1,5 +1,5 @@
 import "./style.css";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
 import {
   Grid,
@@ -10,7 +10,6 @@ import {
   Button,
 } from "@mui/material";
 import theme from "../../HomlyTheme";
-
 import SideNavbar from "../../Components/locationAdmin/SideNavbar";
 import PageTitle from "../../Components/locationAdmin/PageTitle";
 import PropTypes from "prop-types";
@@ -19,11 +18,12 @@ import Tab from "@mui/material/Tab";
 import EditHolidayHomeDetails from "../../Components/locationAdmin/CreateHolidayHome/EditHolidayHomes/EditHolidayHomeDetails";
 import EditCaretakerDetails from "../../Components/locationAdmin/CreateHolidayHome/EditHolidayHomes/EditCaretakerDetails";
 import EditHolidayHomeBreakdown from "../../Components/locationAdmin/CreateHolidayHome/EditHolidayHomes/EditHolidayHomeBreakdown";
-
-import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import AxiosClient from "../../services/AxiosClient";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
+import { SocketioContext } from "../../Contexts/SocketioContext";
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -59,14 +59,24 @@ function a11yProps(index) {
 
 const HolidayHomeEdit = () => {
   const navigate = useNavigate();
+  const { socket } = useContext(SocketioContext);
 
   const [approvedClicked, setApprovedClicked] = useState(false);
-
+  const [submitDisable, setSubmitDisable] = useState(false);
   const [showNav, setShowNav] = useState("nav_grid_deactive");
   const [value, setValue] = useState(0);
-
+  const [declined, setDeclined] = useState(false);
   const [caretaker1Id, setCaretaker1Id] = useState("");
   const [caretaker2Id, setCaretaker2Id] = useState("");
+
+  const [EditSuccessfullAlert, setEditSuccessfullAlert] = useState(false);
+  const handleEditSuccessfullAlert = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setEditSuccessfullAlert(false);
+  };
 
   const [detailsValue, setDetailsValue] = useState({
     name: "",
@@ -154,6 +164,8 @@ const HolidayHomeEdit = () => {
           const roomTypeSettings = res.data.roomTypeSettings;
           const settingRoomRental = res.data.roomRentalSettings;
 
+          setDeclined(homeDetails.isDiclined);
+
           setRoomArray(roomDetails);
           setUnitArray(unitDetails);
           setHallArray(hallDetails);
@@ -224,6 +236,18 @@ const HolidayHomeEdit = () => {
   console.log("caretakerimage1", careTakerImage1);
   console.log("caretakerimage2", careTakerImage2);
 
+  const [holidayHomeSubmit, setHolidayHomeSubmit] = useState(false);
+  const [caretakerSubmit, setCaretakerSubmit] = useState(false);
+  const [homeBreakdownSubmit, setHomeBreakdownSubmit] = useState(false);
+
+  useEffect(() => {
+    if (holidayHomeSubmit && caretakerSubmit && homeBreakdownSubmit) {
+      setSubmitDisable(false);
+    } else {
+      setSubmitDisable(true); // Make sure to set to false or true explicitly
+    }
+  }, [holidayHomeSubmit, caretakerSubmit, homeBreakdownSubmit]);
+
   const handleApproval = (e) => {
     const updatedUnitArray = unitArray.map((unit) => {
       return {
@@ -254,6 +278,7 @@ const HolidayHomeEdit = () => {
       image3: image3,
       careTakerImage1: careTakerImage1,
       careTakerImage2: careTakerImage2,
+      selectedRoomDetails: selectedRoomDetails,
     };
     e.preventDefault();
     setApprovedClicked(true);
@@ -261,7 +286,20 @@ const HolidayHomeEdit = () => {
     AxiosClient.post("admin/auth/locationadmin/holidayhome/update", updatedData)
       .then((res) => {
         console.log(res);
-        // navigate("/locationadmin/manage");
+        setEditSuccessfullAlert(true);
+        if (!declined) {
+          socket.emit("newNotification", {
+            senderId: sessionStorage.getItem("userId"),
+            receiverId: "HomlyPriAdmin",
+            data: `${
+              detailsValue.name
+            } - Holiday Home has edited by ${sessionStorage.getItem(
+              "userId"
+            )} `,
+            type: "Holiday Home Edited",
+            time: new Date(),
+          });
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -339,6 +377,7 @@ const HolidayHomeEdit = () => {
                   </Box>
                   <CustomTabPanel value={value} index={0}>
                     <EditHolidayHomeDetails
+                      setSubmit={setHolidayHomeSubmit}
                       value={detailsValue}
                       setValue={setDetailsValue}
                       mainImage={mainImage}
@@ -368,6 +407,7 @@ const HolidayHomeEdit = () => {
                   </CustomTabPanel>
                   <CustomTabPanel value={value} index={1}>
                     <EditHolidayHomeBreakdown
+                      setSubmit={setHomeBreakdownSubmit}
                       roomArray={roomArray}
                       setRoomArray={setRoomArray}
                       unitArray={unitArray}
@@ -405,6 +445,7 @@ const HolidayHomeEdit = () => {
                   </CustomTabPanel>
                   <CustomTabPanel value={value} index={2}>
                     <EditCaretakerDetails
+                      setSubmit={setCaretakerSubmit}
                       value={valueCaretaker}
                       setValue={setValueCareTaker}
                       valueSecond={valueSecond}
@@ -424,6 +465,7 @@ const HolidayHomeEdit = () => {
                       <Button
                         variant="contained"
                         sx={{ marginTop: "1em" }}
+                        disabled={submitDisable}
                         onClick={handleApproval}
                       >
                         Update
@@ -436,6 +478,24 @@ const HolidayHomeEdit = () => {
           </Grid>
         </Container>
       </Box>
+
+      {/* alert type already exist*/}
+      <div>
+        <Snackbar
+          open={EditSuccessfullAlert}
+          autoHideDuration={4000}
+          onClose={handleEditSuccessfullAlert}
+        >
+          <Alert
+            onClose={handleEditSuccessfullAlert}
+            severity="success"
+            variant="filled"
+            sx={{ width: "100%" }}
+          >
+            HolidayHome Successfully Updated
+          </Alert>
+        </Snackbar>
+      </div>
     </ThemeProvider>
   );
 };

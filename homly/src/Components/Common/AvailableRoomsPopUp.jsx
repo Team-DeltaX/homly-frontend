@@ -1,13 +1,8 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
-import axios from "axios";
+import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
-import ListItemText from "@mui/material/ListItemText";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
 import List from "@mui/material/List";
-import Divider from "@mui/material/Divider";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -15,9 +10,7 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import CloseIcon from "@mui/icons-material/Close";
 import Slide from "@mui/material/Slide";
-import Checkbox from "@mui/material/Checkbox";
-import AccordionUsage from "./Accordion";
-import Stack from "@mui/material/Stack";
+import AccordionUsage from "./RoomAccordion";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -40,10 +33,6 @@ export default function AvailableRoomsPopUp({
 
 }) {
   const [open, setOpen] = React.useState(false);
-  const [rooms, setRooms] = React.useState([]);
-  //const [holidayId, setHolidayId] = React.useState( holidayHomeId);
-  console.log("holidayhomeId",holidayHomeId)
-  console.log("roomCodessss",roomCodes);
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -63,7 +52,6 @@ export default function AvailableRoomsPopUp({
         onClose={handleClose}
         TransitionComponent={Transition}
       >
-        {/* Top App Bar */}
         <AppBar sx={{ position: "relative", height: '10%' }}>
           <Toolbar>
             <Typography sx={{ ml: 2, flex: 1 }} variant="h5" component="div">
@@ -80,14 +68,11 @@ export default function AvailableRoomsPopUp({
           </Toolbar>
         </AppBar>
         <List sx={{overflow: 'hidden', overflowY: 'scroll', height: '80%'}}>
-          {console.log("room",room)}
           {room.length > 0 ? (
             room.map((room, index) => (
-              console.log("room",room),
-              room.HolidayHomeId === holidayId && (// TODO: remove this hard-coded room code
+              room.HolidayHomeId === holidayId && (
                 <AccordionUsage
                   index={index}
-                  key={room.id}
                   room={room}
                   NoOfRooms={ NoOfRooms}
                   setNoOfRooms={ setNoOfRooms}
@@ -109,7 +94,6 @@ export default function AvailableRoomsPopUp({
             <Typography variant="h6">No Available Rooms</Typography>
           )}
         </List>
-        {/* botom app bar */}
         <AppBar
           position="fixed"
           color="primary"

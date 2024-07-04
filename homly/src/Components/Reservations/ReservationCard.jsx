@@ -1,17 +1,22 @@
 import Stack from "@mui/material/Stack";
 import { Box } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
-import ViewPopUp from "./ViewPopup";
-import dayjs from "dayjs";
-import { useState } from "react";
 import Typography from "@mui/material/Typography";
+import dayjs from "dayjs";
+import ViewPopUp from "./ViewPopup";
 import AddComplainPopUp from "./AddComplainPopUp";
+import ViewComplaintPopup from "./ViewComplainPopup";
 
 const ReservationCard = (props) => {
-  const [isSpecial, setIsSpecial] = useState(props.reservation.IsSpecial);
-  const [isCancelled, setIsCancelled] = useState(props.reservation.IsCancelled);
-  const [isPaid, setIsPaid] = useState(props.reservation.IsPaid);
-  const isComplainTrue = (props.type === "past" && props.adminNumber != "HomlyPriAdmin");
+  const isComplainTrue =
+    props.type === "past" &&
+    props.adminNumber !== "HomlyPriAdmin" &&
+    (props.isComplaint && props.isComplaint.length === 0)
+      ? true
+      : false;
+  const isViewComplainTrue =
+    props.isComplaint && props.isComplaint.length > 0 ? true : false;
+
   return (
     <Grid
       container
@@ -20,7 +25,6 @@ const ReservationCard = (props) => {
       sx={{
         padding: { xs: "2px 1px", sm: "5px 1px", md: "10px 3px" },
         margin: { xs: "2px 1px", sm: "5px 1px", md: "10px 5px" },
-        borderBottom: "1px solid #fafafa",
         borderRadius: "20px",
         boxShadow: "3px 1px 3px 3px rgba(0,0,0,0.1)",
         borderBottom: "1px solid #fafafa",
@@ -113,27 +117,27 @@ const ReservationCard = (props) => {
           >
             Amount: {props.reservation.Price}
           </Typography>
-          {isPaid ? (
-        <Typography
-          variant="button"
-          sx={{
-            color: "green",
-            fontSize: { xs: "13px", sm: "14px", md: "15px" },
-          }}
-        >
-          PAID
-        </Typography>
-      ) : (
-        <Typography
-          variant="button"
-          sx={{
-            color: "red",
-            fontSize: { xs: "13px", sm: "14px", md: "15px" },
-          }}
-        >
-          NOT PAID
-        </Typography>
-      )}
+          {props.reservation.IsPaid ? (
+            <Typography
+              variant="button"
+              sx={{
+                color: "green",
+                fontSize: { xs: "13px", sm: "14px", md: "15px" },
+              }}
+            >
+              PAID
+            </Typography>
+          ) : (
+            <Typography
+              variant="button"
+              sx={{
+                color: "red",
+                fontSize: { xs: "13px", sm: "14px", md: "15px" },
+              }}
+            >
+              NOT PAID
+            </Typography>
+          )}
         </Grid>
         <Grid
           item
@@ -160,7 +164,7 @@ const ReservationCard = (props) => {
                 marginBottom: "8px",
               }}
             >
-              {props.holidayHome.Name.toUpperCase()}
+              {props.holidayHome && props.holidayHome.Name.toUpperCase()}
             </Typography>
             <Typography
               sx={{
@@ -178,7 +182,7 @@ const ReservationCard = (props) => {
               Check Out:{" "}
               {dayjs(props.reservation.CheckoutDate).format("DD/MM/YYYY")}
             </Typography>
-            {isSpecial && (
+            {props.reservation.IsSpecial && (
               <Typography
                 variant="button"
                 sx={{
@@ -189,7 +193,7 @@ const ReservationCard = (props) => {
                 Special
               </Typography>
             )}
-            {isCancelled && (
+            {props.reservation.IsCancelled && (
               <Typography
                 variant="button"
                 sx={{
@@ -223,9 +227,10 @@ const ReservationCard = (props) => {
                 reservedHall={props.reservedHall}
                 holidayhome={props.holidayHome}
               />
-              <Box sx={{ display: isComplainTrue ? "block" : "none" }}>
-                <AddComplainPopUp reservation={props} />
-              </Box>
+              {isComplainTrue && <AddComplainPopUp reservation={props} />}
+              {isViewComplainTrue && (
+                <ViewComplaintPopup complain={props.isComplaint} />
+              )}
             </Stack>
           </Grid>
         </Grid>

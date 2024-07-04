@@ -207,7 +207,7 @@ export default function CompareLineChart() {
                   HolidayHome3 !== hh.HolidayHomeId
                 );
               }).map((hh) => {
-                return <MenuItem value={hh.HolidayHomeId}>{hh.Name}</MenuItem>;
+                return <MenuItem key={hh.HolidayHomeId} value={hh.HolidayHomeId}>{hh.Name}</MenuItem>;
               })}
             </Select>
             <FormHelperText>
@@ -217,7 +217,7 @@ export default function CompareLineChart() {
                 <Typography
                   sx={{ color: HolidayHome1Rating < 5 ? "red" : "green" }}
                 >
-                  {HolidayHome1Rating} Total Ratings
+                  {HolidayHome1Rating.toFixed(2)} Total Ratings
                 </Typography>
               )}
             </FormHelperText>
@@ -257,7 +257,7 @@ export default function CompareLineChart() {
                   HolidayHome3 !== hh.HolidayHomeId
                 );
               }).map((hh) => {
-                return <MenuItem value={hh.HolidayHomeId}>{hh.Name}</MenuItem>;
+                return <MenuItem key={hh.HolidayHomeId}  value={hh.HolidayHomeId}>{hh.Name}</MenuItem>;
               })}
             </Select>
             <FormHelperText>
@@ -265,9 +265,9 @@ export default function CompareLineChart() {
                 "select Home two to analyse"
               ) : (
                 <Typography
-                  sx={{ color: HolidayHome1Rating < 5 ? "red" : "green" }}
+                  sx={{ color: HolidayHome2Rating < 5 ? "red" : "green" }}
                 >
-                  {HolidayHome2Rating} Total Ratings
+                  {HolidayHome2Rating.toFixed(2)} Total Ratings
                 </Typography>
               )}
             </FormHelperText>
@@ -308,7 +308,7 @@ export default function CompareLineChart() {
                   HolidayHome2 !== hh.HolidayHomeId
                 );
               }).map((hh) => {
-                return <MenuItem value={hh.HolidayHomeId}>{hh.Name}</MenuItem>;
+                return <MenuItem key={hh.HolidayHomeId}  value={hh.HolidayHomeId}>{hh.Name}</MenuItem>;
               })}
             </Select>
 
@@ -317,9 +317,9 @@ export default function CompareLineChart() {
                 "select Home three to analyse"
               ) : (
                 <Typography
-                  sx={{ color: HolidayHome1Rating < 5 ? "red" : "green" }}
+                  sx={{ color: HolidayHome3Rating < 5 ? "red" : "green" }}
                 >
-                  {HolidayHome3Rating} Total Ratings
+                  {HolidayHome3Rating.toFixed(2)} Total Ratings
                 </Typography>
               )}{" "}
             </FormHelperText>
