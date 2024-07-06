@@ -16,9 +16,12 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import { PDFDownloadLink } from "@react-pdf/renderer";
 import logo from "../../../Assets/images/logo.png";
 import dayjs from "dayjs";
+import BlackListUserReportPDF from "../Report/ReportPDF/BlacklistUserReportPdf";
 import { useState } from "react";
+
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
   ...theme.typography.body2,
@@ -35,22 +38,19 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-const PreviewPopupIncomeReport = ({
+const PreviewPopupBlackListUserReport = ({
   open,
   setOpen,
   previewData,
   toDate,
   fromDate,
 }) => {
-  const [isDownolad, setIsDownload] = useState(false);
+  const [isDownload, setIsDownload] = useState(false);
 
   const handleClose = () => {
     setOpen(false);
   };
 
-  function createData(name, protein) {
-    return { name, protein };
-  }
   return (
     <React.Fragment>
       <BootstrapDialog
@@ -60,7 +60,6 @@ const PreviewPopupIncomeReport = ({
       >
         <div>
           <div>
-            {" "}
             <img
               src={logo}
               alt="logoOfHomely"
@@ -75,7 +74,7 @@ const PreviewPopupIncomeReport = ({
               style={{ fontWeight: "bold" }}
             >
               Inova IT Systems - Welfare Department <br />
-              Income Details
+              Blacklist Users Details
             </DialogTitle>
           </div>
         </div>
@@ -110,38 +109,30 @@ const PreviewPopupIncomeReport = ({
               <TableHead>
                 <TableRow>
                   <TableCell style={{ fontWeight: "bold" }}>
-                    {" "}
-                    Service Number{" "}
+                    Service Number
                   </TableCell>
                   <TableCell style={{ fontWeight: "bold" }}>
-                    {" "}
-                    Employee Name{" "}
+                    Employee Name
                   </TableCell>
                   <TableCell align="right" style={{ fontWeight: "bold" }}>
-                    {" "}
-                    Blacklisted Date{" "}
+                    Blacklisted Date
                   </TableCell>
                   <TableCell align="right" style={{ fontWeight: "bold" }}>
-                    {" "}
-                    Blacklisted Reason{" "}
+                    Blacklisted Reason
                   </TableCell>
                   <TableCell align="right" style={{ fontWeight: "bold" }}>
-                    {" "}
-                    Removed Date{" "}
+                    Removed Date
                   </TableCell>
                   <TableCell align="right" style={{ fontWeight: "bold" }}>
-                    {" "}
-                    Removed Reason{" "}
+                    Removed Reason
                   </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {/* holidayHome name and income */}
-
                 {previewData &&
                   previewData.map((row) => (
                     <TableRow
-                      key={row.name}
+                      key={row.ServiceNo}
                       sx={{
                         "&:last-child td, &:last-child th": { border: 0 },
                       }}
@@ -160,10 +151,35 @@ const PreviewPopupIncomeReport = ({
             </Table>
           </TableContainer>
         </DialogContent>
-
         <DialogActions>
-          <Button autoFocus onClick={() => setIsDownload(true)}>
-            Download
+          <PDFDownloadLink
+            document={
+              <BlackListUserReportPDF
+                previewData={previewData}
+                fromDate={fromDate}
+                toDate={toDate}
+              />
+            }
+            fileName="blacklist_user_report.pdf"
+            style={{ textDecoration: "none" }}
+          >
+            {({ loading }) => (
+              <Button
+                variant="contained"
+                onClick={() => setIsDownload(true)}
+                disabled={loading}
+              >
+                {loading ? "Loading document..." : "Download"}
+              </Button>
+            )}
+          </PDFDownloadLink>
+          <Button
+            autoFocus
+            onClick={handleClose}
+            variant="outlined"
+            color="error"
+          >
+            Close
           </Button>
         </DialogActions>
       </BootstrapDialog>
@@ -171,4 +187,4 @@ const PreviewPopupIncomeReport = ({
   );
 };
 
-export default PreviewPopupIncomeReport;
+export default PreviewPopupBlackListUserReport;

@@ -14,7 +14,9 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import PreviewPopupBlacklistUserReport from "../Report/PreviewPopupBlacklistUserReport";
 import { useState } from "react";
 import AxiosClient from "../../../services/AxiosClient";
-import { useEffect } from "react";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import BlackListUserReportPDF from "../Report/ReportPDF/BlacklistUserReportPdf";
+import ErrorSnackbar from "../../User/ErrorSnackbar"; // Import ErrorSnackbar component
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -24,17 +26,31 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-export default function IncomeReport() {
+export default function BlackListUserReport() {
   const [open, setOpen] = React.useState(false);
-  const [holidayHome, setHolidayHome] = useState("all");
   const [fromDate, setFromDate] = useState(dayjs().subtract(1, "day"));
   const [toDate, setToDate] = useState(dayjs().subtract(1, "day"));
-  const [HHNames, setHHNames] = useState([]);
   const [previewData, setPreviewData] = useState([]);
+  const [errorStatus, setErrorStatus] = useState({
+    isOpen: false,
+    type: "",
+    message: "",
+  });
 
   const maxDate = dayjs().subtract(1, "day");
+
   const handleClickOpen = () => {
-    AxiosClient.get("admin//report/blacklist", {
+    if (fromDate.isAfter(toDate)) {
+      setErrorStatus({
+        ...errorStatus,
+        isOpen: true,
+        type: "error",
+        message: "From Date should be before To Date",
+      });
+      return;
+    }
+
+    AxiosClient.get("admin/report/blacklist", {
       params: {
         fromDate: fromDate,
         toDate: toDate,
@@ -47,8 +63,8 @@ export default function IncomeReport() {
   };
 
   const handleReset = () => {
-    setFromDate("");
-    setToDate("");
+    setFromDate(dayjs().subtract(1, "day"));
+    setToDate(dayjs().subtract(1, "day"));
   };
 
   return (
@@ -67,7 +83,7 @@ export default function IncomeReport() {
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DemoContainer components={["DatePicker"]}>
                       <DatePicker
-                        label="Basic date picker"
+                        label="From Date"
                         value={fromDate}
                         onChange={(value) => setFromDate(value)}
                         maxDate={maxDate}
@@ -93,7 +109,7 @@ export default function IncomeReport() {
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DemoContainer components={["DatePicker"]}>
                       <DatePicker
-                        label="Basic date picker"
+                        label="To Date"
                         value={toDate}
                         onChange={(value) => setToDate(value)}
                         maxDate={maxDate}
@@ -113,6 +129,26 @@ export default function IncomeReport() {
           <Button variant="contained" onClick={handleClickOpen}>
             Preview
           </Button>
+          <PDFDownloadLink
+            document={
+              <BlackListUserReportPDF
+                previewData={previewData}
+                fromDate={fromDate}
+                toDate={toDate}
+              />
+            }
+            fileName="blacklist_user_report.pdf"
+          >
+            {({ loading }) =>
+              loading ? (
+                <Button variant="contained" disabled>
+                  Loading...
+                </Button>
+              ) : (
+                <Button variant="contained">Download</Button>
+              )
+            }
+          </PDFDownloadLink>
         </Stack>
       </Stack>
       <PreviewPopupBlacklistUserReport
@@ -121,6 +157,12 @@ export default function IncomeReport() {
         previewData={previewData}
         fromDate={fromDate}
         toDate={toDate}
+      />
+      <ErrorSnackbar
+        isOpen={errorStatus.isOpen}
+        type={errorStatus.type}
+        message={errorStatus.message}
+        setIsOpen={(value) => setErrorStatus({ ...errorStatus, isOpen: value })}
       />
     </Box>
   );

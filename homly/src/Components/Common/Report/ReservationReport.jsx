@@ -19,8 +19,7 @@ import { useState, useEffect } from "react";
 import AxiosClient from "../../../services/AxiosClient";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import ReservationReportPDF from "./ReportPDF/ReservationReportPdf";
-import Snackbar from "@mui/material/Snackbar";
-import Alert from "@mui/material/Alert";
+import ErrorSnackbar from "../../User/ErrorSnackbar";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -37,15 +36,21 @@ export default function ReservationReport() {
   const [toDate, setToDate] = useState(dayjs().subtract(1, "day"));
   const [HHNames, setHHNames] = useState([]);
   const [previewData, setPreviewData] = useState([]);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [showError, setShowError] = useState(false);
+  const [errorStatus, setErrorStatus] = useState({
+    isOpen: false,
+    type: "",
+    message: "",
+  });
 
   const maxDate = dayjs().subtract(1, "day");
 
   const handleClickOpen = () => {
     if (fromDate.isAfter(toDate)) {
-      setErrorMessage("Please enter the dates properly and try again");
-      setShowError(true);
+      setErrorStatus({
+        isOpen: true,
+        type: "error",
+        message: "From Date should be before To Date",
+      });
       return;
     }
 
@@ -74,10 +79,6 @@ export default function ReservationReport() {
     setToDate(dayjs().subtract(1, "day"));
     setHolidayHome("all");
     setPreviewData([]);
-  };
-
-  const handleCloseError = () => {
-    setShowError(false);
   };
 
   return (
@@ -204,15 +205,12 @@ export default function ReservationReport() {
         fromDate={fromDate}
         toDate={toDate}
       />
-      <Snackbar
-        open={showError}
-        autoHideDuration={6000}
-        onClose={handleCloseError}
-      >
-        <Alert onClose={handleCloseError} severity="error" sx={{ width: "100%" }}>
-          {errorMessage}
-        </Alert>
-      </Snackbar>
+      <ErrorSnackbar
+        isOpen={errorStatus.isOpen}
+        type={errorStatus.type}
+        message={errorStatus.message}
+        setIsOpen={(value) => setErrorStatus({ ...errorStatus, isOpen: value })}
+      />
     </Box>
   );
 }
