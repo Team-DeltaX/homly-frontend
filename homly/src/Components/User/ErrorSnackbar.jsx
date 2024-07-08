@@ -19,7 +19,12 @@ export default function ErrorSnackbar({ isOpen, type, message, setIsOpen }) {
         autoHideDuration={5000}
         onClose={handleAlertClose}
       >
-        <Alert severity={type} variant="filled" onClose={handleAlertClose}>
+        <Alert
+          severity={type}
+          variant="filled"
+          onClose={handleAlertClose}
+          sx={{ borderRadius: "20px" }}
+        >
           {message}
         </Alert>
       </Snackbar>
