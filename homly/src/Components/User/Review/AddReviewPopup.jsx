@@ -41,7 +41,7 @@ export default function AddReviewPopup({
           if (res.data) {
             setReview(res.data.review[0].UserReview);
             setTempReview(res.data.review[0].UserReview);
-          }else {
+          } else {
             setReview("");
             setTempReview("");
           }
@@ -271,5 +271,3 @@ export default function AddReviewPopup({
     </ThemeProvider>
   );
 }
-
-
