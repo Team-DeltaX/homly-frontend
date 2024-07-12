@@ -67,7 +67,7 @@ export default function ReservationReportLoc() {
   };
 
   useEffect(() => {
-    AxiosClient.get("admin/auth/HHnames")
+    AxiosClient.get("admin/auth/locHHnames")
       .then((res) => {
         setHHNames(res.data);
       })
