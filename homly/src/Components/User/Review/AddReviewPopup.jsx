@@ -41,15 +41,18 @@ export default function AddReviewPopup({
           if (res.data) {
             setReview(res.data.review[0].UserReview);
             setTempReview(res.data.review[0].UserReview);
+          }else {
+            setReview("");
+            setTempReview("");
           }
         })
         .catch((err) => {
-          setErrorStatus({
-            ...errorStatus,
-            isOpen: true,
-            type: "error",
-            message: err.message,
-          });
+          // setErrorStatus({
+          //   ...errorStatus,
+          //   isOpen: true,
+          //   type: "error",
+          //   message: err.message,
+          // });
         });
     }
   }, [isEdit, open]);
