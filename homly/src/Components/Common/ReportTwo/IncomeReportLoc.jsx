@@ -14,11 +14,11 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import PreviewPopupIncomeReport from "./PreviewPopupIncomeReport";
+import PreviewPopupIncomeLoc from "./PreviewIncomeLoc";
 import { useState, useEffect } from "react";
 import AxiosClient from "../../../services/AxiosClient";
 import { PDFDownloadLink } from "@react-pdf/renderer";
-import PDFDocument from "./ReportPDF/PDFDocument"; // Import the PDFDocument component
+import IncomeLoc from "./PdfReports/IncomeLoc"; // Import the PDFDocument component
 import ErrorSnackbar from "../../User/ErrorSnackbar";
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -29,7 +29,7 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-export default function IncomeReport() {
+export default function IncomeReportLoc() {
   const [open, setOpen] = useState(false);
   const [holidayHome, setHolidayHome] = useState("all");
   const [fromDate, setFromDate] = useState(dayjs().subtract(1, "day"));
@@ -62,13 +62,14 @@ export default function IncomeReport() {
         toDate: toDate,
       },
     }).then((res) => {
+      console.log(res.data)
       setPreviewData(res.data);
       setOpen(true);
     });
   };
 
   useEffect(() => {
-    AxiosClient.get("admin/auth/HHnames")
+    AxiosClient.get("admin/auth/locHHnames")
       .then((res) => {
         setHHNames(res.data);
       })
@@ -178,7 +179,7 @@ export default function IncomeReport() {
           {previewData && (
             <PDFDownloadLink
               document={
-                <PDFDocument
+                <IncomeLoc
                   previewData={previewData}
                   fromDate={fromDate}
                   toDate={toDate}
@@ -199,7 +200,7 @@ export default function IncomeReport() {
           )}
         </Stack>
       </Stack>
-      <PreviewPopupIncomeReport
+      <PreviewPopupIncomeLoc
         open={open}
         setOpen={setOpen}
         previewData={previewData}

@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { Container, Grid, ThemeProvider, Box, Tab } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
-import SideNavbar from "../../Components/PrimaryAdmin/SideNavbar";
+import SideNavbar from "../../Components/locationAdmin/SideNavbar";
 import theme from "../../HomlyTheme";
 import Pagetop from "../../Components/PrimaryAdmin/PageTop";
-import IncomeReport from "../../Components/Common/Report/IncomeReport";
-import ReservationReport from "../../Components/Common/Report/ReservationReport";
-import BlacklistUserReport from "../../Components/Common/Report/BlacklistUserReport";
+import IncomeReportLoc from "../../Components/Common/ReportTwo/IncomeReportLoc";
+import ReservationReportLoc from "../../Components/Common/ReportTwo/ReservationReportLoc";
 
-const PrimaryReport = () => {
+
+const LocationReport = () => {
   const [showNav, setShowNav] = useState("nav_grid_deactive");
   const [value, setValue] = useState("1");
 
@@ -53,19 +53,11 @@ const PrimaryReport = () => {
                     <TabList onChange={handleChange}>
                       <Tab label="Income Report" value="1" />
                       <Tab label="Reservation Report" value="2" />
-                      <Tab label="Blacklist User Report" value="3" />
+                      {/* <Tab label="Blacklist User Report" value="3" /> */}
                     </TabList>
                   </Box>
-                  <TabPanel value="1">
-                    <IncomeReport />
-                  </TabPanel>
-                  <TabPanel value="2">
-                    <ReservationReport />
-                  </TabPanel>
-                  <TabPanel value="3">
-                    Select the Specific Time Period to Generate the Report
-                    <BlacklistUserReport />
-                  </TabPanel>
+                  <TabPanel value="1">{<IncomeReportLoc/>}</TabPanel>
+                  <TabPanel value="2">{<ReservationReportLoc/>}</TabPanel>
                 </TabContext>
               </Box>
             </Grid>
@@ -76,4 +68,4 @@ const PrimaryReport = () => {
   );
 };
 
-export default PrimaryReport;
+export default LocationReport;
