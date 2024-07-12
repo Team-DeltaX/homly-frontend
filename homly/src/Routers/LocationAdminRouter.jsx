@@ -16,7 +16,7 @@ const CreateHolidayHome = lazy(() =>
 );
 const FeedBack = lazy(() => import("../Pages/locationAdmin/Feedback"));
 const Reservations = lazy(() => import("../Pages/locationAdmin/Reservations"));
-const Report = lazy(() => import("../Pages/locationAdmin/Report"));
+const LocationReport = lazy(() => import("../Pages/locationAdmin/LocationReport"));
 const ManageHomes = lazy(() => import("../Pages/locationAdmin/ManageHomes"));
 const HolidayHomeEdit = lazy(() =>
   import("../Pages/locationAdmin/HolidayHomeEdit")
@@ -31,7 +31,7 @@ const LocationAdminRouter = () => {
         <Route path="/details" element={<HolidayHomesDetails />} />
         <Route path="/feedback" element={<FeedBack />} />
         <Route path="/reservations" element={<Reservations />} />
-        <Route path="/report" element={<Report />} />
+        <Route path="/report" element={<LocationReport />} />
         <Route
           path="/holidayhomes/createholidayhome"
           element={<CreateHolidayHome />}

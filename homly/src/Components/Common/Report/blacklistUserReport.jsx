@@ -11,11 +11,11 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import PreviewPopupBlacklistUserReport from "../Report/PreviewPopupBlacklistUserReport";
+import PreviewPopupBlacklistUserReport from "./PreviewPopupBlacklistUserReport";
 import { useState } from "react";
 import AxiosClient from "../../../services/AxiosClient";
 import { PDFDownloadLink } from "@react-pdf/renderer";
-import BlackListUserReportPDF from "../Report/ReportPDF/BlacklistUserReportPdf";
+import BlackListUserReportPDF from "./ReportPDF/BlacklistUserReportPdf";
 import ErrorSnackbar from "../../User/ErrorSnackbar"; // Import ErrorSnackbar component
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -68,7 +68,7 @@ export default function BlackListUserReport() {
   };
 
   return (
-    <Box sx={{ width: "70%", align: "center", flexGrow: 1 }}>
+    <Box sx={{ width: "70%", align: "center", flexGrow: 1, padding: "20px" }}>
       <Stack spacing={2}>
         <Item>
           <Grid container spacing={2}>

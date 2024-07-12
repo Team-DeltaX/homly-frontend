@@ -54,20 +54,21 @@ export default function ReservationReport() {
       return;
     }
 
-    AxiosClient.get("/admin/report/reservation", {
+    AxiosClient.get("/admin/auth/report/reservation", {
       params: {
         HHName: holidayHome,
         fromDate: fromDate,
         toDate: toDate,
       },
     }).then((res) => {
+      console.log(res.data)
       setPreviewData(res.data);
       setOpen(true);
     });
   };
 
   useEffect(() => {
-    AxiosClient.get("admin/HHnames")
+    AxiosClient.get("admin/auth/HHnames")
       .then((res) => {
         setHHNames(res.data);
       })
