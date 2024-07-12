@@ -6,7 +6,7 @@ import theme from "../../HomlyTheme";
 import Pagetop from "../../Components/PrimaryAdmin/PageTop";
 import IncomeReport from "../../Components/Common/Report/IncomeReport";
 import ReservationReport from "../../Components/Common/Report/ReservationReport";
-import BlacklistUserReport from "../../Components/Common/Report/BlacklistUserReport";
+import BlacklistUserReport from "../../Components/Common/Report/blacklistUserReport";
 
 const PrimaryReport = () => {
   const [showNav, setShowNav] = useState("nav_grid_deactive");
