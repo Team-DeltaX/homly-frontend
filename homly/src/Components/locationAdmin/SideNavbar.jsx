@@ -11,7 +11,6 @@ import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import ListAltOutlinedIcon from "@mui/icons-material/ListAltOutlined";
 import QueryStatsOutlinedIcon from "@mui/icons-material/QueryStatsOutlined";
-import RateReviewOutlinedIcon from "@mui/icons-material/RateReviewOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import CloseIcon from "@mui/icons-material/Close";
 
@@ -171,39 +170,6 @@ const SideNavbar = ({ closeNavGrid, setShowNav }) => {
                     }}
                   >
                     HolidayHomes Details
-                  </Typography>
-                </Link>
-              </Box>
-            </Grid>
-
-            <Grid
-              container
-              justifyContent={"flex-start"}
-              alignItems={"center"}
-              xs={12}
-              sx={{
-                backgroundColor:
-                  selectedMenuItem === "feedback" ? "white" : "primary.main",
-              }}
-              className="sidenav_item"
-            >
-              <Box justifyContent={"center"}>
-                <RateReviewOutlinedIcon
-                  sx={{
-                    color: selectedMenuItem === "feedback" ? "black" : "white",
-                  }}
-                />
-              </Box>
-              <Box alignItems={"center"}>
-                <Link to="/locationadmin/feedback" className="sidenav_link">
-                  <Typography
-                    variant="p"
-                    sx={{
-                      color:
-                        selectedMenuItem === "feedback" ? "black" : "white",
-                    }}
-                  >
-                    Feedback
                   </Typography>
                 </Link>
               </Box>
