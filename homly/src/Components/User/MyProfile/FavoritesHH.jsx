@@ -50,6 +50,7 @@ const FavoritesHH = () => {
             sx={{
               width: { xs: "100%", sm: "90%" },
               height: { md: "480px" },
+              minHeight: { xs: "300px", sm: "500px", md: "auto" },
               overflowY: "scroll",
               justifyContent: "center",
             }}
@@ -67,7 +68,7 @@ const FavoritesHH = () => {
                 {showSkeleton ? (
                   [1, 2, 3, 4].map((index) => {
                     return <FavoritesHHCardSkeleton key={index} />;
-                  })	
+                  })
                 ) : favoritesHH.length > 0 ? (
                   favoritesHH.map((hh) => (
                     <FavoritesHHCard
@@ -83,9 +84,20 @@ const FavoritesHH = () => {
                     />
                   ))
                 ) : (
-                  <Typography variant="h6">
-                    No Favorites Holiday Homes
-                  </Typography>
+                  <Box
+                    sx={{
+                      height: "100%",
+                      width: "100%",
+                      minHeight: { xs: "258px", sm: "458px", md: "450px" },
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Typography variant="h6" sx={{ color: "grey.500" }}>
+                      No Favorites Holiday Homes
+                    </Typography>{" "}
+                  </Box>
                 )}
               </Box>
             </CardContent>

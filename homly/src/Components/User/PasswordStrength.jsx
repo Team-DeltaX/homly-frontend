@@ -5,7 +5,8 @@ export default function PasswordStrength({ password, setPasswordStrength }) {
   return (
     <PasswordStrengthBar
       password={password}
-      scoreWords={['too weak', 'weak', 'okay', 'good', 'strong']}
+      minLength={6}
+      scoreWords={["too weak", "weak", "okay", "good", "strong"]}
       onChangeScore={(e) => {
         setPasswordStrength(e);
       }}
