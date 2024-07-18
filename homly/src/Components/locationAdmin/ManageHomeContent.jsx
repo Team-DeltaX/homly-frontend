@@ -138,7 +138,7 @@ const ManageHomeContent = () => {
                         HolidayHomeName={item.Name}
                         Category={item.Category}
                         HolidayHomeId={item.HolidayHomeId}
-                        image={item.Image1}
+                        image={item.MainImage}
                         status={item.Status}
                         activeToggler={true}
                       />
@@ -168,6 +168,7 @@ const ManageHomeContent = () => {
                         Category={item.Category}
                         HolidayHomeId={item.HolidayHomeId}
                         activeToggler={true}
+                        image={item.MainImage}
                       />
                     );
                   })}
@@ -194,6 +195,7 @@ const ManageHomeContent = () => {
                         Category={item.Category}
                         HolidayHomeId={item.HolidayHomeId}
                         activeToggler={false}
+                        image={item.MainImage}
                       />
                     );
                   })}
@@ -221,6 +223,7 @@ const ManageHomeContent = () => {
                         HolidayHomeId={item.HolidayHomeId}
                         activeToggler={false}
                         reason={item.reason}
+                        image={item.MainImage}
                       />
                     );
                   })}

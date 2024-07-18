@@ -77,11 +77,22 @@ const HolidayHomeCard = ({
           marginBottom: "",
         }}
       >
-        <Box className="home_image" sx={{ width: "160px" }}>
+        <Box
+          className="home_image"
+          sx={{ width: "160px", height: "100px", overflow: "hidden" }}
+        >
           {image ? (
-            <img src={image} alt="holidayhome" style={{ width: "160px" }} />
+            <img
+              src={image}
+              alt="holidayhome"
+              style={{ width: "160px", height: "100%" }}
+            />
           ) : (
-            <img src={imag} alt="holidayhome" style={{ width: "100px" }} />
+            <img
+              src={imag}
+              alt="holidayhome"
+              style={{ width: "100px", height: "100%" }}
+            />
           )}
         </Box>
         <Box className="sub_details">
