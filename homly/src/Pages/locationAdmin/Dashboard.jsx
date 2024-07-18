@@ -1,6 +1,6 @@
 import "./style.css";
 import React, { useState } from "react";
-
+import { Link } from "react-router-dom";
 import Box from "@mui/material/Box";
 import {
   Grid,
@@ -56,23 +56,25 @@ const Dashboard = () => {
                   bell={true}
                 />
                 <DashboardContent />
-                <Button
-                  variant="contained"
-                  sx={{
-                    backgroundColor: "primary.main",
-                    textTransform: "capitalize",
-                    fontWeight: "bold",
-                    position: "absolute",
-                    bottom: "20px",
-                    right: "40px",
-                    color: "white",
-                  }}
-                  startIcon={<ControlPointIcon />}
-                >
-                  <Typography sx={{ fontFamily: "sans-serif" }} variant="p">
-                    Create New HolidayHome
-                  </Typography>{" "}
-                </Button>
+                <Link to="/locationadmin/holidayhomes/createholidayhome">
+                  <Button
+                    variant="contained"
+                    sx={{
+                      backgroundColor: "primary.main",
+                      textTransform: "capitalize",
+                      fontWeight: "bold",
+                      position: "absolute",
+                      bottom: "20px",
+                      right: "40px",
+                      color: "white",
+                    }}
+                    startIcon={<ControlPointIcon />}
+                  >
+                    <Typography sx={{ fontFamily: "sans-serif" }} variant="p">
+                      Create New HolidayHome
+                    </Typography>{" "}
+                  </Button>
+                </Link>
               </Box>
             </Grid>
           </Grid>

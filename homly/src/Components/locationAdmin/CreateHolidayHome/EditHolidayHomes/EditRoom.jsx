@@ -12,7 +12,6 @@ import Select from "@mui/material/Select";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import RoomBreakdown from "../RoomBreakdown";
-import axios from "axios";
 import { useParams } from "react-router-dom";
 import AxiosClient from "../../../../services/AxiosClient";
 
@@ -205,10 +204,6 @@ const EditRoom = ({
       roomRental: editedRoom.roomRental,
       groupByUnit: editedRoom.groupByUnit,
     });
-    // axios
-    //   .get(
-    //     `http://localhost:8080/admin/auth/locationadmin/holidayhome/rental/${homeId}/${editedRoom.roomCode}`
-    //   )
     AxiosClient.get(
       `/admin/auth/locationadmin/holidayhome/rental/${homeId}/${editedRoom.roomCode}`
     )
@@ -320,14 +315,6 @@ const EditRoom = ({
 
   const handleFloorLevelChange = (e) => {
     setValues({ ...values, floorLevel: e.target.value });
-  };
-
-  const handleNoOfAdults = (e) => {
-    setValues({ ...values, NoOfAdults: e.target.value });
-  };
-
-  const handleNoOfChildren = (e) => {
-    setValues({ ...values, NoOfChildren: e.target.value });
   };
 
   const handleRemarksChange = (e) => {

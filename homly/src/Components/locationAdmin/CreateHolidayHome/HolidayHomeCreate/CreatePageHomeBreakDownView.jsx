@@ -10,11 +10,9 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import Checkbox from "@mui/material/Checkbox";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import CancelIcon from "@mui/icons-material/Cancel";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-
 import EditRoom from "./EditRoom";
 import EditUnit from "./EditUnit";
 import EditHall from "./EditHall";
@@ -74,9 +72,6 @@ const CreatePageHomeBreakDownView = ({
   setRoomTypeArray,
 }) => {
   const [value, setValue] = useState(0);
-  // const [settingsType, setSettingsType] = useState('');
-  // const [settingsAdults, setSettingsAdults] = useState('');
-  // const [settingsChildren, setSettingsChildren] = useState('');
   const [settingsRoomType, setSettingsRoomType] = useState({
     type: "",
     adults: "",
@@ -268,15 +263,6 @@ const CreatePageHomeBreakDownView = ({
     }
   }, [roomArray, unitArray, setSubmit, error]);
 
-  // useEffect(() => {
-  //   if (submitClicked) {
-  //     const details = { "adultsCount": adultsCount, "childCount": childCount, "otherCharges": otherCharges, "serviceCharges": serviceCharges, "totalRental": totalRental, "facilities": facilities, "gym": gym, "kitchen": kitchen, "park": park, "wifi": wifi, "pool": pool, "bar": bar }
-  //     setAllValues((prev) => {
-  //       return { ...prev, "homeBreakDown": details, "roomArray": roomArray, "unitArray": unitArray, "hallArray": hallArray }
-  //     });
-  //   }
-  // }, [submitClicked]);
-
   const [typeExistAlert, setTypeExistAlert] = useState(false);
 
   const handleTypeExistAlert = (event, reason) => {
@@ -407,24 +393,6 @@ const CreatePageHomeBreakDownView = ({
             </FormGroup>
           </Grid>
           <Grid item md={6} sm={12} xs={12}>
-            {/* <Box className="input_container" sx={{ display: 'flex', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
-              <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
-                <Typography variant='p' sx={{ color: 'black' }}>Other Charges</Typography>
-              </Box>
-              <TextField error={error.oCharges} value={bdValue.otherCharges} type='number' id="outlined-required" label="Other Charges" placeholder='Other Charges' fullWidth size='small' onChange={handleOtherChargesChange} helperText={error.oCharges ? "Invalid Input" : " "} />
-            </Box> */}
-            {/* <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
-              <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
-                <Typography variant='p' sx={{ color: 'black' }}>Service Charges</Typography>
-              </Box>
-              <TextField error={error.sCharges} value={bdValue.serviceCharges} type='number' id="outlined-required" label="Service Charges" placeholder='Service Charges' fullWidth size='small' onChange={handleServiceChargesChange} helperText={error.sCharges ? "Invalid Input" : " "} />
-            </Box> */}
-            {/* <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
-              <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
-                <Typography variant='p' sx={{ color: 'black' }}>Total Rental</Typography>
-              </Box>
-              <TextField error={error.tRental} value={bdValue.totalRental} type='number' id="outlined-required" label="Total Rental" placeholder='Total Rental' fullWidth size='small' required onChange={handleTotalRentalChange} helperText={error.tRental ? "Invalid Input" : " "} />
-            </Box> */}
             <Box
               className="input_container"
               sx={{

@@ -40,16 +40,39 @@ const HolidayHomeImagesView = () => {
             gap: "1em",
           }}
         >
-          <Box sx={{}}>
-            <img src={mainImage} alt="mainImage" style={{ width: "220px" }} />
-          </Box>
-
-          <Box sx={{}}>
-            <img src={image1} alt="image1" style={{ width: "220px" }} />
-          </Box>
-          <Box sx={{}}>
-            <img src={image2} alt="image2" style={{ width: "220px" }} />
-          </Box>
+          {mainImage != null ? (
+            <Box sx={{}}>
+              <img
+                src={mainImage}
+                alt="mainImage"
+                style={{ width: "220px", height: "150px", borderRadius: "6px" }}
+              />
+            </Box>
+          ) : (
+            ""
+          )}
+          {image1 !== null ? (
+            <Box sx={{}}>
+              <img
+                src={image1}
+                alt="image1"
+                style={{ width: "220px", height: "150px", borderRadius: "6px" }}
+              />
+            </Box>
+          ) : (
+            ""
+          )}
+          {image2 != null ? (
+            <Box sx={{}}>
+              <img
+                src={image2}
+                alt="image2"
+                style={{ width: "220px", height: "150px", borderRadius: "6px" }}
+              />
+            </Box>
+          ) : (
+            ""
+          )}
         </Box>
       </fieldset>
     </Box>

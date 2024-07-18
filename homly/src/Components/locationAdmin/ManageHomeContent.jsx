@@ -4,12 +4,7 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import axios from "axios";
-
 import ControlPointIcon from "@mui/icons-material/ControlPoint";
-import Input from "./Input";
-import SearchIcon from "@mui/icons-material/Search";
-
 import HolidayHomeCard from "./HolidayHomeCard";
 import AxiosClient from "../../services/AxiosClient";
 
@@ -143,7 +138,7 @@ const ManageHomeContent = () => {
                         HolidayHomeName={item.Name}
                         Category={item.Category}
                         HolidayHomeId={item.HolidayHomeId}
-                        image={item.Image1}
+                        image={item.MainImage}
                         status={item.Status}
                         activeToggler={true}
                       />
@@ -173,6 +168,7 @@ const ManageHomeContent = () => {
                         Category={item.Category}
                         HolidayHomeId={item.HolidayHomeId}
                         activeToggler={true}
+                        image={item.MainImage}
                       />
                     );
                   })}
@@ -199,6 +195,7 @@ const ManageHomeContent = () => {
                         Category={item.Category}
                         HolidayHomeId={item.HolidayHomeId}
                         activeToggler={false}
+                        image={item.MainImage}
                       />
                     );
                   })}
@@ -226,6 +223,7 @@ const ManageHomeContent = () => {
                         HolidayHomeId={item.HolidayHomeId}
                         activeToggler={false}
                         reason={item.reason}
+                        image={item.MainImage}
                       />
                     );
                   })}

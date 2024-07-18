@@ -12,11 +12,7 @@ export default function CalendarDetails({
   handleClose,
   paidRooms,
   pendingRooms,
-  selectedHolidayHome,
 }) {
-  console.log("rooms in the components pending", pendingRooms);
-  console.log("rooms in the components paid", paidRooms);
-
   let dateString = date.toString();
   return (
     <div>

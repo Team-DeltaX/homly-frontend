@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Box, Button, Typography, TextField, Paper } from "@mui/material";
-import CancelIcon from "@mui/icons-material/Cancel";
-
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -10,10 +8,8 @@ import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
-
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-
 import UnitBreakDown from "../UnitBreakDown";
 
 const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
@@ -150,10 +146,6 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
       };
       setUnitArray(updatedUnitArray);
     } else {
-      // Adding a new room
-      // const updatedValues = { ...unitValues, unitRentalArray };
-      // setUnitArray([...unitArray, updatedValues]);
-
       const newUnit = {
         ...unitValues,
         selectedRooms: [],
@@ -220,25 +212,6 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
   });
 
   const [unitRentalArray, setUnitRentalArray] = useState([]);
-  // const handleUnitAdd = () => {
-  //     if (unitRental.district === '' || unitRental.weekDays === '' || unitRental.weekEnds === '') return;
-  //     setUnitRentalArray([...unitRentalArray, unitRental]);
-  //     setUnitRental({
-  //         district: '',
-  //         weekDays: '',
-  //         weekEnds: '',
-  //     });
-
-  //     setNewUnitWeekDayValue('');
-  //     setNewUnitWeekendValue('');
-  // };
-
-  // const handleRemoveUnitRentalItem = (no) => {
-  //     const newUnitRentalArray = unitRentalArray.filter((item, index) => index !== no);
-  //     setUnitRentalArray(newUnitRentalArray);
-  // }
-
-  //unit - all fields should filled warning
   const [openUnitFillAlert, setOpenUnitFillAlert] = useState(false);
 
   const handleCloseUnitFillAlert = (event, reason) => {
@@ -472,84 +445,6 @@ const EditUnit = ({ roomArray, setRoomArray, unitArray, setUnitArray }) => {
                   helperText={error.ctName ? "Invalid Input" : ""}
                 />
               </Box>
-              {/* <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
-                                <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
-                                    <Typography variant='p' sx={{ color: 'black' }}>Rental</Typography>
-                                </Box>
-                                <TextField type='number' value={unitValues.unitRental} error={error.ctName} required id="outlined-required" label="Rental" placeholder='Rental' fullWidth size='small' onChange={handleUnitRentalChange} helperText={error.ctName ? "Invalid Input" : ''} />
-                            </Box> */}
-
-              {/* <Box className="rental_container">
-                                <Box sx={{ minWidth: '100px', maxWidth: '200px' }} className="label_container" >
-                                    <Typography variant='p' sx={{ color: 'black' }}>Add Rental</Typography>
-                                </Box>
-
-                                <Box className="input_container" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1em', marginBottom: '12px' }}>
-                                    <Box sx={{ width: "100%", display: 'flex', justifyContent: 'space-around', marginTop: '20px' }} >
-                                        <FormControl sx={{}}>
-                                            <InputLabel id="demo-simple-select-label">Month</InputLabel>
-                                            <Select
-                                                required
-
-                                                size='small'
-                                                labelId="demo-simple-select-label"
-                                                id="demo-simple-select"
-                                                value={value.district}
-                                                label="Age"
-                                                sx={{ width: "150px" }}
-                                                onChange={handleUnitDistrict}
-
-
-                                            >
-                                                <MenuItem value={"January"}>January</MenuItem>
-                                                <MenuItem value={"February"}>February</MenuItem>
-                                                <MenuItem value={"March"}>March</MenuItem>
-                                                <MenuItem value={"April"}>April</MenuItem>
-                                                <MenuItem value={"May"}>May</MenuItem>
-                                                <MenuItem value={"June"}>June</MenuItem>
-                                                <MenuItem value={"July"}>July</MenuItem>
-                                                <MenuItem value={"August"}>August</MenuItem>
-                                                <MenuItem value={"September"}>September</MenuItem>
-                                                <MenuItem value={"October"}>October</MenuItem>
-                                                <MenuItem value={"November"}>November</MenuItem>
-                                                <MenuItem value={"December"}>December</MenuItem>
-
-                                            </Select>
-                                        </FormControl>
-                                        <TextField type='number' id="outlined-required" label="WeekDays" placeholder='WeekDays' size='small' value={newUnitWeekDayValue} onChange={handleUnitWeedays} helperText={error.ctName ? "Invalid Input" : ''} sx={{ width: "150px" }} />
-                                        <TextField type='number' id="outlined-required" label="Weekend" placeholder='Weekend' size='small' value={newUnitWeekendValue} onChange={handleUnitWeekends} helperText={error.ctName ? "Invalid Input" : ''} sx={{ width: "150px" }} />
-                                        <Button variant='contained' size='small' onClick={handleUnitAdd} >Add</Button>
-
-
-                                    </Box>
-                                </Box>
-
-
-                                {unitRentalArray.map((item, index) => {
-                                    return (
-                                        <Box>
-                                            <Paper sx={{ display: 'flex', padding: "1.2em 2em", justifyContent: 'space-between', marginBottom: "1em" }}>
-                                                <Box>
-                                                    <Typography variant='p' sx={{ color: 'black', marginRight: '0.6em', fontWeight: "bold" }}>Month</Typography>
-                                                    <Typography variant='p' sx={{ color: 'grey', fontWeight: '500' }}>{item.district}</Typography>
-                                                </Box>
-                                                <Box>
-                                                    <Typography variant='p' sx={{ color: 'black', marginRight: '0.6em', fontWeight: "bold" }}>WeekDays</Typography>
-                                                    <Typography variant='p' sx={{ color: 'grey', fontWeight: '500' }}>{item.weekDays}</Typography>
-                                                </Box>
-                                                <Box>
-                                                    <Typography variant='p' sx={{ color: 'black', marginRight: '0.6em', fontWeight: 'bold' }}>WeekEnd</Typography>
-                                                    <Typography variant='p' sx={{ color: 'grey', fontWeight: '500' }}>{item.weekEnds}</Typography>
-                                                </Box>
-                                                <CancelIcon sx={{ cursor: 'pointer' }} onClick={() => handleRemoveUnitRentalItem(index)} />
-
-                                            </Paper>
-                                        </Box>
-                                    )
-
-                                })}
-
-                            </Box> */}
             </DialogContent>
             <DialogActions>
               <Button variant="contained" onClick={handleSaveUnit}>

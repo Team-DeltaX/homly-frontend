@@ -59,39 +59,6 @@ const EditUnit = ({
     }
   }, [isEditMode, editIndex, roomArray, unitArray]);
 
-  console.log("selectedroomdetailsobject", selectedRoomDetails);
-
-  // const handleUnitRemake = (unitCode) => {
-  //   //roomArray update
-
-  //   setRoomArray((prevRoomArray) => {
-  //     const updatedRoomArray = prevRoomArray.map((room) => {
-  //       if (
-  //         selectedRoomDetails[unitCode].some(
-  //           (item) => item.roomCode === room.roomCode
-  //         )
-  //       ) {
-  //         return { ...room, groupByUnit: true };
-  //       }
-  //       return room;
-  //     });
-
-  //     return updatedRoomArray;
-  //   });
-
-  //   const updatedUnitArray = unitArray.map((unit) => {
-  //     return {
-  //       ...unit,
-  //       selectedRooms: selectedRoomDetails[unit.unitCode] || [],
-  //       roomAttached: selectedRoomDetails[unit.unitCode] ? true : false,
-  //     };
-  //   });
-
-  //   setUnitArray(updatedUnitArray);
-  // };
-
-  // //dropdowns
-
   //AC room
   const [value, setValue] = useState(0);
   const handleChange = (event, newValue) => {
@@ -264,10 +231,6 @@ const EditUnit = ({
 
     setOpenUnitExistAlert(false);
   };
-  //unit - same unit no exist warning
-  const [openHallExistAlert, setOpenHallExistAlert] = useState(false);
-
-  console.log("unit array in editunit", unitArray);
 
   return (
     <Box>

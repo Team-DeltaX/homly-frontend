@@ -14,14 +14,10 @@ const ViewUnitBreakDown = ({
   unitCode,
   unitAc,
   floorLevel,
-  unitRemarks,
   unitRental,
   selectedRooms,
   roomArray,
   setRoomArray,
-  handleUnitDelete,
-  handleUnitEdit,
-  index,
   setSelectedRoomDetails,
 }) => {
   const [open, setOpen] = useState(false);
@@ -32,8 +28,6 @@ const ViewUnitBreakDown = ({
   const [unitAdultCount, setUnitAdultCount] = useState(0);
   const [unitRoomCount, setUnitRoomCount] = useState(0);
   const { homeId } = useParams();
-
-  console.log("selectedrooms", selectedRooms);
 
   const getSelectedRoom = async (unitCode) => {
     try {
@@ -107,28 +101,6 @@ const ViewUnitBreakDown = ({
   };
 
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
-
-  // //ADD ac nonac room alert
-  // const [openAlert, setOpenAlert] = useState(false);
-
-  // const handleCloseAlert = (event, reason) => {
-  //     if (reason === 'clickaway') {
-  //         return;
-  //     }
-
-  //     setOpenAlert(false);
-  // };
-
-  // // Sure dialog for remove unit
-
-  // const theme = useTheme();
-  // const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
-  // const [openUnitRemove, setOpenUnitRemove] = useState(false);//unit remove state pop up
-
-  // const handleOpenUnitRemove = () => {
-  //     setOpenUnitRemove(true);
-  // };
-
   //ADD ac nonac room alert
   const [openAlert, setOpenAlert] = useState(false);
 
