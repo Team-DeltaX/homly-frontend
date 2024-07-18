@@ -308,6 +308,21 @@ const PrimaryAdminRefundForm = ({
           <Divider sx={{ my: 3 }} />
         </Collapse>
         <Grid container spacing={2}>
+        <Grid item xs={12}>
+            <FormControl fullWidth variant="outlined" size="normal">
+              <InputLabel>Status</InputLabel>
+              <Select
+                label="Status"
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+                disabled={isFilled}
+              >
+                <MenuItem value="Pending">Pending</MenuItem>
+                <MenuItem value="Refunded">Refunded</MenuItem>
+                <MenuItem value="Rejected">Rejected</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
           <Grid item xs={6}>
             <TextField
               fullWidth
@@ -379,22 +394,7 @@ const PrimaryAdminRefundForm = ({
                 Please upload the bank slip for a refund.
               </FormHelperText>
             )}
-          </Grid>
-          <Grid item xs={12}>
-            <FormControl fullWidth variant="outlined" size="normal">
-              <InputLabel>Status</InputLabel>
-              <Select
-                label="Status"
-                value={status}
-                onChange={(e) => setStatus(e.target.value)}
-                disabled={isFilled}
-              >
-                <MenuItem value="Pending">Pending</MenuItem>
-                <MenuItem value="Refunded">Refunded</MenuItem>
-                <MenuItem value="Rejected">Rejected</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
+          </Grid>          
           <Grid item xs={12}>
             <TextField
               fullWidth

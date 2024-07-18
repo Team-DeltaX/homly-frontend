@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Stack from "@mui/material/Stack";
 import { Box } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
@@ -9,9 +8,9 @@ import AddComplainPopUp from "./AddComplainPopUp";
 import ViewComplaintPopup from "./ViewComplainPopup";
 
 const ReservationCard = (props) => {
-  const [isSpecial, setIsSpecial] = useState(props.reservation.IsSpecial);
-  const [isCancelled, setIsCancelled] = useState(props.reservation.IsCancelled);
-  const [isPaid, setIsPaid] = useState(props.reservation.IsPaid);
+  const isSpecial = props.reservation.IsSpecial;
+  const isCancelled = props.reservation.IsCancelled;
+  const isPaid = props.reservation.IsPaid;
   const isComplainTrue =
     props.type === "past" &&
     props.adminNumber !== "HomlyPriAdmin" &&
@@ -28,7 +27,6 @@ const ReservationCard = (props) => {
       sx={{
         padding: { xs: "2px 1px", sm: "5px 1px", md: "10px 3px" },
         margin: { xs: "2px 1px", sm: "5px 1px", md: "10px 5px" },
-        borderBottom: "1px solid #fafafa",
         borderRadius: "20px",
         boxShadow: "3px 1px 3px 3px rgba(0,0,0,0.1)",
         borderBottom: "1px solid #fafafa",

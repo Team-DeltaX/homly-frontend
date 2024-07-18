@@ -24,7 +24,7 @@ const DisabledAdminslist = () => {
   };
 
   const fetchadmins = () => {
-    AxiosClient.get(`/admin/auth/locationadmin/all`)
+    AxiosClient.get(`/admin/auth/locationadmin/alldisabled`)
       .then((res) => {
         console.log(res.data);
         //reverse array to keep new ones first
