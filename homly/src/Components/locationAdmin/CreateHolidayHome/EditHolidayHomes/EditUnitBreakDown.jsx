@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Box, Button, Typography, Paper } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import CancelIcon from "@mui/icons-material/Cancel";
@@ -11,7 +11,6 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-import AxiosClient from "../../../../services/AxiosClient";
 import { useParams } from "react-router";
 
 const EditUnitBreakDown = ({
@@ -36,7 +35,6 @@ const EditUnitBreakDown = ({
   const [unitChildCount, setUnitChildCount] = useState(0);
   const [unitAdultCount, setUnitAdultCount] = useState(0);
   const [unitRoomCount, setUnitRoomCount] = useState(0);
-  const { homeId } = useParams();
 
   console.log("selectedrooms top", selectedRooms);
 

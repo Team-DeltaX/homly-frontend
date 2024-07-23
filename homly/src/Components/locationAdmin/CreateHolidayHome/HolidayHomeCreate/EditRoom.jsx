@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Box, Button, TextField, Typography, Paper } from "@mui/material";
 import CancelIcon from "@mui/icons-material/Cancel";
-
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -10,14 +9,9 @@ import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
-
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-
 import RoomBreakdown from "../RoomBreakdown";
-
-import axios from "axios";
-import { useParams } from "react-router-dom";
 
 const EditRoom = ({
   roomArray,
@@ -27,14 +21,11 @@ const EditRoom = ({
   roomTypeArray,
   settingRoomRentalArray,
 }) => {
-  // open pop up for add room
   const [open, setOpen] = useState(false);
   const [fullWidth, setFullWidth] = useState(true);
   const [maxWidth, setMaxWidth] = useState("sm");
-
   const [isEditMode, setIsEditMode] = useState(false);
   const [editIndex, setEditIndex] = useState(null);
-
   const [values, setValues] = useState({
     roomCode: "",
     roomAc: "",
@@ -118,8 +109,6 @@ const EditRoom = ({
     setOpenRoomFillAlert(false);
   };
 
-  //room - same room no exist warning
-
   const [openRoomExistAlert, setOpenRoomExistAlert] = useState(false);
 
   const handleCloseRoomExistAlert = (event, reason) => {
@@ -131,18 +120,6 @@ const EditRoom = ({
   };
 
   const handleSaveRoom = () => {
-    // if (values.roomCode === '' || values.roomAc === '' || values.RoomType === '' || values.NoOfBeds === '' || values.NoOfAdults === '' || values.NoOfChildren === '' || values.roomRemarks === '' || values.roomRental === '') {
-    //     setOpenRoomFillAlert(true);
-    //     return;
-    // }
-
-    // const updatedValues = { ...values, rentalArray };
-    // setRoomArray([...roomArray, updatedValues]);
-    // setRentalArray([]);
-
-    // setValues({ roomCode: '', roomAc: '', RoomType: '', NoOfBeds: '', NoOfAdults: '', NoOfChildren: '', roomRemarks: '', roomRental: '', groupByUnit: false })
-    // setOpen(false);
-    console.log("values array", values);
     if (
       values.roomCode === "" ||
       values.roomAc === "" ||
@@ -255,21 +232,6 @@ const EditRoom = ({
   const handleRoomAcChange = (e) => {
     setValues({ ...values, roomAc: e.target.value });
   };
-
-  // const handleRoomTypeChange = (e) => {
-  //     setValues({ ...values, RoomType: e.target.value });
-  //     let type = e.target.value;
-  //     // console.log(type)
-  //     for (let i = 0; i < roomTypeArray.length; i++) {
-  //         if (roomTypeArray[i].type === type) {
-  //             console.log("in", roomTypeArray[i])
-  //             setValues({ ...values, NoOfAdults: roomTypeArray[i].adults });
-  //             setValues({ ...values, NoOfChildren: roomTypeArray[i].children });
-  //         }
-  //     }
-  //     // setValues({ ...values, RoomType: e.target.value });
-
-  // }
 
   const handleRoomTypeChange = (e) => {
     console.log("createpage", roomTypeArray);

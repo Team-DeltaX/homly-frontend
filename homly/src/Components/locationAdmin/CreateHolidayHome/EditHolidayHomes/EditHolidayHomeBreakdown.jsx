@@ -20,7 +20,6 @@ import InputLabel from "@mui/material/InputLabel";
 import EditRoom from "./EditRoom";
 import EditUnit from "./EditUnit";
 import EditHall from "./EditHall";
-import AxiosClient from "../../../../services/AxiosClient";
 import { useParams } from "react-router-dom";
 
 function CustomTabPanel(props) {
@@ -101,13 +100,6 @@ const EditHolidayHomeBreakdown = ({
     oCharges: false,
     sCharges: false,
   });
-
-  const { homeId } = useParams();
-
-  const handleTotalRentalChange = (e) => {
-    const positive_regex = /^\d*\.?\d+$/;
-    setBdValue({ ...bdValue, totalRental: e.target.value });
-  };
 
   const handlefacilityChange = (e) => {
     setBdValue({ ...bdValue, facilities: e.target.value });
@@ -253,12 +245,6 @@ const EditHolidayHomeBreakdown = ({
     setSettingRoomRentalArray(tempArray);
   };
   const [typeExistAlert, setTypeExistAlert] = useState(false);
-  const handleTypeExistAlert = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setTypeExistAlert(false);
-  };
 
   useEffect(() => {
     const areErrorsEmpty = !error.oCharges && !error.sCharges && !error.tRental;

@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Box, Button, TextField, Typography, Paper } from "@mui/material";
-import CancelIcon from "@mui/icons-material/Cancel";
-
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -11,7 +9,6 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import ViewRoomBreakdown from "./ViewRoomBreakdown";
-import axios from "axios";
 import { useParams } from "react-router-dom";
 import AxiosClient from "../../../../services/AxiosClient";
 
@@ -28,8 +25,6 @@ const ViewRoom = ({
 
   const [isEditMode, setIsEditMode] = useState(false);
   const [editIndex, setEditIndex] = useState(null);
-  const [data, setData] = useState([]);
-
   const { homeId } = useParams();
 
   useEffect(() => {
@@ -128,17 +123,6 @@ const ViewRoom = ({
   });
 
   const handleSaveRoom = () => {
-    // if (values.roomCode === '' || values.roomAc === '' || values.RoomType === '' || values.NoOfBeds === '' || values.NoOfAdults === '' || values.NoOfChildren === '' || values.roomRemarks === '' || values.roomRental === '') {
-    //     setOpenRoomFillAlert(true);
-    //     return;
-    // }
-
-    // const updatedValues = { ...values, rentalArray };
-    // setRoomArray([...roomArray, updatedValues]);
-    // setRentalArray([]);
-
-    // setValues({ roomCode: '', roomAc: '', RoomType: '', NoOfBeds: '', NoOfAdults: '', NoOfChildren: '', roomRemarks: '', roomRental: '', groupByUnit: false })
-    // setOpen(false);
     if (
       values.roomCode === "" ||
       values.roomAc === "" ||
@@ -233,7 +217,6 @@ const ViewRoom = ({
       groupByUnit: editedRoom.groupByUnit,
     });
 
-    // axios.get(`http://localhost:8080/admin/auth/locationadmin/holidayhome/rental/${homeId}/${editedRoom.roomCode}`)
     AxiosClient.get(
       `admin/auth/locationadmin/holidayhome/rental/${homeId}/${editedRoom.roomCode}`
     )

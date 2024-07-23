@@ -8,7 +8,6 @@ import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
-import axios from "axios";
 import { useParams } from "react-router-dom";
 import ViewHallBreakDown from "./ViewHallBreakDown";
 import AxiosClient from "../../../../services/AxiosClient";
@@ -89,14 +88,6 @@ const ViewHall = ({ hallArray, setHallArray }) => {
 
   const [openHallExistAlert, setOpenHallExistAlert] = useState(false);
 
-  const handleCloseHallExistAlert = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setOpenHallExistAlert(false);
-  };
-
   const [error, setError] = useState({
     ctName: false,
     ctAddress: false,
@@ -162,10 +153,6 @@ const ViewHall = ({ hallArray, setHallArray }) => {
       setOpenHallFillAlert(true);
       return;
     }
-    // if (hallExist) {
-    //     setOpenHallExistAlert(true);
-    //     return;
-    // }
 
     if (isEditMode && editIndex !== null) {
       // Editing an existing room
@@ -212,8 +199,6 @@ const ViewHall = ({ hallArray, setHallArray }) => {
       hallRemark: editedHall.hallRemark,
       hallRental: editedHall.hallRental,
     });
-
-    // axios.get(`http://localhost:8080/admin/auth/locationadmin/holidayhome/rental/${homeId}/${editedHall.hallCode}`)
     AxiosClient.get(
       `/admin/auth/locationadmin/holidayhome/rental/${homeId}/${editedHall.hallCode}`
     )

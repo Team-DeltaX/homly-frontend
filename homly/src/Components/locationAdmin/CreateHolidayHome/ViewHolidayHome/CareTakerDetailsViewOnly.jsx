@@ -3,14 +3,12 @@ import { Box, Typography, TextField, Button } from "@mui/material";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import axios from "axios";
 import { useParams } from "react-router-dom";
 import AxiosClient from "../../../../services/AxiosClient";
 
 const CareTakerDetailsViewOnly = ({ setAllValues }) => {
   const { homeId } = useParams();
   useEffect(() => {
-    // axios.get(`http://localhost:8080/admin/auth/locationadmin/holidayhome/${homeId}`)
     AxiosClient.get(`/admin/auth/locationadmin/holidayhome/${homeId}`).then(
       (res) => {
         if (Response) {

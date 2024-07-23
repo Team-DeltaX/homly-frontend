@@ -8,7 +8,6 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import AxiosClient from "../../../../services/AxiosClient";
 
 const EditHolidayHomeDetails = () => {
@@ -34,17 +33,14 @@ const EditHolidayHomeDetails = () => {
   const { homeId } = useParams();
 
   useEffect(() => {
-    // axios.get(`http://localhost:8080/locationadmin/holidayhome/${homeId}`)
     AxiosClient.get(`/locationadmin/holidayhome/${homeId}`).then((res) => {
       if (Response) {
         const homeDetails = res.data.homeDetails;
         const contactNo = res.data.contactNo;
-
-        // Extract relevant data from response and set to 'value' state
         setValue({
           name: homeDetails.Name || "",
           address: homeDetails.Address || "",
-          district: homeDetails.district, // Add the logic to get district if available
+          district: homeDetails.district,
           description: homeDetails.Description || "",
           contactNo1:
             contactNo && contactNo.length > 0 ? contactNo[0].ContactNo : "",
@@ -85,8 +81,6 @@ const EditHolidayHomeDetails = () => {
 
   const handleContactNo1Change = (e) => {
     const newValue = e.target.value.replace(/\D/g, "");
-
-    // Limit to 10 characters
     if (newValue.length <= 10) {
       setValue({ ...value, contactNo1: newValue });
     }
