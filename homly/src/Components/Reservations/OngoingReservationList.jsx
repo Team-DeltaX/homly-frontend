@@ -29,7 +29,6 @@ const OngoingReservationList = (props) => {
     fetchreservations();
   }, []);
 
-  
   return (
     <>
       <Box
@@ -53,7 +52,7 @@ const OngoingReservationList = (props) => {
                   .includes(props.search.toLowerCase()) ||
                 reservation.reservation.ReservationId.toLowerCase().includes(
                   props.search.toLowerCase()
-                ) 
+                )
               ? reservation
               : null;
           })

@@ -7,10 +7,8 @@ import SearchIcon from "@mui/icons-material/Search";
 import dayjs from "dayjs";
 import SearchResaltDrawer from "./SearchResaltDrawer";
 import AxiosClient from "../../../services/AxiosClient";
-import { SocketioContext } from "../../../Contexts/SocketioContext";
 
 const SearchBarHome = () => {
-  const { socket } = useContext(SocketioContext);
   const [dateValue, setDateValue] = useState([dayjs(), dayjs().add(1, "day")]);
   const [district, setDistrict] = useState("");
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -18,32 +16,26 @@ const SearchBarHome = () => {
   const [showSkeleton, setShowSkeleton] = useState(true);
 
   const handleSearch = () => {
-    setOpenDrawer(true);
-    setShowSkeleton(true);
-    setSearchedHH([]);
-    AxiosClient.get("/user/auth/holidayhomes/search", {
-      params: {
-        district: district,
-        startDate: dateValue[0].format("YYYY-MM-DD"),
-        endDate: dateValue[1].format("YYYY-MM-DD"),
-      },
-    })
-      .then((res) => {
-        setSearchedHH(res.data);
-        setShowSkeleton(false);
+    if (dateValue[0] && dateValue[1]) {
+      setOpenDrawer(true);
+      setShowSkeleton(true);
+      setSearchedHH([]);
+      AxiosClient.get("/user/auth/holidayhomes/search", {
+        params: {
+          district: district,
+          startDate: dateValue[0].format("YYYY-MM-DD"),
+          endDate: dateValue[1].format("YYYY-MM-DD"),
+        },
       })
-      .catch(() => {
-        setSearchedHH([]);
-        setShowSkeleton(false);
-      });
-
-    socket.emit("newNotification", {
-      senderId: "214028",
-      receiverId: "214029",
-      data: "test message",
-      type: "Authorization Denied",
-      time: new Date(),
-    });
+        .then((res) => {
+          setSearchedHH(res.data);
+          setShowSkeleton(false);
+        })
+        .catch(() => {
+          setSearchedHH([]);
+          setShowSkeleton(false);
+        });
+    }
   };
   return (
     <ThemeProvider theme={theme}>

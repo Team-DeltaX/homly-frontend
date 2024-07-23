@@ -159,7 +159,12 @@ export default function HolidayHomeCard({
                   value={interst3_value}
                 />
               </Stack>
-              <Typography sx={{ display: !showInterest ? "flex" : "none" }}>
+              <Typography
+                sx={{
+                  display: !showInterest ? "flex" : "none",
+                  fontSize: "0.8rem",
+                }}
+              >
                 {HHLocation}
               </Typography>
               <Stack

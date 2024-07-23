@@ -27,6 +27,7 @@ const Security = () => {
   });
 
   const [isEnable, setIsEnable] = useState(false);
+  const [isCancelEnable, setIsCancelEnable] = useState(false);
   const [errorStatus, setErrorStatus] = useState({
     isOpen: false,
     type: "",
@@ -83,6 +84,11 @@ const Security = () => {
         !error.confirmPass &&
         !error.password &&
         passwordStrength > 1
+    );
+    setIsCancelEnable(
+      password.currentPass.length > 0 ||
+        password.newPass.length > 0 ||
+        password.confirmPass.length > 0
     );
   }, [password, error, passwordStrength]);
 
@@ -160,18 +166,20 @@ const Security = () => {
               </CardContent>
               <CardActions sx={{ justifyContent: "flex-end" }}>
                 <Stack direction={"row"} sx={{ justifyContent: "flex-end" }}>
-                  <Button
-                    variant="contained"
-                    size="small"
-                    sx={{
-                      backgroundColor: "primary.main",
-                      width: "70px",
-                      marginRight: "10px",
-                    }}
-                    onClick={handleCancel}
-                  >
-                    Cancel
-                  </Button>
+                  {isCancelEnable && (
+                    <Button
+                      variant="contained"
+                      size="small"
+                      sx={{
+                        backgroundColor: "primary.main",
+                        width: "70px",
+                        marginRight: "10px",
+                      }}
+                      onClick={handleCancel}
+                    >
+                      Cancel
+                    </Button>
+                  )}
                   <Button
                     variant="contained"
                     size="small"

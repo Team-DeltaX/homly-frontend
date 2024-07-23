@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import { Stack, ThemeProvider, Button, Typography } from "@mui/material";
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import theme from "../../HomlyTheme";
 
 const UploadImageCloudinary = ({
@@ -27,14 +27,9 @@ const UploadImageCloudinary = ({
       {
         cloudName: "dwgeetnoj",
         uploadPreset: "auzerdek",
-        // select file and url
         sources: ["local", "url"],
-        // add one image limit
         multiple: isMultiple,
-        // maxFiles: limit,
-        // upload folder
         folder: folderName,
-        // crop image
         cropping: true,
         croppingAspectRatio: 1,
         croppingCoordinatesMode: "custom",
